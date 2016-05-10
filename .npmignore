@@ -32,5 +32,8 @@ node_modules
 # Optional REPL history
 .node_repl_history
 
-# build folder
-lib
+.storybook
+examples
+stories
+test
+public

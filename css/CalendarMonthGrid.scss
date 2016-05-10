@@ -1,0 +1,22 @@
+$day-picker-width: 300px;
+
+.CalendarMonthGrid {
+  background: #fff;
+  z-index: 0;
+}
+
+.CalendarMonthGrid--animating {
+  transition: transform 0.2s ease-in-out;
+  z-index: 1;
+}
+
+.CalendarMonthGrid--horizontal {
+  position: absolute;
+  left: 9px;
+  width: 4 * $day-picker-width;
+}
+
+.CalendarMonthGrid--vertical {
+  width: $day-picker-width;
+  margin: 0 auto;
+}

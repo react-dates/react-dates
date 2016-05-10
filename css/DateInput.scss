@@ -1,0 +1,53 @@
+.DateInput {
+  // font
+  font-weight: 200;
+  font-size: 18px;
+  line-height: 24px;
+  color: $placeholder-color;
+  margin: 0;
+  padding: 8px;
+
+  background: $color-white;
+  position: relative;
+  display: inline-block;
+  width: $input-width;
+  vertical-align: middle;
+}
+
+.DateInput__label {
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+.DateInput__input {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.DateInput__display-text {
+  padding: 4px 8px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.DateInput__display-text--has-input {
+  color: $text-color;
+}
+
+.DateInput__display-text--focused {
+  background: $focus-color;
+  border-color: $focus-color;
+  border-radius: 3px;
+  color: $focus-text-color;
+}

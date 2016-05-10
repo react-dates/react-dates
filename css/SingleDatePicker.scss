@@ -1,0 +1,88 @@
+@import 'variables';
+
+.SingleDatePicker {
+  position: relative;
+  display: inline-block;
+}
+
+.SingleDatePicker__picker {
+  background-color: $color-white;
+  z-index: 1;
+  position: absolute;
+  top: 145%;
+  left: 0;
+
+  &::before,
+  &::after {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    bottom: auto;
+  }
+
+  &::before {
+    top: -10px;
+    border: 10px solid transparent;
+    border-top: 0;
+    border-bottom-color: rgba(0, 0, 0, 0.1);
+    left: 22px;
+  }
+
+  &::after {
+    top: -9px;
+    border: 9px solid transparent;
+    border-top: 0;
+    border-bottom-color: #fff;
+    left: 23px;
+  }
+}
+
+.SingleDatePicker__picker--show {
+  visibility: visible;
+}
+
+.SingleDatePicker__picker--invisible {
+  visibility: hidden;
+}
+
+.SingleDatePicker__picker--portal {
+  background-color: rgba(0, 0, 0, 0.3);
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.SingleDatePicker__picker--full-screen-portal {
+  background-color: $color-white;
+}
+
+.SingleDatePicker__close {
+  background: none;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  line-height: normal;
+  overflow: visible;
+  padding: 0;
+  cursor: pointer;
+
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 15px;
+  z-index: 2;
+
+  svg {
+    height: 15px;
+    width: 15px;
+    fill: $color-light-gray;
+  }
+
+  &:hover,
+  &:focus {
+    color: darken(#cacccd, 10%);
+    text-decoration: none;
+  }
+}

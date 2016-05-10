@@ -1,0 +1,51 @@
+@import "variables";
+
+.DateRangePickerInput {
+  background-color: $color-white;
+  border: 1px solid $color-light-gray;
+  display: inline-block;
+}
+
+.DateRangePickerInput__arrow {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.DateRangePickerInput__arrow svg {
+  vertical-align: middle;
+  fill: $text-color;
+  height: 24px;
+  width: 24px;
+}
+
+.DateRangePickerInput__clear-dates {
+  background: none;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  line-height: normal;
+  overflow: visible;
+
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: middle;
+  padding: 10px;
+  margin: 0 10px 0 5px;
+}
+
+.DateRangePickerInput__clear-dates svg {
+  fill: $color-gray;
+  height: 12px;
+  width: 15px;
+  vertical-align: middle;
+}
+
+.DateRangePickerInput__clear-dates--hide {
+  visibility: hidden;
+}
+
+.DateRangePickerInput__clear-dates:focus,
+.DateRangePickerInput__clear-dates--hover {
+  background: $border-color;
+  border-radius: 50%;
+}

@@ -1,0 +1,115 @@
+@import "variables";
+
+.screen-reader-only {
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+.DateRangePicker {
+  position: relative;
+  display: inline-block;
+}
+
+.DateRangePicker__picker {
+  background-color: $color-white;
+  z-index: 1;
+  position: absolute;
+  top: 145%;
+  left: 0;
+
+  &::before,
+  &::after {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    bottom: auto;
+  }
+}
+
+.DateRangePicker__picker--show {
+  visibility: visible;
+}
+
+.DateRangePicker__picker--invisible {
+  visibility: hidden;
+}
+
+.DateRangePicker__picker--portal {
+  background-color: rgba(0, 0, 0, 0.3);
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.DateRangePicker__picker--full-screen-portal {
+  background-color: $color-white;
+}
+
+.DateRangePicker__picker--start::before,
+.DateRangePicker__picker--end::before {
+  top: -10px;
+  border: 10px solid transparent;
+  border-top: 0;
+  border-bottom-color: rgba(0, 0, 0, 0.1);
+}
+
+.DateRangePicker__picker--start::before {
+  left: 22px;
+}
+
+.DateRangePicker__picker--end::before {
+  left: 162px;
+}
+
+.DateRangePicker__picker--start::after,
+.DateRangePicker__picker--end::after {
+  top: -9px;
+  border: 9px solid transparent;
+  border-top: 0;
+  border-bottom-color: $color-white;
+}
+
+.DateRangePicker__picker--start::after {
+  left: 23px;
+}
+
+.DateRangePicker__picker--end::after {
+  left: 163px;
+}
+
+.DateRangePicker__close {
+  background: none;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  line-height: normal;
+  overflow: visible;
+  padding: 0;
+  cursor: pointer;
+
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 15px;
+  z-index: 2;
+
+  svg {
+    height: 15px;
+    width: 15px;
+    fill: $color-light-gray;
+  }
+
+  &:hover,
+  &:focus {
+    color: darken(#cacccd, 10%);
+    text-decoration: none;
+  }
+}
