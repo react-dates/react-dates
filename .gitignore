@@ -34,3 +34,4 @@ node_modules
 
 # build folder
 lib
+_site
