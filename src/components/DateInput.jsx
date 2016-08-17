@@ -9,6 +9,7 @@ const propTypes = {
   placeholder: PropTypes.string, // also used as label
   dateValue: PropTypes.string,
   focused: PropTypes.bool,
+  disabled: PropTypes.bool,
 
   onChange: PropTypes.func,
   onFocus: PropTypes.func,
@@ -20,6 +21,7 @@ const defaultProps = {
   placeholder: 'Select Date',
   dateValue: '',
   focused: false,
+  disabled: false,
 
   onChange() {},
   onFocus() {},
@@ -83,13 +85,16 @@ export default class DateInput extends React.Component {
       dateValue,
       focused,
       onFocus,
+      disabled,
     } = this.props;
 
     const value = dateValue || dateString;
 
     return (
       <div
-        className="DateInput"
+        className={cx('DateInput', {
+          'DateInput--disabled': disabled,
+        })}
         onClick={onFocus}
       >
         <label className="DateInput__label" htmlFor={id}>
@@ -109,13 +114,14 @@ export default class DateInput extends React.Component {
           placeholder={placeholder}
           autoComplete="off"
           maxLength={10}
-          disabled={this.isTouchDevice}
+          disabled={disabled || this.isTouchDevice}
         />
 
         <div
           className={cx('DateInput__display-text', {
             'DateInput__display-text--has-input': !!value,
             'DateInput__display-text--focused': focused,
+            'DateInput__display-text--disabled': disabled,
           })}
         >
           {value || placeholder}

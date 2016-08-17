@@ -18,6 +18,20 @@ describe('DateRangePickerInput', () => {
       expect(wrapper.find(DateInput)).to.have.lengthOf(2);
     });
 
+    describe('props.disabled is falsey', () => {
+      it('does not have .DateRangePickerInput--disabled class ', () => {
+        const wrapper = shallow(<DateRangePickerInput id="date" disabled={false} />);
+        expect(wrapper.find('.DateRangePickerInput--disabled')).to.have.lengthOf(0);
+      });
+    });
+
+    describe('props.disabled is truthy', () => {
+      it('has .DateRangePickerInput--disabled class', () => {
+        const wrapper = shallow(<DateRangePickerInput id="date" disabled />);
+        expect(wrapper.find('.DateRangePickerInput--disabled')).to.have.lengthOf(1);
+      });
+    });
+
     it('has .DateRangePickerInput__arrow class', () => {
       const wrapper = shallow(<DateRangePickerInput />);
       expect(wrapper.find('.DateRangePickerInput__arrow')).to.have.lengthOf(1);

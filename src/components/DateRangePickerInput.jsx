@@ -28,6 +28,7 @@ const propTypes = {
   isStartDateFocused: PropTypes.bool,
   isEndDateFocused: PropTypes.bool,
   showClearDates: PropTypes.bool,
+  disabled: PropTypes.bool,
 
   // i18n
   phrases: PropTypes.shape({
@@ -50,6 +51,7 @@ const defaultProps = {
   isStartDateFocused: false,
   isEndDateFocused: false,
   showClearDates: false,
+  disabled: false,
 
   // i18n
   phrases: {
@@ -99,6 +101,7 @@ export default class DateRangePickerInput extends React.Component {
       onEndDateTab,
       onClearDates,
       showClearDates,
+      disabled,
       phrases,
     } = this.props;
 
@@ -106,12 +109,17 @@ export default class DateRangePickerInput extends React.Component {
     const endDateValue = endDate || endDateString;
 
     return (
-      <div className="DateRangePickerInput">
+      <div
+        className={cx('DateRangePickerInput', {
+          'DateRangePickerInput--disabled': disabled,
+        })}
+      >
         <DateInput
           id={startDateId}
           placeholder={startDatePlaceholderText}
           dateValue={startDateValue}
           focused={isStartDateFocused}
+          disabled={disabled}
 
           onChange={onStartDateChange}
           onFocus={onStartDateFocus}
@@ -127,6 +135,7 @@ export default class DateRangePickerInput extends React.Component {
           placeholder={endDatePlaceholderText}
           dateValue={endDateValue}
           focused={isEndDateFocused}
+          disabled={disabled}
 
           onChange={onEndDateChange}
           onFocus={onEndDateFocus}

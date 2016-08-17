@@ -24,6 +24,7 @@ const propTypes = SingleDatePickerShape;
 const defaultProps = {
   date: null,
   focused: false,
+  disabled: false,
 
   onDateChange() {},
   onFocusChange() {},
@@ -99,7 +100,9 @@ export default class SingleDatePicker extends React.Component {
   }
 
   onFocus() {
-    this.props.onFocusChange({ focused: true });
+    if (!this.props.disabled) {
+      this.props.onFocusChange({ focused: true });
+    }
   }
 
   onClearFocus() {
@@ -225,6 +228,7 @@ export default class SingleDatePicker extends React.Component {
       id,
       placeholder,
       focused,
+      disabled,
       date,
       withPortal,
       withFullScreenPortal,
@@ -241,6 +245,7 @@ export default class SingleDatePicker extends React.Component {
             id={id}
             placeholder={placeholder}
             focused={focused}
+            disabled={disabled}
             dateValue={dateValue}
             onChange={this.onChange}
             onFocus={this.onFocus}

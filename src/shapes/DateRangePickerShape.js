@@ -16,6 +16,7 @@ export default {
   enableOutsideDays: PropTypes.bool,
   numberOfMonths: PropTypes.number,
   showClearDates: PropTypes.bool,
+  disabled: PropTypes.bool,
 
   orientation: OrientationShape,
 
