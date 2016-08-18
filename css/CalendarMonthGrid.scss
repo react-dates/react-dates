@@ -1,4 +1,4 @@
-$day-picker-width: 300px;
+$react-dates-width-day-picker: 300px;
 
 .CalendarMonthGrid {
   background: #fff;
@@ -13,10 +13,10 @@ $day-picker-width: 300px;
 .CalendarMonthGrid--horizontal {
   position: absolute;
   left: 9px;
-  width: 4 * $day-picker-width;
+  width: 4 * $react-dates-width-day-picker;
 }
 
 .CalendarMonthGrid--vertical {
-  width: $day-picker-width;
+  width: $react-dates-width-day-picker;
   margin: 0 auto;
 }

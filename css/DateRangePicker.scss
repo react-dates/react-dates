@@ -17,7 +17,7 @@
 }
 
 .DateRangePicker__picker {
-  background-color: $color-white;
+  background-color: $react-dates-color-white;
   z-index: 1;
   position: absolute;
   top: 145%;
@@ -50,7 +50,7 @@
 }
 
 .DateRangePicker__picker--full-screen-portal {
-  background-color: $color-white;
+  background-color: $react-dates-color-white;
 }
 
 .DateRangePicker__picker--start::before,
@@ -74,7 +74,7 @@
   top: -9px;
   border: 9px solid transparent;
   border-top: 0;
-  border-bottom-color: $color-white;
+  border-bottom-color: $react-dates-color-white;
 }
 
 .DateRangePicker__picker--start::after {
@@ -104,7 +104,7 @@
   svg {
     height: 15px;
     width: 15px;
-    fill: $color-light-gray;
+    fill: $react-dates-color-gray-lighter;
   }
 
   &:hover,

@@ -149,3 +149,14 @@ The `phrases` prop is an object that contains all the English language phrases c
     clearDates: PropTypes.node,
   }),
 ```
+
+## Theming
+
+react-dates comes with a set of SCSS variables that can be overridden to add your own project-specific theming. Override any variables found in `css/variables.scss` with your own and then import `~react-dates/css/styles.scss` (and `~react-dates/css/variables.scss` if you're only overriding a few). If you were using [sass-loader](https://github.com/jtangelder/sass-loader) with webpack, the code below would properly override the selected variables:
+```sass
+//overriding default sass variables with my project's colors
+$react-dates-color-primary: $some-color-specific-to-my-project;
+$react-dates-color-primary-dark: $some-other-color-specific-to-my-project;
+@import '~react-dates/css/variables';
+@import '~react-dates/css/styles.scss';
+```

@@ -1,12 +1,12 @@
 @import 'variables';
 
 .DayPicker {
-  background: $color-white;
+  background: $react-dates-color-white;
   position: relative;
 }
 
 .DayPicker--horizontal {
-  background: $color-white;
+  background: $react-dates-color-white;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.07);
   border-radius: 3px;
 
@@ -24,19 +24,19 @@
 
 .DayPicker__nav--prev,
 .DayPicker__nav--next {
-  border: 1px solid $border-light;
-  background-color: $color-white;
-  color: $placeholder-color;
+  border: 1px solid $react-dates-color-border-light;
+  background-color: $react-dates-color-white;
+  color: $react-dates-color-placeholder-text;
   cursor: pointer;
   line-height: 0.78;
 
   &:focus,
   &:hover {
-    border: 1px solid $border-medium;
+    border: 1px solid $react-dates-color-border-medium;
   }
 
   &:active {
-    background: darken($color-white, 5%);
+    background: darken($react-dates-color-white, 5%);
   }
 }
 
@@ -65,13 +65,13 @@
   svg {
     height: 19px;
     width: 19px;
-    fill: $color-light;
+    fill: $react-dates-color-gray-light;
   }
 }
 
 .DayPicker--vertical {
   .DayPicker__nav {
-    background: $color-white;
+    background: $react-dates-color-white;
     box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.1);
     position: absolute;
     bottom: 0;
@@ -99,7 +99,7 @@
   svg {
     height: 42px;
     width: 42px;
-    fill: $text-color
+    fill: $react-dates-color-text
   }
 }
 
@@ -108,7 +108,7 @@
 }
 
 .DayPicker__week-header {
-  color: $placeholder-color;
+  color: $react-dates-color-placeholder-text;
   position: absolute;
   top: 62px;
   z-index: 2;
@@ -136,9 +136,9 @@
 }
 
 .DayPicker--vertical .DayPicker__week-header {
-  margin-left: -1 * $day-picker-width / 2;
+  margin-left: -1 * $react-dates-width-day-picker / 2;
   padding: 0 13px;
-  width: $day-picker-width;
+  width: $react-dates-width-day-picker;
   left: 50%;
 }
 

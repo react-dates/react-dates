@@ -6,7 +6,7 @@
 }
 
 .SingleDatePicker__picker {
-  background-color: $color-white;
+  background-color: $react-dates-color-white;
   z-index: 1;
   position: absolute;
   top: 145%;
@@ -55,7 +55,7 @@
 }
 
 .SingleDatePicker__picker--full-screen-portal {
-  background-color: $color-white;
+  background-color: $react-dates-color-white;
 }
 
 .SingleDatePicker__close {
@@ -77,7 +77,7 @@
   svg {
     height: 15px;
     width: 15px;
-    fill: $color-light-gray;
+    fill: $react-dates-color-gray-lighter;
   }
 
   &:hover,
