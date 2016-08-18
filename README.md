@@ -2,6 +2,22 @@
 
 An accessible, easily internationalizable, mobile-friendly datepicker library for the web
 
+## How to Use
+
+Ensure packages are installed with correct version numbers by running:
+  ```sh
+  (
+    export PKG=react-dates;
+    npm info "$PKG" peerDependencies --json | command sed 's/[\{\},]//g ; s/: /@/g; s/ *//g' | xargs npm install --save-dev "$PKG"
+  )
+  ```
+
+  Which produces and runs a command like:
+
+  ```sh
+  npm install --save-dev react-dates jquery@>=#.# moment@>=#.## react@>=#.## react-dom@>=#.## react-addons-shallow-compare@>=#.##
+  ```
+
 ## API
 
 We have a handful of different components and utilities available for all of your date picking needs!
