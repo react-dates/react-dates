@@ -313,7 +313,7 @@ export default class DayPicker extends React.Component {
       'transition-container--vertical': this.isVertical(),
     });
 
-    const horizontalWidth = CALENDAR_MONTH_WIDTH * numberOfMonths + 2 * DAY_PICKER_PADDING;
+    const horizontalWidth = (CALENDAR_MONTH_WIDTH * numberOfMonths) + (2 * DAY_PICKER_PADDING);
 
     // this is a kind of made-up value that generally looks good. we'll
     // probably want to let the user set this explicitly.

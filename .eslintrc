@@ -1,3 +1,13 @@
 {
-  "extends": "airbnb"
+  "extends": "airbnb",
+
+  "env": {
+    "browser": true,
+    "node": true
+  },
+
+  "rules": {
+    "react/no-find-dom-node": 1,
+    "react/no-string-refs": 1
+  }
 }
