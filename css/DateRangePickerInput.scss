@@ -1,8 +1,8 @@
 @import "variables";
 
 .DateRangePickerInput {
-  background-color: $color-white;
-  border: 1px solid $color-light-gray;
+  background-color: $react-dates-color-white;
+  border: 1px solid $react-dates-color-gray-lighter;
   display: inline-block;
 }
 
@@ -13,7 +13,7 @@
 
 .DateRangePickerInput__arrow svg {
   vertical-align: middle;
-  fill: $text-color;
+  fill: $react-dates-color-text;
   height: 24px;
   width: 24px;
 }
@@ -34,7 +34,7 @@
 }
 
 .DateRangePickerInput__clear-dates svg {
-  fill: $color-gray;
+  fill: $react-dates-color-gray-light;
   height: 12px;
   width: 15px;
   vertical-align: middle;
@@ -46,6 +46,6 @@
 
 .DateRangePickerInput__clear-dates:focus,
 .DateRangePickerInput__clear-dates--hover {
-  background: $border-color;
+  background: $react-dates-color-border;
   border-radius: 50%;
 }

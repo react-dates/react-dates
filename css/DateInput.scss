@@ -3,14 +3,14 @@
   font-weight: 200;
   font-size: 18px;
   line-height: 24px;
-  color: $placeholder-color;
+  color: $react-dates-color-placeholder-text;
   margin: 0;
   padding: 8px;
 
-  background: $color-white;
+  background: $react-dates-color-white;
   position: relative;
   display: inline-block;
-  width: $input-width;
+  width: $react-dates-width-input;
   vertical-align: middle;
 }
 
@@ -42,12 +42,12 @@
 }
 
 .DateInput__display-text--has-input {
-  color: $text-color;
+  color: $react-dates-color-text;
 }
 
 .DateInput__display-text--focused {
-  background: $focus-color;
-  border-color: $focus-color;
+  background: $react-dates-color-focus;
+  border-color: $react-dates-color-focus;
   border-radius: 3px;
-  color: $focus-text-color;
+  color: $react-dates-color-text-focus;
 }

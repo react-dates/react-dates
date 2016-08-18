@@ -27,7 +27,7 @@
 }
 
 .CalendarMonth__caption {
-  color: $color-dark-gray;
+  color: $react-dates-color-gray-dark;
   margin-top: 7px;
   font-size: 18px;
   padding: 15px 0 35px;
@@ -38,16 +38,16 @@
 
 // This order is important.
 .CalendarMonth__day {
-  border: 1px solid lighten($border-light, 3);
+  border: 1px solid lighten($react-dates-color-border-light, 3);
   padding: 0;
   box-sizing: border-box;
-  color: $color-dark;
+  color: $react-dates-color-gray;
   cursor: pointer;
   width: 39px;
   height: 38px;
 
   &:active {
-    background: darken($color-white, 5%);
+    background: darken($react-dates-color-white, 5%);
   }
 }
 
@@ -56,49 +56,49 @@
   cursor: default;
 
   &:active {
-    background: $color-white;
+    background: $react-dates-color-white;
   }
 }
 
 .CalendarMonth__day--hovered {
-  background: lighten($border-light, 3);
-  border: 1px double darken($border-light, 3);
+  background: lighten($react-dates-color-border-light, 3);
+  border: 1px double darken($react-dates-color-border-light, 3);
   color: inherit;
 }
 
 .CalendarMonth__day--blocked-minimum-nights {
-  color: $color-light-gray;
-  background: $color-white;
-  border: 1px solid lighten($border-light, 3);
+  color: $react-dates-color-gray-lighter;
+  background: $react-dates-color-white;
+  border: 1px solid lighten($react-dates-color-border-light, 3);
   cursor: default;
 
   &:active {
-    background: $color-white;
+    background: $react-dates-color-white;
   }
 }
 
 .CalendarMonth__day--selected-span {
-  background: $babu-shade-4;
-  border: 1px double $babu-shade-2;
-  color: $color-white;
+  background: $react-dates-color-primary-shade-2;
+  border: 1px double $react-dates-color-primary-shade-1;
+  color: $react-dates-color-white;
 
   &.CalendarMonth__day--hovered,
   &:active {
-    background: $babu-shade-2;
-    border: 1px double $color-babu;
+    background: $react-dates-color-primary-shade-1;
+    border: 1px double $react-dates-color-primary;
   }
 
   &.CalendarMonth__day--last-in-range {
-    border-right: $color-babu;
+    border-right: $react-dates-color-primary;
   }
 }
 
 .DateRangePicker__picker--valid-date-hovered {
   .CalendarMonth__day--hovered-span,
   .CalendarMonth__day--after-hovered-start {
-    background: $babu-shade-7;
-    border: 1px double $babu-shade-5;
-    color: $color-kazan;
+    background: $react-dates-color-primary-shade-4;
+    border: 1px double $react-dates-color-primary-shade-3;
+    color: $react-dates-color-secondary;
   }
 }
 
@@ -107,32 +107,32 @@
 .CalendarMonth__day--selected-start,
 .CalendarMonth__day--selected-end,
 .CalendarMonth__day--selected {
-  background: $color-babu;
-  border: 1px double $color-babu;
-  color: $color-white;
+  background: $react-dates-color-primary;
+  border: 1px double $react-dates-color-primary;
+  color: $react-dates-color-white;
 
   &:active {
-    background: $color-babu;
+    background: $react-dates-color-primary;
   }
 }
 
 .CalendarMonth__day--blocked-calendar {
-  background: $color-light-gray;
-  color: $color-gray;
+  background: $react-dates-color-gray-lighter;
+  color: $react-dates-color-gray-light;
   cursor: default;
 
   &:active {
-    background: $color-light-gray;
+    background: $react-dates-color-gray-lighter;
   }
 }
 
 .CalendarMonth__day--blocked-past-date {
-  color: $color-light-gray;
-  background: $color-white;
-  border: 1px solid lighten($border-light, 3);
+  color: $react-dates-color-gray-lighter;
+  background: $react-dates-color-white;
+  border: 1px solid lighten($react-dates-color-border-light, 3);
   cursor: default;
 
   &:active {
-    background: $color-white;
+    background: $react-dates-color-white;
   }
 }

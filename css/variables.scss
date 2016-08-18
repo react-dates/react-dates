@@ -1,32 +1,23 @@
-$input-width: 130px;
+$react-dates-width-input: 130px !default;
+$react-dates-width-day-picker: 300px !default;
 
-$color-babu: #00a699;
-$color-babu-dark: #00514a;
-$color-white: #fff;
+$react-dates-color-primary: #00a699 !default;
+$react-dates-color-primary-dark: #00514a !default;
+$react-dates-color-primary-shade-1: #33dacd !default;
+$react-dates-color-primary-shade-2: #66e2da !default;
+$react-dates-color-primary-shade-3: #80e8e0 !default;
+$react-dates-color-primary-shade-4: #b2f1ec !default;
+$react-dates-color-secondary: #007a87 !default;
+$react-dates-color-white: #fff !default;
+$react-dates-color-gray: #565a5c !default;
+$react-dates-color-gray-dark: darken($react-dates-color-gray, 10.5%) !default;
+$react-dates-color-gray-light: lighten($react-dates-color-gray, 17.8%) !default;   // #82888a
+$react-dates-color-gray-lighter: lighten($react-dates-color-gray, 45%) !default;     // #cacccd
 
-$border-color: #dbdbdb;
-$placeholder-color: #757575;
-$text-color: #484848;
-$focus-color: #99ede6;
-$focus-text-color: #007a87;
-
-$border-light: #dce0e0;
-$border-medium: #c4c4c4;
-$day-picker-width: 300px;
-
-$chevron-border: 24px;
-
-$color-dark: #565a5c;
-$color-dark-gray: darken($color-dark, 10.5%);
-$color-gray: lighten($color-dark, 17.8%);   // #82888a
-$color-light-gray: lighten($color-dark, 45%);     // #cacccd
-
-$color-light: $color-gray;
-$border-light: #dce0e0;
-$color-white: #fff;
-
-$babu-shade-2: #33dacd;
-$babu-shade-4: #66e2da;
-$babu-shade-5: #80e8e0;
-$babu-shade-7: #b2f1ec;
-$color-kazan: #007a87;
+$react-dates-color-border: #dbdbdb !default;
+$react-dates-color-border-light: #dce0e0 !default;
+$react-dates-color-border-medium: #c4c4c4 !default;
+$react-dates-color-placeholder-text: #757575 !default;
+$react-dates-color-text: #484848 !default;
+$react-dates-color-text-focus: #007a87 !default;
+$react-dates-color-focus: #99ede6 !default;
