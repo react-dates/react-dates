@@ -127,6 +127,10 @@ The `phrases` prop is an object that contains all the English language phrases c
 ## Live Playground
 For examples of the datepicker in action,
 
+Go to [http://airbnb.io/react-dates]
+
+OR
+
 * `npm install`
 * `npm run storybook`
 * Visit `http://localhost:9001/`
