@@ -241,11 +241,10 @@ export default class DayPicker extends React.Component {
 
   adjustDayPickerHeight() {
     const transitionContainer = ReactDOM.findDOMNode(this.refs.transitionContainer);
-    const calendarMonths = transitionContainer.querySelectorAll('.CalendarMonth');
     const heights = [];
 
     // convert node list to array
-    Array.prototype.slice.call(calendarMonths).forEach((el) => {
+    [...transitionContainer.querySelectorAll('.CalendarMonth')].forEach((el) => {
       if (el.getAttribute('data-visible') === 'true') {
         heights.push(this.getMonthHeight(el));
       }
