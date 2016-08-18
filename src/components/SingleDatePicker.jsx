@@ -29,9 +29,7 @@ const defaultProps = {
   onDateChange() {},
   onFocusChange() {},
 
-  blockedDates: [],
-  blockedByDefault: false,
-  unblockedDates: [],
+  isDayBlocked: () => false,
   disabledDays: [],
   allowPastDates: false,
   enableOutsideDays: false,
@@ -130,13 +128,7 @@ export default class SingleDatePicker extends React.Component {
   }
 
   isBlocked(day) {
-    return this.isCalendarBlocked(day) || this.isPastDate(day);
-  }
-
-  isCalendarBlocked(day) {
-    return this.props.blockedDates.some(d => isSameDay(d, day)) ||
-      (this.props.blockedByDefault &&
-        !this.props.unblockedDates.some(d => isSameDay(d, day)));
+    return this.props.isDayBlocked(day) || this.isPastDate(day);
   }
 
   isHovered(day) {
@@ -168,6 +160,7 @@ export default class SingleDatePicker extends React.Component {
 
   renderDayPicker() {
     const {
+      isDayBlocked,
       enableOutsideDays,
       numberOfMonths,
       orientation,
@@ -180,7 +173,7 @@ export default class SingleDatePicker extends React.Component {
 
     const modifiers = {
       blocked: day => this.isBlocked(day),
-      'blocked-calendar': day => this.isCalendarBlocked(day),
+      'blocked-calendar': day => isDayBlocked(day),
       'blocked-past-date': day => this.isPastDate(day),
       valid: day => !this.isBlocked(day),
       hovered: day => this.isHovered(day),

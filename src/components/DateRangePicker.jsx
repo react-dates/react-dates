@@ -35,9 +35,7 @@ const defaultProps = {
   endDateId: END_DATE,
   focusedInput: null,
   minimumNights: 1,
-  blockedDates: [],
-  blockedByDefault: false,
-  unblockedDates: [],
+  isDayBlocked: () => false,
   disabledDays: [],
   allowPastDates: false,
   enableOutsideDays: false,
@@ -236,12 +234,6 @@ export default class DateRangePicker extends React.Component {
     return focusedInput === END_DATE && dayDiff < minimumNights && dayDiff >= 0;
   }
 
-  isCalendarBlocked(day) {
-    return this.props.blockedDates.some(d => isSameDay(d, day)) ||
-      (this.props.blockedByDefault &&
-        !this.props.unblockedDates.some(d => isSameDay(d, day)));
-  }
-
   isDayAfterHoveredStartDate(day) {
     const { startDate, endDate } = this.props;
     const { hoverDate } = this.state;
@@ -290,8 +282,7 @@ export default class DateRangePicker extends React.Component {
   }
 
   isBlocked(day) {
-    return this.isCalendarBlocked(day) ||
-      this.isPastDate(day) ||
+    return this.props.isDayBlocked(day) || this.isPastDate(day) ||
       this.doesNotMeetMinimumNights(day);
   }
 
@@ -311,6 +302,7 @@ export default class DateRangePicker extends React.Component {
 
   renderDayPicker() {
     const {
+      isDayBlocked,
       numberOfMonths,
       orientation,
       monthFormat,
@@ -323,7 +315,7 @@ export default class DateRangePicker extends React.Component {
 
     const modifiers = {
       blocked: day => this.isBlocked(day),
-      'blocked-calendar': day => this.isCalendarBlocked(day),
+      'blocked-calendar': day => isDayBlocked(day),
       'blocked-past-date': day => this.isPastDate(day),
       'blocked-minimum-nights': day => this.doesNotMeetMinimumNights(day),
       valid: day => !this.isBlocked(day),

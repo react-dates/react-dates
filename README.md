@@ -69,11 +69,9 @@ The value of `minimumNights` indicates the minimum number of days between the st
   minimumNights: PropTypes.number
 ```
 
-To indicate which days are blocked from selection, you may either provide an array of moment objects to the `blockedDates` prop or you may set `blockedByDefault` to true and provide available days as an array of moment objects to the `unblockedDates` prop, depending on what makes sense for you. As of v1.0.0, we allow blocked dates inside of ranges.
+To indicate which days are blocked from selection, you may provide a function to the `isDayBlocked` prop. As of v1.0.0, we allow blocked dates inside of ranges.
 ```
-  blockedDates: PropTypes.PropTypes.arrayOf(momentPropTypes.momentObj)
-  blockedByDefault: PropTypes.bool
-  unblockedDates: PropTypes.arrayOf(momentPropTypes.momentObj)
+  isDayBlocked: PropTypes.func
 ```
 
 If you would like to allow the user to selected days in the past, you may set `allowPastDates` to true.

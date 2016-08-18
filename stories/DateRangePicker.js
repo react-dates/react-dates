@@ -4,6 +4,8 @@ import { storiesOf } from '@kadira/storybook';
 
 import { VERTICAL_ORIENTATION } from '../src/constants';
 
+import isSameDay from '../src/utils/isSameDay';
+
 import DateRangePickerWrapper from '../examples/DateRangePickerWrapper';
 
 const datesList = [
@@ -83,12 +85,11 @@ storiesOf('DateRangePicker', module)
   ))
   .add('with some blocked dates', () => (
     <DateRangePickerWrapper
-      blockedDates={datesList}
+      isDayBlocked={day1 => datesList.some(day2 => isSameDay(day1, day2))}
     />
   ))
-  .add('blockedByDefault', () => (
+  .add('blocks fridays', () => (
     <DateRangePickerWrapper
-      unblockedDates={datesList}
-      blockedByDefault
+      isDayBlocked={day => moment.weekdays(day.weekday()) === 'Friday'}
     />
   ));
