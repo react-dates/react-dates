@@ -10,7 +10,7 @@ export default {
   focusedInput: FocusedInputShape,
   minimumNights: PropTypes.number,
   isDayBlocked: PropTypes.func,
-  allowPastDates: PropTypes.bool,
+  isOutsideRange: PropTypes.func,
   enableOutsideDays: PropTypes.bool,
   numberOfMonths: PropTypes.number,
   showClearDates: PropTypes.bool,

@@ -14,7 +14,7 @@ export default {
   onFocusChange: PropTypes.func,
 
   isDayBlocked: PropTypes.func,
-  allowPastDates: PropTypes.bool,
+  isOutsideRange: PropTypes.func,
   enableOutsideDays: PropTypes.bool,
   numberOfMonths: PropTypes.number,
   orientation: OrientationShape,

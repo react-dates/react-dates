@@ -12,7 +12,7 @@ import DayPicker from './DayPicker';
 
 import CloseButton from '../svg/close.svg';
 
-import isInclusivelyBeforeDay from '../utils/isInclusivelyBeforeDay';
+import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
 import isSameDay from '../utils/isSameDay';
 
 import SingleDatePickerShape from '../shapes/SingleDatePickerShape';
@@ -31,7 +31,7 @@ const defaultProps = {
 
   isDayBlocked: () => false,
   disabledDays: [],
-  allowPastDates: false,
+  isOutsideRange: day => !isInclusivelyAfterDay(day, moment()),
   enableOutsideDays: false,
   numberOfMonths: 2,
   orientation: HORIZONTAL_ORIENTATION,
@@ -67,8 +67,8 @@ export default class SingleDatePicker extends React.Component {
   onChange(dateString) {
     const date = toMomentObject(dateString);
 
-    const { allowPastDates, onDateChange, onFocusChange } = this.props;
-    const isValid = date && (allowPastDates || !this.isPastDate(date));
+    const { isOutsideRange, onDateChange, onFocusChange } = this.props;
+    const isValid = date && !isOutsideRange(date);
     if (isValid) {
       onDateChange(date);
       onFocusChange({ focused: false });
@@ -128,16 +128,12 @@ export default class SingleDatePicker extends React.Component {
   }
 
   isBlocked(day) {
-    return this.props.isDayBlocked(day) || this.isPastDate(day);
+    const { isDayBlocked, isOutsideRange } = this.props;
+    return isDayBlocked(day) || isOutsideRange(day);
   }
 
   isHovered(day) {
     return isSameDay(day, this.state.hoverDate);
-  }
-
-  isPastDate(day) {
-    if (this.props.allowPastDates) return false;
-    return !isInclusivelyBeforeDay(moment(), day);
   }
 
   isSelected(day) {
@@ -161,6 +157,7 @@ export default class SingleDatePicker extends React.Component {
   renderDayPicker() {
     const {
       isDayBlocked,
+      isOutsideRange,
       enableOutsideDays,
       numberOfMonths,
       orientation,
@@ -174,7 +171,7 @@ export default class SingleDatePicker extends React.Component {
     const modifiers = {
       blocked: day => this.isBlocked(day),
       'blocked-calendar': day => isDayBlocked(day),
-      'blocked-past-date': day => this.isPastDate(day),
+      'blocked-out-of-range': day => isOutsideRange(day),
       valid: day => !this.isBlocked(day),
       hovered: day => this.isHovered(day),
       selected: day => this.isSelected(day),

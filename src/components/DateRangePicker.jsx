@@ -37,7 +37,7 @@ const defaultProps = {
   minimumNights: 1,
   isDayBlocked: () => false,
   disabledDays: [],
-  allowPastDates: false,
+  isOutsideRange: day => !isInclusivelyAfterDay(day, moment()),
   enableOutsideDays: false,
   numberOfMonths: 2,
   showClearDates: false,
@@ -136,8 +136,8 @@ export default class DateRangePicker extends React.Component {
   onEndDateChange(endDateString) {
     const endDate = toMomentObject(endDateString);
 
-    const { allowPastDates, startDate, onDatesChange, onFocusChange } = this.props;
-    const isEndDateValid = endDate && (!this.isPastDate(endDate) || allowPastDates) &&
+    const { startDate, isOutsideRange, onDatesChange, onFocusChange } = this.props;
+    const isEndDateValid = endDate && !isOutsideRange(endDate) &&
       !isInclusivelyBeforeDay(endDate, startDate);
     if (isEndDateValid) {
       onDatesChange({ startDate, endDate });
@@ -174,8 +174,8 @@ export default class DateRangePicker extends React.Component {
     const startDate = toMomentObject(startDateString);
 
     let { endDate } = this.props;
-    const { onDatesChange, onFocusChange } = this.props;
-    const isStartDateValid = startDate && !this.isPastDate(startDate);
+    const { isOutsideRange, onDatesChange, onFocusChange } = this.props;
+    const isStartDateValid = startDate && !isOutsideRange(startDate);
     if (isStartDateValid) {
       if (isInclusivelyBeforeDay(endDate, startDate)) {
         endDate = null;
@@ -228,9 +228,9 @@ export default class DateRangePicker extends React.Component {
 
   doesNotMeetMinimumNights(day) {
     const { startDate, focusedInput, minimumNights } = this.props;
-    const today = moment().startOf('day');
-    const dayDiff = startDate ? day.diff(startDate, 'days') : day.diff(today, 'days');
+    if (!startDate) return false;
 
+    const dayDiff = day.diff(startDate, 'days');
     return focusedInput === END_DATE && dayDiff < minimumNights && dayDiff >= 0;
   }
 
@@ -276,14 +276,9 @@ export default class DateRangePicker extends React.Component {
     return isSameDay(day, this.props.startDate);
   }
 
-  isPastDate(day) {
-    if (this.props.allowPastDates) return false;
-    return !isInclusivelyBeforeDay(moment(), day);
-  }
-
   isBlocked(day) {
-    return this.props.isDayBlocked(day) || this.isPastDate(day) ||
-      this.doesNotMeetMinimumNights(day);
+    const { isDayBlocked, isOutsideRange } = this.props;
+    return isDayBlocked(day) || isOutsideRange(day) || this.doesNotMeetMinimumNights(day);
   }
 
   maybeRenderDayPickerWithPortal() {
@@ -303,6 +298,7 @@ export default class DateRangePicker extends React.Component {
   renderDayPicker() {
     const {
       isDayBlocked,
+      isOutsideRange,
       numberOfMonths,
       orientation,
       monthFormat,
@@ -316,7 +312,7 @@ export default class DateRangePicker extends React.Component {
     const modifiers = {
       blocked: day => this.isBlocked(day),
       'blocked-calendar': day => isDayBlocked(day),
-      'blocked-past-date': day => this.isPastDate(day),
+      'blocked-out-of-range': day => isOutsideRange(day),
       'blocked-minimum-nights': day => this.doesNotMeetMinimumNights(day),
       valid: day => !this.isBlocked(day),
       // before anything has been set or after both are set

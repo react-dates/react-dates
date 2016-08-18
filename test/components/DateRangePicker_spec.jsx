@@ -429,12 +429,19 @@ describe('DateRangePicker', () => {
       });
     });
 
-    describe('is a past date', () => {
-      const pastDateString = moment(today).subtract(10, 'days').toISOString();
+    describe('is outside range', () => {
+      const futureDate = moment().add(7, 'day').toISOString();
+      const isOutsideRange = day => day >= moment().add(3, 'day');
+
       it('calls props.onDatesChange', () => {
         const onDatesChangeStub = sinon.stub();
-        const wrapper = shallow(<DateRangePicker onDatesChange={onDatesChangeStub} />);
-        wrapper.instance().onEndDateChange(pastDateString);
+        const wrapper = shallow(
+          <DateRangePicker
+            onDatesChange={onDatesChangeStub}
+            isOutsideRange={isOutsideRange}
+          />
+        );
+        wrapper.instance().onEndDateChange(futureDate);
         expect(onDatesChangeStub.callCount).to.equal(1);
       });
 
@@ -444,17 +451,23 @@ describe('DateRangePicker', () => {
           <DateRangePicker
             onDatesChange={onDatesChangeStub}
             startDate={today}
+            isOutsideRange={isOutsideRange}
           />
         );
-        wrapper.instance().onEndDateChange(pastDateString);
+        wrapper.instance().onEndDateChange(futureDate);
         const args = onDatesChangeStub.getCall(0).args[0];
         expect(args.startDate).to.equal(today);
       });
 
       it('calls props.onDatesChange with endDate === null', () => {
         const onDatesChangeStub = sinon.stub();
-        const wrapper = shallow(<DateRangePicker onDatesChange={onDatesChangeStub} />);
-        wrapper.instance().onEndDateChange(pastDateString);
+        const wrapper = shallow(
+          <DateRangePicker
+            onDatesChange={onDatesChangeStub}
+            isOutsideRange={isOutsideRange}
+          />
+        );
+        wrapper.instance().onEndDateChange(futureDate);
         const args = onDatesChangeStub.getCall(0).args[0];
         expect(args.endDate).to.equal(null);
       });
@@ -662,12 +675,19 @@ describe('DateRangePicker', () => {
       });
     });
 
-    describe('is a past date', () => {
-      const pastDateString = moment(today).subtract(10, 'days').toISOString();
+    describe('is outside range', () => {
+      const futureDate = moment().add(7, 'days').toISOString();
+      const isOutsideRange = day => day > moment().add(5, 'days');
+
       it('calls props.onDatesChange', () => {
         const onDatesChangeStub = sinon.stub();
-        const wrapper = shallow(<DateRangePicker onDatesChange={onDatesChangeStub} />);
-        wrapper.instance().onStartDateChange(pastDateString);
+        const wrapper = shallow(
+          <DateRangePicker
+            onDatesChange={onDatesChangeStub}
+            isOutsideRange={isOutsideRange}
+          />
+        );
+        wrapper.instance().onStartDateChange(futureDate);
         expect(onDatesChangeStub.callCount).to.equal(1);
       });
 
@@ -677,9 +697,10 @@ describe('DateRangePicker', () => {
           <DateRangePicker
             onDatesChange={onDatesChangeStub}
             startDate={today}
+            isOutsideRange={isOutsideRange}
           />
         );
-        wrapper.instance().onStartDateChange(pastDateString);
+        wrapper.instance().onStartDateChange(futureDate);
         const args = onDatesChangeStub.getCall(0).args[0];
         expect(args.startDate).to.equal(null);
       });
@@ -690,9 +711,10 @@ describe('DateRangePicker', () => {
           <DateRangePicker
             onDatesChange={onDatesChangeStub}
             endDate={today}
+            isOutsideRange={isOutsideRange}
           />
         );
-        wrapper.instance().onStartDateChange(pastDateString);
+        wrapper.instance().onStartDateChange(futureDate);
         const args = onDatesChangeStub.getCall(0).args[0];
         expect(args.endDate).to.equal(today);
       });
@@ -827,48 +849,6 @@ describe('DateRangePicker', () => {
               <DateRangePicker
                 focusedInput={START_DATE}
                 startDate={startDate}
-                minimumNights={MIN_NIGHTS}
-              />
-            );
-            expect(wrapper.instance().doesNotMeetMinimumNights(testDate)).to.equal(false);
-          });
-        });
-      });
-
-      describe('props.startDate === null', () => {
-        describe('props.focusedInput === END_DATE', () => {
-          it('returns true if arg is < props.minimumNights after today', () => {
-            const testDate = moment(today).add(MIN_NIGHTS - 1, 'days');
-            const wrapper = shallow(
-              <DateRangePicker
-                focusedInput={END_DATE}
-                startDate={null}
-                minimumNights={MIN_NIGHTS}
-              />
-            );
-            expect(wrapper.instance().doesNotMeetMinimumNights(testDate)).to.equal(true);
-          });
-
-          it('returns false if arg is > props.minimumNights after today', () => {
-            const testDate = moment(today).add(MIN_NIGHTS + 1, 'days');
-            const wrapper = shallow(
-              <DateRangePicker
-                focusedInput={END_DATE}
-                startDate={null}
-                minimumNights={MIN_NIGHTS}
-              />
-            );
-            expect(wrapper.instance().doesNotMeetMinimumNights(testDate)).to.equal(false);
-          });
-        });
-
-        describe('state.focusedInput !== END_DATE', () => {
-          it('returns false', () => {
-            const testDate = moment(today).add(MIN_NIGHTS - 1, 'days');
-            const wrapper = shallow(
-              <DateRangePicker
-                focusedInput={START_DATE}
-                startDate={null}
                 minimumNights={MIN_NIGHTS}
               />
             );
@@ -1169,70 +1149,70 @@ describe('DateRangePicker', () => {
       });
     });
 
-    describe('#isPastDate', () => {
-      it('returns true for days in the past', () => {
-        const testDate = moment(today).subtract(1, 'days');
-        const wrapper = shallow(<DateRangePicker />);
-        expect(wrapper.instance().isPastDate(testDate)).to.equal(true);
-      });
-
-      it('returns false for days in the future', () => {
-        const testDate = moment(today).add(1, 'days');
-        const wrapper = shallow(<DateRangePicker />);
-        expect(wrapper.instance().isPastDate(testDate)).to.equal(false);
-      });
-
-      it('returns false if props.allowPastDates === true', () => {
-        const testDate = moment(today).subtract(1, 'days');
-        const wrapper = shallow(<DateRangePicker allowPastDates />);
-        expect(wrapper.instance().isPastDate(testDate)).to.equal(false);
-      });
-    });
-
     describe('#isBlocked', () => {
       let isDayBlockedStub;
-      let isPastDateStub;
+      let isOutsideRangeStub;
       let doesNotMeetMinimumNightsStub;
       beforeEach(() => {
         isDayBlockedStub = sinon.stub();
-        isPastDateStub = sinon.stub(DateRangePicker.prototype, 'isPastDate');
+        isOutsideRangeStub = sinon.stub();
         doesNotMeetMinimumNightsStub =
           sinon.stub(DateRangePicker.prototype, 'doesNotMeetMinimumNights');
       });
 
       it('returns true if arg is calendar blocked', () => {
         isDayBlockedStub.returns(true);
-        isPastDateStub.returns(false);
+        isOutsideRangeStub.returns(false);
         doesNotMeetMinimumNightsStub.returns(false);
 
-        const wrapper = shallow(<DateRangePicker isDayBlocked={isDayBlockedStub} />);
+        const wrapper = shallow(
+          <DateRangePicker
+            isDayBlocked={isDayBlockedStub}
+            isOutsideRange={isOutsideRangeStub}
+          />
+        );
         expect(wrapper.instance().isBlocked(today)).to.equal(true);
       });
 
-      it('returns true if arg is a past date', () => {
+      it('returns true if arg is out of range', () => {
         isDayBlockedStub.returns(false);
-        isPastDateStub.returns(true);
+        isOutsideRangeStub.returns(true);
         doesNotMeetMinimumNightsStub.returns(false);
 
-        const wrapper = shallow(<DateRangePicker isDayBlocked={isDayBlockedStub} />);
+        const wrapper = shallow(
+          <DateRangePicker
+            isDayBlocked={isDayBlockedStub}
+            isOutsideRange={isOutsideRangeStub}
+          />
+        );
         expect(wrapper.instance().isBlocked(today)).to.equal(true);
       });
 
       it('returns true if arg does not meet minimum nights', () => {
         isDayBlockedStub.returns(false);
-        isPastDateStub.returns(false);
+        isOutsideRangeStub.returns(false);
         doesNotMeetMinimumNightsStub.returns(true);
 
-        const wrapper = shallow(<DateRangePicker isDayBlocked={isDayBlockedStub} />);
+        const wrapper = shallow(
+          <DateRangePicker
+            isDayBlocked={isDayBlockedStub}
+            isOutsideRange={isOutsideRangeStub}
+          />
+        );
         expect(wrapper.instance().isBlocked(today)).to.equal(true);
       });
 
-      it('returns false if arg is not blocked, not a past date, and meets minimum nights', () => {
+      it('returns false if arg is not blocked, not out of range, and meets minimum nights', () => {
         isDayBlockedStub.returns(false);
-        isPastDateStub.returns(false);
+        isOutsideRangeStub.returns(false);
         doesNotMeetMinimumNightsStub.returns(false);
 
-        const wrapper = shallow(<DateRangePicker isDayBlocked={isDayBlockedStub} />);
+        const wrapper = shallow(
+          <DateRangePicker
+            isDayBlocked={isDayBlockedStub}
+            isOutsideRange={isOutsideRangeStub}
+          />
+        );
         expect(wrapper.instance().isBlocked(today)).to.equal(false);
       });
     });
