@@ -1,0 +1,18 @@
+language: node_js
+node_js:
+  - "5.1"
+  - "5.0"
+  - "4.2"
+  - "4.1"
+  - "4.0"
+script: npm run lint && npm test
+env:
+  - REACT=0.14
+sudo: false
+matrix:
+  fast_finish: true
+  allow_failures:
+    - node_js: "5.0"
+    - node_js: "4.1"
+    - node_js: "4.0"
+    - node_js: "0.11"
