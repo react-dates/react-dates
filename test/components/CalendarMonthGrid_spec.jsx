@@ -5,7 +5,7 @@ import { shallow } from 'enzyme';
 import CalendarMonth from '../../src/components/CalendarMonth';
 import CalendarMonthGrid from '../../src/components/CalendarMonthGrid';
 
-import { HORIZONTAL_ORIENTATION, VERTICAL_ORIENTATION } from '../../src/constants';
+import { HORIZONTAL_ORIENTATION, VERTICAL_ORIENTATION } from '../../constants';
 
 import getTransformStyles from '../../src/utils/getTransformStyles';
 

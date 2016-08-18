@@ -5,7 +5,7 @@ import DateInput from './DateInput';
 import RightArrow from '../svg/arrow-right.svg';
 import CloseButton from '../svg/close.svg';
 
-import { START_DATE, END_DATE } from '../constants';
+import { START_DATE, END_DATE } from '../../constants';
 
 const propTypes = {
   startDateId: PropTypes.string,

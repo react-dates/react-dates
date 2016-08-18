@@ -9,7 +9,7 @@ import getCalendarMonthWeeks from '../utils/getCalendarMonthWeeks';
 
 import OrientationShape from '../shapes/OrientationShape';
 
-import { HORIZONTAL_ORIENTATION, VERTICAL_ORIENTATION } from '../constants';
+import { HORIZONTAL_ORIENTATION, VERTICAL_ORIENTATION } from '../../constants';
 
 const propTypes = {
   month: momentPropTypes.momentObj,
