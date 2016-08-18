@@ -24,8 +24,6 @@ const MONTH_PADDING = 23;
 const PREV_TRANSITION = 'prev';
 const NEXT_TRANSITION = 'next';
 
-const slice = Array.prototype.slice;
-
 const propTypes = {
   enableOutsideDays: PropTypes.bool,
   numberOfMonths: PropTypes.number,
@@ -114,10 +112,10 @@ export default class DayPicker extends React.Component {
     const grid = el.querySelector('.js-CalendarMonth__grid');
 
     // Need to separate out table children for FF
+    // Add an additional +1 for the border
     return (
       this.calculateDimension(caption, 'height', 'outer', true) +
-      this.calculateDimension(grid, 'height') +
-      1 // for border
+      this.calculateDimension(grid, 'height') + 1
     );
   }
 
@@ -243,9 +241,11 @@ export default class DayPicker extends React.Component {
 
   adjustDayPickerHeight() {
     const transitionContainer = ReactDOM.findDOMNode(this.refs.transitionContainer);
+    const calendarMonths = transitionContainer.querySelectorAll('.CalendarMonth');
     const heights = [];
 
-    slice.call(transitionContainer.querySelectorAll('.CalendarMonth')).forEach((el) => {
+    // convert node list to array
+    Array.prototype.slice.call(calendarMonths).forEach((el) => {
       if (el.getAttribute('data-visible') === 'true') {
         heights.push(this.getMonthHeight(el));
       }
@@ -255,7 +255,7 @@ export default class DayPicker extends React.Component {
 
     if (newMonthHeight !== this.calculateDimension(transitionContainer, 'height')) {
       this.monthHeight = newMonthHeight;
-      transitionContainer.style.height = newMonthHeight;
+      transitionContainer.style.height = `${newMonthHeight}px`;
     }
   }
 
