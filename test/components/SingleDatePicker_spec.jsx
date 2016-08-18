@@ -5,7 +5,7 @@ import sinon from 'sinon-sandbox';
 import moment from 'moment';
 import Portal from 'react-portal';
 
-import { HORIZONTAL_ORIENTATION, VERTICAL_ORIENTATION } from '../../src/constants';
+import { HORIZONTAL_ORIENTATION, VERTICAL_ORIENTATION } from '../../constants';
 
 import DayPicker from '../../src/components/DayPicker';
 import OutsideClickHandler from '../../src/components/OutsideClickHandler';

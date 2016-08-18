@@ -27,7 +27,7 @@ import {
   END_DATE,
   HORIZONTAL_ORIENTATION,
   VERTICAL_ORIENTATION,
-} from '../constants';
+} from '../../constants';
 
 const propTypes = DateRangePickerShape;
 

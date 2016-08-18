@@ -18,7 +18,7 @@ import isSameDay from '../utils/isSameDay';
 
 import SingleDatePickerShape from '../shapes/SingleDatePickerShape';
 
-import { HORIZONTAL_ORIENTATION, VERTICAL_ORIENTATION } from '../constants';
+import { HORIZONTAL_ORIENTATION, VERTICAL_ORIENTATION } from '../../constants';
 
 const propTypes = SingleDatePickerShape;
 

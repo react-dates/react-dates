@@ -4,7 +4,7 @@ import { storiesOf } from '@kadira/storybook';
 
 import SingleDatePickerWrapper from '../examples/SingleDatePickerWrapper';
 
-import { VERTICAL_ORIENTATION } from '../src/constants';
+import { VERTICAL_ORIENTATION } from '../constants';
 
 storiesOf('SingleDatePicker', module)
   .add('default', () => (

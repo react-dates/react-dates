@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import moment from 'moment';
 
-import { HORIZONTAL_ORIENTATION, VERTICAL_ORIENTATION } from '../../src/constants';
+import { HORIZONTAL_ORIENTATION, VERTICAL_ORIENTATION } from '../../constants';
 import CalendarMonth, { getModifiersForDay } from '../../src/components/CalendarMonth';
 
 describe('CalendarMonth', () => {

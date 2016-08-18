@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import { storiesOf } from '@kadira/storybook';
 
-import { VERTICAL_ORIENTATION } from '../src/constants';
+import { VERTICAL_ORIENTATION } from '../constants';
 
 import isSameDay from '../src/utils/isSameDay';
 import isInclusivelyAfterDay from '../src/utils/isInclusivelyAfterDay';
