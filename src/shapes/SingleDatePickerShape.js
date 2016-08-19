@@ -8,6 +8,7 @@ export default {
   placeholder: PropTypes.string,
   date: momentPropTypes.momentObj,
   focused: PropTypes.bool,
+  disabled: PropTypes.bool,
 
   onDateChange: PropTypes.func,
   onFocusChange: PropTypes.func,

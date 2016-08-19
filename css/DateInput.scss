@@ -14,6 +14,10 @@
   vertical-align: middle;
 }
 
+.DateInput--disabled {
+  background: $react-dates-color-gray-lighter;
+}
+
 .DateInput__label {
   border: 0;
   clip: rect(0, 0, 0, 0);
@@ -50,4 +54,8 @@
   border-color: $react-dates-color-focus;
   border-radius: 3px;
   color: $react-dates-color-text-focus;
+}
+
+.DateInput__display-text--disabled {
+  font-style: italic;
 }

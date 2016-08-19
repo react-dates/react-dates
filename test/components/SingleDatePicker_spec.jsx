@@ -354,6 +354,20 @@ describe('SingleDatePicker', () => {
       wrapper.instance().onFocus();
       expect(onFocusChangeStub.getCall(0).args[0].focused).to.equal(true);
     });
+
+    describe('props.disabled = true', () => {
+      it('does not call props.onFocusChange', () => {
+        const onFocusChangeStub = sinon.stub();
+        const wrapper = shallow(
+          <SingleDatePicker
+            id="date"
+            disabled
+            onFocusChange={onFocusChangeStub}
+          />);
+        wrapper.instance().onFocus();
+        expect(onFocusChangeStub).to.have.property('callCount', 0);
+      });
+    });
   });
 
   describe('#onClearFocus', () => {

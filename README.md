@@ -127,6 +127,11 @@ If the `showClearDates` prop is set to true, an `x` shows up in the input box th
   showClearDates: PropTypes.bool,
 ```
 
+If the `disabled` prop is set to true, onFocusChange is not called when onStartDateFocus or onEndDateFocus are invoked and disabled is assigned to the actual `<input>` DOM elements.
+```
+  disabled: PropTypes.bool,
+```
+
 **Some useful callbacks:**
 If you need to do something when the user navigates between months (for instance, check the availability of a listing), you can do so using the `onPrevMonthClick` and `onNextMonthClick` props.
 ```

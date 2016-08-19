@@ -699,6 +699,96 @@ describe('DateRangePicker', () => {
     });
   });
 
+  describe('#onStartDateFocus', () => {
+    it('calls props.onFocusChange once', () => {
+      const onFocusChangeStub = sinon.stub();
+      const wrapper = shallow(<DateRangePicker onFocusChange={onFocusChangeStub} />);
+      wrapper.instance().onStartDateFocus();
+      expect(onFocusChangeStub).to.have.property('callCount', 1);
+    });
+
+    it('calls props.onFocusChange with START_DATE as arg', () => {
+      const onFocusChangeStub = sinon.stub();
+      const wrapper = shallow(<DateRangePicker onFocusChange={onFocusChangeStub} />);
+      wrapper.instance().onStartDateFocus();
+      expect(onFocusChangeStub.getCall(0).args[0]).to.equal(START_DATE);
+    });
+
+    describe('props.disabled = true', () => {
+      it('does not call props.onFocusChange', () => {
+        const onFocusChangeStub = sinon.stub();
+        const wrapper = shallow(<DateRangePicker disabled onFocusChange={onFocusChangeStub} />);
+        wrapper.instance().onStartDateFocus();
+        expect(onFocusChangeStub).to.have.property('callCount', 0);
+      });
+    });
+  });
+
+  describe('#onEndDateFocus', () => {
+    it('calls props.onFocusChange once with arg END_DATE', () => {
+      const onFocusChangeStub = sinon.stub();
+      const wrapper = shallow(<DateRangePicker onFocusChange={onFocusChangeStub} />);
+      wrapper.instance().onEndDateFocus();
+      expect(onFocusChangeStub).to.have.property('callCount', 1);
+      expect(onFocusChangeStub.getCall(0).args[0]).to.equal(END_DATE);
+    });
+
+    describe('props.startDate = moment', () => {
+      it('calls props.onFocusChange once with arg END_DATE', () => {
+        const onFocusChangeStub = sinon.stub();
+        const wrapper = shallow(
+          <DateRangePicker
+            startDate={moment(today)}
+            onFocusChange={onFocusChangeStub}
+          />
+        );
+        wrapper.instance().onEndDateFocus();
+        expect(onFocusChangeStub).to.have.property('callCount', 1);
+        expect(onFocusChangeStub.getCall(0).args[0]).to.equal(END_DATE);
+      });
+    });
+
+    describe('props.orientation = VERTICAL_ORIENTATION', () => {
+      it('calls props.onFocusChange once with arg START_DATE', () => {
+        const onFocusChangeStub = sinon.stub();
+        const wrapper = shallow(
+          <DateRangePicker
+            orientation={VERTICAL_ORIENTATION}
+            onFocusChange={onFocusChangeStub}
+          />
+        );
+        wrapper.instance().onEndDateFocus();
+        expect(onFocusChangeStub).to.have.property('callCount', 1);
+        expect(onFocusChangeStub.getCall(0).args[0]).to.equal(START_DATE);
+      });
+    });
+
+    describe('props.startDate = moment and props.orientation = VERTICAL_ORIENTATION', () => {
+      it('calls props.onFocusChange once with arg END_DATE', () => {
+        const onFocusChangeStub = sinon.stub();
+        const wrapper = shallow(
+          <DateRangePicker
+            startDate={moment(today)}
+            orientation={VERTICAL_ORIENTATION}
+            onFocusChange={onFocusChangeStub}
+          />
+        );
+        wrapper.instance().onEndDateFocus();
+        expect(onFocusChangeStub).to.have.property('callCount', 1);
+        expect(onFocusChangeStub.getCall(0).args[0]).to.equal(END_DATE);
+      });
+    });
+
+    describe('props.disabled = true', () => {
+      it('does not call props.onFocusChange', () => {
+        const onFocusChangeStub = sinon.stub();
+        const wrapper = shallow(<DateRangePicker disabled onFocusChange={onFocusChangeStub} />);
+        wrapper.instance().onEndDateFocus();
+        expect(onFocusChangeStub.callCount).to.equal(0);
+      });
+    });
+  });
+
   describe('day modifier methods', () => {
     describe('#doesNotMeetMinimumNights', () => {
       const MIN_NIGHTS = 3;

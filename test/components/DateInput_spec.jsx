@@ -12,6 +12,20 @@ describe('DateInput', () => {
       expect(wrapper.is('.DateInput')).to.equal(true);
     });
 
+    describe('props.disabled is falsey', () => {
+      it('does not have .DateInput--disabled class ', () => {
+        const wrapper = shallow(<DateInput id="date" disabled={false} />);
+        expect(wrapper.find('.DateInput--disabled')).to.have.lengthOf(0);
+      });
+    });
+
+    describe('props.disabled is truthy', () => {
+      it('has .DateInput--disabled class', () => {
+        const wrapper = shallow(<DateInput id="date" disabled />);
+        expect(wrapper.find('.DateInput--disabled')).to.have.lengthOf(1);
+      });
+    });
+
     describe('label', () => {
       it('has .DateInput__label class', () => {
         const wrapper = shallow(<DateInput id="date" />);
@@ -67,6 +81,20 @@ describe('DateInput', () => {
         it('has .DateInput__display-text--focused class', () => {
           const wrapper = shallow(<DateInput id="date" focused />);
           expect(wrapper.find('.DateInput__display-text--focused')).to.have.lengthOf(1);
+        });
+      });
+
+      describe('props.disabled is falsey', () => {
+        it('does not have .DateInput__display-text--disabled class ', () => {
+          const wrapper = shallow(<DateInput id="date" disabled={false} />);
+          expect(wrapper.find('.DateInput__display-text--disabled')).to.have.lengthOf(0);
+        });
+      });
+
+      describe('props.disabled is truthy', () => {
+        it('has .DateInput__display-text--disabled class', () => {
+          const wrapper = shallow(<DateInput id="date" disabled />);
+          expect(wrapper.find('.DateInput__display-text--disabled')).to.have.lengthOf(1);
         });
       });
     });

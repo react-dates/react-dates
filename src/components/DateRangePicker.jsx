@@ -43,6 +43,7 @@ const defaultProps = {
   enableOutsideDays: false,
   numberOfMonths: 2,
   showClearDates: false,
+  disabled: false,
 
   orientation: HORIZONTAL_ORIENTATION,
   withPortal: false,
@@ -152,14 +153,14 @@ export default class DateRangePicker extends React.Component {
   }
 
   onEndDateFocus() {
-    const { startDate, onFocusChange, orientation } = this.props;
+    const { startDate, onFocusChange, orientation, disabled } = this.props;
 
-    if (!startDate && orientation === VERTICAL_ORIENTATION) {
+    if (!startDate && orientation === VERTICAL_ORIENTATION && !disabled) {
       // Since the vertical datepicker is full screen, we never want to focus the end date first
       // because there's no indication that that is the case once the datepicker is open and it
       // might confuse the user
       onFocusChange(START_DATE);
-    } else {
+    } else if (!disabled) {
       onFocusChange(END_DATE);
     }
   }
@@ -193,7 +194,9 @@ export default class DateRangePicker extends React.Component {
   }
 
   onStartDateFocus() {
-    this.props.onFocusChange(START_DATE);
+    if (!this.props.disabled) {
+      this.props.onFocusChange(START_DATE);
+    }
   }
 
   getDayPickerContainerClasses() {
@@ -381,6 +384,7 @@ export default class DateRangePicker extends React.Component {
       endDate,
       focusedInput,
       showClearDates,
+      disabled,
       startDateId,
       endDateId,
       phrases,
@@ -413,6 +417,7 @@ export default class DateRangePicker extends React.Component {
             endDate={endDateString}
             showClearDates={showClearDates}
             onClearDates={this.clearDates}
+            disabled={disabled}
             phrases={phrases}
           />
 
