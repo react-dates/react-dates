@@ -10,6 +10,7 @@ const propTypes = {
   dateValue: PropTypes.string,
   focused: PropTypes.bool,
   disabled: PropTypes.bool,
+  tabIndex: PropTypes.number,
 
   onChange: PropTypes.func,
   onFocus: PropTypes.func,
@@ -81,6 +82,7 @@ export default class DateInput extends React.Component {
     const { dateString } = this.state;
     const {
       id,
+      tabIndex,
       placeholder,
       dateValue,
       focused,
@@ -115,6 +117,7 @@ export default class DateInput extends React.Component {
           autoComplete="off"
           maxLength={10}
           disabled={disabled || this.isTouchDevice}
+          tabIndex={tabIndex}
         />
 
         <div

@@ -380,6 +380,7 @@ export default class DateRangePicker extends React.Component {
       startDateId,
       endDateId,
       phrases,
+      tabIndex,
       withPortal,
       withFullScreenPortal,
     } = this.props;
@@ -410,6 +411,7 @@ export default class DateRangePicker extends React.Component {
             showClearDates={showClearDates}
             onClearDates={this.clearDates}
             disabled={disabled}
+            tabIndex={tabIndex}
             phrases={phrases}
           />
 

@@ -5,6 +5,7 @@ import DateInput from './DateInput';
 const propTypes = {
   id: PropTypes.string.isRequired,
   placeholder: PropTypes.string, // also used as label
+  tabIndex: PropTypes.number,
   dateValue: PropTypes.string,
   border: PropTypes.bool,
   focused: PropTypes.bool,
@@ -33,6 +34,7 @@ export default function SingleDatePickerInput(props) {
   const {
     id,
     placeholder,
+    tabIndex,
     dateValue,
     focused,
     disabled,
@@ -46,6 +48,7 @@ export default function SingleDatePickerInput(props) {
     <div className="SingleDatePickerInput">
       <DateInput
         id={id}
+        tabIndex={tabIndex}
         placeholder={placeholder} // also used as label
         dateValue={dateValue}
         focused={focused}

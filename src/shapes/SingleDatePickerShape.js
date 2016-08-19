@@ -6,6 +6,7 @@ import OrientationShape from '../shapes/OrientationShape';
 export default {
   id: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
+  tabIndex: PropTypes.number,
   date: momentPropTypes.momentObj,
   focused: PropTypes.bool,
   disabled: PropTypes.bool,

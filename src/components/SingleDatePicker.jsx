@@ -220,6 +220,7 @@ export default class SingleDatePicker extends React.Component {
     const {
       id,
       placeholder,
+      tabIndex,
       focused,
       disabled,
       date,
@@ -236,6 +237,7 @@ export default class SingleDatePicker extends React.Component {
         <OutsideClickHandler onOutsideClick={onOutsideClick}>
           <SingleDatePickerInput
             id={id}
+            tabIndex={tabIndex}
             placeholder={placeholder}
             focused={focused}
             disabled={disabled}
