@@ -878,38 +878,6 @@ describe('DateRangePicker', () => {
       });
     });
 
-    describe('#isCalendarBlocked', () => {
-      describe('props.blockedByDefault === true', () => {
-        it('returns true if arg is not included in props.unblockedDates', () => {
-          const unblockedDates = [];
-          const wrapper =
-            shallow(<DateRangePicker unblockedDates={unblockedDates} blockedByDefault />);
-          expect(wrapper.instance().isCalendarBlocked(today)).to.equal(true);
-        });
-
-        it('returns false if arg is included in props.unblockedDates', () => {
-          const unblockedDates = [today];
-          const wrapper =
-            shallow(<DateRangePicker unblockedDates={unblockedDates} blockedByDefault />);
-          expect(wrapper.instance().isCalendarBlocked(today)).to.equal(false);
-        });
-      });
-
-      describe('props.blockedByDefault === false', () => {
-        it('returns true if arg is included in props.blockedDates', () => {
-          const blockedDates = [today];
-          const wrapper = shallow(<DateRangePicker blockedDates={blockedDates} />);
-          expect(wrapper.instance().isCalendarBlocked(today)).to.equal(true);
-        });
-
-        it('returns false if arg is not included in props.blockedDates', () => {
-          const blockedDates = [];
-          const wrapper = shallow(<DateRangePicker blockedDates={blockedDates} />);
-          expect(wrapper.instance().isCalendarBlocked(today)).to.equal(false);
-        });
-      });
-    });
-
     describe('#isDayAfterHoveredStartDate', () => {
       it('returns true if arg startDate is hovered and arg is the day after the startDate', () => {
         const wrapper = shallow(<DateRangePicker startDate={today} />);
@@ -1222,49 +1190,49 @@ describe('DateRangePicker', () => {
     });
 
     describe('#isBlocked', () => {
-      let isCalendarBlockedStub;
+      let isDayBlockedStub;
       let isPastDateStub;
       let doesNotMeetMinimumNightsStub;
       beforeEach(() => {
-        isCalendarBlockedStub = sinon.stub(DateRangePicker.prototype, 'isCalendarBlocked');
+        isDayBlockedStub = sinon.stub();
         isPastDateStub = sinon.stub(DateRangePicker.prototype, 'isPastDate');
         doesNotMeetMinimumNightsStub =
           sinon.stub(DateRangePicker.prototype, 'doesNotMeetMinimumNights');
       });
 
       it('returns true if arg is calendar blocked', () => {
-        isCalendarBlockedStub.returns(true);
+        isDayBlockedStub.returns(true);
         isPastDateStub.returns(false);
         doesNotMeetMinimumNightsStub.returns(false);
 
-        const wrapper = shallow(<DateRangePicker />);
+        const wrapper = shallow(<DateRangePicker isDayBlocked={isDayBlockedStub} />);
         expect(wrapper.instance().isBlocked(today)).to.equal(true);
       });
 
       it('returns true if arg is a past date', () => {
-        isCalendarBlockedStub.returns(false);
+        isDayBlockedStub.returns(false);
         isPastDateStub.returns(true);
         doesNotMeetMinimumNightsStub.returns(false);
 
-        const wrapper = shallow(<DateRangePicker />);
+        const wrapper = shallow(<DateRangePicker isDayBlocked={isDayBlockedStub} />);
         expect(wrapper.instance().isBlocked(today)).to.equal(true);
       });
 
       it('returns true if arg does not meet minimum nights', () => {
-        isCalendarBlockedStub.returns(false);
+        isDayBlockedStub.returns(false);
         isPastDateStub.returns(false);
         doesNotMeetMinimumNightsStub.returns(true);
 
-        const wrapper = shallow(<DateRangePicker />);
+        const wrapper = shallow(<DateRangePicker isDayBlocked={isDayBlockedStub} />);
         expect(wrapper.instance().isBlocked(today)).to.equal(true);
       });
 
       it('returns false if arg is not blocked, not a past date, and meets minimum nights', () => {
-        isCalendarBlockedStub.returns(false);
+        isDayBlockedStub.returns(false);
         isPastDateStub.returns(false);
         doesNotMeetMinimumNightsStub.returns(false);
 
-        const wrapper = shallow(<DateRangePicker />);
+        const wrapper = shallow(<DateRangePicker isDayBlocked={isDayBlockedStub} />);
         expect(wrapper.instance().isBlocked(today)).to.equal(false);
       });
     });

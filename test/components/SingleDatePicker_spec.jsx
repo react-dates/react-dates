@@ -401,62 +401,24 @@ describe('SingleDatePicker', () => {
   });
 
   describe('#isBlocked', () => {
-    it('returns true if isCalendarBlocked returns true', () => {
-      sinon.stub(SingleDatePicker.prototype, 'isCalendarBlocked').returns(true);
+    it('returns true if props.isDayBlocked returns true', () => {
+      const isDayBlockedStub = sinon.stub().returns(true);
       sinon.stub(SingleDatePicker.prototype, 'isPastDate').returns(false);
-      const wrapper = shallow(<SingleDatePicker id="date" />);
+      const wrapper = shallow(<SingleDatePicker id="date" isDayBlocked={isDayBlockedStub} />);
       expect(wrapper.instance().isBlocked()).to.equal(true);
     });
 
     it('returns true if isPastDate returns true', () => {
-      sinon.stub(SingleDatePicker.prototype, 'isCalendarBlocked').returns(false);
       sinon.stub(SingleDatePicker.prototype, 'isPastDate').returns(true);
       const wrapper = shallow(<SingleDatePicker id="date" />);
       expect(wrapper.instance().isBlocked()).to.equal(true);
     });
 
-    it('returns false if isCalendarBlocked and isPastDate are both false', () => {
-      sinon.stub(SingleDatePicker.prototype, 'isCalendarBlocked').returns(false);
+    it('returns false if props.isDayBlocked and isPastDate are both false', () => {
+      const isDayBlockedStub = sinon.stub().returns(false);
       sinon.stub(SingleDatePicker.prototype, 'isPastDate').returns(false);
-      const wrapper = shallow(<SingleDatePicker id="date" />);
+      const wrapper = shallow(<SingleDatePicker id="date" isDayBlocked={isDayBlockedStub} />);
       expect(wrapper.instance().isBlocked()).to.equal(false);
-    });
-  });
-
-  describe('#isCalendarBlocked', () => {
-    describe('day arg is in props.blockedDates', () => {
-      it('returns true', () => {
-        const today = moment();
-        const wrapper = shallow(<SingleDatePicker id="date" blockedDates={[today]} />);
-        expect(wrapper.instance().isCalendarBlocked(today)).to.equal(true);
-      });
-    });
-
-    describe('day arg is not in props.blockedDates', () => {
-      it('returns false if props.blockedByDefault is false', () => {
-        const today = moment();
-        const wrapper =
-          shallow(<SingleDatePicker id="date" blockedDates={[]} blockedByDefault={false} />);
-        expect(wrapper.instance().isCalendarBlocked(today)).to.equal(false);
-      });
-    });
-
-    describe('day arg is in props.unblockedDates', () => {
-      it('returns false if props.blockedByDefault is true', () => {
-        const today = moment();
-        const wrapper =
-          shallow(<SingleDatePicker id="date" unblockedDates={[today]} blockedByDefault />);
-        expect(wrapper.instance().isCalendarBlocked(today)).to.equal(false);
-      });
-    });
-
-    describe('day arg is not in props.unblockedDates', () => {
-      it('returns true if props.blockedByDefault is true', () => {
-        const today = moment();
-        const wrapper =
-          shallow(<SingleDatePicker id="date" unblockedDates={[]} blockedByDefault />);
-        expect(wrapper.instance().isCalendarBlocked(today)).to.equal(true);
-      });
     });
   });
 

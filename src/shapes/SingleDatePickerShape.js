@@ -13,9 +13,7 @@ export default {
   onDateChange: PropTypes.func,
   onFocusChange: PropTypes.func,
 
-  blockedDates: PropTypes.arrayOf(momentPropTypes.momentObj),
-  blockedByDefault: PropTypes.bool,
-  unblockedDates: PropTypes.arrayOf(momentPropTypes.momentObj),
+  isDayBlocked: PropTypes.func,
   allowPastDates: PropTypes.bool,
   enableOutsideDays: PropTypes.bool,
   numberOfMonths: PropTypes.number,
