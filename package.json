@@ -46,6 +46,7 @@
     "babel-cli": "^6.11.4",
     "babel-core": "^6.13.2",
     "babel-loader": "^6.2.5",
+    "babel-plugin-syntax-jsx": "^6.13.0",
     "babel-preset-airbnb": "^2.0.0",
     "babel-register": "^6.11.6",
     "chai": "^3.5.0",
@@ -72,7 +73,8 @@
     "sass-loader": "^4.0.0",
     "sinon": "^1.17.5",
     "sinon-sandbox": "^1.0.2",
-    "style-loader": "^0.13.1"
+    "style-loader": "^0.13.1",
+    "webpack": "^1.13.2"
   },
   "dependencies": {
     "classnames": "^2.2.5",
