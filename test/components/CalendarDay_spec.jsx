@@ -44,6 +44,10 @@ describe('CalendarDay', () => {
       handleDayClickSpy = sinon.spy(CalendarDay.prototype, 'handleDayClick');
     });
 
+    afterEach(() => {
+      sinon.restore();
+    });
+
     it('gets triggered by click', () => {
       const wrapper = shallow(<CalendarDay />);
       wrapper.simulate('click');
@@ -62,6 +66,10 @@ describe('CalendarDay', () => {
     let handleDayMouseDownSpy;
     beforeEach(() => {
       handleDayMouseDownSpy = sinon.spy(CalendarDay.prototype, 'handleDayMouseDown');
+    });
+
+    afterEach(() => {
+      sinon.restore();
     });
 
     it('gets triggered by mousedown', () => {
@@ -84,6 +92,10 @@ describe('CalendarDay', () => {
       handleDayMouseUpSpy = sinon.spy(CalendarDay.prototype, 'handleDayMouseUp');
     });
 
+    afterEach(() => {
+      sinon.restore();
+    });
+
     it('gets triggered by mouseup', () => {
       const wrapper = shallow(<CalendarDay />);
       wrapper.simulate('mouseup');
@@ -104,6 +116,10 @@ describe('CalendarDay', () => {
       handleDayMouseEnterSpy = sinon.spy(CalendarDay.prototype, 'handleDayMouseEnter');
     });
 
+    afterEach(() => {
+      sinon.restore();
+    });
+
     it('gets triggered by mouseenter', () => {
       const wrapper = shallow(<CalendarDay />);
       wrapper.simulate('mouseenter');
@@ -122,6 +138,10 @@ describe('CalendarDay', () => {
     let handleDayMouseLeaveSpy;
     beforeEach(() => {
       handleDayMouseLeaveSpy = sinon.spy(CalendarDay.prototype, 'handleDayMouseLeave');
+    });
+
+    afterEach(() => {
+      sinon.restore();
     });
 
     it('gets triggered by mouseleave', () => {
@@ -174,6 +194,7 @@ describe('CalendarDay', () => {
     });
 
     afterEach(() => {
+      sinon.restore();
       useFakeTimers.restore();
     });
   });
@@ -184,6 +205,10 @@ describe('CalendarDay', () => {
     beforeEach(() => {
       handleDayTouchEndSpy = sinon.spy(CalendarDay.prototype, 'handleDayTouchEnd');
       handleDayTouchTapSpy = sinon.spy(CalendarDay.prototype, 'handleDayTouchTap');
+    });
+
+    afterEach(() => {
+      sinon.restore();
     });
 
     it('gets triggered by touchend', () => {

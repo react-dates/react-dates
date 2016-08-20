@@ -357,6 +357,10 @@ describe('SingleDatePicker', () => {
   });
 
   describe('#isBlocked', () => {
+    afterEach(() => {
+      sinon.restore();
+    });
+
     it('returns true if props.isDayBlocked returns true', () => {
       const isDayBlockedStub = sinon.stub().returns(true);
       const isOutsideRangeStub = sinon.stub().returns(false);
