@@ -26,6 +26,7 @@ export default {
   startDatePlaceholderText: PropTypes.string,
   endDateId: PropTypes.string,
   endDatePlaceholderText: PropTypes.string,
+  tabIndex: PropTypes.number,
 
   onDatesChange: PropTypes.func,
   onFocusChange: PropTypes.func,

@@ -130,6 +130,11 @@ If the `disabled` prop is set to true, onFocusChange is not called when onStartD
   disabled: PropTypes.bool,
 ```
 
+`tabIndex` can be passed and will be applied to the actual `<input>` DOM elements.
+```
+  tabIndex: PropTypes.number,
+```
+
 **Some useful callbacks:**
 If you need to do something when the user navigates between months (for instance, check the availability of a listing), you can do so using the `onPrevMonthClick` and `onNextMonthClick` props.
 ```

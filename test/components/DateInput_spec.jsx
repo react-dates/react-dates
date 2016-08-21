@@ -26,6 +26,11 @@ describe('DateInput', () => {
       });
     });
 
+    it('will apply tabIndex', () => {
+      const wrapper = shallow(<DateInput tabIndex={1} id="date" />);
+      expect(wrapper.find('input').is('[tabIndex=1]')).to.equal(true);
+    });
+
     describe('label', () => {
       it('has .DateInput__label class', () => {
         const wrapper = shallow(<DateInput id="date" />);
