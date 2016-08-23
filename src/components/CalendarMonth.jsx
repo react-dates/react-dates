@@ -4,6 +4,7 @@ import moment from 'moment';
 import cx from 'classnames';
 
 import CalendarDay from './CalendarDay';
+import MenuMonthYears from './MenuMonthYear';
 
 import getCalendarMonthWeeks from '../utils/getCalendarMonthWeeks';
 
@@ -69,6 +70,7 @@ export default function CalendarMonth(props) {
     onDayTouchStart,
     onDayTouchEnd,
     onDayTouchTap,
+    onMenuChangeYearMonth
   } = props;
   const monthTitle = month.format(monthFormat);
 
@@ -81,7 +83,10 @@ export default function CalendarMonth(props) {
     <div className={calendarMonthClasses} data-visible={isVisible}>
       <table>
         <caption className="CalendarMonth__caption js-CalendarMonth__caption">
-          <strong>{monthTitle}</strong>
+          <MenuMonthYears
+            onMenuChangeYearMonth={onMenuChangeYearMonth}
+            date={month}
+          />
         </caption>
 
         <tbody className="js-CalendarMonth__grid">

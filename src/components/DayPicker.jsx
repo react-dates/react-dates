@@ -25,6 +25,7 @@ const MONTH_PADDING = 23;
 
 const PREV_TRANSITION = 'prev';
 const NEXT_TRANSITION = 'next';
+const MONTHYEAR_TRANSITION = 'monthyear';
 
 const propTypes = {
   enableOutsideDays: PropTypes.bool,
@@ -77,6 +78,8 @@ export default class DayPicker extends React.Component {
       currentMonth: moment(),
       monthTransition: null,
       translationValue: 0,
+      month: moment().format('M'),
+      year: moment().format('YYYY')
     };
 
     this.handlePrevMonthClick = this.handlePrevMonthClick.bind(this);
@@ -128,13 +131,17 @@ export default class DayPicker extends React.Component {
   }
 
   updateStateAfterMonthTransition() {
-    const { currentMonth, monthTransition } = this.state;
+    const { currentMonth, monthTransition, month, year } = this.state;
 
     let newMonth = currentMonth;
     if (monthTransition === PREV_TRANSITION) {
       newMonth = currentMonth.clone().subtract(1, 'month');
     } else if (monthTransition === NEXT_TRANSITION) {
       newMonth = currentMonth.clone().add(1, 'month');
+    }
+    else if(monthTransition == MONTHYEAR_TRANSITION) {
+      newMonth = moment(month+'-'+year,'M-YYYY');
+      console.log(newMonth);
     }
 
     const $calendarMonthGrid = $(ReactDOM.findDOMNode(this.refs.calendarMonthGrid));
@@ -269,6 +276,19 @@ export default class DayPicker extends React.Component {
     );
   }
 
+  handleChangeMonthYearMenu(e) {
+    const obj = {};
+    const value = e.target.value;
+    const name = e.target.name;
+
+    obj[name] = value;
+    obj.monthTransition = MONTHYEAR_TRANSITION;
+
+    this.setState(obj, () => {
+      this.updateStateAfterMonthTransition();
+    });
+  }
+
   render() {
     const { currentMonth, monthTransition, translationValue } = this.state;
     const {
@@ -351,6 +371,7 @@ export default class DayPicker extends React.Component {
             style={transitionContainerStyle}
           >
             <CalendarMonthGrid
+              onMenuChangeYearMonth={this.handleChangeMonthYearMenu.bind(this)}
               ref="calendarMonthGrid"
               transformValue={transformValue}
               enableOutsideDays={enableOutsideDays}
