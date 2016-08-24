@@ -1,4 +1,12 @@
-# react-dates
+# react-dates <sup>[![Version Badge][npm-version-svg]][package-url]</sup>
+
+[![Build Status][travis-svg]][travis-url]
+[![dependency status][deps-svg]][deps-url]
+[![dev dependency status][dev-deps-svg]][dev-deps-url]
+[![License][license-image]][license-url]
+[![Downloads][downloads-image]][downloads-url]
+
+[![npm badge][npm-badge-png]][package-url]
 
 An accessible, easily internationalizable, mobile-friendly datepicker library for the web.
 
@@ -165,3 +173,17 @@ $react-dates-color-primary-dark: $some-other-color-specific-to-my-project;
 @import '~react-dates/css/variables';
 @import '~react-dates/css/styles.scss';
 ```
+
+[package-url]: https://npmjs.org/package/react-dates
+[npm-version-svg]: http://versionbadg.es/airbnb/react-dates.svg
+[travis-svg]: https://travis-ci.org/airbnb/react-dates.svg
+[travis-url]: https://travis-ci.org/airbnb/react-dates
+[deps-svg]: https://david-dm.org/airbnb/react-dates.svg
+[deps-url]: https://david-dm.org/airbnb/react-dates
+[dev-deps-svg]: https://david-dm.org/airbnb/react-dates/dev-status.svg
+[dev-deps-url]: https://david-dm.org/airbnb/react-dates#info=devDependencies
+[npm-badge-png]: https://nodei.co/npm/react-dates.png?downloads=true&stars=true
+[license-image]: http://img.shields.io/npm/l/react-dates.svg
+[license-url]: LICENSE
+[downloads-image]: http://img.shields.io/npm/dm/react-dates.svg
+[downloads-url]: http://npm-stat.com/charts.html?package=react-dates
