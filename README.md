@@ -2,6 +2,8 @@
 
 An accessible, easily internationalizable, mobile-friendly datepicker library for the web.
 
+![react-dates in action](https://raw.githubusercontent.com/airbnb/react-dates/gh-pages/images/react-dates.gif)
+
 ## Live Playground
 
 For examples of the datepicker in action, go to http://airbnb.io/react-dates.
