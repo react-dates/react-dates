@@ -322,4 +322,60 @@ describe('DayPicker', () => {
       });
     });
   });
+
+  /* Requires a DOM
+  describe('#calculateDimension', () => {
+    let dimensionInstance = null;
+    let testElement = null;
+
+    beforeEach(() => {
+      dimensionInstance = shallow(<DayPicker />).instance();
+      testElement = document.createElement('div');
+
+      testElement.style.width = '100px';
+      testElement.style.height = '250px';
+      testElement.style.padding = '15px 10px';
+      testElement.style.border = '1px solid red';
+      testElement.style.margin = '3px 6px 5px 2px';
+      testElement.boxSizing = 'border-box';
+    });
+
+    it('returns 0 for an empty element', () => {
+      expect(dimensionInstance.calculateDimension(null, 'width')).to.equal(0);
+    });
+
+    it('calculates border-box height', () => {
+      expect(dimensionInstance.calculateDimension(testElement, 'height', true)).to.equal(282);
+    });
+
+    it('calculates border-box height with margin', () => {
+      expect(dimensionInstance.calculateDimension(testElement, 'height', true, true)).to.equal(290);
+    });
+
+    it('calculates border-box width', () => {
+      expect(dimensionInstance.calculateDimension(testElement, 'width', true)).to.equal(122);
+    });
+
+    it('calculates border-box width with margin', () => {
+      expect(dimensionInstance.calculateDimension(testElement, 'width', true, true)).to.equal(130);
+    });
+
+    it('calculates content-box height', () => {
+      expect(dimensionInstance.calculateDimension(testElement, 'height')).to.equal(250);
+    });
+
+    it('calculates content-box height with margin', () => {
+      expect(dimensionInstance.calculateDimension(testElement, 'height', false, true))
+        .to.equal(258);
+    });
+
+    it('calculates content-box width', () => {
+      expect(dimensionInstance.calculateDimension(testElement, 'width')).to.equal(100);
+    });
+
+    it('calculates content-box width with margin', () => {
+      expect(dimensionInstance.calculateDimension(testElement, 'width', false, true)).to.equal(108);
+    });
+  });
+  */
 });

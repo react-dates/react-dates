@@ -114,7 +114,7 @@ export default class DayPicker extends React.Component {
     // Need to separate out table children for FF
     // Add an additional +1 for the border
     return (
-      this.calculateDimension(caption, 'height', 'outer', true) +
+      this.calculateDimension(caption, 'height', true, true) +
       this.calculateDimension(grid, 'height') + 1
     );
   }
@@ -129,28 +129,31 @@ export default class DayPicker extends React.Component {
     });
   }
 
-  calculateDimension(el, axis, range = 'inner', withMargin = false) {
+  calculateDimension(el, axis, borderBox = false, withMargin = false) {
     if (!el) {
       return 0;
     }
 
-    const style = window.getComputedStyle(el);
     const axisStart = (axis === 'width') ? 'Left' : 'Top';
     const axisEnd = (axis === 'width') ? 'Right' : 'Bottom';
-    const extraSize = (
-      parseFloat(style[`padding${axisStart}`]) +
-      parseFloat(style[`padding${axisEnd}`]) +
-      parseFloat(style[`border${axisStart}Width`]) +
-      parseFloat(style[`border${axisEnd}Width`])
-    );
-    let size = parseFloat(style[axis]);
 
-    if (range === 'outer' && style.boxSizing === 'content-box') {
-      size += extraSize;
-    } else if (range === 'inner' && style.boxSizing === 'border-box') {
-      size -= extraSize;
+    // Only read styles if we need to
+    const style = (!borderBox || withMargin) ? window.getComputedStyle(el) : {};
+
+    // Offset includes border and padding
+    let size = (axis === 'width') ? el.offsetWidth : el.offsetHeight;
+
+    // Get the inner size
+    if (!borderBox) {
+      size -= (
+        parseFloat(style[`padding${axisStart}`]) +
+        parseFloat(style[`padding${axisEnd}`]) +
+        parseFloat(style[`border${axisStart}Width`]) +
+        parseFloat(style[`border${axisEnd}Width`])
+      );
     }
 
+    // Apply margin
     if (withMargin) {
       size += (
         parseFloat(style[`margin${axisStart}`]) +
@@ -173,7 +176,7 @@ export default class DayPicker extends React.Component {
     this.dayPickerWidth = this.calculateDimension(
       ReactDOM.findDOMNode(this.refs.calendarMonthGrid).querySelector('.CalendarMonth'),
       'width',
-      'outer'
+      true
     );
   }
 
