@@ -71,6 +71,7 @@
     "react-addons-test-utils": "^15.2.1",
     "react-dom": "^15.2.1",
     "react-svg-loader": "^1.1.1",
+    "rimraf": "^2.5.4",
     "safe-publish-latest": "^1.0.1",
     "sass-loader": "^4.0.0",
     "sinon": "^1.17.5",
