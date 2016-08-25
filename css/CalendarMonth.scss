@@ -126,7 +126,7 @@
   }
 }
 
-.CalendarMonth__day--blocked-past-date {
+.CalendarMonth__day--blocked-out-of-range {
   color: $react-dates-color-gray-lighter;
   background: $react-dates-color-white;
   border: 1px solid lighten($react-dates-color-border-light, 3);

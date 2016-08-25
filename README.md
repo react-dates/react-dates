@@ -84,9 +84,10 @@ To indicate which days are blocked from selection, you may provide a function to
   isDayBlocked: PropTypes.func
 ```
 
-If you would like to allow the user to selected days in the past, you may set `allowPastDates` to true.
+`isOutsideRange` indicates which days are out of selectable range.
+Past dates out of range by default. If you would like to allow the user to select days in the past, you may set `isOutsideRange` to `() => true`.
 ```
-  allowPastDates: PropTypes.bool
+  isOutsideRange: PropTypes.func
 ```
 
 **Calendar presentation:**

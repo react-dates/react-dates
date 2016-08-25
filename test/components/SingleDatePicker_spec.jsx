@@ -200,91 +200,47 @@ describe('SingleDatePicker', () => {
       });
     });
 
-    describe('past date string', () => {
-      const pastDateString = moment().subtract(10, 'days').format('YYYY-MM-DD');
-      describe('props.allowPastDates is true', () => {
-        it('calls props.onDateChange once', () => {
-          const onDateChangeStub = sinon.stub();
-          const wrapper =
-            shallow(<SingleDatePicker id="date" onDateChange={onDateChangeStub} allowPastDates />);
-          wrapper.instance().onChange(pastDateString);
-          expect(onDateChangeStub.callCount).to.equal(1);
-        });
+    describe('date string outside range', () => {
+      const isOutsideRangeStub = sinon.stub().returns(true);
+      const today = moment().toISOString();
 
-        it('calls props.onDateChange with date as arg', () => {
-          const onDateChangeStub = sinon.stub();
-          const wrapper =
-            shallow(<SingleDatePicker id="date" onDateChange={onDateChangeStub} allowPastDates />);
-          wrapper.instance().onChange(pastDateString);
-          expect(onDateChangeStub.getCall(0).args[0].isSame(pastDateString)).to.equal(true);
-        });
-
-        it('calls props.onFocusChange once', () => {
-          const onFocusChangeStub = sinon.stub();
-          const wrapper = shallow(
-            <SingleDatePicker
-              id="date"
-              onFocusChange={onFocusChangeStub}
-              allowPastDates
-            />
-          );
-          wrapper.instance().onChange(pastDateString);
-          expect(onFocusChangeStub.callCount).to.equal(1);
-        });
-
-        it('calls props.onFocusChange with { focused: false } as arg', () => {
-          const onFocusChangeStub = sinon.stub();
-          const wrapper = shallow(
-            <SingleDatePicker
-              id="date"
-              onFocusChange={onFocusChangeStub}
-              allowPastDates
-            />
-          );
-          wrapper.instance().onChange(pastDateString);
-          expect(onFocusChangeStub.getCall(0).args[0].focused).to.equal(false);
-        });
+      it('calls props.onDateChange once', () => {
+        const onDateChangeStub = sinon.stub();
+        const wrapper = shallow(
+          <SingleDatePicker
+            id="date"
+            onDateChange={onDateChangeStub}
+            isOutsideRange={isOutsideRangeStub}
+          />
+        );
+        wrapper.instance().onChange(today);
+        expect(onDateChangeStub.callCount).to.equal(1);
       });
 
-      describe('props.allowPastDates is false', () => {
-        it('calls props.onDateChange once', () => {
-          const onDateChangeStub = sinon.stub();
-          const wrapper = shallow(
-            <SingleDatePicker
-              id="date"
-              onDateChange={onDateChangeStub}
-              allowPastDates={false}
-            />
-          );
-          wrapper.instance().onChange(pastDateString);
-          expect(onDateChangeStub.callCount).to.equal(1);
-        });
+      it('calls props.onDateChange with null as arg', () => {
+        const onDateChangeStub = sinon.stub();
+        const wrapper = shallow(
+          <SingleDatePicker
+            id="date"
+            onDateChange={onDateChangeStub}
+            isOutsideRange={isOutsideRangeStub}
+          />
+        );
+        wrapper.instance().onChange(today);
+        expect(onDateChangeStub.getCall(0).args[0]).to.equal(null);
+      });
 
-        it('calls props.onDateChange with null as arg', () => {
-          const onDateChangeStub = sinon.stub();
-          const wrapper = shallow(
-            <SingleDatePicker
-              id="date"
-              onDateChange={onDateChangeStub}
-              allowPastDates={false}
-            />
-          );
-          wrapper.instance().onChange(pastDateString);
-          expect(onDateChangeStub.getCall(0).args[0]).to.equal(null);
-        });
-
-        it('does not call props.onFocusChange', () => {
-          const onFocusChangeStub = sinon.stub();
-          const wrapper = shallow(
-            <SingleDatePicker
-              id="date"
-              onFocusChange={onFocusChangeStub}
-              allowPastDates={false}
-            />
-          );
-          wrapper.instance().onChange(pastDateString);
-          expect(onFocusChangeStub.callCount).to.equal(0);
-        });
+      it('does not call props.onFocusChange', () => {
+        const onFocusChangeStub = sinon.stub();
+        const wrapper = shallow(
+          <SingleDatePicker
+            id="date"
+            onFocusChange={onFocusChangeStub}
+            isOutsideRange={isOutsideRangeStub}
+          />
+        );
+        wrapper.instance().onChange(today);
+        expect(onFocusChangeStub.callCount).to.equal(0);
       });
     });
   });
@@ -403,21 +359,33 @@ describe('SingleDatePicker', () => {
   describe('#isBlocked', () => {
     it('returns true if props.isDayBlocked returns true', () => {
       const isDayBlockedStub = sinon.stub().returns(true);
-      sinon.stub(SingleDatePicker.prototype, 'isPastDate').returns(false);
-      const wrapper = shallow(<SingleDatePicker id="date" isDayBlocked={isDayBlockedStub} />);
+      const isOutsideRangeStub = sinon.stub().returns(false);
+      const wrapper = shallow(
+        <SingleDatePicker
+          id="date"
+          isDayBlocked={isDayBlockedStub}
+          isOutsideRange={isOutsideRangeStub}
+        />
+      );
       expect(wrapper.instance().isBlocked()).to.equal(true);
     });
 
-    it('returns true if isPastDate returns true', () => {
-      sinon.stub(SingleDatePicker.prototype, 'isPastDate').returns(true);
-      const wrapper = shallow(<SingleDatePicker id="date" />);
+    it('returns true if props.isOutsideRange returns true', () => {
+      const isOutsideRangeStub = sinon.stub().returns(true);
+      const wrapper = shallow(<SingleDatePicker id="date" isOutsideRange={isOutsideRangeStub} />);
       expect(wrapper.instance().isBlocked()).to.equal(true);
     });
 
-    it('returns false if props.isDayBlocked and isPastDate are both false', () => {
+    it('returns false if props.isDayBlocked and props.isOutsideRange both refurns false', () => {
       const isDayBlockedStub = sinon.stub().returns(false);
-      sinon.stub(SingleDatePicker.prototype, 'isPastDate').returns(false);
-      const wrapper = shallow(<SingleDatePicker id="date" isDayBlocked={isDayBlockedStub} />);
+      const isOutsideRangeStub = sinon.stub().returns(false);
+      const wrapper = shallow(
+        <SingleDatePicker
+          id="date"
+          isDayBlocked={isDayBlockedStub}
+          isOutsideRange={isOutsideRangeStub}
+        />
+      );
       expect(wrapper.instance().isBlocked()).to.equal(false);
     });
   });
@@ -436,30 +404,6 @@ describe('SingleDatePicker', () => {
       const wrapper = shallow(<SingleDatePicker id="date" />);
       wrapper.setState({ hoverDate: today });
       expect(wrapper.instance().isHovered(tomorrow)).to.equal(false);
-    });
-  });
-
-  describe('#isPastDate', () => {
-    describe('props.allowPastDates is false', () => {
-      it('returns true is date is in the past', () => {
-        const yesterday = moment().subtract(1, 'days');
-        const wrapper = shallow(<SingleDatePicker id="date" allowPastDates={false} />);
-        expect(wrapper.instance().isPastDate(yesterday)).to.equal(true);
-      });
-
-      it('returns true is date is not in the past', () => {
-        const today = moment();
-        const wrapper = shallow(<SingleDatePicker id="date" allowPastDates={false} />);
-        expect(wrapper.instance().isPastDate(today)).to.equal(false);
-      });
-    });
-
-    describe('props.allowPastDates is true', () => {
-      it('returns false', () => {
-        const yesterday = moment().subtract(1, 'days');
-        const wrapper = shallow(<SingleDatePicker id="date" allowPastDates />);
-        expect(wrapper.instance().isPastDate(yesterday)).to.equal(false);
-      });
     });
   });
 
