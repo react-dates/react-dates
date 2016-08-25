@@ -227,11 +227,14 @@ export default class DateRangePicker extends React.Component {
   }
 
   doesNotMeetMinimumNights(day) {
-    const { startDate, focusedInput, minimumNights } = this.props;
-    if (!startDate) return false;
+    const { startDate, isOutsideRange, focusedInput, minimumNights } = this.props;
+    if (focusedInput !== END_DATE) return false;
 
-    const dayDiff = day.diff(startDate, 'days');
-    return focusedInput === END_DATE && dayDiff < minimumNights && dayDiff >= 0;
+    if (startDate) {
+      const dayDiff = day.diff(startDate, 'days');
+      return dayDiff < minimumNights && dayDiff >= 0;
+    }
+    return isOutsideRange(moment(day).subtract(minimumNights, 'days'));
   }
 
   isDayAfterHoveredStartDate(day) {

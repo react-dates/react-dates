@@ -12,6 +12,8 @@ import DayPicker from '../../src/components/DayPicker';
 
 import OutsideClickHandler from '../../src/components/OutsideClickHandler';
 
+import isInclusivelyAfterDay from '../../src/utils/isInclusivelyAfterDay';
+
 import {
   HORIZONTAL_ORIENTATION,
   VERTICAL_ORIENTATION,
@@ -849,6 +851,52 @@ describe('DateRangePicker', () => {
               <DateRangePicker
                 focusedInput={START_DATE}
                 startDate={startDate}
+                minimumNights={MIN_NIGHTS}
+              />
+            );
+            expect(wrapper.instance().doesNotMeetMinimumNights(testDate)).to.equal(false);
+          });
+        });
+      });
+
+      describe('props.startDate === null', () => {
+        describe('props.focusedInput === END_DATE', () => {
+          it('returns true if arg - props.minimumNights is outside allowed range', () => {
+            const isOutsideRange = day => !isInclusivelyAfterDay(day, today);
+            const testDate = moment(today).add(MIN_NIGHTS - 1, 'days');
+            const wrapper = shallow(
+              <DateRangePicker
+                focusedInput={END_DATE}
+                startDate={null}
+                minimumNights={MIN_NIGHTS}
+                isOutsideRange={isOutsideRange}
+              />
+            );
+            expect(wrapper.instance().doesNotMeetMinimumNights(testDate)).to.equal(true);
+          });
+
+          it('returns false if arg - props.minimumNights is inside allowed range', () => {
+            const isOutsideRange = day => !isInclusivelyAfterDay(day, today);
+            const testDate = moment(today).add(MIN_NIGHTS, 'days');
+            const wrapper = shallow(
+              <DateRangePicker
+                focusedInput={END_DATE}
+                startDate={null}
+                minimumNights={MIN_NIGHTS}
+                isOutsideRange={isOutsideRange}
+              />
+            );
+            expect(wrapper.instance().doesNotMeetMinimumNights(testDate)).to.equal(false);
+          });
+        });
+
+        describe('state.focusedInput !== END_DATE', () => {
+          it('returns false', () => {
+            const testDate = moment(today).add(MIN_NIGHTS - 1, 'days');
+            const wrapper = shallow(
+              <DateRangePicker
+                focusedInput={START_DATE}
+                startDate={null}
                 minimumNights={MIN_NIGHTS}
               />
             );
