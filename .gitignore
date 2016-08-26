@@ -34,3 +34,6 @@ node_modules
 
 # build folder
 lib
+
+# gh-pages
+_gh-pages
