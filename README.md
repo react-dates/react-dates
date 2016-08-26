@@ -10,7 +10,7 @@
 
 > An accessible, easily internationalizable, mobile-friendly datepicker library for the web.
 
-![react-dates in action](https://raw.githubusercontent.com/airbnb/react-dates/master/images/react-dates-demo.gif)
+![react-dates in action](https://raw.githubusercontent.com/airbnb/react-dates/master/react-dates-demo.gif)
 
 ## Live Playground
 
