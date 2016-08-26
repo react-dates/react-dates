@@ -184,6 +184,7 @@ This fully-controlled component is designed to allow a user to select a single d
 Moment objects representing the currently selected date. This is set to `null` when no date has yet been selected.
 ```
   date: momentPropTypes.momentObj
+```
 
 `onDateChange` is the callback necessary to update the date state held in the parent component. It expects a single argument equal to either `null` or a moment object.
 ```
