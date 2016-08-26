@@ -16,7 +16,7 @@
     "test": "npm run tests-only",
     "storybook": "start-storybook -p 9001 -s ./public",
     "tag": "git tag v$npm_package_version",
-    "gh-pages:clean": "rm -rf _gh-pages",
+    "gh-pages:clean": "rimraf _gh-pages",
     "gh-pages:build": "$(npm bin)/build-storybook -o _gh-pages",
     "gh-pages:copy-public": "cp public/* _gh-pages/$1",
     "gh-pages:publish": "$(npm bin)/git-directory-deploy --directory _gh-pages",
