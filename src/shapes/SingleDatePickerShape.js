@@ -18,6 +18,7 @@ export default {
   enableOutsideDays: PropTypes.bool,
   numberOfMonths: PropTypes.number,
   orientation: OrientationShape,
+  initialVisibleMonth: PropTypes.func,
 
   // portal options
   withPortal: PropTypes.bool,

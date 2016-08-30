@@ -1,6 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon-sandbox';
+import moment from 'moment';
 import { mount, shallow } from 'enzyme';
 
 import DayPicker from '../../src/components/DayPicker';
@@ -237,6 +238,20 @@ describe('DayPicker', () => {
           mount(<DayPicker orientation={VERTICAL_ORIENTATION} />);
           expect(initializeDayPickerWidthSpy.called).to.equal(false);
         });
+      });
+    });
+
+    describe('#componentWillReceiveProps', () => {
+      const initialVisibleMonth = () => moment('01 2016', 'MM YYYY');
+      it('will set initialVisibleMonth when focused is toggled', () => {
+        const wrapper = mount(
+          <DayPicker focused={false} initialVisibleMonth={initialVisibleMonth} />
+        );
+        expect(wrapper.state('visibleMonth')).to.be(null);
+        wrapper.setProps({
+          focused: true,
+        });
+        expect(wrapper.state('visibleMonth').isSame(initialVisibleMonth())).to.be(true);
       });
     });
 
