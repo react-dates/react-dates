@@ -371,6 +371,20 @@ The `monthFormat` prop abides by [moment's date formatting rules](http://momentj
   monthFormat: PropTypes.string,
 ```
 
+## Utility Methods
+
+### Date Comparison
+
+We provide four utility methods for date comparison:
+```
+  isInclusivelyAfterDay
+  isInclusivelyBeforeDay
+  isNextDay
+  isSameDay
+```
+
+Each of these methods takes in two moment objects and returns a boolean, indicating whether the first argument is inclusively after, inclusively before, the day immediately after, or the same day as the second argument.
+
 ## Theming
 
 react-dates comes with a set of SCSS variables that can be overridden to add your own project-specific theming. Override any variables found in `css/variables.scss` with your own and then import `~react-dates/css/styles.scss` (and `~react-dates/css/variables.scss` if you're only overriding a few). If you were using [sass-loader](https://github.com/jtangelder/sass-loader) with webpack, the code below would properly override the selected variables:
