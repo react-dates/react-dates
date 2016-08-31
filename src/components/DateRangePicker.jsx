@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import moment from 'moment';
 import cx from 'classnames';
 import Portal from 'react-portal';
+import includes from 'array-includes';
 
 import isTouchDevice from '../utils/isTouchDevice';
 import toMomentObject from '../utils/toMomentObject';
@@ -88,7 +89,7 @@ export default class DateRangePicker extends React.Component {
 
   onDayClick(day, modifiers, e) {
     if (e) e.preventDefault();
-    if (modifiers.includes('blocked')) return;
+    if (includes(modifiers, 'blocked')) return;
 
     const { focusedInput } = this.props;
     let { startDate, endDate } = this.props;
