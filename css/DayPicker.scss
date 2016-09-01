@@ -29,6 +29,7 @@
   color: $react-dates-color-placeholder-text;
   cursor: pointer;
   line-height: 0.78;
+  user-select: none;
 
   &:focus,
   &:hover {
