@@ -46,6 +46,11 @@ storiesOf('SingleDatePicker', module)
       />
     );
   })
+  .add('with custom display format', () => (
+    <SingleDatePickerWrapper
+      displayFormat="MMM D"
+    />
+  ))
   .add('with outside days enabled', () => (
     <SingleDatePickerWrapper
       numberOfMonths={1}
