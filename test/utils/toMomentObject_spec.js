@@ -4,6 +4,22 @@ import { expect } from 'chai';
 import toMomentObject from '../../src/utils/toMomentObject';
 
 describe('toMomentObject', () => {
+  it('returns null for null input', () => {
+    expect(toMomentObject(null)).to.equal(null);
+  });
+
+  it('returns null for undefined input', () => {
+    expect(toMomentObject(undefined)).to.equal(null);
+  });
+
+  it('returns null for empty string', () => {
+    expect(toMomentObject('')).to.equal(null);
+  });
+
+  it('returns null for no input', () => {
+    expect(toMomentObject()).to.equal(null);
+  });
+
   it('parses custom format', () => {
     const date = toMomentObject('1991---13/07', 'YYYY---DD/MM');
 
