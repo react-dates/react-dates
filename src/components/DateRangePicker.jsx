@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import moment from 'moment';
 import cx from 'classnames';
 import Portal from 'react-portal';
@@ -87,6 +86,8 @@ export default class DateRangePicker extends React.Component {
     this.onEndDateChange = this.onEndDateChange.bind(this);
     this.onEndDateFocus = this.onEndDateFocus.bind(this);
     this.clearDates = this.clearDates.bind(this);
+
+    this.setDayPickerRef = this.setDayPickerRef.bind(this);
   }
 
   onClearFocus() {
@@ -240,12 +241,16 @@ export default class DateRangePicker extends React.Component {
   }
 
   getDayPickerDOMNode() {
-    return ReactDOM.findDOMNode(this.dayPicker);
+    return this.dayPicker.getDOMNode();
   }
 
   getDisplayFormat() {
     const { displayFormat } = this.props;
     return typeof displayFormat === 'string' ? displayFormat : displayFormat();
+  }
+
+  setDayPickerRef(ref) {
+    this.dayPicker = ref;
   }
 
   clearDates() {
@@ -369,7 +374,7 @@ export default class DateRangePicker extends React.Component {
     return (
       <div className={this.getDayPickerContainerClasses()}>
         <DayPicker
-          ref={ref => { this.dayPicker = ref; }}
+          ref={this.setDayPickerRef}
           orientation={orientation}
           enableOutsideDays={enableOutsideDays}
           modifiers={modifiers}
