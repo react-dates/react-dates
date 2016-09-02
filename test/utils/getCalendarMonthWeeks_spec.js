@@ -55,9 +55,37 @@ describe('getCalendarMonthWeeks', () => {
       expect(containsFirstOfMonth).to.equal(true);
     });
 
-    it('contains last of the month', () => {
+    it('last week contains last of the month', () => {
       const lastOfMonth = today.clone().endOf('month');
       const containsLastOfMonth = weeks[weeksWithOutsideDays.length - 1]
+        .filter(day => lastOfMonth.isSame(day, 'day')).length > 0;
+      expect(containsLastOfMonth).to.equal(true);
+    });
+
+    it('last week contains last of the month if next month begins on Sunday', () => {
+      const december2016 = moment('2016-12-01');
+      const lastOfMonth = december2016.clone().endOf('month');
+      const weeksInDecember = getCalendarMonthWeeks(december2016);
+      const containsLastOfMonth = weeksInDecember[weeksInDecember.length - 1]
+        .filter(day => lastOfMonth.isSame(day, 'day')).length > 0;
+      expect(containsLastOfMonth).to.equal(true);
+    });
+
+    it('last week contains last of the month if next month begins on Monday', () => {
+      moment.locale('es');
+      const april2017 = moment('2017-04-01');
+      const lastOfMonth = april2017.clone().endOf('month');
+      const weeksInApril = getCalendarMonthWeeks(april2017);
+      const containsLastOfMonth = weeksInApril[weeksInApril.length - 1]
+        .filter(day => lastOfMonth.isSame(day, 'day')).length > 0;
+      expect(containsLastOfMonth).to.equal(true);
+    });
+
+    it('last week contains last of the month if next month begins on Saturday', () => {
+      const september2016 = moment('2016-09-01');
+      const lastOfMonth = september2016.clone().endOf('month');
+      const weeksInSeptember = getCalendarMonthWeeks(september2016);
+      const containsLastOfMonth = weeksInSeptember[weeksInSeptember.length - 1]
         .filter(day => lastOfMonth.isSame(day, 'day')).length > 0;
       expect(containsLastOfMonth).to.equal(true);
     });
