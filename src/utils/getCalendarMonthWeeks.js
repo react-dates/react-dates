@@ -1,4 +1,5 @@
 export default function getCalendarMonthWeeks(month, enableOutsideDays) {
+  // set utc offset to get correct dates in future (when timezone changes)
   const baseDate = month.clone().utcOffset(month.utcOffset());
   const firstOfMonth = baseDate.clone().startOf('month');
   const lastOfMonth = baseDate.clone().endOf('month');
