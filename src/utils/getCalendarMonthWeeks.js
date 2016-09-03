@@ -1,6 +1,8 @@
 export default function getCalendarMonthWeeks(month, enableOutsideDays) {
-  const firstOfMonth = month.clone().startOf('month');
-  const lastOfMonth = month.clone().endOf('month');
+  // set utc offset to get correct dates in future (when timezone changes)
+  const baseDate = month.clone().utcOffset(month.utcOffset());
+  const firstOfMonth = baseDate.clone().startOf('month');
+  const lastOfMonth = baseDate.clone().endOf('month');
 
   const currentDay = firstOfMonth.clone();
   let currentWeek = [];
