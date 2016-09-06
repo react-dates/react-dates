@@ -392,7 +392,7 @@ react-dates comes with a set of SCSS variables that can be overridden to add you
 //overriding default sass variables with my project's colors
 $react-dates-color-primary: $some-color-specific-to-my-project;
 $react-dates-color-primary-dark: $some-other-color-specific-to-my-project;
-@import '~react-dates/css/variables';
+@import '~react-dates/css/variables.scss';
 @import '~react-dates/css/styles.scss';
 ```
 
