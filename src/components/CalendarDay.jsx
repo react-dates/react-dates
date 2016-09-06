@@ -3,6 +3,8 @@ import shallowCompare from 'react-addons-shallow-compare';
 import momentPropTypes from 'react-moment-proptypes';
 import moment from 'moment';
 
+import { css, withStyles } from 'react-with-styles';
+
 export const TOUCHSTART_TIMEOUT = 200;
 
 const propTypes = {
@@ -16,6 +18,8 @@ const propTypes = {
   onDayTouchStart: PropTypes.func,
   onDayTouchEnd: PropTypes.func,
   onDayTouchTap: PropTypes.func,
+
+  styles: PropTypes.object.isRequired,
 };
 
 const defaultProps = {
@@ -31,7 +35,7 @@ const defaultProps = {
   onDayTouchTap() {},
 };
 
-export default class CalendarDay extends React.Component {
+class CalendarDay extends React.Component {
   constructor(props) {
     super(props);
     this.hasActiveTouchStart = false;
@@ -84,11 +88,11 @@ export default class CalendarDay extends React.Component {
   }
 
   render() {
-    const { day, modifiers } = this.props;
+    const { day, modifiers, styles } = this.props;
 
     return (
       <div
-        className="CalendarDay"
+        {...css(styles.component)}
         onMouseEnter={(e) => this.handleDayMouseEnter(day, modifiers, e)}
         onMouseLeave={(e) => this.handleDayMouseLeave(day, modifiers, e)}
         onMouseDown={(e) => this.handleDayMouseDown(day, modifiers, e)}
@@ -97,7 +101,7 @@ export default class CalendarDay extends React.Component {
         onTouchStart={(e) => this.handleDayTouchStart(day, modifiers, e)}
         onTouchEnd={(e) => this.handleDayTouchEnd(day, modifiers, e)}
       >
-        <span className="CalendarDay__day">{day.format('D')}</span>
+        <span {...css(styles.day)}>{day.format('D')}</span>
       </div>
     );
   }
@@ -105,3 +109,18 @@ export default class CalendarDay extends React.Component {
 
 CalendarDay.propTypes = propTypes;
 CalendarDay.defaultProps = defaultProps;
+
+export default withStyles(() => ({
+  component: {
+    position: 'relative',
+    display: 'table',
+    height: '100%',
+    width: '100%',
+  },
+
+  day: {
+    display: 'table-cell',
+    verticalAlign: 'middle',
+    userSelect: 'none',
+  },
+}))(CalendarDay);
