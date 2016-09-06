@@ -43,6 +43,7 @@ const defaultProps = {
   onNextMonthClick() {},
 
   // i18n
+  displayLabel: null,
   monthFormat: 'MMMM YYYY',
   phrases: {
     closeDatePicker: 'Close',
@@ -126,6 +127,16 @@ export default class SingleDatePicker extends React.Component {
     });
 
     return dayPickerClassName;
+  }
+
+  getDisplayValue(date) {
+    const { displayLabel } = this.props;
+
+    if (displayLabel) {
+      return displayLabel(date);
+    }
+
+    return toLocalizedDateString(date);
   }
 
   isBlocked(day) {
@@ -227,7 +238,7 @@ export default class SingleDatePicker extends React.Component {
 
     const onOutsideClick = withPortal || withFullScreenPortal ? () => {} : this.onClearFocus;
 
-    const dateValue = toLocalizedDateString(date);
+    const dateValue = this.getDisplayValue(date);
 
     return (
       <div className="SingleDatePicker">
