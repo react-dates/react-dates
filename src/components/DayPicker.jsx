@@ -24,6 +24,8 @@ const MONTH_PADDING = 23;
 const PREV_TRANSITION = 'prev';
 const NEXT_TRANSITION = 'next';
 
+const DAY_HEIGHT = 38;
+
 const propTypes = {
   enableOutsideDays: PropTypes.bool,
   numberOfMonths: PropTypes.number,
@@ -117,12 +119,15 @@ export default class DayPicker extends React.Component {
   }
 
   getMonthHeightByIndex(i) {
+    console.log('getMonthHeightByIndex')
+    console.log(this.ref.calendarMonthGrid)
     return this.getMonthHeight(
       ReactDOM.findDOMNode(this.refs.transitionContainer).querySelectorAll('.CalendarMonth')[i]
     );
   }
 
   getMonthHeight(el) {
+    console.log(this.calendarMonthGrid)
     const caption = el.querySelector('.js-CalendarMonth__caption');
     const grid = el.querySelector('.js-CalendarMonth__grid');
 
@@ -247,6 +252,8 @@ export default class DayPicker extends React.Component {
     if (this.props.onNextMonthClick) {
       this.props.onNextMonthClick(e);
     }
+
+    console.log('handleNextMonthClick')
 
     const translationValue =
       this.isVertical() ? -this.getMonthHeightByIndex(1) : -this.dayPickerWidth;
@@ -402,7 +409,7 @@ export default class DayPicker extends React.Component {
 
     const transitionContainerStyle = {
       width: this.isHorizontal() && horizontalWidth,
-      height: this.isVertical() && !withPortal && verticalHeight,
+      height: 300, //this.isVertical() && !withPortal && verticalHeight,
     };
 
     const isCalendarMonthGridAnimating = monthTransition !== null;
@@ -444,6 +451,8 @@ export default class DayPicker extends React.Component {
               onDayMouseLeave={onDayMouseLeave}
               onMonthTransitionEnd={this.updateStateAfterMonthTransition}
               monthFormat={monthFormat}
+
+              dayHeight={DAY_HEIGHT}
             />
           </div>
         </OutsideClickHandler>

@@ -35,6 +35,8 @@ const propTypes = {
 
   // i18n
   monthFormat: PropTypes.string,
+
+  dayHeight: PropTypes.number,
 };
 
 const defaultProps = {
@@ -58,6 +60,8 @@ const defaultProps = {
 
   // i18n
   monthFormat: 'MMMM YYYY', // english locale
+
+  dayHeight: 0,
 };
 
 export default class CalendarMonthGrid extends React.Component {
@@ -115,6 +119,7 @@ export default class CalendarMonthGrid extends React.Component {
       onDayTouchEnd,
       onDayTouchTap,
       onMonthTransitionEnd,
+      dayHeight,
     } = this.props;
 
     let month = initialMonth.clone().subtract(1, 'month');
@@ -126,6 +131,7 @@ export default class CalendarMonthGrid extends React.Component {
 
       months.push(
         <CalendarMonth
+          ref={`calendarMonth_${i}`}
           key={month.format('MM-YY')}
           month={month}
           isVisible={isVisible}
@@ -141,6 +147,7 @@ export default class CalendarMonthGrid extends React.Component {
           onDayTouchStart={onDayTouchStart}
           onDayTouchEnd={onDayTouchEnd}
           onDayTouchTap={onDayTouchTap}
+          dayHeight={dayHeight}
         />
       );
       month = month.clone().add(1, 'month');

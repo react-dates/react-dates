@@ -345,22 +345,23 @@ export default class DateRangePicker extends React.Component {
 
     const modifiers = {
       blocked: day => this.isBlocked(day),
-      'blocked-calendar': day => isDayBlocked(day),
-      'blocked-out-of-range': day => isOutsideRange(day),
       'blocked-minimum-nights': day => this.doesNotMeetMinimumNights(day),
       valid: day => !this.isBlocked(day),
       // before anything has been set or after both are set
       hovered: day => this.isHovered(day),
 
       // while start date has been set, but end date has not been
-      'hovered-span': day => this.isInHoveredSpan(day),
-      'after-hovered-start': day => this.isDayAfterHoveredStartDate(day),
       'last-in-range': day => this.isLastInRange(day),
 
       // once a start date and end date have been set
-      'selected-start': day => this.isStartDate(day),
-      'selected-end': day => this.isEndDate(day),
       'selected-span': day => this.isInSelectedSpan(day),
+
+      'hovered-span': day => this.isInHoveredSpan(day) || this.isDayAfterHoveredStartDate(day),
+
+      selected: day => this.isStartDate(day) || this.isEndDate(day),
+
+      'blocked-calendar': day => isDayBlocked(day),
+      'blocked-out-of-range': day => isOutsideRange(day),
     };
 
     const onOutsideClick = !withFullScreenPortal ? this.onOutsideClick : undefined;

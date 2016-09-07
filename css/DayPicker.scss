@@ -3,6 +3,8 @@
 .DayPicker {
   background: $react-dates-color-white;
   position: relative;
+  background: lighten($react-dates-color-border-light, 3);
+  background: darken($react-dates-color-border-light, 3);
 }
 
 .DayPicker--horizontal {

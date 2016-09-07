@@ -72,6 +72,6 @@ SingleDatePickerInput.defaultProps = defaultProps;
 
 export default withStyles(({ reactDates }) => ({
   component: {
-    border: `1px solid ${reactDates.color.border}`,
+    border: `1px solid ${reactDates.color.border_input}`,
   },
 }))(SingleDatePickerInput);
