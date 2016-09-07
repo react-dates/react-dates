@@ -1154,6 +1154,10 @@ describe('DateRangePicker', () => {
         isInSelectedSpanStub = sinon.stub(DateRangePicker.prototype, 'isInSelectedSpan');
       });
 
+      afterEach(() => {
+        sinon.restore();
+      });
+
       it('returns true if arg is day before props.endDate and is in the selected span', () => {
         isInSelectedSpanStub.returns(true);
         const wrapper = shallow(
@@ -1206,6 +1210,10 @@ describe('DateRangePicker', () => {
         isOutsideRangeStub = sinon.stub();
         doesNotMeetMinimumNightsStub =
           sinon.stub(DateRangePicker.prototype, 'doesNotMeetMinimumNights');
+      });
+
+      afterEach(() => {
+        sinon.restore();
       });
 
       it('returns true if arg is calendar blocked', () => {

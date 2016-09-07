@@ -5,6 +5,10 @@ node_js:
   - "4"
   - "4.2"
   - "iojs"
+before_script:
+  - if [ "${TRAVIS_NODE_VERSION}" = 6 ]; then export DISPLAY=:99.0; fi
+  - if [ "${TRAVIS_NODE_VERSION}" = 6 ]; then sh -e /etc/init.d/xvfb start; fi
+  - if [ "${TRAVIS_NODE_VERSION}" = 6 ]; then sleep 3; fi
 script: 'if [ "${TRAVIS_NODE_VERSION}" = 6 ]; then npm test; else npm run tests-only; fi'
 env:
   - REACT=0.14
