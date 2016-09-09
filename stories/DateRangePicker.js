@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import { storiesOf } from '@kadira/storybook';
 
-import { VERTICAL_ORIENTATION } from '../constants';
+import { VERTICAL_ORIENTATION, ANCHOR_RIGHT } from '../constants';
 
 import isSameDay from '../src/utils/isSameDay';
 import isInclusivelyAfterDay from '../src/utils/isInclusivelyAfterDay';
@@ -29,10 +29,25 @@ storiesOf('DateRangePicker', module)
       numberOfMonths={1}
     />
   ))
+  .add('anchored right', () => (
+    <div style={{ float: 'right' }}>
+      <DateRangePickerWrapper
+        anchorDirection={ANCHOR_RIGHT}
+      />
+    </div>
+  ))
   .add('vertical', () => (
     <DateRangePickerWrapper
       orientation={VERTICAL_ORIENTATION}
     />
+  ))
+  .add('vertical anchored right', () => (
+    <div style={{ float: 'right' }}>
+      <DateRangePickerWrapper
+        orientation={VERTICAL_ORIENTATION}
+        anchorDirection={ANCHOR_RIGHT}
+      />
+    </div>
   ))
   .add('horizontal with portal', () => (
     <DateRangePickerWrapper
