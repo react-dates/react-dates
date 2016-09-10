@@ -114,6 +114,10 @@
   top: 62px;
   z-index: 2;
   text-align: left;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
 
   ul {
     list-style: none;
