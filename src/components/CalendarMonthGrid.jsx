@@ -10,6 +10,8 @@ import CalendarMonth from './CalendarMonth';
 import isTransitionEndSupported from '../utils/isTransitionEndSupported';
 import getTransformStyles from '../utils/getTransformStyles';
 
+import getCalendarMonthWidth from '../utils/getCalendarMonthWidth';
+
 import OrientationShape from '../shapes/OrientationShape';
 
 import { HORIZONTAL_ORIENTATION, VERTICAL_ORIENTATION } from '../../constants';
@@ -19,6 +21,7 @@ const propTypes = {
   firstVisibleMonthIndex: PropTypes.number,
   initialMonth: momentPropTypes.momentObj,
   isAnimating: PropTypes.bool,
+  withWeekNumbers: PropTypes.bool,
   numberOfMonths: PropTypes.number,
   modifiers: PropTypes.object,
   orientation: OrientationShape,
@@ -41,6 +44,7 @@ const defaultProps = {
   enableOutsideDays: false,
   firstVisibleMonthIndex: 0,
   initialMonth: moment(),
+  withWeekNumbers: false,
   isAnimating: false,
   numberOfMonths: 1,
   modifiers: {},
@@ -59,6 +63,19 @@ const defaultProps = {
   // i18n
   monthFormat: 'MMMM YYYY', // english locale
 };
+
+function getCalendarMonthGridWidthStyle(orientation, withWeekNumbers) {
+  const calendarMonthWidth = getCalendarMonthWidth(withWeekNumbers);
+
+  switch (orientation) {
+    case HORIZONTAL_ORIENTATION:
+      return { width: 4 * calendarMonthWidth };
+    case VERTICAL_ORIENTATION:
+      return { width: calendarMonthWidth };
+    default:
+      return {};
+  }
+}
 
 export default class CalendarMonthGrid extends React.Component {
   constructor(props) {
@@ -103,6 +120,7 @@ export default class CalendarMonthGrid extends React.Component {
       isAnimating,
       modifiers,
       numberOfMonths,
+      withWeekNumbers,
       monthFormat,
       orientation,
       transformValue,
@@ -131,6 +149,7 @@ export default class CalendarMonthGrid extends React.Component {
           isVisible={isVisible}
           enableOutsideDays={enableOutsideDays}
           modifiers={modifiers}
+          withWeekNumbers={withWeekNumbers}
           monthFormat={monthFormat}
           orientation={orientation}
           onDayMouseEnter={onDayMouseEnter}
@@ -156,7 +175,10 @@ export default class CalendarMonthGrid extends React.Component {
       <div
         ref={ref => { this.containerRef = ref; }}
         className={className}
-        style={getTransformStyles(transformValue)}
+        style={Object.assign(
+          getTransformStyles(transformValue),
+          getCalendarMonthGridWidthStyle(orientation, withWeekNumbers)
+        )}
         onTransitionEnd={onMonthTransitionEnd}
       >
         {months}

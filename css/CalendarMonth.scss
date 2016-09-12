@@ -36,6 +36,20 @@
   margin-bottom: 2px;
 }
 
+.CalendarMonth__weeknumber {
+  padding: 0;
+  box-sizing: border-box;
+  color: $react-dates-color-gray;
+  cursor: default;
+  width: 39px;
+  height: 38px;
+
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
 // This order is important.
 .CalendarMonth__day {
   border: 1px solid lighten($react-dates-color-border-light, 3);

@@ -14,11 +14,12 @@ import ChevronDown from '../svg/chevron-down.svg';
 
 import getTransformStyles from '../utils/getTransformStyles';
 
+import getCalendarMonthWidth from '../utils/getCalendarMonthWidth';
+
 import OrientationShape from '../shapes/OrientationShape';
 
 import { HORIZONTAL_ORIENTATION, VERTICAL_ORIENTATION } from '../../constants';
 
-const CALENDAR_MONTH_WIDTH = 300;
 const DAY_PICKER_PADDING = 9;
 const MONTH_PADDING = 23;
 const PREV_TRANSITION = 'prev';
@@ -30,6 +31,7 @@ const propTypes = {
   modifiers: PropTypes.object,
   orientation: OrientationShape,
   withPortal: PropTypes.bool,
+  withWeekNumbers: PropTypes.bool,
   onDayClick: PropTypes.func,
   onDayMouseDown: PropTypes.func,
   onDayMouseUp: PropTypes.func,
@@ -52,6 +54,7 @@ const defaultProps = {
   modifiers: {},
   orientation: HORIZONTAL_ORIENTATION,
   withPortal: false,
+  withWeekNumbers: false,
   onDayClick() {},
   onDayMouseDown() {},
   onDayMouseUp() {},
@@ -295,7 +298,7 @@ export default class DayPicker extends React.Component {
   }
 
   renderWeekHeader(index) {
-    const { numberOfMonths } = this.props;
+    const { numberOfMonths, withWeekNumbers } = this.props;
 
     const widthPercentage = 100 / numberOfMonths;
     const horizontalStyle = {
@@ -303,9 +306,16 @@ export default class DayPicker extends React.Component {
       left: `${widthPercentage * index}%`,
     };
 
-    const style = this.isHorizontal() ? horizontalStyle : {};
+    const style = this.isHorizontal() ? horizontalStyle : {
+      width: getCalendarMonthWidth(withWeekNumbers),
+    };
 
     const header = [];
+
+    if (withWeekNumbers) {
+      header.push(<li key={-1} />);
+    }
+
     for (let i = 0; i < 7; i++) {
       header.push(
         <li key={i}>
@@ -335,6 +345,7 @@ export default class DayPicker extends React.Component {
       orientation,
       modifiers,
       withPortal,
+      withWeekNumbers,
       onDayClick,
       onDayMouseDown,
       onDayMouseUp,
@@ -371,18 +382,20 @@ export default class DayPicker extends React.Component {
       'transition-container--vertical': this.isVertical(),
     });
 
-    const horizontalWidth = (CALENDAR_MONTH_WIDTH * numberOfMonths) + (2 * DAY_PICKER_PADDING);
+    const calendarMonthWidth = getCalendarMonthWidth(withWeekNumbers);
+
+    const horizontalWidth = ((calendarMonthWidth * numberOfMonths) + (2 * DAY_PICKER_PADDING));
 
     // this is a kind of made-up value that generally looks good. we'll
     // probably want to let the user set this explicitly.
-    const verticalHeight = 1.75 * CALENDAR_MONTH_WIDTH;
+    const verticalHeight = 1.75 * calendarMonthWidth;
 
     const dayPickerStyle = {
       width: this.isHorizontal() && horizontalWidth,
 
       // These values are to center the datepicker (approximately) on the page
       marginLeft: this.isHorizontal() && withPortal && -horizontalWidth / 2,
-      marginTop: this.isHorizontal() && withPortal && -CALENDAR_MONTH_WIDTH / 2,
+      marginTop: this.isHorizontal() && withPortal && -calendarMonthWidth / 2,
     };
 
     const transitionContainerStyle = {
@@ -418,6 +431,7 @@ export default class DayPicker extends React.Component {
               modifiers={modifiers}
               orientation={orientation}
               withPortal={withPortal}
+              withWeekNumbers={withWeekNumbers}
               numberOfMonths={numberOfMonths}
               onDayClick={onDayClick}
               onDayMouseDown={onDayMouseDown}

@@ -40,7 +40,9 @@ storiesOf('DateRangePicker', module)
     />
   ))
   .add('horizontal with fullscreen portal', () => (
-    <DateRangePickerWrapper withFullScreenPortal />
+    <DateRangePickerWrapper 
+      withFullScreenPortal 
+    />
   ))
   .add('vertical with full screen portal', () => (
     <DateRangePickerWrapper
@@ -106,5 +108,10 @@ storiesOf('DateRangePicker', module)
   .add('blocks fridays', () => (
     <DateRangePickerWrapper
       isDayBlocked={day => moment.weekdays(day.weekday()) === 'Friday'}
+    />
+  ))
+  .add('with week numbers', () => (
+    <DateRangePickerWrapper
+      withWeekNumbers
     />
   ));
