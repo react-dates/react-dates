@@ -15,6 +15,7 @@ const propTypes = {
   month: momentPropTypes.momentObj,
   isVisible: PropTypes.bool,
   enableOutsideDays: PropTypes.bool,
+  withWeekNumbers: PropTypes.bool,
   modifiers: PropTypes.object,
   orientation: OrientationShape,
   onDayClick: PropTypes.func,
@@ -34,6 +35,7 @@ const defaultProps = {
   month: moment(),
   isVisible: true,
   enableOutsideDays: false,
+  withWeekNumbers: false,
   modifiers: {},
   orientation: HORIZONTAL_ORIENTATION,
   onDayClick() {},
@@ -53,11 +55,26 @@ export function getModifiersForDay(modifiers, day) {
   return day ? Object.keys(modifiers).filter(key => modifiers[key](day)) : [];
 }
 
+export function getWeekNumberForWeek(week) {
+  if (week && Array.isArray(week)) {
+    const validDays = week.filter((d) => (d));
+    if (validDays[0] && moment.isMoment(validDays[0])) {
+      const firstDayOfWeek = validDays[0].clone().startOf('week');
+
+      return firstDayOfWeek.week();
+    }
+    return null;
+  }
+
+  return null;
+}
+
 export default function CalendarMonth(props) {
   const {
     month,
     monthFormat,
     orientation,
+    withWeekNumbers,
     isVisible,
     modifiers,
     enableOutsideDays,
@@ -87,6 +104,12 @@ export default function CalendarMonth(props) {
         <tbody className="js-CalendarMonth__grid">
           {getCalendarMonthWeeks(month, enableOutsideDays).map((week, i) =>
             <tr key={i}>
+
+              {withWeekNumbers ?
+                <td className="CalendarMonth__weeknumber" key={-1}>
+                  <small>{getWeekNumberForWeek(week)}</small>
+                </td> : null}
+
               {week.map((day, j) => {
                 const modifiersForDay = getModifiersForDay(modifiers, day);
                 const className = cx('CalendarMonth__day', {

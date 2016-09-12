@@ -56,4 +56,9 @@ storiesOf('SingleDatePicker', module)
       numberOfMonths={1}
       enableOutsideDays
     />
+  ))
+  .add('with week numbers', () => (
+    <SingleDatePickerWrapper
+      withWeekNumbers
+    />
   ));

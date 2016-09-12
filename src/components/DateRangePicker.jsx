@@ -48,6 +48,7 @@ const defaultProps = {
   orientation: HORIZONTAL_ORIENTATION,
   withPortal: false,
   withFullScreenPortal: false,
+  withWeekNumbers: false,
 
   onDatesChange() {},
   onFocusChange() {},
@@ -324,6 +325,7 @@ export default class DateRangePicker extends React.Component {
       onNextMonthClick,
       withPortal,
       withFullScreenPortal,
+      withWeekNumbers,
       enableOutsideDays,
     } = this.props;
 
@@ -365,6 +367,7 @@ export default class DateRangePicker extends React.Component {
           onNextMonthClick={onNextMonthClick}
           monthFormat={monthFormat}
           withPortal={withPortal || withFullScreenPortal}
+          withWeekNumbers={withWeekNumbers}
           onOutsideClick={onOutsideClick}
         />
 

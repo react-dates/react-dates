@@ -23,6 +23,8 @@ export default {
   withPortal: PropTypes.bool,
   withFullScreenPortal: PropTypes.bool,
 
+  withWeekNumbers: PropTypes.bool,
+
   startDateId: PropTypes.string,
   startDatePlaceholderText: PropTypes.string,
   endDateId: PropTypes.string,

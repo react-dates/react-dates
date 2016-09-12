@@ -11,6 +11,12 @@ storiesOf('DayPicker', module)
   .add('more than one month', () => (
     <DayPicker numberOfMonths={2} />
   ))
+  .add('with week numbers', () => (
+    <DayPicker
+      numberOfMonths={2}
+      withWeekNumbers
+    />
+  ))
   .add('vertical', () => (
     <DayPicker
       numberOfMonths={2}
@@ -24,4 +30,11 @@ storiesOf('DayPicker', module)
         orientation={VERTICAL_ORIENTATION}
       />
     </div>
+  ))
+  .add('vertical with week numbers', () => (
+    <DayPicker
+      numberOfMonths={2}
+      orientation={VERTICAL_ORIENTATION}
+      withWeekNumbers
+    />
   ));
