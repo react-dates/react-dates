@@ -6,14 +6,25 @@ node_js:
   - "4.2"
   - "iojs"
 before_script:
-  - if [ "${TRAVIS_NODE_VERSION}" = 6 ]; then export DISPLAY=:99.0; fi
-  - if [ "${TRAVIS_NODE_VERSION}" = 6 ]; then sh -e /etc/init.d/xvfb start; fi
-  - if [ "${TRAVIS_NODE_VERSION}" = 6 ]; then sleep 3; fi
-script: 'if [ "${TRAVIS_NODE_VERSION}" = 6 ]; then npm test; else npm run tests-only; fi'
+  - 'if [ "${TRAVIS_NODE_VERSION}" = 6 ]; then export DISPLAY=:99.0; fi'
+  - 'if [ "${TRAVIS_NODE_VERSION}" = 6 ]; then sh -e /etc/init.d/xvfb start; fi'
+  - 'if [ "${TRAVIS_NODE_VERSION}" = 6 ]; then sleep 3; fi'
+script:
+  - 'if [ -n "${LINT-}" ]; then npm run lint ; fi'
+  - 'if [ -n "${TEST-}" ]; then npm run tests-only ; fi'
+  - 'if [ -n "${KARMA-}" ]; then npm run tests-karma ; fi'
 env:
-  - REACT=0.14
+  global:
+    - REACT=0.14
+  matrix:
+    - TEST=true
 sudo: false
 matrix:
   fast_finish: true
+  include:
+    - node_js: "node"
+      env: KARMA=true
+    - node_js: "node"
+      env: LINT=true
   allow_failures:
     - node_js: "iojs"
