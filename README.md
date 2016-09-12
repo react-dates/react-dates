@@ -108,6 +108,11 @@ By default, we do not show days from the previous month and the next month in th
   enableOutsideDays: PropTypes.bool
 ```
 
+`initialVisibleMonth` indicates the month that should be displayed initially when the calendar is first opened. The prop is a function that must return a Moment.js object. This function will be called the first time the user focuses on the `DateRangePicker`/`SingleDatePicker` inputs or when the `focused` prop is passed to the `DayPicker` component.
+```
+   initialVisibleMonth: PropTypes.func
+```
+
 **DayPicker presentation:**
 
 The `orientation` prop indicates whether months are stacked on top of each other or displayed side-by-side. You can import the `HORIZONTAL_ORIENTATION` and `VERTICAL_ORIENTATION` constants from `react-dates/constants`.

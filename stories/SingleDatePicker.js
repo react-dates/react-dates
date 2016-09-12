@@ -34,6 +34,11 @@ storiesOf('SingleDatePicker', module)
       withFullScreenPortal
     />
   ))
+  .add('with month specified on open', () => (
+    <SingleDatePickerWrapper
+      initialVisibleMonth={() => moment('01 2017', 'MM YYYY')}
+    />
+  ))
   .add('non-english locale', () => {
     moment.locale('zh-cn');
     return (

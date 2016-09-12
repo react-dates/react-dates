@@ -103,6 +103,11 @@ storiesOf('DateRangePicker', module)
       isDayBlocked={day1 => datesList.some(day2 => isSameDay(day1, day2))}
     />
   ))
+  .add('with month specified on open', () => (
+    <DateRangePickerWrapper
+      initialVisibleMonth={() => moment('01 2017', 'MM YYYY')}
+    />
+  ))
   .add('blocks fridays', () => (
     <DateRangePickerWrapper
       isDayBlocked={day => moment.weekdays(day.weekday()) === 'Friday'}
