@@ -400,6 +400,52 @@ describe('DateRangePicker', () => {
       });
     });
 
+    describe('matches custom display format', () => {
+      const customFormat = 'MM[foobar]DD';
+      const customFormatDateString = moment(today).add(5, 'days').format(customFormat);
+      it('calls props.onDatesChange with correct arguments', () => {
+        const onDatesChangeStub = sinon.stub();
+        const wrapper = shallow(
+          <DateRangePicker
+            displayFormat={customFormat}
+            onDatesChange={onDatesChangeStub}
+          />
+        );
+        wrapper.instance().onEndDateChange(customFormatDateString);
+        expect(onDatesChangeStub.callCount).to.equal(1);
+
+        const { startDate, endDate } = onDatesChangeStub.getCall(0).args[0];
+        expect(startDate).to.equal(wrapper.instance().props.startDate);
+        expect(endDate.format(customFormat)).to.equal(customFormatDateString);
+      });
+
+      describe('props.onFocusChange', () => {
+        it('is called once', () => {
+          const onFocusChangeStub = sinon.stub();
+          const wrapper = shallow(
+            <DateRangePicker
+              displayFormat={customFormat}
+              onFocusChange={onFocusChangeStub}
+            />
+          );
+          wrapper.instance().onEndDateChange(customFormatDateString);
+          expect(onFocusChangeStub.callCount).to.equal(1);
+        });
+
+        it('is called with null arg', () => {
+          const onFocusChangeStub = sinon.stub();
+          const wrapper = shallow(
+            <DateRangePicker
+              displayFormat={customFormat}
+              onFocusChange={onFocusChangeStub}
+            />
+          );
+          wrapper.instance().onEndDateChange(customFormatDateString);
+          expect(onFocusChangeStub.calledWith(null)).to.equal(true);
+        });
+      });
+    });
+
     describe('is not a valid date string', () => {
       const invalidDateString = 'foo';
       it('calls props.onDatesChange', () => {
@@ -641,6 +687,52 @@ describe('DateRangePicker', () => {
             wrapper.instance().onStartDateChange(validFutureDateString);
             expect(onFocusChangeStub.calledWith(END_DATE)).to.equal(true);
           });
+        });
+      });
+    });
+
+    describe('matches custom display format', () => {
+      const customFormat = 'MM[foobar]DD';
+      const customFormatDateString = moment(today).add(5, 'days').format(customFormat);
+      it('calls props.onDatesChange with correct arguments', () => {
+        const onDatesChangeStub = sinon.stub();
+        const wrapper = shallow(
+          <DateRangePicker
+            displayFormat={customFormat}
+            onDatesChange={onDatesChangeStub}
+          />
+        );
+        wrapper.instance().onStartDateChange(customFormatDateString);
+        expect(onDatesChangeStub.callCount).to.equal(1);
+
+        const { startDate, endDate } = onDatesChangeStub.getCall(0).args[0];
+        expect(startDate.format(customFormat)).to.equal(customFormatDateString);
+        expect(endDate).to.equal(wrapper.instance().props.endDate);
+      });
+
+      describe('props.onFocusChange', () => {
+        it('is called once', () => {
+          const onFocusChangeStub = sinon.stub();
+          const wrapper = shallow(
+            <DateRangePicker
+              displayFormat={customFormat}
+              onFocusChange={onFocusChangeStub}
+            />
+          );
+          wrapper.instance().onStartDateChange(customFormatDateString);
+          expect(onFocusChangeStub.callCount).to.equal(1);
+        });
+
+        it('is called with END_DATE arg', () => {
+          const onFocusChangeStub = sinon.stub();
+          const wrapper = shallow(
+            <DateRangePicker
+              displayFormat={customFormat}
+              onFocusChange={onFocusChangeStub}
+            />
+          );
+          wrapper.instance().onStartDateChange(customFormatDateString);
+          expect(onFocusChangeStub.calledWith(END_DATE)).to.equal(true);
         });
       });
     });

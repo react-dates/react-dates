@@ -67,9 +67,9 @@ export default class SingleDatePicker extends React.Component {
   }
 
   onChange(dateString) {
-    const date = toMomentObject(dateString);
+    const { displayFormat, isOutsideRange, onDateChange, onFocusChange } = this.props;
+    const date = toMomentObject(dateString, displayFormat);
 
-    const { isOutsideRange, onDateChange, onFocusChange } = this.props;
     const isValid = date && !isOutsideRange(date);
     if (isValid) {
       onDateChange(date);
@@ -114,7 +114,7 @@ export default class SingleDatePicker extends React.Component {
 
   getDateString(date) {
     const { displayFormat } = this.props;
-    if (displayFormat) {
+    if (date && displayFormat) {
       return date && date.format(displayFormat);
     }
     return toLocalizedDateString(date);

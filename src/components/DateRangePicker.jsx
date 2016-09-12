@@ -136,9 +136,9 @@ export default class DateRangePicker extends React.Component {
   }
 
   onEndDateChange(endDateString) {
-    const endDate = toMomentObject(endDateString);
+    const { startDate, isOutsideRange, onDatesChange, onFocusChange, displayFormat } = this.props;
+    const endDate = toMomentObject(endDateString, displayFormat);
 
-    const { startDate, isOutsideRange, onDatesChange, onFocusChange } = this.props;
     const isEndDateValid = endDate && !isOutsideRange(endDate) &&
       !isInclusivelyBeforeDay(endDate, startDate);
     if (isEndDateValid) {
@@ -173,7 +173,8 @@ export default class DateRangePicker extends React.Component {
   }
 
   onStartDateChange(startDateString) {
-    const startDate = toMomentObject(startDateString);
+    const { displayFormat } = this.props;
+    const startDate = toMomentObject(startDateString, displayFormat);
 
     let { endDate } = this.props;
     const { isOutsideRange, onDatesChange, onFocusChange } = this.props;
@@ -201,7 +202,7 @@ export default class DateRangePicker extends React.Component {
 
   getDateString(date) {
     const { displayFormat } = this.props;
-    if (displayFormat) {
+    if (date && displayFormat) {
       return date && date.format(displayFormat);
     }
     return toLocalizedDateString(date);
