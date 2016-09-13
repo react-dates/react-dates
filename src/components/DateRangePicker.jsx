@@ -54,6 +54,7 @@ const defaultProps = {
   onNextMonthClick() {},
 
   // i18n
+  displayFormat: moment.localeData().longDateFormat('L'),
   monthFormat: 'MMMM YYYY',
   phrases: {
     closeDatePicker: 'Close',
@@ -135,9 +136,9 @@ export default class DateRangePicker extends React.Component {
   }
 
   onEndDateChange(endDateString) {
-    const endDate = toMomentObject(endDateString);
+    const { startDate, isOutsideRange, onDatesChange, onFocusChange, displayFormat } = this.props;
+    const endDate = toMomentObject(endDateString, displayFormat);
 
-    const { startDate, isOutsideRange, onDatesChange, onFocusChange } = this.props;
     const isEndDateValid = endDate && !isOutsideRange(endDate) &&
       !isInclusivelyBeforeDay(endDate, startDate);
     if (isEndDateValid) {
@@ -172,7 +173,8 @@ export default class DateRangePicker extends React.Component {
   }
 
   onStartDateChange(startDateString) {
-    const startDate = toMomentObject(startDateString);
+    const { displayFormat } = this.props;
+    const startDate = toMomentObject(startDateString, displayFormat);
 
     let { endDate } = this.props;
     const { isOutsideRange, onDatesChange, onFocusChange } = this.props;
@@ -196,6 +198,14 @@ export default class DateRangePicker extends React.Component {
     if (!this.props.disabled) {
       this.props.onFocusChange(START_DATE);
     }
+  }
+
+  getDateString(date) {
+    const { displayFormat } = this.props;
+    if (date && displayFormat) {
+      return date && date.format(displayFormat);
+    }
+    return toLocalizedDateString(date);
   }
 
   getDayPickerContainerClasses() {
@@ -384,8 +394,8 @@ export default class DateRangePicker extends React.Component {
       withFullScreenPortal,
     } = this.props;
 
-    const startDateString = toLocalizedDateString(startDate);
-    const endDateString = toLocalizedDateString(endDate);
+    const startDateString = this.getDateString(startDate);
+    const endDateString = this.getDateString(endDate);
 
     const onOutsideClick = !withPortal && !withFullScreenPortal ? this.onOutsideClick : () => {};
 

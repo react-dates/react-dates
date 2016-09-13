@@ -68,6 +68,11 @@ storiesOf('DateRangePicker', module)
       />
     );
   })
+  .add('with custom display format', () => (
+    <DateRangePickerWrapper
+      displayFormat="MMM D"
+    />
+  ))
   .add('with minimum nights set', () => (
     <DateRangePickerWrapper
       minimumNights={3}

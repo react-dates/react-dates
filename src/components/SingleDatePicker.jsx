@@ -43,6 +43,7 @@ const defaultProps = {
   onNextMonthClick() {},
 
   // i18n
+  displayFormat: moment.localeData().longDateFormat('L'),
   monthFormat: 'MMMM YYYY',
   phrases: {
     closeDatePicker: 'Close',
@@ -66,9 +67,9 @@ export default class SingleDatePicker extends React.Component {
   }
 
   onChange(dateString) {
-    const date = toMomentObject(dateString);
+    const { displayFormat, isOutsideRange, onDateChange, onFocusChange } = this.props;
+    const date = toMomentObject(dateString, displayFormat);
 
-    const { isOutsideRange, onDateChange, onFocusChange } = this.props;
     const isValid = date && !isOutsideRange(date);
     if (isValid) {
       onDateChange(date);
@@ -109,6 +110,14 @@ export default class SingleDatePicker extends React.Component {
     if (!focused) return;
 
     onFocusChange({ focused: false });
+  }
+
+  getDateString(date) {
+    const { displayFormat } = this.props;
+    if (date && displayFormat) {
+      return date && date.format(displayFormat);
+    }
+    return toLocalizedDateString(date);
   }
 
   getDayPickerContainerClasses() {
@@ -227,7 +236,7 @@ export default class SingleDatePicker extends React.Component {
 
     const onOutsideClick = withPortal || withFullScreenPortal ? () => {} : this.onClearFocus;
 
-    const dateValue = toLocalizedDateString(date);
+    const dateString = this.getDateString(date);
 
     return (
       <div className="SingleDatePicker">
@@ -237,7 +246,7 @@ export default class SingleDatePicker extends React.Component {
             placeholder={placeholder}
             focused={focused}
             disabled={disabled}
-            dateValue={dateValue}
+            dateValue={dateString}
             onChange={this.onChange}
             onFocus={this.onFocus}
             onKeyDownShiftTab={this.onClearFocus}
