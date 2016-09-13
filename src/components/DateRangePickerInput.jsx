@@ -29,6 +29,7 @@ const propTypes = {
   isEndDateFocused: PropTypes.bool,
   showClearDates: PropTypes.bool,
   disabled: PropTypes.bool,
+  showCaret: PropTypes.bool,
 
   // i18n
   phrases: PropTypes.shape({
@@ -52,6 +53,7 @@ const defaultProps = {
   isEndDateFocused: false,
   showClearDates: false,
   disabled: false,
+  showCaret: false,
 
   // i18n
   phrases: {
@@ -102,6 +104,7 @@ export default class DateRangePickerInput extends React.Component {
       onClearDates,
       showClearDates,
       disabled,
+      showCaret,
       phrases,
     } = this.props;
 
@@ -120,6 +123,7 @@ export default class DateRangePickerInput extends React.Component {
           dateValue={startDateValue}
           focused={isStartDateFocused}
           disabled={disabled}
+          showCaret={showCaret}
 
           onChange={onStartDateChange}
           onFocus={onStartDateFocus}
@@ -136,6 +140,7 @@ export default class DateRangePickerInput extends React.Component {
           dateValue={endDateValue}
           focused={isEndDateFocused}
           disabled={disabled}
+          showCaret={showCaret}
 
           onChange={onEndDateChange}
           onFocus={onEndDateFocus}

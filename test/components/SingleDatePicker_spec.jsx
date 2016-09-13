@@ -4,6 +4,7 @@ import { shallow } from 'enzyme';
 import sinon from 'sinon-sandbox';
 import moment from 'moment';
 import Portal from 'react-portal';
+import TetherComponent from 'react-tether';
 
 import {
   HORIZONTAL_ORIENTATION,
@@ -13,7 +14,6 @@ import {
 } from '../../constants';
 
 import DayPicker from '../../src/components/DayPicker';
-import OutsideClickHandler from '../../src/components/OutsideClickHandler';
 import SingleDatePickerInput from '../../src/components/SingleDatePickerInput';
 import SingleDatePicker from '../../src/components/SingleDatePicker';
 
@@ -26,9 +26,9 @@ describe('SingleDatePicker', () => {
       expect(wrapper.is('.SingleDatePicker')).to.equal(true);
     });
 
-    it('renders an OutsideClickHandler', () => {
+    it('renders an TetherComponent', () => {
       const wrapper = shallow(<SingleDatePicker id="date" />);
-      expect(wrapper.find(OutsideClickHandler)).to.have.lengthOf(1);
+      expect(wrapper.find(TetherComponent)).to.have.lengthOf(1);
     });
 
     it('renders a SingleDatePickerInput', () => {

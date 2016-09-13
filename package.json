@@ -97,7 +97,8 @@
     "array-includes": "^3.0.2",
     "classnames": "^2.2.5",
     "react-moment-proptypes": "^1.2.0",
-    "react-portal": "^2.2.1"
+    "react-portal": "^2.2.1",
+    "react-tether": "^0.5.2"
   },
   "peerDependencies": {
     "moment": "2.10 - 2.14 || ^2.15.1",
