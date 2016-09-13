@@ -22,8 +22,8 @@ sudo: false
 matrix:
   fast_finish: true
   include:
-    - node_js: "node"
-      env: KARMA=true
+#    - node_js: "node"
+#      env: KARMA=true
     - node_js: "node"
       env: LINT=true
   allow_failures:
