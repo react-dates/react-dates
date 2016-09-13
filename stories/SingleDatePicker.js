@@ -51,4 +51,30 @@ storiesOf('SingleDatePicker', module)
       numberOfMonths={1}
       enableOutsideDays
     />
-  ));
+  ))
+  .add('with custom display label', () => {
+    moment.locale('en', {
+      calendar: {
+        sameDay: '[Now]',
+        nextDay: '[Tomorrow]',
+        nextWeek: 'dddd',
+        lastDay: '[Yesterday]',
+        lastWeek: '[last] dddd',
+        sameElse: 'L',
+      }
+    });
+
+    function parseDate(date) {
+      if (!date) {
+        return null;
+      }
+
+      return date.calendar();
+    }
+
+    return (
+      <SingleDatePickerWrapper
+        displayLabel={parseDate}
+      />
+    )
+  });
