@@ -70,7 +70,7 @@
     "karma-webpack": "^1.8.0",
     "mocha": "^3.0.2",
     "mocha-wrap": "^2.0.5",
-    "moment": "^2.14.1",
+    "moment": "~2.14.1",
     "node-sass": "^3.8.0",
     "raw-loader": "^0.5.1",
     "react": "^15.2.1",
@@ -93,7 +93,7 @@
     "react-portal": "^2.2.1"
   },
   "peerDependencies": {
-    "moment": ">=2.10",
+    "moment": ">=2.10 && < 2.15.0",
     "react": ">=0.14",
     "react-dom": ">=0.14",
     "react-addons-shallow-compare": ">=0.14"
