@@ -1,5 +1,10 @@
 # Change Log
 
+## v2.2.0
+ - [fix] Fix height issue where an extra table row was being rendered for some months ([#57](https://github.com/airbnb/react-dates/pull/57))
+ - [fix] Disables user-select on navigation ([#74](https://github.com/airbnb/react-dates/pull/74))
+ - [new] Allows for a custom date display format ([#52](https://github.com/airbnb/react-dates/pull/52))
+
 ## v2.1.1
  - [fix] Fix initial day of month to utc to fix daylight savings time problem in Brazil and other locales
  - [fix] Remove jQuery as a dependency
