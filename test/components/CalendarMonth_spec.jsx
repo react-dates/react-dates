@@ -4,7 +4,10 @@ import { shallow } from 'enzyme';
 import moment from 'moment';
 
 import { HORIZONTAL_ORIENTATION, VERTICAL_ORIENTATION } from '../../src/constants';
+
 import CalendarMonth, { getModifiersForDay } from '../../src/components/CalendarMonth';
+
+import getWeekNumberForWeek from '../../src/utils/getWeekNumberForWeek';
 
 describe('CalendarMonth', () => {
   describe('#render', () => {
@@ -95,23 +98,6 @@ describe('CalendarMonth', () => {
   });
 
   describe('#getWeekNumberForWeek', () => {
-    it('returns null if week is not passed in', () => {
-      const weekNumber = getWeekNumberForWeek();
-      expect(weekNumber).to.equal(null);
-    });
-
-    it('returns null if empty week is passed in', () => {
-      const week = [];
-      const weekNumber = getWeekNumberForWeek(week);
-      expect(weekNumber).to.equal(null);
-    });
-
-    it('returns null if not valid week is passed in', () => {
-      const week = [false];
-      const weekNumber = getWeekNumberForWeek(week);
-      expect(weekNumber).to.equal(null);
-    });
-
     it('returns right week number if not valid week is passed in', () => {
       // week number is highly depend on local
       // http://momentjs.com/docs/#/get-set/week/
