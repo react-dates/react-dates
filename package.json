@@ -7,7 +7,7 @@
     "build": "npm run clean && npm run build:js && npm run build:css && npm run build:svg",
     "build:js": "babel src/ -d lib/ --ignore src/components",
     "build:css": "node-sass css/styles.scss lib/css/_datepicker.css",
-    "build:svg": "webpack",
+    "build:svg": "webpack --watch",
     "clean": "rimraf lib",
     "lint": "eslint --ext .js,.jsx src test",
     "mocha": "mocha --compilers js:babel-register,jsx:babel-register --require airbnb-js-shims --recursive ./test/_helpers",
@@ -97,5 +97,8 @@
     "react": ">=0.14",
     "react-dom": ">=0.14",
     "react-addons-shallow-compare": ">=0.14"
+  },
+  "jshintConfig": {
+    "esnext": true
   }
 }

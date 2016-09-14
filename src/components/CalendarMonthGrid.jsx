@@ -126,6 +126,7 @@ export default class CalendarMonthGrid extends React.Component {
 
       months.push(
         <CalendarMonth
+          onMenuChangeYearMonth={this.props.onMenuChangeYearMonth}
           key={month.format('MM-YY')}
           month={month}
           isVisible={isVisible}
