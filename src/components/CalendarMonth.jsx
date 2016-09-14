@@ -7,6 +7,8 @@ import CalendarDay from './CalendarDay';
 
 import getCalendarMonthWeeks from '../utils/getCalendarMonthWeeks';
 
+import getWeekNumberForWeek from '../utils/getWeekNumberForWeek';
+
 import OrientationShape from '../shapes/OrientationShape';
 
 import { HORIZONTAL_ORIENTATION, VERTICAL_ORIENTATION } from '../../constants';
@@ -53,20 +55,6 @@ const defaultProps = {
 
 export function getModifiersForDay(modifiers, day) {
   return day ? Object.keys(modifiers).filter(key => modifiers[key](day)) : [];
-}
-
-export function getWeekNumberForWeek(week) {
-  if (week && Array.isArray(week)) {
-    const validDays = week.filter((d) => (d));
-    if (validDays[0] && moment.isMoment(validDays[0])) {
-      const firstDayOfWeek = validDays[0].clone().startOf('week');
-
-      return firstDayOfWeek.week();
-    }
-    return null;
-  }
-
-  return null;
 }
 
 export default function CalendarMonth(props) {
