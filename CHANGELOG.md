@@ -1,5 +1,9 @@
 # Change Log
 
+## v3.0.0
+ - [breaking] Move the constants file to the top-level ([#53](https://github.com/airbnb/react-dates/pull/53))
+ - [breaking] Add `reopenPickerOnClearDates` prop so that the DateRangePicker no longer automatically reopens when clearing dates ([#75](https://github.com/airbnb/react-dates/pull/75))
+
 ## v2.2.0
  - [fix] Fix height issue where an extra table row was being rendered for some months ([#57](https://github.com/airbnb/react-dates/pull/57))
  - [fix] Disables user-select on navigation ([#74](https://github.com/airbnb/react-dates/pull/74))
