@@ -154,19 +154,40 @@ describe('DateRangePicker', () => {
   });
 
   describe('#clearDates', () => {
-    describe('props.onFocusChange', () => {
-      it('is called once', () => {
-        const onFocusChangeStub = sinon.stub();
-        const wrapper = shallow(<DateRangePicker onFocusChange={onFocusChangeStub} />);
-        wrapper.instance().clearDates();
-        expect(onFocusChangeStub.callCount).to.equal(1);
-      });
+    describe('props.reopenPickerOnClearDates is truthy', () => {
+      describe('props.onFocusChange', () => {
+        it('is called once', () => {
+          const onFocusChangeStub = sinon.stub();
+          const wrapper = shallow(
+            <DateRangePicker
+              onFocusChange={onFocusChangeStub}
+              reopenPickerOnClearDates
+            />);
+          wrapper.instance().clearDates();
+          expect(onFocusChangeStub.callCount).to.equal(1);
+        });
 
-      it('is called with arg START_DATE', () => {
-        const onFocusChangeStub = sinon.stub();
-        const wrapper = shallow(<DateRangePicker onFocusChange={onFocusChangeStub} />);
-        wrapper.instance().clearDates();
-        expect(onFocusChangeStub.getCall(0).args[0]).to.equal(START_DATE);
+        it('is called with arg START_DATE', () => {
+          const onFocusChangeStub = sinon.stub();
+          const wrapper = shallow(
+            <DateRangePicker
+              onFocusChange={onFocusChangeStub}
+              reopenPickerOnClearDates
+            />);
+          wrapper.instance().clearDates();
+          expect(onFocusChangeStub.getCall(0).args[0]).to.equal(START_DATE);
+        });
+      });
+    });
+
+    describe('props.reopenPickerOnClearDates is falsy', () => {
+      describe('props.onFocusChange', () => {
+        it('is not called', () => {
+          const onFocusChangeStub = sinon.stub();
+          const wrapper = shallow(<DateRangePicker onFocusChange={onFocusChangeStub} />);
+          wrapper.instance().clearDates();
+          expect(onFocusChangeStub.callCount).to.equal(0);
+        });
       });
     });
 

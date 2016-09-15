@@ -43,6 +43,7 @@ const defaultProps = {
   numberOfMonths: 2,
   showClearDates: false,
   disabled: false,
+  reopenPickerOnClearDates: false,
 
   orientation: HORIZONTAL_ORIENTATION,
   withPortal: false,
@@ -233,8 +234,11 @@ export default class DateRangePicker extends React.Component {
   }
 
   clearDates() {
-    this.props.onDatesChange({ startDate: null, endDate: null });
-    this.props.onFocusChange(START_DATE);
+    const { onDatesChange, reopenPickerOnClearDates, onFocusChange } = this.props;
+    onDatesChange({ startDate: null, endDate: null });
+    if (reopenPickerOnClearDates) {
+      onFocusChange(START_DATE);
+    }
   }
 
   doesNotMeetMinimumNights(day) {

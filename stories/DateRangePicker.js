@@ -53,6 +53,12 @@ storiesOf('DateRangePicker', module)
       showClearDates
     />
   ))
+  .add('with clear dates button (Picker Displayed)', () => (
+    <DateRangePickerWrapper
+      showClearDates
+      reopenPickerOnClearDates
+    />
+  ))
   .add('non-english locale', () => {
     moment.locale('zh-cn');
     return (
