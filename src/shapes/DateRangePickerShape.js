@@ -12,6 +12,7 @@ export default {
   isDayBlocked: PropTypes.func,
   isOutsideRange: PropTypes.func,
   enableOutsideDays: PropTypes.bool,
+  reopenPickerOnClearDates: PropTypes.bool,
   numberOfMonths: PropTypes.number,
   showClearDates: PropTypes.bool,
   disabled: PropTypes.bool,

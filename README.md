@@ -174,6 +174,15 @@ The `phrases` prop is an object that contains all the English language phrases c
   }),
 ```
 
+** Display picker when clicked on clear button: **
+
+The `reopenPickerOnClearDates` helps to control whether to show the date picker when the clear option is clicked. This is set to `false` by default
+which means that the picker does not open when the clear button is clicked by default. To display the picker one must explicitly set it to `true`.
+
+```
+    reopenPickerOnClearDates: PropTypes.bool
+```
+
 ### `SingleDatePicker`
 This fully-controlled component is designed to allow a user to select a single date.
 
