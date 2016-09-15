@@ -19,7 +19,7 @@ import {
   VERTICAL_ORIENTATION,
   START_DATE,
   END_DATE,
-} from '../../src/constants';
+} from '../../constants';
 
 const today = moment().startOf('day');
 

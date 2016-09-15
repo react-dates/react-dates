@@ -5,7 +5,7 @@ import { mount, shallow } from 'enzyme';
 
 import DayPicker from '../../src/components/DayPicker';
 import CalendarMonthGrid from '../../src/components/CalendarMonthGrid';
-import { HORIZONTAL_ORIENTATION, VERTICAL_ORIENTATION } from '../../src/constants';
+import { HORIZONTAL_ORIENTATION, VERTICAL_ORIENTATION } from '../../constants';
 
 describe('DayPicker', () => {
   describe('#render', () => {
