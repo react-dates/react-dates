@@ -27,6 +27,7 @@ export default {
   onNextMonthClick: PropTypes.func,
 
   // i18n
+  displayFormat: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   monthFormat: PropTypes.string,
   phrases: PropTypes.shape({
     closeDatePicker: PropTypes.node,

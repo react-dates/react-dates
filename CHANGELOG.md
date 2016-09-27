@@ -1,5 +1,9 @@
 # Change Log
 
+## Unreleased
+ - [new] Allow `displayFormat` prop to take a function as well as a string ([#98](https://github.com/airbnb/react-dates/pull/98))
+ - [fix] Default value for `displayFormat` now actually returns moment's `L` format based on the locale ([#98](https://github.com/airbnb/react-dates/pull/98)))
+
 ## v3.0.0
  - [breaking] Move the constants file to the top-level ([#53](https://github.com/airbnb/react-dates/pull/53))
  - [breaking] Add `reopenPickerOnClearDates` prop so that the DateRangePicker no longer automatically reopens when clearing dates ([#75](https://github.com/airbnb/react-dates/pull/75))
