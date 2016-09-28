@@ -161,6 +161,11 @@ If you need to do something when the user navigates between months (for instance
 
 While we have reasonable defaults for english, we understand that that's not the only language in the world! :) At Airbnb, more than 50% of users visit our site in a language other than english. Thus, in addition to supporting moment locales, the `DateRangePicker` accepts a number of props to allow for this.
 
+The `displayFormat` prop is either a string that abides by [moment's date formatting rules](http://momentjs.com/docs/#/displaying/format/) or a function that returns a string that follows these rules. It defaults to the value of moment's `L` format in whatever locale you happen to be in at the time of render.
+```
+  displayFormat: PropTypes.oneOfType([PropTypes.string, PropTypes.func])
+```
+
 The `monthFormat` prop abides by [moment's date formatting rules](http://momentjs.com/docs/#/displaying/format/) and indicates the format in which to display dates at the top of each calendar. It defaults to `MMMM YYYY`.
 ```
   monthFormat: PropTypes.string,
@@ -287,6 +292,11 @@ If you need to do something when the user navigates between months (for instance
 ```
 
 **Internationalization:**
+
+The `displayFormat` prop is either a string that abides by [moment's date formatting rules](http://momentjs.com/docs/#/displaying/format/) or a function that returns a string that follows these rules. It defaults to the value of moment's `L` format in whatever locale you happen to be in at the time of render.
+```
+  displayFormat: PropTypes.oneOfType([PropTypes.string, PropTypes.func])
+```
 
 The `monthFormat` prop abides by [moment's date formatting rules](http://momentjs.com/docs/#/displaying/format/) and indicates the format in which to display dates at the top of each calendar. It defaults to `MMMM YYYY`.
 ```

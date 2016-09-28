@@ -55,7 +55,7 @@ const defaultProps = {
   onNextMonthClick() {},
 
   // i18n
-  displayFormat: moment.localeData().longDateFormat('L'),
+  displayFormat: () => moment.localeData().longDateFormat('L'),
   monthFormat: 'MMMM YYYY',
   phrases: {
     closeDatePicker: 'Close',
@@ -137,8 +137,9 @@ export default class DateRangePicker extends React.Component {
   }
 
   onEndDateChange(endDateString) {
-    const { startDate, isOutsideRange, onDatesChange, onFocusChange, displayFormat } = this.props;
-    const endDate = toMomentObject(endDateString, displayFormat);
+    const { startDate, isOutsideRange, onDatesChange, onFocusChange } = this.props;
+
+    const endDate = toMomentObject(endDateString, this.getDisplayFormat());
 
     const isEndDateValid = endDate && !isOutsideRange(endDate) &&
       !isInclusivelyBeforeDay(endDate, startDate);
@@ -174,8 +175,7 @@ export default class DateRangePicker extends React.Component {
   }
 
   onStartDateChange(startDateString) {
-    const { displayFormat } = this.props;
-    const startDate = toMomentObject(startDateString, displayFormat);
+    const startDate = toMomentObject(startDateString, this.getDisplayFormat());
 
     let { endDate } = this.props;
     const { isOutsideRange, onDatesChange, onFocusChange } = this.props;
@@ -202,7 +202,7 @@ export default class DateRangePicker extends React.Component {
   }
 
   getDateString(date) {
-    const { displayFormat } = this.props;
+    const displayFormat = this.getDisplayFormat();
     if (date && displayFormat) {
       return date && date.format(displayFormat);
     }
@@ -231,6 +231,11 @@ export default class DateRangePicker extends React.Component {
 
   getDayPickerDOMNode() {
     return ReactDOM.findDOMNode(this.dayPicker);
+  }
+
+  getDisplayFormat() {
+    const { displayFormat } = this.props;
+    return typeof displayFormat === 'string' ? displayFormat : displayFormat();
   }
 
   clearDates() {
