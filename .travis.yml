@@ -13,6 +13,9 @@ script:
   - 'if [ -n "${LINT-}" ]; then npm run lint ; fi'
   - 'if [ -n "${TEST-}" ]; then npm run tests-only ; fi'
   - 'if [ -n "${KARMA-}" ]; then npm run tests-karma ; fi'
+  - 'if [ -n "${REACT-}" ]; then npm run cover; fi'
+after_success:
+  - 'if [ "${TRAVIS_NODE_VERSION}" = "4.2" ]; then cat ./coverage/lcov.info | ./node_modules/.bin/coveralls ; fi'
 env:
   global:
     - REACT=0.14
