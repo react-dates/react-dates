@@ -1,0 +1,16 @@
+instrumentation:
+  root: "."
+  extensions: [".js", ".jsx"]
+  excludes: [
+    "node_modules/**",
+    "lib/**",
+    "public/**",
+    "test/**",
+    "coverage/**",
+  ]
+check:
+  global:
+    statements: 89
+    branches: 70
+    lines: 91
+    functions: 79
