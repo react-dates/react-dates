@@ -1,6 +1,6 @@
 # Change Log
 
-## Unreleased
+## v3.1.0
  - [new] Allow `displayFormat` prop to take a function as well as a string ([#98](https://github.com/airbnb/react-dates/pull/98))
  - [fix] Default value for `displayFormat` now actually returns moment's `L` format based on the locale ([#98](https://github.com/airbnb/react-dates/pull/98)))
 
