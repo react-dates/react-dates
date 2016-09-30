@@ -3,6 +3,7 @@ import shallowCompare from 'react-addons-shallow-compare';
 import ReactDOM from 'react-dom';
 import moment from 'moment';
 import cx from 'classnames';
+import momentPropTypes from 'react-moment-proptypes';
 
 import OutsideClickHandler from './OutsideClickHandler';
 import CalendarMonthGrid from './CalendarMonthGrid';
@@ -25,9 +26,11 @@ const PREV_TRANSITION = 'prev';
 const NEXT_TRANSITION = 'next';
 
 const propTypes = {
+  startDate: momentPropTypes.momentObj,
   enableOutsideDays: PropTypes.bool,
   numberOfMonths: PropTypes.number,
   modifiers: PropTypes.object,
+  minimumNights: PropTypes.number,
   orientation: OrientationShape,
   withPortal: PropTypes.bool,
   onDayClick: PropTypes.func,
@@ -97,6 +100,30 @@ export default class DayPicker extends React.Component {
     if (this.state.monthTransition) {
       if (this.isHorizontal()) {
         this.adjustDayPickerHeight();
+      }
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const {monthTransition, monthsToTransition, currentMonth} = this.state;
+    const {startDate, minimumNights} = this.props;
+    const {startDate: nextStartDate} = nextProps;
+
+    if (!monthTransition && nextStartDate !== startDate && currentMonth.isBefore(nextStartDate.endOf('day'))) {
+      const endOfMonthDate = moment().endOf('month').date();
+
+      const firstPossibleDay = nextStartDate.clone().add(minimumNights, 'days');
+      const monthsDifferent = Math.floor(firstPossibleDay.diff(nextStartDate, 'months', true));
+
+      const monthsToTransition = (minimumNights > endOfMonthDate)
+        ? monthsDifferent
+        : 0;
+
+      const translationValue =
+        monthsToTransition * (this.isVertical() ? -this.getMonthHeightByIndex(1) : -this.dayPickerWidth);
+
+      if (monthsToTransition > 0) {
+        this.handleTransition(NEXT_TRANSITION, translationValue, monthsToTransition);
       }
     }
   }
@@ -181,13 +208,13 @@ export default class DayPicker extends React.Component {
   }
 
   updateStateAfterMonthTransition() {
-    const { currentMonth, monthTransition } = this.state;
+    const { currentMonth, monthTransition, monthsToTransition = 1 } = this.state;
 
     let newMonth = currentMonth;
     if (monthTransition === PREV_TRANSITION) {
       newMonth = currentMonth.clone().subtract(1, 'month');
     } else if (monthTransition === NEXT_TRANSITION) {
-      newMonth = currentMonth.clone().add(1, 'month');
+      newMonth = currentMonth.clone().add(monthsToTransition, 'month');
     }
 
     // clear the previous transforms
@@ -236,10 +263,11 @@ export default class DayPicker extends React.Component {
     const translationValue =
       this.isVertical() ? -this.getMonthHeightByIndex(1) : -this.dayPickerWidth;
 
-    this.setState({
-      monthTransition: NEXT_TRANSITION,
-      translationValue,
-    });
+    this.handleTransition(NEXT_TRANSITION, translationValue, 1);
+  }
+
+  handleTransition(monthTransition, translationValue, monthsToTransition = 1) {
+    this.setState({monthTransition, translationValue, monthsToTransition})
   }
 
   adjustDayPickerHeight() {
@@ -345,7 +373,11 @@ export default class DayPicker extends React.Component {
       onDayMouseLeave,
       onOutsideClick,
       monthFormat,
+      minimumNights,
+      startDate,
     } = this.props;
+
+    const {monthsToTransition} = this.state;
 
     const numOfWeekHeaders = this.isVertical() ? 1 : numberOfMonths;
     const weekHeaders = [];
@@ -357,7 +389,7 @@ export default class DayPicker extends React.Component {
     if (monthTransition === PREV_TRANSITION) {
       firstVisibleMonthIndex -= 1;
     } else if (monthTransition === NEXT_TRANSITION) {
-      firstVisibleMonthIndex += 1;
+      firstVisibleMonthIndex += monthsToTransition;
     }
 
     const dayPickerClassNames = cx('DayPicker', {

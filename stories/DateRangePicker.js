@@ -107,4 +107,9 @@ storiesOf('DateRangePicker', module)
     <DateRangePickerWrapper
       isDayBlocked={day => moment.weekdays(day.weekday()) === 'Friday'}
     />
+  ))
+  .add('with more minimum nights than remaining months', () => (
+    <DateRangePickerWrapper
+      minimumNights={45}
+    />
   ));
