@@ -7,6 +7,8 @@ import CalendarDay from './CalendarDay';
 
 import getCalendarMonthWeeks from '../utils/getCalendarMonthWeeks';
 
+import getWeekNumberForWeek from '../utils/getWeekNumberForWeek';
+
 import OrientationShape from '../shapes/OrientationShape';
 
 import { HORIZONTAL_ORIENTATION, VERTICAL_ORIENTATION } from '../../constants';
@@ -15,6 +17,7 @@ const propTypes = {
   month: momentPropTypes.momentObj,
   isVisible: PropTypes.bool,
   enableOutsideDays: PropTypes.bool,
+  withWeekNumbers: PropTypes.bool,
   modifiers: PropTypes.object,
   orientation: OrientationShape,
   onDayClick: PropTypes.func,
@@ -34,6 +37,7 @@ const defaultProps = {
   month: moment(),
   isVisible: true,
   enableOutsideDays: false,
+  withWeekNumbers: false,
   modifiers: {},
   orientation: HORIZONTAL_ORIENTATION,
   onDayClick() {},
@@ -58,6 +62,7 @@ export default function CalendarMonth(props) {
     month,
     monthFormat,
     orientation,
+    withWeekNumbers,
     isVisible,
     modifiers,
     enableOutsideDays,
@@ -87,6 +92,12 @@ export default function CalendarMonth(props) {
         <tbody className="js-CalendarMonth__grid">
           {getCalendarMonthWeeks(month, enableOutsideDays).map((week, i) =>
             <tr key={i}>
+
+              {withWeekNumbers ?
+                <td className="CalendarMonth__weeknumber" key={-1}>
+                  <small>{getWeekNumberForWeek(week)}</small>
+                </td> : null}
+
               {week.map((day, j) => {
                 const modifiersForDay = getModifiersForDay(modifiers, day);
                 const className = cx('CalendarMonth__day', {

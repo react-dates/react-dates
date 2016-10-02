@@ -4,7 +4,10 @@ import { shallow } from 'enzyme';
 import moment from 'moment';
 
 import { HORIZONTAL_ORIENTATION, VERTICAL_ORIENTATION } from '../../constants';
+
 import CalendarMonth, { getModifiersForDay } from '../../src/components/CalendarMonth';
+
+import getWeekNumberForWeek from '../../src/utils/getWeekNumberForWeek';
 
 describe('CalendarMonth', () => {
   describe('#render', () => {
@@ -91,6 +94,19 @@ describe('CalendarMonth', () => {
 
       const filteredModifiers = getModifiersForDay(modifiers, moment());
       expect(filteredModifiers).not.to.include(modifierKey);
+    });
+  });
+
+  describe('#getWeekNumberForWeek', () => {
+    it('returns right week number if not valid week is passed in', () => {
+      // week number is highly depend on local
+      // http://momentjs.com/docs/#/get-set/week/
+      moment.locale('en');
+
+      const day = moment('12-25-1995', 'MM-DD-YYYY');
+      const week = [false, false, false, day];
+      const weekNumber = getWeekNumberForWeek(week);
+      expect(weekNumber).to.equal(52);
     });
   });
 });

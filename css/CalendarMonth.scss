@@ -36,6 +36,15 @@
   margin-bottom: 2px;
 }
 
+.CalendarMonth__weeknumber {
+  padding: 0;
+  box-sizing: border-box;
+  color: $react-dates-color-gray;
+  cursor: default;
+  width: $react-dates-width-day;
+  height: $react-dates-height-day;;
+}
+
 // This order is important.
 .CalendarMonth__day {
   border: 1px solid lighten($react-dates-color-border-light, 3);
@@ -43,8 +52,8 @@
   box-sizing: border-box;
   color: $react-dates-color-gray;
   cursor: pointer;
-  width: 39px;
-  height: 38px;
+  width: $react-dates-width-day;
+  height: $react-dates-height-day;;
 
   &:active {
     background: darken($react-dates-color-white, 5%);

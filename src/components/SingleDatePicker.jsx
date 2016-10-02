@@ -38,6 +38,7 @@ const defaultProps = {
   orientation: HORIZONTAL_ORIENTATION,
   withPortal: false,
   withFullScreenPortal: false,
+  withWeekNumbers: false,
 
   onPrevMonthClick() {},
   onNextMonthClick() {},
@@ -181,6 +182,7 @@ export default class SingleDatePicker extends React.Component {
       onNextMonthClick,
       withPortal,
       withFullScreenPortal,
+      withWeekNumbers,
     } = this.props;
 
     const modifiers = {
@@ -209,6 +211,7 @@ export default class SingleDatePicker extends React.Component {
           onNextMonthClick={onNextMonthClick}
           monthFormat={monthFormat}
           withPortal={withPortal || withFullScreenPortal}
+          withWeekNumbers={withWeekNumbers}
           onOutsideClick={onOutsideClick}
         />
 
