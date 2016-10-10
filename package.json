@@ -1,6 +1,6 @@
 {
-  "name": "react-dates",
-  "version": "3.1.1",
+  "name": "trucking-react-dates",
+  "version": "1.0.1",
   "description": "A responsive and accessible date range picker component built with React",
   "main": "index.js",
   "scripts": {
@@ -39,14 +39,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/airbnb/react-dates.git"
+    "url": "git+https://github.com/SungwonKim/react-dates"
   },
-  "author": "Maja Wichrowska <maja.wichrowska@airbnb.com>",
+  "author": "SungwonKim <sw.engineer@sk.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/airbnb/react-dates/issues"
+    "url": "https://github.com/SungwonKim/react-dates/issues"
   },
-  "homepage": "https://github.com/airbnb/react-dates#readme",
+  "homepage": "https://github.com/SungwonKim/react-dates",
   "devDependencies": {
     "@kadira/storybook": "^2.3.0",
     "airbnb-js-shims": "^1.0.1",
