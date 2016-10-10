@@ -1,5 +1,8 @@
 # Change Log
 
+## v3.2.0
+ - [new] Add `initialVisibleMonth` prop to the SingleDatePicker, DateRangePicker, and DayPicker components ([#70](https://github.com/airbnb/react-dates/pull/70))
+
 ## v3.1.1
  - [fix] Fix moment dependencies to allow v2.10 - v2.14
 
