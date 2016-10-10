@@ -44,6 +44,7 @@ const defaultProps = {
   showClearDates: false,
   disabled: false,
   reopenPickerOnClearDates: false,
+  initialVisibleMonth: () => moment(),
 
   orientation: HORIZONTAL_ORIENTATION,
   withPortal: false,
@@ -330,6 +331,8 @@ export default class DateRangePicker extends React.Component {
       withPortal,
       withFullScreenPortal,
       enableOutsideDays,
+      initialVisibleMonth,
+      focusedInput,
     } = this.props;
 
     const modifiers = {
@@ -370,6 +373,8 @@ export default class DateRangePicker extends React.Component {
           onNextMonthClick={onNextMonthClick}
           monthFormat={monthFormat}
           withPortal={withPortal || withFullScreenPortal}
+          hidden={!focusedInput}
+          initialVisibleMonth={initialVisibleMonth}
           onOutsideClick={onOutsideClick}
         />
 

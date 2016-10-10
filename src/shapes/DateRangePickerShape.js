@@ -28,6 +28,7 @@ export default {
   endDateId: PropTypes.string,
   endDatePlaceholderText: PropTypes.string,
 
+  initialVisibleMonth: PropTypes.func,
   onDatesChange: PropTypes.func,
   onFocusChange: PropTypes.func,
   onPrevMonthClick: PropTypes.func,

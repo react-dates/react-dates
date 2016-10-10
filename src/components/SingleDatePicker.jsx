@@ -38,6 +38,8 @@ const defaultProps = {
   orientation: HORIZONTAL_ORIENTATION,
   withPortal: false,
   withFullScreenPortal: false,
+  initialVisibleMonth: () => moment(),
+
 
   onPrevMonthClick() {},
   onNextMonthClick() {},
@@ -181,6 +183,8 @@ export default class SingleDatePicker extends React.Component {
       onNextMonthClick,
       withPortal,
       withFullScreenPortal,
+      focused,
+      initialVisibleMonth,
     } = this.props;
 
     const modifiers = {
@@ -209,6 +213,8 @@ export default class SingleDatePicker extends React.Component {
           onNextMonthClick={onNextMonthClick}
           monthFormat={monthFormat}
           withPortal={withPortal || withFullScreenPortal}
+          hidden={!focused}
+          initialVisibleMonth={initialVisibleMonth}
           onOutsideClick={onOutsideClick}
         />
 
