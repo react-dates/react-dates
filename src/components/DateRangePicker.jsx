@@ -11,6 +11,7 @@ import toLocalizedDateString from '../utils/toLocalizedDateString';
 
 import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
 import isInclusivelyBeforeDay from '../utils/isInclusivelyBeforeDay';
+import isBeforeDay from '../utils/isBeforeDay';
 import isNextDay from '../utils/isNextDay';
 import isSameDay from '../utils/isSameDay';
 
@@ -104,7 +105,7 @@ export default class DateRangePicker extends React.Component {
         endDate = null;
       }
     } else if (focusedInput === END_DATE) {
-      if (isInclusivelyBeforeDay(day, startDate)) {
+      if (isBeforeDay(day, startDate)) {
         startDate = day;
         endDate = null;
       } else {
@@ -343,7 +344,7 @@ export default class DateRangePicker extends React.Component {
 
       // while start date has been set, but end date has not been
       'hovered-span': day => this.isInHoveredSpan(day),
-      'after-hovered-start': day => this.isDayAfterHoveredStartDate(day),
+      // 'after-hovered-start': day => this.isDayAfterHoveredStartDate(day),
       'last-in-range': day => this.isLastInRange(day),
 
       // once a start date and end date have been set
