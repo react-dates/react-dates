@@ -17,6 +17,8 @@ import OutsideClickHandler from '../../src/components/OutsideClickHandler';
 import SingleDatePickerInput from '../../src/components/SingleDatePickerInput';
 import SingleDatePicker from '../../src/components/SingleDatePicker';
 
+import isSameDay from '../../src/utils/isSameDay';
+
 describe('SingleDatePicker', () => {
   describe('#render', () => {
     it('is .SingleDatePicker class', () => {
@@ -177,7 +179,8 @@ describe('SingleDatePicker', () => {
         const onDateChangeStub = sinon.stub();
         const wrapper = shallow(<SingleDatePicker id="date" onDateChange={onDateChangeStub} />);
         wrapper.instance().onChange(futureDateString);
-        expect(onDateChangeStub.getCall(0).args[0].isSame(futureDateString)).to.equal(true);
+        const newDate = onDateChangeStub.getCall(0).args[0];
+        expect(isSameDay(newDate, moment(futureDateString))).to.equal(true);
       });
 
       it('calls props.onFocusChange once', () => {

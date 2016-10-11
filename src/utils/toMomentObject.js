@@ -8,5 +8,5 @@ export default function toMomentObject(dateString, customFormat) {
     [DISPLAY_FORMAT, ISO_FORMAT];
 
   const date = moment(dateString, dateFormats, true);
-  return date.isValid() ? date : null;
+  return date.isValid() ? date.hour(12) : null;
 }
