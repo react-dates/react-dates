@@ -2,6 +2,7 @@ import { PropTypes } from 'react';
 import momentPropTypes from 'react-moment-proptypes';
 
 import OrientationShape from '../shapes/OrientationShape';
+import anchorDirectionShape from '../shapes/AnchorDirectionShape';
 
 export default {
   id: PropTypes.string.isRequired,
@@ -19,6 +20,7 @@ export default {
   numberOfMonths: PropTypes.number,
   orientation: OrientationShape,
   initialVisibleMonth: PropTypes.func,
+  anchorDirection: anchorDirectionShape,
 
   // portal options
   withPortal: PropTypes.bool,

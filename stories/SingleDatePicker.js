@@ -4,7 +4,7 @@ import { storiesOf } from '@kadira/storybook';
 
 import SingleDatePickerWrapper from '../examples/SingleDatePickerWrapper';
 
-import { VERTICAL_ORIENTATION } from '../constants';
+import { VERTICAL_ORIENTATION, ANCHOR_RIGHT } from '../constants';
 
 storiesOf('SingleDatePicker', module)
   .add('default', () => (
@@ -14,6 +14,13 @@ storiesOf('SingleDatePicker', module)
     <SingleDatePickerWrapper
       numberOfMonths={1}
     />
+  ))
+  .add('anchored right', () => (
+    <div style={{ float: 'right' }}>
+      <SingleDatePickerWrapper
+        anchorDirection={ANCHOR_RIGHT}
+      />
+    </div>
   ))
   .add('vertical', () => (
     <SingleDatePickerWrapper

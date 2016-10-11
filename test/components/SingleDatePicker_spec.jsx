@@ -5,7 +5,12 @@ import sinon from 'sinon-sandbox';
 import moment from 'moment';
 import Portal from 'react-portal';
 
-import { HORIZONTAL_ORIENTATION, VERTICAL_ORIENTATION } from '../../constants';
+import {
+  HORIZONTAL_ORIENTATION,
+  VERTICAL_ORIENTATION,
+  ANCHOR_LEFT,
+  ANCHOR_RIGHT,
+} from '../../constants';
 
 import DayPicker from '../../src/components/DayPicker';
 import OutsideClickHandler from '../../src/components/OutsideClickHandler';
@@ -67,6 +72,20 @@ describe('SingleDatePicker', () => {
           const wrapper =
             shallow(<SingleDatePicker id="date" orientation={VERTICAL_ORIENTATION} />);
           expect(wrapper.find('.SingleDatePicker__picker--vertical')).to.have.lengthOf(1);
+        });
+      });
+
+      describe('props.anchorDirection === ANCHOR_LEFT', () => {
+        it('renders .SingleDatePicker__picker--direction-left class', () => {
+          const wrapper = shallow(<SingleDatePicker anchorDirection={ANCHOR_LEFT} />);
+          expect(wrapper.find('.SingleDatePicker__picker--direction-left')).to.have.length(1);
+        });
+      });
+
+      describe('props.orientation === ANCHOR_RIGHT', () => {
+        it('renders .SingleDatePicker__picker--direction-right class', () => {
+          const wrapper = shallow(<SingleDatePicker anchorDirection={ANCHOR_RIGHT} />);
+          expect(wrapper.find('.SingleDatePicker__picker--direction-right')).to.have.length(1);
         });
       });
 

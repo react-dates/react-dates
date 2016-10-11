@@ -10,7 +10,6 @@
   z-index: 1;
   position: absolute;
   top: 145%;
-  left: 0;
 
   &::before,
   &::after {
@@ -25,7 +24,6 @@
     border: 10px solid transparent;
     border-top: 0;
     border-bottom-color: rgba(0, 0, 0, 0.1);
-    left: 22px;
   }
 
   &::after {
@@ -33,8 +31,27 @@
     border: 9px solid transparent;
     border-top: 0;
     border-bottom-color: #fff;
-    left: 23px;
   }
+}
+
+.SingleDatePicker__picker--direction-left {
+    left: 0;
+    &::before {
+        left: 22px;
+    }
+    &::after {
+        left: 23px;
+    }
+}
+
+.SingleDatePicker__picker--direction-right {
+    right: 0;
+    &::before {
+        right: 22px;
+    }
+    &::after {
+        right: 23px;
+    }
 }
 
 .SingleDatePicker__picker--show {

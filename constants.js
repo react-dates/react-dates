@@ -6,5 +6,8 @@ module.exports = {
   END_DATE: 'endDate',
 
   HORIZONTAL_ORIENTATION: 'horizontal',
-  VERTICAL_ORIENTATION: 'vertical'
+  VERTICAL_ORIENTATION: 'vertical',
+
+  ANCHOR_LEFT: 'left',
+  ANCHOR_RIGHT: 'right',
 };

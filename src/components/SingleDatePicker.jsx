@@ -18,7 +18,12 @@ import isSameDay from '../utils/isSameDay';
 
 import SingleDatePickerShape from '../shapes/SingleDatePickerShape';
 
-import { HORIZONTAL_ORIENTATION, VERTICAL_ORIENTATION } from '../../constants';
+import {
+  HORIZONTAL_ORIENTATION,
+  VERTICAL_ORIENTATION,
+  ANCHOR_LEFT,
+  ANCHOR_RIGHT,
+} from '../../constants';
 
 const propTypes = SingleDatePickerShape;
 
@@ -36,6 +41,7 @@ const defaultProps = {
   enableOutsideDays: false,
   numberOfMonths: 2,
   orientation: HORIZONTAL_ORIENTATION,
+  anchorDirection: ANCHOR_LEFT,
   withPortal: false,
   withFullScreenPortal: false,
   initialVisibleMonth: () => moment(),
@@ -123,12 +129,14 @@ export default class SingleDatePicker extends React.Component {
   }
 
   getDayPickerContainerClasses() {
-    const { focused, orientation, withPortal, withFullScreenPortal } = this.props;
+    const { focused, orientation, withPortal, withFullScreenPortal, anchorDirection } = this.props;
     const { hoverDate } = this.state;
 
     const dayPickerClassName = cx('SingleDatePicker__picker', {
       'SingleDatePicker__picker--show': focused,
       'SingleDatePicker__picker--invisible': !focused,
+      'SingleDatePicker__picker--direction-left': anchorDirection === ANCHOR_LEFT,
+      'SingleDatePicker__picker--direction-right': anchorDirection === ANCHOR_RIGHT,
       'SingleDatePicker__picker--horizontal': orientation === HORIZONTAL_ORIENTATION,
       'SingleDatePicker__picker--vertical': orientation === VERTICAL_ORIENTATION,
       'SingleDatePicker__picker--portal': withPortal || withFullScreenPortal,
