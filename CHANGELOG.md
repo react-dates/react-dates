@@ -1,5 +1,8 @@
 # Change Log
 
+## v3.3.1
+ - [fix] Updates all days to use noon as their time stamp to fix a number of DST issues ([#114](https://github.com/airbnb/react-dates/pull/114))
+
 ## v3.3.0
  - [new] Add `anchorDirection` prop to the SingleDatePicker and DateRangePicker components ([#72](https://github.com/airbnb/react-dates/pull/72))
 
