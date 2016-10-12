@@ -20,15 +20,7 @@
   background-color: $react-dates-color-white;
   z-index: 1;
   position: absolute;
-  top: 145%;
-
-  &::before,
-  &::after {
-    content: "";
-    display: inline-block;
-    position: absolute;
-    bottom: auto;
-  }
+  top: $react-dates-spacing-vertical-picker;
 }
 
 .DateRangePicker__picker--direction-left {
@@ -58,50 +50,6 @@
 
 .DateRangePicker__picker--full-screen-portal {
   background-color: $react-dates-color-white;
-}
-
-.DateRangePicker__picker--start::before,
-.DateRangePicker__picker--end::before {
-  top: -$react-dates-width-tooltip-arrow / 2;
-  border: $react-dates-width-tooltip-arrow / 2 solid transparent;
-  border-top: 0;
-  border-bottom-color: rgba(0, 0, 0, 0.1);
-}
-
-.DateRangePicker__picker--direction-left.DateRangePicker__picker--start::before {
-  left: 22px;
-}
-.DateRangePicker__picker--direction-right.DateRangePicker__picker--start::before {
-    right: $react-dates-width-input + $react-dates-width-arrow + 22px;
-}
-
-.DateRangePicker__picker--direction-left.DateRangePicker__picker--end::before {
-  left: $react-dates-width-arrow + $react-dates-width-input + 22px;
-}
-.DateRangePicker__picker--direction-right.DateRangePicker__picker--end::before {
-  right: 22px;
-}
-
-.DateRangePicker__picker--start::after,
-.DateRangePicker__picker--end::after {
-  top: -$react-dates-width-tooltip-arrow / 2;
-  border: $react-dates-width-tooltip-arrow / 2 solid transparent;
-  border-top: 0;
-  border-bottom-color: $react-dates-color-white;
-}
-
-.DateRangePicker__picker--direction-left.DateRangePicker__picker--start::after {
-  left: 23px;
-}
-.DateRangePicker__picker--direction-right.DateRangePicker__picker--start::after {
-    right: $react-dates-width-input + $react-dates-width-arrow + 23px;
-}
-
-.DateRangePicker__picker--direction-left.DateRangePicker__picker--end::after {
-    left: $react-dates-width-arrow + $react-dates-width-input + 23px;
-}
-.DateRangePicker__picker--direction-right.DateRangePicker__picker--end::after {
-    right: 23px;
 }
 
 .DateRangePicker__close {

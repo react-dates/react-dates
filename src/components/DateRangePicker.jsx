@@ -229,8 +229,6 @@ export default class DateRangePicker extends React.Component {
       'DateRangePicker__picker--direction-right': anchorDirection === ANCHOR_RIGHT,
       'DateRangePicker__picker--show': showDatepicker,
       'DateRangePicker__picker--invisible': !showDatepicker,
-      'DateRangePicker__picker--start': focusedInput === START_DATE,
-      'DateRangePicker__picker--end': focusedInput === END_DATE,
       'DateRangePicker__picker--horizontal': orientation === HORIZONTAL_ORIENTATION,
       'DateRangePicker__picker--vertical': orientation === VERTICAL_ORIENTATION,
       'DateRangePicker__picker--portal': withPortal || withFullScreenPortal,

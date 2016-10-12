@@ -93,6 +93,7 @@ export default class DateInput extends React.Component {
     return (
       <div
         className={cx('DateInput', {
+          'DateInput--focused': focused,
           'DateInput--disabled': disabled,
         })}
         onClick={onFocus}
