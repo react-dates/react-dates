@@ -12,6 +12,7 @@ import DayPicker from '../../src/components/DayPicker';
 
 import OutsideClickHandler from '../../src/components/OutsideClickHandler';
 
+import isSameDay from '../../src/utils/isSameDay';
 import isInclusivelyAfterDay from '../../src/utils/isInclusivelyAfterDay';
 
 import {
@@ -417,7 +418,7 @@ describe('DateRangePicker', () => {
 
         const onDatesChangeArgs = onDatesChangeStub.getCall(0).args[0];
         expect(onDatesChangeArgs.startDate).to.equal(wrapper.props().startDate);
-        expect(onDatesChangeArgs.endDate.isSame(validFutureDateString)).to.equal(true);
+        expect(isSameDay(onDatesChangeArgs.endDate, moment(validFutureDateString))).to.equal(true);
       });
 
       describe('props.onFocusChange', () => {
@@ -651,7 +652,8 @@ describe('DateRangePicker', () => {
           expect(onDatesChangeStub.callCount).to.equal(1);
 
           const onDatesChangeArgs = onDatesChangeStub.getCall(0).args[0];
-          expect(onDatesChangeArgs.startDate.isSame(validFutureDateString)).to.equal(true);
+          const futureDate = moment(validFutureDateString);
+          expect(isSameDay(onDatesChangeArgs.startDate, futureDate)).to.equal(true);
           expect(onDatesChangeArgs.endDate).to.equal(endDate);
         });
 
@@ -696,7 +698,8 @@ describe('DateRangePicker', () => {
           expect(onDatesChangeStub.callCount).to.equal(1);
 
           const onDatesChangeArgs = onDatesChangeStub.getCall(0).args[0];
-          expect(onDatesChangeArgs.startDate.isSame(validFutureDateString)).to.equal(true);
+          const futureDate = moment(validFutureDateString);
+          expect(isSameDay(onDatesChangeArgs.startDate, futureDate)).to.equal(true);
           expect(onDatesChangeArgs.endDate).to.equal(null);
         });
 
