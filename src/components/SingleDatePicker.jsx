@@ -2,7 +2,6 @@ import React from 'react';
 import moment from 'moment';
 import cx from 'classnames';
 import Portal from 'react-portal';
-import includes from 'array-includes';
 
 import toMomentObject from '../utils/toMomentObject';
 import toLocalizedDateString from '../utils/toLocalizedDateString';
@@ -89,7 +88,7 @@ export default class SingleDatePicker extends React.Component {
 
   onDayClick(day, modifiers, e) {
     if (e) e.preventDefault();
-    if (includes(modifiers, 'blocked')) return;
+    if (~modifiers.indexOf('blocked')) return;
 
     this.props.onDateChange(day);
     this.props.onFocusChange({ focused: null });
