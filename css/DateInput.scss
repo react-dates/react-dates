@@ -14,6 +14,28 @@
   vertical-align: middle;
 }
 
+.DateInput--focused::before,
+.DateInput--focused::after {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  top: $react-dates-spacing-vertical-picker - $react-dates-width-tooltip-arrow / 2;
+  bottom: auto;
+  border: $react-dates-width-tooltip-arrow / 2 solid transparent;
+  border-top: 0;
+  z-index: 2;
+}
+
+.DateInput--focused::before {
+  left: 22px;
+  border-bottom-color: rgba(0, 0, 0, 0.1);
+}
+
+.DateInput--focused::after {
+  left: 23px;
+  border-bottom-color: $react-dates-color-white;
+}
+
 .DateInput--disabled {
   background: $react-dates-color-gray-lighter;
 }

@@ -157,16 +157,6 @@ describe('DateRangePicker', () => {
         const wrapper = shallow(<DateRangePicker focusedInput={null} />);
         expect(wrapper.find('.DateRangePicker__picker--invisible')).to.have.length(1);
       });
-
-      it('has .DateRangePicker-picker--start class if props.focusedInput=START_DATE', () => {
-        const wrapper = shallow(<DateRangePicker focusedInput={START_DATE} />);
-        expect(wrapper.find('.DateRangePicker__picker--start')).to.have.length(1);
-      });
-
-      it('has .DateRangePicker-picker--end class if props.focusedInput=END_DATE', () => {
-        const wrapper = shallow(<DateRangePicker focusedInput={END_DATE} />);
-        expect(wrapper.find('.DateRangePicker__picker--end')).to.have.length(1);
-      });
     });
   });
 
