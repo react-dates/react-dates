@@ -103,6 +103,8 @@ export default class DateRangePickerInput extends React.Component {
       showClearDates,
       disabled,
       phrases,
+      isFlashStartDate,
+      isFlashEndDate
     } = this.props;
 
     const startDateValue = startDate || startDateString;
@@ -124,6 +126,7 @@ export default class DateRangePickerInput extends React.Component {
           onChange={onStartDateChange}
           onFocus={onStartDateFocus}
           onKeyDownShiftTab={onStartDateShiftTab}
+          isFlash={isFlashStartDate}
         />
 
         <div className="DateRangePickerInput__arrow">
@@ -140,6 +143,7 @@ export default class DateRangePickerInput extends React.Component {
           onChange={onEndDateChange}
           onFocus={onEndDateFocus}
           onKeyDownTab={onEndDateTab}
+          isFlash={isFlashEndDate}
         />
 
         {showClearDates &&

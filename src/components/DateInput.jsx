@@ -122,6 +122,7 @@ export default class DateInput extends React.Component {
             'DateInput__display-text--has-input': !!value,
             'DateInput__display-text--focused': focused,
             'DateInput__display-text--disabled': disabled,
+            'flash': this.props.isFlash
           })}
         >
           {value || placeholder}

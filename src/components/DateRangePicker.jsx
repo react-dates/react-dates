@@ -402,6 +402,8 @@ export default class DateRangePicker extends React.Component {
       phrases,
       withPortal,
       withFullScreenPortal,
+      isFlashStartDate,
+      isFlashEndDate
     } = this.props;
 
     const startDateString = this.getDateString(startDate);
@@ -431,6 +433,8 @@ export default class DateRangePicker extends React.Component {
             onClearDates={this.clearDates}
             disabled={disabled}
             phrases={phrases}
+            isFlashStartDate={isFlashStartDate}
+            isFlashEndDate={isFlashEndDate}
           />
 
           {this.maybeRenderDayPickerWithPortal()}
