@@ -393,6 +393,25 @@ describe('DateRangePicker', () => {
           });
         });
       });
+
+      describe('minimumNights is 0', () => {
+        it('calls props.onDatesChange with startDate === today and endDate === today',
+          () => {
+            const onDatesChangeStub = sinon.stub();
+            const wrapper = shallow(
+              <DateRangePicker
+                focusedInput={END_DATE}
+                minimumNights={0}
+                onDatesChange={onDatesChangeStub}
+                startDate={today}
+              />
+            );
+            wrapper.instance().onDayClick(today, []);
+            const args = onDatesChangeStub.getCall(0).args[0];
+            expect(args.startDate).to.equal(today);
+            expect(args.endDate).to.equal(today);
+          });
+      });
     });
   });
 
@@ -1074,6 +1093,15 @@ describe('DateRangePicker', () => {
         const wrapper = shallow(<DateRangePicker startDate={today} />);
         wrapper.setState({
           hoverDate: testDate,
+        });
+        expect(wrapper.instance().isDayAfterHoveredStartDate(testDate)).to.equal(false);
+      });
+
+      it('returns false if arg is day after state.hoverDate and props.minimumNights is 0', () => {
+        const testDate = moment(today).add(1, 'days');
+        const wrapper = shallow(<DateRangePicker startDate={today} minimumNights={0} />);
+        wrapper.setState({
+          hoverDate: today,
         });
         expect(wrapper.instance().isDayAfterHoveredStartDate(testDate)).to.equal(false);
       });

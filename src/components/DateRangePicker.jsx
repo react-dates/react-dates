@@ -94,6 +94,7 @@ export default class DateRangePicker extends React.Component {
   }
 
   onDayClick(day, modifiers, e) {
+    const { minimumNights } = this.props;
     if (e) e.preventDefault();
     if (includes(modifiers, 'blocked')) return;
 
@@ -104,20 +105,22 @@ export default class DateRangePicker extends React.Component {
       this.props.onFocusChange(END_DATE);
 
       startDate = day;
+
       if (isInclusivelyAfterDay(day, endDate)) {
         endDate = null;
       }
     } else if (focusedInput === END_DATE) {
-      if (isInclusivelyBeforeDay(day, startDate)) {
+      const firstAllowedEndDate = startDate && startDate.clone().add(minimumNights, 'days');
+
+      if (!startDate) {
+        endDate = day;
+        this.props.onFocusChange(START_DATE);
+      } else if (isInclusivelyAfterDay(day, firstAllowedEndDate)) {
+        endDate = day;
+        this.props.onFocusChange(null);
+      } else {
         startDate = day;
         endDate = null;
-      } else {
-        endDate = day;
-        if (!startDate) {
-          this.props.onFocusChange(START_DATE);
-        } else {
-          this.props.onFocusChange(null);
-        }
       }
     }
 
@@ -268,9 +271,9 @@ export default class DateRangePicker extends React.Component {
   }
 
   isDayAfterHoveredStartDate(day) {
-    const { startDate, endDate } = this.props;
+    const { startDate, endDate, minimumNights } = this.props;
     const { hoverDate } = this.state;
-    return !!startDate && !endDate && isNextDay(hoverDate, day) &&
+    return !!startDate && !endDate && isNextDay(hoverDate, day) && minimumNights > 0 &&
       isSameDay(hoverDate, startDate);
   }
 
