@@ -14,8 +14,8 @@
   vertical-align: middle;
 }
 
-.DateInput--focused::before,
-.DateInput--focused::after {
+.DateInput--with-caret::before,
+.DateInput--with-caret::after {
   content: "";
   display: inline-block;
   position: absolute;
@@ -26,12 +26,12 @@
   z-index: 2;
 }
 
-.DateInput--focused::before {
+.DateInput--with-caret::before {
   left: 22px;
   border-bottom-color: rgba(0, 0, 0, 0.1);
 }
 
-.DateInput--focused::after {
+.DateInput--with-caret::after {
   left: 23px;
   border-bottom-color: $react-dates-color-white;
 }
