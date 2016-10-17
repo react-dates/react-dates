@@ -99,6 +99,11 @@ storiesOf('DateRangePicker', module)
       minimumNights={3}
     />
   ))
+  .add('allows a single night', () => (
+    <DateRangePickerWrapper
+      minimumNights={0}
+    />
+  ))
   .add('allows previous three month only', () => (
     <DateRangePickerWrapper
       isOutsideRange={day =>
