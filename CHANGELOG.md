@@ -1,7 +1,7 @@
 # Change Log
 
-## Unreleased
- - [fix] Allows for elements to be interacted with when rendered beneath the tether component ([]())
+## v3.3.3
+ - [fix] Allows for elements to be interacted with when rendered beneath the tether component ([#131](https://github.com/airbnb/react-dates/pull/131))
 
 ## v3.3.2
  - [fix] Responsive the `DateRangePicker` and `SingleDatePicker` components ([#80](https://github.com/airbnb/react-dates/pull/83))
