@@ -269,7 +269,7 @@ export default class SingleDatePicker extends React.Component {
           }]}
           className={cx({
             'SingleDatePicker__tether--show': focused,
-            'SingleDatePicker__tether--invisible': !focused
+            'SingleDatePicker__tether--invisible': !focused,
           })}
         >
           <SingleDatePickerInput
