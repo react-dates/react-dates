@@ -129,12 +129,10 @@ export default class SingleDatePicker extends React.Component {
   }
 
   getDayPickerContainerClasses() {
-    const { focused, orientation, withPortal, withFullScreenPortal, anchorDirection } = this.props;
+    const { orientation, withPortal, withFullScreenPortal, anchorDirection } = this.props;
     const { hoverDate } = this.state;
 
     const dayPickerClassName = cx('SingleDatePicker__picker', {
-      'SingleDatePicker__picker--show': focused,
-      'SingleDatePicker__picker--invisible': !focused,
       'SingleDatePicker__picker--direction-left': anchorDirection === ANCHOR_LEFT,
       'SingleDatePicker__picker--direction-right': anchorDirection === ANCHOR_RIGHT,
       'SingleDatePicker__picker--horizontal': orientation === HORIZONTAL_ORIENTATION,
@@ -269,6 +267,10 @@ export default class SingleDatePicker extends React.Component {
             attachment: 'none',
             pin: [tetherPinDirection],
           }]}
+          className={cx({
+            'SingleDatePicker__tether--show': focused,
+            'SingleDatePicker__tether--invisible': !focused
+          })}
         >
           <SingleDatePickerInput
             id={id}
