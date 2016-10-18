@@ -218,20 +218,16 @@ export default class DateRangePicker extends React.Component {
 
   getDayPickerContainerClasses() {
     const {
-      focusedInput,
       orientation,
       withPortal,
       withFullScreenPortal,
       anchorDirection,
     } = this.props;
     const { hoverDate } = this.state;
-    const showDatepicker = focusedInput === START_DATE || focusedInput === END_DATE;
 
     const dayPickerClassName = cx('DateRangePicker__picker', {
       'DateRangePicker__picker--direction-left': anchorDirection === ANCHOR_LEFT,
       'DateRangePicker__picker--direction-right': anchorDirection === ANCHOR_RIGHT,
-      'DateRangePicker__picker--show': showDatepicker,
-      'DateRangePicker__picker--invisible': !showDatepicker,
       'DateRangePicker__picker--horizontal': orientation === HORIZONTAL_ORIENTATION,
       'DateRangePicker__picker--vertical': orientation === VERTICAL_ORIENTATION,
       'DateRangePicker__picker--portal': withPortal || withFullScreenPortal,
@@ -424,11 +420,17 @@ export default class DateRangePicker extends React.Component {
     const startDateString = this.getDateString(startDate);
     const endDateString = this.getDateString(endDate);
 
+    const showDatepicker = focusedInput === START_DATE || focusedInput === END_DATE;
     const tetherPinDirection = anchorDirection === ANCHOR_LEFT ? ANCHOR_RIGHT : ANCHOR_LEFT;
 
     return (
       <div className="DateRangePicker">
         <TetherComponent
+          classPrefix="DateRangePicker__tether"
+          className={cx({
+            'DateRangePicker__tether--show': showDatepicker,
+            'DateRangePicker__tether--invisible': !showDatepicker,
+          })}
           attachment={`top ${anchorDirection}`}
           targetAttachment={`bottom ${anchorDirection}`}
           offset="-23px 0"

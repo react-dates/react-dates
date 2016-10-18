@@ -16,6 +16,14 @@
   display: inline-block;
 }
 
+.DateRangePicker__tether--show {
+  visibility: visible;
+}
+
+.DateRangePicker__tether--invisible {
+  visibility: hidden;
+}
+
 .DateRangePicker__picker {
   z-index: 1;
 }
@@ -26,14 +34,6 @@
 
 .DateRangePicker__picker--direction-right {
     right: 0;
-}
-
-.DateRangePicker__picker--show {
-  visibility: visible;
-}
-
-.DateRangePicker__picker--invisible {
-  visibility: hidden;
 }
 
 .DateRangePicker__picker--portal {

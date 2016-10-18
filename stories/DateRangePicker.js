@@ -20,9 +20,33 @@ const datesList = [
   moment().add(13, 'days'),
 ];
 
+const TestInput = props => (
+  <div style={{ marginTop: 16 }} >
+    <input
+      {...props}
+      type="text"
+      style={{
+        height: 48,
+        width: 284,
+        fontSize: 18,
+        fontWeight: 200,
+        padding: '12px 16px',
+      }}
+    />
+  </div>
+);
+
 storiesOf('DateRangePicker', module)
   .add('default', () => (
     <DateRangePickerWrapper />
+  ))
+  .add('as part of a form', () => (
+    <div>
+      <DateRangePickerWrapper />
+      <TestInput placeholder="Input 1" />
+      <TestInput placeholder="Input 2" />
+      <TestInput placeholder="Input 3" />
+    </div>
   ))
   .add('single month', () => (
     <DateRangePickerWrapper
