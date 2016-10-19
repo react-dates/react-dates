@@ -351,6 +351,7 @@ export default class DayPicker extends React.Component {
               monthFormat={monthFormat}
 
               dayHeight={DAY_HEIGHT}
+              monthHorizontalPadding={MONTH_HORIZONTAL_PADDING}
             />
           </div>
         </OutsideClickHandler>
