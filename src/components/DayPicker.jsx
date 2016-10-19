@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import shallowCompare from 'react-addons-shallow-compare';
-import ReactDOM from 'react-dom';
 import moment from 'moment';
 import cx from 'classnames';
 
@@ -13,7 +12,6 @@ import ChevronUp from '../svg/chevron-up.svg';
 import ChevronDown from '../svg/chevron-down.svg';
 
 import getCalendarMonthWeeks from '../utils/getCalendarMonthWeeks';
-import getTransformStyles from '../utils/getTransformStyles';
 
 import OrientationShape from '../shapes/OrientationShape';
 

@@ -98,7 +98,7 @@ function CalendarMonth(props) {
         // height to position the container). Variable calendar heights, amirite? <3 Maja
         translationValue && styles.component_absolute,
         // translation should be contingent on vertical v. horizontal
-        getTransformStyles(`translateX(${translationValue}px)`),
+        getTransformStyles(`translateX(${translationValue}px)`)
       )}
     >
       <table {...css(styles.table)}>
@@ -224,26 +224,30 @@ export default withStyles(({ reactDates }) => ({
   },
 
   'day_blocked-minimum-nights': {
-//   color: $react-dates-color-gray-lighter;
-//   background: $react-dates-color-white;
-//   border: 1px solid lighten($react-dates-color-border-light, 3);
-//   cursor: default;
+    color: reactDates.color.day_blocked_minnights_color,
+    background: reactDates.color.day_blocked_minnights_background,
+    border: `1px solid ${reactDates.color.day_blocked_minnights_border}`,
+    cursor: 'default',
 
-//   &:active {
-//     background: $react-dates-color-white;
-//   }
+    ':active': {
+      background: reactDates.color.day_blocked_minnights_background,
+    },
   },
 
   'day_selected-span': {
-//   background: $react-dates-color-primary-shade-2;
-//   border: 1px double $react-dates-color-primary-shade-1;
-//   color: $react-dates-color-white;
+    background: reactDates.color.day_selectedspan_background,
+    border: `1px double ${reactDates.color.day_selectedspan_border}`,
+    color: reactDates.color.day_selectedspan_color,
 
-//   &.CalendarMonth__day--hovered,
-//   &:active {
-//     background: $react-dates-color-primary-shade-1;
-//     border: 1px double $react-dates-color-primary;
-//   }
+    ':hover': {
+      background: reactDates.color.day_selectedspan_hover_background,
+      border: `1px double ${reactDates.color.day_selectedspan_hover_background}`,
+    },
+
+    ':active': {
+      background: reactDates.color.day_selectedspan_hover_background,
+      border: `1px double ${reactDates.color.day_selectedspan_hover_background}`,
+    },
 
 //   &.CalendarMonth__day--last-in-range {
 //     border-right: $react-dates-color-primary;

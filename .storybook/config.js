@@ -17,6 +17,17 @@ const DefaultTheme = {
       background_day_active: '#f2f2f2',
       text_day: '#565a5c',
 
+      day_blocked_minnights_background: '#fff',
+      day_blocked_minnights_border: '#e4e7e7',
+      day_blocked_minnights_color: '#cacccd',
+
+      day_selectedspan_background: '#66e2da',
+      day_selectedspan_border: '#33dacd',
+      day_selectedspan_color: '#fff',
+
+      day_selectedspan_hover_background: '#33dacd',
+      day_selectedspan_hover_border: '#00a699',
+
       day_hoveredspan_background: '#b2f1ec',
       day_hoveredspan_border: '#80e8e0',
       day_hoveredspan_color: '#007a87',
