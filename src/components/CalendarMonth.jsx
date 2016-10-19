@@ -6,6 +6,7 @@ import moment from 'moment';
 import CalendarDay from './CalendarDay';
 
 import getCalendarMonthWeeks from '../utils/getCalendarMonthWeeks';
+import getTransformStyles from '../utils/getTransformStyles';
 
 import OrientationShape from '../shapes/OrientationShape';
 
@@ -31,6 +32,7 @@ const propTypes = {
   monthFormat: PropTypes.string,
 
   dayHeight: PropTypes.number,
+  translationValue: PropTypes.number,
 };
 
 const defaultProps = {
@@ -52,6 +54,7 @@ const defaultProps = {
   monthFormat: 'MMMM YYYY', // english locale
 
   dayHeight: 0,
+  translationValue: 0,
 };
 
 export function getModifiersForDay(modifiers, day) {
@@ -76,6 +79,7 @@ function CalendarMonth(props) {
     onDayTouchTap,
     styles,
     dayHeight,
+    translationValue,
   } = props;
   const monthTitle = month.format(monthFormat);
 
@@ -83,10 +87,19 @@ function CalendarMonth(props) {
     <div
       {...css(
         styles.component,
+        isVisible && styles.component_visible,
         orientation === HORIZONTAL_ORIENTATION && styles.component_horizontal,
-        orientation === VERTICAL_ORIENTATION && styles.component_vertical
+        orientation === VERTICAL_ORIENTATION && styles.component_vertical,
+        // The first CalendarMonth is always positioned absolute at top: 0 or left: 0
+        // so we need to transform it to the appropriate location before the animation.
+        // This behavior is because we would otherwise need a double-render in order to
+        // adjust the container position once we had the height the first calendar
+        // (ie first draw all the calendar, then in a second render, use the first calendar's
+        // height to position the container). Variable calendar heights, amirite? <3 Maja
+        translationValue && styles.component_absolute,
+        // translation should be contingent on vertical v. horizontal
+        getTransformStyles(`translateX(${translationValue}px)`),
       )}
-      data-visible={isVisible}
     >
       <table {...css(styles.table)}>
         <caption {...css(styles.caption)}>
@@ -145,6 +158,19 @@ export default withStyles(({ reactDates }) => ({
     textAlign: 'center',
     padding: '0 13px',
     verticalAlign: 'top',
+    position: 'absolute',
+    zIndex: -1,
+    opacity: 0,
+  },
+
+  component_absolute: {
+    position: 'absolute',
+  },
+
+  component_visible: {
+    position: 'relative',
+    zIndex: 0,
+    opacity: 1,
   },
 
   component_horizontal: {
@@ -176,9 +202,6 @@ export default withStyles(({ reactDates }) => ({
     boxSizing: 'border-box',
     color: reactDates.color.text_day,
     cursor: 'pointer',
-
-    // width: DAY_HEIGHT + 1,
-    // height: DAY_HEIGHT,
 
     ':active': {
       background: reactDates.color.background_day_active,
