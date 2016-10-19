@@ -231,11 +231,9 @@ A boolean representing whether or not the date input is currently focused.
 
 These properties are the same as provided to the `<DateRangePicker />` component.
 
-To indicate which days are blocked from selection, you may either provide an array of moment objects to the `blockedDates` prop or you may set `blockedByDefault` to true and provide available days as an array of moment objects to the `unblockedDates` prop, depending on what makes sense for you.
+To indicate which days are blocked from selection, you may provide a function to the `isDayBlocked` prop. As of v1.0.0, we allow blocked dates inside of ranges.
 ```
-  blockedDates: PropTypes.arrayOf(momentPropTypes.momentObj)
-  blockedByDefault: PropTypes.bool
-  unblockedDates: PropTypes.arrayOf(momentPropTypes.momentObj)
+  isDayBlocked: PropTypes.func
 ```
 
 `isOutsideRange` indicates which days are out of selectable range.
