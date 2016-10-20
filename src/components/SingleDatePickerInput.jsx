@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { css, withStyles } from 'react-with-styles';
 
 import DateInput from './DateInput';
 
@@ -15,6 +16,7 @@ const propTypes = {
   onFocus: PropTypes.func,
   onKeyDownShiftTab: PropTypes.func,
   onKeyDownTab: PropTypes.func,
+  styles: PropTypes.object.isRequired,
 };
 
 const defaultProps = {
@@ -31,7 +33,7 @@ const defaultProps = {
   onKeyDownTab() {},
 };
 
-export default function SingleDatePickerInput(props) {
+function SingleDatePickerInput(props) {
   const {
     id,
     placeholder,
@@ -43,10 +45,11 @@ export default function SingleDatePickerInput(props) {
     onFocus,
     onKeyDownShiftTab,
     onKeyDownTab,
+    styles,
   } = props;
 
   return (
-    <div className="SingleDatePickerInput">
+    <div {...css(styles.component)}>
       <DateInput
         id={id}
         placeholder={placeholder} // also used as label
@@ -66,3 +69,9 @@ export default function SingleDatePickerInput(props) {
 
 SingleDatePickerInput.propTypes = propTypes;
 SingleDatePickerInput.defaultProps = defaultProps;
+
+export default withStyles(({ reactDates }) => ({
+  component: {
+    border: `1px solid ${reactDates.color.border_input}`,
+  },
+}))(SingleDatePickerInput);

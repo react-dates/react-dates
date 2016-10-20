@@ -10,4 +10,7 @@ module.exports = {
 
   ANCHOR_LEFT: 'left',
   ANCHOR_RIGHT: 'right',
+
+  PREV_TRANSITION: 'prev',
+  NEXT_TRANSITION: 'next',
 };

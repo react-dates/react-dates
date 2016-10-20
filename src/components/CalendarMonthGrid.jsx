@@ -1,9 +1,8 @@
 import React, { PropTypes } from 'react';
-import ReactDOM from 'react-dom';
 import shallowCompare from 'react-addons-shallow-compare';
 import momentPropTypes from 'react-moment-proptypes';
+import { css, withStyles } from 'react-with-styles';
 import moment from 'moment';
-import cx from 'classnames';
 
 import CalendarMonth from './CalendarMonth';
 
@@ -12,13 +11,18 @@ import getTransformStyles from '../utils/getTransformStyles';
 
 import OrientationShape from '../shapes/OrientationShape';
 
-import { HORIZONTAL_ORIENTATION, VERTICAL_ORIENTATION } from '../../constants';
+import {
+  HORIZONTAL_ORIENTATION,
+  VERTICAL_ORIENTATION,
+  PREV_TRANSITION,
+  NEXT_TRANSITION,
+} from '../../constants';
 
 const propTypes = {
   enableOutsideDays: PropTypes.bool,
   firstVisibleMonthIndex: PropTypes.number,
   initialMonth: momentPropTypes.momentObj,
-  isAnimating: PropTypes.bool,
+  monthTransition: PropTypes.oneOf([PREV_TRANSITION, NEXT_TRANSITION]),
   numberOfMonths: PropTypes.number,
   modifiers: PropTypes.object,
   orientation: OrientationShape,
@@ -35,13 +39,17 @@ const propTypes = {
 
   // i18n
   monthFormat: PropTypes.string,
+
+  dayHeight: PropTypes.number,
+  monthHorizontalPadding: PropTypes.number,
+  styles: PropTypes.object.isRequired,
 };
 
 const defaultProps = {
   enableOutsideDays: false,
   firstVisibleMonthIndex: 0,
   initialMonth: moment(),
-  isAnimating: false,
+  monthTransition: null,
   numberOfMonths: 1,
   modifiers: {},
   orientation: HORIZONTAL_ORIENTATION,
@@ -58,9 +66,12 @@ const defaultProps = {
 
   // i18n
   monthFormat: 'MMMM YYYY', // english locale
+
+  dayHeight: 0,
+  monthHorizontalPadding: 13,
 };
 
-export default class CalendarMonthGrid extends React.Component {
+class CalendarMonthGrid extends React.Component {
   constructor(props) {
     super(props);
 
@@ -69,8 +80,7 @@ export default class CalendarMonthGrid extends React.Component {
   }
 
   componentDidMount() {
-    this.container = ReactDOM.findDOMNode(this.containerRef);
-    this.container.addEventListener('transitionend', this.onTransitionEnd);
+    this.containerRef.addEventListener('transitionend', this.onTransitionEnd);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -78,17 +88,17 @@ export default class CalendarMonthGrid extends React.Component {
   }
 
   componentDidUpdate() {
-    const { isAnimating, onMonthTransitionEnd } = this.props;
+    const { monthTransition, onMonthTransitionEnd } = this.props;
 
     // For IE9, immediately call onMonthTransitionEnd instead of
     // waiting for the animation to complete
-    if (!this.isTransitionEndSupported && isAnimating) {
+    if (!this.isTransitionEndSupported && monthTransition) {
       onMonthTransitionEnd();
     }
   }
 
   componentWillUnmount() {
-    this.container.removeEventListener('transitionend', this.onTransitionEnd);
+    this.containerRef.removeEventListener('transitionend', this.onTransitionEnd);
   }
 
   onTransitionEnd() {
@@ -100,7 +110,7 @@ export default class CalendarMonthGrid extends React.Component {
       enableOutsideDays,
       firstVisibleMonthIndex,
       initialMonth,
-      isAnimating,
+      monthTransition,
       modifiers,
       numberOfMonths,
       monthFormat,
@@ -115,6 +125,9 @@ export default class CalendarMonthGrid extends React.Component {
       onDayTouchEnd,
       onDayTouchTap,
       onMonthTransitionEnd,
+      dayHeight,
+      monthHorizontalPadding,
+      styles,
     } = this.props;
 
     let month = initialMonth.clone().subtract(1, 'month');
@@ -122,10 +135,19 @@ export default class CalendarMonthGrid extends React.Component {
     const months = [];
     for (let i = 0; i < numberOfMonths + 2; i++) {
       const isVisible =
-        (i >= firstVisibleMonthIndex) && (i < firstVisibleMonthIndex + numberOfMonths);
+        (i >= firstVisibleMonthIndex && i < firstVisibleMonthIndex + numberOfMonths) ||
+        (monthTransition === PREV_TRANSITION && i < firstVisibleMonthIndex) ||
+        (monthTransition === NEXT_TRANSITION && i >= firstVisibleMonthIndex + numberOfMonths);
+
+      let translationValue = 0;
+      if (i < firstVisibleMonthIndex && monthTransition === PREV_TRANSITION) {
+        const monthWidthSansPadding = (7 * (dayHeight + 1)) + 1;
+        translationValue = -(monthWidthSansPadding + (2 * monthHorizontalPadding));
+      }
 
       months.push(
         <CalendarMonth
+          ref={`calendarMonth_${i}`}
           key={month.format('MM-YY')}
           month={month}
           isVisible={isVisible}
@@ -141,22 +163,34 @@ export default class CalendarMonthGrid extends React.Component {
           onDayTouchStart={onDayTouchStart}
           onDayTouchEnd={onDayTouchEnd}
           onDayTouchTap={onDayTouchTap}
+
+          dayHeight={dayHeight}
+          translationValue={translationValue}
         />
       );
       month = month.clone().add(1, 'month');
     }
 
-    const className = cx('CalendarMonthGrid', {
-      'CalendarMonthGrid--horizontal': orientation === HORIZONTAL_ORIENTATION,
-      'CalendarMonthGrid--vertical': orientation === VERTICAL_ORIENTATION,
-      'CalendarMonthGrid--animating': isAnimating,
-    });
+    // let's turn this calculation into a util method
+    const monthWidthSansPadding = (7 * (dayHeight + 1)) + 1;
+    const calendarMonthWidth = monthWidthSansPadding + (2 * monthHorizontalPadding);
+
+    const isHorizontal = orientation === HORIZONTAL_ORIENTATION;
+    const isVertical = orientation === VERTICAL_ORIENTATION;
 
     return (
       <div
         ref={ref => { this.containerRef = ref; }}
-        className={className}
-        style={getTransformStyles(transformValue)}
+        {...css(
+          styles.container,
+          isHorizontal && styles.container_horizontal,
+          isVertical && styles.container_vertical,
+          !!monthTransition && styles.container_animating,
+          getTransformStyles(transformValue),
+          {
+            width: isHorizontal ? 4 * calendarMonthWidth : calendarMonthWidth,
+          }
+        )}
         onTransitionEnd={onMonthTransitionEnd}
       >
         {months}
@@ -167,3 +201,24 @@ export default class CalendarMonthGrid extends React.Component {
 
 CalendarMonthGrid.propTypes = propTypes;
 CalendarMonthGrid.defaultProps = defaultProps;
+
+export default withStyles(({ reactDates }) => ({
+  container: {
+    background: reactDates.color.white,
+    zIndex: 0,
+  },
+
+  container_horizontal: {
+    position: 'absolute',
+    left: 9,
+  },
+
+  container_vertical: {
+    margin: '0 auto',
+  },
+
+  container_animating: {
+    transition: 'transform 0.2s ease-in-out',
+    zIndex: 1,
+  },
+}))(CalendarMonthGrid);

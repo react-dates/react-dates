@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
-import ReactDOM from 'react-dom';
-import cx from 'classnames';
+import { css, withStyles } from 'react-with-styles';
 
 import isTouchDevice from '../utils/isTouchDevice';
 
@@ -16,6 +15,8 @@ const propTypes = {
   onFocus: PropTypes.func,
   onKeyDownShiftTab: PropTypes.func,
   onKeyDownTab: PropTypes.func,
+
+  styles: PropTypes.object.isRequired,
 };
 
 const defaultProps = {
@@ -31,7 +32,7 @@ const defaultProps = {
   onKeyDownTab() {},
 };
 
-export default class DateInput extends React.Component {
+class DateInput extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -55,9 +56,8 @@ export default class DateInput extends React.Component {
   componentDidUpdate(prevProps) {
     const { focused } = this.props;
     if (prevProps.focused !== focused && focused) {
-      const startDateInput = ReactDOM.findDOMNode(this.inputRef);
-      startDateInput.focus();
-      startDateInput.select();
+      this.inputRef.focus();
+      this.inputRef.select();
     }
   }
 
@@ -89,24 +89,26 @@ export default class DateInput extends React.Component {
       showCaret,
       onFocus,
       disabled,
+      styles,
     } = this.props;
 
     const value = dateValue || dateString;
 
     return (
       <div
-        className={cx('DateInput', {
-          'DateInput--with-caret': showCaret && focused,
-          'DateInput--disabled': disabled,
-        })}
+        {...css(
+          styles.container,
+          showCaret && focused && styles.container_caret,
+          disabled && styles.container_disabled
+        )}
         onClick={onFocus}
       >
-        <label className="DateInput__label" htmlFor={id}>
+        <label {...css(styles.label)} htmlFor={id}>
           {placeholder}
         </label>
 
         <input
-          className="DateInput__input"
+          {...css(styles.input)}
           type="text"
           id={id}
           name={id}
@@ -122,11 +124,12 @@ export default class DateInput extends React.Component {
         />
 
         <div
-          className={cx('DateInput__display-text', {
-            'DateInput__display-text--has-input': !!value,
-            'DateInput__display-text--focused': focused,
-            'DateInput__display-text--disabled': disabled,
-          })}
+          {...css(
+            styles.displaytext,
+            !!value && styles.displaytext_has_input,
+            focused && styles.displaytext_focused,
+            disabled && styles.displaytext_disabled
+          )}
         >
           {value || placeholder}
         </div>
@@ -137,3 +140,98 @@ export default class DateInput extends React.Component {
 
 DateInput.propTypes = propTypes;
 DateInput.defaultProps = defaultProps;
+
+export default withStyles(({ reactDates }) => ({
+  container: {
+    fontWeight: 200,
+    fontSize: 18,
+    lineHeight: '24px',
+    color: reactDates.color.input_placeholder_color,
+    margin: 0,
+    padding: 8,
+
+    background: reactDates.color.input_background,
+    position: 'relative',
+    display: 'inline-block',
+    width: reactDates.size.input_width,
+    verticalAlign: 'middle',
+  },
+
+  container_caret: {
+    // this isn't working for some reason?
+    ':before': {
+      content: '',
+      display: 'inline-block',
+      position: 'absolute',
+      top: reactDates.size.input_vertical_spacing -
+        (reactDates.size.input_caret_width / 2),
+      bottom: 'auto',
+      border: `${reactDates.size.input_caret_width / 2}px solid transparent`,
+      borderTop: 0,
+      zIndex: 2,
+      left: 22,
+      borderBottomColor: 'rgba(0, 0, 0, 0.1)',
+    },
+
+    ':after': {
+      content: '',
+      display: 'inline-block',
+      position: 'absolute',
+      top: reactDates.size.input_vertical_spacing -
+        (reactDates.size.input_caret_width / 2),
+      bottom: 'auto',
+      border: `${reactDates.size.input_caret_width / 2}px solid transparent`,
+      borderTop: 0,
+      zIndex: 2,
+      left: 23,
+      borderBottomColor: '#fff',
+    },
+  },
+
+  container_disabled: {
+    background: reactDates.color.input_background_disabled,
+  },
+
+  label: {
+    border: 0,
+    clip: 'rect(0, 0, 0, 0)',
+    height: 1,
+    margin: -1,
+    overflow: 'hidden',
+    padding: 0,
+    position: 'absolute',
+    width: 1,
+  },
+
+  input: {
+    opacity: 0,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    border: 0,
+    height: '100%',
+    width: '100%',
+  },
+
+  displaytext: {
+    padding: '4px 8px',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+  },
+
+  displaytext_has_input: {
+    color: reactDates.color.input_text_color,
+  },
+
+  displaytext_focused: {
+    background: reactDates.color.input_background_focused,
+    borderColor: reactDates.color.input_background_focused,
+    borderRadius: 3,
+    color: reactDates.color.input_text_color_focused,
+  },
+
+  displaytext_disabled: {
+    fontStyle: 'italic',
+  },
+}))(DateInput);
+

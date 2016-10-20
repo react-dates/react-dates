@@ -1,11 +1,12 @@
 import React, { PropTypes } from 'react';
 import momentPropTypes from 'react-moment-proptypes';
+import { css, withStyles } from 'react-with-styles';
 import moment from 'moment';
-import cx from 'classnames';
 
 import CalendarDay from './CalendarDay';
 
 import getCalendarMonthWeeks from '../utils/getCalendarMonthWeeks';
+import getTransformStyles from '../utils/getTransformStyles';
 
 import OrientationShape from '../shapes/OrientationShape';
 
@@ -25,9 +26,13 @@ const propTypes = {
   onDayTouchStart: PropTypes.func,
   onDayTouchEnd: PropTypes.func,
   onDayTouchTap: PropTypes.func,
+  styles: PropTypes.object.isRequired,
 
   // i18n
   monthFormat: PropTypes.string,
+
+  dayHeight: PropTypes.number,
+  translationValue: PropTypes.number,
 };
 
 const defaultProps = {
@@ -47,20 +52,23 @@ const defaultProps = {
 
   // i18n
   monthFormat: 'MMMM YYYY', // english locale
+
+  dayHeight: 0,
+  translationValue: 0,
 };
 
 export function getModifiersForDay(modifiers, day) {
   return day ? Object.keys(modifiers).filter(key => modifiers[key](day)) : [];
 }
 
-export default function CalendarMonth(props) {
+function CalendarMonth(props) {
   const {
     month,
     monthFormat,
     orientation,
     isVisible,
-    modifiers,
     enableOutsideDays,
+    modifiers,
     onDayClick,
     onDayMouseDown,
     onDayMouseUp,
@@ -69,32 +77,54 @@ export default function CalendarMonth(props) {
     onDayTouchStart,
     onDayTouchEnd,
     onDayTouchTap,
+    styles,
+    dayHeight,
+    translationValue,
   } = props;
   const monthTitle = month.format(monthFormat);
 
-  const calendarMonthClasses = cx('CalendarMonth', {
-    'CalendarMonth--horizontal': orientation === HORIZONTAL_ORIENTATION,
-    'CalendarMonth--vertical': orientation === VERTICAL_ORIENTATION,
-  });
-
   return (
-    <div className={calendarMonthClasses} data-visible={isVisible}>
-      <table>
-        <caption className="CalendarMonth__caption js-CalendarMonth__caption">
+    <div
+      {...css(
+        styles.container,
+        isVisible && styles.container_visible,
+        orientation === HORIZONTAL_ORIENTATION && styles.container_horizontal,
+        orientation === VERTICAL_ORIENTATION && styles.container_vertical,
+        // The first CalendarMonth is always positioned absolute at top: 0 or left: 0
+        // so we need to transform it to the appropriate location before the animation.
+        // This behavior is because we would otherwise need a double-render in order to
+        // adjust the container position once we had the height the first calendar
+        // (ie first draw all the calendar, then in a second render, use the first calendar's
+        // height to position the container). Variable calendar heights, amirite? <3 Maja
+        translationValue && styles.container_absolute,
+        // translation should be contingent on vertical v. horizontal
+        getTransformStyles(`translateX(${translationValue}px)`)
+      )}
+    >
+      <table {...css(styles.table)}>
+        <caption {...css(styles.caption)}>
           <strong>{monthTitle}</strong>
         </caption>
 
-        <tbody className="js-CalendarMonth__grid">
+        <tbody>
           {getCalendarMonthWeeks(month, enableOutsideDays).map((week, i) =>
             <tr key={i}>
               {week.map((day, j) => {
                 const modifiersForDay = getModifiersForDay(modifiers, day);
-                const className = cx('CalendarMonth__day', {
-                  'CalendarMonth__day--outside': !day || day.month() !== month.month(),
-                }, modifiersForDay.map(mod => `CalendarMonth__day--${mod}`));
+
+                const isOutsideDay = !day || day.month() !== month.month();
+                const dayStyles = css(
+                  styles.day,
+                  isOutsideDay && styles.day_outside,
+                  modifiersForDay.map(mod => styles[`day_${mod}`]),
+                  {
+                    height: dayHeight,
+                    width: dayHeight + 1,
+                  }
+                );
 
                 return (
-                  <td className={className} key={j}>
+                  <td {...dayStyles} key={j}>
                     {day &&
                       <CalendarDay
                         day={day}
@@ -122,3 +152,144 @@ export default function CalendarMonth(props) {
 
 CalendarMonth.propTypes = propTypes;
 CalendarMonth.defaultProps = defaultProps;
+
+export default withStyles(({ reactDates }) => ({
+  container: {
+    textAlign: 'center',
+    padding: '0 13px',
+    verticalAlign: 'top',
+    position: 'absolute',
+    zIndex: -1,
+    opacity: 0,
+  },
+
+  container_absolute: {
+    position: 'absolute',
+  },
+
+  container_visible: {
+    position: 'relative',
+    zIndex: 0,
+    opacity: 1,
+  },
+
+  container_horizontal: {
+    display: 'inline-block',
+    minHeight: '100%',
+  },
+
+  container_vertical: {
+    display: 'block',
+  },
+
+  table: {
+    borderCollapse: 'collapse',
+    borderSpacing: 0,
+  },
+
+  caption: {
+    color: reactDates.color.caption,
+    marginTop: 7,
+    fontSize: 18,
+    padding: '15px 0 35px',
+    textAlign: 'center',
+    marginBottom: 2,
+  },
+
+  day: {
+    border: `1px solid ${reactDates.color.border_day}`,
+    padding: 0,
+    boxSizing: 'border-box',
+    color: reactDates.color.text_day,
+    cursor: 'pointer',
+
+    ':active': {
+      background: reactDates.color.background_day_active,
+    },
+  },
+
+  day_outside: {
+    border: 0,
+    cursor: 'default',
+
+    ':active': {
+      background: reactDates.color.white,
+    },
+  },
+
+  day_hovered: {
+    background: reactDates.color.border_day,
+    border: `1px double ${reactDates.color.border_day_hovered}`,
+    color: 'inherit',
+  },
+
+  'day_blocked-minimum-nights': {
+    color: reactDates.color.day_blocked_minnights_color,
+    background: reactDates.color.day_blocked_minnights_background,
+    border: `1px solid ${reactDates.color.day_blocked_minnights_border}`,
+    cursor: 'default',
+
+    ':active': {
+      background: reactDates.color.day_blocked_minnights_background,
+    },
+  },
+
+  'day_selected-span': {
+    background: reactDates.color.day_selectedspan_background,
+    border: `1px double ${reactDates.color.day_selectedspan_border}`,
+    color: reactDates.color.day_selectedspan_color,
+
+    ':hover': {
+      background: reactDates.color.day_selectedspan_hover_background,
+      border: `1px double ${reactDates.color.day_selectedspan_hover_background}`,
+    },
+
+    ':active': {
+      background: reactDates.color.day_selectedspan_hover_background,
+      border: `1px double ${reactDates.color.day_selectedspan_hover_background}`,
+    },
+
+//   &.CalendarMonth__day--last-in-range {
+//     border-right: $react-dates-color-primary;
+//   }
+  },
+
+  'day_hovered-span': {
+    background: reactDates.color.day_hoveredspan_background,
+    border: `1px solid ${reactDates.color.day_hoveredspan_border}`,
+    color: reactDates.color.day_hoveredspan_color,
+  },
+
+  day_selected: {
+    background: reactDates.color.day_selected_background,
+    border: `1px solid ${reactDates.color.day_selected_border}`,
+    color: reactDates.color.day_selected_color,
+
+    ':active': {
+      background: reactDates.color.day_selected_background,
+    },
+  },
+
+  'day_blocked-calendar': {
+    background: reactDates.color.day_blocked_calendar_background,
+    border: `1px solid ${reactDates.color.day_blocked_calendar_border}`,
+    color: reactDates.color.day_blocked_calendar_color,
+    cursor: 'default',
+
+    ':active': {
+      background: reactDates.color.day_blocked_calendar_background,
+    },
+  },
+
+  'day_blocked-out-of-range': {
+    color: reactDates.color.day_blocked_outsiderange_color,
+    background: reactDates.color.white,
+    border: `1px solid ${reactDates.color.day_blocked_outsiderange_border}`,
+    cursor: 'default',
+
+    ':active': {
+      background: reactDates.color.white,
+    },
+  },
+
+}))(CalendarMonth);

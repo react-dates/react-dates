@@ -94,11 +94,14 @@
     "webpack": "^1.13.2"
   },
   "dependencies": {
+    "aphrodite": "^0.5.0",
     "array-includes": "^3.0.2",
     "classnames": "^2.2.5",
     "react-moment-proptypes": "^1.2.0",
     "react-portal": "^2.2.1",
-    "react-tether": "^0.5.2"
+    "react-tether": "^0.5.2",
+    "react-with-styles": "^1.0.0",
+    "react-with-styles-interface-aphrodite": "^1.0.0"
   },
   "peerDependencies": {
     "moment": "2.10 - 2.14 || ^2.15.1",
