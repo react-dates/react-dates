@@ -1,15 +1,12 @@
 import React, { PropTypes } from 'react';
 import shallowCompare from 'react-addons-shallow-compare';
+import { css, withStyles } from 'react-with-styles';
 import moment from 'moment';
-import cx from 'classnames';
 
 import OutsideClickHandler from './OutsideClickHandler';
+import DayPickerNavigation from './DayPickerNavigation';
+import DayPickerWeekHeaders from './DayPickerWeekHeaders';
 import CalendarMonthGrid from './CalendarMonthGrid';
-
-import LeftArrow from '../svg/arrow-left.svg';
-import RightArrow from '../svg/arrow-right.svg';
-import ChevronUp from '../svg/chevron-up.svg';
-import ChevronDown from '../svg/chevron-down.svg';
 
 import getCalendarMonthWeeks from '../utils/getCalendarMonthWeeks';
 
@@ -51,6 +48,8 @@ const propTypes = {
   onNextMonthClick: PropTypes.func,
   onOutsideClick: PropTypes.func,
 
+  styles: PropTypes.object.isRequired,
+
   // i18n
   monthFormat: PropTypes.string,
 };
@@ -79,7 +78,7 @@ const defaultProps = {
   monthFormat: 'MMMM YYYY',
 };
 
-export default class DayPicker extends React.Component {
+class DayPicker extends React.Component {
   constructor(props) {
     super(props);
 
@@ -196,61 +195,6 @@ export default class DayPicker extends React.Component {
     });
   }
 
-  renderNavigation() {
-    const isVertical = this.isVertical();
-
-    return (
-      <div className="DayPicker__nav">
-        <span
-          className="DayPicker__nav--prev"
-          onClick={this.handlePrevMonthClick}
-        >
-          {isVertical ? <ChevronUp /> : <LeftArrow />}
-        </span>
-
-        <span
-          className="DayPicker__nav--next"
-          onClick={this.handleNextMonthClick}
-        >
-          {isVertical ? <ChevronDown /> : <RightArrow />}
-        </span>
-      </div>
-    );
-  }
-
-  renderWeekHeader(index) {
-    const { numberOfMonths } = this.props;
-
-    const widthPercentage = 100 / numberOfMonths;
-    const horizontalStyle = {
-      width: `${widthPercentage}%`,
-      left: `${widthPercentage * index}%`,
-    };
-
-    const style = this.isHorizontal() ? horizontalStyle : {};
-
-    const header = [];
-    for (let i = 0; i < 7; i++) {
-      header.push(
-        <li key={i}>
-          <small>{moment().weekday(i).format('dd')}</small>
-        </li>
-      );
-    }
-
-    return (
-      <div
-        className="DayPicker__week-header"
-        key={`week-${index}`}
-        style={style}
-      >
-        <ul>
-          {header}
-        </ul>
-      </div>
-    );
-  }
-
   render() {
     const {
       enableOutsideDays,
@@ -268,6 +212,7 @@ export default class DayPicker extends React.Component {
       onDayMouseLeave,
       onOutsideClick,
       monthFormat,
+      styles,
     } = this.props;
 
     const {
@@ -277,57 +222,50 @@ export default class DayPicker extends React.Component {
       transitionContainerHeight,
     } = this.state;
 
-    const numOfWeekHeaders = this.isVertical() ? 1 : numberOfMonths;
-    const weekHeaders = [];
-    for (let i = 0; i < numOfWeekHeaders; i++) {
-      weekHeaders.push(this.renderWeekHeader(i));
-    }
-
-    const dayPickerClassNames = cx('DayPicker', {
-      'DayPicker--horizontal': this.isHorizontal(),
-      'DayPicker--vertical': this.isVertical(),
-      'DayPicker--portal': withPortal,
-    });
-
-    const transitionContainerClasses = cx('transition-container', {
-      'transition-container--horizontal': this.isHorizontal(),
-      'transition-container--vertical': this.isVertical(),
-    });
-
     const horizontalWidth = (this.calendarMonthWidth * numberOfMonths) + (2 * DAY_PICKER_PADDING);
 
     // this is a kind of made-up value that generally looks good. we'll
     // probably want to let the user set this explicitly.
     const verticalHeight = 1.75 * this.calendarMonthWidth;
 
-    const dayPickerStyle = {
-      width: this.isHorizontal() && horizontalWidth,
-
-      // These values are to center the datepicker (approximately) on the page
-      marginLeft: this.isHorizontal() && withPortal && -horizontalWidth / 2,
-      marginTop: this.isHorizontal() && withPortal && -this.calendarMonthWidth / 2,
-    };
-
-    const transitionContainerStyle = {
-      width: this.isHorizontal() && horizontalWidth,
-      height: this.isHorizontal() && transitionContainerHeight,
-    };
-
     const transformType = this.isVertical() ? 'translateY' : 'translateX';
     const transformValue = `${transformType}(${translationValue}px)`;
 
     return (
-      <div className={dayPickerClassNames} style={dayPickerStyle} >
-        <OutsideClickHandler onOutsideClick={onOutsideClick}>
-          {this.renderNavigation()}
+      <div
+        {...css(
+          {
+            width: this.isHorizontal() && horizontalWidth,
 
-          <div className="DayPicker__week-headers">
-            {weekHeaders}
-          </div>
+            // These values are to center the datepicker (approximately) on the page
+            marginLeft: this.isHorizontal() && withPortal && -horizontalWidth / 2,
+            marginTop: this.isHorizontal() && withPortal && -this.calendarMonthWidth / 2,
+          }
+        )}
+      >
+        <OutsideClickHandler onOutsideClick={onOutsideClick}>
+          <DayPickerNavigation
+            orientation={orientation}
+            onPrevMonthClick={this.handlePrevMonthClick}
+            onNextMonthClick={this.handleNextMonthClick}
+          />
+
+          <DayPickerWeekHeaders
+            orientation={orientation}
+            numberOfMonths={numberOfMonths}
+            calendarMonthWidth={this.calendarMonthWidth}
+          />
 
           <div
-            className={transitionContainerClasses}
-            style={transitionContainerStyle}
+            {...css(
+              styles.calendarMonthGridContainer,
+              this.isHorizontal() && styles.calendarMonthGridContainer_horizontal,
+              this.isVertical() && styles.calendarMonthGridContainer_vertical,
+              {
+                width: this.isHorizontal() && horizontalWidth,
+                height: this.isHorizontal() ? transitionContainerHeight : verticalHeight,
+              }
+            )}
           >
             <CalendarMonthGrid
               transformValue={transformValue}
@@ -362,3 +300,32 @@ export default class DayPicker extends React.Component {
 
 DayPicker.propTypes = propTypes;
 DayPicker.defaultProps = defaultProps;
+
+export default withStyles(({ reactDates }) => ({
+  calendarMonthGridContainer: {
+    background: reactDates.color.white,
+    boxShadow: '0 2px 6px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.07)',
+    position: 'relative',
+    overflow: 'hidden',
+    borderRadius: 3,
+  },
+
+  calendarMonthGridContainer_horizontal: {
+    transition: 'height 0.2s ease-in-out',
+  },
+
+  calendarMonthGridContainer_vertical: {
+    width: '100%',
+  },
+
+//   .DayPicker--horizontal.DayPicker--portal {
+//     box-shadow: none;
+//     position: absolute;
+//     left: 50%;
+//     top: 50%;
+//   }
+
+// .DayPicker--vertical.DayPicker--portal {
+//   position: initial;
+// }
+}))(DayPicker);

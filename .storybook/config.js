@@ -17,6 +17,16 @@ const DefaultTheme = {
       background_day_active: '#f2f2f2',
       text_day: '#565a5c',
 
+      week_header_color: '#757575',
+
+      nav_background: '#fff',
+      nav_background_active: '#f2f2f2',
+      nav_border: '#dce0e0',
+      nav_border_focus: '#c4c4c4',
+      nav_horizontal_color: '#757575',
+      nav_vertical_color: '#484848',
+
+
       day_blocked_minnights_background: '#fff',
       day_blocked_minnights_border: '#e4e7e7',
       day_blocked_minnights_color: '#cacccd',
