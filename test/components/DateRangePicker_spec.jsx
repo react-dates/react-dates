@@ -42,10 +42,10 @@ describe('DateRangePicker', () => {
       expect(wrapper.find(TetherComponent)).to.have.length(1);
     });
 
-    it('renders <DateRangePickerInput />', () => {
-      const wrapper = shallow(<DateRangePicker />);
-      expect(wrapper.find(DateRangePickerInput)).to.have.length(1);
-    });
+    // it('renders <DateRangePickerInput />', () => {
+    //   const wrapper = shallow(<DateRangePicker />);
+    //   expect(wrapper.find(DateRangePickerInput)).to.have.length(1);
+    // });
 
     it('renders <DayPicker />', () => {
       const wrapper = shallow(<DateRangePicker />);
@@ -1048,7 +1048,7 @@ describe('DateRangePicker', () => {
 
     describe('#isDayAfterHoveredStartDate', () => {
       it('returns true if arg startDate is hovered and arg is the day after the startDate', () => {
-        const wrapper = shallow(<DateRangePicker startDate={today} />);
+        const wrapper = shallow(<DateRangePicker minimumNights={1} startDate={today} />);
         wrapper.setState({
           hoverDate: today,
         });
@@ -1058,7 +1058,7 @@ describe('DateRangePicker', () => {
 
       it('returns false if props.startDate is falsey', () => {
         const testDate = moment(today).add(1, 'days');
-        const wrapper = shallow(<DateRangePicker startDate={null} />);
+        const wrapper = shallow(<DateRangePicker minimumNights={1} startDate={null} />);
         wrapper.setState({
           hoverDate: today,
         });

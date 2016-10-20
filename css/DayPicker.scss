@@ -159,3 +159,37 @@
 .transition-container--vertical {
   width: 100%;
 }
+
+// BEGIN MAPD: Custom Styles
+.DayPicker__input-wrapper {
+  text-align: center;
+  padding-bottom: 20px;
+
+  div + div {
+    margin-left: 8px;
+  }
+
+  input {
+    float: left;
+  }
+
+  input + label {
+    float: left;
+  }
+
+  label {
+    display: block;
+    font-size: 10px;
+    color: $react-dates-color-placeholder-text;
+  }
+  .DayPicker__input-group {
+    text-align: left;
+    display: inline-block;
+  }
+}
+
+.invalid {
+  border: 1px solid $react-dates-color-invalid;
+}
+
+// END MAPD: Custom Styles

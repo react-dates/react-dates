@@ -40,7 +40,7 @@ const propTypes = {
 const defaultProps = {
   enableOutsideDays: false,
   firstVisibleMonthIndex: 0,
-  initialMonth: moment(),
+  initialMonth: moment().locale('en'),
   isAnimating: false,
   numberOfMonths: 1,
   modifiers: {},

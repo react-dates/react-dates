@@ -81,11 +81,41 @@ export default class DayPicker extends React.Component {
       currentMonth: props.hidden ? moment() : props.initialVisibleMonth(),
       monthTransition: null,
       translationValue: 0,
+      start: "",
+      end: "",
     };
 
     this.handlePrevMonthClick = this.handlePrevMonthClick.bind(this);
     this.handleNextMonthClick = this.handleNextMonthClick.bind(this);
     this.updateStateAfterMonthTransition = this.updateStateAfterMonthTransition.bind(this);
+    this.onEndDateInputChange = this.onEndDateInputChange.bind(this);
+    this.onStartDateInputChange = this.onStartDateInputChange.bind(this);
+    this.handleSumbit = this.handleSumbit.bind(this);
+
+    this.handleEndDateInputChange = this.handleEndDateInputChange.bind(this);
+    this.handleStartDateInputChange = this.handleStartDateInputChange.bind(this);
+  }
+
+  onEndDateInputChange(end) {
+    this.setState({end});
+    this.props.onEndDateChange(end);
+  }
+
+  onStartDateInputChange(start) {
+    this.setState({start});
+    this.props.onStartDateChange(start);
+  }
+
+  handleStartDateInputChange() {
+    if (!this.state.start && !this.props.startDate) {
+      this.onStartDateInputChange(this.props.startDatePlaceholder);
+    }
+  }
+
+  handleEndDateInputChange() {
+    if (!this.state.end && !this.props.endDate) {
+      this.onEndDateInputChange(this.props.endDatePlaceholder);
+    }
   }
 
   componentDidMount() {
@@ -101,6 +131,14 @@ export default class DayPicker extends React.Component {
       this.setState({
         currentMonth: nextProps.initialVisibleMonth(),
       });
+    }
+
+    if (nextProps.startDate) {
+      this.setState({start: nextProps.startDate});
+    }
+
+    if (nextProps.endDate) {
+      this.setState({end: nextProps.endDate});
     }
   }
 
@@ -257,6 +295,19 @@ export default class DayPicker extends React.Component {
     });
   }
 
+  handleSumbit(input, event) {
+    const { startDate, endDate } = this.props
+    event.preventDefault();
+
+    if (input === "start") {
+      return this.endInputRef.focus();
+    } else if (endDate && startDate) {
+      return this.props.onSubmit();
+    } else {
+      return this.startInputRef.focus();
+    }
+  }
+
   adjustDayPickerHeight() {
     const transitionContainer = ReactDOM.findDOMNode(this.refs.transitionContainer);
     const heights = [];
@@ -324,7 +375,7 @@ export default class DayPicker extends React.Component {
     for (let i = 0; i < 7; i++) {
       header.push(
         <li key={i}>
-          <small>{moment().weekday(i).format('dd')}</small>
+          <small>{moment().locale('en').weekday(i).format('dd')}</small>
         </li>
       );
     }
@@ -343,7 +394,7 @@ export default class DayPicker extends React.Component {
   }
 
   render() {
-    const { currentMonth, monthTransition, translationValue } = this.state;
+    const { currentMonth, monthTransition, translationValue, start, end } = this.state;
     const {
       enableOutsideDays,
       numberOfMonths,
@@ -360,6 +411,14 @@ export default class DayPicker extends React.Component {
       onDayMouseLeave,
       onOutsideClick,
       monthFormat,
+      mode,
+      onStartDateChange,
+      onEndDateChange,
+      startDate,
+      endDate,
+      onSubmit,
+      startDatePlaceholder,
+      endDatePlaceholder,
     } = this.props;
 
     const numOfWeekHeaders = this.isVertical() ? 1 : numberOfMonths;
@@ -446,6 +505,49 @@ export default class DayPicker extends React.Component {
               monthFormat={monthFormat}
             />
           </div>
+
+          {mode === "range" &&
+              <div className={"DayPicker__input-wrapper"}>
+                <div className={"DayPicker__input-group"}>
+                  <label htmlFor={"from-time"} >FROM </label>
+                  <form onSubmit={(e) => this.handleSumbit("start", e)}>
+                  <input
+                    id={"from-time"}
+                    name={"from-time"}
+                    className={cx("DayPicker__input", {invalid: this.props.error.start})}
+                    type="text"
+                    ref={(ref) => { this.startInputRef = ref; }}
+                    value={start || startDate || ""}
+                    onChange={(e) => this.onStartDateInputChange(e.target.value)}
+                    onFocus={this.handleStartDateInputChange}
+                    placeholder={startDatePlaceholder}
+                    autoComplete="off"
+                    maxLength={20}
+                  />
+                  </form>
+                </div>
+
+                <div className={"DayPicker__input-group"}>
+                  <label htmlFor={"to-time"} >TO</label>
+                  <form onSubmit={(e) => this.handleSumbit("end", e)}>
+                  <input
+                    id={"to-time"}
+                    name={"to-time"}
+                    className={cx("DayPicker__input", {invalid: this.props.error.end})}
+                    type="text"
+                    ref={(ref) => { this.endInputRef = ref; }}
+                    value={end || endDate || ""}
+                    onChange={(e) => this.onEndDateInputChange(e.target.value)}
+                    onKeyDown={() => {}}
+                    onFocus={this.handleEndDateInputChange}
+                    placeholder={endDatePlaceholder}
+                    autoComplete="off"
+                  />
+                  </form>
+                </div>
+              </div>
+          }
+
         </OutsideClickHandler>
       </div>
     );

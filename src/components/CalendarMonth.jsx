@@ -31,7 +31,7 @@ const propTypes = {
 };
 
 const defaultProps = {
-  month: moment(),
+  month: moment().locale('en'),
   isVisible: true,
   enableOutsideDays: false,
   modifiers: {},
@@ -116,6 +116,7 @@ export default function CalendarMonth(props) {
           )}
         </tbody>
       </table>
+      <hr className={'DayPicker__month-divider-bottom'} />
     </div>
   );
 }

@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import shallowCompare from 'react-addons-shallow-compare';
 import momentPropTypes from 'react-moment-proptypes';
 import moment from 'moment';
+import cx from 'classnames';
 
 export const TOUCHSTART_TIMEOUT = 200;
 
@@ -85,6 +86,7 @@ export default class CalendarDay extends React.Component {
 
   render() {
     const { day, modifiers } = this.props;
+    const className = cx("CalendarDay__day", {CalendarDay__today: day.isSame(moment(), 'd')});
 
     return (
       <div
@@ -97,7 +99,7 @@ export default class CalendarDay extends React.Component {
         onTouchStart={(e) => this.handleDayTouchStart(day, modifiers, e)}
         onTouchEnd={(e) => this.handleDayTouchEnd(day, modifiers, e)}
       >
-        <span className="CalendarDay__day">{day.format('D')}</span>
+        <span className={className}>{day.format('D')}</span>
       </div>
     );
   }
