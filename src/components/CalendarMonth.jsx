@@ -86,17 +86,17 @@ function CalendarMonth(props) {
   return (
     <div
       {...css(
-        styles.component,
-        isVisible && styles.component_visible,
-        orientation === HORIZONTAL_ORIENTATION && styles.component_horizontal,
-        orientation === VERTICAL_ORIENTATION && styles.component_vertical,
+        styles.container,
+        isVisible && styles.container_visible,
+        orientation === HORIZONTAL_ORIENTATION && styles.container_horizontal,
+        orientation === VERTICAL_ORIENTATION && styles.container_vertical,
         // The first CalendarMonth is always positioned absolute at top: 0 or left: 0
         // so we need to transform it to the appropriate location before the animation.
         // This behavior is because we would otherwise need a double-render in order to
         // adjust the container position once we had the height the first calendar
         // (ie first draw all the calendar, then in a second render, use the first calendar's
         // height to position the container). Variable calendar heights, amirite? <3 Maja
-        translationValue && styles.component_absolute,
+        translationValue && styles.container_absolute,
         // translation should be contingent on vertical v. horizontal
         getTransformStyles(`translateX(${translationValue}px)`)
       )}
@@ -154,7 +154,7 @@ CalendarMonth.propTypes = propTypes;
 CalendarMonth.defaultProps = defaultProps;
 
 export default withStyles(({ reactDates }) => ({
-  component: {
+  container: {
     textAlign: 'center',
     padding: '0 13px',
     verticalAlign: 'top',
@@ -163,22 +163,22 @@ export default withStyles(({ reactDates }) => ({
     opacity: 0,
   },
 
-  component_absolute: {
+  container_absolute: {
     position: 'absolute',
   },
 
-  component_visible: {
+  container_visible: {
     position: 'relative',
     zIndex: 0,
     opacity: 1,
   },
 
-  component_horizontal: {
+  container_horizontal: {
     display: 'inline-block',
     minHeight: '100%',
   },
 
-  component_vertical: {
+  container_vertical: {
     display: 'block',
   },
 

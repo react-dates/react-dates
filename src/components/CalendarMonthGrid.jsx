@@ -182,10 +182,10 @@ class CalendarMonthGrid extends React.Component {
       <div
         ref={ref => { this.containerRef = ref; }}
         {...css(
-          styles.component,
-          isHorizontal && styles.component_horizontal,
-          isVertical && styles.component_vertical,
-          !!monthTransition && styles.component_animating,
+          styles.container,
+          isHorizontal && styles.container_horizontal,
+          isVertical && styles.container_vertical,
+          !!monthTransition && styles.container_animating,
           getTransformStyles(transformValue),
           {
             width: isHorizontal ? 4 * calendarMonthWidth : calendarMonthWidth,
@@ -203,21 +203,21 @@ CalendarMonthGrid.propTypes = propTypes;
 CalendarMonthGrid.defaultProps = defaultProps;
 
 export default withStyles(({ reactDates }) => ({
-  component: {
+  container: {
     background: reactDates.color.white,
     zIndex: 0,
   },
 
-  component_horizontal: {
+  container_horizontal: {
     position: 'absolute',
     left: 9,
   },
 
-  component_vertical: {
+  container_vertical: {
     margin: '0 auto',
   },
 
-  component_animating: {
+  container_animating: {
     transition: 'transform 0.2s ease-in-out',
     zIndex: 1,
   },

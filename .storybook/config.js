@@ -17,6 +17,13 @@ const DefaultTheme = {
       background_day_active: '#f2f2f2',
       text_day: '#565a5c',
 
+      input_placeholder_color: '#757575',
+      input_text_color: '#484848',
+      input_text_color_focused: '#007a87',
+      input_background: '#fff',
+      input_background_disabled: '#cacccd',
+      input_background_focused: '#99ede6',
+
       week_header_color: '#757575',
 
       nav_background: '#fff',
@@ -52,6 +59,11 @@ const DefaultTheme = {
 
       day_blocked_outsiderange_color: '#cacccd',
       day_blocked_outsiderange_border: '#e4e7e7',
+    },
+    size: {
+      input_width: 130,
+      input_caret_width: 20,
+      input_vertical_spacing: 72,
     },
   },
 };
