@@ -17,6 +17,7 @@ export default {
   numberOfMonths: PropTypes.number,
   showClearDates: PropTypes.bool,
   disabled: PropTypes.bool,
+  required: PropTypes.bool,
 
   orientation: OrientationShape,
   anchorDirection: anchorDirectionShape,

@@ -159,6 +159,11 @@ If the `disabled` prop is set to true, onFocusChange is not called when onStartD
   disabled: PropTypes.bool,
 ```
 
+If the `required` prop is set to true, the input will have to be filled before the user can submit the form. The standard HTML5 error message will appear on the input when the form is submitted and the input has no value.
+```
+  required: PropTypes.bool,
+```
+
 **Some useful callbacks:**
 
 If you need to do something when the user navigates between months (for instance, check the availability of a listing), you can do so using the `onPrevMonthClick` and `onNextMonthClick` props.
