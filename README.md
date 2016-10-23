@@ -304,6 +304,16 @@ The `placeholder` props is the placeholder text for the input. It is both applie
   placeholder: PropTypes.string
 ```
 
+If the `disabled` prop is set to true, onFocusChange is not called when onStartDateFocus or onEndDateFocus are invoked and disabled is assigned to the actual `<input>` DOM elements.
+```
+  disabled: PropTypes.bool,
+```
+
+If the `required` prop is set to true, the input will have to be filled before the user can submit the form. The standard HTML5 error message will appear on the input when the form is submitted and the input has no value.
+```
+  required: PropTypes.bool,
+```
+
 **Some useful callbacks:**
 
 These properties are the same as provided to the `<DateRangePicker />` component.
