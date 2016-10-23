@@ -1,6 +1,7 @@
 # Change Log
 
 ## v3.4.0
+ - [new] Add support for `required` attribute on inputs ([#142](https://github.com/airbnb/react-dates/pull/142))
 
 ## v3.3.4
  - [fix] Fix same tether overlay issue for the `SingleDatePicker` component ([#133](https://github.com/airbnb/react-dates/pull/133))
