@@ -45,6 +45,7 @@ const defaultProps = {
   numberOfMonths: 2,
   showClearDates: false,
   disabled: false,
+  required: false,
   reopenPickerOnClearDates: false,
   initialVisibleMonth: () => moment(),
 
@@ -409,6 +410,7 @@ export default class DateRangePicker extends React.Component {
       focusedInput,
       showClearDates,
       disabled,
+      required,
       startDateId,
       endDateId,
       phrases,
@@ -459,6 +461,7 @@ export default class DateRangePicker extends React.Component {
             showClearDates={showClearDates}
             onClearDates={this.clearDates}
             disabled={disabled}
+            required={required}
             showCaret={!withPortal && !withFullScreenPortal}
             phrases={phrases}
           />

@@ -31,6 +31,7 @@ const defaultProps = {
   date: null,
   focused: false,
   disabled: false,
+  required: false,
 
   onDateChange() {},
   onFocusChange() {},
@@ -246,6 +247,7 @@ export default class SingleDatePicker extends React.Component {
       placeholder,
       focused,
       disabled,
+      required,
       date,
       anchorDirection,
       withPortal,
@@ -277,6 +279,7 @@ export default class SingleDatePicker extends React.Component {
             placeholder={placeholder}
             focused={focused}
             disabled={disabled}
+            required={required}
             showCaret={!withPortal && !withFullScreenPortal}
             dateValue={dateString}
             onChange={this.onChange}

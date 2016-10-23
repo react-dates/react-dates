@@ -10,6 +10,7 @@ export default {
   date: momentPropTypes.momentObj,
   focused: PropTypes.bool,
   disabled: PropTypes.bool,
+  required: PropTypes.bool,
 
   onDateChange: PropTypes.func,
   onFocusChange: PropTypes.func,

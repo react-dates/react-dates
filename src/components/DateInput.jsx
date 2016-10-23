@@ -10,6 +10,7 @@ const propTypes = {
   dateValue: PropTypes.string,
   focused: PropTypes.bool,
   disabled: PropTypes.bool,
+  required: PropTypes.bool,
   showCaret: PropTypes.bool,
 
   onChange: PropTypes.func,
@@ -23,6 +24,7 @@ const defaultProps = {
   dateValue: '',
   focused: false,
   disabled: false,
+  required: false,
   showCaret: false,
 
   onChange() {},
@@ -89,6 +91,7 @@ export default class DateInput extends React.Component {
       showCaret,
       onFocus,
       disabled,
+      required,
     } = this.props;
 
     const value = dateValue || dateString;
@@ -119,6 +122,7 @@ export default class DateInput extends React.Component {
           autoComplete="off"
           maxLength={10}
           disabled={disabled || this.isTouchDevice}
+          required={required}
         />
 
         <div

@@ -9,6 +9,7 @@ const propTypes = {
   border: PropTypes.bool,
   focused: PropTypes.bool,
   disabled: PropTypes.bool,
+  required: PropTypes.bool,
   showCaret: PropTypes.bool,
 
   onChange: PropTypes.func,
@@ -23,6 +24,7 @@ const defaultProps = {
   border: false,
   focused: false,
   disabled: false,
+  required: false,
   showCaret: false,
 
   onChange() {},
@@ -38,6 +40,7 @@ export default function SingleDatePickerInput(props) {
     dateValue,
     focused,
     disabled,
+    required,
     showCaret,
     onChange,
     onFocus,
@@ -53,6 +56,7 @@ export default function SingleDatePickerInput(props) {
         dateValue={dateValue}
         focused={focused}
         disabled={disabled}
+        required={required}
         showCaret={showCaret}
 
         onChange={onChange}
