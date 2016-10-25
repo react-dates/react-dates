@@ -4,6 +4,7 @@
   "description": "A responsive and accessible date range picker component built with React",
   "main": "index.js",
   "scripts": {
+    "postinstall": "npm run build",
     "build": "npm run clean && npm run build:js && npm run build:css && npm run build:svg",
     "build:js": "babel src/ -d lib/ --ignore src/components",
     "build:css": "node-sass css/styles.scss lib/css/_datepicker.css",
