@@ -48,6 +48,8 @@ const defaultProps = {
   required: false,
   reopenPickerOnClearDates: false,
   initialVisibleMonth: () => moment(),
+  navPrev: null,
+  navNext: null,
 
   orientation: HORIZONTAL_ORIENTATION,
   anchorDirection: ANCHOR_LEFT,
@@ -163,10 +165,10 @@ export default class DateRangePicker extends React.Component {
   }
 
   onEndDateFocus() {
-    const { startDate, onFocusChange, orientation, disabled } = this.props;
+    const { startDate, onFocusChange, withFullScreenPortal, disabled } = this.props;
 
-    if (!startDate && orientation === VERTICAL_ORIENTATION && !disabled) {
-      // Since the vertical datepicker is full screen, we never want to focus the end date first
+    if (!startDate && withFullScreenPortal && !disabled) {
+      // When the datepicker is full screen, we never want to focus the end date first
       // because there's no indication that that is the case once the datepicker is open and it
       // might confuse the user
       onFocusChange(START_DATE);
@@ -335,6 +337,8 @@ export default class DateRangePicker extends React.Component {
       numberOfMonths,
       orientation,
       monthFormat,
+      navPrev,
+      navNext,
       onPrevMonthClick,
       onNextMonthClick,
       withPortal,
@@ -385,6 +389,8 @@ export default class DateRangePicker extends React.Component {
           hidden={!focusedInput}
           initialVisibleMonth={initialVisibleMonth}
           onOutsideClick={onOutsideClick}
+          navPrev={navPrev}
+          navNext={navNext}
         />
 
         {withFullScreenPortal &&

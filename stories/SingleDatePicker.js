@@ -21,6 +21,28 @@ const TestInput = props => (
      />
   </div>
 );
+const TestPrevIcon = props => (
+  <span style={{
+      border: '1px solid #dce0e0',
+      backgroundColor: '#fff',
+      color: '#484848',
+      padding: '3px'
+    }}
+  >
+    Prev
+  </span>
+);
+const TestNextIcon = props => (
+  <span style={{
+    border: '1px solid #dce0e0',
+    backgroundColor: '#fff',
+    color: '#484848',
+    padding: '3px'
+    }}
+  >
+    Next
+  </span>
+);
 
 storiesOf('SingleDatePicker', module)
   .add('default', () => (
@@ -65,6 +87,17 @@ storiesOf('SingleDatePicker', module)
       withFullScreenPortal
     />
   ))
+  .add('with clear dates button', () => (
+    <SingleDatePickerWrapper
+      showClearDate
+    />
+  ))
+  .add('with clear dates button (Picker Displayed)', () => (
+    <SingleDatePickerWrapper
+      showClearDate
+      reopenPickerOnClearDate
+    />
+  ))
   .add('with month specified on open', () => (
     <SingleDatePickerWrapper
       initialVisibleMonth={() => moment('01 2017', 'MM YYYY')}
@@ -85,6 +118,12 @@ storiesOf('SingleDatePicker', module)
   .add('with custom display format', () => (
     <SingleDatePickerWrapper
       displayFormat="MMM D"
+    />
+  ))
+  .add('with custom arrows', () => (
+    <SingleDatePickerWrapper
+      navPrev={<TestPrevIcon />}
+      navNext={<TestNextIcon />}
     />
   ))
   .add('with outside days enabled', () => (

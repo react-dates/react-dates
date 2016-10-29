@@ -1,5 +1,9 @@
 # Change Log
 
+## v3.5.0
+ - [new] Add support for clear date button on the `SingleDatePicker` ([#155](https://github.com/airbnb/react-dates/pull/155))
+ - [fix] Fix focus behavior for vertically attached datepickers ([#121](https://github.com/airbnb/react-dates/pull/121))
+
 ## v3.4.0
  - [new] Add support for `required` attribute on inputs ([#142](https://github.com/airbnb/react-dates/pull/142))
 

@@ -9,6 +9,8 @@ export default {
   placeholder: PropTypes.string,
   date: momentPropTypes.momentObj,
   focused: PropTypes.bool,
+  showClearDate: PropTypes.bool,
+  reopenPickerOnClearDates: PropTypes.bool,
   disabled: PropTypes.bool,
   required: PropTypes.bool,
 
@@ -22,6 +24,9 @@ export default {
   orientation: OrientationShape,
   initialVisibleMonth: PropTypes.func,
   anchorDirection: anchorDirectionShape,
+
+  navPrev: PropTypes.node,
+  navNext: PropTypes.node,
 
   // portal options
   withPortal: PropTypes.bool,
