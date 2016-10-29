@@ -23,6 +23,9 @@ export default {
   initialVisibleMonth: PropTypes.func,
   anchorDirection: anchorDirectionShape,
 
+  navPrev: PropTypes.node,
+  navNext: PropTypes.node,
+
   // portal options
   withPortal: PropTypes.bool,
   withFullScreenPortal: PropTypes.bool,

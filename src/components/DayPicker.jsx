@@ -43,6 +43,8 @@ const propTypes = {
   onPrevMonthClick: PropTypes.func,
   onNextMonthClick: PropTypes.func,
   onOutsideClick: PropTypes.func,
+  navPrev: PropTypes.node,
+  navNext: PropTypes.node,
 
   // i18n
   monthFormat: PropTypes.string,
@@ -288,7 +290,21 @@ export default class DayPicker extends React.Component {
   }
 
   renderNavigation() {
+    const {
+      navPrev,
+      navNext,
+    } = this.props;
+
     const isVertical = this.isVertical();
+
+    let navPrevIcon = navPrev;
+    let navNextIcon = navNext;
+    if (!navPrevIcon) {
+      navPrevIcon = isVertical ? <ChevronUp /> : <LeftArrow />;
+    }
+    if (!navNextIcon) {
+      navNextIcon = isVertical ? <ChevronDown /> : <RightArrow />;
+    }
 
     return (
       <div className="DayPicker__nav">
@@ -296,14 +312,14 @@ export default class DayPicker extends React.Component {
           className="DayPicker__nav--prev"
           onClick={this.handlePrevMonthClick}
         >
-          {isVertical ? <ChevronUp /> : <LeftArrow />}
+          {navPrevIcon}
         </span>
 
         <span
           className="DayPicker__nav--next"
           onClick={this.handleNextMonthClick}
         >
-          {isVertical ? <ChevronDown /> : <RightArrow />}
+          {navNextIcon}
         </span>
       </div>
     );

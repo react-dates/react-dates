@@ -17,6 +17,12 @@ storiesOf('DayPicker', module)
       orientation={VERTICAL_ORIENTATION}
     />
   ))
+  .add('with custom arrows', () => (
+    <DayPicker
+      navPrev={<span>Prev</span>}
+      navNext={<span>Next</span>}
+    />
+  ))
   .add('vertical with fixed-width container', () => (
     <div style={{ width: '400px' }}>
       <DayPicker

@@ -20,11 +20,21 @@ describe('DayPicker', () => {
           const wrapper = shallow(<DayPicker />);
           expect(wrapper.find('.DayPicker__nav--prev')).to.have.lengthOf(1);
         });
+
+        it('has .DayPicker__nav--prev on custom icon', () => {
+          const wrapper = shallow(<DayPicker navPrev={<span>Prev</span>} />);
+          expect(wrapper.find('.DayPicker__nav--prev')).to.have.lengthOf(1);
+        });
       });
 
       describe('next month button', () => {
         it('.DayPicker__nav--next class exists', () => {
           const wrapper = shallow(<DayPicker />);
+          expect(wrapper.find('.DayPicker__nav--next')).to.have.lengthOf(1);
+        });
+
+        it('has .DayPicker__nav--next class on custom icon', () => {
+          const wrapper = shallow(<DayPicker navNext={<span>Next</span>} />);
           expect(wrapper.find('.DayPicker__nav--next')).to.have.lengthOf(1);
         });
       });

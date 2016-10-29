@@ -87,6 +87,12 @@ storiesOf('SingleDatePicker', module)
       displayFormat="MMM D"
     />
   ))
+  .add('with custom arrows', () => (
+    <SingleDatePickerWrapper
+      navPrev={<span>Prev</span>}
+      navNext={<span>Next</span>}
+    />
+  ))
   .add('with outside days enabled', () => (
     <SingleDatePickerWrapper
       numberOfMonths={1}

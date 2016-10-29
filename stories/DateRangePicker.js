@@ -118,6 +118,12 @@ storiesOf('DateRangePicker', module)
       displayFormat="MMM D"
     />
   ))
+  .add('with custom arrows', () => (
+    <DateRangePickerWrapper
+      navPrev={<span>Prev</span>}
+      navNext={<span>Next</span>}
+    />
+  ))
   .add('with minimum nights set', () => (
     <DateRangePickerWrapper
       minimumNights={3}
