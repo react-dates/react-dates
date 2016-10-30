@@ -65,6 +65,17 @@ storiesOf('SingleDatePicker', module)
       withFullScreenPortal
     />
   ))
+  .add('with clear dates button', () => (
+    <SingleDatePickerWrapper
+      showClearDate
+    />
+  ))
+  .add('with clear dates button (Picker Displayed)', () => (
+    <SingleDatePickerWrapper
+      showClearDate
+      reopenPickerOnClearDate
+    />
+  ))
   .add('with month specified on open', () => (
     <SingleDatePickerWrapper
       initialVisibleMonth={() => moment('01 2017', 'MM YYYY')}

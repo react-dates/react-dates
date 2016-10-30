@@ -32,6 +32,8 @@ const defaultProps = {
   focused: false,
   disabled: false,
   required: false,
+  showClearDate: false,
+  reopenPickerOnClearDate: false,
 
   onDateChange() {},
   onFocusChange() {},
@@ -56,6 +58,7 @@ const defaultProps = {
   monthFormat: 'MMMM YYYY',
   phrases: {
     closeDatePicker: 'Close',
+    clearDate: 'Clear Date',
   },
 };
 
@@ -73,6 +76,7 @@ export default class SingleDatePicker extends React.Component {
     this.onChange = this.onChange.bind(this);
     this.onFocus = this.onFocus.bind(this);
     this.onClearFocus = this.onClearFocus.bind(this);
+    this.clearDate = this.clearDate.bind(this);
   }
 
   onChange(dateString) {
@@ -149,6 +153,14 @@ export default class SingleDatePicker extends React.Component {
   getDisplayFormat() {
     const { displayFormat } = this.props;
     return typeof displayFormat === 'string' ? displayFormat : displayFormat();
+  }
+
+  clearDate() {
+    const { onDateChange, reopenPickerOnClearDate, onFocusChange } = this.props;
+    onDateChange(null);
+    if (reopenPickerOnClearDate) {
+      onFocusChange({ focused: true });
+    }
   }
 
   isBlocked(day) {
@@ -248,7 +260,9 @@ export default class SingleDatePicker extends React.Component {
       focused,
       disabled,
       required,
+      showClearDate,
       date,
+      phrases,
       anchorDirection,
       withPortal,
       withFullScreenPortal,
@@ -281,6 +295,9 @@ export default class SingleDatePicker extends React.Component {
             disabled={disabled}
             required={required}
             showCaret={!withPortal && !withFullScreenPortal}
+            phrases={phrases}
+            onClearDate={this.clearDate}
+            showClearDate={showClearDate}
             dateValue={dateString}
             onChange={this.onChange}
             onFocus={this.onFocus}
