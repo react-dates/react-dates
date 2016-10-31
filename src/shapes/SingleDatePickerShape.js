@@ -9,6 +9,8 @@ export default {
   placeholder: PropTypes.string,
   date: momentPropTypes.momentObj,
   focused: PropTypes.bool,
+  showClearDate: PropTypes.bool,
+  reopenPickerOnClearDates: PropTypes.bool,
   disabled: PropTypes.bool,
   required: PropTypes.bool,
 

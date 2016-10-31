@@ -1,5 +1,38 @@
 @import 'variables';
 
 .SingleDatePickerInput {
+  background-color: $react-dates-color-white;
   border: 1px solid $react-dates-color-border;
+}
+
+.SingleDatePickerInput__clear-date {
+  background: none;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  line-height: normal;
+  overflow: visible;
+
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: middle;
+  padding: 10px;
+  margin: 0 10px 0 5px;
+}
+
+.SingleDatePickerInput__clear-date svg {
+  fill: $react-dates-color-gray-light;
+  height: 12px;
+  width: 15px;
+  vertical-align: middle;
+}
+
+.SingleDatePickerInput__clear-date--hide {
+  visibility: hidden;
+}
+
+.SingleDatePickerInput__clear-date:focus,
+.SingleDatePickerInput__clear-date--hover {
+  background: $react-dates-color-border;
+  border-radius: 50%;
 }
