@@ -8,7 +8,6 @@ const propTypes = {
   id: PropTypes.string.isRequired,
   placeholder: PropTypes.string, // also used as label
   dateValue: PropTypes.string,
-  border: PropTypes.bool,
   focused: PropTypes.bool,
   disabled: PropTypes.bool,
   required: PropTypes.bool,
@@ -30,7 +29,6 @@ const propTypes = {
 const defaultProps = {
   placeholder: 'Select Date',
   dateValue: '',
-  border: false,
   focused: false,
   disabled: false,
   required: false,

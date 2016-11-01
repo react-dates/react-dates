@@ -8,9 +8,10 @@ import OutsideClickHandler from '../../src/components/OutsideClickHandler';
 
 describe('OutsideClickHandler', () => {
   describe('#render', () => {
-    it('has `childNode` ref', () => {
-      const wrapper = shallow(<OutsideClickHandler />);
-      expect(wrapper.node.ref).to.equal('childNode');
+    it('renders children', () => {
+      const innerText = 'foobar';
+      const wrapper = shallow(<OutsideClickHandler>{innerText}</OutsideClickHandler>);
+      expect(wrapper.text()).to.equal(innerText);
     });
   });
 

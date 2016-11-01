@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import ReactDOM from 'react-dom';
 
 const propTypes = {
   children: PropTypes.node,
@@ -15,6 +14,7 @@ export default class OutsideClickHandler extends React.Component {
   constructor(props) {
     super(props);
     this.onOutsideClick = this.onOutsideClick.bind(this);
+    this.setChildNodeRef = this.setChildNodeRef.bind(this);
   }
 
   componentDidMount() {
@@ -36,15 +36,19 @@ export default class OutsideClickHandler extends React.Component {
   }
 
   onOutsideClick(e) {
-    const isDescendantOfRoot = ReactDOM.findDOMNode(this.refs.childNode).contains(e.target);
+    const isDescendantOfRoot = this.childNode.contains(e.target);
     if (!isDescendantOfRoot) {
       this.props.onOutsideClick(e);
     }
   }
 
+  setChildNodeRef(ref) {
+    this.childNode = ref;
+  }
+
   render() {
     return (
-      <div ref="childNode">
+      <div ref={this.setChildNodeRef}>
         {this.props.children}
       </div>
     );

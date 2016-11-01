@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import ReactDOM from 'react-dom';
 import cx from 'classnames';
 
 import isTouchDevice from '../utils/isTouchDevice';
@@ -42,6 +41,7 @@ export default class DateInput extends React.Component {
 
     this.onChange = this.onChange.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
+    this.setInputRef = this.setInputRef.bind(this);
 
     this.isTouchDevice = isTouchDevice();
   }
@@ -57,9 +57,8 @@ export default class DateInput extends React.Component {
   componentDidUpdate(prevProps) {
     const { focused } = this.props;
     if (prevProps.focused !== focused && focused) {
-      const startDateInput = ReactDOM.findDOMNode(this.inputRef);
-      startDateInput.focus();
-      startDateInput.select();
+      this.input.focus();
+      this.input.select();
     }
   }
 
@@ -79,6 +78,10 @@ export default class DateInput extends React.Component {
         onKeyDownTab(e);
       }
     }
+  }
+
+  setInputRef(ref) {
+    this.input = ref;
   }
 
   render() {
@@ -113,7 +116,7 @@ export default class DateInput extends React.Component {
           type="text"
           id={id}
           name={id}
-          ref={(ref) => { this.inputRef = ref; }}
+          ref={this.setInputRef}
           value={value}
           onChange={this.onChange}
           onKeyDown={this.onKeyDown}

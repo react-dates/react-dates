@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import ReactDOM from 'react-dom';
 import shallowCompare from 'react-addons-shallow-compare';
 import momentPropTypes from 'react-moment-proptypes';
 import moment from 'moment';
@@ -66,10 +65,10 @@ export default class CalendarMonthGrid extends React.Component {
 
     this.isTransitionEndSupported = isTransitionEndSupported();
     this.onTransitionEnd = this.onTransitionEnd.bind(this);
+    this.setContainerRef = this.setContainerRef.bind(this);
   }
 
   componentDidMount() {
-    this.container = ReactDOM.findDOMNode(this.containerRef);
     this.container.addEventListener('transitionend', this.onTransitionEnd);
   }
 
@@ -93,6 +92,14 @@ export default class CalendarMonthGrid extends React.Component {
 
   onTransitionEnd() {
     this.props.onMonthTransitionEnd();
+  }
+
+  getDOMNode() {
+    return this.container;
+  }
+
+  setContainerRef(ref) {
+    this.container = ref;
   }
 
   render() {
@@ -120,7 +127,7 @@ export default class CalendarMonthGrid extends React.Component {
     let month = initialMonth.clone().subtract(1, 'month');
 
     const months = [];
-    for (let i = 0; i < numberOfMonths + 2; i++) {
+    for (let i = 0; i < numberOfMonths + 2; i += 1) {
       const isVisible =
         (i >= firstVisibleMonthIndex) && (i < firstVisibleMonthIndex + numberOfMonths);
 
@@ -154,7 +161,7 @@ export default class CalendarMonthGrid extends React.Component {
 
     return (
       <div
-        ref={ref => { this.containerRef = ref; }}
+        ref={this.setContainerRef}
         className={className}
         style={getTransformStyles(transformValue)}
         onTransitionEnd={onMonthTransitionEnd}

@@ -159,6 +159,15 @@ describe('DateRangePicker', () => {
     });
   });
 
+  describe('#setDayPickerRef', () => {
+    it('sets this.dayPicker to the arg', () => {
+      const ref = 'foobar';
+      const wrapper = shallow(<DateRangePicker />);
+      wrapper.instance().setDayPickerRef(ref);
+      expect(wrapper.instance().dayPicker).to.equal(ref);
+    });
+  });
+
   describe('#clearDates', () => {
     describe('props.reopenPickerOnClearDates is truthy', () => {
       describe('props.onFocusChange', () => {
