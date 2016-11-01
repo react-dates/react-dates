@@ -163,10 +163,10 @@ export default class DateRangePicker extends React.Component {
   }
 
   onEndDateFocus() {
-    const { startDate, onFocusChange, orientation, disabled } = this.props;
+    const { startDate, onFocusChange, withFullScreenPortal, disabled } = this.props;
 
-    if (!startDate && orientation === VERTICAL_ORIENTATION && !disabled) {
-      // Since the vertical datepicker is full screen, we never want to focus the end date first
+    if (!startDate && withFullScreenPortal && !disabled) {
+      // When the datepicker is full screen, we never want to focus the end date first
       // because there's no indication that that is the case once the datepicker is open and it
       // might confuse the user
       onFocusChange(START_DATE);

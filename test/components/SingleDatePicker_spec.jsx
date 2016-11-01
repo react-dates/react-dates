@@ -427,6 +427,41 @@ describe('SingleDatePicker', () => {
     });
   });
 
+  describe('#clearDate', () => {
+    describe('props.reopenPickerOnClearDate is truthy', () => {
+      describe('props.onFocusChange', () => {
+        it('is called once', () => {
+          const onFocusChangeStub = sinon.stub();
+          const wrapper = shallow(
+            <SingleDatePicker
+              onFocusChange={onFocusChangeStub}
+              reopenPickerOnClearDate
+            />);
+          wrapper.instance().clearDate();
+          expect(onFocusChangeStub.callCount).to.equal(1);
+        });
+      });
+    });
+
+    describe('props.reopenPickerOnClearDate is falsy', () => {
+      describe('props.onFocusChange', () => {
+        it('is not called', () => {
+          const onFocusChangeStub = sinon.stub();
+          const wrapper = shallow(<SingleDatePicker onFocusChange={onFocusChangeStub} />);
+          wrapper.instance().clearDate();
+          expect(onFocusChangeStub.callCount).to.equal(0);
+        });
+      });
+    });
+
+    it('calls props.onDateChange with null date', () => {
+      const onDateChangeStub = sinon.stub();
+      const wrapper = shallow(<SingleDatePicker onDateChange={onDateChangeStub} />);
+      wrapper.instance().clearDate();
+      expect(onDateChangeStub.callCount).to.equal(1);
+    });
+  });
+
   describe('#isBlocked', () => {
     afterEach(() => {
       sinon.restore();
