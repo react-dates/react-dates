@@ -23,6 +23,13 @@ storiesOf('DayPicker', module)
       navNext={<span>Next</span>}
     />
   ))
+  .add('with non-default custom arrows', () => (
+    <DayPicker
+      navPrev={<span>Prev</span>}
+      navNext={<span>Next</span>}
+      useNavDefaultStyles={false}
+    />
+  ))
   .add('vertical with fixed-width container', () => (
     <div style={{ width: '400px' }}>
       <DayPicker

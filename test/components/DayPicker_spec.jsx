@@ -25,6 +25,16 @@ describe('DayPicker', () => {
           const wrapper = shallow(<DayPicker navPrev={<span>Prev</span>} />);
           expect(wrapper.find('.DayPicker__nav--prev')).to.have.lengthOf(1);
         });
+
+        it('has .DayPicker__nav-prev-default if default styles', () => {
+          const wrapper = shallow(<DayPicker useNavDefaultStyles />);
+          expect(wrapper.find('.DayPicker__nav-prev-default')).to.have.lengthOf(1);
+        });
+
+        it('has no .DayPicker__nav-prev-default if not default styles', () => {
+          const wrapper = shallow(<DayPicker useNavDefaultStyles={false} />);
+          expect(wrapper.find('.DayPicker__nav-prev-default')).to.have.lengthOf(0);
+        });
       });
 
       describe('next month button', () => {
@@ -36,6 +46,16 @@ describe('DayPicker', () => {
         it('has .DayPicker__nav--next class on custom icon', () => {
           const wrapper = shallow(<DayPicker navNext={<span>Next</span>} />);
           expect(wrapper.find('.DayPicker__nav--next')).to.have.lengthOf(1);
+        });
+
+        it('has .DayPicker__nav-next-default if default styles', () => {
+          const wrapper = shallow(<DayPicker useNavDefaultStyles />);
+          expect(wrapper.find('.DayPicker__nav-next-default')).to.have.lengthOf(1);
+        });
+
+        it('has no .DayPicker__nav-next-default if not default styles', () => {
+          const wrapper = shallow(<DayPicker useNavDefaultStyles={false} />);
+          expect(wrapper.find('.DayPicker__nav-next-default')).to.have.lengthOf(0);
         });
       });
     });

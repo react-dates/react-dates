@@ -45,6 +45,7 @@ const propTypes = {
   onOutsideClick: PropTypes.func,
   navPrev: PropTypes.node,
   navNext: PropTypes.node,
+  useNavDefaultStyles: PropTypes.bool,
 
   // i18n
   monthFormat: PropTypes.string,
@@ -57,6 +58,9 @@ const defaultProps = {
   orientation: HORIZONTAL_ORIENTATION,
   withPortal: false,
   hidden: false,
+  navPrev: null,
+  navNext: null,
+  useNavDefaultStyles: true,
   initialVisibleMonth: () => moment(),
   onDayClick() {},
   onDayMouseDown() {},
@@ -293,6 +297,7 @@ export default class DayPicker extends React.Component {
     const {
       navPrev,
       navNext,
+      useNavDefaultStyles,
     } = this.props;
 
     const isVertical = this.isVertical();
@@ -306,17 +311,24 @@ export default class DayPicker extends React.Component {
       navNextIcon = isVertical ? <ChevronDown /> : <RightArrow />;
     }
 
+    const prevClassNames = cx('DayPicker__nav--prev', {
+      'DayPicker__nav-prev-default': useNavDefaultStyles,
+    });
+    const nextClassNames = cx('DayPicker__nav--next', {
+      'DayPicker__nav-next-default': useNavDefaultStyles,
+    });
+
     return (
       <div className="DayPicker__nav">
         <span
-          className="DayPicker__nav--prev"
+          className={prevClassNames}
           onClick={this.handlePrevMonthClick}
         >
           {navPrevIcon}
         </span>
 
         <span
-          className="DayPicker__nav--next"
+          className={nextClassNames}
           onClick={this.handleNextMonthClick}
         >
           {navNextIcon}
