@@ -912,12 +912,12 @@ describe('DateRangePicker', () => {
       });
     });
 
-    describe('props.orientation = VERTICAL_ORIENTATION', () => {
+    describe('props.withFullScreenPortal is truthy', () => {
       it('calls props.onFocusChange once with arg START_DATE', () => {
         const onFocusChangeStub = sinon.stub();
         const wrapper = shallow(
           <DateRangePicker
-            orientation={VERTICAL_ORIENTATION}
+            withFullScreenPortal
             onFocusChange={onFocusChangeStub}
           />
         );
