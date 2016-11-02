@@ -6,11 +6,7 @@ import cx from 'classnames';
 
 import OutsideClickHandler from './OutsideClickHandler';
 import CalendarMonthGrid from './CalendarMonthGrid';
-
-import LeftArrow from '../svg/arrow-left.svg';
-import RightArrow from '../svg/arrow-right.svg';
-import ChevronUp from '../svg/chevron-up.svg';
-import ChevronDown from '../svg/chevron-down.svg';
+import DayPickerNavigation from './DayPickerNavigation';
 
 import getTransformStyles from '../utils/getTransformStyles';
 
@@ -45,7 +41,6 @@ const propTypes = {
   onOutsideClick: PropTypes.func,
   navPrev: PropTypes.node,
   navNext: PropTypes.node,
-  useNavDefaultStyles: PropTypes.bool,
 
   // i18n
   monthFormat: PropTypes.string,
@@ -60,7 +55,6 @@ const defaultProps = {
   hidden: false,
   navPrev: null,
   navNext: null,
-  useNavDefaultStyles: true,
   initialVisibleMonth: () => moment(),
   onDayClick() {},
   onDayMouseDown() {},
@@ -297,43 +291,16 @@ export default class DayPicker extends React.Component {
     const {
       navPrev,
       navNext,
-      useNavDefaultStyles,
     } = this.props;
 
-    const isVertical = this.isVertical();
-
-    let navPrevIcon = navPrev;
-    let navNextIcon = navNext;
-    if (!navPrevIcon) {
-      navPrevIcon = isVertical ? <ChevronUp /> : <LeftArrow />;
-    }
-    if (!navNextIcon) {
-      navNextIcon = isVertical ? <ChevronDown /> : <RightArrow />;
-    }
-
-    const prevClassNames = cx('DayPicker__nav--prev', {
-      'DayPicker__nav-prev-default': useNavDefaultStyles,
-    });
-    const nextClassNames = cx('DayPicker__nav--next', {
-      'DayPicker__nav-next-default': useNavDefaultStyles,
-    });
-
     return (
-      <div className="DayPicker__nav">
-        <span
-          className={prevClassNames}
-          onClick={this.handlePrevMonthClick}
-        >
-          {navPrevIcon}
-        </span>
-
-        <span
-          className={nextClassNames}
-          onClick={this.handleNextMonthClick}
-        >
-          {navNextIcon}
-        </span>
-      </div>
+      <DayPickerNavigation
+        navPrev={navPrev}
+        navNext={navNext}
+        isVertical={this.isVertical()}
+        handlePrevMonthClick={this.handlePrevMonthClick}
+        handleNextMonthClick={this.handleNextMonthClick}
+      />
     );
   }
 

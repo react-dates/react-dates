@@ -4,6 +4,29 @@ import DayPicker from '../src/components/DayPicker';
 
 import { VERTICAL_ORIENTATION } from '../constants';
 
+const TestPrevIcon = props => (
+  <span style={{
+      border: '1px solid #dce0e0',
+      backgroundColor: '#fff',
+      color: '#484848',
+      padding: '3px'
+    }}
+  >
+    Prev
+  </span>
+);
+const TestNextIcon = props => (
+  <span style={{
+    border: '1px solid #dce0e0',
+    backgroundColor: '#fff',
+    color: '#484848',
+    padding: '3px'
+    }}
+  >
+    Next
+  </span>
+);
+
 storiesOf('DayPicker', module)
   .add('default', () => (
     <DayPicker />
@@ -19,15 +42,8 @@ storiesOf('DayPicker', module)
   ))
   .add('with custom arrows', () => (
     <DayPicker
-      navPrev={<span>Prev</span>}
-      navNext={<span>Next</span>}
-    />
-  ))
-  .add('with non-default custom arrows', () => (
-    <DayPicker
-      navPrev={<span>Prev</span>}
-      navNext={<span>Next</span>}
-      useNavDefaultStyles={false}
+      navPrev={<TestPrevIcon />}
+      navNext={<TestNextIcon />}
     />
   ))
   .add('vertical with fixed-width container', () => (

@@ -9,57 +9,6 @@ import { HORIZONTAL_ORIENTATION, VERTICAL_ORIENTATION } from '../../constants';
 
 describe('DayPicker', () => {
   describe('#render', () => {
-    describe('#renderNavigation', () => {
-      it('.DayPicker__nav class exists', () => {
-        const wrapper = shallow(<DayPicker />);
-        expect(wrapper.find('.DayPicker__nav')).to.have.lengthOf(1);
-      });
-
-      describe('prev month button', () => {
-        it('has .DayPicker__nav--prev class', () => {
-          const wrapper = shallow(<DayPicker />);
-          expect(wrapper.find('.DayPicker__nav--prev')).to.have.lengthOf(1);
-        });
-
-        it('has .DayPicker__nav--prev on custom icon', () => {
-          const wrapper = shallow(<DayPicker navPrev={<span>Prev</span>} />);
-          expect(wrapper.find('.DayPicker__nav--prev')).to.have.lengthOf(1);
-        });
-
-        it('has .DayPicker__nav-prev-default if default styles', () => {
-          const wrapper = shallow(<DayPicker useNavDefaultStyles />);
-          expect(wrapper.find('.DayPicker__nav-prev-default')).to.have.lengthOf(1);
-        });
-
-        it('has no .DayPicker__nav-prev-default if not default styles', () => {
-          const wrapper = shallow(<DayPicker useNavDefaultStyles={false} />);
-          expect(wrapper.find('.DayPicker__nav-prev-default')).to.have.lengthOf(0);
-        });
-      });
-
-      describe('next month button', () => {
-        it('.DayPicker__nav--next class exists', () => {
-          const wrapper = shallow(<DayPicker />);
-          expect(wrapper.find('.DayPicker__nav--next')).to.have.lengthOf(1);
-        });
-
-        it('has .DayPicker__nav--next class on custom icon', () => {
-          const wrapper = shallow(<DayPicker navNext={<span>Next</span>} />);
-          expect(wrapper.find('.DayPicker__nav--next')).to.have.lengthOf(1);
-        });
-
-        it('has .DayPicker__nav-next-default if default styles', () => {
-          const wrapper = shallow(<DayPicker useNavDefaultStyles />);
-          expect(wrapper.find('.DayPicker__nav-next-default')).to.have.lengthOf(1);
-        });
-
-        it('has no .DayPicker__nav-next-default if not default styles', () => {
-          const wrapper = shallow(<DayPicker useNavDefaultStyles={false} />);
-          expect(wrapper.find('.DayPicker__nav-next-default')).to.have.lengthOf(0);
-        });
-      });
-    });
-
     describe('renderWeekHeader', () => {
       it('there are 7 elements on each .DayPicker__week-header class', () => {
         const wrapper = shallow(<DayPicker />);
@@ -178,19 +127,6 @@ describe('DayPicker', () => {
       sinon.restore();
     });
 
-    describe('interactions', () => {
-      let handlePrevMonthClickSpy;
-      beforeEach(() => {
-        handlePrevMonthClickSpy = sinon.spy(DayPicker.prototype, 'handlePrevMonthClick');
-      });
-
-      it('is triggered by prev month button click', () => {
-        const prevMonthButton = shallow(<DayPicker />).find('.DayPicker__nav--prev');
-        prevMonthButton.simulate('click');
-        expect(handlePrevMonthClickSpy).to.have.property('callCount', 1);
-      });
-    });
-
     it('calls props.onPrevMonthClick', () => {
       const onPrevMonthClickSpy = sinon.stub();
       const wrapper = shallow(<DayPicker onPrevMonthClick={onPrevMonthClickSpy} />);
@@ -219,23 +155,6 @@ describe('DayPicker', () => {
 
     afterEach(() => {
       sinon.restore();
-    });
-
-    describe('interactions', () => {
-      let handleNextMonthClickSpy;
-      beforeEach(() => {
-        handleNextMonthClickSpy = sinon.spy(DayPicker.prototype, 'handleNextMonthClick');
-      });
-
-      afterEach(() => {
-        sinon.restore();
-      });
-
-      it('is triggered by prev month button click', () => {
-        const nextMonthButton = shallow(<DayPicker />).find('.DayPicker__nav--next');
-        nextMonthButton.simulate('click');
-        expect(handleNextMonthClickSpy).to.have.property('callCount', 1);
-      });
     });
 
     it('calls props.onNextMonthClick', () => {
