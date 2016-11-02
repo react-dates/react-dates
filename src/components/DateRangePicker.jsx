@@ -50,11 +50,13 @@ const defaultProps = {
   initialVisibleMonth: () => moment(),
   navPrev: null,
   navNext: null,
+  portalMarginTop: 23,
 
   orientation: HORIZONTAL_ORIENTATION,
   anchorDirection: ANCHOR_LEFT,
   withPortal: false,
   withFullScreenPortal: false,
+  bottomPanel: null,
 
   onDatesChange() {},
   onFocusChange() {},
@@ -346,6 +348,7 @@ export default class DateRangePicker extends React.Component {
       enableOutsideDays,
       initialVisibleMonth,
       focusedInput,
+      bottomPanel,
     } = this.props;
 
     const modifiers = {
@@ -405,6 +408,8 @@ export default class DateRangePicker extends React.Component {
             <CloseButton />
           </button>
         }
+
+        {bottomPanel}
       </div>
     );
   }
@@ -423,6 +428,7 @@ export default class DateRangePicker extends React.Component {
       anchorDirection,
       withPortal,
       withFullScreenPortal,
+      portalMarginTop,
     } = this.props;
 
     const startDateString = this.getDateString(startDate);
@@ -441,7 +447,7 @@ export default class DateRangePicker extends React.Component {
           })}
           attachment={`top ${anchorDirection}`}
           targetAttachment={`bottom ${anchorDirection}`}
-          offset="-23px 0"
+          offset={`-${portalMarginTop}px 0`}
           constraints={[{
             to: 'scrollParent',
             attachment: 'none',

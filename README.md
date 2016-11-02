@@ -135,6 +135,16 @@ The `anchorDirection` prop indicates whether the calendar is anchored to the rig
   withFullScreenPortal: PropTypes.bool
 ```
 
+The `bottomPanel` prop accepts a React element that will be displayed below `DayPicker`.
+```
+  bottomPanel: PropTypes.element
+```
+
+The `portalMarginTop` prop sets the space between `DateRangePickerInput` and the `DayPicker` popout.
+```
+  portalMarginTop: PropTypes.number
+```
+
 **Input presentation:**
 
 The `startDateId` and `endDateId` props are assigned to the actual `<input>` DOM elements for accessibility reasons. They default to the values of the `START_DATE` and `END_DATE` constants.
