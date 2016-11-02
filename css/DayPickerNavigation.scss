@@ -1,7 +1,7 @@
 @import 'variables';
 
-.DayPicker__nav--prev,
-.DayPicker__nav--next {
+.DayPickerNavigation__prev,
+.DayPickerNavigation__next {
   cursor: pointer;
   line-height: 0.78;
   user-select: none;
@@ -10,8 +10,8 @@
   -ms-user-select: none; /* IE10+ */
 }
 
-.DayPicker__nav-prev-default,
-.DayPicker__nav-next-default {
+.DayPickerNavigation__prev--default,
+.DayPickerNavigation__next--default {
   border: 1px solid $react-dates-color-border-light;
   background-color: $react-dates-color-white;
   color: $react-dates-color-placeholder-text;
@@ -26,13 +26,11 @@
   }
 }
 
-.DayPicker--horizontal {
-  .DayPicker__nav {
-    position: relative;
-  }
+.DayPickerNavigation--horizontal {
+  position: relative;
 
-  .DayPicker__nav--prev,
-  .DayPicker__nav--next {
+  .DayPickerNavigation__prev,
+  .DayPickerNavigation__next {
     border-radius: 3px;
     padding: 6px 9px;
     top: 18px;
@@ -40,16 +38,16 @@
     position: absolute;
   }
 
-  .DayPicker__nav--prev {
+  .DayPickerNavigation__prev {
     left: 22px;
   }
 
-  .DayPicker__nav--next {
+  .DayPickerNavigation__next {
     right: 22px;
   }
 
-  .DayPicker__nav-next-default,
-  .DayPicker__nav-prev-default {
+  .DayPickerNavigation__prev--default,
+  .DayPickerNavigation__next--default {
     svg {
       height: 19px;
       width: 19px;
@@ -58,35 +56,31 @@
   }
 }
 
-.DayPicker--vertical {
-  .DayPicker__nav {
-    background: $react-dates-color-white;
-    box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.1);
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 52px;
-    width: 100%;
-    z-index: 2;
-  }
+.DayPickerNavigation--vertical {
+  background: $react-dates-color-white;
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 52px;
+  width: 100%;
+  z-index: 2;
 
-  .DayPicker__nav--prev,
-  .DayPicker__nav--next {
-    text-align: center;
-    font-size: 2.5em;
-    padding: 5px;
+  .DayPickerNavigation__prev,
+  .DayPickerNavigation__next {
     display: inline-block;
     position: relative;
     height: 100%;
     width: 50%;
   }
 
-  .DayPicker__nav--next {
+  .DayPickerNavigation__prev--default,
+  .DayPickerNavigation__next--default {
     border-left: 0;
-  }
+    text-align: center;
+    font-size: 2.5em;
+    padding: 5px;
 
-  .DayPicker__nav-next-default,
-  .DayPicker__nav-prev-default {
     svg {
       height: 42px;
       width: 42px;

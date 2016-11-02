@@ -114,7 +114,7 @@ describe('DayPicker', () => {
     });
   });
 
-  describe('#handlePrevMonthClick', () => {
+  describe('#onPrevMonthClick', () => {
     let translateFirstDayPickerForAnimationSpy;
     beforeEach(() => {
       translateFirstDayPickerForAnimationSpy =
@@ -130,24 +130,24 @@ describe('DayPicker', () => {
     it('calls props.onPrevMonthClick', () => {
       const onPrevMonthClickSpy = sinon.stub();
       const wrapper = shallow(<DayPicker onPrevMonthClick={onPrevMonthClickSpy} />);
-      wrapper.instance().handlePrevMonthClick();
+      wrapper.instance().onPrevMonthClick();
       expect(onPrevMonthClickSpy).to.have.property('callCount', 1);
     });
 
     it('calls translateFirstDayPickerForAnimation', () => {
       const wrapper = shallow(<DayPicker />);
-      wrapper.instance().handlePrevMonthClick();
+      wrapper.instance().onPrevMonthClick();
       expect(translateFirstDayPickerForAnimationSpy).to.have.property('callCount', 1);
     });
 
     it('sets state.monthTransition to "prev"', () => {
       const wrapper = shallow(<DayPicker />);
-      wrapper.instance().handlePrevMonthClick();
+      wrapper.instance().onPrevMonthClick();
       expect(wrapper.state().monthTransition).to.equal('prev');
     });
   });
 
-  describe('#handleNextMonthClick', () => {
+  describe('#onNextMonthClick', () => {
     beforeEach(() => {
       sinon.stub(DayPicker.prototype, 'adjustDayPickerHeight');
       sinon.stub(DayPicker.prototype, 'updateStateAfterMonthTransition');
@@ -160,13 +160,13 @@ describe('DayPicker', () => {
     it('calls props.onNextMonthClick', () => {
       const onNextMonthClickSpy = sinon.stub();
       const wrapper = shallow(<DayPicker onNextMonthClick={onNextMonthClickSpy} />);
-      wrapper.instance().handleNextMonthClick();
+      wrapper.instance().onNextMonthClick();
       expect(onNextMonthClickSpy).to.have.property('callCount', 1);
     });
 
     it('sets state.monthTransition to "next"', () => {
       const wrapper = shallow(<DayPicker />);
-      wrapper.instance().handleNextMonthClick();
+      wrapper.instance().onNextMonthClick();
       expect(wrapper.state().monthTransition).to.equal('next');
     });
   });

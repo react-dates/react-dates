@@ -11,8 +11,8 @@ const propTypes = {
   navNext: PropTypes.node,
   isVertical: PropTypes.bool,
 
-  handlePrevMonthClick: PropTypes.func,
-  handleNextMonthClick: PropTypes.func,
+  onPrevMonthClick: PropTypes.func,
+  onNextMonthClick: PropTypes.func,
 };
 const defaultProps = {
   navPrev: null,
@@ -28,16 +28,16 @@ export default function DayPickerNavigation(props) {
     navPrev,
     navNext,
     isVertical,
-    handlePrevMonthClick,
-    handleNextMonthClick,
+    onPrevMonthClick,
+    onNextMonthClick,
   } = props;
 
   let navPrevIcon = navPrev;
   let navNextIcon = navNext;
-  let isDefaualtNavPrev = false;
+  let isDefualtNavPrev = false;
   let isDefaultNavNext = false;
   if (!navPrevIcon) {
-    isDefaualtNavPrev = true;
+    isDefualtNavPrev = true;
     navPrevIcon = isVertical ? <ChevronUp /> : <LeftArrow />;
   }
   if (!navNextIcon) {
@@ -45,25 +45,29 @@ export default function DayPickerNavigation(props) {
     navNextIcon = isVertical ? <ChevronDown /> : <RightArrow />;
   }
 
-  const prevClassNames = cx('DayPicker__nav--prev', {
-    'DayPicker__nav-prev-default': isDefaualtNavPrev,
+  const navClassNames = cx('DayPickerNavigation', {
+    'DayPickerNavigation--horizontal': !isVertical,
+    'DayPickerNavigation--vertical': isVertical,
   });
-  const nextClassNames = cx('DayPicker__nav--next', {
-    'DayPicker__nav-next-default': isDefaultNavNext,
+  const prevClassNames = cx('DayPickerNavigation__prev', {
+    'DayPickerNavigation__prev--default': isDefualtNavPrev,
+  });
+  const nextClassNames = cx('DayPickerNavigation__next', {
+    'DayPickerNavigation__next--default': isDefaultNavNext,
   });
 
   return (
-    <div className="DayPicker__nav">
+    <div className={navClassNames}>
       <span
         className={prevClassNames}
-        onClick={handlePrevMonthClick}
+        onClick={onPrevMonthClick}
       >
         {navPrevIcon}
       </span>
 
       <span
         className={nextClassNames}
-        onClick={handleNextMonthClick}
+        onClick={onNextMonthClick}
       >
         {navNextIcon}
       </span>

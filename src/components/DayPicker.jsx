@@ -83,8 +83,8 @@ export default class DayPicker extends React.Component {
       translationValue: 0,
     };
 
-    this.handlePrevMonthClick = this.handlePrevMonthClick.bind(this);
-    this.handleNextMonthClick = this.handleNextMonthClick.bind(this);
+    this.onPrevMonthClick = this.onPrevMonthClick.bind(this);
+    this.onNextMonthClick = this.onNextMonthClick.bind(this);
     this.updateStateAfterMonthTransition = this.updateStateAfterMonthTransition.bind(this);
   }
 
@@ -114,6 +114,45 @@ export default class DayPicker extends React.Component {
         this.adjustDayPickerHeight();
       }
     }
+  }
+
+  onPrevMonthClick(e) {
+    if (e) e.preventDefault();
+
+    if (this.props.onPrevMonthClick) {
+      this.props.onPrevMonthClick(e);
+    }
+
+    const translationValue =
+      this.isVertical() ? this.getMonthHeightByIndex(0) : this.dayPickerWidth;
+
+    // The first CalendarMonth is always positioned absolute at top: 0 or left: 0
+    // so we need to transform it to the appropriate location before the animation.
+    // This behavior is because we would otherwise need a double-render in order to
+    // adjust the container position once we had the height the first calendar
+    // (ie first draw all the calendar, then in a second render, use the first calendar's
+    // height to position the container). Variable calendar heights, amirite? <3 Maja
+    this.translateFirstDayPickerForAnimation(translationValue);
+
+    this.setState({
+      monthTransition: PREV_TRANSITION,
+      translationValue,
+    });
+  }
+
+  onNextMonthClick(e) {
+    if (e) e.preventDefault();
+    if (this.props.onNextMonthClick) {
+      this.props.onNextMonthClick(e);
+    }
+
+    const translationValue =
+      this.isVertical() ? -this.getMonthHeightByIndex(1) : -this.dayPickerWidth;
+
+    this.setState({
+      monthTransition: NEXT_TRANSITION,
+      translationValue,
+    });
   }
 
   getMonthHeightByIndex(i) {
@@ -218,45 +257,6 @@ export default class DayPicker extends React.Component {
     });
   }
 
-  handlePrevMonthClick(e) {
-    if (e) e.preventDefault();
-
-    if (this.props.onPrevMonthClick) {
-      this.props.onPrevMonthClick(e);
-    }
-
-    const translationValue =
-      this.isVertical() ? this.getMonthHeightByIndex(0) : this.dayPickerWidth;
-
-    // The first CalendarMonth is always positioned absolute at top: 0 or left: 0
-    // so we need to transform it to the appropriate location before the animation.
-    // This behavior is because we would otherwise need a double-render in order to
-    // adjust the container position once we had the height the first calendar
-    // (ie first draw all the calendar, then in a second render, use the first calendar's
-    // height to position the container). Variable calendar heights, amirite? <3 Maja
-    this.translateFirstDayPickerForAnimation(translationValue);
-
-    this.setState({
-      monthTransition: PREV_TRANSITION,
-      translationValue,
-    });
-  }
-
-  handleNextMonthClick(e) {
-    if (e) e.preventDefault();
-    if (this.props.onNextMonthClick) {
-      this.props.onNextMonthClick(e);
-    }
-
-    const translationValue =
-      this.isVertical() ? -this.getMonthHeightByIndex(1) : -this.dayPickerWidth;
-
-    this.setState({
-      monthTransition: NEXT_TRANSITION,
-      translationValue,
-    });
-  }
-
   adjustDayPickerHeight() {
     const transitionContainer = ReactDOM.findDOMNode(this.refs.transitionContainer);
     const heights = [];
@@ -295,11 +295,11 @@ export default class DayPicker extends React.Component {
 
     return (
       <DayPickerNavigation
+        onPrevMonthClick={this.onPrevMonthClick}
+        onNextMonthClick={this.onNextMonthClick}
         navPrev={navPrev}
         navNext={navNext}
         isVertical={this.isVertical()}
-        handlePrevMonthClick={this.handlePrevMonthClick}
-        handleNextMonthClick={this.handleNextMonthClick}
       />
     );
   }

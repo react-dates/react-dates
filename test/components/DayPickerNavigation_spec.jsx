@@ -7,79 +7,89 @@ import DayPickerNavigation from '../../src/components/DayPickerNavigation';
 
 describe('DayPickerNavigation', () => {
   describe('#render', () => {
-    it('.DayPicker__nav class exists', () => {
+    it('.DayPickerNavigation class exists', () => {
       const wrapper = shallow(<DayPickerNavigation />);
-      expect(wrapper.find('.DayPicker__nav')).to.have.lengthOf(1);
+      expect(wrapper.find('.DayPickerNavigation')).to.have.lengthOf(1);
+    });
+
+    it('has .DayPickerNavigation--horizontal when not vertical', () => {
+      const wrapper = shallow(<DayPickerNavigation isVertical={false} />);
+      expect(wrapper.find('.DayPickerNavigation--horizontal')).to.have.lengthOf(1);
+    });
+
+    it('has .DayPickerNavigation--vertical when vertical', () => {
+      const wrapper = shallow(<DayPickerNavigation isVertical />);
+      expect(wrapper.find('.DayPickerNavigation--vertical')).to.have.lengthOf(1);
     });
 
     describe('prev month button', () => {
-      it('has .DayPicker__nav--prev class', () => {
+      it('has .DayPickerNavigation__prev class', () => {
         const wrapper = shallow(<DayPickerNavigation />);
-        expect(wrapper.find('.DayPicker__nav--prev')).to.have.lengthOf(1);
+        expect(wrapper.find('.DayPickerNavigation__prev')).to.have.lengthOf(1);
       });
 
-      it('has .DayPicker__nav--prev on custom icon', () => {
+      it('has .DayPickerNavigation__prev on custom icon', () => {
         const wrapper = shallow(<DayPickerNavigation navPrev={<span>Prev</span>} />);
-        expect(wrapper.find('.DayPicker__nav--prev')).to.have.lengthOf(1);
+        expect(wrapper.find('.DayPickerNavigation__prev')).to.have.lengthOf(1);
       });
 
-      it('has .DayPicker__nav-prev-default if no custom prev icon', () => {
+      it('has .DayPickerNavigation__prev--default if no custom prev icon', () => {
         const wrapper = shallow(<DayPickerNavigation />);
-        expect(wrapper.find('.DayPicker__nav-prev-default')).to.have.lengthOf(1);
+        expect(wrapper.find('.DayPickerNavigation__prev--default')).to.have.lengthOf(1);
       });
 
-      it('has no .DayPicker__nav-prev-default if custom prev icon', () => {
+      it('has no .DayPickerNavigation__prev--default if custom prev icon', () => {
         const wrapper = shallow(<DayPickerNavigation navPrev={<span>Prev</span>} />);
-        expect(wrapper.find('.DayPicker__nav-prev-default')).to.have.lengthOf(0);
+        expect(wrapper.find('.DayPickerNavigation__prev--default')).to.have.lengthOf(0);
       });
     });
 
     describe('next month button', () => {
-      it('.DayPicker__nav--next class exists', () => {
+      it('.DayPickerNavigation__next class exists', () => {
         const wrapper = shallow(<DayPickerNavigation />);
-        expect(wrapper.find('.DayPicker__nav--next')).to.have.lengthOf(1);
+        expect(wrapper.find('.DayPickerNavigation__next')).to.have.lengthOf(1);
       });
 
-      it('has .DayPicker__nav--next class on custom icon', () => {
+      it('has .DayPickerNavigation__next class on custom icon', () => {
         const wrapper = shallow(<DayPickerNavigation navNext={<span>Next</span>} />);
-        expect(wrapper.find('.DayPicker__nav--next')).to.have.lengthOf(1);
+        expect(wrapper.find('.DayPickerNavigation__next')).to.have.lengthOf(1);
       });
 
-      it('has .DayPicker__nav-next-default if no custom prev icon', () => {
+      it('has .DayPickerNavigation__next--default if no custom prev icon', () => {
         const wrapper = shallow(<DayPickerNavigation />);
-        expect(wrapper.find('.DayPicker__nav-next-default')).to.have.lengthOf(1);
+        expect(wrapper.find('.DayPickerNavigation__next--default')).to.have.lengthOf(1);
       });
 
-      it('has no .DayPicker__nav-prev-default if custom next icon', () => {
+      it('has no .DayPickerNavigation__next--default if custom next icon', () => {
         const wrapper = shallow(<DayPickerNavigation navNext={<span>Next</span>} />);
-        expect(wrapper.find('.DayPicker__nav-next-default')).to.have.lengthOf(0);
+        expect(wrapper.find('.DayPickerNavigation__next--default')).to.have.lengthOf(0);
       });
     });
   });
 
   describe('interactions', () => {
     it('is triggered by prev month button click', () => {
-      const handlePrevMonthStub = sinon.stub();
+      const onPrevMonthStub = sinon.stub();
       const prevMonthButton = shallow(
         <DayPickerNavigation
-          handlePrevMonthClick={handlePrevMonthStub}
+          onPrevMonthClick={onPrevMonthStub}
         />
-      ).find('.DayPicker__nav--prev');
+      ).find('.DayPickerNavigation__prev');
       prevMonthButton.simulate('click');
-      expect(handlePrevMonthStub).to.have.property('callCount', 1);
+      expect(onPrevMonthStub).to.have.property('callCount', 1);
     });
   });
 
   describe('interactions', () => {
     it('is triggered by next month button click', () => {
-      const handleNextMonthStub = sinon.stub();
-      const prevMonthButton = shallow(
+      const onNextMonthStub = sinon.stub();
+      const nextMonthButton = shallow(
         <DayPickerNavigation
-          handleNextMonthClick={handleNextMonthStub}
+          onNextMonthClick={onNextMonthStub}
         />
-      ).find('.DayPicker__nav--next');
-      prevMonthButton.simulate('click');
-      expect(handleNextMonthStub).to.have.property('callCount', 1);
+      ).find('.DayPickerNavigation__next');
+      nextMonthButton.simulate('click');
+      expect(onNextMonthStub).to.have.property('callCount', 1);
     });
   });
 });
