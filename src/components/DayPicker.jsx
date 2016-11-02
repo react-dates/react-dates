@@ -6,11 +6,7 @@ import cx from 'classnames';
 
 import OutsideClickHandler from './OutsideClickHandler';
 import CalendarMonthGrid from './CalendarMonthGrid';
-
-import LeftArrow from '../svg/arrow-left.svg';
-import RightArrow from '../svg/arrow-right.svg';
-import ChevronUp from '../svg/chevron-up.svg';
-import ChevronDown from '../svg/chevron-down.svg';
+import DayPickerNavigation from './DayPickerNavigation';
 
 import getTransformStyles from '../utils/getTransformStyles';
 
@@ -43,6 +39,8 @@ const propTypes = {
   onPrevMonthClick: PropTypes.func,
   onNextMonthClick: PropTypes.func,
   onOutsideClick: PropTypes.func,
+  navPrev: PropTypes.node,
+  navNext: PropTypes.node,
 
   // i18n
   monthFormat: PropTypes.string,
@@ -55,6 +53,8 @@ const defaultProps = {
   orientation: HORIZONTAL_ORIENTATION,
   withPortal: false,
   hidden: false,
+  navPrev: null,
+  navNext: null,
   initialVisibleMonth: () => moment(),
   onDayClick() {},
   onDayMouseDown() {},
@@ -83,8 +83,8 @@ export default class DayPicker extends React.Component {
       translationValue: 0,
     };
 
-    this.handlePrevMonthClick = this.handlePrevMonthClick.bind(this);
-    this.handleNextMonthClick = this.handleNextMonthClick.bind(this);
+    this.onPrevMonthClick = this.onPrevMonthClick.bind(this);
+    this.onNextMonthClick = this.onNextMonthClick.bind(this);
     this.updateStateAfterMonthTransition = this.updateStateAfterMonthTransition.bind(this);
   }
 
@@ -108,12 +108,51 @@ export default class DayPicker extends React.Component {
     return shallowCompare(this, nextProps, nextState);
   }
 
-  componentDidUpdate() {
-    if (this.state.monthTransition) {
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.monthTransition || !this.state.currentMonth.isSame(prevState.currentMonth)) {
       if (this.isHorizontal()) {
         this.adjustDayPickerHeight();
       }
     }
+  }
+
+  onPrevMonthClick(e) {
+    if (e) e.preventDefault();
+
+    if (this.props.onPrevMonthClick) {
+      this.props.onPrevMonthClick(e);
+    }
+
+    const translationValue =
+      this.isVertical() ? this.getMonthHeightByIndex(0) : this.dayPickerWidth;
+
+    // The first CalendarMonth is always positioned absolute at top: 0 or left: 0
+    // so we need to transform it to the appropriate location before the animation.
+    // This behavior is because we would otherwise need a double-render in order to
+    // adjust the container position once we had the height the first calendar
+    // (ie first draw all the calendar, then in a second render, use the first calendar's
+    // height to position the container). Variable calendar heights, amirite? <3 Maja
+    this.translateFirstDayPickerForAnimation(translationValue);
+
+    this.setState({
+      monthTransition: PREV_TRANSITION,
+      translationValue,
+    });
+  }
+
+  onNextMonthClick(e) {
+    if (e) e.preventDefault();
+    if (this.props.onNextMonthClick) {
+      this.props.onNextMonthClick(e);
+    }
+
+    const translationValue =
+      this.isVertical() ? -this.getMonthHeightByIndex(1) : -this.dayPickerWidth;
+
+    this.setState({
+      monthTransition: NEXT_TRANSITION,
+      translationValue,
+    });
   }
 
   getMonthHeightByIndex(i) {
@@ -218,45 +257,6 @@ export default class DayPicker extends React.Component {
     });
   }
 
-  handlePrevMonthClick(e) {
-    if (e) e.preventDefault();
-
-    if (this.props.onPrevMonthClick) {
-      this.props.onPrevMonthClick(e);
-    }
-
-    const translationValue =
-      this.isVertical() ? this.getMonthHeightByIndex(0) : this.dayPickerWidth;
-
-    // The first CalendarMonth is always positioned absolute at top: 0 or left: 0
-    // so we need to transform it to the appropriate location before the animation.
-    // This behavior is because we would otherwise need a double-render in order to
-    // adjust the container position once we had the height the first calendar
-    // (ie first draw all the calendar, then in a second render, use the first calendar's
-    // height to position the container). Variable calendar heights, amirite? <3 Maja
-    this.translateFirstDayPickerForAnimation(translationValue);
-
-    this.setState({
-      monthTransition: PREV_TRANSITION,
-      translationValue,
-    });
-  }
-
-  handleNextMonthClick(e) {
-    if (e) e.preventDefault();
-    if (this.props.onNextMonthClick) {
-      this.props.onNextMonthClick(e);
-    }
-
-    const translationValue =
-      this.isVertical() ? -this.getMonthHeightByIndex(1) : -this.dayPickerWidth;
-
-    this.setState({
-      monthTransition: NEXT_TRANSITION,
-      translationValue,
-    });
-  }
-
   adjustDayPickerHeight() {
     const transitionContainer = ReactDOM.findDOMNode(this.refs.transitionContainer);
     const heights = [];
@@ -288,24 +288,19 @@ export default class DayPicker extends React.Component {
   }
 
   renderNavigation() {
-    const isVertical = this.isVertical();
+    const {
+      navPrev,
+      navNext,
+    } = this.props;
 
     return (
-      <div className="DayPicker__nav">
-        <span
-          className="DayPicker__nav--prev"
-          onClick={this.handlePrevMonthClick}
-        >
-          {isVertical ? <ChevronUp /> : <LeftArrow />}
-        </span>
-
-        <span
-          className="DayPicker__nav--next"
-          onClick={this.handleNextMonthClick}
-        >
-          {isVertical ? <ChevronDown /> : <RightArrow />}
-        </span>
-      </div>
+      <DayPickerNavigation
+        onPrevMonthClick={this.onPrevMonthClick}
+        onNextMonthClick={this.onNextMonthClick}
+        navPrev={navPrev}
+        navNext={navNext}
+        isVertical={this.isVertical()}
+      />
     );
   }
 

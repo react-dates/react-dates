@@ -35,6 +35,28 @@ const TestInput = props => (
     />
   </div>
 );
+const TestPrevIcon = props => (
+  <span style={{
+      border: '1px solid #dce0e0',
+      backgroundColor: '#fff',
+      color: '#484848',
+      padding: '3px'
+    }}
+  >
+    Prev
+  </span>
+);
+const TestNextIcon = props => (
+  <span style={{
+    border: '1px solid #dce0e0',
+    backgroundColor: '#fff',
+    color: '#484848',
+    padding: '3px'
+    }}
+  >
+    Next
+  </span>
+);
 
 storiesOf('DateRangePicker', module)
   .add('default', () => (
@@ -118,6 +140,12 @@ storiesOf('DateRangePicker', module)
       displayFormat="MMM D"
     />
   ))
+  .add('with custom arrows', () => (
+    <DateRangePickerWrapper
+      navPrev={<TestPrevIcon />}
+      navNext={<TestNextIcon />}
+    />
+  ))
   .add('with minimum nights set', () => (
     <DateRangePickerWrapper
       minimumNights={3}
@@ -149,7 +177,7 @@ storiesOf('DateRangePicker', module)
   ))
   .add('with month specified on open', () => (
     <DateRangePickerWrapper
-      initialVisibleMonth={() => moment('01 2017', 'MM YYYY')}
+      initialVisibleMonth={() => moment('04 2017', 'MM YYYY')}
     />
   ))
   .add('blocks fridays', () => (
