@@ -1,3 +1,5 @@
+$caret-top: $react-dates-spacing-vertical-picker - $react-dates-width-tooltip-arrow / 2;
+
 .DateInput {
   // font
   font-weight: 200;
@@ -19,20 +21,20 @@
   content: "";
   display: inline-block;
   position: absolute;
-  top: $react-dates-spacing-vertical-picker - $react-dates-width-tooltip-arrow / 2;
   bottom: auto;
   border: $react-dates-width-tooltip-arrow / 2 solid transparent;
   border-top: 0;
+  left: 22px;
   z-index: 2;
 }
 
 .DateInput--with-caret::before {
-  left: 22px;
+  top: $caret-top;
   border-bottom-color: rgba(0, 0, 0, 0.1);
 }
 
 .DateInput--with-caret::after {
-  left: 23px;
+  top: $caret-top + 1;
   border-bottom-color: $react-dates-color-white;
 }
 
