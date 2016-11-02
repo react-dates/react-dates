@@ -149,7 +149,7 @@ storiesOf('DateRangePicker', module)
   ))
   .add('with month specified on open', () => (
     <DateRangePickerWrapper
-      initialVisibleMonth={() => moment('01 2017', 'MM YYYY')}
+      initialVisibleMonth={() => moment('04 2017', 'MM YYYY')}
     />
   ))
   .add('blocks fridays', () => (
