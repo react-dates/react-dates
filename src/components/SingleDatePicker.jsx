@@ -34,6 +34,8 @@ const defaultProps = {
   required: false,
   showClearDate: false,
   reopenPickerOnClearDate: false,
+  navPrev: null,
+  navNext: null,
 
   onDateChange() {},
   onFocusChange() {},

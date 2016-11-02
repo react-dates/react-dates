@@ -48,6 +48,8 @@ const defaultProps = {
   required: false,
   reopenPickerOnClearDates: false,
   initialVisibleMonth: () => moment(),
+  navPrev: null,
+  navNext: null,
 
   orientation: HORIZONTAL_ORIENTATION,
   anchorDirection: ANCHOR_LEFT,
