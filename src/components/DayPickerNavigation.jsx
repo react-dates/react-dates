@@ -19,8 +19,8 @@ const defaultProps = {
   navNext: null,
   isVertical: false,
 
-  handleNextMonthClick() {},
-  handlePrevMonthClick() {},
+  onPrevMonthClick() {},
+  onNextMonthClick() {},
 };
 
 export default function DayPickerNavigation(props) {
@@ -34,10 +34,10 @@ export default function DayPickerNavigation(props) {
 
   let navPrevIcon = navPrev;
   let navNextIcon = navNext;
-  let isDefualtNavPrev = false;
+  let isDefaultNavPrev = false;
   let isDefaultNavNext = false;
   if (!navPrevIcon) {
-    isDefualtNavPrev = true;
+    isDefaultNavPrev = true;
     navPrevIcon = isVertical ? <ChevronUp /> : <LeftArrow />;
   }
   if (!navNextIcon) {
@@ -50,7 +50,7 @@ export default function DayPickerNavigation(props) {
     'DayPickerNavigation--vertical': isVertical,
   });
   const prevClassNames = cx('DayPickerNavigation__prev', {
-    'DayPickerNavigation__prev--default': isDefualtNavPrev,
+    'DayPickerNavigation__prev--default': isDefaultNavPrev,
   });
   const nextClassNames = cx('DayPickerNavigation__next', {
     'DayPickerNavigation__next--default': isDefaultNavNext,

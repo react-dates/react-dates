@@ -74,9 +74,12 @@
     width: 50%;
   }
 
-  .DayPickerNavigation__prev--default,
   .DayPickerNavigation__next--default {
     border-left: 0;
+  }
+
+  .DayPickerNavigation__prev--default,
+  .DayPickerNavigation__next--default {
     text-align: center;
     font-size: 2.5em;
     padding: 5px;
