@@ -11,6 +11,7 @@ export default {
   focused: PropTypes.bool,
   showClearDate: PropTypes.bool,
   reopenPickerOnClearDates: PropTypes.bool,
+  keepOpenOnDateSelect: PropTypes.bool,
   disabled: PropTypes.bool,
   required: PropTypes.bool,
 

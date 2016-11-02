@@ -92,10 +92,15 @@ storiesOf('SingleDatePicker', module)
       showClearDate
     />
   ))
-  .add('with clear dates button (Picker Displayed)', () => (
+  .add('reopens DayPicker on clear dates', () => (
     <SingleDatePickerWrapper
       showClearDate
       reopenPickerOnClearDate
+    />
+  ))
+  .add('does not autoclose the DayPicker on date selection', () => (
+    <SingleDatePickerWrapper
+      keepOpenOnDateSelect
     />
   ))
   .add('with month specified on open', () => (
