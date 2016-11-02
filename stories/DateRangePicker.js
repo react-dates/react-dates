@@ -35,6 +35,28 @@ const TestInput = props => (
     />
   </div>
 );
+const TestPrevIcon = props => (
+  <span style={{
+      border: '1px solid #dce0e0',
+      backgroundColor: '#fff',
+      color: '#484848',
+      padding: '3px'
+    }}
+  >
+    Prev
+  </span>
+);
+const TestNextIcon = props => (
+  <span style={{
+    border: '1px solid #dce0e0',
+    backgroundColor: '#fff',
+    color: '#484848',
+    padding: '3px'
+    }}
+  >
+    Next
+  </span>
+);
 
 storiesOf('DateRangePicker', module)
   .add('default', () => (
@@ -116,6 +138,12 @@ storiesOf('DateRangePicker', module)
   .add('with custom display format', () => (
     <DateRangePickerWrapper
       displayFormat="MMM D"
+    />
+  ))
+  .add('with custom arrows', () => (
+    <DateRangePickerWrapper
+      navPrev={<TestPrevIcon />}
+      navNext={<TestNextIcon />}
     />
   ))
   .add('with minimum nights set', () => (
