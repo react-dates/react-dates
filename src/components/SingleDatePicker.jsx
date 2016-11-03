@@ -34,6 +34,8 @@ const defaultProps = {
   required: false,
   showClearDate: false,
   reopenPickerOnClearDate: false,
+  keepOpenOnDateSelect: false,
+
   navPrev: null,
   navNext: null,
 
@@ -82,13 +84,13 @@ export default class SingleDatePicker extends React.Component {
   }
 
   onChange(dateString) {
-    const { isOutsideRange, onDateChange, onFocusChange } = this.props;
+    const { isOutsideRange, keepOpenOnDateSelect, onDateChange, onFocusChange } = this.props;
     const date = toMomentObject(dateString, this.getDisplayFormat());
 
     const isValid = date && !isOutsideRange(date);
     if (isValid) {
       onDateChange(date);
-      onFocusChange({ focused: false });
+      if (!keepOpenOnDateSelect) onFocusChange({ focused: false });
     } else {
       onDateChange(null);
     }
@@ -99,7 +101,7 @@ export default class SingleDatePicker extends React.Component {
     if (includes(modifiers, 'blocked')) return;
 
     this.props.onDateChange(day);
-    this.props.onFocusChange({ focused: null });
+    if (!this.props.keepOpenOnDateSelect) this.props.onFocusChange({ focused: null });
   }
 
   onDayMouseEnter(day) {

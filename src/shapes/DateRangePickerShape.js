@@ -14,6 +14,7 @@ export default {
   isOutsideRange: PropTypes.func,
   enableOutsideDays: PropTypes.bool,
   reopenPickerOnClearDates: PropTypes.bool,
+  keepOpenOnDateSelect: PropTypes.bool,
   numberOfMonths: PropTypes.number,
   showClearDates: PropTypes.bool,
   disabled: PropTypes.bool,
