@@ -9,27 +9,6 @@ import { HORIZONTAL_ORIENTATION, VERTICAL_ORIENTATION } from '../../constants';
 
 describe('DayPicker', () => {
   describe('#render', () => {
-    describe('#renderNavigation', () => {
-      it('.DayPicker__nav class exists', () => {
-        const wrapper = shallow(<DayPicker />);
-        expect(wrapper.find('.DayPicker__nav')).to.have.lengthOf(1);
-      });
-
-      describe('prev month button', () => {
-        it('has .DayPicker__nav--prev class', () => {
-          const wrapper = shallow(<DayPicker />);
-          expect(wrapper.find('.DayPicker__nav--prev')).to.have.lengthOf(1);
-        });
-      });
-
-      describe('next month button', () => {
-        it('.DayPicker__nav--next class exists', () => {
-          const wrapper = shallow(<DayPicker />);
-          expect(wrapper.find('.DayPicker__nav--next')).to.have.lengthOf(1);
-        });
-      });
-    });
-
     describe('renderWeekHeader', () => {
       it('there are 7 elements on each .DayPicker__week-header class', () => {
         const wrapper = shallow(<DayPicker />);
@@ -135,7 +114,7 @@ describe('DayPicker', () => {
     });
   });
 
-  describe('#handlePrevMonthClick', () => {
+  describe('#onPrevMonthClick', () => {
     let translateFirstDayPickerForAnimationSpy;
     beforeEach(() => {
       translateFirstDayPickerForAnimationSpy =
@@ -148,40 +127,27 @@ describe('DayPicker', () => {
       sinon.restore();
     });
 
-    describe('interactions', () => {
-      let handlePrevMonthClickSpy;
-      beforeEach(() => {
-        handlePrevMonthClickSpy = sinon.spy(DayPicker.prototype, 'handlePrevMonthClick');
-      });
-
-      it('is triggered by prev month button click', () => {
-        const prevMonthButton = shallow(<DayPicker />).find('.DayPicker__nav--prev');
-        prevMonthButton.simulate('click');
-        expect(handlePrevMonthClickSpy).to.have.property('callCount', 1);
-      });
-    });
-
     it('calls props.onPrevMonthClick', () => {
       const onPrevMonthClickSpy = sinon.stub();
       const wrapper = shallow(<DayPicker onPrevMonthClick={onPrevMonthClickSpy} />);
-      wrapper.instance().handlePrevMonthClick();
+      wrapper.instance().onPrevMonthClick();
       expect(onPrevMonthClickSpy).to.have.property('callCount', 1);
     });
 
     it('calls translateFirstDayPickerForAnimation', () => {
       const wrapper = shallow(<DayPicker />);
-      wrapper.instance().handlePrevMonthClick();
+      wrapper.instance().onPrevMonthClick();
       expect(translateFirstDayPickerForAnimationSpy).to.have.property('callCount', 1);
     });
 
     it('sets state.monthTransition to "prev"', () => {
       const wrapper = shallow(<DayPicker />);
-      wrapper.instance().handlePrevMonthClick();
+      wrapper.instance().onPrevMonthClick();
       expect(wrapper.state().monthTransition).to.equal('prev');
     });
   });
 
-  describe('#handleNextMonthClick', () => {
+  describe('#onNextMonthClick', () => {
     beforeEach(() => {
       sinon.stub(DayPicker.prototype, 'adjustDayPickerHeight');
       sinon.stub(DayPicker.prototype, 'updateStateAfterMonthTransition');
@@ -191,33 +157,16 @@ describe('DayPicker', () => {
       sinon.restore();
     });
 
-    describe('interactions', () => {
-      let handleNextMonthClickSpy;
-      beforeEach(() => {
-        handleNextMonthClickSpy = sinon.spy(DayPicker.prototype, 'handleNextMonthClick');
-      });
-
-      afterEach(() => {
-        sinon.restore();
-      });
-
-      it('is triggered by prev month button click', () => {
-        const nextMonthButton = shallow(<DayPicker />).find('.DayPicker__nav--next');
-        nextMonthButton.simulate('click');
-        expect(handleNextMonthClickSpy).to.have.property('callCount', 1);
-      });
-    });
-
     it('calls props.onNextMonthClick', () => {
       const onNextMonthClickSpy = sinon.stub();
       const wrapper = shallow(<DayPicker onNextMonthClick={onNextMonthClickSpy} />);
-      wrapper.instance().handleNextMonthClick();
+      wrapper.instance().onNextMonthClick();
       expect(onNextMonthClickSpy).to.have.property('callCount', 1);
     });
 
     it('sets state.monthTransition to "next"', () => {
       const wrapper = shallow(<DayPicker />);
-      wrapper.instance().handleNextMonthClick();
+      wrapper.instance().onNextMonthClick();
       expect(wrapper.state().monthTransition).to.equal('next');
     });
   });

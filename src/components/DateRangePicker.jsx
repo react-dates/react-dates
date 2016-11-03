@@ -48,6 +48,8 @@ const defaultProps = {
   required: false,
   reopenPickerOnClearDates: false,
   initialVisibleMonth: () => moment(),
+  navPrev: null,
+  navNext: null,
 
   orientation: HORIZONTAL_ORIENTATION,
   anchorDirection: ANCHOR_LEFT,
@@ -335,6 +337,8 @@ export default class DateRangePicker extends React.Component {
       numberOfMonths,
       orientation,
       monthFormat,
+      navPrev,
+      navNext,
       onPrevMonthClick,
       onNextMonthClick,
       withPortal,
@@ -385,6 +389,8 @@ export default class DateRangePicker extends React.Component {
           hidden={!focusedInput}
           initialVisibleMonth={initialVisibleMonth}
           onOutsideClick={onOutsideClick}
+          navPrev={navPrev}
+          navNext={navNext}
         />
 
         {withFullScreenPortal &&
