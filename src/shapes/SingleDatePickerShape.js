@@ -25,6 +25,7 @@ export default {
   orientation: OrientationShape,
   initialVisibleMonth: PropTypes.func,
   anchorDirection: anchorDirectionShape,
+  horizontalMargin: PropTypes.number,
 
   navPrev: PropTypes.node,
   navNext: PropTypes.node,

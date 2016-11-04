@@ -4,9 +4,9 @@ import moment from 'moment';
 import cx from 'classnames';
 import Portal from 'react-portal';
 import includes from 'array-includes';
-import TetherComponent from 'react-tether';
 
 import isTouchDevice from '../utils/isTouchDevice';
+import getResponsiveContainerStyles from '../utils/getResponsiveContainerStyles';
 import toMomentObject from '../utils/toMomentObject';
 import toLocalizedDateString from '../utils/toLocalizedDateString';
 
@@ -54,6 +54,7 @@ const defaultProps = {
 
   orientation: HORIZONTAL_ORIENTATION,
   anchorDirection: ANCHOR_LEFT,
+  horizontalMargin: 0,
   withPortal: false,
   withFullScreenPortal: false,
 
@@ -75,6 +76,7 @@ export default class DateRangePicker extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      dayPickerContainerStyles: {},
       hoverDate: null,
     };
 
@@ -91,6 +93,17 @@ export default class DateRangePicker extends React.Component {
     this.onEndDateChange = this.onEndDateChange.bind(this);
     this.onEndDateFocus = this.onEndDateFocus.bind(this);
     this.clearDates = this.clearDates.bind(this);
+
+    this.responsivizePickerPosition = this.responsivizePickerPosition.bind(this);
+  }
+
+  componentDidMount() {
+    window.addEventListener('resize', this.responsivizePickerPosition);
+    this.responsivizePickerPosition();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.responsivizePickerPosition);
   }
 
   onClearFocus() {
@@ -228,14 +241,18 @@ export default class DateRangePicker extends React.Component {
 
   getDayPickerContainerClasses() {
     const {
+      focusedInput,
       orientation,
       withPortal,
       withFullScreenPortal,
       anchorDirection,
     } = this.props;
     const { hoverDate } = this.state;
+    const showDatepicker = focusedInput === START_DATE || focusedInput === END_DATE;
 
     const dayPickerClassName = cx('DateRangePicker__picker', {
+      'DateRangePicker__picker--show': showDatepicker,
+      'DateRangePicker__picker--invisible': !showDatepicker,
       'DateRangePicker__picker--direction-left': anchorDirection === ANCHOR_LEFT,
       'DateRangePicker__picker--direction-right': anchorDirection === ANCHOR_RIGHT,
       'DateRangePicker__picker--horizontal': orientation === HORIZONTAL_ORIENTATION,
@@ -263,6 +280,26 @@ export default class DateRangePicker extends React.Component {
     if (reopenPickerOnClearDates) {
       onFocusChange(START_DATE);
     }
+  }
+
+  responsivizePickerPosition() {
+    const { anchorDirection, horizontalMargin } = this.props;
+    const { dayPickerContainerStyles } = this.state;
+
+    const isAnchoredLeft = anchorDirection === ANCHOR_LEFT;
+
+    const containerRect = this.dayPickerContainer.getBoundingClientRect();
+    const currentOffset = dayPickerContainerStyles[anchorDirection] || 0;
+    const containerEdge = isAnchoredLeft ? containerRect[ANCHOR_RIGHT] : containerRect[ANCHOR_LEFT];
+
+    this.setState({
+      dayPickerContainerStyles: getResponsiveContainerStyles(
+        anchorDirection,
+        currentOffset,
+        containerEdge,
+        horizontalMargin
+      ),
+    });
   }
 
   doesNotMeetMinimumNights(day) {
@@ -354,6 +391,7 @@ export default class DateRangePicker extends React.Component {
       initialVisibleMonth,
       focusedInput,
     } = this.props;
+    const { dayPickerContainerStyles } = this.state;
 
     const modifiers = {
       blocked: day => this.isBlocked(day),
@@ -378,7 +416,11 @@ export default class DateRangePicker extends React.Component {
     const onOutsideClick = !withFullScreenPortal ? this.onOutsideClick : undefined;
 
     return (
-      <div className={this.getDayPickerContainerClasses()}>
+      <div
+        ref={ref => { this.dayPickerContainer = ref; }}
+        className={this.getDayPickerContainerClasses()}
+        style={dayPickerContainerStyles}
+      >
         <DayPicker
           ref={ref => { this.dayPicker = ref; }}
           orientation={orientation}
@@ -427,7 +469,6 @@ export default class DateRangePicker extends React.Component {
       startDateId,
       endDateId,
       phrases,
-      anchorDirection,
       withPortal,
       withFullScreenPortal,
     } = this.props;
@@ -435,52 +476,33 @@ export default class DateRangePicker extends React.Component {
     const startDateString = this.getDateString(startDate);
     const endDateString = this.getDateString(endDate);
 
-    const showDatepicker = focusedInput === START_DATE || focusedInput === END_DATE;
-    const tetherPinDirection = anchorDirection === ANCHOR_LEFT ? ANCHOR_RIGHT : ANCHOR_LEFT;
-
     return (
       <div className="DateRangePicker">
-        <TetherComponent
-          classPrefix="DateRangePicker__tether"
-          className={cx({
-            'DateRangePicker__tether--show': showDatepicker,
-            'DateRangePicker__tether--invisible': !showDatepicker,
-          })}
-          attachment={`top ${anchorDirection}`}
-          targetAttachment={`bottom ${anchorDirection}`}
-          offset="-23px 0"
-          constraints={[{
-            to: 'scrollParent',
-            attachment: 'none',
-            pin: [tetherPinDirection],
-          }]}
-        >
-          <DateRangePickerInput
-            ref={(ref) => { this.input = ref; }}
-            startDateId={startDateId}
-            startDatePlaceholderText={this.props.startDatePlaceholderText}
-            isStartDateFocused={focusedInput === START_DATE}
-            endDateId={endDateId}
-            endDatePlaceholderText={this.props.endDatePlaceholderText}
-            isEndDateFocused={focusedInput === END_DATE}
-            onStartDateChange={this.onStartDateChange}
-            onStartDateFocus={this.onStartDateFocus}
-            onStartDateShiftTab={this.onClearFocus}
-            onEndDateChange={this.onEndDateChange}
-            onEndDateFocus={this.onEndDateFocus}
-            onEndDateTab={this.onClearFocus}
-            startDate={startDateString}
-            endDate={endDateString}
-            showClearDates={showClearDates}
-            onClearDates={this.clearDates}
-            disabled={disabled}
-            required={required}
-            showCaret={!withPortal && !withFullScreenPortal}
-            phrases={phrases}
-          />
+        <DateRangePickerInput
+          ref={(ref) => { this.input = ref; }}
+          startDateId={startDateId}
+          startDatePlaceholderText={this.props.startDatePlaceholderText}
+          isStartDateFocused={focusedInput === START_DATE}
+          endDateId={endDateId}
+          endDatePlaceholderText={this.props.endDatePlaceholderText}
+          isEndDateFocused={focusedInput === END_DATE}
+          onStartDateChange={this.onStartDateChange}
+          onStartDateFocus={this.onStartDateFocus}
+          onStartDateShiftTab={this.onClearFocus}
+          onEndDateChange={this.onEndDateChange}
+          onEndDateFocus={this.onEndDateFocus}
+          onEndDateTab={this.onClearFocus}
+          startDate={startDateString}
+          endDate={endDateString}
+          showClearDates={showClearDates}
+          onClearDates={this.clearDates}
+          disabled={disabled}
+          required={required}
+          showCaret={!withPortal && !withFullScreenPortal}
+          phrases={phrases}
+        />
 
-          {this.maybeRenderDayPickerWithPortal()}
-        </TetherComponent>
+        {this.maybeRenderDayPickerWithPortal()}
       </div>
     );
   }

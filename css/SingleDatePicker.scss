@@ -7,6 +7,17 @@
 
 .SingleDatePicker__picker {
   z-index: 1;
+  background-color: $react-dates-color-white;
+  position: absolute;
+  top: $react-dates-spacing-vertical-picker;
+}
+
+.SingleDatePicker__picker--show {
+  visibility: visible;
+}
+
+.SingleDatePicker__picker--invisible {
+  visibility: hidden;
 }
 
 .SingleDatePicker__picker--direction-left {
@@ -15,14 +26,6 @@
 
 .SingleDatePicker__picker--direction-right {
   right: 0;
-}
-
-.SingleDatePicker__tether--show {
-  visibility: visible;
-}
-
-.SingleDatePicker__tether--invisible {
-  visibility: hidden;
 }
 
 .SingleDatePicker__picker--portal {

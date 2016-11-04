@@ -22,6 +22,7 @@ export default {
 
   orientation: OrientationShape,
   anchorDirection: anchorDirectionShape,
+  horizontalMargin: PropTypes.number,
   // portal options
   withPortal: PropTypes.bool,
   withFullScreenPortal: PropTypes.bool,
