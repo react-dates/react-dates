@@ -140,6 +140,15 @@ describe('DateRangePicker', () => {
       });
     });
 
+    describe('props.bottomPanel', () => {
+      it('renders a custom bottomPanel', () => {
+        const wrapper = shallow(
+          <DateRangePicker bottomPanel={<div className="bottomPanel" />} />
+        );
+        expect(wrapper.find('.bottomPanel')).to.have.length(1);
+      });
+    });
+
     describe('props.focusedInput', () => {
       it('shows datepicker if props.focusedInput != null', () => {
         const wrapper = shallow(<DateRangePicker focusedInput={START_DATE} />);

@@ -57,6 +57,7 @@ const defaultProps = {
   horizontalMargin: 0,
   withPortal: false,
   withFullScreenPortal: false,
+  bottomPanel: null,
 
   onDatesChange() {},
   onFocusChange() {},
@@ -390,6 +391,7 @@ export default class DateRangePicker extends React.Component {
       enableOutsideDays,
       initialVisibleMonth,
       focusedInput,
+      bottomPanel,
     } = this.props;
     const { dayPickerContainerStyles } = this.state;
 
@@ -453,6 +455,12 @@ export default class DateRangePicker extends React.Component {
             </span>
             <CloseButton />
           </button>
+        }
+
+        {bottomPanel &&
+          <div className="DateRangePicker__bottom-panel">
+            {bottomPanel}
+          </div>
         }
       </div>
     );
