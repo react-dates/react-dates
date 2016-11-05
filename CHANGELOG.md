@@ -53,7 +53,7 @@
  - [fix] Add centered text alignment to `DayPicker__caption` class to work with bootstrap styles
 
 ## v2.1.0
- - [new] Export date comparision methods - `isNextDay`, `isSameDay`, `isInclusivelyAfterDay`, `isInclusivelyBeforeDay`
+ - [new] Export date comparison methods - `isNextDay`, `isSameDay`, `isInclusivelyAfterDay`, `isInclusivelyBeforeDay`
  - [fix] Replace `Array.includes` with `array-includes` for compatibility with IE11
 
 ## v2.0.0
