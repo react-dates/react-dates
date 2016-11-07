@@ -16,16 +16,19 @@
   display: inline-block;
 }
 
-.DateRangePicker__tether--show {
+.DateRangePicker__picker {
+  z-index: 1;
+  background-color: $react-dates-color-white;
+  position: absolute;
+  top: $react-dates-spacing-vertical-picker;
+}
+
+.DateRangePicker__picker--show {
   visibility: visible;
 }
 
-.DateRangePicker__tether--invisible {
+.DateRangePicker__picker--invisible {
   visibility: hidden;
-}
-
-.DateRangePicker__picker {
-  z-index: 1;
 }
 
 .DateRangePicker__picker--direction-left {

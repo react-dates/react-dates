@@ -4,7 +4,6 @@ import { shallow } from 'enzyme';
 import sinon from 'sinon-sandbox';
 import moment from 'moment';
 import Portal from 'react-portal';
-import TetherComponent from 'react-tether';
 
 import {
   HORIZONTAL_ORIENTATION,
@@ -26,11 +25,6 @@ describe('SingleDatePicker', () => {
       expect(wrapper.is('.SingleDatePicker')).to.equal(true);
     });
 
-    it('renders an TetherComponent', () => {
-      const wrapper = shallow(<SingleDatePicker id="date" />);
-      expect(wrapper.find(TetherComponent)).to.have.lengthOf(1);
-    });
-
     it('renders a SingleDatePickerInput', () => {
       const wrapper = shallow(<SingleDatePicker id="date" />);
       expect(wrapper.find(SingleDatePickerInput)).to.have.lengthOf(1);
@@ -48,16 +42,16 @@ describe('SingleDatePicker', () => {
       });
 
       describe('props.focused === true', () => {
-        it('has .SingleDatePicker__tether--show class', () => {
+        it('has .SingleDatePicker__picker--show class', () => {
           const wrapper = shallow(<SingleDatePicker id="date" focused />);
-          expect(wrapper.find('.SingleDatePicker__tether--show')).to.have.lengthOf(1);
+          expect(wrapper.find('.SingleDatePicker__picker--show')).to.have.lengthOf(1);
         });
       });
 
       describe('props.focused === false', () => {
-        it('has .SingleDatePicker__tether--invisible class', () => {
+        it('has .SingleDatePicker__picker--invisible class', () => {
           const wrapper = shallow(<SingleDatePicker id="date" focused={false} />);
-          expect(wrapper.find('.SingleDatePicker__tether--invisible')).to.have.lengthOf(1);
+          expect(wrapper.find('.SingleDatePicker__picker--invisible')).to.have.lengthOf(1);
         });
       });
 
