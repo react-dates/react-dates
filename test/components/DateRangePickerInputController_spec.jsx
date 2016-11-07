@@ -75,6 +75,22 @@ describe('DateRangePickerInputController', () => {
     });
   });
 
+  describe('#onClearFocus', () => {
+    it('calls props.onFocusChange', () => {
+      const onFocusChangeStub = sinon.stub();
+      const wrapper = shallow(<DateRangePickerInputController onFocusChange={onFocusChangeStub} />);
+      wrapper.instance().onClearFocus();
+      expect(onFocusChangeStub.callCount).to.equal(1);
+    });
+
+    it('calls props.onFocusChange with null arg', () => {
+      const onFocusChangeStub = sinon.stub();
+      const wrapper = shallow(<DateRangePickerInputController onFocusChange={onFocusChangeStub} />);
+      wrapper.instance().onClearFocus();
+      expect(onFocusChangeStub.calledWith(null)).to.equal(true);
+    });
+  });
+
   describe('#onEndDateChange', () => {
     describe('is a valid end date', () => {
       const validFutureDateString = moment(today).add(10, 'days').format('YYYY-MM-DD');

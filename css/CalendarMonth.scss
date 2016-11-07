@@ -93,17 +93,13 @@
   }
 }
 
-.DateRangePicker__picker--valid-date-hovered {
-  .CalendarMonth__day--hovered-span,
-  .CalendarMonth__day--after-hovered-start {
-    background: $react-dates-color-primary-shade-4;
-    border: 1px double $react-dates-color-primary-shade-3;
-    color: $react-dates-color-secondary;
-  }
+.CalendarMonth__day--hovered-span,
+.CalendarMonth__day--after-hovered-start {
+  background: $react-dates-color-primary-shade-4;
+  border: 1px double $react-dates-color-primary-shade-3;
+  color: $react-dates-color-secondary;
 }
 
-.DateRangePicker__picker--valid-date-hovered .CalendarMonth__day--selected-start,
-.DateRangePicker__picker--valid-date-hovered .CalendarMonth__day--selected-end,
 .CalendarMonth__day--selected-start,
 .CalendarMonth__day--selected-end,
 .CalendarMonth__day--selected {
