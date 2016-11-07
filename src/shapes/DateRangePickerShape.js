@@ -25,6 +25,8 @@ export default {
   // portal options
   withPortal: PropTypes.bool,
   withFullScreenPortal: PropTypes.bool,
+  bottomPanel: PropTypes.element,
+  portalMarginTop: PropTypes.number,
 
   startDateId: PropTypes.string,
   startDatePlaceholderText: PropTypes.string,

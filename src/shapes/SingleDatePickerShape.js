@@ -32,6 +32,7 @@ export default {
   // portal options
   withPortal: PropTypes.bool,
   withFullScreenPortal: PropTypes.bool,
+  portalMarginTop: PropTypes.number,
 
   onPrevMonthClick: PropTypes.func,
   onNextMonthClick: PropTypes.func,

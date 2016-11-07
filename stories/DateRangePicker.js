@@ -109,6 +109,23 @@ storiesOf('DateRangePicker', module)
       withFullScreenPortal
     />
   ))
+  .add('horizontal with bottom panel', () => (
+    <DateRangePickerWrapper
+      bottomPanel={
+        <div style={{
+          backgroundColor: 'white',
+          width: '100%',
+          padding: '0.5em',
+          textAlign: 'center',
+        }}>
+          This is the bottom panel
+        </div>
+      }
+    />
+  ))
+  .add('with custom space between input and portal DayPicker', () => (
+    <DateRangePickerWrapper portalMarginTop={0} />
+  ))
   .add('with clear dates button', () => (
     <DateRangePickerWrapper
       showClearDates
