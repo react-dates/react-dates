@@ -1,5 +1,8 @@
 # Change Log
 
+## v4.0.0
+ - [breaking] Cuts the tether dependency from react-dates ([#163](https://github.com/airbnb/react-dates/pull/163))
+
 ## v3.6.0
  - [new] Add `navPrev`/`navNext` props for custom month navigation ([#161](https://github.com/airbnb/react-dates/pull/161))
  - [fix] Add missing right border on caret ([#160](https://github.com/airbnb/react-dates/pull/160))
