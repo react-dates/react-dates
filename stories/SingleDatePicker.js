@@ -136,4 +136,9 @@ storiesOf('SingleDatePicker', module)
       numberOfMonths={1}
       enableOutsideDays
     />
+  ))
+  .add('with minimum date specified', () => (
+    <SingleDatePickerWrapper
+      minDate={moment().add(1, 'week')}
+    />
   ));

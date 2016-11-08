@@ -44,8 +44,8 @@ const defaultProps = {
 
   isDayBlocked: () => false,
   disabledDays: [],
-  startDate: null,
-  isOutsideRange: (day, startDate) => !isInclusivelyAfterDay(day, startDate || moment()),
+  minDate: moment(),
+  isOutsideRange: (day, minDate) => !isInclusivelyAfterDay(day, minDate),
   enableOutsideDays: false,
   numberOfMonths: 2,
   orientation: HORIZONTAL_ORIENTATION,
@@ -99,10 +99,16 @@ export default class SingleDatePicker extends React.Component {
   }
 
   onChange(dateString) {
-    const { isOutsideRange, keepOpenOnDateSelect, onDateChange, onFocusChange, startDate } = this.props;
+    const {
+      isOutsideRange,
+      keepOpenOnDateSelect,
+      onDateChange,
+      onFocusChange,
+      minDate,
+    } = this.props;
     const date = toMomentObject(dateString, this.getDisplayFormat());
 
-    const isValid = date && !isOutsideRange(date, startDate);
+    const isValid = date && !isOutsideRange(date, minDate);
     if (isValid) {
       onDateChange(date);
       if (!keepOpenOnDateSelect) onFocusChange({ focused: false });
@@ -206,8 +212,8 @@ export default class SingleDatePicker extends React.Component {
   }
 
   isBlocked(day) {
-    const { isDayBlocked, isOutsideRange, startDate } = this.props;
-    return isDayBlocked(day) || isOutsideRange(day, startDate);
+    const { isDayBlocked, isOutsideRange, minDate } = this.props;
+    return isDayBlocked(day) || isOutsideRange(day, minDate);
   }
 
   isHovered(day) {
@@ -248,14 +254,14 @@ export default class SingleDatePicker extends React.Component {
       withFullScreenPortal,
       focused,
       initialVisibleMonth,
-      startDate
+      minDate,
     } = this.props;
     const { dayPickerContainerStyles } = this.state;
 
     const modifiers = {
       blocked: day => this.isBlocked(day),
       'blocked-calendar': day => isDayBlocked(day),
-      'blocked-out-of-range': day => isOutsideRange(day, startDate),
+      'blocked-out-of-range': day => isOutsideRange(day, minDate),
       valid: day => !this.isBlocked(day),
       hovered: day => this.isHovered(day),
       selected: day => this.isSelected(day),
