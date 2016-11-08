@@ -8,7 +8,7 @@
 
 [![npm badge][npm-badge-png]][package-url]
 
-> An accessible, easily internationalizable, mobile-friendly datepicker library for the web.
+> An easily internationalizable, mobile-friendly datepicker library for the web.
 
 ![react-dates in action](https://raw.githubusercontent.com/airbnb/react-dates/master/react-dates-demo.gif)
 
