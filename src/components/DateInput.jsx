@@ -121,7 +121,8 @@ export default class DateInput extends React.Component {
           placeholder={placeholder}
           autoComplete="off"
           maxLength={10}
-          disabled={disabled || this.isTouchDevice}
+          disabled={disabled}
+          readOnly={this.isTouchDevice}
           required={required}
         />
 
