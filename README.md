@@ -321,6 +321,11 @@ The `placeholder` props is the placeholder text for the input. It is both applie
   placeholder: PropTypes.string
 ```
 
+If the `showClearDate` prop is set to true, an `x` shows up in the input box that allows you to clear out both dates and reset the input.
+```
+  showClearDate: PropTypes.bool,
+```
+
 If the `disabled` prop is set to true, onFocusChange is not called when onStartDateFocus or onEndDateFocus are invoked and disabled is assigned to the actual `<input>` DOM elements.
 ```
   disabled: PropTypes.bool,
