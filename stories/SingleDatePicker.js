@@ -139,6 +139,6 @@ storiesOf('SingleDatePicker', module)
   ))
   .add('with minimum date specified', () => (
     <SingleDatePickerWrapper
-      minDate={moment().add(1, 'week')}
+      minimumDate={moment().add(1, 'week')}
     />
   ));

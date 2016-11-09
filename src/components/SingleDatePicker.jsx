@@ -44,8 +44,8 @@ const defaultProps = {
 
   isDayBlocked: () => false,
   disabledDays: [],
-  minDate: moment(),
-  isOutsideRange: (day, minDate) => !isInclusivelyAfterDay(day, minDate),
+  minimumDate: moment(),
+  isOutsideRange: (day, minimumDate) => !isInclusivelyAfterDay(day, minimumDate),
   enableOutsideDays: false,
   numberOfMonths: 2,
   orientation: HORIZONTAL_ORIENTATION,
@@ -104,11 +104,11 @@ export default class SingleDatePicker extends React.Component {
       keepOpenOnDateSelect,
       onDateChange,
       onFocusChange,
-      minDate,
+      minimumDate,
     } = this.props;
     const date = toMomentObject(dateString, this.getDisplayFormat());
 
-    const isValid = date && !isOutsideRange(date, minDate);
+    const isValid = date && !isOutsideRange(date, minimumDate);
     if (isValid) {
       onDateChange(date);
       if (!keepOpenOnDateSelect) onFocusChange({ focused: false });
@@ -212,8 +212,8 @@ export default class SingleDatePicker extends React.Component {
   }
 
   isBlocked(day) {
-    const { isDayBlocked, isOutsideRange, minDate } = this.props;
-    return isDayBlocked(day) || isOutsideRange(day, minDate);
+    const { isDayBlocked, isOutsideRange, minimumDate } = this.props;
+    return isDayBlocked(day) || isOutsideRange(day, minimumDate);
   }
 
   isHovered(day) {
@@ -254,14 +254,14 @@ export default class SingleDatePicker extends React.Component {
       withFullScreenPortal,
       focused,
       initialVisibleMonth,
-      minDate,
+      minimumDate,
     } = this.props;
     const { dayPickerContainerStyles } = this.state;
 
     const modifiers = {
       blocked: day => this.isBlocked(day),
       'blocked-calendar': day => isDayBlocked(day),
-      'blocked-out-of-range': day => isOutsideRange(day, minDate),
+      'blocked-out-of-range': day => isOutsideRange(day, minimumDate),
       valid: day => !this.isBlocked(day),
       hovered: day => this.isHovered(day),
       selected: day => this.isSelected(day),
