@@ -1,5 +1,6 @@
 var DateRangePicker = require('./lib/components/DateRangePicker').default;
 var DateRangePickerInput = require('./lib/components/DateRangePickerInput').default;
+var DateRangePickerInputController = require('./lib/components/DateRangePickerInputController').default;
 var SingleDatePicker = require('./lib/components/SingleDatePicker').default;
 var SingleDatePickerInput = require('./lib/components/SingleDatePickerInput').default;
 var DayPicker = require('./lib/components/DayPicker').default;
@@ -24,6 +25,7 @@ module.exports = {
   DateRangePicker: DateRangePicker,
   SingleDatePicker: SingleDatePicker,
 
+  DateRangePickerInputController: DateRangePickerInputController,
   DateRangePickerInput: DateRangePickerInput,
   SingleDatePickerInput: SingleDatePickerInput,
   DayPicker: DayPicker,
