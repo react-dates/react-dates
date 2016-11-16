@@ -88,8 +88,11 @@ export default class SingleDatePicker extends React.Component {
 
   /* istanbul ignore next */
   componentDidMount() {
+    const { withPortal, withFullScreenPortal } = this.props;
     window.addEventListener('resize', this.responsivizePickerPosition);
-    this.responsivizePickerPosition();
+    if (!withPortal && !withFullScreenPortal) {
+      this.responsivizePickerPosition();
+    }
   }
 
   /* istanbul ignore next */
