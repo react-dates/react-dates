@@ -1,7 +1,11 @@
 # Change Log
 
+## v4.0.1
+ - [patch] `initialVisibleMonth` prop will now be called every time the `DayPicker` is opened ([#176](https://github.com/airbnb/react-dates/pull/176))
+ - [patch] Use the `readOnly` prop on inputs instead of the `disabled` prop on touch devices ([#174](https://github.com/airbnb/react-dates/pull/174))
+
 ## v4.0.0
- - [breaking] Cuts the tether dependency from react-dates ([#163](https://github.com/airbnb/react-dates/pull/163))
+ - [breaking] Cut the tether dependency from react-dates ([#163](https://github.com/airbnb/react-dates/pull/163))
 
 ## v3.6.0
  - [new] Add `navPrev`/`navNext` props for custom month navigation ([#161](https://github.com/airbnb/react-dates/pull/161))
