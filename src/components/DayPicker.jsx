@@ -76,6 +76,7 @@ export default class DayPicker extends React.Component {
   constructor(props) {
     super(props);
 
+    this.hasSetInitialVisibleMonth = !props.hidden;
     this.state = {
       currentMonth: props.hidden ? moment() : props.initialVisibleMonth(),
       monthTransition: null,
@@ -95,7 +96,8 @@ export default class DayPicker extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!nextProps.hidden) {
+    if (!this.hasSetInitialVisibleMonth && !nextProps.hidden) {
+      this.hasSetInitialVisibleMonth = true;
       this.setState({
         currentMonth: nextProps.initialVisibleMonth(),
       });
