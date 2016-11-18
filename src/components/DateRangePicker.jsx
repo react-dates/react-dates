@@ -7,15 +7,12 @@ import includes from 'array-includes';
 
 import isTouchDevice from '../utils/isTouchDevice';
 import getResponsiveContainerStyles from '../utils/getResponsiveContainerStyles';
-import toMomentObject from '../utils/toMomentObject';
-import toLocalizedDateString from '../utils/toLocalizedDateString';
 
 import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
-import isInclusivelyBeforeDay from '../utils/isInclusivelyBeforeDay';
 import isNextDay from '../utils/isNextDay';
 import isSameDay from '../utils/isSameDay';
 
-import DateRangePickerInput from './DateRangePickerInput';
+import DateRangePickerInputController from './DateRangePickerInputController';
 import DayPicker from './DayPicker';
 
 import CloseButton from '../svg/close.svg';
@@ -87,13 +84,6 @@ export default class DateRangePicker extends React.Component {
     this.onDayMouseLeave = this.onDayMouseLeave.bind(this);
     this.onDayClick = this.onDayClick.bind(this);
 
-    this.onClearFocus = this.onClearFocus.bind(this);
-    this.onStartDateChange = this.onStartDateChange.bind(this);
-    this.onStartDateFocus = this.onStartDateFocus.bind(this);
-    this.onEndDateChange = this.onEndDateChange.bind(this);
-    this.onEndDateFocus = this.onEndDateFocus.bind(this);
-    this.clearDates = this.clearDates.bind(this);
-
     this.responsivizePickerPosition = this.responsivizePickerPosition.bind(this);
   }
 
@@ -104,10 +94,6 @@ export default class DateRangePicker extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.responsivizePickerPosition);
-  }
-
-  onClearFocus() {
-    this.props.onFocusChange(null);
   }
 
   onDayClick(day, modifiers, e) {
@@ -160,83 +146,11 @@ export default class DateRangePicker extends React.Component {
     });
   }
 
-  onEndDateChange(endDateString) {
-    const {
-      startDate,
-      isOutsideRange,
-      keepOpenOnDateSelect,
-      onDatesChange,
-      onFocusChange,
-    } = this.props;
-
-    const endDate = toMomentObject(endDateString, this.getDisplayFormat());
-
-    const isEndDateValid = endDate && !isOutsideRange(endDate) &&
-      !isInclusivelyBeforeDay(endDate, startDate);
-    if (isEndDateValid) {
-      onDatesChange({ startDate, endDate });
-      if (!keepOpenOnDateSelect) onFocusChange(null);
-    } else {
-      onDatesChange({
-        startDate,
-        endDate: null,
-      });
-    }
-  }
-
-  onEndDateFocus() {
-    const { startDate, onFocusChange, withFullScreenPortal, disabled } = this.props;
-
-    if (!startDate && withFullScreenPortal && !disabled) {
-      // When the datepicker is full screen, we never want to focus the end date first
-      // because there's no indication that that is the case once the datepicker is open and it
-      // might confuse the user
-      onFocusChange(START_DATE);
-    } else if (!disabled) {
-      onFocusChange(END_DATE);
-    }
-  }
-
   onOutsideClick() {
     const { focusedInput, onFocusChange } = this.props;
     if (!focusedInput) return;
 
     onFocusChange(null);
-  }
-
-  onStartDateChange(startDateString) {
-    const startDate = toMomentObject(startDateString, this.getDisplayFormat());
-
-    let { endDate } = this.props;
-    const { isOutsideRange, onDatesChange, onFocusChange } = this.props;
-    const isStartDateValid = startDate && !isOutsideRange(startDate);
-    if (isStartDateValid) {
-      if (isInclusivelyBeforeDay(endDate, startDate)) {
-        endDate = null;
-      }
-
-      onDatesChange({ startDate, endDate });
-      onFocusChange(END_DATE);
-    } else {
-      onDatesChange({
-        startDate: null,
-        endDate,
-      });
-    }
-  }
-
-  onStartDateFocus() {
-    if (!this.props.disabled) {
-      this.props.onFocusChange(START_DATE);
-    }
-  }
-
-  getDateString(date) {
-    const displayFormat = this.getDisplayFormat();
-    if (date && displayFormat) {
-      return date && date.format(displayFormat);
-    }
-    return toLocalizedDateString(date);
   }
 
   getDayPickerContainerClasses() {
@@ -267,19 +181,6 @@ export default class DateRangePicker extends React.Component {
 
   getDayPickerDOMNode() {
     return ReactDOM.findDOMNode(this.dayPicker);
-  }
-
-  getDisplayFormat() {
-    const { displayFormat } = this.props;
-    return typeof displayFormat === 'string' ? displayFormat : displayFormat();
-  }
-
-  clearDates() {
-    const { onDatesChange, reopenPickerOnClearDates, onFocusChange } = this.props;
-    onDatesChange({ startDate: null, endDate: null });
-    if (reopenPickerOnClearDates) {
-      onFocusChange(START_DATE);
-    }
   }
 
   responsivizePickerPosition() {
@@ -461,44 +362,48 @@ export default class DateRangePicker extends React.Component {
   render() {
     const {
       startDate,
+      startDateId,
+      startDatePlaceholderText,
       endDate,
+      endDateId,
+      endDatePlaceholderText,
       focusedInput,
       showClearDates,
       disabled,
       required,
-      startDateId,
-      endDateId,
       phrases,
+      isOutsideRange,
       withPortal,
       withFullScreenPortal,
+      displayFormat,
+      reopenPickerOnClearDates,
+      keepOpenOnDateSelect,
+      onDatesChange,
+      onFocusChange,
     } = this.props;
-
-    const startDateString = this.getDateString(startDate);
-    const endDateString = this.getDateString(endDate);
 
     return (
       <div className="DateRangePicker">
-        <DateRangePickerInput
-          ref={(ref) => { this.input = ref; }}
+        <DateRangePickerInputController
+          startDate={startDate}
           startDateId={startDateId}
-          startDatePlaceholderText={this.props.startDatePlaceholderText}
+          startDatePlaceholderText={startDatePlaceholderText}
           isStartDateFocused={focusedInput === START_DATE}
+          endDate={endDate}
           endDateId={endDateId}
-          endDatePlaceholderText={this.props.endDatePlaceholderText}
+          endDatePlaceholderText={endDatePlaceholderText}
           isEndDateFocused={focusedInput === END_DATE}
-          onStartDateChange={this.onStartDateChange}
-          onStartDateFocus={this.onStartDateFocus}
-          onStartDateShiftTab={this.onClearFocus}
-          onEndDateChange={this.onEndDateChange}
-          onEndDateFocus={this.onEndDateFocus}
-          onEndDateTab={this.onClearFocus}
-          startDate={startDateString}
-          endDate={endDateString}
+          displayFormat={displayFormat}
           showClearDates={showClearDates}
-          onClearDates={this.clearDates}
+          showCaret={!withPortal && !withFullScreenPortal}
           disabled={disabled}
           required={required}
-          showCaret={!withPortal && !withFullScreenPortal}
+          reopenPickerOnClearDates={reopenPickerOnClearDates}
+          keepOpenOnDateSelect={keepOpenOnDateSelect}
+          isOutsideRange={isOutsideRange}
+          withFullScreenPortal={withFullScreenPortal}
+          onDatesChange={onDatesChange}
+          onFocusChange={onFocusChange}
           phrases={phrases}
         />
 
