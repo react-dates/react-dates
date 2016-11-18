@@ -290,8 +290,8 @@ export default class DateRangePicker extends React.Component {
     if (!withPortal && !withFullScreenPortal) {
       const containerRect = this.dayPickerContainer.getBoundingClientRect();
       const currentOffset = dayPickerContainerStyles[anchorDirection] || 0;
-      const containerEdge = isAnchoredLeft ? containerRect[ANCHOR_RIGHT] :
-        containerRect[ANCHOR_LEFT];
+      const containerEdge =
+        isAnchoredLeft ? containerRect[ANCHOR_RIGHT] : containerRect[ANCHOR_LEFT];
 
       this.setState({
         dayPickerContainerStyles: getResponsiveContainerStyles(
