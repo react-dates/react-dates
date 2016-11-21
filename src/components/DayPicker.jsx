@@ -28,6 +28,10 @@ const propTypes = {
   withPortal: PropTypes.bool,
   hidden: PropTypes.bool,
   initialVisibleMonth: PropTypes.func,
+
+  navPrev: PropTypes.node,
+  navNext: PropTypes.node,
+
   onDayClick: PropTypes.func,
   onDayMouseDown: PropTypes.func,
   onDayMouseUp: PropTypes.func,
@@ -39,8 +43,6 @@ const propTypes = {
   onPrevMonthClick: PropTypes.func,
   onNextMonthClick: PropTypes.func,
   onOutsideClick: PropTypes.func,
-  navPrev: PropTypes.node,
-  navNext: PropTypes.node,
 
   // i18n
   monthFormat: PropTypes.string,
@@ -53,9 +55,12 @@ const defaultProps = {
   orientation: HORIZONTAL_ORIENTATION,
   withPortal: false,
   hidden: false,
+
+  initialVisibleMonth: () => moment(),
+
   navPrev: null,
   navNext: null,
-  initialVisibleMonth: () => moment(),
+
   onDayClick() {},
   onDayMouseDown() {},
   onDayMouseUp() {},

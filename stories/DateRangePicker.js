@@ -161,11 +161,16 @@ storiesOf('DateRangePicker', module)
       minimumNights={0}
     />
   ))
-  .add('allows previous three month only', () => (
+  .add('allows all days', () => (
+    <DateRangePickerWrapper
+      isOutsideRange={day => false}
+    />
+  ))
+  .add('allows next two weeks only', () => (
     <DateRangePickerWrapper
       isOutsideRange={day =>
-        !isInclusivelyAfterDay(day, moment().startOf('month').subtract(3, 'months')) ||
-        isInclusivelyAfterDay(day, moment().startOf('month'))
+        !isInclusivelyAfterDay(day, moment()) ||
+        isInclusivelyAfterDay(day, moment().add(2, 'weeks'))
       }
     />
   ))
