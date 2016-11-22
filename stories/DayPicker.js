@@ -28,25 +28,25 @@ const TestNextIcon = props => (
 );
 
 storiesOf('DayPicker', module)
-  .add('default', () => (
+  .addWithInfo('default', () => (
     <DayPicker />
   ))
-  .add('more than one month', () => (
+  .addWithInfo('more than one month', () => (
     <DayPicker numberOfMonths={2} />
   ))
-  .add('vertical', () => (
+  .addWithInfo('vertical', () => (
     <DayPicker
       numberOfMonths={2}
       orientation={VERTICAL_ORIENTATION}
     />
   ))
-  .add('with custom arrows', () => (
+  .addWithInfo('with custom arrows', () => (
     <DayPicker
       navPrev={<TestPrevIcon />}
       navNext={<TestNextIcon />}
     />
   ))
-  .add('vertical with fixed-width container', () => (
+  .addWithInfo('vertical with fixed-width container', () => (
     <div style={{ width: '400px' }}>
       <DayPicker
         numberOfMonths={2}
