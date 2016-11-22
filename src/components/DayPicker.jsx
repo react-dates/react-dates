@@ -96,16 +96,22 @@ export default class DayPicker extends React.Component {
   componentDidMount() {
     if (this.isHorizontal()) {
       this.adjustDayPickerHeight();
-      this.initializeDayPickerWidth();
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!this.hasSetInitialVisibleMonth && !nextProps.hidden) {
-      this.hasSetInitialVisibleMonth = true;
-      this.setState({
-        currentMonth: nextProps.initialVisibleMonth(),
-      });
+    if (!nextProps.hidden) {
+      if (!this.hasSetInitialVisibleMonth) {
+        this.hasSetInitialVisibleMonth = true;
+        this.setState({
+          currentMonth: nextProps.initialVisibleMonth(),
+        });
+      }
+
+      if (!this.dayPickerWidth && this.isHorizontal()) {
+        this.initializeDayPickerWidth();
+        this.adjustDayPickerHeight();
+      }
     }
   }
 
