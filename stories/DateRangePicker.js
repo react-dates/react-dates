@@ -21,7 +21,7 @@ const datesList = [
 ];
 
 const TestInput = props => (
-  <div style={{ marginTop: 16 }} >
+  <div style={{ marginTop: 16 }}>
     <input
       {...props}
       type="text"
@@ -35,32 +35,67 @@ const TestInput = props => (
     />
   </div>
 );
-const TestPrevIcon = props => (
-  <span style={{
+
+const TestPrevIcon = () => (
+  <span
+    style={{
       border: '1px solid #dce0e0',
       backgroundColor: '#fff',
       color: '#484848',
-      padding: '3px'
+      padding: '3px',
     }}
   >
     Prev
   </span>
 );
-const TestNextIcon = props => (
-  <span style={{
-    border: '1px solid #dce0e0',
-    backgroundColor: '#fff',
-    color: '#484848',
-    padding: '3px'
+
+const TestNextIcon = () => (
+  <span
+    style={{
+      border: '1px solid #dce0e0',
+      backgroundColor: '#fff',
+      color: '#484848',
+      padding: '3px',
     }}
   >
     Next
   </span>
 );
 
+class TestWrapper extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showDatePicker: false,
+    };
+  }
+
+  render() {
+    const { showDatePicker } = this.state;
+    const display = showDatePicker ? 'block' : 'none';
+    return (
+      <div>
+        <button
+          type="button"
+          onClick={() => this.setState({ showDatePicker: !showDatePicker })}
+        >
+          Show me!
+        </button>
+
+        <div style={{ display }}>
+          <DateRangePickerWrapper />
+        </div>
+      </div>
+    );
+  }
+}
+
 storiesOf('DateRangePicker', module)
   .addWithInfo('default', () => (
     <DateRangePickerWrapper />
+  ))
+  .addWithInfo('hidden with display: none', () => (
+    <TestWrapper />
   ))
   .addWithInfo('as part of a form', () => (
     <div>
@@ -161,7 +196,7 @@ storiesOf('DateRangePicker', module)
   ))
   .addWithInfo('allows all days', () => (
     <DateRangePickerWrapper
-      isOutsideRange={day => false}
+      isOutsideRange={() => false}
     />
   ))
   .addWithInfo('allows next two weeks only', () => (
