@@ -45,15 +45,15 @@ const TestNextIcon = props => (
 );
 
 storiesOf('SingleDatePicker', module)
-  .add('default', () => (
+  .addWithInfo('default', () => (
     <SingleDatePickerWrapper />
   ))
-  .add('single month', () => (
+  .addWithInfo('single month', () => (
     <SingleDatePickerWrapper
       numberOfMonths={1}
     />
   ))
-  .add('as part of a form', () => (
+  .addWithInfo('as part of a form', () => (
      <div>
        <SingleDatePickerWrapper />
        <TestInput placeholder="Input 1" />
@@ -61,54 +61,54 @@ storiesOf('SingleDatePicker', module)
        <TestInput placeholder="Input 3" />
      </div>
    ))
-  .add('anchored right', () => (
+  .addWithInfo('anchored right', () => (
     <div style={{ float: 'right' }}>
       <SingleDatePickerWrapper
         anchorDirection={ANCHOR_RIGHT}
       />
     </div>
   ))
-  .add('vertical', () => (
+  .addWithInfo('vertical', () => (
     <SingleDatePickerWrapper
       orientation={VERTICAL_ORIENTATION}
     />
   ))
-  .add('horizontal with portal', () => (
+  .addWithInfo('horizontal with portal', () => (
     <SingleDatePickerWrapper
       withPortal
     />
   ))
-  .add('horizontal with fullscreen portal', () => (
+  .addWithInfo('horizontal with fullscreen portal', () => (
     <SingleDatePickerWrapper withFullScreenPortal />
   ))
-  .add('vertical with full screen portal', () => (
+  .addWithInfo('vertical with full screen portal', () => (
     <SingleDatePickerWrapper
       orientation={VERTICAL_ORIENTATION}
       withFullScreenPortal
     />
   ))
-  .add('with clear dates button', () => (
+  .addWithInfo('with clear dates button', () => (
     <SingleDatePickerWrapper
       showClearDate
     />
   ))
-  .add('reopens DayPicker on clear dates', () => (
+  .addWithInfo('reopens DayPicker on clear dates', () => (
     <SingleDatePickerWrapper
       showClearDate
       reopenPickerOnClearDate
     />
   ))
-  .add('does not autoclose the DayPicker on date selection', () => (
+  .addWithInfo('does not autoclose the DayPicker on date selection', () => (
     <SingleDatePickerWrapper
       keepOpenOnDateSelect
     />
   ))
-  .add('with month specified on open', () => (
+  .addWithInfo('with month specified on open', () => (
     <SingleDatePickerWrapper
       initialVisibleMonth={() => moment('01 2017', 'MM YYYY')}
     />
   ))
-  .add('non-english locale', () => {
+  .addWithInfo('non-english locale', () => {
     moment.locale('zh-cn');
     return (
       <SingleDatePickerWrapper
@@ -120,18 +120,18 @@ storiesOf('SingleDatePicker', module)
       />
     );
   })
-  .add('with custom display format', () => (
+  .addWithInfo('with custom display format', () => (
     <SingleDatePickerWrapper
       displayFormat="MMM D"
     />
   ))
-  .add('with custom arrows', () => (
+  .addWithInfo('with custom arrows', () => (
     <SingleDatePickerWrapper
       navPrev={<TestPrevIcon />}
       navNext={<TestNextIcon />}
     />
   ))
-  .add('with outside days enabled', () => (
+  .addWithInfo('with outside days enabled', () => (
     <SingleDatePickerWrapper
       numberOfMonths={1}
       enableOutsideDays

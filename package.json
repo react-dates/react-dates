@@ -48,6 +48,7 @@
   },
   "homepage": "https://github.com/airbnb/react-dates#readme",
   "devDependencies": {
+    "@kadira/react-storybook-addon-info": "^3.3.0",
     "@kadira/storybook": "^2.24.0",
     "airbnb-js-shims": "^1.0.1",
     "babel-cli": "^6.11.4",
