@@ -34,6 +34,12 @@ storiesOf('DayPicker', module)
   .add('more than one month', () => (
     <DayPicker numberOfMonths={2} />
   ))
+  .add('more than two months', () => (
+    <DayPicker numberOfMonths={3} />
+  ))
+  .add('more than three months', () => (
+    <DayPicker numberOfMonths={4} />
+  ))
   .add('vertical', () => (
     <DayPicker
       numberOfMonths={2}
