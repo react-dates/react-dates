@@ -314,7 +314,7 @@ export default class DayPicker extends React.Component {
 
     const widthPercentage = 100 / numberOfMonths;
     const horizontalStyle = {
-      width: `${widthPercentage}%`,
+      width: `${widthPercentage + 1}%`,
       left: `${widthPercentage * index}%`,
     };
 

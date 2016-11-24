@@ -41,16 +41,20 @@
 
   li {
     display: inline-block;
-    width: 39px;
+    width: 40px;
     text-align: center;
   }
 }
 
 .DayPicker--horizontal .DayPicker__week-header {
-  padding: 0 22px 0 13px;
+  padding: 0 22px 0 9px;
 
   &:first-of-type {
-    padding: 0 13px 0 22px;
+    padding: 0 13px 0 16px;
+  }
+
+  &:last-of-type {
+    padding: 0 13px 0 9px;
   }
 }
 
