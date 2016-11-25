@@ -6,35 +6,10 @@
 }
 
 .SingleDatePicker__picker {
-  background-color: $react-dates-color-white;
   z-index: 1;
+  background-color: $react-dates-color-white;
   position: absolute;
-  top: 145%;
-  left: 0;
-
-  &::before,
-  &::after {
-    content: "";
-    display: inline-block;
-    position: absolute;
-    bottom: auto;
-  }
-
-  &::before {
-    top: -10px;
-    border: 10px solid transparent;
-    border-top: 0;
-    border-bottom-color: rgba(0, 0, 0, 0.1);
-    left: 22px;
-  }
-
-  &::after {
-    top: -9px;
-    border: 9px solid transparent;
-    border-top: 0;
-    border-bottom-color: #fff;
-    left: 23px;
-  }
+  top: $react-dates-spacing-vertical-picker;
 }
 
 .SingleDatePicker__picker--show {
@@ -43,6 +18,14 @@
 
 .SingleDatePicker__picker--invisible {
   visibility: hidden;
+}
+
+.SingleDatePicker__picker--direction-left {
+  left: 0;
+}
+
+.SingleDatePicker__picker--direction-right {
+  right: 0;
 }
 
 .SingleDatePicker__picker--portal {

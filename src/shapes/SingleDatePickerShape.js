@@ -2,13 +2,18 @@ import { PropTypes } from 'react';
 import momentPropTypes from 'react-moment-proptypes';
 
 import OrientationShape from '../shapes/OrientationShape';
+import anchorDirectionShape from '../shapes/AnchorDirectionShape';
 
 export default {
   id: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   date: momentPropTypes.momentObj,
   focused: PropTypes.bool,
+  showClearDate: PropTypes.bool,
+  reopenPickerOnClearDates: PropTypes.bool,
+  keepOpenOnDateSelect: PropTypes.bool,
   disabled: PropTypes.bool,
+  required: PropTypes.bool,
 
   onDateChange: PropTypes.func,
   onFocusChange: PropTypes.func,
@@ -18,6 +23,12 @@ export default {
   enableOutsideDays: PropTypes.bool,
   numberOfMonths: PropTypes.number,
   orientation: OrientationShape,
+  initialVisibleMonth: PropTypes.func,
+  anchorDirection: anchorDirectionShape,
+  horizontalMargin: PropTypes.number,
+
+  navPrev: PropTypes.node,
+  navNext: PropTypes.node,
 
   // portal options
   withPortal: PropTypes.bool,

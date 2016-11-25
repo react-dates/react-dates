@@ -1,12 +1,13 @@
 import React from 'react';
 
 import DateRangePicker from '../src/components/DateRangePicker';
+import { START_DATE } from '../constants';
 
 class DateRangePickerWrapper extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      focusedInput: null,
+      focusedInput: START_DATE,
       startDate: null,
       endDate: null,
     };

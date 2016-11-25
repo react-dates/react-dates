@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import { storiesOf } from '@kadira/storybook';
 
-import { VERTICAL_ORIENTATION } from '../constants';
+import { VERTICAL_ORIENTATION, ANCHOR_RIGHT } from '../constants';
 
 import isSameDay from '../src/utils/isSameDay';
 import isInclusivelyAfterDay from '../src/utils/isInclusivelyAfterDay';
@@ -20,19 +20,80 @@ const datesList = [
   moment().add(13, 'days'),
 ];
 
+const TestInput = props => (
+  <div style={{ marginTop: 16 }} >
+    <input
+      {...props}
+      type="text"
+      style={{
+        height: 48,
+        width: 284,
+        fontSize: 18,
+        fontWeight: 200,
+        padding: '12px 16px',
+      }}
+    />
+  </div>
+);
+const TestPrevIcon = props => (
+  <span style={{
+      border: '1px solid #dce0e0',
+      backgroundColor: '#fff',
+      color: '#484848',
+      padding: '3px'
+    }}
+  >
+    Prev
+  </span>
+);
+const TestNextIcon = props => (
+  <span style={{
+    border: '1px solid #dce0e0',
+    backgroundColor: '#fff',
+    color: '#484848',
+    padding: '3px'
+    }}
+  >
+    Next
+  </span>
+);
+
 storiesOf('DateRangePicker', module)
   .add('default', () => (
     <DateRangePickerWrapper />
+  ))
+  .add('as part of a form', () => (
+    <div>
+      <DateRangePickerWrapper />
+      <TestInput placeholder="Input 1" />
+      <TestInput placeholder="Input 2" />
+      <TestInput placeholder="Input 3" />
+    </div>
   ))
   .add('single month', () => (
     <DateRangePickerWrapper
       numberOfMonths={1}
     />
   ))
+  .add('anchored right', () => (
+    <div style={{ float: 'right' }}>
+      <DateRangePickerWrapper
+        anchorDirection={ANCHOR_RIGHT}
+      />
+    </div>
+  ))
   .add('vertical', () => (
     <DateRangePickerWrapper
       orientation={VERTICAL_ORIENTATION}
     />
+  ))
+  .add('vertical anchored right', () => (
+    <div style={{ float: 'right' }}>
+      <DateRangePickerWrapper
+        orientation={VERTICAL_ORIENTATION}
+        anchorDirection={ANCHOR_RIGHT}
+      />
+    </div>
   ))
   .add('horizontal with portal', () => (
     <DateRangePickerWrapper
@@ -53,10 +114,15 @@ storiesOf('DateRangePicker', module)
       showClearDates
     />
   ))
-  .add('with clear dates button (Picker Displayed)', () => (
+  .add('reopens DayPicker on clear dates', () => (
     <DateRangePickerWrapper
       showClearDates
       reopenPickerOnClearDates
+    />
+  ))
+  .add('does not autoclose the DayPicker on date selection', () => (
+    <DateRangePickerWrapper
+      keepOpenOnDateSelect
     />
   ))
   .add('non-english locale', () => {
@@ -79,16 +145,32 @@ storiesOf('DateRangePicker', module)
       displayFormat="MMM D"
     />
   ))
+  .add('with custom arrows', () => (
+    <DateRangePickerWrapper
+      navPrev={<TestPrevIcon />}
+      navNext={<TestNextIcon />}
+    />
+  ))
   .add('with minimum nights set', () => (
     <DateRangePickerWrapper
       minimumNights={3}
     />
   ))
-  .add('allows previous three month only', () => (
+  .add('allows a single night', () => (
+    <DateRangePickerWrapper
+      minimumNights={0}
+    />
+  ))
+  .add('allows all days', () => (
+    <DateRangePickerWrapper
+      isOutsideRange={day => false}
+    />
+  ))
+  .add('allows next two weeks only', () => (
     <DateRangePickerWrapper
       isOutsideRange={day =>
-        !isInclusivelyAfterDay(day, moment().startOf('month').subtract(3, 'months')) ||
-        isInclusivelyAfterDay(day, moment().startOf('month'))
+        !isInclusivelyAfterDay(day, moment()) ||
+        isInclusivelyAfterDay(day, moment().add(2, 'weeks'))
       }
     />
   ))
@@ -101,6 +183,11 @@ storiesOf('DateRangePicker', module)
   .add('with some blocked dates', () => (
     <DateRangePickerWrapper
       isDayBlocked={day1 => datesList.some(day2 => isSameDay(day1, day2))}
+    />
+  ))
+  .add('with month specified on open', () => (
+    <DateRangePickerWrapper
+      initialVisibleMonth={() => moment('04 2017', 'MM YYYY')}
     />
   ))
   .add('blocks fridays', () => (

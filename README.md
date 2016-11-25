@@ -8,7 +8,7 @@
 
 [![npm badge][npm-badge-png]][package-url]
 
-> An accessible, easily internationalizable, mobile-friendly datepicker library for the web.
+> An easily internationalizable, mobile-friendly datepicker library for the web.
 
 ![react-dates in action](https://raw.githubusercontent.com/airbnb/react-dates/master/react-dates-demo.gif)
 
@@ -125,11 +125,21 @@ By default, we do not show days from the previous month and the next month in th
   enableOutsideDays: PropTypes.bool
 ```
 
+`initialVisibleMonth` indicates the month that should be displayed initially when the calendar is first opened. The prop is a function that must return a Moment.js object. This function will be called the first time the user focuses on the `DateRangePicker`/`SingleDatePicker` inputs or when the `focused` prop is passed to the `DayPicker` component.
+```
+   initialVisibleMonth: PropTypes.func
+```
+
 **DayPicker presentation:**
 
 The `orientation` prop indicates whether months are stacked on top of each other or displayed side-by-side. You can import the `HORIZONTAL_ORIENTATION` and `VERTICAL_ORIENTATION` constants from `react-dates/constants`.
 ```
   orientation: PropTypes.oneOf([HORIZONTAL_ORIENTATION, VERTICAL_ORIENTATION])
+```
+
+The `anchorDirection` prop indicates whether the calendar is anchored to the right or left side of the input. You can import the `ANCHOR_LEFT` and `ANCHOR_RIGHT` constants from `react-dates/constants`. Defaults to `ANCHOR_LEFT`.
+```
+  direction: PropTypes.oneOf([ANCHOR_LEFT, ANCHOR_RIGHT])
 ```
 
 `withPortal` was designed for use on mobile devices. Namely, if this prop is set to true, the `DayPicker` will be rendered centrally on the screen, above the current plane, with a transparent black background behind it. Clicking on the background will hide the `DayPicker`. This option is currently only available for a `DateRangePicker` with a horizontal orientation.
@@ -166,6 +176,19 @@ If the `disabled` prop is set to true, onFocusChange is not called when onStartD
   disabled: PropTypes.bool,
 ```
 
+If the `required` prop is set to true, the input will have to be filled before the user can submit the form. The standard HTML5 error message will appear on the input when the form is submitted and the input has no value.
+```
+  required: PropTypes.bool,
+```
+
+**Custom Navigation Icons:**
+
+The `navPrev` and `navNext` props are used to assign custom icons to the "Next", and "Previous" arrows for the top navigation. If you do specify a custom icon you'll have to do the styling of the button yourself (e.g. the color, border, and things of that nature). All that comes "out of the box" is your button being positioned correctly.
+```
+  navPrev: PropTypes.node,
+  navNext: PropTypes.node,
+```
+
 **Some useful callbacks:**
 
 If you need to do something when the user navigates between months (for instance, check the availability of a listing), you can do so using the `onPrevMonthClick` and `onNextMonthClick` props.
@@ -188,21 +211,30 @@ The `monthFormat` prop abides by [moment's date formatting rules](http://momentj
   monthFormat: PropTypes.string,
 ```
 
-The `phrases` prop is an object that contains all the English language phrases currently part of the class. As of now, we only have two such phrases and neither are visible but they are used for screen-reader navigation of the datepicker.
+The `phrases` prop is an object that contains all the English language phrases currently part of the class. As of now, we only have three such phrases and none are visible but they are used for screen-reader navigation of the datepicker.
 ```
   phrases: PropTypes.shape({
     closeDatePicker: PropTypes.node,
     clearDates: PropTypes.node,
+    clearDate: PropTypes.node,
   }),
 ```
 
 ** Display picker when clicked on clear button: **
 
-The `reopenPickerOnClearDates` helps to control whether to show the date picker when the clear option is clicked. This is set to `false` by default
+The `reopenPickerOnClearDates` prop helps to control whether to show the date picker when the clear option is clicked. This is set to `false` by default
 which means that the picker does not open when the clear button is clicked by default. To display the picker one must explicitly set it to `true`.
 
 ```
     reopenPickerOnClearDates: PropTypes.bool
+```
+
+** Keep picker open on date selection: **
+
+The `keepOpenOnDateSelect` prop allows you to better control in what scenario the `DayPicker` stays visible or not. If it is set to false (the default value), once a date range has been successfully selected, the `DayPicker` will close. If true, it will stay open.
+
+```
+    keepOpenOnDateSelect: PropTypes.bool
 ```
 
 ### `SingleDatePicker`
@@ -238,11 +270,9 @@ A boolean representing whether or not the date input is currently focused.
 
 These properties are the same as provided to the `<DateRangePicker />` component.
 
-To indicate which days are blocked from selection, you may either provide an array of moment objects to the `blockedDates` prop or you may set `blockedByDefault` to true and provide available days as an array of moment objects to the `unblockedDates` prop, depending on what makes sense for you.
+To indicate which days are blocked from selection, you may provide a function to the `isDayBlocked` prop. As of v1.0.0, we allow blocked dates inside of ranges.
 ```
-  blockedDates: PropTypes.arrayOf(momentPropTypes.momentObj)
-  blockedByDefault: PropTypes.bool
-  unblockedDates: PropTypes.arrayOf(momentPropTypes.momentObj)
+  isDayBlocked: PropTypes.func
 ```
 
 `isOutsideRange` indicates which days are out of selectable range.
@@ -267,6 +297,11 @@ By default, we do not show days from the previous month and the next month in th
   enableOutsideDays: PropTypes.bool
 ```
 
+`initialVisibleMonth` indicates the month that should be displayed initially when the calendar is first opened. The prop is a function that must return a Moment.js object. This function will be called the first time the user focuses on the `DateRangePicker`/`SingleDatePicker` inputs or when the `focused` prop is passed to the `DayPicker` component.
+```
+   initialVisibleMonth: PropTypes.func
+```
+
 **DayPicker presentation:**
 
 These properties are the same as provided to the `<DateRangePicker />` component.
@@ -274,6 +309,11 @@ These properties are the same as provided to the `<DateRangePicker />` component
 The `orientation` prop indicates whether months are stacked on top of each other or displayed side-by-side. You can import the `HORIZONTAL_ORIENTATION` and `VERTICAL_ORIENTATION` constants from `react-dates/constants`.
 ```
   orientation: PropTypes.oneOf([HORIZONTAL_ORIENTATION, VERTICAL_ORIENTATION])
+```
+
+The `anchorDirection` prop indicates whether the calendar is anchored to the right or left side of the input. You can import the `ANCHOR_LEFT` and `ANCHOR_RIGHT` constants from `react-dates/constants`. Defaults to `ANCHOR_LEFT`.
+```
+  direction: PropTypes.oneOf([ANCHOR_LEFT, ANCHOR_RIGHT])
 ```
 
 `withPortal` was designed for use on mobile devices. Namely, if this prop is set to true, the `DayPicker` will be rendered centrally on the screen, above the current plane, with a transparent black background behind it. Clicking on the background will hide the `DayPicker`. This option is currently only available for a `DateRangePicker` with a horizontal orientation.
@@ -296,6 +336,21 @@ The `id` prop is assigned to the actual `<input>` DOM element. It is currently r
 The `placeholder` props is the placeholder text for the input. It is both applied as an actual placeholder to the DOM `<input>` and as a placeholder for the display text. As of v1.0.0, it is also used as label text.
 ```
   placeholder: PropTypes.string
+```
+
+If the `showClearDate` prop is set to true, an `x` shows up in the input box that allows you to clear out both dates and reset the input.
+```
+  showClearDate: PropTypes.bool,
+```
+
+If the `disabled` prop is set to true, onFocusChange is not called when onStartDateFocus or onEndDateFocus are invoked and disabled is assigned to the actual `<input>` DOM elements.
+```
+  disabled: PropTypes.bool,
+```
+
+If the `required` prop is set to true, the input will have to be filled before the user can submit the form. The standard HTML5 error message will appear on the input when the form is submitted and the input has no value.
+```
+  required: PropTypes.bool,
 ```
 
 **Some useful callbacks:**
@@ -325,6 +380,23 @@ The `phrases` prop is an object that contains all the English language phrases c
   phrases: PropTypes.shape({
     closeDatePicker: PropTypes.node,
   })
+```
+
+** Display picker when clicked on clear button: **
+
+The `reopenPickerOnClearDates` prop helps to control whether to show the date picker when the clear option is clicked. This is set to `false` by default
+which means that the picker does not open when the clear button is clicked by default. To display the picker one must explicitly set it to `true`.
+
+```
+    reopenPickerOnClearDates: PropTypes.bool
+```
+
+** Keep picker open on date selection: **
+
+The `keepOpenOnDateSelect` prop allows you to better control in what scenario the `DayPicker` stays visible or not. If it is set to false (the default value), once a date range has been successfully selected, the `DayPicker` will close. If true, it will stay open.
+
+```
+    keepOpenOnDateSelect: PropTypes.bool
 ```
 
 ### `DayPicker`

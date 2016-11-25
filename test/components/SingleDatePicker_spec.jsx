@@ -5,23 +5,24 @@ import sinon from 'sinon-sandbox';
 import moment from 'moment';
 import Portal from 'react-portal';
 
-import { HORIZONTAL_ORIENTATION, VERTICAL_ORIENTATION } from '../../constants';
+import {
+  HORIZONTAL_ORIENTATION,
+  VERTICAL_ORIENTATION,
+  ANCHOR_LEFT,
+  ANCHOR_RIGHT,
+} from '../../constants';
 
 import DayPicker from '../../src/components/DayPicker';
-import OutsideClickHandler from '../../src/components/OutsideClickHandler';
 import SingleDatePickerInput from '../../src/components/SingleDatePickerInput';
 import SingleDatePicker from '../../src/components/SingleDatePicker';
+
+import isSameDay from '../../src/utils/isSameDay';
 
 describe('SingleDatePicker', () => {
   describe('#render', () => {
     it('is .SingleDatePicker class', () => {
       const wrapper = shallow(<SingleDatePicker id="date" />);
       expect(wrapper.is('.SingleDatePicker')).to.equal(true);
-    });
-
-    it('renders an OutsideClickHandler', () => {
-      const wrapper = shallow(<SingleDatePicker id="date" />);
-      expect(wrapper.find(OutsideClickHandler)).to.have.lengthOf(1);
     });
 
     it('renders a SingleDatePickerInput', () => {
@@ -67,6 +68,20 @@ describe('SingleDatePicker', () => {
           const wrapper =
             shallow(<SingleDatePicker id="date" orientation={VERTICAL_ORIENTATION} />);
           expect(wrapper.find('.SingleDatePicker__picker--vertical')).to.have.lengthOf(1);
+        });
+      });
+
+      describe('props.anchorDirection === ANCHOR_LEFT', () => {
+        it('renders .SingleDatePicker__picker--direction-left class', () => {
+          const wrapper = shallow(<SingleDatePicker anchorDirection={ANCHOR_LEFT} />);
+          expect(wrapper.find('.SingleDatePicker__picker--direction-left')).to.have.length(1);
+        });
+      });
+
+      describe('props.orientation === ANCHOR_RIGHT', () => {
+        it('renders .SingleDatePicker__picker--direction-right class', () => {
+          const wrapper = shallow(<SingleDatePicker anchorDirection={ANCHOR_RIGHT} />);
+          expect(wrapper.find('.SingleDatePicker__picker--direction-right')).to.have.length(1);
         });
       });
 
@@ -158,7 +173,8 @@ describe('SingleDatePicker', () => {
         const onDateChangeStub = sinon.stub();
         const wrapper = shallow(<SingleDatePicker id="date" onDateChange={onDateChangeStub} />);
         wrapper.instance().onChange(futureDateString);
-        expect(onDateChangeStub.getCall(0).args[0].isSame(futureDateString)).to.equal(true);
+        const newDate = onDateChangeStub.getCall(0).args[0];
+        expect(isSameDay(newDate, moment(futureDateString))).to.equal(true);
       });
 
       it('calls props.onFocusChange once', () => {
@@ -402,6 +418,41 @@ describe('SingleDatePicker', () => {
         wrapper.instance().onClearFocus();
         expect(onFocusChangeStub.getCall(0).args[0].focused).to.equal(false);
       });
+    });
+  });
+
+  describe('#clearDate', () => {
+    describe('props.reopenPickerOnClearDate is truthy', () => {
+      describe('props.onFocusChange', () => {
+        it('is called once', () => {
+          const onFocusChangeStub = sinon.stub();
+          const wrapper = shallow(
+            <SingleDatePicker
+              onFocusChange={onFocusChangeStub}
+              reopenPickerOnClearDate
+            />);
+          wrapper.instance().clearDate();
+          expect(onFocusChangeStub.callCount).to.equal(1);
+        });
+      });
+    });
+
+    describe('props.reopenPickerOnClearDate is falsy', () => {
+      describe('props.onFocusChange', () => {
+        it('is not called', () => {
+          const onFocusChangeStub = sinon.stub();
+          const wrapper = shallow(<SingleDatePicker onFocusChange={onFocusChangeStub} />);
+          wrapper.instance().clearDate();
+          expect(onFocusChangeStub.callCount).to.equal(0);
+        });
+      });
+    });
+
+    it('calls props.onDateChange with null date', () => {
+      const onDateChangeStub = sinon.stub();
+      const wrapper = shallow(<SingleDatePicker onDateChange={onDateChangeStub} />);
+      wrapper.instance().clearDate();
+      expect(onDateChangeStub.callCount).to.equal(1);
     });
   });
 

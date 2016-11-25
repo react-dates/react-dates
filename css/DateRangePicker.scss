@@ -17,19 +17,10 @@
 }
 
 .DateRangePicker__picker {
-  background-color: $react-dates-color-white;
   z-index: 1;
+  background-color: $react-dates-color-white;
   position: absolute;
-  top: 145%;
-  left: 0;
-
-  &::before,
-  &::after {
-    content: "";
-    display: inline-block;
-    position: absolute;
-    bottom: auto;
-  }
+  top: $react-dates-spacing-vertical-picker;
 }
 
 .DateRangePicker__picker--show {
@@ -38,6 +29,14 @@
 
 .DateRangePicker__picker--invisible {
   visibility: hidden;
+}
+
+.DateRangePicker__picker--direction-left {
+    left: 0;
+}
+
+.DateRangePicker__picker--direction-right {
+    right: 0;
 }
 
 .DateRangePicker__picker--portal {
@@ -51,38 +50,6 @@
 
 .DateRangePicker__picker--full-screen-portal {
   background-color: $react-dates-color-white;
-}
-
-.DateRangePicker__picker--start::before,
-.DateRangePicker__picker--end::before {
-  top: -10px;
-  border: 10px solid transparent;
-  border-top: 0;
-  border-bottom-color: rgba(0, 0, 0, 0.1);
-}
-
-.DateRangePicker__picker--start::before {
-  left: 22px;
-}
-
-.DateRangePicker__picker--end::before {
-  left: 162px;
-}
-
-.DateRangePicker__picker--start::after,
-.DateRangePicker__picker--end::after {
-  top: -9px;
-  border: 9px solid transparent;
-  border-top: 0;
-  border-bottom-color: $react-dates-color-white;
-}
-
-.DateRangePicker__picker--start::after {
-  left: 23px;
-}
-
-.DateRangePicker__picker--end::after {
-  left: 163px;
 }
 
 .DateRangePicker__close {

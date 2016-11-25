@@ -10,6 +10,8 @@ const propTypes = {
   dateValue: PropTypes.string,
   focused: PropTypes.bool,
   disabled: PropTypes.bool,
+  required: PropTypes.bool,
+  showCaret: PropTypes.bool,
 
   onChange: PropTypes.func,
   onFocus: PropTypes.func,
@@ -22,6 +24,8 @@ const defaultProps = {
   dateValue: '',
   focused: false,
   disabled: false,
+  required: false,
+  showCaret: false,
 
   onChange() {},
   onFocus() {},
@@ -84,8 +88,10 @@ export default class DateInput extends React.Component {
       placeholder,
       dateValue,
       focused,
+      showCaret,
       onFocus,
       disabled,
+      required,
     } = this.props;
 
     const value = dateValue || dateString;
@@ -93,6 +99,7 @@ export default class DateInput extends React.Component {
     return (
       <div
         className={cx('DateInput', {
+          'DateInput--with-caret': showCaret && focused,
           'DateInput--disabled': disabled,
         })}
         onClick={onFocus}
@@ -114,7 +121,9 @@ export default class DateInput extends React.Component {
           placeholder={placeholder}
           autoComplete="off"
           maxLength={10}
-          disabled={disabled || this.isTouchDevice}
+          disabled={disabled}
+          readOnly={this.isTouchDevice}
+          required={required}
         />
 
         <div
