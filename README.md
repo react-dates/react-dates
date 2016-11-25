@@ -26,13 +26,19 @@ To run that demo on your own computer:
 
 ## Getting Started
 #### Install dependencies
-```
-npm install --save react-dates
-```
-Make sure you have the following dependencies installed:
-```
- npm install --save moment react react-dom react-addons-shallow-compare
-```
+Ensure packages are installed with correct version numbers by running:
+  ```sh
+  (
+    export PKG=react-dates;
+    npm info "$PKG" peerDependencies --json | command sed 's/[\{\},]//g ; s/: /@/g; s/ *//g' | xargs npm install --save "$PKG"
+  )
+  ```
+
+  Which produces and runs a command like:
+
+  ```sh
+  npm install --save react-dates moment@>=#.## react@>=#.## react-dom@>=#.## react-addons-shallow-compare@>=#.##
+  ```
 
 #### Include component
 ```
