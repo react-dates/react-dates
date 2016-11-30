@@ -26,13 +26,17 @@ To run that demo on your own computer:
 
 ## How to Use
 
-Ensure packages are installed with correct version numbers by running:
+Ensure packages are installed with correct version numbers by running the following shell script: 
   ```sh
   (
     export PKG=react-dates;
     npm info "$PKG" peerDependencies --json | command sed 's/[\{\},]//g ; s/: /@/g; s/ *//g' | xargs npm install --save "$PKG"
   )
   ```
+If you're new to shell scripts, create an install.sh file, copy the command above to it and run by typing this in your terminal: 
+```sh
+bash install.sh
+```
 
   Which produces and runs a command like:
 
