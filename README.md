@@ -24,8 +24,8 @@ To run that demo on your own computer:
 * `npm run storybook`
 * Visit http://localhost:9001/
 
-## How to Use
-
+## Getting Started
+#### Install dependencies
 Ensure packages are installed with correct version numbers by running:
   ```sh
   (
@@ -39,6 +39,29 @@ Ensure packages are installed with correct version numbers by running:
   ```sh
   npm install --save react-dates moment@>=#.## react@>=#.## react-dom@>=#.## react-addons-shallow-compare@>=#.##
   ```
+
+#### Include component
+```
+import { SingleDatePicker } from 'react-dates';
+```
+
+#### Include CSS
+When you use Webpack with CSS loader:
+```
+import 'react-dates/lib/css/_datepicker.css';
+```
+Otherwise create a CSS file with the contents of `require.resolve('react-dates/lib/css/_datepicker.css')` and include it in the html `<head>` section.
+
+#### Make some awesome datepickers
+```
+<SingleDatePicker
+  id="date_input"
+  date={this.state.date}
+  focused={this.state.focused}
+  onDateChange={(date) => { this.setState({ date }); }}
+  onFocusChange={({ focused }) => { this.setState({ focused }); }}
+/>
+```
 
 ## API
 
