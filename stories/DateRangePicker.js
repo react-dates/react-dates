@@ -218,6 +218,11 @@ storiesOf('DateRangePicker', module)
       isDayBlocked={day1 => datesList.some(day2 => isSameDay(day1, day2))}
     />
   ))
+  .addWithInfo('with some highlighted dates', () => (
+    <DateRangePickerWrapper
+      isDayHighlighted={day1 => datesList.some(day2 => isSameDay(day1, day2))}
+    />
+  ))
   .addWithInfo('with month specified on open', () => (
     <DateRangePickerWrapper
       initialVisibleMonth={() => moment('04 2017', 'MM YYYY')}

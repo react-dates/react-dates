@@ -43,6 +43,7 @@ const defaultProps = {
   onFocusChange() {},
 
   isDayBlocked: () => false,
+  isDayHighlighted: () => false,
   disabledDays: [],
   isOutsideRange: day => !isInclusivelyAfterDay(day, moment()),
   enableOutsideDays: false,
@@ -237,6 +238,7 @@ export default class SingleDatePicker extends React.Component {
   renderDayPicker() {
     const {
       isDayBlocked,
+      isDayHighlighted,
       isOutsideRange,
       enableOutsideDays,
       numberOfMonths,
@@ -257,6 +259,7 @@ export default class SingleDatePicker extends React.Component {
       blocked: day => this.isBlocked(day),
       'blocked-calendar': day => isDayBlocked(day),
       'blocked-out-of-range': day => isOutsideRange(day),
+      'highlighted-calendar': day => isDayHighlighted(day),
       valid: day => !this.isBlocked(day),
       hovered: day => this.isHovered(day),
       selected: day => this.isSelected(day),

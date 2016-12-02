@@ -32,6 +32,7 @@ const propTypes = {
   minimumNights: PropTypes.number,
   isOutsideRange: PropTypes.func,
   isDayBlocked: PropTypes.func,
+  isDayHighlighted: PropTypes.func,
 
   // DayPicker props
   enableOutsideDays: PropTypes.bool,
@@ -70,6 +71,7 @@ const defaultProps = {
   minimumNights: 1,
   isOutsideRange() {},
   isDayBlocked() {},
+  isDayHighlighted() {},
 
   // DayPicker props
   enableOutsideDays: false,
@@ -226,6 +228,7 @@ export default class DayPickerRangeController extends React.Component {
   render() {
     const {
       isDayBlocked,
+      isDayHighlighted,
       isOutsideRange,
       numberOfMonths,
       orientation,
@@ -246,6 +249,7 @@ export default class DayPickerRangeController extends React.Component {
       'blocked-calendar': day => isDayBlocked(day),
       'blocked-out-of-range': day => isOutsideRange(day),
       'blocked-minimum-nights': day => this.doesNotMeetMinimumNights(day),
+      'highlighted-calendar': day => isDayHighlighted(day),
       valid: day => !this.isBlocked(day),
       // before anything has been set or after both are set
       hovered: day => this.isHovered(day),
