@@ -19,7 +19,6 @@
     "tests-only": "npm run mocha --silent test",
     "tests-karma": "karma start",
     "test": "npm run tests-only && npm run tests-karma",
-    "posttest": "npm run --silent cover",
     "storybook": "start-storybook -p 9001 -s ./public",
     "tag": "git tag v$npm_package_version",
     "gh-pages:clean": "rimraf _gh-pages",
