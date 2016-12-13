@@ -1,6 +1,6 @@
 {
-  "name": "react-dates",
-  "version": "4.1.0",
+  "name": "react-dates-custom",
+  "version": "0.0.0",
   "description": "A responsive and accessible date range picker component built with React",
   "main": "index.js",
   "scripts": {
@@ -48,8 +48,6 @@
   },
   "homepage": "https://github.com/airbnb/react-dates#readme",
   "devDependencies": {
-    "@kadira/react-storybook-addon-info": "^3.3.0",
-    "@kadira/storybook": "^2.24.0",
     "airbnb-js-shims": "^1.0.1",
     "babel-cli": "^6.11.4",
     "babel-core": "^6.13.2",
