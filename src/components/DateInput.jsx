@@ -117,7 +117,7 @@ export default class DateInput extends React.Component {
           value={value}
           onChange={this.onChange}
           onKeyDown={this.onKeyDown}
-          onFocus={onFocus}
+          //onFocus={onFocus}
           placeholder={placeholder}
           autoComplete="off"
           maxLength={10}
