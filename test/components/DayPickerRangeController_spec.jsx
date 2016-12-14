@@ -728,5 +728,21 @@ describe('DayPickerRangeController', () => {
         expect(wrapper.instance().isBlocked(today)).to.equal(false);
       });
     });
+    describe('#isToday', () => {
+      it('returns true if today', () => {
+        const wrapper = shallow(<DayPickerRangeController />);
+        expect(wrapper.instance().isToday(today)).to.equal(true);
+      });
+
+      it('returns false if tomorrow', () => {
+        const wrapper = shallow(<DayPickerRangeController />);
+        expect(wrapper.instance().isToday(moment(today).add(1, 'days'))).to.equal(false);
+      });
+
+      it('returns false if last month', () => {
+        const wrapper = shallow(<DayPickerRangeController />);
+        expect(wrapper.instance().isToday(moment(today).subtract(1, 'months'))).to.equal(false);
+      });
+    });
   });
 });
