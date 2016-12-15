@@ -44,7 +44,8 @@ const defaultProps = {
 
   isDayBlocked: () => false,
   disabledDays: [],
-  isOutsideRange: day => !isInclusivelyAfterDay(day, moment()),
+  minimumDate: moment(),
+  isOutsideRange: (day, minimumDate) => !isInclusivelyAfterDay(day, minimumDate),
   enableOutsideDays: false,
   numberOfMonths: 2,
   orientation: HORIZONTAL_ORIENTATION,
@@ -98,10 +99,16 @@ export default class SingleDatePicker extends React.Component {
   }
 
   onChange(dateString) {
-    const { isOutsideRange, keepOpenOnDateSelect, onDateChange, onFocusChange } = this.props;
+    const {
+      isOutsideRange,
+      keepOpenOnDateSelect,
+      onDateChange,
+      onFocusChange,
+      minimumDate,
+    } = this.props;
     const date = toMomentObject(dateString, this.getDisplayFormat());
 
-    const isValid = date && !isOutsideRange(date);
+    const isValid = date && !isOutsideRange(date, minimumDate);
     if (isValid) {
       onDateChange(date);
       if (!keepOpenOnDateSelect) onFocusChange({ focused: false });
@@ -208,8 +215,8 @@ export default class SingleDatePicker extends React.Component {
   }
 
   isBlocked(day) {
-    const { isDayBlocked, isOutsideRange } = this.props;
-    return isDayBlocked(day) || isOutsideRange(day);
+    const { isDayBlocked, isOutsideRange, minimumDate } = this.props;
+    return isDayBlocked(day) || isOutsideRange(day, minimumDate);
   }
 
   isHovered(day) {
@@ -250,13 +257,14 @@ export default class SingleDatePicker extends React.Component {
       withFullScreenPortal,
       focused,
       initialVisibleMonth,
+      minimumDate,
     } = this.props;
     const { dayPickerContainerStyles } = this.state;
 
     const modifiers = {
       blocked: day => this.isBlocked(day),
       'blocked-calendar': day => isDayBlocked(day),
-      'blocked-out-of-range': day => isOutsideRange(day),
+      'blocked-out-of-range': day => isOutsideRange(day, minimumDate),
       valid: day => !this.isBlocked(day),
       hovered: day => this.isHovered(day),
       selected: day => this.isSelected(day),
