@@ -96,6 +96,7 @@ export default class DayPicker extends React.Component {
   componentDidMount() {
     if (this.isHorizontal()) {
       this.adjustDayPickerHeight();
+      this.initializeDayPickerWidth();
     }
   }
 
