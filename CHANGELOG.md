@@ -1,5 +1,8 @@
 # Change Log
 
+## v4.1.2
+ - [fix] `DayPicker` now has initial width set, even before any other interaction ([#215](https://github.com/airbnb/react-dates/pull/215))
+
 ## v4.1.1
  - [fix] Fix issue where the DayPicker height and width were not always being set initially ([#196](https://github.com/airbnb/react-dates/pull/196))
  - [fix] Fix closed DRP/SDP refocus issue on window blur and refocus ([#212](https://github.com/airbnb/react-dates/pull/212))
