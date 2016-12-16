@@ -63,6 +63,9 @@ const defaultProps = {
 export default class CalendarMonthGrid extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      months: this.getMonths(props.initialMonth, props.numberOfMonths),
+    };
 
     this.isTransitionEndSupported = isTransitionEndSupported();
     this.onTransitionEnd = this.onTransitionEnd.bind(this);
@@ -71,6 +74,23 @@ export default class CalendarMonthGrid extends React.Component {
   componentDidMount() {
     this.container = ReactDOM.findDOMNode(this.containerRef);
     this.container.addEventListener('transitionend', this.onTransitionEnd);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { initialMonth, numberOfMonths } = nextProps;
+    const { months } = this.state;
+
+    const hasMonthChanged = !this.props.initialMonth.isSame(initialMonth, 'month');
+    const hasNumberOfMonthsChanged = this.props.numberOfMonths !== numberOfMonths;
+    if (hasMonthChanged || hasNumberOfMonthsChanged) {
+      if (initialMonth.isAfter(this.props.initialMonth)) {
+        months.shift();
+        months.push(months[months.length - 1].clone().add(1, 'month'));
+      } else {
+        months.pop();
+        months.unshift(months[0].clone().subtract(1, 'month'));
+      }
+    }
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -95,11 +115,22 @@ export default class CalendarMonthGrid extends React.Component {
     this.props.onMonthTransitionEnd();
   }
 
+  getMonths(initialMonth, numberOfMonths) {
+    let month = initialMonth.clone().subtract(1, 'month');
+
+    const months = [];
+    for (let i = 0; i < numberOfMonths + 2; i++) {
+      months.push(month);
+      month = month.clone().add(1, 'month');
+    }
+
+    return months;
+  }
+
   render() {
     const {
       enableOutsideDays,
       firstVisibleMonthIndex,
-      initialMonth,
       isAnimating,
       modifiers,
       numberOfMonths,
@@ -117,34 +148,8 @@ export default class CalendarMonthGrid extends React.Component {
       onMonthTransitionEnd,
     } = this.props;
 
-    let month = initialMonth.clone().subtract(1, 'month');
 
-    const months = [];
-    for (let i = 0; i < numberOfMonths + 2; i++) {
-      const isVisible =
-        (i >= firstVisibleMonthIndex) && (i < firstVisibleMonthIndex + numberOfMonths);
-
-      months.push(
-        <CalendarMonth
-          key={month.format('MM-YY')}
-          month={month}
-          isVisible={isVisible}
-          enableOutsideDays={enableOutsideDays}
-          modifiers={modifiers}
-          monthFormat={monthFormat}
-          orientation={orientation}
-          onDayMouseEnter={onDayMouseEnter}
-          onDayMouseLeave={onDayMouseLeave}
-          onDayMouseDown={onDayMouseDown}
-          onDayMouseUp={onDayMouseUp}
-          onDayClick={onDayClick}
-          onDayTouchStart={onDayTouchStart}
-          onDayTouchEnd={onDayTouchEnd}
-          onDayTouchTap={onDayTouchTap}
-        />,
-      );
-      month = month.clone().add(1, 'month');
-    }
+    const { months } = this.state;
 
     const className = cx('CalendarMonthGrid', {
       'CalendarMonthGrid--horizontal': orientation === HORIZONTAL_ORIENTATION,
@@ -159,7 +164,29 @@ export default class CalendarMonthGrid extends React.Component {
         style={getTransformStyles(transformValue)}
         onTransitionEnd={onMonthTransitionEnd}
       >
-        {months}
+        {months.map((month, i) => {
+          const isVisible =
+            (i >= firstVisibleMonthIndex) && (i < firstVisibleMonthIndex + numberOfMonths);
+          return (
+            <CalendarMonth
+              key={`CalendarMonth-${i}`}
+              month={month}
+              isVisible={isVisible}
+              enableOutsideDays={enableOutsideDays}
+              modifiers={modifiers}
+              monthFormat={monthFormat}
+              orientation={orientation}
+              onDayMouseEnter={onDayMouseEnter}
+              onDayMouseLeave={onDayMouseLeave}
+              onDayMouseDown={onDayMouseDown}
+              onDayMouseUp={onDayMouseUp}
+              onDayClick={onDayClick}
+              onDayTouchStart={onDayTouchStart}
+              onDayTouchEnd={onDayTouchEnd}
+              onDayTouchTap={onDayTouchTap}
+            />
+          );
+        })}
       </div>
     );
   }
