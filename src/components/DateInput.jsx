@@ -108,7 +108,6 @@ export default class DateInput extends React.Component {
           'DateInput--with-caret': showCaret && focused,
           'DateInput--disabled': disabled,
         })}
-        onClick={onFocus}
       >
         <label className="DateInput__label" htmlFor={id}>
           {placeholder}

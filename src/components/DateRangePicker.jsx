@@ -4,6 +4,7 @@ import moment from 'moment';
 import cx from 'classnames';
 import Portal from 'react-portal';
 
+import OutsideClickHandler from './OutsideClickHandler';
 import isTouchDevice from '../utils/isTouchDevice';
 import getResponsiveContainerStyles from '../utils/getResponsiveContainerStyles';
 
@@ -186,7 +187,7 @@ export default class DateRangePicker extends React.Component {
     } = this.props;
     const { dayPickerContainerStyles } = this.state;
 
-    const onOutsideClick = !withFullScreenPortal ? this.onOutsideClick : undefined;
+    const onOutsideClick = !withFullScreenPortal && withPortal ? this.onOutsideClick : undefined;
 
     return (
       <div
@@ -263,32 +264,36 @@ export default class DateRangePicker extends React.Component {
       onFocusChange,
     } = this.props;
 
+    const onOutsideClick = !withPortal && !withFullScreenPortal ? this.onOutsideClick : () => {};
+
     return (
       <div className="DateRangePicker">
-        <DateRangePickerInputController
-          startDate={startDate}
-          startDateId={startDateId}
-          startDatePlaceholderText={startDatePlaceholderText}
-          isStartDateFocused={focusedInput === START_DATE}
-          endDate={endDate}
-          endDateId={endDateId}
-          endDatePlaceholderText={endDatePlaceholderText}
-          isEndDateFocused={focusedInput === END_DATE}
-          displayFormat={displayFormat}
-          showClearDates={showClearDates}
-          showCaret={!withPortal && !withFullScreenPortal}
-          disabled={disabled}
-          required={required}
-          reopenPickerOnClearDates={reopenPickerOnClearDates}
-          keepOpenOnDateSelect={keepOpenOnDateSelect}
-          isOutsideRange={isOutsideRange}
-          withFullScreenPortal={withFullScreenPortal}
-          onDatesChange={onDatesChange}
-          onFocusChange={onFocusChange}
-          phrases={phrases}
-        />
+        <OutsideClickHandler onOutsideClick={onOutsideClick}>
+          <DateRangePickerInputController
+            startDate={startDate}
+            startDateId={startDateId}
+            startDatePlaceholderText={startDatePlaceholderText}
+            isStartDateFocused={focusedInput === START_DATE}
+            endDate={endDate}
+            endDateId={endDateId}
+            endDatePlaceholderText={endDatePlaceholderText}
+            isEndDateFocused={focusedInput === END_DATE}
+            displayFormat={displayFormat}
+            showClearDates={showClearDates}
+            showCaret={!withPortal && !withFullScreenPortal}
+            disabled={disabled}
+            required={required}
+            reopenPickerOnClearDates={reopenPickerOnClearDates}
+            keepOpenOnDateSelect={keepOpenOnDateSelect}
+            isOutsideRange={isOutsideRange}
+            withFullScreenPortal={withFullScreenPortal}
+            onDatesChange={onDatesChange}
+            onFocusChange={onFocusChange}
+            phrases={phrases}
+          />
 
-        {this.maybeRenderDayPickerWithPortal()}
+          {this.maybeRenderDayPickerWithPortal()}
+        </OutsideClickHandler>
       </div>
     );
   }
