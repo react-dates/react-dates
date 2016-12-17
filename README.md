@@ -177,6 +177,13 @@ If the `showClearDates` prop is set to true, an `x` shows up in the input box th
   showClearDates: PropTypes.bool,
 ```
 
+If the `showDefaultInputIcon` prop is set to true, the default calendar icon is displayed at the start of the input box. Interaction is the same as focusing the start date.
+Optionally, you can display a React node using `props.customInputIcon`
+```
+  showDefaultInputIcon: PropTypes.bool,
+  customInputIcon: PropTypes.node
+```
+
 If the `disabled` prop is set to true, onFocusChange is not called when onStartDateFocus or onEndDateFocus are invoked and disabled is assigned to the actual `<input>` DOM elements.
 ```
   disabled: PropTypes.bool,

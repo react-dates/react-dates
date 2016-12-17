@@ -4,6 +4,7 @@ import cx from 'classnames';
 import DateInput from './DateInput';
 import RightArrow from '../svg/arrow-right.svg';
 import CloseButton from '../svg/close.svg';
+import CalendarIcon from '../svg/calendar.svg';
 
 import { START_DATE, END_DATE } from '../../constants';
 
@@ -33,6 +34,8 @@ const propTypes = {
   disabled: PropTypes.bool,
   required: PropTypes.bool,
   showCaret: PropTypes.bool,
+  showDefaultInputIcon: PropTypes.bool,
+  customInputIcon: PropTypes.node,
 
   // i18n
   phrases: PropTypes.shape({
@@ -64,6 +67,8 @@ const defaultProps = {
   disabled: false,
   required: false,
   showCaret: false,
+  showDefaultInputIcon: false,
+  customInputIcon: null,
 
   // i18n
   phrases: {
@@ -118,8 +123,12 @@ export default class DateRangePickerInput extends React.Component {
       disabled,
       required,
       showCaret,
+      showDefaultInputIcon,
+      customInputIcon,
       phrases,
     } = this.props;
+
+    const inputIcon = customInputIcon || (<CalendarIcon />);
 
     return (
       <div
@@ -127,6 +136,14 @@ export default class DateRangePickerInput extends React.Component {
           'DateRangePickerInput--disabled': disabled,
         })}
       >
+        {(showDefaultInputIcon || customInputIcon !== null) &&
+          <span
+            className="DateRangePickerInput__calendar-icon"
+            onClick={onStartDateFocus}
+          >
+            {inputIcon}
+          </span>
+        }
         <DateInput
           id={startDateId}
           placeholder={startDatePlaceholderText}

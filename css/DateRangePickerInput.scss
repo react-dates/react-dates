@@ -53,3 +53,25 @@
   background: $react-dates-color-border;
   border-radius: 50%;
 }
+
+.DateRangePickerInput__calendar-icon {
+  background: none;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  line-height: normal;
+  overflow: visible;
+
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: middle;
+  padding: 10px;
+  margin: 0 5px 0 10px;
+
+  svg {
+    fill: $react-dates-color-gray-light;
+    height: 15px;
+    width: 14px;
+    vertical-align: middle;
+  }
+}

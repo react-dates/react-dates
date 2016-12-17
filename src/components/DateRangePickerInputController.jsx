@@ -27,6 +27,7 @@ const propTypes = {
 
   showClearDates: PropTypes.bool,
   showCaret: PropTypes.bool,
+  showDefaultInputIcon: PropTypes.bool,
   disabled: PropTypes.bool,
   required: PropTypes.bool,
 
@@ -38,6 +39,8 @@ const propTypes = {
 
   onFocusChange: PropTypes.func,
   onDatesChange: PropTypes.func,
+
+  customInputIcon: PropTypes.node,
 
   // i18n
   phrases: PropTypes.shape({
@@ -58,6 +61,7 @@ const defaultProps = {
 
   showClearDates: false,
   showCaret: false,
+  showDefaultInputIcon: false,
   disabled: false,
   required: false,
 
@@ -69,6 +73,8 @@ const defaultProps = {
 
   onFocusChange() {},
   onDatesChange() {},
+
+  customInputIcon: null,
 
   // i18n
   phrases: {
@@ -189,6 +195,8 @@ export default class DateRangePickerInputWithHandlers extends React.Component {
       isEndDateFocused,
       showClearDates,
       showCaret,
+      showDefaultInputIcon,
+      customInputIcon,
       disabled,
       required,
       phrases,
@@ -214,6 +222,8 @@ export default class DateRangePickerInputWithHandlers extends React.Component {
         disabled={disabled}
         required={required}
         showCaret={showCaret}
+        showDefaultInputIcon={showDefaultInputIcon}
+        customInputIcon={customInputIcon}
         phrases={phrases}
         onStartDateChange={this.onStartDateChange}
         onStartDateFocus={this.onStartDateFocus}

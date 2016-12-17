@@ -19,6 +19,7 @@ export default {
   showClearDates: PropTypes.bool,
   disabled: PropTypes.bool,
   required: PropTypes.bool,
+  showDefaultInputIcon: PropTypes.bool,
 
   orientation: OrientationShape,
   anchorDirection: anchorDirectionShape,

@@ -80,6 +80,31 @@ describe('DateRangePickerInput', () => {
           });
       });
     });
+
+    describe('show calendar icon', () => {
+      describe('props.showInputIcon is falsey', () => {
+        it('does not have .DateRangePickerInput__calendar-icon class', () => {
+          const wrapper = shallow(<DateRangePickerInput showDefaultInputIcon={false} />);
+          expect(wrapper.find('.DateRangePickerInput__calendar-icon')).to.have.lengthOf(0);
+        });
+      });
+
+      describe('props.showInputIcon is truthy', () => {
+        it('has .DateRangePickerInput__calendar-icon class', () => {
+          const wrapper = shallow(<DateRangePickerInput showDefaultInputIcon />);
+          expect(wrapper.find('.DateRangePickerInput__calendar-icon')).to.have.lengthOf(1);
+        });
+      });
+      describe('props.customInputIcon is a React Element', () => {
+        it('has custom icon', () => {
+          const wrapper = shallow(
+            <DateRangePickerInput
+              customInputIcon={<span className="custom-icon" />}
+            />);
+          expect(wrapper.find('.DateRangePickerInput__calendar-icon .custom-icon'));
+        });
+      });
+    });
   });
 
   describe('#onClearDatesMouseEnter', () => {
@@ -143,6 +168,22 @@ describe('DateRangePickerInput', () => {
         clearDatesWrapper.simulate('mouseLeave');
 
         expect(onClearDatesMouseLeaveSpy.called).to.equal(true);
+      });
+    });
+  });
+
+  describe('calendar icon interaction', () => {
+    describe('onClick', () => {
+      it('props.onStartDateFocus gets triggered', () => {
+        const onStartDateFocusSpy = sinon.spy();
+        const wrapper = shallow(
+          <DateRangePickerInput
+            onStartDateFocus={onStartDateFocusSpy}
+            showDefaultInputIcon
+          />);
+        const calendarIconWrapper = wrapper.find('.DateRangePickerInput__calendar-icon');
+        calendarIconWrapper.simulate('click');
+        expect(onStartDateFocusSpy.called).to.equal(true);
       });
     });
   });
