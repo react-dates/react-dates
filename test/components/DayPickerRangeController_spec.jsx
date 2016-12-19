@@ -728,6 +728,7 @@ describe('DayPickerRangeController', () => {
         expect(wrapper.instance().isBlocked(today)).to.equal(false);
       });
     });
+
     describe('#isToday', () => {
       it('returns true if today', () => {
         const wrapper = shallow(<DayPickerRangeController />);
