@@ -33,6 +33,7 @@ const defaultProps = {
   focusedInput: null,
   minimumNights: 1,
   isDayBlocked: () => false,
+  isDayHighlighted: () => false,
   isOutsideRange: day => !isInclusivelyAfterDay(day, moment()),
   enableOutsideDays: false,
   numberOfMonths: 2,
@@ -162,6 +163,7 @@ export default class DateRangePicker extends React.Component {
   renderDayPicker() {
     const {
       isDayBlocked,
+      isDayHighlighted,
       isOutsideRange,
       numberOfMonths,
       orientation,
@@ -217,6 +219,7 @@ export default class DateRangePicker extends React.Component {
           navNext={navNext}
           minimumNights={minimumNights}
           isOutsideRange={isOutsideRange}
+          isDayHighlighted={isDayHighlighted}
           isDayBlocked={isDayBlocked}
           keepOpenOnDateSelect={keepOpenOnDateSelect}
         />

@@ -51,6 +51,16 @@
   }
 }
 
+.CalendarMonth__day--highlighted-calendar {
+  background: $react-dates-color-highlighted;
+  color: $react-dates-color-gray;
+  cursor: default;
+
+  &:active {
+    background: $react-dates-color-secondary;
+  }
+}
+
 .CalendarMonth__day--outside {
   border: 0;
   cursor: default;
