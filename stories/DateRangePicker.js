@@ -108,6 +108,9 @@ storiesOf('DateRangePicker', module)
   .addWithInfo('single month', () => (
     <DateRangePickerWrapper numberOfMonths={1} />
   ))
+  .addWithInfo('3 months', () => (
+    <DateRangePickerWrapper numberOfMonths={3} />
+  ))
   .addWithInfo('anchored right', () => (
     <div style={{ float: 'right' }}>
       <DateRangePickerWrapper
