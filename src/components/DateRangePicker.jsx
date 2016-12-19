@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import shallowCompare from 'react-addons-shallow-compare';
 import moment from 'moment';
 import cx from 'classnames';
 import Portal from 'react-portal';
@@ -84,6 +85,10 @@ export default class DateRangePicker extends React.Component {
   componentDidMount() {
     window.addEventListener('resize', this.responsivizePickerPosition);
     this.responsivizePickerPosition();
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState);
   }
 
   componentWillUnmount() {
@@ -187,7 +192,7 @@ export default class DateRangePicker extends React.Component {
     } = this.props;
     const { dayPickerContainerStyles } = this.state;
 
-    const onOutsideClick = !withFullScreenPortal && withPortal ? this.onOutsideClick : undefined;
+    const onOutsideClick = (!withFullScreenPortal && withPortal) ? this.onOutsideClick : undefined;
 
     return (
       <div
@@ -260,7 +265,7 @@ export default class DateRangePicker extends React.Component {
       onFocusChange,
     } = this.props;
 
-    const onOutsideClick = !withPortal && !withFullScreenPortal ? this.onOutsideClick : () => {};
+    const onOutsideClick = (!withPortal && !withFullScreenPortal) ? this.onOutsideClick : undefined;
 
     return (
       <div className="DateRangePicker">

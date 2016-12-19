@@ -316,15 +316,27 @@ describe('SingleDatePicker', () => {
     describe('day arg is blocked', () => {
       it('props.onDateChange is not called', () => {
         const onDateChangeStub = sinon.stub();
-        const wrapper = shallow(<SingleDatePicker id="date" onDateChange={onDateChangeStub} />);
-        wrapper.instance().onDayClick(moment(), ['blocked']);
+        const wrapper = shallow(
+          <SingleDatePicker
+            id="date"
+            onDateChange={onDateChangeStub}
+            isDayBlocked={() => true}
+          />,
+        );
+        wrapper.instance().onDayClick(moment());
         expect(onDateChangeStub.callCount).to.equal(0);
       });
 
       it('props.onFocusChange is not called', () => {
         const onFocusChangeStub = sinon.stub();
-        const wrapper = shallow(<SingleDatePicker id="date" onFocusChange={onFocusChangeStub} />);
-        wrapper.instance().onDayClick(moment(), ['blocked']);
+        const wrapper = shallow(
+          <SingleDatePicker
+            id="date"
+            onFocusChange={onFocusChangeStub}
+            isDayBlocked={() => true}
+          />,
+        );
+        wrapper.instance().onDayClick(moment());
         expect(onFocusChangeStub.callCount).to.equal(0);
       });
     });
@@ -333,14 +345,14 @@ describe('SingleDatePicker', () => {
       it('props.onDateChange is called', () => {
         const onDateChangeStub = sinon.stub();
         const wrapper = shallow(<SingleDatePicker id="date" onDateChange={onDateChangeStub} />);
-        wrapper.instance().onDayClick(moment(), []);
+        wrapper.instance().onDayClick(moment());
         expect(onDateChangeStub.callCount).to.equal(1);
       });
 
       it('props.onFocusChange is called', () => {
         const onFocusChangeStub = sinon.stub();
         const wrapper = shallow(<SingleDatePicker id="date" onFocusChange={onFocusChangeStub} />);
-        wrapper.instance().onDayClick(moment(), []);
+        wrapper.instance().onDayClick(moment());
         expect(onFocusChangeStub.callCount).to.equal(1);
       });
     });

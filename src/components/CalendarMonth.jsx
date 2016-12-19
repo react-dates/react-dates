@@ -112,14 +112,14 @@ export default class CalendarMonth extends React.Component {
           <tbody className="js-CalendarMonth__grid">
             {weeks.map((week, i) => (
               <tr key={i}>
-                {week.map((day, j) => {
+                {week.map((day, dayOfWeek) => {
                   const modifiersForDay = getModifiersForDay(modifiers, day);
                   const className = cx('CalendarMonth__day', {
                     'CalendarMonth__day--outside': !day || day.month() !== month.month(),
                   }, modifiersForDay.map(mod => `CalendarMonth__day--${mod}`));
 
                   return (
-                    <td className={className} key={j}>
+                    <td className={className} key={dayOfWeek}>
                       {day &&
                         <CalendarDay
                           day={day}

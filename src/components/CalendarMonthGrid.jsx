@@ -60,11 +60,23 @@ const defaultProps = {
   monthFormat: 'MMMM YYYY', // english locale
 };
 
+function getMonths(initialMonth, numberOfMonths) {
+  let month = initialMonth.clone().subtract(1, 'month');
+
+  const months = [];
+  for (let i = 0; i < numberOfMonths + 2; i++) {
+    months.push(month);
+    month = month.clone().add(1, 'month');
+  }
+
+  return months;
+}
+
 export default class CalendarMonthGrid extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      months: this.getMonths(props.initialMonth, props.numberOfMonths),
+      months: getMonths(props.initialMonth, props.numberOfMonths),
     };
 
     this.isTransitionEndSupported = isTransitionEndSupported();
@@ -82,15 +94,32 @@ export default class CalendarMonthGrid extends React.Component {
 
     const hasMonthChanged = !this.props.initialMonth.isSame(initialMonth, 'month');
     const hasNumberOfMonthsChanged = this.props.numberOfMonths !== numberOfMonths;
-    if (hasMonthChanged || hasNumberOfMonthsChanged) {
+    let newMonths = months;
+
+    if (hasMonthChanged && !hasNumberOfMonthsChanged) {
       if (initialMonth.isAfter(this.props.initialMonth)) {
-        months.shift();
-        months.push(months[months.length - 1].clone().add(1, 'month'));
+        newMonths = months.slice(1);
+        newMonths.push(months[months.length - 1].clone().add(1, 'month'));
       } else {
-        months.pop();
-        months.unshift(months[0].clone().subtract(1, 'month'));
+        newMonths = months.slice(0, months.length - 1);
+        newMonths.unshift(months[0].clone().subtract(1, 'month'));
       }
     }
+
+    if (hasNumberOfMonthsChanged) {
+      if (this.props.numberOfMonths < numberOfMonths) {
+        newMonths = months.slice();
+        for (let i = 0; i < numberOfMonths - this.props.numberOfMonths; i += 1) {
+          newMonths.push(months[months.length - 1].clone().add(i, 'month'));
+        }
+      } else {
+        newMonths = months.slice(0, numberOfMonths + 3);
+      }
+    }
+
+    this.setState({
+      months: newMonths,
+    });
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -113,18 +142,6 @@ export default class CalendarMonthGrid extends React.Component {
 
   onTransitionEnd() {
     this.props.onMonthTransitionEnd();
-  }
-
-  getMonths(initialMonth, numberOfMonths) {
-    let month = initialMonth.clone().subtract(1, 'month');
-
-    const months = [];
-    for (let i = 0; i < numberOfMonths + 2; i++) {
-      months.push(month);
-      month = month.clone().add(1, 'month');
-    }
-
-    return months;
   }
 
   render() {
@@ -169,7 +186,7 @@ export default class CalendarMonthGrid extends React.Component {
             (i >= firstVisibleMonthIndex) && (i < firstVisibleMonthIndex + numberOfMonths);
           return (
             <CalendarMonth
-              key={`CalendarMonth-${i}`}
+              key={month.month()}
               month={month}
               isVisible={isVisible}
               enableOutsideDays={enableOutsideDays}

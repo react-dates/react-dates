@@ -40,45 +40,53 @@ export default class CalendarDay extends React.Component {
   }
 
   onDayClick(day, e) {
-    this.props.onDayClick(day, e);
+    const { onDayClick } = this.props;
+    onDayClick(day, e);
   }
 
   onDayMouseDown(day, e) {
-    this.props.onDayMouseDown(day, e);
+    const { onDayMouseDown } = this.props;
+    onDayMouseDown(day, e);
   }
 
   onDayMouseUp(day, e) {
-    this.props.onDayMouseUp(day, e);
+    const { onDayMouseUp } = this.props;
+    onDayMouseUp(day, e);
   }
 
   onDayMouseEnter(day, e) {
-    this.props.onDayMouseEnter(day, e);
+    const { onDayMouseEnter } = this.props;
+    onDayMouseEnter(day, e);
   }
 
   onDayMouseLeave(day, e) {
-    this.props.onDayMouseLeave(day, e);
+    const { onDayMouseLeave } = this.props;
+    onDayMouseLeave(day, e);
   }
 
   onDayTouchStart(day, e) {
+    const { onDayTouchStart } = this.props;
     this.hasActiveTouchStart = true;
     setTimeout(() => {
       this.hasActiveTouchStart = false;
     }, TOUCHSTART_TIMEOUT);
 
-    this.props.onDayTouchStart(day, e);
+    onDayTouchStart(day, e);
   }
 
   onDayTouchEnd(day, e) {
+    const { onDayTouchEnd } = this.props;
     if (this.hasActiveTouchStart) {
       this.hasActiveTouchStart = false;
       this.onDayTouchTap(day, e);
     }
 
-    this.props.onDayTouchEnd(day, e);
+    onDayTouchEnd(day, e);
   }
 
   onDayTouchTap(day, e) {
-    this.props.onDayTouchTap(day, e);
+    const { onDayTouchTap } = this.props;
+    onDayTouchTap(day, e);
   }
 
   render() {
