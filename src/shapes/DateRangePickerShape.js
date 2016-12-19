@@ -37,6 +37,10 @@ export default {
   onFocusChange: PropTypes.func,
   onPrevMonthClick: PropTypes.func,
   onNextMonthClick: PropTypes.func,
+  onDayMouseEnter: PropTypes.func,
+  onDayMouseLeave: PropTypes.func,
+  onDayMouseDown: PropTypes.func,
+  onDayTouchTap: PropTypes.func,
 
   // i18n
   displayFormat: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
