@@ -45,14 +45,6 @@ const propTypes = {
   navPrev: PropTypes.node,
   navNext: PropTypes.node,
 
-  onDayClick: PropTypes.func,
-  onDayMouseDown: PropTypes.func,
-  onDayMouseUp: PropTypes.func,
-  onDayMouseEnter: PropTypes.func,
-  onDayMouseLeave: PropTypes.func,
-  onDayTouchStart: PropTypes.func,
-  onDayTouchEnd: PropTypes.func,
-  onDayTouchTap: PropTypes.func,
   onPrevMonthClick: PropTypes.func,
   onNextMonthClick: PropTypes.func,
   onOutsideClick: PropTypes.func,
@@ -87,14 +79,6 @@ const defaultProps = {
   navPrev: null,
   navNext: null,
 
-  onDayClick() {},
-  onDayMouseDown() {},
-  onDayMouseUp() {},
-  onDayMouseEnter() {},
-  onDayMouseLeave() {},
-  onDayTouchStart() {},
-  onDayTouchTap() {},
-  onDayTouchEnd() {},
   onPrevMonthClick() {},
   onNextMonthClick() {},
   onOutsideClick() {},
@@ -122,10 +106,10 @@ export default class DayPickerRangeController extends React.Component {
     this.today = moment();
   }
 
-  onDayClick(day, modifiers, e) {
+  onDayClick(day, e) {
     const { keepOpenOnDateSelect, minimumNights } = this.props;
     if (e) e.preventDefault();
-    if (includes(modifiers, 'blocked')) return;
+    if (this.isBlocked(day)) return;
 
     const { focusedInput } = this.props;
     let { startDate, endDate } = this.props;

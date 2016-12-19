@@ -7,7 +7,6 @@ export const TOUCHSTART_TIMEOUT = 200;
 
 const propTypes = {
   day: momentPropTypes.momentObj,
-  modifiers: PropTypes.arrayOf(PropTypes.string),
   onDayClick: PropTypes.func,
   onDayMouseDown: PropTypes.func,
   onDayMouseUp: PropTypes.func,
@@ -20,7 +19,6 @@ const propTypes = {
 
 const defaultProps = {
   day: moment(),
-  modifiers: [],
   onDayClick() {},
   onDayMouseDown() {},
   onDayMouseUp() {},
@@ -41,61 +39,61 @@ export default class CalendarDay extends React.Component {
     return shallowCompare(this, nextProps, nextState);
   }
 
-  handleDayClick(day, modifiers, e) {
-    this.props.onDayClick(day, modifiers, e);
+  onDayClick(day, e) {
+    this.props.onDayClick(day, e);
   }
 
-  handleDayMouseDown(day, modifiers, e) {
-    this.props.onDayMouseDown(day, modifiers, e);
+  onDayMouseDown(day, e) {
+    this.props.onDayMouseDown(day, e);
   }
 
-  handleDayMouseUp(day, modifiers, e) {
-    this.props.onDayMouseUp(day, modifiers, e);
+  onDayMouseUp(day, e) {
+    this.props.onDayMouseUp(day, e);
   }
 
-  handleDayMouseEnter(day, modifiers, e) {
-    this.props.onDayMouseEnter(day, modifiers, e);
+  onDayMouseEnter(day, e) {
+    this.props.onDayMouseEnter(day, e);
   }
 
-  handleDayMouseLeave(day, modifiers, e) {
-    this.props.onDayMouseLeave(day, modifiers, e);
+  onDayMouseLeave(day, e) {
+    this.props.onDayMouseLeave(day, e);
   }
 
-  handleDayTouchStart(day, modifiers, e) {
+  onDayTouchStart(day, e) {
     this.hasActiveTouchStart = true;
     setTimeout(() => {
       this.hasActiveTouchStart = false;
     }, TOUCHSTART_TIMEOUT);
 
-    this.props.onDayTouchStart(day, modifiers, e);
+    this.props.onDayTouchStart(day, e);
   }
 
-  handleDayTouchEnd(day, modifiers, e) {
+  onDayTouchEnd(day, e) {
     if (this.hasActiveTouchStart) {
       this.hasActiveTouchStart = false;
-      this.handleDayTouchTap(day, modifiers, e);
+      this.onDayTouchTap(day, e);
     }
 
-    this.props.onDayTouchEnd(day, modifiers, e);
+    this.props.onDayTouchEnd(day, e);
   }
 
-  handleDayTouchTap(day, modifiers, e) {
-    this.props.onDayTouchTap(day, modifiers, e);
+  onDayTouchTap(day, e) {
+    this.props.onDayTouchTap(day, e);
   }
 
   render() {
-    const { day, modifiers } = this.props;
+    const { day } = this.props;
 
     return (
       <div
         className="CalendarDay"
-        onMouseEnter={(e) => { this.handleDayMouseEnter(day, modifiers, e); }}
-        onMouseLeave={(e) => { this.handleDayMouseLeave(day, modifiers, e); }}
-        onMouseDown={(e) => { this.handleDayMouseDown(day, modifiers, e); }}
-        onMouseUp={(e) => { this.handleDayMouseUp(day, modifiers, e); }}
-        onClick={(e) => { this.handleDayClick(day, modifiers, e); }}
-        onTouchStart={(e) => { this.handleDayTouchStart(day, modifiers, e); }}
-        onTouchEnd={(e) => { this.handleDayTouchEnd(day, modifiers, e); }}
+        onMouseEnter={e => this.onDayMouseEnter(day, e)}
+        onMouseLeave={e => this.onDayMouseLeave(day, e)}
+        onMouseDown={e => this.onDayMouseDown(day, e)}
+        onMouseUp={e => this.onDayMouseUp(day, e)}
+        onClick={e => this.onDayClick(day, e)}
+        onTouchStart={e => this.onDayTouchStart(day, e)}
+        onTouchEnd={e => this.onDayTouchEnd(day, e)}
       >
         <span className="CalendarDay__day">{day.format('D')}</span>
       </div>

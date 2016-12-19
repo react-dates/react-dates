@@ -123,7 +123,6 @@ export default class CalendarMonth extends React.Component {
                       {day &&
                         <CalendarDay
                           day={day}
-                          modifiers={modifiersForDay}
                           onDayMouseEnter={onDayMouseEnter}
                           onDayMouseLeave={onDayMouseLeave}
                           onDayMouseDown={onDayMouseDown}

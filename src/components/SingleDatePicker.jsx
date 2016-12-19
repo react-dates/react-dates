@@ -118,9 +118,9 @@ export default class SingleDatePicker extends React.Component {
     }
   }
 
-  onDayClick(day, modifiers, e) {
+  onDayClick(day, e) {
     if (e) e.preventDefault();
-    if (includes(modifiers, 'blocked')) return;
+    if (this.isBlocked(day)) return;
 
     this.props.onDateChange(day);
     if (!this.props.keepOpenOnDateSelect) this.props.onFocusChange({ focused: null });
