@@ -1,5 +1,12 @@
 # Change Log
 
+## v4.3.0
+ - [new] Add today modifier to the `SingleDatePicker` component ([#218](https://github.com/airbnb/react-dates/pull/218))
+ - [fix] Fix week header alignment when `numberOfMonths` is greater than 2 ([#221](https://github.com/airbnb/react-dates/pull/221))
+ - [fix] Fix `transition`/`transform` prefixing on `.CalendarMonthGrid--animating` class ([#220](https://github.com/airbnb/react-dates/pull/220))
+ - [fix] Do not allow `pointer-events` on invisible first month ([#227](https://github.com/airbnb/react-dates/pull/227))
+ - [fix] Remove `maxLength` attribute from inputs ([#219](https://github.com/airbnb/react-dates/pull/219))
+
 ## v4.2.0
  - [new] Add `isDayHighlighted` prop to the DRP/SDP which applies a `highlighted-calendar` to the relevant days ([#206](https://github.com/airbnb/react-dates/pull/206))
  - [new] Add `today` modifier to the `DayPickerRangeController` component ([#213](https://github.com/airbnb/react-dates/pull/213))
