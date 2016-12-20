@@ -26,11 +26,17 @@
   position: relative;
 }
 
+.DayPicker--horizontal .DayPicker__week-headers {
+  margin-left: 9px;
+}
+
 .DayPicker__week-header {
   color: $react-dates-color-placeholder-text;
   position: absolute;
+  width: $react-dates-width-day-picker;
   top: 62px;
   z-index: 2;
+  padding: 0 13px;
   text-align: left;
 
   ul {
@@ -46,18 +52,8 @@
   }
 }
 
-.DayPicker--horizontal .DayPicker__week-header {
-  padding: 0 22px 0 13px;
-
-  &:first-of-type {
-    padding: 0 13px 0 22px;
-  }
-}
-
 .DayPicker--vertical .DayPicker__week-header {
   margin-left: -1 * $react-dates-width-day-picker / 2;
-  padding: 0 13px;
-  width: $react-dates-width-day-picker;
   left: 50%;
 }
 

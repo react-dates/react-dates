@@ -317,12 +317,8 @@ export default class DayPicker extends React.Component {
   }
 
   renderWeekHeader(index) {
-    const { numberOfMonths } = this.props;
-
-    const widthPercentage = 100 / numberOfMonths;
     const horizontalStyle = {
-      width: `${widthPercentage}%`,
-      left: `${widthPercentage * index}%`,
+      left: index * CALENDAR_MONTH_WIDTH,
     };
 
     const style = this.isHorizontal() ? horizontalStyle : {};
