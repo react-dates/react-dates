@@ -6,8 +6,8 @@ $react-dates-width-day-picker: 300px;
 }
 
 .CalendarMonthGrid--animating {
-  -webkit-transition: transform 0.2s ease-in-out;
-  -moz-transition: transform 0.2s ease-in-out;
+  -webkit-transition: -webkit-transform 0.2s ease-in-out;
+  -moz-transition: -moz-transform 0.2s ease-in-out;
   transition: transform 0.2s ease-in-out;
   z-index: 1;
 }
