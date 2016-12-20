@@ -18,6 +18,8 @@ import SingleDatePicker from '../../src/components/SingleDatePicker';
 
 import isSameDay from '../../src/utils/isSameDay';
 
+const today = moment();
+
 describe('SingleDatePicker', () => {
   describe('#render', () => {
     it('is .SingleDatePicker class', () => {
@@ -267,7 +269,7 @@ describe('SingleDatePicker', () => {
 
     describe('date string outside range', () => {
       const isOutsideRangeStub = sinon.stub().returns(true);
-      const today = moment().toISOString();
+      const todayDateString = today.toISOString();
 
       it('calls props.onDateChange once', () => {
         const onDateChangeStub = sinon.stub();
@@ -278,7 +280,7 @@ describe('SingleDatePicker', () => {
             isOutsideRange={isOutsideRangeStub}
           />
         );
-        wrapper.instance().onChange(today);
+        wrapper.instance().onChange(todayDateString);
         expect(onDateChangeStub.callCount).to.equal(1);
       });
 
@@ -291,7 +293,7 @@ describe('SingleDatePicker', () => {
             isOutsideRange={isOutsideRangeStub}
           />
         );
-        wrapper.instance().onChange(today);
+        wrapper.instance().onChange(todayDateString);
         expect(onDateChangeStub.getCall(0).args[0]).to.equal(null);
       });
 
@@ -304,7 +306,7 @@ describe('SingleDatePicker', () => {
             isOutsideRange={isOutsideRangeStub}
           />
         );
-        wrapper.instance().onChange(today);
+        wrapper.instance().onChange(todayDateString);
         expect(onFocusChangeStub.callCount).to.equal(0);
       });
     });
@@ -346,7 +348,6 @@ describe('SingleDatePicker', () => {
 
   describe('#onDayMouseEnter', () => {
     it('sets state.hoverDate to day arg', () => {
-      const today = moment();
       const wrapper = shallow(<SingleDatePicker id="date" />);
       wrapper.instance().onDayMouseEnter(today);
       expect(wrapper.state().hoverDate).to.equal(today);
@@ -456,73 +457,88 @@ describe('SingleDatePicker', () => {
     });
   });
 
-  describe('#isBlocked', () => {
-    afterEach(() => {
-      sinon.restore();
+  describe('modifiers', () => {
+    describe('#isBlocked', () => {
+      afterEach(() => {
+        sinon.restore();
+      });
+
+      it('returns true if props.isDayBlocked returns true', () => {
+        const isDayBlockedStub = sinon.stub().returns(true);
+        const isOutsideRangeStub = sinon.stub().returns(false);
+        const wrapper = shallow(
+          <SingleDatePicker
+            id="date"
+            isDayBlocked={isDayBlockedStub}
+            isOutsideRange={isOutsideRangeStub}
+          />
+        );
+        expect(wrapper.instance().isBlocked()).to.equal(true);
+      });
+
+      it('returns true if props.isOutsideRange returns true', () => {
+        const isOutsideRangeStub = sinon.stub().returns(true);
+        const wrapper = shallow(<SingleDatePicker id="date" isOutsideRange={isOutsideRangeStub} />);
+        expect(wrapper.instance().isBlocked()).to.equal(true);
+      });
+
+      it('returns false if props.isDayBlocked and props.isOutsideRange both refurns false', () => {
+        const isDayBlockedStub = sinon.stub().returns(false);
+        const isOutsideRangeStub = sinon.stub().returns(false);
+        const wrapper = shallow(
+          <SingleDatePicker
+            id="date"
+            isDayBlocked={isDayBlockedStub}
+            isOutsideRange={isOutsideRangeStub}
+          />
+        );
+        expect(wrapper.instance().isBlocked()).to.equal(false);
+      });
     });
 
-    it('returns true if props.isDayBlocked returns true', () => {
-      const isDayBlockedStub = sinon.stub().returns(true);
-      const isOutsideRangeStub = sinon.stub().returns(false);
-      const wrapper = shallow(
-        <SingleDatePicker
-          id="date"
-          isDayBlocked={isDayBlockedStub}
-          isOutsideRange={isOutsideRangeStub}
-        />
-      );
-      expect(wrapper.instance().isBlocked()).to.equal(true);
+    describe('#isHovered', () => {
+      it('returns true if day arg is equal to state.hoverDate', () => {
+        const wrapper = shallow(<SingleDatePicker id="date" />);
+        wrapper.setState({ hoverDate: today });
+        expect(wrapper.instance().isHovered(today)).to.equal(true);
+      });
+
+      it('returns false if day arg is not equal to state.hoverDate', () => {
+        const tomorrow = moment().add(1, 'days');
+        const wrapper = shallow(<SingleDatePicker id="date" />);
+        wrapper.setState({ hoverDate: today });
+        expect(wrapper.instance().isHovered(tomorrow)).to.equal(false);
+      });
     });
 
-    it('returns true if props.isOutsideRange returns true', () => {
-      const isOutsideRangeStub = sinon.stub().returns(true);
-      const wrapper = shallow(<SingleDatePicker id="date" isOutsideRange={isOutsideRangeStub} />);
-      expect(wrapper.instance().isBlocked()).to.equal(true);
+    describe('#isSelected', () => {
+      it('returns true if day arg is equal to props.date', () => {
+        const wrapper = shallow(<SingleDatePicker id="date" date={today} />);
+        expect(wrapper.instance().isSelected(today)).to.equal(true);
+      });
+
+      it('returns false if day arg is not equal to props.date', () => {
+        const tomorrow = moment().add(1, 'days');
+        const wrapper = shallow(<SingleDatePicker id="date" date={tomorrow} />);
+        expect(wrapper.instance().isSelected(today)).to.equal(false);
+      });
     });
 
-    it('returns false if props.isDayBlocked and props.isOutsideRange both refurns false', () => {
-      const isDayBlockedStub = sinon.stub().returns(false);
-      const isOutsideRangeStub = sinon.stub().returns(false);
-      const wrapper = shallow(
-        <SingleDatePicker
-          id="date"
-          isDayBlocked={isDayBlockedStub}
-          isOutsideRange={isOutsideRangeStub}
-        />
-      );
-      expect(wrapper.instance().isBlocked()).to.equal(false);
-    });
-  });
+    describe('#isToday', () => {
+      it('returns true if today', () => {
+        const wrapper = shallow(<SingleDatePicker />);
+        expect(wrapper.instance().isToday(today)).to.equal(true);
+      });
 
-  describe('#isHovered', () => {
-    it('returns true if day arg is equal to state.hoverDate', () => {
-      const today = moment();
-      const wrapper = shallow(<SingleDatePicker id="date" />);
-      wrapper.setState({ hoverDate: today });
-      expect(wrapper.instance().isHovered(today)).to.equal(true);
-    });
+      it('returns false if tomorrow', () => {
+        const wrapper = shallow(<SingleDatePicker />);
+        expect(wrapper.instance().isToday(moment(today).add(1, 'days'))).to.equal(false);
+      });
 
-    it('returns false if day arg is not equal to state.hoverDate', () => {
-      const today = moment();
-      const tomorrow = moment().add(1, 'days');
-      const wrapper = shallow(<SingleDatePicker id="date" />);
-      wrapper.setState({ hoverDate: today });
-      expect(wrapper.instance().isHovered(tomorrow)).to.equal(false);
-    });
-  });
-
-  describe('#isSelected', () => {
-    it('returns true if day arg is equal to props.date', () => {
-      const today = moment();
-      const wrapper = shallow(<SingleDatePicker id="date" date={today} />);
-      expect(wrapper.instance().isSelected(today)).to.equal(true);
-    });
-
-    it('returns false if day arg is not equal to props.date', () => {
-      const today = moment();
-      const tomorrow = moment().add(1, 'days');
-      const wrapper = shallow(<SingleDatePicker id="date" date={tomorrow} />);
-      expect(wrapper.instance().isSelected(today)).to.equal(false);
+      it('returns false if last month', () => {
+        const wrapper = shallow(<SingleDatePicker />);
+        expect(wrapper.instance().isToday(moment(today).subtract(1, 'months'))).to.equal(false);
+      });
     });
   });
 });
