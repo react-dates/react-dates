@@ -7,8 +7,8 @@ import CloseButton from '../svg/close.svg';
 const propTypes = {
   id: PropTypes.string.isRequired,
   placeholder: PropTypes.string, // also used as label
-  dateValue: PropTypes.string,
-  border: PropTypes.bool,
+  displayValue: PropTypes.string,
+  inputValue: PropTypes.string,
   focused: PropTypes.bool,
   disabled: PropTypes.bool,
   required: PropTypes.bool,
@@ -29,8 +29,8 @@ const propTypes = {
 
 const defaultProps = {
   placeholder: 'Select Date',
-  dateValue: '',
-  border: false,
+  displayValue: '',
+  inputValue: '',
   focused: false,
   disabled: false,
   required: false,
@@ -77,7 +77,8 @@ export default class SingleDatePickerInput extends React.Component {
     const {
       id,
       placeholder,
-      dateValue,
+      displayValue,
+      inputValue,
       focused,
       disabled,
       required,
@@ -96,7 +97,8 @@ export default class SingleDatePickerInput extends React.Component {
         <DateInput
           id={id}
           placeholder={placeholder} // also used as label
-          dateValue={dateValue}
+          displayValue={displayValue}
+          inputValue={inputValue}
           focused={focused}
           disabled={disabled}
           required={required}
@@ -112,7 +114,7 @@ export default class SingleDatePickerInput extends React.Component {
           <button
             type="button"
             className={cx('SingleDatePickerInput__clear-date', {
-              'SingleDatePickerInput__clear-date--hide': !dateValue,
+              'SingleDatePickerInput__clear-date--hide': !displayValue,
               'SingleDatePickerInput__clear-date--hover': isClearDateHovered,
             })}
             onMouseEnter={this.onClearDateMouseEnter}

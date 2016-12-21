@@ -43,13 +43,14 @@ describe('SingleDatePickerInput', () => {
 
       it('has .SingleDatePickerInput__clear-date--hide class if there is no date',
         () => {
-          const wrapper = shallow(<SingleDatePickerInput showClearDate dateValue={null} />);
+          const wrapper = shallow(<SingleDatePickerInput showClearDate displayValue={null} />);
           expect(wrapper.find('.SingleDatePickerInput__clear-date--hide')).to.have.lengthOf(1);
         });
 
       it('does not have .SingleDatePickerInput__clear-date--hide class if there is a date',
         () => {
-          const wrapper = shallow(<SingleDatePickerInput showClearDate dateValue="2016-07-13" />);
+          const wrapper =
+            shallow(<SingleDatePickerInput showClearDate displayValue="2016-07-13" />);
           expect(wrapper.find('.SingleDatePickerInput__clear-date--hide')).to.have.lengthOf(0);
         });
     });

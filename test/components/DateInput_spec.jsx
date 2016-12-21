@@ -44,6 +44,18 @@ describe('DateInput', () => {
         const wrapper = shallow(<DateInput id="date" />);
         expect(wrapper.find('input').is('.DateInput__input')).to.equal(true);
       });
+
+      it('has value === props.inputValue if prop is passed in', () => {
+        const INPUT_VALUE = 'foobar';
+        const wrapper = shallow(<DateInput id="date" inputValue={INPUT_VALUE} />);
+        expect(wrapper.find('input').props().value).to.equal(INPUT_VALUE);
+      });
+
+      it('has value === props.displayValue if inputValue is not passed in', () => {
+        const DISPLAY_VALUE = 'foobar';
+        const wrapper = shallow(<DateInput id="date" displayValue={DISPLAY_VALUE} />);
+        expect(wrapper.find('input').props().value).to.equal(DISPLAY_VALUE);
+      });
     });
 
     describe('display text', () => {
@@ -52,18 +64,18 @@ describe('DateInput', () => {
         expect(wrapper.find('.DateInput__display-text')).to.have.lengthOf(1);
       });
 
-      describe('props.dateValue is falsey', () => {
+      describe('props.displayValue is falsey', () => {
         it('does not have .DateInput__display-text__has-input class', () => {
-          const wrapper = shallow(<DateInput id="date" dateValue={null} />);
+          const wrapper = shallow(<DateInput id="date" displayValue={null} />);
           const hasInputDisplayTextWrapper =
             wrapper.find('.DateInput__display-text--has-input');
           expect(hasInputDisplayTextWrapper).to.have.lengthOf(0);
         });
       });
 
-      describe('props.dateValue is truthy', () => {
+      describe('props.displayValue is truthy', () => {
         it('has .DateInput__display-text--has-input class', () => {
-          const wrapper = shallow(<DateInput id="date" dateValue="1991-07-13" />);
+          const wrapper = shallow(<DateInput id="date" displayValue="1991-07-13" />);
           const hasInputDisplayTextWrapper =
             wrapper.find('.DateInput__display-text--has-input');
           expect(hasInputDisplayTextWrapper).to.have.lengthOf(1);
