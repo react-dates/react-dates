@@ -7,6 +7,7 @@
   },
 
   "rules": {
+    "no-mixed-operators": [2, { "allowSamePrecedence": true }],
     "react/no-find-dom-node": 1,
     "react/no-string-refs": 1
   }

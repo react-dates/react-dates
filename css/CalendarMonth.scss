@@ -9,6 +9,7 @@
     position: absolute;
     z-index: -1;
     opacity: 0;
+    pointer-events: none;
   }
 
   table {
@@ -31,7 +32,7 @@
   margin-top: 7px;
   font-size: 18px;
   padding: 15px 0 35px;
-
+  text-align: center;
   // necessary to not hide borders in FF
   margin-bottom: 2px;
 }
@@ -48,6 +49,16 @@
 
   &:active {
     background: darken($react-dates-color-white, 5%);
+  }
+}
+
+.CalendarMonth__day--highlighted-calendar {
+  background: $react-dates-color-highlighted;
+  color: $react-dates-color-gray;
+  cursor: default;
+
+  &:active {
+    background: $react-dates-color-secondary;
   }
 }
 
@@ -93,17 +104,13 @@
   }
 }
 
-.DateRangePicker__picker--valid-date-hovered {
-  .CalendarMonth__day--hovered-span,
-  .CalendarMonth__day--after-hovered-start {
-    background: $react-dates-color-primary-shade-4;
-    border: 1px double $react-dates-color-primary-shade-3;
-    color: $react-dates-color-secondary;
-  }
+.CalendarMonth__day--hovered-span,
+.CalendarMonth__day--after-hovered-start {
+  background: $react-dates-color-primary-shade-4;
+  border: 1px double $react-dates-color-primary-shade-3;
+  color: $react-dates-color-secondary;
 }
 
-.DateRangePicker__picker--valid-date-hovered .CalendarMonth__day--selected-start,
-.DateRangePicker__picker--valid-date-hovered .CalendarMonth__day--selected-end,
 .CalendarMonth__day--selected-start,
 .CalendarMonth__day--selected-end,
 .CalendarMonth__day--selected {

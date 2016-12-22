@@ -5,7 +5,7 @@ import DateInput from './DateInput';
 import RightArrow from '../svg/arrow-right.svg';
 import CloseButton from '../svg/close.svg';
 
-import { START_DATE, END_DATE } from '../constants';
+import { START_DATE, END_DATE } from '../../constants';
 
 const propTypes = {
   startDateId: PropTypes.string,
@@ -29,6 +29,8 @@ const propTypes = {
   isEndDateFocused: PropTypes.bool,
   showClearDates: PropTypes.bool,
   disabled: PropTypes.bool,
+  required: PropTypes.bool,
+  showCaret: PropTypes.bool,
 
   // i18n
   phrases: PropTypes.shape({
@@ -52,6 +54,7 @@ const defaultProps = {
   isEndDateFocused: false,
   showClearDates: false,
   disabled: false,
+  showCaret: false,
 
   // i18n
   phrases: {
@@ -102,6 +105,8 @@ export default class DateRangePickerInput extends React.Component {
       onClearDates,
       showClearDates,
       disabled,
+      required,
+      showCaret,
       phrases,
     } = this.props;
 
@@ -120,6 +125,8 @@ export default class DateRangePickerInput extends React.Component {
           dateValue={startDateValue}
           focused={isStartDateFocused}
           disabled={disabled}
+          required={required}
+          showCaret={showCaret}
 
           onChange={onStartDateChange}
           onFocus={onStartDateFocus}
@@ -136,6 +143,8 @@ export default class DateRangePickerInput extends React.Component {
           dateValue={endDateValue}
           focused={isEndDateFocused}
           disabled={disabled}
+          required={required}
+          showCaret={showCaret}
 
           onChange={onEndDateChange}
           onFocus={onEndDateFocus}

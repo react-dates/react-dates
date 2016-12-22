@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import { storiesOf } from '@kadira/storybook';
 
-import { VERTICAL_ORIENTATION } from '../src/constants';
+import { VERTICAL_ORIENTATION, ANCHOR_RIGHT } from '../constants';
 
 import isSameDay from '../src/utils/isSameDay';
 import isInclusivelyAfterDay from '../src/utils/isInclusivelyAfterDay';
@@ -20,40 +20,148 @@ const datesList = [
   moment().add(13, 'days'),
 ];
 
+const TestInput = props => (
+  <div style={{ marginTop: 16 }}>
+    <input
+      {...props}
+      type="text"
+      style={{
+        height: 48,
+        width: 284,
+        fontSize: 18,
+        fontWeight: 200,
+        padding: '12px 16px',
+      }}
+    />
+  </div>
+);
+
+const TestPrevIcon = () => (
+  <span
+    style={{
+      border: '1px solid #dce0e0',
+      backgroundColor: '#fff',
+      color: '#484848',
+      padding: '3px',
+    }}
+  >
+    Prev
+  </span>
+);
+
+const TestNextIcon = () => (
+  <span
+    style={{
+      border: '1px solid #dce0e0',
+      backgroundColor: '#fff',
+      color: '#484848',
+      padding: '3px',
+    }}
+  >
+    Next
+  </span>
+);
+
+class TestWrapper extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showDatePicker: false,
+    };
+  }
+
+  render() {
+    const { showDatePicker } = this.state;
+    const display = showDatePicker ? 'block' : 'none';
+    return (
+      <div>
+        <button
+          type="button"
+          onClick={() => this.setState({ showDatePicker: !showDatePicker })}
+        >
+          Show me!
+        </button>
+
+        <div style={{ display }}>
+          <DateRangePickerWrapper />
+        </div>
+      </div>
+    );
+  }
+}
+
 storiesOf('DateRangePicker', module)
-  .add('default', () => (
+  .addWithInfo('default', () => (
     <DateRangePickerWrapper />
   ))
-  .add('single month', () => (
-    <DateRangePickerWrapper
-      numberOfMonths={1}
-    />
+  .addWithInfo('hidden with display: none', () => (
+    <TestWrapper />
   ))
-  .add('vertical', () => (
+  .addWithInfo('as part of a form', () => (
+    <div>
+      <DateRangePickerWrapper />
+      <TestInput placeholder="Input 1" />
+      <TestInput placeholder="Input 2" />
+      <TestInput placeholder="Input 3" />
+    </div>
+  ))
+  .addWithInfo('single month', () => (
+    <DateRangePickerWrapper numberOfMonths={1} />
+  ))
+  .addWithInfo('3 months', () => (
+    <DateRangePickerWrapper numberOfMonths={3} />
+  ))
+  .addWithInfo('anchored right', () => (
+    <div style={{ float: 'right' }}>
+      <DateRangePickerWrapper
+        anchorDirection={ANCHOR_RIGHT}
+      />
+    </div>
+  ))
+  .addWithInfo('vertical', () => (
     <DateRangePickerWrapper
       orientation={VERTICAL_ORIENTATION}
     />
   ))
-  .add('horizontal with portal', () => (
+  .addWithInfo('vertical anchored right', () => (
+    <div style={{ float: 'right' }}>
+      <DateRangePickerWrapper
+        orientation={VERTICAL_ORIENTATION}
+        anchorDirection={ANCHOR_RIGHT}
+      />
+    </div>
+  ))
+  .addWithInfo('horizontal with portal', () => (
     <DateRangePickerWrapper
       withPortal
     />
   ))
-  .add('horizontal with fullscreen portal', () => (
+  .addWithInfo('horizontal with fullscreen portal', () => (
     <DateRangePickerWrapper withFullScreenPortal />
   ))
-  .add('vertical with full screen portal', () => (
+  .addWithInfo('vertical with full screen portal', () => (
     <DateRangePickerWrapper
       orientation={VERTICAL_ORIENTATION}
       withFullScreenPortal
     />
   ))
-  .add('with clear dates button', () => (
+  .addWithInfo('with clear dates button', () => (
     <DateRangePickerWrapper
       showClearDates
     />
   ))
-  .add('non-english locale', () => {
+  .addWithInfo('reopens DayPicker on clear dates', () => (
+    <DateRangePickerWrapper
+      showClearDates
+      reopenPickerOnClearDates
+    />
+  ))
+  .addWithInfo('does not autoclose the DayPicker on date selection', () => (
+    <DateRangePickerWrapper
+      keepOpenOnDateSelect
+    />
+  ))
+  .addWithInfo('non-english locale', () => {
     moment.locale('zh-cn');
     return (
       <DateRangePickerWrapper
@@ -68,31 +176,62 @@ storiesOf('DateRangePicker', module)
       />
     );
   })
-  .add('with minimum nights set', () => (
+  .addWithInfo('with custom display format', () => (
+    <DateRangePickerWrapper
+      displayFormat="MMM D"
+    />
+  ))
+  .addWithInfo('with custom arrows', () => (
+    <DateRangePickerWrapper
+      navPrev={<TestPrevIcon />}
+      navNext={<TestNextIcon />}
+    />
+  ))
+  .addWithInfo('with minimum nights set', () => (
     <DateRangePickerWrapper
       minimumNights={3}
     />
   ))
-  .add('allows previous three month only', () => (
+  .addWithInfo('allows a single night', () => (
+    <DateRangePickerWrapper
+      minimumNights={0}
+    />
+  ))
+  .addWithInfo('allows all days', () => (
+    <DateRangePickerWrapper
+      isOutsideRange={() => false}
+    />
+  ))
+  .addWithInfo('allows next two weeks only', () => (
     <DateRangePickerWrapper
       isOutsideRange={day =>
-        !isInclusivelyAfterDay(day, moment().startOf('month').subtract(3, 'months')) ||
-        isInclusivelyAfterDay(day, moment().startOf('month'))
+        !isInclusivelyAfterDay(day, moment()) ||
+        isInclusivelyAfterDay(day, moment().add(2, 'weeks'))
       }
     />
   ))
-  .add('with outside days enabled', () => (
+  .addWithInfo('with outside days enabled', () => (
     <DateRangePickerWrapper
       numberOfMonths={1}
       enableOutsideDays
     />
   ))
-  .add('with some blocked dates', () => (
+  .addWithInfo('with some blocked dates', () => (
     <DateRangePickerWrapper
       isDayBlocked={day1 => datesList.some(day2 => isSameDay(day1, day2))}
     />
   ))
-  .add('blocks fridays', () => (
+  .addWithInfo('with some highlighted dates', () => (
+    <DateRangePickerWrapper
+      isDayHighlighted={day1 => datesList.some(day2 => isSameDay(day1, day2))}
+    />
+  ))
+  .addWithInfo('with month specified on open', () => (
+    <DateRangePickerWrapper
+      initialVisibleMonth={() => moment('04 2017', 'MM YYYY')}
+    />
+  ))
+  .addWithInfo('blocks fridays', () => (
     <DateRangePickerWrapper
       isDayBlocked={day => moment.weekdays(day.weekday()) === 'Friday'}
     />

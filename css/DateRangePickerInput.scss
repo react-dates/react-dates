@@ -18,8 +18,8 @@
 .DateRangePickerInput__arrow svg {
   vertical-align: middle;
   fill: $react-dates-color-text;
-  height: 24px;
-  width: 24px;
+  height: $react-dates-width-arrow;
+  width: $react-dates-width-arrow;
 }
 
 .DateRangePickerInput__clear-dates {

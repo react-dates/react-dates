@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import ReactDOM from 'react-dom';
 import cx from 'classnames';
 
 import isTouchDevice from '../utils/isTouchDevice';
@@ -10,6 +9,8 @@ const propTypes = {
   dateValue: PropTypes.string,
   focused: PropTypes.bool,
   disabled: PropTypes.bool,
+  required: PropTypes.bool,
+  showCaret: PropTypes.bool,
 
   onChange: PropTypes.func,
   onFocus: PropTypes.func,
@@ -22,6 +23,8 @@ const defaultProps = {
   dateValue: '',
   focused: false,
   disabled: false,
+  required: false,
+  showCaret: false,
 
   onChange() {},
   onFocus() {},
@@ -52,10 +55,13 @@ export default class DateInput extends React.Component {
 
   componentDidUpdate(prevProps) {
     const { focused } = this.props;
-    if (prevProps.focused !== focused && focused) {
-      const startDateInput = ReactDOM.findDOMNode(this.inputRef);
-      startDateInput.focus();
-      startDateInput.select();
+    if (prevProps.focused === focused) return;
+
+    if (focused) {
+      this.inputRef.focus();
+      this.inputRef.select();
+    } else {
+      this.inputRef.blur();
     }
   }
 
@@ -84,8 +90,10 @@ export default class DateInput extends React.Component {
       placeholder,
       dateValue,
       focused,
+      showCaret,
       onFocus,
       disabled,
+      required,
     } = this.props;
 
     const value = dateValue || dateString;
@@ -93,6 +101,7 @@ export default class DateInput extends React.Component {
     return (
       <div
         className={cx('DateInput', {
+          'DateInput--with-caret': showCaret && focused,
           'DateInput--disabled': disabled,
         })}
         onClick={onFocus}
@@ -113,8 +122,9 @@ export default class DateInput extends React.Component {
           onFocus={onFocus}
           placeholder={placeholder}
           autoComplete="off"
-          maxLength={10}
-          disabled={disabled || this.isTouchDevice}
+          disabled={disabled}
+          readOnly={this.isTouchDevice}
+          required={required}
         />
 
         <div
