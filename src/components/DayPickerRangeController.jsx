@@ -41,6 +41,7 @@ const propTypes = {
   withPortal: PropTypes.bool,
   hidden: PropTypes.bool,
   initialVisibleMonth: PropTypes.func,
+  scrollable: PropTypes.bool,
 
   navPrev: PropTypes.node,
   navNext: PropTypes.node,
@@ -81,6 +82,7 @@ const defaultProps = {
   hidden: false,
 
   initialVisibleMonth: () => moment(),
+  scrollable: false,
 
   navPrev: null,
   navNext: null,
@@ -251,6 +253,7 @@ export default class DayPickerRangeController extends React.Component {
       enableOutsideDays,
       initialVisibleMonth,
       focusedInput,
+      scrollable,
     } = this.props;
 
     const modifiers = {
@@ -295,6 +298,7 @@ export default class DayPickerRangeController extends React.Component {
         onOutsideClick={onOutsideClick}
         navPrev={navPrev}
         navNext={navNext}
+        scrollable={scrollable}
       />
     );
   }

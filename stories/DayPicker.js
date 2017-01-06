@@ -40,6 +40,18 @@ storiesOf('DayPicker', module)
       orientation={VERTICAL_ORIENTATION}
     />
   ))
+  .addWithInfo('vertically scrollable with 12 months', () => (
+    <div style={{
+      height: '568px',
+      width: '320px',
+    }}>
+      <DayPicker
+        numberOfMonths={12}
+        scrollable
+        orientation={VERTICAL_ORIENTATION}
+      />
+    </div>
+  ))
   .addWithInfo('with custom arrows', () => (
     <DayPicker
       navPrev={<TestPrevIcon />}

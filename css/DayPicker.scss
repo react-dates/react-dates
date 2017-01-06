@@ -57,6 +57,56 @@
   left: 50%;
 }
 
+.DayPicker.DayPicker--scrollable {
+  height: 100%;
+
+  .DayPicker__week-header {
+    top: 0;
+    display: table-row;
+    border-bottom: 1px solid $react-dates-color-border;
+    background: white;
+  }
+
+  .CalendarMonth__caption {
+    padding-bottom: 5px;
+    padding-top: 5px;
+  }
+
+  .transition-container--vertical {
+    padding-top: 20px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    overflow-y: scroll;
+  }
+
+  .DayPickerNavigation__prev {
+    display: none;
+  }
+
+  .DayPickerNavigation__next {
+    width: 100%;
+  }
+
+  .DayPickerNavigation--vertical {
+    position: relative;
+  }
+
+  .CalendarMonthGrid--vertical {
+    overflow-y: scroll;
+  }
+
+  &.DayPicker--vertical .DayPicker__week-header {
+    margin-left: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+  }
+}
+
 .transition-container {
   position: relative;
   overflow: hidden;
