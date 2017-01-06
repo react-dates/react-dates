@@ -273,8 +273,7 @@ export default class DayPicker extends React.Component {
     const transitionContainer = ReactDOM.findDOMNode(this.refs.transitionContainer);
     const heights = [];
 
-    // convert node list to array
-    [...transitionContainer.querySelectorAll('.CalendarMonth')].forEach((el) => {
+    Array.prototype.forEach.call(transitionContainer.querySelectorAll('.CalendarMonth'), (el) => {
       if (el.getAttribute('data-visible') === 'true') {
         heights.push(this.getMonthHeight(el));
       }
