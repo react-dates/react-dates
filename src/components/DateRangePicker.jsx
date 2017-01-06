@@ -140,7 +140,7 @@ export default class DateRangePicker extends React.Component {
           anchorDirection,
           currentOffset,
           containerEdge,
-          horizontalMargin
+          horizontalMargin,
         ),
       });
     }
@@ -190,12 +190,12 @@ export default class DateRangePicker extends React.Component {
 
     return (
       <div
-        ref={ref => { this.dayPickerContainer = ref; }}
+        ref={(ref) => { this.dayPickerContainer = ref; }}
         className={this.getDayPickerContainerClasses()}
         style={dayPickerContainerStyles}
       >
         <DayPickerRangeController
-          ref={ref => { this.dayPicker = ref; }}
+          ref={(ref) => { this.dayPicker = ref; }}
           orientation={orientation}
           enableOutsideDays={enableOutsideDays}
           numberOfMonths={numberOfMonths}

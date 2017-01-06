@@ -141,7 +141,7 @@ export default class CalendarMonthGrid extends React.Component {
           onDayTouchStart={onDayTouchStart}
           onDayTouchEnd={onDayTouchEnd}
           onDayTouchTap={onDayTouchTap}
-        />
+        />,
       );
       month = month.clone().add(1, 'month');
     }
@@ -154,7 +154,7 @@ export default class CalendarMonthGrid extends React.Component {
 
     return (
       <div
-        ref={ref => { this.containerRef = ref; }}
+        ref={(ref) => { this.containerRef = ref; }}
         className={className}
         style={getTransformStyles(transformValue)}
         onTransitionEnd={onMonthTransitionEnd}

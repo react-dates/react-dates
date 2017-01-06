@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import sinon from 'sinon-sandbox';
 import { mount, shallow } from 'enzyme';
 
-import DayPicker from '../../src/components/DayPicker';
+import DayPicker, { calculateDimension } from '../../src/components/DayPicker';
 import CalendarMonthGrid from '../../src/components/CalendarMonthGrid';
 import { HORIZONTAL_ORIENTATION, VERTICAL_ORIENTATION } from '../../constants';
 
@@ -22,7 +22,7 @@ describe('DayPicker', () => {
         it('props.numberOfMonths .DayPicker__week-header elements exists', () => {
           const NUM_OF_MONTHS = 3;
           const wrapper = shallow(
-            <DayPicker orientation={HORIZONTAL_ORIENTATION} numberOfMonths={NUM_OF_MONTHS} />
+            <DayPicker orientation={HORIZONTAL_ORIENTATION} numberOfMonths={NUM_OF_MONTHS} />,
           );
           expect(wrapper.find('.DayPicker__week-header')).to.have.lengthOf(NUM_OF_MONTHS);
         });
@@ -214,7 +214,7 @@ describe('DayPicker', () => {
       beforeEach(() => {
         updateStateAfterMonthTransitionSpy = sinon.stub(
           DayPicker.prototype,
-          'updateStateAfterMonthTransition'
+          'updateStateAfterMonthTransition',
         );
       });
 
@@ -243,15 +243,13 @@ describe('DayPicker', () => {
           expect(updateStateAfterMonthTransitionSpy).to.have.property('callCount', 1);
         });
 
-        it('does not call updateStateAfterMonthTransition if state.monthTransition is falsey',
-          () => {
-            const wrapper = mount(<DayPicker orientation={HORIZONTAL_ORIENTATION} />);
-            wrapper.setState({
-              monthTransition: null,
-            });
-            expect(updateStateAfterMonthTransitionSpy.calledOnce).to.equal(false);
-          }
-        );
+        it('does not call updateStateAfterMonthTransition if state.monthTransition is falsey', () => {
+          const wrapper = mount(<DayPicker orientation={HORIZONTAL_ORIENTATION} />);
+          wrapper.setState({
+            monthTransition: null,
+          });
+          expect(updateStateAfterMonthTransitionSpy.calledOnce).to.equal(false);
+        });
       });
 
       describe('props.orientation === VERTICAL_ORIENTATION', () => {
@@ -279,26 +277,22 @@ describe('DayPicker', () => {
           expect(updateStateAfterMonthTransitionSpy).to.have.property('callCount', 1);
         });
 
-        it('does not call updateStateAfterMonthTransition if state.monthTransition is falsey',
-          () => {
-            const wrapper = mount(<DayPicker orientation={VERTICAL_ORIENTATION} />);
-            wrapper.setState({
-              monthTransition: null,
-            });
-            expect(updateStateAfterMonthTransitionSpy.calledOnce).to.equal(false);
-          }
-        );
+        it('does not call updateStateAfterMonthTransition if state.monthTransition is falsey', () => {
+          const wrapper = mount(<DayPicker orientation={VERTICAL_ORIENTATION} />);
+          wrapper.setState({
+            monthTransition: null,
+          });
+          expect(updateStateAfterMonthTransitionSpy.calledOnce).to.equal(false);
+        });
       });
     });
   });
 
-  /* Requires a DOM
-  describe('#calculateDimension', () => {
-    let dimensionInstance = null;
+  /* Requires a DOM */
+  describe.skip('calculateDimension()', () => {
     let testElement = null;
 
     beforeEach(() => {
-      dimensionInstance = shallow(<DayPicker />).instance();
       testElement = document.createElement('div');
 
       testElement.style.width = '100px';
@@ -310,41 +304,39 @@ describe('DayPicker', () => {
     });
 
     it('returns 0 for an empty element', () => {
-      expect(dimensionInstance.calculateDimension(null, 'width')).to.equal(0);
+      expect(calculateDimension(null, 'width')).to.equal(0);
     });
 
     it('calculates border-box height', () => {
-      expect(dimensionInstance.calculateDimension(testElement, 'height', true)).to.equal(282);
+      expect(calculateDimension(testElement, 'height', true)).to.equal(282);
     });
 
     it('calculates border-box height with margin', () => {
-      expect(dimensionInstance.calculateDimension(testElement, 'height', true, true)).to.equal(290);
+      expect(calculateDimension(testElement, 'height', true, true)).to.equal(290);
     });
 
     it('calculates border-box width', () => {
-      expect(dimensionInstance.calculateDimension(testElement, 'width', true)).to.equal(122);
+      expect(calculateDimension(testElement, 'width', true)).to.equal(122);
     });
 
     it('calculates border-box width with margin', () => {
-      expect(dimensionInstance.calculateDimension(testElement, 'width', true, true)).to.equal(130);
+      expect(calculateDimension(testElement, 'width', true, true)).to.equal(130);
     });
 
     it('calculates content-box height', () => {
-      expect(dimensionInstance.calculateDimension(testElement, 'height')).to.equal(250);
+      expect(calculateDimension(testElement, 'height')).to.equal(250);
     });
 
     it('calculates content-box height with margin', () => {
-      expect(dimensionInstance.calculateDimension(testElement, 'height', false, true))
-        .to.equal(258);
+      expect(calculateDimension(testElement, 'height', false, true)).to.equal(258);
     });
 
     it('calculates content-box width', () => {
-      expect(dimensionInstance.calculateDimension(testElement, 'width')).to.equal(100);
+      expect(calculateDimension(testElement, 'width')).to.equal(100);
     });
 
     it('calculates content-box width with margin', () => {
-      expect(dimensionInstance.calculateDimension(testElement, 'width', false, true)).to.equal(108);
+      expect(calculateDimension(testElement, 'width', false, true)).to.equal(108);
     });
   });
-  */
 });

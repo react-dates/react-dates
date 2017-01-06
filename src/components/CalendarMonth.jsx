@@ -85,7 +85,7 @@ export default function CalendarMonth(props) {
         </caption>
 
         <tbody className="js-CalendarMonth__grid">
-          {getCalendarMonthWeeks(month, enableOutsideDays).map((week, i) =>
+          {getCalendarMonthWeeks(month, enableOutsideDays).map((week, i) => (
             <tr key={i}>
               {week.map((day, j) => {
                 const modifiersForDay = getModifiersForDay(modifiers, day);
@@ -113,7 +113,7 @@ export default function CalendarMonth(props) {
                 );
               })}
             </tr>
-          )}
+          ))}
         </tbody>
       </table>
     </div>

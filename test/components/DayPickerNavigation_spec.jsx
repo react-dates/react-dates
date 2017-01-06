@@ -73,7 +73,7 @@ describe('DayPickerNavigation', () => {
       const prevMonthButton = shallow(
         <DayPickerNavigation
           onPrevMonthClick={onPrevMonthStub}
-        />
+        />,
       ).find('.DayPickerNavigation__prev');
       prevMonthButton.simulate('click');
       expect(onPrevMonthStub).to.have.property('callCount', 1);
@@ -86,7 +86,7 @@ describe('DayPickerNavigation', () => {
       const nextMonthButton = shallow(
         <DayPickerNavigation
           onNextMonthClick={onNextMonthStub}
-        />
+        />,
       ).find('.DayPickerNavigation__next');
       nextMonthButton.simulate('click');
       expect(onNextMonthStub).to.have.property('callCount', 1);

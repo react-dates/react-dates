@@ -89,13 +89,13 @@ export default class CalendarDay extends React.Component {
     return (
       <div
         className="CalendarDay"
-        onMouseEnter={(e) => this.handleDayMouseEnter(day, modifiers, e)}
-        onMouseLeave={(e) => this.handleDayMouseLeave(day, modifiers, e)}
-        onMouseDown={(e) => this.handleDayMouseDown(day, modifiers, e)}
-        onMouseUp={(e) => this.handleDayMouseUp(day, modifiers, e)}
-        onClick={(e) => this.handleDayClick(day, modifiers, e)}
-        onTouchStart={(e) => this.handleDayTouchStart(day, modifiers, e)}
-        onTouchEnd={(e) => this.handleDayTouchEnd(day, modifiers, e)}
+        onMouseEnter={(e) => { this.handleDayMouseEnter(day, modifiers, e); }}
+        onMouseLeave={(e) => { this.handleDayMouseLeave(day, modifiers, e); }}
+        onMouseDown={(e) => { this.handleDayMouseDown(day, modifiers, e); }}
+        onMouseUp={(e) => { this.handleDayMouseUp(day, modifiers, e); }}
+        onClick={(e) => { this.handleDayClick(day, modifiers, e); }}
+        onTouchStart={(e) => { this.handleDayTouchStart(day, modifiers, e); }}
+        onTouchEnd={(e) => { this.handleDayTouchEnd(day, modifiers, e); }}
       >
         <span className="CalendarDay__day">{day.format('D')}</span>
       </div>

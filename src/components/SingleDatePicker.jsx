@@ -208,7 +208,7 @@ export default class SingleDatePicker extends React.Component {
           anchorDirection,
           currentOffset,
           containerEdge,
-          horizontalMargin
+          horizontalMargin,
         ),
       });
     }
@@ -280,7 +280,7 @@ export default class SingleDatePicker extends React.Component {
 
     return (
       <div
-        ref={ref => { this.dayPickerContainer = ref; }}
+        ref={(ref) => { this.dayPickerContainer = ref; }}
         className={this.getDayPickerContainerClasses()}
         style={dayPickerContainerStyles}
       >

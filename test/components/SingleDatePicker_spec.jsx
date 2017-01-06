@@ -278,7 +278,7 @@ describe('SingleDatePicker', () => {
             id="date"
             onDateChange={onDateChangeStub}
             isOutsideRange={isOutsideRangeStub}
-          />
+          />,
         );
         wrapper.instance().onChange(todayDateString);
         expect(onDateChangeStub.callCount).to.equal(1);
@@ -291,7 +291,7 @@ describe('SingleDatePicker', () => {
             id="date"
             onDateChange={onDateChangeStub}
             isOutsideRange={isOutsideRangeStub}
-          />
+          />,
         );
         wrapper.instance().onChange(todayDateString);
         expect(onDateChangeStub.getCall(0).args[0]).to.equal(null);
@@ -304,7 +304,7 @@ describe('SingleDatePicker', () => {
             id="date"
             onFocusChange={onFocusChangeStub}
             isOutsideRange={isOutsideRangeStub}
-          />
+          />,
         );
         wrapper.instance().onChange(todayDateString);
         expect(onFocusChangeStub.callCount).to.equal(0);
@@ -471,7 +471,7 @@ describe('SingleDatePicker', () => {
             id="date"
             isDayBlocked={isDayBlockedStub}
             isOutsideRange={isOutsideRangeStub}
-          />
+          />,
         );
         expect(wrapper.instance().isBlocked()).to.equal(true);
       });
@@ -490,7 +490,7 @@ describe('SingleDatePicker', () => {
             id="date"
             isDayBlocked={isDayBlockedStub}
             isOutsideRange={isOutsideRangeStub}
-          />
+          />,
         );
         expect(wrapper.instance().isBlocked()).to.equal(false);
       });

@@ -68,16 +68,14 @@ describe('DateRangePickerInput', () => {
         it('has .DateRangePickerInput__clear-dates--hide class if there are no dates',
           () => {
             const wrapper = shallow(
-              <DateRangePickerInput showClearDates startDate={null} endDate={null} />
+              <DateRangePickerInput showClearDates startDate={null} endDate={null} />,
             );
             expect(wrapper.find('.DateRangePickerInput__clear-dates--hide')).to.have.lengthOf(1);
           });
 
         it('does not have .DateRangePickerInput__clear-dates--hide class if there are dates',
           () => {
-            const wrapper = shallow(
-              <DateRangePickerInput showClearDates startDate="2016-07-13" />
-            );
+            const wrapper = shallow(<DateRangePickerInput showClearDates startDate="2016-07-13" />);
             expect(wrapper.find('.DateRangePickerInput__clear-dates--hide')).to.have.lengthOf(0);
           });
       });
@@ -110,7 +108,7 @@ describe('DateRangePickerInput', () => {
           <DateRangePickerInput
             onClearDates={onClearDatesSpy}
             showClearDates
-          />
+          />,
         );
         const clearDatesWrapper = wrapper.find('.DateRangePickerInput__clear-dates');
         clearDatesWrapper.simulate('click');
@@ -122,7 +120,7 @@ describe('DateRangePickerInput', () => {
       it('onClearDatesMouseEnter gets triggered', () => {
         const onClearDatesMouseEnterSpy = sinon.spy(
           DateRangePickerInput.prototype,
-          'onClearDatesMouseEnter'
+          'onClearDatesMouseEnter',
         );
         const wrapper = shallow(<DateRangePickerInput showClearDates />);
         const clearDatesWrapper = wrapper.find('.DateRangePickerInput__clear-dates');
@@ -137,7 +135,7 @@ describe('DateRangePickerInput', () => {
       it('onClearDatesMouseLeave gets triggered', () => {
         const onClearDatesMouseLeaveSpy = sinon.spy(
           DateRangePickerInput.prototype,
-          'onClearDatesMouseLeave'
+          'onClearDatesMouseLeave',
         );
         const wrapper = shallow(<DateRangePickerInput showClearDates />);
         const clearDatesWrapper = wrapper.find('.DateRangePickerInput__clear-dates');
