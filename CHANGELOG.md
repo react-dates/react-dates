@@ -1,6 +1,9 @@
 # Change Log
 
-## v4.3.1
+## v4.3.2
+ - [fix] finish refactor from 471bd602302f4dfe4f1e66b79d50b22f7511d8ba ([#233](https://github.com/airbnb/react-dates/pull/233))
+
+## v4.3.1 (unpublished)
  - [fix] Don’t create an unnecessary array from a NodeList, which avoids needing `Array.from` ([#233](https://github.com/airbnb/react-dates/pull/233))
 
 ## v4.3.0
