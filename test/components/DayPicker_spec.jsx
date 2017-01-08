@@ -1,7 +1,9 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { expect } from 'chai';
 import sinon from 'sinon-sandbox';
 import { mount, shallow } from 'enzyme';
+import wrap from 'mocha-wrap';
 
 import DayPicker, { calculateDimension } from '../../src/components/DayPicker';
 import CalendarMonthGrid from '../../src/components/CalendarMonthGrid';
@@ -168,6 +170,23 @@ describe('DayPicker', () => {
       const wrapper = shallow(<DayPicker />);
       wrapper.instance().onNextMonthClick();
       expect(wrapper.state().monthTransition).to.equal('next');
+    });
+  });
+
+  const windowWrap = wrap().withGlobal('window', () => ({ getComputedStyle() { return {}; } }));
+  const maybeWindowWrap = typeof window === 'undefined' ? windowWrap : global;
+  maybeWindowWrap.describe('#initializeDayPickerWidth()', () => {
+    beforeEach(() => {
+      sinon.stub(ReactDOM, 'findDOMNode').returns({ querySelector() {} });
+    });
+
+    afterEach(() => {
+      sinon.restore();
+    });
+
+    it('executes', () => {
+      const wrapper = shallow(<DayPicker />);
+      wrapper.instance().initializeDayPickerWidth();
     });
   });
 

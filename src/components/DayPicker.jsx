@@ -238,7 +238,7 @@ export default class DayPicker extends React.Component {
   }
 
   initializeDayPickerWidth() {
-    this.dayPickerWidth = this.calculateDimension(
+    this.dayPickerWidth = calculateDimension(
       ReactDOM.findDOMNode(this.refs.calendarMonthGrid).querySelector('.CalendarMonth'),
       'width',
       true,
