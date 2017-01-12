@@ -35,6 +35,8 @@ export default {
   withPortal: PropTypes.bool,
   withFullScreenPortal: PropTypes.bool,
 
+  daySize: PropTypes.number,
+
   onPrevMonthClick: PropTypes.func,
   onNextMonthClick: PropTypes.func,
 

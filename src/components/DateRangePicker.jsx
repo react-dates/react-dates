@@ -58,6 +58,8 @@ const defaultProps = {
   withPortal: false,
   withFullScreenPortal: false,
 
+  daySize: 39,
+
   onDatesChange() {},
   onFocusChange() {},
   onPrevMonthClick() {},
@@ -175,10 +177,12 @@ export default class DateRangePicker extends React.Component {
   maybeRenderDayPickerWithPortal() {
     const { withPortal, withFullScreenPortal } = this.props;
 
+    console.log('hello world')
     if (!this.isOpened()) {
       return null;
     }
 
+    console.log('hello')
     if (withPortal || withFullScreenPortal) {
       return (
         <Portal isOpened>
@@ -206,6 +210,7 @@ export default class DateRangePicker extends React.Component {
       onFocusChange,
       withPortal,
       withFullScreenPortal,
+      daySize,
       enableOutsideDays,
       focusedInput,
       startDate,
@@ -243,6 +248,7 @@ export default class DateRangePicker extends React.Component {
           endDate={endDate}
           monthFormat={monthFormat}
           withPortal={withPortal || withFullScreenPortal}
+          daySize={daySize}
           initialVisibleMonth={initialVisibleMonthThunk}
           onOutsideClick={onOutsideClick}
           navPrev={navPrev}
