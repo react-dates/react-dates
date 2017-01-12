@@ -29,6 +29,7 @@ import {
   VERTICAL_ORIENTATION,
   ANCHOR_LEFT,
   ANCHOR_RIGHT,
+  DAY_SIZE,
 } from '../../constants';
 
 const propTypes = forbidExtraProps(SingleDatePickerShape);
@@ -58,10 +59,12 @@ const defaultProps = {
   keepOpenOnDateSelect: false,
   reopenPickerOnClearDate: false,
   renderCalendarInfo: null,
+  daySize: DAY_SIZE,
 
   // navigation related props
   navPrev: null,
   navNext: null,
+
   onPrevMonthClick() {},
   onNextMonthClick() {},
 
@@ -343,6 +346,7 @@ export default class SingleDatePicker extends React.Component {
       initialVisibleMonth,
       customCloseIcon,
       phrases,
+      daySize,
     } = this.props;
     const { dayPickerContainerStyles, isDayPickerFocused } = this.state;
 
@@ -389,6 +393,7 @@ export default class SingleDatePicker extends React.Component {
           isFocused={isDayPickerFocused}
           onBlur={this.onDayPickerBlur}
           phrases={phrases}
+          daySize={daySize}
         />
 
         {withFullScreenPortal && (

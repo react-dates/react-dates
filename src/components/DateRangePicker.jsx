@@ -29,6 +29,7 @@ import {
   VERTICAL_ORIENTATION,
   ANCHOR_LEFT,
   ANCHOR_RIGHT,
+  DAY_SIZE,
 } from '../../constants';
 
 const propTypes = forbidExtraProps(DateRangePickerShape);
@@ -64,10 +65,12 @@ const defaultProps = {
   keepOpenOnDateSelect: false,
   reopenPickerOnClearDates: false,
   renderCalendarInfo: null,
+  daySize: DAY_SIZE,
 
   // navigation related props
   navPrev: null,
   navNext: null,
+
   onPrevMonthClick() {},
   onNextMonthClick() {},
 
@@ -266,6 +269,7 @@ export default class DateRangePicker extends React.Component {
       onFocusChange,
       withPortal,
       withFullScreenPortal,
+      daySize,
       enableOutsideDays,
       focusedInput,
       startDate,
@@ -307,6 +311,7 @@ export default class DateRangePicker extends React.Component {
           endDate={endDate}
           monthFormat={monthFormat}
           withPortal={withPortal || withFullScreenPortal}
+          daySize={daySize}
           initialVisibleMonth={initialVisibleMonthThunk}
           onOutsideClick={onOutsideClick}
           navPrev={navPrev}

@@ -1,12 +1,15 @@
 import React, { PropTypes } from 'react';
 import shallowCompare from 'react-addons-shallow-compare';
 import momentPropTypes from 'react-moment-proptypes';
-import { forbidExtraProps } from 'airbnb-prop-types';
+import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
 import moment from 'moment';
 import cx from 'classnames';
 
+import { DAY_SIZE } from '../../constants';
+
 const propTypes = forbidExtraProps({
   day: momentPropTypes.momentObj,
+  daySize: nonNegativeInteger,
   isOutsideDay: PropTypes.bool,
   modifiers: PropTypes.object,
   onDayClick: PropTypes.func,
@@ -17,6 +20,7 @@ const propTypes = forbidExtraProps({
 
 const defaultProps = {
   day: moment(),
+  daySize: DAY_SIZE,
   isOutsideDay: false,
   modifiers: {},
   onDayClick() {},
@@ -52,6 +56,7 @@ export default class CalendarDay extends React.Component {
   render() {
     const {
       day,
+      daySize,
       isOutsideDay,
       modifiers,
       renderDay,
@@ -61,9 +66,15 @@ export default class CalendarDay extends React.Component {
       'CalendarDay--outside': !day || isOutsideDay,
     }, getModifiersForDay(modifiers, day).map(mod => `CalendarDay--${mod}`));
 
+    const daySizeStyles = {
+      width: daySize,
+      height: daySize - 1,
+    };
+
     return (day ?
       <td
         className={className}
+        style={daySizeStyles}
         onMouseEnter={e => this.onDayMouseEnter(day, e)}
         onMouseLeave={e => this.onDayMouseLeave(day, e)}
         onClick={e => this.onDayClick(day, e)}

@@ -3,7 +3,7 @@
 import React, { PropTypes } from 'react';
 import shallowCompare from 'react-addons-shallow-compare';
 import momentPropTypes from 'react-moment-proptypes';
-import { forbidExtraProps } from 'airbnb-prop-types';
+import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
 import moment from 'moment';
 import cx from 'classnames';
 
@@ -17,6 +17,7 @@ import {
   HORIZONTAL_ORIENTATION,
   VERTICAL_ORIENTATION,
   VERTICAL_SCROLLABLE,
+  DAY_SIZE,
 } from '../../constants';
 
 const propTypes = forbidExtraProps({
@@ -25,6 +26,7 @@ const propTypes = forbidExtraProps({
   enableOutsideDays: PropTypes.bool,
   modifiers: PropTypes.object,
   orientation: ScrollableOrientationShape,
+  daySize: nonNegativeInteger,
   onDayClick: PropTypes.func,
   onDayMouseEnter: PropTypes.func,
   onDayMouseLeave: PropTypes.func,
@@ -40,6 +42,7 @@ const defaultProps = {
   enableOutsideDays: false,
   modifiers: {},
   orientation: HORIZONTAL_ORIENTATION,
+  daySize: DAY_SIZE,
   onDayClick() {},
   onDayMouseEnter() {},
   onDayMouseLeave() {},
@@ -81,6 +84,7 @@ export default class CalendarMonth extends React.Component {
       onDayMouseEnter,
       onDayMouseLeave,
       renderDay,
+      daySize,
     } = this.props;
 
     const { weeks } = this.state;
@@ -105,6 +109,7 @@ export default class CalendarMonth extends React.Component {
                 {week.map((day, dayOfWeek) => (
                   <CalendarDay
                     day={day}
+                    daySize={daySize}
                     isOutsideDay={!day || day.month() !== month.month()}
                     modifiers={modifiers}
                     key={dayOfWeek}

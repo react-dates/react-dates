@@ -54,6 +54,9 @@ storiesOf('SDP - Calendar Props', module)
       autoFocus
     />
   ))
+  .addWithInfo('with custom day size', () => (
+    <SingleDatePickerWrapper daySize={50} autoFocus />
+  ))
   .addWithInfo('anchored right', () => (
     <div style={{ float: 'right' }}>
       <SingleDatePickerWrapper

@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import momentPropTypes from 'react-moment-proptypes';
-import { forbidExtraProps } from 'airbnb-prop-types';
+import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
 import moment from 'moment';
 
 import { DayPickerPhrases } from '../defaultPhrases';
@@ -19,6 +19,7 @@ import {
   START_DATE,
   END_DATE,
   HORIZONTAL_ORIENTATION,
+  DAY_SIZE,
 } from '../../constants';
 
 import DayPicker from './DayPicker';
@@ -43,6 +44,7 @@ const propTypes = forbidExtraProps({
   orientation: ScrollableOrientationShape,
   withPortal: PropTypes.bool,
   initialVisibleMonth: PropTypes.func,
+  daySize: nonNegativeInteger,
 
   navPrev: PropTypes.node,
   navNext: PropTypes.node,
@@ -82,6 +84,7 @@ const defaultProps = {
   withPortal: false,
 
   initialVisibleMonth: () => moment(),
+  daySize: DAY_SIZE,
 
   navPrev: null,
   navNext: null,
@@ -251,6 +254,7 @@ export default class DayPickerRangeController extends React.Component {
       withPortal,
       enableOutsideDays,
       initialVisibleMonth,
+      daySize,
       focusedInput,
       renderDay,
       renderCalendarInfo,
@@ -308,6 +312,7 @@ export default class DayPickerRangeController extends React.Component {
         withPortal={withPortal}
         hidden={!focusedInput}
         initialVisibleMonth={initialVisibleMonth}
+        daySize={daySize}
         onOutsideClick={onOutsideClick}
         navPrev={navPrev}
         navNext={navNext}

@@ -16,16 +16,13 @@
 .CalendarMonthGrid--horizontal {
   position: absolute;
   left: 9px;
-  width: 4 * $react-dates-width-day-picker;
 }
 
 .CalendarMonthGrid--vertical {
-  width: $react-dates-width-day-picker;
   margin: 0 auto;
 }
 
 .CalendarMonthGrid--vertical-scrollable {
-  width: $react-dates-width-day-picker;
   margin: 0 auto;
   overflow-y: scroll;
 }

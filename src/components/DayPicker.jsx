@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import shallowCompare from 'react-addons-shallow-compare';
 import ReactDOM from 'react-dom';
-import { forbidExtraProps } from 'airbnb-prop-types';
+import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
 import moment from 'moment';
 import cx from 'classnames';
 
@@ -13,6 +13,7 @@ import CalendarMonthGrid from './CalendarMonthGrid';
 import DayPickerNavigation from './DayPickerNavigation';
 
 import getTransformStyles from '../utils/getTransformStyles';
+import getCalendarMonthWidth from '../utils/getCalendarMonthWidth';
 
 import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
 
@@ -20,11 +21,11 @@ import {
   HORIZONTAL_ORIENTATION,
   VERTICAL_ORIENTATION,
   VERTICAL_SCROLLABLE,
+  DAY_SIZE,
 } from '../../constants';
 
-const CALENDAR_MONTH_WIDTH = 300;
-const DAY_PICKER_PADDING = 9;
 const MONTH_PADDING = 23;
+const DAY_PICKER_PADDING = 9;
 const PREV_TRANSITION = 'prev';
 const NEXT_TRANSITION = 'next';
 
@@ -38,6 +39,7 @@ const propTypes = forbidExtraProps({
   hidden: PropTypes.bool,
   initialVisibleMonth: PropTypes.func,
   renderCalendarInfo: PropTypes.func,
+  daySize: nonNegativeInteger,
 
   // navigation props
   navPrev: PropTypes.node,
@@ -70,6 +72,7 @@ const defaultProps = {
   hidden: false,
   initialVisibleMonth: () => moment(),
   renderCalendarInfo: null,
+  daySize: DAY_SIZE,
 
   // navigation props
   navPrev: null,
@@ -158,6 +161,7 @@ export default class DayPicker extends React.Component {
       monthTransition: null,
       translationValue: 0,
       scrollableMonthMultiple: 1,
+      calendarMonthWidth: getCalendarMonthWidth(props.daySize),
     };
 
     this.onPrevMonthClick = this.onPrevMonthClick.bind(this);
@@ -190,6 +194,12 @@ export default class DayPicker extends React.Component {
         this.initializeDayPickerWidth();
         this.adjustDayPickerHeight();
       }
+    }
+
+    if (nextProps.daySize !== this.props.daySize) {
+      this.setState({
+        calendarMonthWidth: getCalendarMonthWidth(nextProps.daySize),
+      });
     }
   }
 
@@ -358,16 +368,30 @@ export default class DayPicker extends React.Component {
   }
 
   renderWeekHeader(index) {
+    const { daySize, orientation } = this.props;
+    const { calendarMonthWidth } = this.state;
+
+    const verticalScrollable = orientation === VERTICAL_SCROLLABLE;
+
     const horizontalStyle = {
-      left: index * CALENDAR_MONTH_WIDTH,
+      left: index * calendarMonthWidth,
     };
 
-    const style = this.isHorizontal() ? horizontalStyle : {};
+    const verticalStyle = {
+      marginLeft: -calendarMonthWidth / 2,
+    };
+
+    let style = {}; // no styles applied to the vertical-scrollable orientation
+    if (this.isHorizontal()) {
+      style = horizontalStyle;
+    } else if (this.isVertical() && !verticalScrollable) {
+      style = verticalStyle;
+    }
 
     const header = [];
     for (let i = 0; i < 7; i += 1) {
       header.push(
-        <li key={i}>
+        <li key={i} style={{ width: daySize }}>
           <small>{moment().weekday(i).format('dd')}</small>
         </li>,
       );
@@ -406,7 +430,10 @@ export default class DayPicker extends React.Component {
       renderCalendarInfo,
       onOutsideClick,
       monthFormat,
+      daySize,
     } = this.props;
+
+    const { calendarMonthWidth } = this.state;
 
     const numOfWeekHeaders = this.isVertical() ? 1 : numberOfMonths;
     const weekHeaders = [];
@@ -435,18 +462,18 @@ export default class DayPicker extends React.Component {
       'transition-container--vertical': this.isVertical(),
     });
 
-    const horizontalWidth = (CALENDAR_MONTH_WIDTH * numberOfMonths) + (2 * DAY_PICKER_PADDING);
+    const horizontalWidth = (calendarMonthWidth * numberOfMonths) + (2 * DAY_PICKER_PADDING);
 
     // this is a kind of made-up value that generally looks good. we'll
     // probably want to let the user set this explicitly.
-    const verticalHeight = 1.75 * CALENDAR_MONTH_WIDTH;
+    const verticalHeight = 1.75 * calendarMonthWidth;
 
     const dayPickerStyle = {
       width: this.isHorizontal() && horizontalWidth,
 
       // These values are to center the datepicker (approximately) on the page
       marginLeft: this.isHorizontal() && withPortal && -horizontalWidth / 2,
-      marginTop: this.isHorizontal() && withPortal && -CALENDAR_MONTH_WIDTH / 2,
+      marginTop: this.isHorizontal() && withPortal && -calendarMonthWidth / 2,
     };
 
     const transitionContainerStyle = {
@@ -498,6 +525,7 @@ export default class DayPicker extends React.Component {
                 renderDay={renderDay}
                 onMonthTransitionEnd={this.updateStateAfterMonthTransition}
                 monthFormat={monthFormat}
+                daySize={daySize}
               />
               {verticalScrollable && this.renderNavigation()}
             </div>
