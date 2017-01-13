@@ -50,10 +50,15 @@ const defaultProps = {
   onStartDateShiftTab() {},
   onEndDateTab() {},
   onClearDates() {},
+
+  startDate: '',
+  endDate: '',
+
   isStartDateFocused: false,
   isEndDateFocused: false,
   showClearDates: false,
   disabled: false,
+  required: false,
   showCaret: false,
 
   // i18n

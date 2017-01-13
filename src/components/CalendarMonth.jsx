@@ -1,3 +1,5 @@
+/* eslint react/no-array-index-key: 0 */
+
 import React, { PropTypes } from 'react';
 import momentPropTypes from 'react-moment-proptypes';
 import moment from 'moment';

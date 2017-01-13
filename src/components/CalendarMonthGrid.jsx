@@ -54,7 +54,7 @@ const defaultProps = {
   onDayTouchEnd() {},
   onDayTouchTap() {},
   onMonthTransitionEnd() {},
-  transform: 'none',
+  transformValue: 'none',
 
   // i18n
   monthFormat: 'MMMM YYYY', // english locale

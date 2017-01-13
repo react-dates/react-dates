@@ -35,8 +35,10 @@ const defaultProps = {
   disabled: false,
   required: false,
   showCaret: false,
+  showClearDate: false,
 
   onChange() {},
+  onClearDate() {},
   onFocus() {},
   onKeyDownShiftTab() {},
   onKeyDownTab() {},

@@ -62,6 +62,8 @@ const propTypes = {
 };
 
 const defaultProps = {
+  startDate: undefined, // TODO: use null
+  endDate: undefined, // TODO: use null
   onDatesChange() {},
 
   focusedInput: null,
