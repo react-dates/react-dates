@@ -1,5 +1,9 @@
 # Change Log
 
+## v5.0.0
+ - [breaking] Updates input value to use ISO format instead of the display format ([#229](https://github.com/airbnb/react-dates/pull/229))
+ - [breaking] Performance improvements, including the removal of the modifiers prop from `CalendarDay` ([#217](https://github.com/airbnb/react-dates/pull/217))
+
 ## v4.3.3
  - [fix] Force DayPicker and CalendarMonthGrid alignment to the left ([#257](https://github.com/airbnb/react-dates/pull/257),[#258](https://github.com/airbnb/react-dates/pull/258))
 
