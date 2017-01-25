@@ -183,6 +183,10 @@ export default class DateRangePicker extends React.Component {
       endDate,
       minimumNights,
       keepOpenOnDateSelect,
+      onDayMouseEnter,
+      onDayMouseLeave,
+      onDayMouseDown,
+      onDayTouchTap,
     } = this.props;
     const { dayPickerContainerStyles } = this.state;
 
@@ -199,10 +203,10 @@ export default class DateRangePicker extends React.Component {
           orientation={orientation}
           enableOutsideDays={enableOutsideDays}
           numberOfMonths={numberOfMonths}
-          onDayMouseEnter={this.onDayMouseEnter}
-          onDayMouseLeave={this.onDayMouseLeave}
-          onDayMouseDown={this.onDayClick}
-          onDayTouchTap={this.onDayClick}
+          onDayMouseEnter={onDayMouseEnter}
+          onDayMouseLeave={onDayMouseLeave}
+          onDayMouseDown={onDayMouseDown}
+          onDayTouchTap={onDayTouchTap}
           onPrevMonthClick={onPrevMonthClick}
           onNextMonthClick={onNextMonthClick}
           onDatesChange={onDatesChange}
