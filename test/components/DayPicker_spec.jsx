@@ -7,7 +7,12 @@ import wrap from 'mocha-wrap';
 
 import DayPicker, { calculateDimension } from '../../src/components/DayPicker';
 import CalendarMonthGrid from '../../src/components/CalendarMonthGrid';
-import { HORIZONTAL_ORIENTATION, VERTICAL_ORIENTATION } from '../../constants';
+import DayPickerNavigation from '../../src/components/DayPickerNavigation';
+import {
+  HORIZONTAL_ORIENTATION,
+  VERTICAL_ORIENTATION,
+  VERTICAL_SCROLLABLE,
+} from '../../constants';
 
 describe('DayPicker', () => {
   describe('#render', () => {
@@ -116,6 +121,14 @@ describe('DayPicker', () => {
     });
   });
 
+  describe('props.orientation === VERTICAL_SCROLLABLE', () => {
+    it('uses multiplyScrollableMonths instead of onNextMonthClick', () => {
+      const wrapper = shallow(<DayPicker orientation={VERTICAL_SCROLLABLE} />);
+      const nav = wrapper.find(DayPickerNavigation);
+      expect(nav.prop('onNextMonthClick')).to.equal(wrapper.instance().multiplyScrollableMonths);
+    });
+  });
+
   describe('#onPrevMonthClick', () => {
     let translateFirstDayPickerForAnimationSpy;
     beforeEach(() => {
@@ -170,6 +183,14 @@ describe('DayPicker', () => {
       const wrapper = shallow(<DayPicker />);
       wrapper.instance().onNextMonthClick();
       expect(wrapper.state().monthTransition).to.equal('next');
+    });
+  });
+
+  describe('#multiplyScrollableMonths', () => {
+    it('increments scrollableMonthMultiple', () => {
+      const wrapper = shallow(<DayPicker />);
+      wrapper.instance().multiplyScrollableMonths();
+      expect(wrapper.state().scrollableMonthMultiple).to.equal(2);
     });
   });
 

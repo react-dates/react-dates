@@ -31,10 +31,18 @@
   color: $react-dates-color-gray-dark;
   margin-top: 7px;
   font-size: 18px;
-  padding: 15px 0 35px;
   text-align: center;
   // necessary to not hide borders in FF
   margin-bottom: 2px;
+}
+
+.CalendarMonth--horizontal .CalendarMonth__caption,
+.CalendarMonth--vertical .CalendarMonth__caption {
+  padding: 15px 0 35px;
+}
+
+.CalendarMonth--vertical-scrollable .CalendarMonth__caption {
+  padding: 5px 0;
 }
 
 // This order is important.

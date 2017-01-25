@@ -10,9 +10,13 @@ import CalendarMonth from './CalendarMonth';
 import isTransitionEndSupported from '../utils/isTransitionEndSupported';
 import getTransformStyles from '../utils/getTransformStyles';
 
-import OrientationShape from '../shapes/OrientationShape';
+import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
 
-import { HORIZONTAL_ORIENTATION, VERTICAL_ORIENTATION } from '../../constants';
+import {
+  HORIZONTAL_ORIENTATION,
+  VERTICAL_ORIENTATION,
+  VERTICAL_SCROLLABLE,
+} from '../../constants';
 
 const propTypes = {
   enableOutsideDays: PropTypes.bool,
@@ -21,7 +25,7 @@ const propTypes = {
   isAnimating: PropTypes.bool,
   numberOfMonths: PropTypes.number,
   modifiers: PropTypes.object,
-  orientation: OrientationShape,
+  orientation: ScrollableOrientationShape,
   onDayClick: PropTypes.func,
   onDayMouseDown: PropTypes.func,
   onDayMouseUp: PropTypes.func,
@@ -171,6 +175,7 @@ export default class CalendarMonthGrid extends React.Component {
     const className = cx('CalendarMonthGrid', {
       'CalendarMonthGrid--horizontal': orientation === HORIZONTAL_ORIENTATION,
       'CalendarMonthGrid--vertical': orientation === VERTICAL_ORIENTATION,
+      'CalendarMonthGrid--vertical-scrollable': orientation === VERTICAL_SCROLLABLE,
       'CalendarMonthGrid--animating': isAnimating,
     });
 
