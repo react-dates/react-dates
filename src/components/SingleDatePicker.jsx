@@ -6,6 +6,7 @@ import includes from 'array-includes';
 
 import toMomentObject from '../utils/toMomentObject';
 import toLocalizedDateString from '../utils/toLocalizedDateString';
+import toISODateString from '../utils/toISODateString';
 import getResponsiveContainerStyles from '../utils/getResponsiveContainerStyles';
 
 import SingleDatePickerInput from './SingleDatePickerInput';
@@ -335,6 +336,7 @@ export default class SingleDatePicker extends React.Component {
     } = this.props;
 
     const dateString = this.getDateString(date);
+    const dateValue = toISODateString(date);
 
     return (
       <div className="SingleDatePicker">
@@ -348,7 +350,8 @@ export default class SingleDatePicker extends React.Component {
           phrases={phrases}
           onClearDate={this.clearDate}
           showClearDate={showClearDate}
-          dateValue={dateString}
+          displayValue={dateString}
+          inputValue={dateValue}
           onChange={this.onChange}
           onFocus={this.onFocus}
           onKeyDownShiftTab={this.onClearFocus}
