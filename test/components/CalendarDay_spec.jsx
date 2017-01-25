@@ -38,10 +38,10 @@ describe('CalendarDay', () => {
     });
   });
 
-  describe('#handleDayClick', () => {
-    let handleDayClickSpy;
+  describe('#onDayClick', () => {
+    let onDayClickSpy;
     beforeEach(() => {
-      handleDayClickSpy = sinon.spy(CalendarDay.prototype, 'handleDayClick');
+      onDayClickSpy = sinon.spy(CalendarDay.prototype, 'onDayClick');
     });
 
     afterEach(() => {
@@ -51,21 +51,21 @@ describe('CalendarDay', () => {
     it('gets triggered by click', () => {
       const wrapper = shallow(<CalendarDay />);
       wrapper.simulate('click');
-      expect(handleDayClickSpy).to.have.property('callCount', 1);
+      expect(onDayClickSpy).to.have.property('callCount', 1);
     });
 
     it('calls props.onDayClick', () => {
       const onDayClickStub = sinon.stub();
       const wrapper = shallow(<CalendarDay onDayClick={onDayClickStub} />);
-      wrapper.instance().handleDayClick();
+      wrapper.instance().onDayClick();
       expect(onDayClickStub).to.have.property('callCount', 1);
     });
   });
 
-  describe('#handleDayMouseDown', () => {
-    let handleDayMouseDownSpy;
+  describe('#onDayMouseDown', () => {
+    let onDayMouseDownSpy;
     beforeEach(() => {
-      handleDayMouseDownSpy = sinon.spy(CalendarDay.prototype, 'handleDayMouseDown');
+      onDayMouseDownSpy = sinon.spy(CalendarDay.prototype, 'onDayMouseDown');
     });
 
     afterEach(() => {
@@ -75,21 +75,21 @@ describe('CalendarDay', () => {
     it('gets triggered by mousedown', () => {
       const wrapper = shallow(<CalendarDay />);
       wrapper.simulate('mousedown');
-      expect(handleDayMouseDownSpy).to.have.property('callCount', 1);
+      expect(onDayMouseDownSpy).to.have.property('callCount', 1);
     });
 
     it('calls props.onDayMouseDown', () => {
       const onMouseDownStub = sinon.stub();
       const wrapper = shallow(<CalendarDay onDayMouseDown={onMouseDownStub} />);
-      wrapper.instance().handleDayMouseDown();
+      wrapper.instance().onDayMouseDown();
       expect(onMouseDownStub).to.have.property('callCount', 1);
     });
   });
 
-  describe('#handleDayMouseUp', () => {
-    let handleDayMouseUpSpy;
+  describe('#onDayMouseUp', () => {
+    let onDayMouseUpSpy;
     beforeEach(() => {
-      handleDayMouseUpSpy = sinon.spy(CalendarDay.prototype, 'handleDayMouseUp');
+      onDayMouseUpSpy = sinon.spy(CalendarDay.prototype, 'onDayMouseUp');
     });
 
     afterEach(() => {
@@ -99,21 +99,21 @@ describe('CalendarDay', () => {
     it('gets triggered by mouseup', () => {
       const wrapper = shallow(<CalendarDay />);
       wrapper.simulate('mouseup');
-      expect(handleDayMouseUpSpy).to.have.property('callCount', 1);
+      expect(onDayMouseUpSpy).to.have.property('callCount', 1);
     });
 
     it('calls props.onDayMouseUp', () => {
       const onMouseUpStub = sinon.stub();
       const wrapper = shallow(<CalendarDay onDayMouseUp={onMouseUpStub} />);
-      wrapper.instance().handleDayMouseUp();
+      wrapper.instance().onDayMouseUp();
       expect(onMouseUpStub).to.have.property('callCount', 1);
     });
   });
 
-  describe('#handleDayMouseEnter', () => {
-    let handleDayMouseEnterSpy;
+  describe('#onDayMouseEnter', () => {
+    let onDayMouseEnterSpy;
     beforeEach(() => {
-      handleDayMouseEnterSpy = sinon.spy(CalendarDay.prototype, 'handleDayMouseEnter');
+      onDayMouseEnterSpy = sinon.spy(CalendarDay.prototype, 'onDayMouseEnter');
     });
 
     afterEach(() => {
@@ -123,21 +123,21 @@ describe('CalendarDay', () => {
     it('gets triggered by mouseenter', () => {
       const wrapper = shallow(<CalendarDay />);
       wrapper.simulate('mouseenter');
-      expect(handleDayMouseEnterSpy).to.have.property('callCount', 1);
+      expect(onDayMouseEnterSpy).to.have.property('callCount', 1);
     });
 
     it('calls props.onDayMouseEnter', () => {
       const onMouseEnterStub = sinon.stub();
       const wrapper = shallow(<CalendarDay onDayMouseEnter={onMouseEnterStub} />);
-      wrapper.instance().handleDayMouseEnter();
+      wrapper.instance().onDayMouseEnter();
       expect(onMouseEnterStub).to.have.property('callCount', 1);
     });
   });
 
-  describe('#handleDayMouseLeave', () => {
-    let handleDayMouseLeaveSpy;
+  describe('#onDayMouseLeave', () => {
+    let onDayMouseLeaveSpy;
     beforeEach(() => {
-      handleDayMouseLeaveSpy = sinon.spy(CalendarDay.prototype, 'handleDayMouseLeave');
+      onDayMouseLeaveSpy = sinon.spy(CalendarDay.prototype, 'onDayMouseLeave');
     });
 
     afterEach(() => {
@@ -147,40 +147,40 @@ describe('CalendarDay', () => {
     it('gets triggered by mouseleave', () => {
       const wrapper = shallow(<CalendarDay />);
       wrapper.simulate('mouseleave');
-      expect(handleDayMouseLeaveSpy).to.have.property('callCount', 1);
+      expect(onDayMouseLeaveSpy).to.have.property('callCount', 1);
     });
 
     it('calls props.onDayMouseLeave', () => {
       const onMouseLeaveStub = sinon.stub();
       const wrapper = shallow(<CalendarDay onDayMouseLeave={onMouseLeaveStub} />);
-      wrapper.instance().handleDayMouseLeave();
+      wrapper.instance().onDayMouseLeave();
       expect(onMouseLeaveStub).to.have.property('callCount', 1);
     });
   });
 
-  describe('#handleDayTouchStart', () => {
-    let handleDayTouchStartSpy;
+  describe('#onDayTouchStart', () => {
+    let onDayTouchStartSpy;
     let useFakeTimers;
     beforeEach(() => {
-      handleDayTouchStartSpy = sinon.spy(CalendarDay.prototype, 'handleDayTouchStart');
+      onDayTouchStartSpy = sinon.spy(CalendarDay.prototype, 'onDayTouchStart');
       useFakeTimers = sinon.useFakeTimers();
     });
 
     it('gets triggered by touchstart', () => {
       const wrapper = shallow(<CalendarDay />);
       wrapper.simulate('touchstart');
-      expect(handleDayTouchStartSpy).to.have.property('callCount', 1);
+      expect(onDayTouchStartSpy).to.have.property('callCount', 1);
     });
 
     it('sets this.hasActiveTouchStart to true', () => {
       const wrapperInstance = shallow(<CalendarDay />).instance();
-      wrapperInstance.handleDayTouchStart();
+      wrapperInstance.onDayTouchStart();
       expect(wrapperInstance.hasActiveTouchStart).to.equal(true);
     });
 
     it('sets this.hasActiveTouchStart to false after TOUCHSTART_TIMEOUT ms have passed', () => {
       const wrapperInstance = shallow(<CalendarDay />).instance();
-      wrapperInstance.handleDayTouchStart();
+      wrapperInstance.onDayTouchStart();
       expect(wrapperInstance.hasActiveTouchStart).to.equal(true);
       useFakeTimers.tick(TOUCHSTART_TIMEOUT);
       expect(wrapperInstance.hasActiveTouchStart).to.equal(false);
@@ -189,7 +189,7 @@ describe('CalendarDay', () => {
     it('calls props.onDayTouchStart', () => {
       const onDayTouchStartStub = sinon.stub();
       const wrapper = shallow(<CalendarDay onDayTouchStart={onDayTouchStartStub} />);
-      wrapper.instance().handleDayTouchStart();
+      wrapper.instance().onDayTouchStart();
       expect(onDayTouchStartStub).to.have.property('callCount', 1);
     });
 
@@ -199,12 +199,12 @@ describe('CalendarDay', () => {
     });
   });
 
-  describe('#handleDayTouchEnd', () => {
-    let handleDayTouchEndSpy;
-    let handleDayTouchTapSpy;
+  describe('#onDayTouchEnd', () => {
+    let onDayTouchEndSpy;
+    let onDayTouchTapSpy;
     beforeEach(() => {
-      handleDayTouchEndSpy = sinon.spy(CalendarDay.prototype, 'handleDayTouchEnd');
-      handleDayTouchTapSpy = sinon.spy(CalendarDay.prototype, 'handleDayTouchTap');
+      onDayTouchEndSpy = sinon.spy(CalendarDay.prototype, 'onDayTouchEnd');
+      onDayTouchTapSpy = sinon.spy(CalendarDay.prototype, 'onDayTouchTap');
     });
 
     afterEach(() => {
@@ -214,43 +214,43 @@ describe('CalendarDay', () => {
     it('gets triggered by touchend', () => {
       const wrapper = shallow(<CalendarDay />);
       wrapper.simulate('touchend');
-      expect(handleDayTouchEndSpy).to.have.property('callCount', 1);
+      expect(onDayTouchEndSpy).to.have.property('callCount', 1);
     });
 
-    it('calls handleDayTouchTap if this.hasActiveTouchStart', () => {
+    it('calls onDayTouchTap if this.hasActiveTouchStart', () => {
       const wrapperInstance = shallow(<CalendarDay />).instance();
       wrapperInstance.hasActiveTouchStart = true;
-      wrapperInstance.handleDayTouchEnd();
-      expect(handleDayTouchTapSpy).to.have.property('callCount', 1);
+      wrapperInstance.onDayTouchEnd();
+      expect(onDayTouchTapSpy).to.have.property('callCount', 1);
     });
 
     it('sets this.hasActiveTouchStart to false if this.hasActiveTouchStart', () => {
       const wrapperInstance = shallow(<CalendarDay />).instance();
       wrapperInstance.hasActiveTouchStart = true;
-      wrapperInstance.handleDayTouchEnd();
+      wrapperInstance.onDayTouchEnd();
       expect(wrapperInstance.hasActiveTouchStart).to.equal(false);
     });
 
-    it('does not call handleDayTouchTap if !this.hasActiveTouchStart', () => {
+    it('does not call onDayTouchTap if !this.hasActiveTouchStart', () => {
       const wrapperInstance = shallow(<CalendarDay />).instance();
       wrapperInstance.hasActiveTouchStart = false;
-      wrapperInstance.handleDayTouchEnd();
-      expect(handleDayTouchTapSpy.called).to.equal(false);
+      wrapperInstance.onDayTouchEnd();
+      expect(onDayTouchTapSpy.called).to.equal(false);
     });
 
     it('calls props.onDayTouchEnd', () => {
       const onDayTouchEndStub = sinon.stub();
       const wrapper = shallow(<CalendarDay onDayTouchEnd={onDayTouchEndStub} />);
-      wrapper.instance().handleDayTouchEnd();
+      wrapper.instance().onDayTouchEnd();
       expect(onDayTouchEndStub).to.have.property('callCount', 1);
     });
   });
 
-  describe('#handleDayTouchTap', () => {
+  describe('#onDayTouchTap', () => {
     it('calls props.onDayTouchTap', () => {
       const onDayTouchTapStub = sinon.stub();
       const wrapper = shallow(<CalendarDay onDayTouchTap={onDayTouchTapStub} />);
-      wrapper.instance().handleDayTouchTap();
+      wrapper.instance().onDayTouchTap();
       expect(onDayTouchTapStub).to.have.property('callCount', 1);
     });
   });
