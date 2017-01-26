@@ -9,6 +9,7 @@ const propTypes = {
   placeholder: PropTypes.string, // also used as label
   displayValue: PropTypes.string,
   inputValue: PropTypes.string,
+  screenReaderMessage: PropTypes.string,
   focused: PropTypes.bool,
   disabled: PropTypes.bool,
   required: PropTypes.bool,
@@ -31,6 +32,7 @@ const defaultProps = {
   placeholder: 'Select Date',
   displayValue: '',
   inputValue: '',
+  screenReaderMessage: '',
   focused: false,
   disabled: false,
   required: false,
@@ -90,6 +92,7 @@ export default class SingleDatePickerInput extends React.Component {
       onFocus,
       onKeyDownShiftTab,
       onKeyDownTab,
+      screenReaderMessage,
     } = this.props;
 
     return (
@@ -99,6 +102,7 @@ export default class SingleDatePickerInput extends React.Component {
           placeholder={placeholder} // also used as label
           displayValue={displayValue}
           inputValue={inputValue}
+          screenReaderMessage={screenReaderMessage}
           focused={focused}
           disabled={disabled}
           required={required}
