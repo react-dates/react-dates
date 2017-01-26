@@ -62,6 +62,19 @@ const TestNextIcon = () => (
   </span>
 );
 
+const TestCustomInputIcon = () => (
+  <span
+    style={{
+      border: '1px solid #dce0e0',
+      backgroundColor: '#fff',
+      color: '#484848',
+      padding: '3px',
+    }}
+  >
+    C
+  </span>
+);
+
 class TestWrapper extends React.Component {
   constructor(props) {
     super(props);
@@ -234,5 +247,15 @@ storiesOf('DateRangePicker', module)
   .addWithInfo('blocks fridays', () => (
     <DateRangePickerWrapper
       isDayBlocked={day => moment.weekdays(day.weekday()) === 'Friday'}
+    />
+  ))
+  .addWithInfo('with show calendar icon', () => (
+    <DateRangePickerWrapper
+      showDefaultInputIcon={true}
+    />
+  ))
+  .addWithInfo('with custom show calendar icon', () => (
+    <DateRangePickerWrapper
+      customInputIcon={<TestCustomInputIcon />}
     />
   ));
