@@ -1,17 +1,20 @@
 # Change Log
 
+## v5.1.1
+ - [fix] Fix regression where user was no longer able to type into input ([#269](https://github.com/airbnb/react-dates/pull/269))
+
 ## v5.1.0
- - [new] Adds `showDefaultInputIcon` and `customInputIcon` prop to show an icon at the beginning of the input field ([#222](https://github.com/airbnb/react-dates/pull/222))
+ - [new] Add `showDefaultInputIcon` and `customInputIcon` prop to show an icon at the beginning of the input field ([#222](https://github.com/airbnb/react-dates/pull/222))
 
 ## v5.0.0
- - [breaking] Updates input value to use ISO format instead of the display format ([#229](https://github.com/airbnb/react-dates/pull/229))
+ - [breaking] Update input value to use ISO format instead of the display format ([#229](https://github.com/airbnb/react-dates/pull/229))
  - [breaking] Performance improvements, including the removal of the modifiers prop from `CalendarDay` ([#217](https://github.com/airbnb/react-dates/pull/217))
 
 ## v4.3.3
  - [fix] Force DayPicker and CalendarMonthGrid alignment to the left ([#257](https://github.com/airbnb/react-dates/pull/257),[#258](https://github.com/airbnb/react-dates/pull/258))
 
 ## v4.3.2
- - [fix] finish refactor from 471bd602302f4dfe4f1e66b79d50b22f7511d8ba ([#233](https://github.com/airbnb/react-dates/pull/233))
+ - [fix] Finish refactor from 471bd602302f4dfe4f1e66b79d50b22f7511d8ba ([#233](https://github.com/airbnb/react-dates/pull/233))
 
 ## v4.3.1 (unpublished)
  - [fix] Don’t create an unnecessary array from a NodeList, which avoids needing `Array.from` ([#233](https://github.com/airbnb/react-dates/pull/233))
