@@ -1,7 +1,7 @@
 # Change Log
 
 ## v5.1.0
- - [new] Adds `showDefaultInputIcon` and `customeInputIcon` prop to show an icon at the beginning of the input field ([#222](https://github.com/airbnb/react-dates/pull/222))
+ - [new] Adds `showDefaultInputIcon` and `customInputIcon` prop to show an icon at the beginning of the input field ([#222](https://github.com/airbnb/react-dates/pull/222))
 
 ## v5.0.0
  - [breaking] Updates input value to use ISO format instead of the display format ([#229](https://github.com/airbnb/react-dates/pull/229))
