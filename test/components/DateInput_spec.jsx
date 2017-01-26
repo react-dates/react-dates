@@ -56,6 +56,17 @@ describe('DateInput', () => {
         const wrapper = shallow(<DateInput id="date" displayValue={DISPLAY_VALUE} />);
         expect(wrapper.find('input').props().value).to.equal(DISPLAY_VALUE);
       });
+
+      it('has value === state.dateString if neither inputValue or displayValue are passed in',
+        () => {
+          const DATE_STRING = 'foobar';
+          const wrapper = shallow(<DateInput id="date" />);
+          wrapper.setState({
+            dateString: DATE_STRING,
+          });
+          expect(wrapper.find('input').props().value).to.equal(DATE_STRING);
+        },
+      );
     });
 
     describe('display text', () => {
