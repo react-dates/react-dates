@@ -100,7 +100,7 @@ export default class DateInput extends React.Component {
     } = this.props;
 
     const displayText = displayValue || inputValue || dateString || placeholder || '';
-    const value = inputValue || displayValue || '';
+    const value = inputValue || displayValue || dateString || '';
 
     return (
       <div
