@@ -36,6 +36,19 @@ describe('CalendarDay', () => {
       const wrapper = shallow(<CalendarDay renderDay={renderDay} />);
       expect(wrapper.text()).to.equal(dayName);
     });
+
+    describe('button', () => {
+      it('contains a button', () => {
+        const wrapper = shallow(<CalendarDay />);
+        expect(wrapper.find('button')).to.have.lengthOf(1);
+      });
+
+      it('has tabIndex equal to props.tabIndex', () => {
+        const tabIndex = -1;
+        const wrapper = shallow(<CalendarDay tabIndex={tabIndex} />);
+        expect(wrapper.find('button').props().tabIndex).to.equal(tabIndex);
+      });
+    });
   });
 
   describe('#onDayClick', () => {
@@ -49,7 +62,7 @@ describe('CalendarDay', () => {
     });
 
     it('gets triggered by click', () => {
-      const wrapper = shallow(<CalendarDay />);
+      const wrapper = shallow(<CalendarDay />).find('button');
       wrapper.simulate('click');
       expect(onDayClickSpy).to.have.property('callCount', 1);
     });
@@ -73,7 +86,7 @@ describe('CalendarDay', () => {
     });
 
     it('gets triggered by mouseenter', () => {
-      const wrapper = shallow(<CalendarDay />);
+      const wrapper = shallow(<CalendarDay />).find('button');
       wrapper.simulate('mouseenter');
       expect(onDayMouseEnterSpy).to.have.property('callCount', 1);
     });
@@ -97,7 +110,7 @@ describe('CalendarDay', () => {
     });
 
     it('gets triggered by mouseleave', () => {
-      const wrapper = shallow(<CalendarDay />);
+      const wrapper = shallow(<CalendarDay />).find('button');
       wrapper.simulate('mouseleave');
       expect(onDayMouseLeaveSpy).to.have.property('callCount', 1);
     });

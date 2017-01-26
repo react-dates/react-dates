@@ -17,6 +17,10 @@ import { START_DATE, END_DATE } from '../../constants';
 const today = moment().startOf('day').hours(12);
 
 describe('DayPickerRangeController', () => {
+  afterEach(() => {
+    sinon.restore();
+  });
+
   describe('#render()', () => {
     it('renders <DayPicker />', () => {
       const wrapper = shallow(<DayPickerRangeController />);
@@ -273,6 +277,109 @@ describe('DayPickerRangeController', () => {
       });
       wrapper.instance().onDayMouseLeave(today);
       expect(wrapper.state().hoverDate).to.equal(null);
+    });
+  });
+
+  describe('#getFirstFocusableDay', () => {
+    describe('focusedInput === START_DATE', () => {
+      it('returns startDate if exists and is not blocked', () => {
+        sinon.stub(DayPickerRangeController.prototype, 'isBlocked').returns(false);
+        const wrapper = shallow(
+          <DayPickerRangeController
+            focusedInput={START_DATE}
+            startDate={today}
+            onFocusChange={sinon.stub()}
+            onDatesChange={sinon.stub()}
+          />,
+        );
+        const firstFocusableDay = wrapper.instance().getFirstFocusableDay(moment().subtract(10, 'days'));
+        expect(firstFocusableDay.isSame(today, 'day')).to.equal(true);
+      });
+
+      it('returns first day of arg month if startDate is falsey', () => {
+        sinon.stub(DayPickerRangeController.prototype, 'isBlocked').returns(false);
+        const wrapper = shallow(
+          <DayPickerRangeController
+            focusedInput={START_DATE}
+            startDate={null}
+            onFocusChange={sinon.stub()}
+            onDatesChange={sinon.stub()}
+          />,
+        );
+        const startOfMonth = today.clone().startOf('month');
+        const firstFocusableDay = wrapper.instance().getFirstFocusableDay(today);
+        expect(firstFocusableDay.isSame(startOfMonth, 'day')).to.equal(true);
+      });
+    });
+
+    describe('focusedInput === END_DATE', () => {
+      it('returns endDate if exists and is not blocked and startDate is falsey', () => {
+        sinon.stub(DayPickerRangeController.prototype, 'isBlocked').returns(false);
+        const endDate = moment().add(10, 'days');
+        const wrapper = shallow(
+          <DayPickerRangeController
+            focusedInput={END_DATE}
+            startDate={null}
+            endDate={endDate}
+            onFocusChange={sinon.stub()}
+            onDatesChange={sinon.stub()}
+          />,
+        );
+        const firstFocusableDay = wrapper.instance().getFirstFocusableDay(today);
+        expect(firstFocusableDay.isSame(endDate, 'day')).to.equal(true);
+      });
+
+      it('returns startDate + minimumNights if startDate is truthy and endDate is not', () => {
+        sinon.stub(DayPickerRangeController.prototype, 'isBlocked').returns(false);
+        const startDate = moment().add(10, 'days');
+        const minimumNights = 5;
+        const wrapper = shallow(
+          <DayPickerRangeController
+            focusedInput={END_DATE}
+            startDate={startDate}
+            minimumNights={minimumNights}
+            onFocusChange={sinon.stub()}
+            onDatesChange={sinon.stub()}
+          />,
+        );
+        const firstFocusableDay = wrapper.instance().getFirstFocusableDay(today);
+        expect(firstFocusableDay.isSame(startDate.clone().add(minimumNights, 'days'), 'day')).to.equal(true);
+      });
+
+      it('returns first day of arg month if startDate and endDate are falsey', () => {
+        sinon.stub(DayPickerRangeController.prototype, 'isBlocked').returns(false);
+        const wrapper = shallow(
+          <DayPickerRangeController
+            focusedInput={END_DATE}
+            startDate={null}
+            minimumNights={null}
+            onFocusChange={sinon.stub()}
+            onDatesChange={sinon.stub()}
+          />,
+        );
+        const firstFocusableDay = wrapper.instance().getFirstFocusableDay(today);
+        expect(firstFocusableDay.isSame(today.clone().startOf('month'), 'day')).to.equal(true);
+      });
+    });
+
+    describe('desired day is blocked', () => {
+      it('returns next unblocked visible day after desired day if exists', () => {
+        const isBlockedStub = sinon.stub(DayPickerRangeController.prototype, 'isBlocked').returns(true);
+        isBlockedStub.onCall(8).returns(false);
+
+        const startDate = moment().endOf('month').subtract(10, 'days');
+        const wrapper = shallow(
+          <DayPickerRangeController
+            focusedInput={END_DATE}
+            startDate={startDate}
+            numberOfMonths={1}
+            onFocusChange={sinon.stub()}
+            onDatesChange={sinon.stub()}
+          />,
+        );
+        const firstFocusableDay = wrapper.instance().getFirstFocusableDay(today);
+        expect(firstFocusableDay.isSame(startDate.clone().add(9, 'days'), 'day')).to.equal(true);
+      });
     });
   });
 
@@ -640,10 +747,6 @@ describe('DayPickerRangeController', () => {
         isInSelectedSpanStub = sinon.stub(DayPickerRangeController.prototype, 'isInSelectedSpan');
       });
 
-      afterEach(() => {
-        sinon.restore();
-      });
-
       it('returns true if arg is day before props.endDate and is in the selected span', () => {
         isInSelectedSpanStub.returns(true);
         const wrapper = shallow(
@@ -697,10 +800,6 @@ describe('DayPickerRangeController', () => {
         isOutsideRangeStub = sinon.stub();
         doesNotMeetMinimumNightsStub =
           sinon.stub(DayPickerRangeController.prototype, 'doesNotMeetMinimumNights');
-      });
-
-      afterEach(() => {
-        sinon.restore();
       });
 
       it('returns true if arg is calendar blocked', () => {
@@ -779,12 +878,8 @@ describe('DayPickerRangeController', () => {
   });
 
   describe('modifier optimization', () => {
-    afterEach(() => {
-      sinon.restore();
-    });
-
     it('includes hover modifiers for non-touch device', () => {
-      sinon.stub(isTouchDeviceModule, 'default', () => false);
+      sinon.stub(isTouchDeviceModule, 'default').returns(false);
 
       const wrapper = shallow(<DayPickerRangeController />);
 
@@ -795,7 +890,7 @@ describe('DayPickerRangeController', () => {
     });
 
     it('excludes hover modifiers for touch device', () => {
-      sinon.stub(isTouchDeviceModule, 'default', () => true);
+      sinon.stub(isTouchDeviceModule, 'default').returns(true);
 
       const wrapper = shallow(<DayPickerRangeController />);
 

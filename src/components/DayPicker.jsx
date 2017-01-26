@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
 import moment from 'moment';
 import cx from 'classnames';
+import throttle from 'lodash.throttle';
 
 import { DayPickerPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
@@ -11,9 +12,15 @@ import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 import OutsideClickHandler from './OutsideClickHandler';
 import CalendarMonthGrid from './CalendarMonthGrid';
 import DayPickerNavigation from './DayPickerNavigation';
+import DayPickerKeyboardShortcuts, {
+  TOP_LEFT,
+  TOP_RIGHT,
+  BOTTOM_RIGHT,
+} from './DayPickerKeyboardShortcuts';
 
 import getTransformStyles from '../utils/getTransformStyles';
 import getCalendarMonthWidth from '../utils/getCalendarMonthWidth';
+import isTouchDevice from '../utils/isTouchDevice';
 
 import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
 
@@ -54,8 +61,11 @@ const propTypes = forbidExtraProps({
   onDayMouseEnter: PropTypes.func,
   onDayMouseLeave: PropTypes.func,
 
+  // accessibility props
   isFocused: PropTypes.bool,
+  getFirstFocusableDay: PropTypes.func,
   onBlur: PropTypes.func,
+  showKeyboardShortcuts: PropTypes.bool,
 
   // internationalization
   monthFormat: PropTypes.string,
@@ -87,8 +97,11 @@ export const defaultProps = {
   onDayMouseEnter() {},
   onDayMouseLeave() {},
 
+  // accessibility props
   isFocused: false,
+  getFirstFocusableDay: null,
   onBlur() {},
+  showKeyboardShortcuts: false,
 
   // internationalization
   monthFormat: 'MMMM YYYY',
@@ -153,34 +166,51 @@ export default class DayPicker extends React.Component {
   constructor(props) {
     super(props);
 
+    const currentMonth = props.hidden ? moment() : props.initialVisibleMonth();
+
+    let focusedDate = currentMonth.clone().startOf('month');
+    if (props.getFirstFocusableDay) {
+      focusedDate = props.getFirstFocusableDay(currentMonth);
+    }
+
     this.hasSetInitialVisibleMonth = !props.hidden;
     this.state = {
-      currentMonth: props.hidden ? moment() : props.initialVisibleMonth(),
+      currentMonth,
       monthTransition: null,
       translationValue: 0,
       scrollableMonthMultiple: 1,
       calendarMonthWidth: getCalendarMonthWidth(props.daySize),
+      focusedDate: (!props.hidden || props.isFocused) ? focusedDate : null,
+      nextFocusedDate: null,
+      showKeyboardShortcuts: props.showKeyboardShortcuts,
+      onKeyboardShortcutsPanelClose() {},
+      isTouchDevice: isTouchDevice(),
     };
 
+    this.onKeyDown = this.onKeyDown.bind(this);
     this.onPrevMonthClick = this.onPrevMonthClick.bind(this);
     this.onNextMonthClick = this.onNextMonthClick.bind(this);
     this.multiplyScrollableMonths = this.multiplyScrollableMonths.bind(this);
     this.updateStateAfterMonthTransition = this.updateStateAfterMonthTransition.bind(this);
+
+    this.openKeyboardShortcutsPanel = this.openKeyboardShortcutsPanel.bind(this);
+    this.closeKeyboardShortcutsPanel = this.closeKeyboardShortcutsPanel.bind(this);
   }
 
   componentDidMount() {
+    this.setState({ isTouchDevice: isTouchDevice() });
+
     if (this.isHorizontal()) {
       this.adjustDayPickerHeight();
       this.initializeDayPickerWidth();
     }
-
-    if (this.props.isFocused) {
-      this.container.focus();
-    }
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!nextProps.hidden) {
+    const { hidden, isFocused, showKeyboardShortcuts, onBlur } = nextProps;
+    const { currentMonth } = this.state;
+
+    if (!hidden) {
       if (!this.hasSetInitialVisibleMonth) {
         this.hasSetInitialVisibleMonth = true;
         this.setState({
@@ -199,6 +229,26 @@ export default class DayPicker extends React.Component {
         calendarMonthWidth: getCalendarMonthWidth(nextProps.daySize),
       });
     }
+
+    if (isFocused !== this.props.isFocused) {
+      if (isFocused) {
+        const focusedDate = this.getFocusedDay(currentMonth);
+
+        let onKeyboardShortcutsPanelClose = this.state.onKeyboardShortcutsPanelClose;
+        if (nextProps.showKeyboardShortcuts) {
+          // the ? shortcut came from the input and we should return input there once it is close
+          onKeyboardShortcutsPanelClose = onBlur;
+        }
+
+        this.setState({
+          showKeyboardShortcuts,
+          onKeyboardShortcutsPanelClose,
+          focusedDate,
+        });
+      } else {
+        this.setState({ focusedDate: null });
+      }
+    }
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -206,18 +256,101 @@ export default class DayPicker extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.state.monthTransition || !this.state.currentMonth.isSame(prevState.currentMonth)) {
+    const { monthTransition, currentMonth, focusedDate } = this.state;
+    if (monthTransition || !currentMonth.isSame(prevState.currentMonth)) {
       if (this.isHorizontal()) {
         this.adjustDayPickerHeight();
       }
     }
 
-    if (!prevProps.isFocused && this.props.isFocused) {
+    if (
+      (!prevProps.isFocused && this.props.isFocused && !focusedDate) ||
+      (!prevProps.showKeyboardShortcuts && this.props.showKeyboardShortcuts)
+    ) {
       this.container.focus();
     }
   }
 
-  onPrevMonthClick(e) {
+  onKeyDown(e) {
+    e.stopPropagation();
+
+    const { onBlur } = this.props;
+    const { focusedDate, showKeyboardShortcuts } = this.state;
+    if (!focusedDate) return;
+
+    const newFocusedDate = focusedDate.clone();
+
+    let didTransitionMonth = false;
+
+    // focus might be anywhere when the keyboard shortcuts panel is opened so we want to
+    // return it to wherever it was before when the panel was opened
+    const activeElement = typeof document !== 'undefined' && document.activeElement;
+    const onKeyboardShortcutsPanelClose = () => {
+      if (activeElement) activeElement.focus();
+    };
+
+    switch (e.key) {
+      case 'ArrowUp':
+        newFocusedDate.subtract(1, 'week');
+        didTransitionMonth = this.maybeTransitionPrevMonth(newFocusedDate);
+        break;
+      case 'ArrowLeft':
+        newFocusedDate.subtract(1, 'day');
+        didTransitionMonth = this.maybeTransitionPrevMonth(newFocusedDate);
+        break;
+      case 'Home':
+        newFocusedDate.startOf('week');
+        didTransitionMonth = this.maybeTransitionPrevMonth(newFocusedDate);
+        break;
+      case 'PageUp':
+        newFocusedDate.subtract(1, 'month');
+        didTransitionMonth = this.maybeTransitionPrevMonth(newFocusedDate);
+        break;
+
+      case 'ArrowDown':
+        newFocusedDate.add(1, 'week');
+        didTransitionMonth = this.maybeTransitionNextMonth(newFocusedDate);
+        break;
+      case 'ArrowRight':
+        newFocusedDate.add(1, 'day');
+        didTransitionMonth = this.maybeTransitionNextMonth(newFocusedDate);
+        break;
+      case 'End':
+        newFocusedDate.endOf('week');
+        didTransitionMonth = this.maybeTransitionNextMonth(newFocusedDate);
+        break;
+      case 'PageDown':
+        newFocusedDate.add(1, 'month');
+        didTransitionMonth = this.maybeTransitionNextMonth(newFocusedDate);
+        break;
+
+      case '?':
+        this.openKeyboardShortcutsPanel(onKeyboardShortcutsPanelClose);
+        break;
+
+      case 'Escape':
+        if (showKeyboardShortcuts) {
+          this.closeKeyboardShortcutsPanel();
+        } else {
+          onBlur();
+        }
+        break;
+
+      default:
+        break;
+    }
+
+    // If there was a month transition, do not update the focused date until the transition has
+    // completed. Otherwise, attempting to focus on a DOM node may interrupt the CSS animation. If
+    // didTransitionMonth is true, the focusedDate gets updated in #updateStateAfterMonthTransition
+    if (!didTransitionMonth) {
+      this.setState({
+        focusedDate: newFocusedDate,
+      });
+    }
+  }
+
+  onPrevMonthClick(nextFocusedDate, e) {
     if (e) e.preventDefault();
 
     if (this.props.onPrevMonthClick) {
@@ -238,10 +371,11 @@ export default class DayPicker extends React.Component {
     this.setState({
       monthTransition: PREV_TRANSITION,
       translationValue,
+      nextFocusedDate,
     });
   }
 
-  onNextMonthClick(e) {
+  onNextMonthClick(nextFocusedDate, e) {
     if (e) e.preventDefault();
     if (this.props.onNextMonthClick) {
       this.props.onNextMonthClick(e);
@@ -253,11 +387,56 @@ export default class DayPicker extends React.Component {
     this.setState({
       monthTransition: NEXT_TRANSITION,
       translationValue,
+      nextFocusedDate,
     });
+  }
+
+  getFocusedDay(newMonth) {
+    // TODO(maja): figure out which month var I should be using
+    const { getFirstFocusableDay } = this.props;
+    const { currentMonth } = this.state;
+
+    let focusedDate;
+    if (getFirstFocusableDay) {
+      const month = newMonth || currentMonth;
+      focusedDate = getFirstFocusableDay(month);
+    }
+
+    if (newMonth && (!focusedDate || !this.isDayVisible(focusedDate, newMonth))) {
+      focusedDate = newMonth.clone().startOf('month');
+    }
+
+    return focusedDate;
   }
 
   getMonthHeightByIndex(i) {
     return getMonthHeight(this.transitionContainer.querySelectorAll('.CalendarMonth')[i]);
+  }
+
+  maybeTransitionNextMonth(newFocusedDate) {
+    const { focusedDate } = this.state;
+
+    const newFocusedDateMonth = newFocusedDate.month();
+    const focusedDateMonth = focusedDate.month();
+    if (newFocusedDateMonth !== focusedDateMonth && !this.isDayVisible(newFocusedDate)) {
+      this.onNextMonthClick(newFocusedDate);
+      return true;
+    }
+
+    return false;
+  }
+
+  maybeTransitionPrevMonth(newFocusedDate) {
+    const { focusedDate } = this.state;
+
+    const newFocusedDateMonth = newFocusedDate.month();
+    const focusedDateMonth = focusedDate.month();
+    if (newFocusedDateMonth !== focusedDateMonth && !this.isDayVisible(newFocusedDate)) {
+      this.onPrevMonthClick(newFocusedDate);
+      return true;
+    }
+
+    return false;
   }
 
   multiplyScrollableMonths(e) {
@@ -266,6 +445,17 @@ export default class DayPicker extends React.Component {
     this.setState({
       scrollableMonthMultiple: this.state.scrollableMonthMultiple + 1,
     });
+  }
+
+  isDayVisible(day, newMonth) {
+    const { numberOfMonths } = this.props;
+    const { currentMonth } = this.state;
+
+    const month = newMonth || currentMonth;
+    const firstDayOfFirstMonth = month.clone().startOf('month');
+    const lastDayOfLastMonth = month.clone().add(numberOfMonths - 1, 'months').endOf('month');
+
+    return !day.isBefore(firstDayOfFirstMonth) && !day.isAfter(lastDayOfLastMonth);
   }
 
   isHorizontal() {
@@ -287,13 +477,22 @@ export default class DayPicker extends React.Component {
   }
 
   updateStateAfterMonthTransition() {
-    const { currentMonth, monthTransition } = this.state;
+    const { currentMonth, monthTransition, focusedDate, nextFocusedDate } = this.state;
 
-    let newMonth = currentMonth;
+    if (!monthTransition) return;
+
+    const newMonth = currentMonth.clone();
     if (monthTransition === PREV_TRANSITION) {
-      newMonth = currentMonth.clone().subtract(1, 'month');
+      newMonth.subtract(1, 'month');
     } else if (monthTransition === NEXT_TRANSITION) {
-      newMonth = currentMonth.clone().add(1, 'month');
+      newMonth.add(1, 'month');
+    }
+
+    let newFocusedDate = null;
+    if (nextFocusedDate) {
+      newFocusedDate = nextFocusedDate;
+    } else if (focusedDate) {
+      newFocusedDate = this.getFocusedDay(newMonth);
     }
 
     // clear the previous transforms
@@ -307,6 +506,8 @@ export default class DayPicker extends React.Component {
       currentMonth: newMonth,
       monthTransition: null,
       translationValue: 0,
+      nextFocusedDate: null,
+      focusedDate: newFocusedDate,
     });
   }
 
@@ -340,27 +541,49 @@ export default class DayPicker extends React.Component {
     );
   }
 
+  openKeyboardShortcutsPanel(onCloseCallBack) {
+    this.setState({
+      showKeyboardShortcuts: true,
+      onKeyboardShortcutsPanelClose: onCloseCallBack,
+    });
+  }
+
+  closeKeyboardShortcutsPanel() {
+    const { onKeyboardShortcutsPanelClose } = this.state;
+
+    if (onKeyboardShortcutsPanelClose) {
+      onKeyboardShortcutsPanelClose();
+    }
+
+    this.setState({
+      onKeyboardShortcutsPanelClose: null,
+      showKeyboardShortcuts: false,
+    });
+  }
+
   renderNavigation() {
     const {
       navPrev,
       navNext,
       orientation,
+      phrases,
     } = this.props;
 
     let onNextMonthClick;
     if (orientation === VERTICAL_SCROLLABLE) {
       onNextMonthClick = this.multiplyScrollableMonths;
     } else {
-      onNextMonthClick = this.onNextMonthClick;
+      onNextMonthClick = (e) => { this.onNextMonthClick(null, e); };
     }
 
     return (
       <DayPickerNavigation
-        onPrevMonthClick={this.onPrevMonthClick}
+        onPrevMonthClick={(e) => { this.onPrevMonthClick(null, e); }}
         onNextMonthClick={onNextMonthClick}
         navPrev={navPrev}
         navNext={navNext}
         orientation={orientation}
+        phrases={phrases}
       />
     );
   }
@@ -410,11 +633,16 @@ export default class DayPicker extends React.Component {
 
   render() {
     const {
+      calendarMonthWidth,
       currentMonth,
       monthTransition,
       translationValue,
       scrollableMonthMultiple,
+      focusedDate,
+      showKeyboardShortcuts,
+      isTouchDevice: isTouch,
     } = this.state;
+
     const {
       enableOutsideDays,
       numberOfMonths,
@@ -429,9 +657,9 @@ export default class DayPicker extends React.Component {
       onOutsideClick,
       monthFormat,
       daySize,
+      isFocused,
+      phrases,
     } = this.props;
-
-    const { calendarMonthWidth } = this.state;
 
     const numOfWeekHeaders = this.isVertical() ? 1 : numberOfMonths;
     const weekHeaders = [];
@@ -483,6 +711,13 @@ export default class DayPicker extends React.Component {
     const transformType = this.isVertical() ? 'translateY' : 'translateX';
     const transformValue = `${transformType}(${translationValue}px)`;
 
+    const shouldFocusDate = !isCalendarMonthGridAnimating && isFocused;
+
+    let keyboardShortcutButtonLocation = BOTTOM_RIGHT;
+    if (this.isVertical()) {
+      keyboardShortcutButtonLocation = withPortal ? TOP_LEFT : TOP_RIGHT;
+    }
+
     return (
       <div
         className={dayPickerClassNames}
@@ -501,6 +736,7 @@ export default class DayPicker extends React.Component {
             className="DayPicker__focus-region"
             ref={(ref) => { this.container = ref; }}
             onClick={(e) => { e.stopPropagation(); }}
+            onKeyDown={throttle(this.onKeyDown, 300)}
             role="region"
             tabIndex={-1}
           >
@@ -528,12 +764,26 @@ export default class DayPicker extends React.Component {
                 onMonthTransitionEnd={this.updateStateAfterMonthTransition}
                 monthFormat={monthFormat}
                 daySize={daySize}
+                isFocused={shouldFocusDate}
+                focusedDate={focusedDate}
+                phrases={phrases}
               />
               {verticalScrollable && this.renderNavigation()}
             </div>
 
-            {renderCalendarInfo && renderCalendarInfo()}
+            {!isTouch &&
+              <DayPickerKeyboardShortcuts
+                block={this.isVertical() && !withPortal}
+                buttonLocation={keyboardShortcutButtonLocation}
+                showKeyboardShortcutsPanel={showKeyboardShortcuts}
+                openKeyboardShortcutsPanel={this.openKeyboardShortcutsPanel}
+                closeKeyboardShortcutsPanel={this.closeKeyboardShortcutsPanel}
+                phrases={phrases}
+              />
+            }
           </div>
+
+          {renderCalendarInfo && renderCalendarInfo()}
         </OutsideClickHandler>
       </div>
     );

@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { forbidExtraProps } from 'airbnb-prop-types';
 import cx from 'classnames';
+import throttle from 'lodash.throttle';
 
 import isTouchDevice from '../utils/isTouchDevice';
 
@@ -20,6 +21,10 @@ const propTypes = forbidExtraProps({
   onKeyDownShiftTab: PropTypes.func,
   onKeyDownTab: PropTypes.func,
 
+  onKeyDownArrowDown: PropTypes.func,
+  onKeyDownQuestionMark: PropTypes.func,
+
+  // accessibility
   isFocused: PropTypes.bool, // describes actual DOM focus
 });
 
@@ -38,6 +43,10 @@ const defaultProps = {
   onKeyDownShiftTab() {},
   onKeyDownTab() {},
 
+  onKeyDownArrowDown() {},
+  onKeyDownQuestionMark() {},
+
+  // accessibility
   isFocused: false,
 };
 
@@ -78,20 +87,42 @@ export default class DateInput extends React.Component {
   }
 
   onChange(e) {
+    const { onChange, onKeyDownQuestionMark } = this.props;
     const dateString = e.target.value;
 
-    this.setState({ dateString });
-    this.props.onChange(dateString);
+    // In Safari, onKeyDown does not consistently fire ahead of onChange. As a result, we need to
+    // special case the `?` key so that it always triggers the appropriate callback, instead of
+    // modifying the input value
+    if (dateString[dateString.length - 1] === '?') {
+      onKeyDownQuestionMark(e);
+    } else {
+      this.setState({ dateString });
+      onChange(dateString);
+    }
   }
 
   onKeyDown(e) {
-    const { onKeyDownShiftTab, onKeyDownTab } = this.props;
-    if (e.key === 'Tab') {
+    e.stopPropagation();
+
+    const {
+      onKeyDownShiftTab,
+      onKeyDownTab,
+      onKeyDownArrowDown,
+      onKeyDownQuestionMark,
+    } = this.props;
+
+    const { key } = e;
+    if (key === 'Tab') {
       if (e.shiftKey) {
         onKeyDownShiftTab(e);
       } else {
         onKeyDownTab(e);
       }
+    } else if (key === 'ArrowDown') {
+      onKeyDownArrowDown(e);
+    } else if (key === '?') {
+      e.preventDefault();
+      onKeyDownQuestionMark(e);
     }
   }
 
@@ -133,7 +164,7 @@ export default class DateInput extends React.Component {
           ref={(ref) => { this.inputRef = ref; }}
           value={value}
           onChange={this.onChange}
-          onKeyDown={this.onKeyDown}
+          onKeyDown={throttle(this.onKeyDown, 300)}
           onFocus={onFocus}
           placeholder={placeholder}
           autoComplete="off"
@@ -143,11 +174,11 @@ export default class DateInput extends React.Component {
           aria-describedby={screenReaderMessage && screenReaderMessageId}
         />
 
-        {screenReaderMessage &&
+        {screenReaderMessage && (
           <p id={screenReaderMessageId} className="screen-reader-only">
             {screenReaderMessage}
           </p>
-        }
+        )}
 
         <div
           className={cx('DateInput__display-text', {

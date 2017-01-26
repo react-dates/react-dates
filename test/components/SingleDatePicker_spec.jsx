@@ -22,6 +22,10 @@ import isSameDay from '../../src/utils/isSameDay';
 const today = moment().startOf('day').hours(12);
 
 describe('SingleDatePicker', () => {
+  afterEach(() => {
+    sinon.restore();
+  });
+
   describe('#render', () => {
     it('is .SingleDatePicker class', () => {
       const wrapper = shallow(
@@ -540,10 +544,6 @@ describe('SingleDatePicker', () => {
       onDayPickerFocusSpy = sinon.spy(SingleDatePicker.prototype, 'onDayPickerFocus');
     });
 
-    afterEach(() => {
-      sinon.restore();
-    });
-
     it('calls props.onFocusChange once', () => {
       const onFocusChangeStub = sinon.stub();
       const wrapper = shallow(
@@ -752,6 +752,53 @@ describe('SingleDatePicker', () => {
     });
   });
 
+  describe('#getFirstFocusableDay', () => {
+    it('returns first day of arg month if not blocked and props.date is falsey', () => {
+      sinon.stub(SingleDatePicker.prototype, 'isBlocked').returns(false);
+      const wrapper = shallow(
+        <SingleDatePicker
+          date={null}
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />,
+      );
+      const firstFocusableDay = wrapper.instance().getFirstFocusableDay(today);
+      expect(firstFocusableDay.isSame(today.clone().startOf('month'), 'day')).to.equal(true);
+    });
+
+    it('returns props.date if exists and is not blocked', () => {
+      sinon.stub(SingleDatePicker.prototype, 'isBlocked').returns(false);
+      const date = today.clone().add(10, 'days');
+      const wrapper = shallow(
+        <SingleDatePicker
+          date={date}
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />,
+      );
+      const firstFocusableDay = wrapper.instance().getFirstFocusableDay(today);
+      expect(firstFocusableDay.isSame(date, 'day')).to.equal(true);
+    });
+
+    describe('desired date is blocked', () => {
+      it('returns first unblocked visible day if exists', () => {
+        const isBlockedStub = sinon.stub(SingleDatePicker.prototype, 'isBlocked').returns(true);
+        isBlockedStub.onCall(8).returns(false);
+
+        const date = moment().endOf('month').subtract(10, 'days');
+        const wrapper = shallow(
+          <SingleDatePicker
+            date={date}
+            onFocusChange={sinon.stub()}
+            onDateChange={sinon.stub()}
+          />,
+        );
+        const firstFocusableDay = wrapper.instance().getFirstFocusableDay(today);
+        expect(firstFocusableDay.isSame(date.clone().add(8, 'days'), 'day')).to.equal(true);
+      });
+    });
+  });
+
   describe('#clearDate', () => {
     describe('props.reopenPickerOnClearDate is truthy', () => {
       describe('props.onFocusChange', () => {
@@ -798,10 +845,6 @@ describe('SingleDatePicker', () => {
 
   describe('modifiers', () => {
     describe('#isBlocked', () => {
-      afterEach(() => {
-        sinon.restore();
-      });
-
       it('returns true if props.isDayBlocked returns true', () => {
         const isDayBlockedStub = sinon.stub().returns(true);
         const isOutsideRangeStub = sinon.stub().returns(false);

@@ -5,6 +5,7 @@ $react-dates-spacing-vertical-picker: 72px !default;
 
 $react-dates-color-primary: #00a699 !default;
 $react-dates-color-primary-dark: #00514a !default;
+$react-date-color-primary-dark-1: #008489 !default;
 $react-dates-color-primary-shade-1: #33dacd !default;
 $react-dates-color-primary-shade-2: #66e2da !default;
 $react-dates-color-primary-shade-3: #80e8e0 !default;
@@ -15,6 +16,7 @@ $react-dates-color-gray: #565a5c !default;
 $react-dates-color-gray-dark: darken($react-dates-color-gray, 10.5%) !default;
 $react-dates-color-gray-light: lighten($react-dates-color-gray, 17.8%) !default;   // #82888a
 $react-dates-color-gray-lighter: lighten($react-dates-color-gray, 45%) !default;     // #cacccd
+$react-dates-color-gray-lightest: lighten($react-dates-color-gray, 60%) !default;
 $react-dates-color-highlighted: #ffe8bc !default;
 
 $react-dates-color-border: #dbdbdb !default;
