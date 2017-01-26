@@ -11,4 +11,6 @@ module.exports = {
 
   ANCHOR_LEFT: 'left',
   ANCHOR_RIGHT: 'right',
+
+  BLOCKED_MODIFIER: 'blocked',
 };

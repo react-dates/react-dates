@@ -19,6 +19,11 @@ const propTypes = forbidExtraProps({
   onFocus: PropTypes.func,
   onKeyDownShiftTab: PropTypes.func,
   onKeyDownTab: PropTypes.func,
+  onKeyDownArrowDown: PropTypes.func,
+  onKeyDownQuestionMark: PropTypes.func,
+
+  // accessibility
+  isFocused: PropTypes.bool,
 });
 
 const defaultProps = {
@@ -35,6 +40,11 @@ const defaultProps = {
   onFocus() {},
   onKeyDownShiftTab() {},
   onKeyDownTab() {},
+  onKeyDownArrowDown() {},
+  onKeyDownQuestionMark() {},
+
+  // accessibility
+  isFocused: false,
 };
 
 export default class DateInput extends React.Component {
@@ -62,10 +72,10 @@ export default class DateInput extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { focused } = this.props;
-    if (prevProps.focused === focused) return;
+    const { focused, isFocused } = this.props;
+    if (prevProps.focused === focused && prevProps.isFocused === isFocused) return;
 
-    if (focused) {
+    if (focused && isFocused) {
       this.inputRef.focus();
       this.inputRef.select();
     } else {
@@ -81,13 +91,24 @@ export default class DateInput extends React.Component {
   }
 
   onKeyDown(e) {
-    const { onKeyDownShiftTab, onKeyDownTab } = this.props;
-    if (e.key === 'Tab') {
+    const {
+      onKeyDownShiftTab,
+      onKeyDownTab,
+      onKeyDownArrowDown,
+      onKeyDownQuestionMark,
+    } = this.props;
+
+    const { key } = e;
+    if (key === 'Tab') {
       if (e.shiftKey) {
         onKeyDownShiftTab(e);
       } else {
         onKeyDownTab(e);
       }
+    } else if (key === 'ArrowDown') {
+      onKeyDownArrowDown(e);
+    } else if (key === '?') {
+      onKeyDownQuestionMark(e);
     }
   }
 
@@ -136,14 +157,12 @@ export default class DateInput extends React.Component {
           disabled={disabled}
           readOnly={isTouch}
           required={required}
-          aria-describedby={screenReaderMessage && screenReaderMessageId}
+          aria-describedby={screenReaderMessageId}
         />
 
-        {screenReaderMessage &&
-          <p id={screenReaderMessageId} className="screen-reader-only">
-            {screenReaderMessage}
-          </p>
-        }
+        <p id={screenReaderMessageId} className="screen-reader-only">
+          {screenReaderMessage}
+        </p>
 
         <div
           className={cx('DateInput__display-text', {

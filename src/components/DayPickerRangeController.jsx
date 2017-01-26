@@ -52,6 +52,11 @@ const propTypes = forbidExtraProps({
   onOutsideClick: PropTypes.func,
   renderDay: PropTypes.func,
 
+  // accessibility
+  onBlur: PropTypes.func,
+  isFocused: PropTypes.bool,
+  showKeyboardShortcuts: PropTypes.bool,
+
   // i18n
   monthFormat: PropTypes.string,
   phrases: PropTypes.shape(getPhrasePropTypes(DayPickerPhrases)),
@@ -88,6 +93,11 @@ const defaultProps = {
 
   renderDay: null,
 
+  // accessibility
+  onBlur() {},
+  isFocused: false,
+  showKeyboardShortcuts: false,
+
   // i18n
   monthFormat: 'MMMM YYYY',
   phrases: DayPickerPhrases,
@@ -106,6 +116,7 @@ export default class DayPickerRangeController extends React.Component {
     this.onDayClick = this.onDayClick.bind(this);
     this.onDayMouseEnter = this.onDayMouseEnter.bind(this);
     this.onDayMouseLeave = this.onDayMouseLeave.bind(this);
+    this.getFirstFocusableDay = this.getFirstFocusableDay.bind(this);
   }
 
   componentWillUpdate() {
@@ -113,7 +124,7 @@ export default class DayPickerRangeController extends React.Component {
   }
 
   onDayClick(day, e) {
-    const { keepOpenOnDateSelect, minimumNights } = this.props;
+    const { keepOpenOnDateSelect, minimumNights, onBlur } = this.props;
     if (e) e.preventDefault();
     if (this.isBlocked(day)) return;
 
@@ -144,6 +155,7 @@ export default class DayPickerRangeController extends React.Component {
     }
 
     this.props.onDatesChange({ startDate, endDate });
+    onBlur();
   }
 
   onDayMouseEnter(day) {
@@ -160,6 +172,34 @@ export default class DayPickerRangeController extends React.Component {
     this.setState({
       hoverDate: null,
     });
+  }
+
+  getFirstFocusableDay(newMonth) {
+    const { startDate, endDate, focusedInput, minimumNights, numberOfMonths } = this.props;
+
+    let focusedDate = newMonth.clone().startOf('month');
+    if (focusedInput === START_DATE && startDate) {
+      focusedDate = startDate.clone();
+    } else if (focusedInput === END_DATE && !endDate && startDate) {
+      focusedDate = startDate.clone().add(minimumNights, 'days');
+    } else if (focusedInput === END_DATE && endDate) {
+      focusedDate = endDate.clone();
+    }
+
+    if (this.isBlocked(focusedDate)) {
+      const days = [];
+      const lastVisibleDay = newMonth.clone().add(numberOfMonths - 1, 'months').endOf('month');
+      let currentDay = focusedDate.clone();
+      while (!currentDay.isAfter(lastVisibleDay)) {
+        currentDay = currentDay.clone().add(1, 'day');
+        days.push(currentDay);
+      }
+
+      const viableDays = days.filter(day => !this.isBlocked(day) && day.isAfter(focusedDate));
+      if (viableDays.length > 0) focusedDate = viableDays[0];
+    }
+
+    return focusedDate;
   }
 
   doesNotMeetMinimumNights(day) {
@@ -244,6 +284,10 @@ export default class DayPickerRangeController extends React.Component {
       initialVisibleMonth,
       focusedInput,
       renderDay,
+      onBlur,
+      isFocused,
+      showKeyboardShortcuts,
+      phrases,
     } = this.props;
 
     const modifiers = {
@@ -288,6 +332,11 @@ export default class DayPickerRangeController extends React.Component {
         navPrev={navPrev}
         navNext={navNext}
         renderDay={renderDay}
+        isFocused={isFocused}
+        getFirstFocusableDay={this.getFirstFocusableDay}
+        onBlur={onBlur}
+        showKeyboardShortcuts={showKeyboardShortcuts}
+        phrases={phrases}
       />
     );
   }

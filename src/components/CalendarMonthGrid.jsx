@@ -6,6 +6,9 @@ import moment from 'moment';
 import cx from 'classnames';
 import { addEventListener, removeEventListener } from 'consolidated-events';
 
+import { CalendarDayPhrases } from '../defaultPhrases';
+import getPhrasePropTypes from '../utils/getPhrasePropTypes';
+
 import CalendarMonth from './CalendarMonth';
 
 import isTransitionEndSupported from '../utils/isTransitionEndSupported';
@@ -33,9 +36,12 @@ const propTypes = forbidExtraProps({
   onMonthTransitionEnd: PropTypes.func,
   renderDay: PropTypes.func,
   transformValue: PropTypes.string,
+  focusedDate: momentPropTypes.momentObj,
+  calendarMonthWidth: PropTypes.number,
 
   // i18n
   monthFormat: PropTypes.string,
+  phrases: PropTypes.shape(getPhrasePropTypes(CalendarDayPhrases)),
 });
 
 const defaultProps = {
@@ -52,9 +58,12 @@ const defaultProps = {
   onMonthTransitionEnd() {},
   renderDay: null,
   transformValue: 'none',
+  focusedDate: null,
+  calendarMonthWidth: 300,
 
   // i18n
   monthFormat: 'MMMM YYYY', // english locale
+  phrases: CalendarDayPhrases,
 };
 
 function getMonths(initialMonth, numberOfMonths) {
@@ -152,23 +161,33 @@ export default class CalendarMonthGrid extends React.Component {
       onDayClick,
       renderDay,
       onMonthTransitionEnd,
+      focusedDate,
+      calendarMonthWidth,
+      phrases,
     } = this.props;
 
 
     const { months } = this.state;
 
+    const isHorizontal = orientation === HORIZONTAL_ORIENTATION;
+
     const className = cx('CalendarMonthGrid', {
-      'CalendarMonthGrid--horizontal': orientation === HORIZONTAL_ORIENTATION,
+      'CalendarMonthGrid--horizontal': isHorizontal,
       'CalendarMonthGrid--vertical': orientation === VERTICAL_ORIENTATION,
       'CalendarMonthGrid--vertical-scrollable': orientation === VERTICAL_SCROLLABLE,
       'CalendarMonthGrid--animating': isAnimating,
     });
 
+    const style = {
+      width: isHorizontal ? (numberOfMonths + 1) * calendarMonthWidth : calendarMonthWidth,
+      ...getTransformStyles(transformValue),
+    };
+
     return (
       <div
         ref={(ref) => { this.container = ref; }}
         className={className}
-        style={getTransformStyles(transformValue)}
+        style={style}
         onTransitionEnd={onMonthTransitionEnd}
       >
         {months.map((month, i) => {
@@ -187,6 +206,8 @@ export default class CalendarMonthGrid extends React.Component {
               onDayMouseLeave={onDayMouseLeave}
               onDayClick={onDayClick}
               renderDay={renderDay}
+              focusedDate={isVisible ? focusedDate : null}
+              phrases={phrases}
             />
           );
         })}
