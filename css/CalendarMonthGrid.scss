@@ -23,3 +23,9 @@ $react-dates-width-day-picker: 300px;
   width: $react-dates-width-day-picker;
   margin: 0 auto;
 }
+
+.CalendarMonthGrid--vertical-scrollable {
+  width: $react-dates-width-day-picker;
+  margin: 0 auto;
+  overflow-y: scroll;
+}

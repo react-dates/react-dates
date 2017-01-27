@@ -58,6 +58,35 @@
   left: 50%;
 }
 
+.DayPicker--vertical-scrollable {
+  height: 100%;
+
+  .DayPicker__week-header {
+    top: 0;
+    display: table-row;
+    border-bottom: 1px solid $react-dates-color-border;
+    background: white;
+  }
+
+  .transition-container--vertical {
+    padding-top: 20px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    overflow-y: scroll;
+  }
+
+  .DayPicker__week-header {
+    margin-left: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+  }
+}
+
 .transition-container {
   position: relative;
   overflow: hidden;

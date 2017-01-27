@@ -5,11 +5,17 @@ import LeftArrow from '../svg/arrow-left.svg';
 import RightArrow from '../svg/arrow-right.svg';
 import ChevronUp from '../svg/chevron-up.svg';
 import ChevronDown from '../svg/chevron-down.svg';
+import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
+
+import {
+  HORIZONTAL_ORIENTATION,
+  VERTICAL_SCROLLABLE,
+} from '../../constants';
 
 const propTypes = {
   navPrev: PropTypes.node,
   navNext: PropTypes.node,
-  isVertical: PropTypes.bool,
+  orientation: ScrollableOrientationShape,
 
   onPrevMonthClick: PropTypes.func,
   onNextMonthClick: PropTypes.func,
@@ -17,7 +23,7 @@ const propTypes = {
 const defaultProps = {
   navPrev: null,
   navNext: null,
-  isVertical: false,
+  orientation: HORIZONTAL_ORIENTATION,
 
   onPrevMonthClick() {},
   onNextMonthClick() {},
@@ -27,10 +33,13 @@ export default function DayPickerNavigation(props) {
   const {
     navPrev,
     navNext,
-    isVertical,
     onPrevMonthClick,
     onNextMonthClick,
+    orientation,
   } = props;
+
+  const isVertical = orientation !== HORIZONTAL_ORIENTATION;
+  const isVerticalScrollable = orientation === VERTICAL_SCROLLABLE;
 
   let navPrevIcon = navPrev;
   let navNextIcon = navNext;
@@ -48,6 +57,7 @@ export default function DayPickerNavigation(props) {
   const navClassNames = cx('DayPickerNavigation', {
     'DayPickerNavigation--horizontal': !isVertical,
     'DayPickerNavigation--vertical': isVertical,
+    'DayPickerNavigation--vertical-scrollable': isVerticalScrollable,
   });
   const prevClassNames = cx('DayPickerNavigation__prev', {
     'DayPickerNavigation__prev--default': isDefaultNavPrev,
@@ -58,12 +68,14 @@ export default function DayPickerNavigation(props) {
 
   return (
     <div className={navClassNames}>
-      <span
-        className={prevClassNames}
-        onClick={onPrevMonthClick}
-      >
-        {navPrevIcon}
-      </span>
+      {!isVerticalScrollable &&
+        <span
+          className={prevClassNames}
+          onClick={onPrevMonthClick}
+        >
+          {navPrevIcon}
+        </span>
+      }
 
       <span
         className={nextClassNames}

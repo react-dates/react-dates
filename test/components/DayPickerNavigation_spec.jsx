@@ -4,6 +4,11 @@ import sinon from 'sinon-sandbox';
 import { shallow } from 'enzyme';
 
 import DayPickerNavigation from '../../src/components/DayPickerNavigation';
+import {
+  HORIZONTAL_ORIENTATION,
+  VERTICAL_ORIENTATION,
+  VERTICAL_SCROLLABLE,
+} from '../../constants';
 
 describe('DayPickerNavigation', () => {
   describe('#render', () => {
@@ -13,12 +18,12 @@ describe('DayPickerNavigation', () => {
     });
 
     it('has .DayPickerNavigation--horizontal when not vertical', () => {
-      const wrapper = shallow(<DayPickerNavigation isVertical={false} />);
+      const wrapper = shallow(<DayPickerNavigation orientation={HORIZONTAL_ORIENTATION} />);
       expect(wrapper.find('.DayPickerNavigation--horizontal')).to.have.lengthOf(1);
     });
 
     it('has .DayPickerNavigation--vertical when vertical', () => {
-      const wrapper = shallow(<DayPickerNavigation isVertical />);
+      const wrapper = shallow(<DayPickerNavigation orientation={VERTICAL_ORIENTATION} />);
       expect(wrapper.find('.DayPickerNavigation--vertical')).to.have.lengthOf(1);
     });
 
@@ -41,6 +46,11 @@ describe('DayPickerNavigation', () => {
       it('has no .DayPickerNavigation__prev--default if custom prev icon', () => {
         const wrapper = shallow(<DayPickerNavigation navPrev={<span>Prev</span>} />);
         expect(wrapper.find('.DayPickerNavigation__prev--default')).to.have.lengthOf(0);
+      });
+
+      it('hidden when vertically scrollable', () => {
+        const wrapper = shallow(<DayPickerNavigation orientation={VERTICAL_SCROLLABLE} />);
+        expect(wrapper.find('.DayPickerNavigation__prev')).to.have.lengthOf(0);
       });
     });
 
