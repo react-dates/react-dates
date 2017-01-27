@@ -1,5 +1,8 @@
 # Change Log
 
+## v5.2.0
+ - [new] Add `VERTICAL_SCROLLABLE` orientation to the `DayPickerRangeController` and child components ([#250](https://github.com/airbnb/react-dates/pull/250))
+
 ## v5.1.1
  - [fix] Fix regression where user was no longer able to type into input ([#269](https://github.com/airbnb/react-dates/pull/269))
 
