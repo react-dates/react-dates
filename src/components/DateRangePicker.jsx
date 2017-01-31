@@ -42,6 +42,7 @@ const defaultProps = {
   showClearDates: false,
   showDefaultInputIcon: false,
   customInputIcon: null,
+  customArrowIcon: null,
   disabled: false,
   required: false,
   reopenPickerOnClearDates: false,
@@ -256,6 +257,7 @@ export default class DateRangePicker extends React.Component {
       showClearDates,
       showDefaultInputIcon,
       customInputIcon,
+      customArrowIcon,
       disabled,
       required,
       phrases,
@@ -288,6 +290,7 @@ export default class DateRangePicker extends React.Component {
             showCaret={!withPortal && !withFullScreenPortal}
             showDefaultInputIcon={showDefaultInputIcon}
             customInputIcon={customInputIcon}
+            customArrowIcon={customArrowIcon}
             disabled={disabled}
             required={required}
             reopenPickerOnClearDates={reopenPickerOnClearDates}
