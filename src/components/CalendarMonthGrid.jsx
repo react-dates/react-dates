@@ -111,14 +111,7 @@ export default class CalendarMonthGrid extends React.Component {
     }
 
     if (hasNumberOfMonthsChanged) {
-      if (this.props.numberOfMonths < numberOfMonths) {
-        newMonths = months.slice();
-        for (let i = 0; i < numberOfMonths - this.props.numberOfMonths; i += 1) {
-          newMonths.push(months[months.length - 1].clone().add(i, 'month'));
-        }
-      } else {
-        newMonths = months.slice(0, numberOfMonths + 3);
-      }
+      newMonths = getMonths(initialMonth, numberOfMonths);
     }
 
     this.setState({
@@ -191,7 +184,7 @@ export default class CalendarMonthGrid extends React.Component {
             (i >= firstVisibleMonthIndex) && (i < firstVisibleMonthIndex + numberOfMonths);
           return (
             <CalendarMonth
-              key={month.month()}
+              key={month.format('YYYY-MM')}
               month={month}
               isVisible={isVisible}
               enableOutsideDays={enableOutsideDays}
