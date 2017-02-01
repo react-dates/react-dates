@@ -62,6 +62,8 @@ const defaultProps = {
   onPrevMonthClick() {},
   onNextMonthClick() {},
 
+  renderDetails: null,
+
   // i18n
   displayFormat: () => moment.localeData().longDateFormat('L'),
   monthFormat: 'MMMM YYYY',
@@ -190,6 +192,7 @@ export default class DateRangePicker extends React.Component {
       endDate,
       minimumNights,
       keepOpenOnDateSelect,
+      renderDetails,
     } = this.props;
     const { dayPickerContainerStyles } = this.state;
 
@@ -225,6 +228,7 @@ export default class DateRangePicker extends React.Component {
           isDayHighlighted={isDayHighlighted}
           isDayBlocked={isDayBlocked}
           keepOpenOnDateSelect={keepOpenOnDateSelect}
+          renderDetails={renderDetails}
         />
 
         {withFullScreenPortal &&
@@ -268,6 +272,7 @@ export default class DateRangePicker extends React.Component {
       keepOpenOnDateSelect,
       onDatesChange,
       onFocusChange,
+      renderDetails,
     } = this.props;
 
     const onOutsideClick = (!withPortal && !withFullScreenPortal) ? this.onOutsideClick : undefined;
@@ -298,6 +303,7 @@ export default class DateRangePicker extends React.Component {
             withFullScreenPortal={withFullScreenPortal}
             onDatesChange={onDatesChange}
             onFocusChange={onFocusChange}
+            renderDetails={renderDetails}
             phrases={phrases}
             screenReaderMessage={screenReaderInputMessage}
           />
