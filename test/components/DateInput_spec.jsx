@@ -62,6 +62,50 @@ describe('DateInput', () => {
       );
     });
 
+    describe('screen reader message', () => {
+      let wrapper;
+      const inputId = 'date';
+      const screenReaderMessage = 'My screen reader message';
+      const screenReaderMessageId = `DateInput__screen-reader-message-${inputId}`;
+      const screenReaderMessageSelector = `#${screenReaderMessageId}`;
+
+      describe('props.screenReaderMessage is truthy', () => {
+        beforeEach(() => {
+          wrapper = shallow(<DateInput id={inputId} screenReaderMessage={screenReaderMessage} />);
+        });
+
+        it('has #DateInput__screen-reader-message id', () => {
+          expect(wrapper.find(screenReaderMessageSelector)).to.have.lengthOf(1);
+        });
+
+        it('has props.screenReaderMessage as content', () => {
+          expect(wrapper.find(screenReaderMessageSelector).text()).to.equal(screenReaderMessage);
+        });
+
+        it('has .screen-reader-only class', () => {
+          expect(wrapper.find(screenReaderMessageSelector).is('.screen-reader-only')).to.equal(true);
+        });
+
+        it('has aria-describedby attribute === screen reader message id', () => {
+          expect(wrapper.find(`input[aria-describedby="${screenReaderMessageId}"]`)).to.have.lengthOf(1);
+        });
+      });
+
+      describe('props.screenReaderMessage is falsey', () => {
+        beforeEach(() => {
+          wrapper = shallow(<DateInput id={inputId} />);
+        });
+
+        it('does not have #DateInput__screen-reader-message id', () => {
+          expect(wrapper.find(screenReaderMessageSelector)).to.have.lengthOf(0);
+        });
+
+        it('does not have aria-describedby attribute value', () => {
+          expect(wrapper.find(`input[aria-describedby="${screenReaderMessageId}"]`)).to.have.lengthOf(0);
+        });
+      });
+    });
+
     describe('display text', () => {
       it('has .DateInput__display-text class', () => {
         const wrapper = shallow(<DateInput id="date" />);

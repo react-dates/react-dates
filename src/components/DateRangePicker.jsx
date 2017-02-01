@@ -32,6 +32,7 @@ const defaultProps = {
   startDateId: START_DATE,
   endDateId: END_DATE,
   focusedInput: null,
+  screenReaderInputMessage: '',
   minimumNights: 1,
   isDayBlocked: () => false,
   isDayHighlighted: () => false,
@@ -251,6 +252,7 @@ export default class DateRangePicker extends React.Component {
       endDateId,
       endDatePlaceholderText,
       focusedInput,
+      screenReaderInputMessage,
       showClearDates,
       showDefaultInputIcon,
       customInputIcon,
@@ -297,6 +299,7 @@ export default class DateRangePicker extends React.Component {
             onDatesChange={onDatesChange}
             onFocusChange={onFocusChange}
             phrases={phrases}
+            screenReaderMessage={screenReaderInputMessage}
           />
 
           {this.maybeRenderDayPickerWithPortal()}

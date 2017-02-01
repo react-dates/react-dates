@@ -11,6 +11,7 @@ import { START_DATE, END_DATE } from '../../constants';
 const propTypes = {
   startDateId: PropTypes.string,
   startDatePlaceholderText: PropTypes.string,
+  screenReaderMessage: PropTypes.string,
 
   endDateId: PropTypes.string,
   endDatePlaceholderText: PropTypes.string,
@@ -49,6 +50,7 @@ const defaultProps = {
   endDateId: END_DATE,
   startDatePlaceholderText: 'Start Date',
   endDatePlaceholderText: 'End Date',
+  screenReaderMessage: '',
   onStartDateFocus() {},
   onEndDateFocus() {},
   onStartDateChange() {},
@@ -108,6 +110,7 @@ export default class DateRangePickerInput extends React.Component {
       startDateValue,
       startDateId,
       startDatePlaceholderText,
+      screenReaderMessage,
       isStartDateFocused,
       onStartDateChange,
       onStartDateFocus,
@@ -153,6 +156,7 @@ export default class DateRangePickerInput extends React.Component {
           placeholder={startDatePlaceholderText}
           displayValue={startDate}
           inputValue={startDateValue}
+          screenReaderMessage={screenReaderMessage}
           focused={isStartDateFocused}
           disabled={disabled}
           required={required}
@@ -172,6 +176,7 @@ export default class DateRangePickerInput extends React.Component {
           placeholder={endDatePlaceholderText}
           displayValue={endDate}
           inputValue={endDateValue}
+          screenReaderMessage={screenReaderMessage}
           focused={isEndDateFocused}
           disabled={disabled}
           required={required}

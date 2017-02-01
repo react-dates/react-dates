@@ -9,6 +9,7 @@ export default {
   startDate: momentPropTypes.momentObj,
   endDate: momentPropTypes.momentObj,
   focusedInput: FocusedInputShape,
+  screenReaderInputMessage: PropTypes.string,
   minimumNights: PropTypes.number,
   isDayBlocked: PropTypes.func,
   isOutsideRange: PropTypes.func,

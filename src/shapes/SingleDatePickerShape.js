@@ -14,6 +14,7 @@ export default {
   keepOpenOnDateSelect: PropTypes.bool,
   disabled: PropTypes.bool,
   required: PropTypes.bool,
+  screenReaderInputMessage: PropTypes.string,
 
   onDateChange: PropTypes.func,
   onFocusChange: PropTypes.func,

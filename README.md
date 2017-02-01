@@ -199,6 +199,11 @@ If the `required` prop is set to true, the input will have to be filled before t
   required: PropTypes.bool,
 ```
 
+The `screenReaderInputMessage` prop accepts a contextual message for screen readers. When an input is focused, the `screenReaderInputMessage` prop value is read. This can inform users about constraints, such as the date format, minimum nights, blocked out dates, etc.
+```
+  screenReaderInputMessage: PropTypes.string,
+```
+
 **Custom Navigation Icons:**
 
 The `navPrev` and `navNext` props are used to assign custom icons to the "Next", and "Previous" arrows for the top navigation. If you do specify a custom icon you'll have to do the styling of the button yourself (e.g. the color, border, and things of that nature). All that comes "out of the box" is your button being positioned correctly.
