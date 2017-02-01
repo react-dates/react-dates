@@ -26,20 +26,13 @@ describe('DateInput', () => {
       });
     });
 
-    describe('label', () => {
-      it('has .DateInput__label class', () => {
-        const wrapper = shallow(<DateInput id="date" />);
-        expect(wrapper.find('label').is('.DateInput__label')).to.equal(true);
-      });
-
-      it('has props.placeholder as content', () => {
+    describe('input', () => {
+      it('has props.placeholder as an aria-label if prop is passed in', () => {
         const placeholder = 'placeholder_foo';
         const wrapper = shallow(<DateInput id="date" placeholder={placeholder} />);
-        expect(wrapper.find('label').text()).to.equal(placeholder);
+        expect(wrapper.find('input').props()['aria-label']).to.equal(placeholder);
       });
-    });
 
-    describe('input', () => {
       it('has .DateInput__input class', () => {
         const wrapper = shallow(<DateInput id="date" />);
         expect(wrapper.find('input').is('.DateInput__input')).to.equal(true);
