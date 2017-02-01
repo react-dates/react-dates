@@ -27,6 +27,7 @@ const propTypes = {
   onDayClick: PropTypes.func,
   onDayMouseEnter: PropTypes.func,
   onDayMouseLeave: PropTypes.func,
+  renderDetails: PropTypes.func,
 
   // i18n
   monthFormat: PropTypes.string,
@@ -41,6 +42,7 @@ const defaultProps = {
   onDayClick() {},
   onDayMouseEnter() {},
   onDayMouseLeave() {},
+  renderDetails: null,
 
   // i18n
   monthFormat: 'MMMM YYYY', // english locale
@@ -81,6 +83,7 @@ export default class CalendarMonth extends React.Component {
       onDayClick,
       onDayMouseEnter,
       onDayMouseLeave,
+      renderDetails,
     } = this.props;
 
     const { weeks } = this.state;
@@ -116,6 +119,7 @@ export default class CalendarMonth extends React.Component {
                           onDayMouseEnter={onDayMouseEnter}
                           onDayMouseLeave={onDayMouseLeave}
                           onDayClick={onDayClick}
+                          renderDetails={renderDetails}
                         />
                       }
                     </td>
