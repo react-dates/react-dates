@@ -29,6 +29,12 @@ describe('CalendarDay', () => {
       const wrapper = shallow(<CalendarDay day={lastOfMonth} />);
       expect(wrapper.text()).to.equal(lastOfMonth.format('D'));
     });
+
+    it('can render custom day output', () => {
+      const output = <div className="test">Stuff</div>;
+      const wrapper = shallow(<CalendarDay renderDetails={() => output} />);
+      expect(wrapper.find('.CalendarDay__details').contains(output)).to.equal(true);
+    });
   });
 
   describe('#onDayClick', () => {

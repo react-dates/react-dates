@@ -8,6 +8,7 @@ const propTypes = {
   onDayClick: PropTypes.func,
   onDayMouseEnter: PropTypes.func,
   onDayMouseLeave: PropTypes.func,
+  renderDetails: PropTypes.func,
 };
 
 const defaultProps = {
@@ -15,6 +16,7 @@ const defaultProps = {
   onDayClick() {},
   onDayMouseEnter() {},
   onDayMouseLeave() {},
+  renderDetails: null,
 };
 
 export default class CalendarDay extends React.Component {
@@ -38,7 +40,7 @@ export default class CalendarDay extends React.Component {
   }
 
   render() {
-    const { day } = this.props;
+    const { day, renderDetails } = this.props;
 
     return (
       <div
@@ -48,6 +50,9 @@ export default class CalendarDay extends React.Component {
         onClick={e => this.onDayClick(day, e)}
       >
         <span className="CalendarDay__day">{day.format('D')}</span>
+        {renderDetails && (
+          <span className="CalendarDay__details">{renderDetails(day)}</span>
+        )}
       </div>
     );
   }
