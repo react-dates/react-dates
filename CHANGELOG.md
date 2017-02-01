@@ -1,5 +1,12 @@
 # Change Log
 
+## v6.0.0
+ - [breaking] Remove hidden `label` element in favor of an `aria-label` property ([#280](https://github.com/airbnb/react-dates/pull/280))
+ - [new] Add `customArrowIcon` prop ([#277](https://github.com/airbnb/react-dates/pull/277))
+ - [breaking] Remove mousedown/mouseup/touchstart/touchend/touchtap handlers in favor of click ([#275](https://github.com/airbnb/react-dates/pull/275))
+ - [fix] Fix duplicate months created when increasing `numberOfMonths` and include year in `CalendarMonth` key ([#279](https://github.com/airbnb/react-dates/pull/279))
+ - [new] Add `screenReaderInputMessage` to populate the `aria-describedby` attribute on the input ([#266](https://github.com/airbnb/react-dates/pull/266))
+
 ## v5.2.0
  - [new] Add `VERTICAL_SCROLLABLE` orientation to the `DayPickerRangeController` and child components ([#250](https://github.com/airbnb/react-dates/pull/250))
 
