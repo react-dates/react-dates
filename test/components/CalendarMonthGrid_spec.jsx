@@ -1,6 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
+import moment from 'moment';
 
 import CalendarMonth from '../../src/components/CalendarMonth';
 import CalendarMonthGrid from '../../src/components/CalendarMonthGrid';
@@ -50,5 +51,27 @@ describe('CalendarMonthGrid', () => {
     Object.keys(transformStyles).forEach((key) => {
       expect(wrapper.prop('style')[key]).to.equal(transformStyles[key]);
     });
+  });
+
+  it('does not generate duplicate months', () => {
+    const initialMonth = moment();
+    const wrapper = shallow(<CalendarMonthGrid numberOfMonths={12} initialMonth={initialMonth} />);
+
+    wrapper.instance().componentWillReceiveProps({
+      initialMonth,
+      numberOfMonths: 24,
+    });
+
+    const months = wrapper.state().months;
+
+    const collisions = months
+      .map(m => m.format('YYYY-MM'))
+      .reduce((acc, m) => Object.assign(
+        {},
+        acc,
+        { [m]: true },
+      ), {});
+
+    expect(Object.keys(collisions).length).to.equal(months.length);
   });
 });
