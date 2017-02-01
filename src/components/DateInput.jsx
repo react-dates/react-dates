@@ -109,11 +109,8 @@ export default class DateInput extends React.Component {
           'DateInput--disabled': disabled,
         })}
       >
-        <label className="DateInput__label" htmlFor={id}>
-          {placeholder}
-        </label>
-
         <input
+          aria-label={placeholder}
           className="DateInput__input"
           type="text"
           id={id}

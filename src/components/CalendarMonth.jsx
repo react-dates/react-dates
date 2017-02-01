@@ -25,13 +25,8 @@ const propTypes = {
   modifiers: PropTypes.object,
   orientation: ScrollableOrientationShape,
   onDayClick: PropTypes.func,
-  onDayMouseDown: PropTypes.func,
-  onDayMouseUp: PropTypes.func,
   onDayMouseEnter: PropTypes.func,
   onDayMouseLeave: PropTypes.func,
-  onDayTouchStart: PropTypes.func,
-  onDayTouchEnd: PropTypes.func,
-  onDayTouchTap: PropTypes.func,
 
   // i18n
   monthFormat: PropTypes.string,
@@ -44,13 +39,8 @@ const defaultProps = {
   modifiers: {},
   orientation: HORIZONTAL_ORIENTATION,
   onDayClick() {},
-  onDayMouseDown() {},
-  onDayMouseUp() {},
   onDayMouseEnter() {},
   onDayMouseLeave() {},
-  onDayTouchStart() {},
-  onDayTouchEnd() {},
-  onDayTouchTap() {},
 
   // i18n
   monthFormat: 'MMMM YYYY', // english locale
@@ -89,13 +79,8 @@ export default class CalendarMonth extends React.Component {
       isVisible,
       modifiers,
       onDayClick,
-      onDayMouseDown,
-      onDayMouseUp,
       onDayMouseEnter,
       onDayMouseLeave,
-      onDayTouchStart,
-      onDayTouchEnd,
-      onDayTouchTap,
     } = this.props;
 
     const { weeks } = this.state;
@@ -130,12 +115,7 @@ export default class CalendarMonth extends React.Component {
                           day={day}
                           onDayMouseEnter={onDayMouseEnter}
                           onDayMouseLeave={onDayMouseLeave}
-                          onDayMouseDown={onDayMouseDown}
-                          onDayMouseUp={onDayMouseUp}
                           onDayClick={onDayClick}
-                          onDayTouchStart={onDayTouchStart}
-                          onDayTouchEnd={onDayTouchEnd}
-                          onDayTouchTap={onDayTouchTap}
                         />
                       }
                     </td>

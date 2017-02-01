@@ -184,6 +184,11 @@ Optionally, you can display a React node using `props.customInputIcon`
   customInputIcon: PropTypes.node
 ```
 
+To replace the default arrow icon, you may pass a React node to `props.customArrowIcon`.
+```
+  customArrowIcon: PropTypes.node
+```
+
 If the `disabled` prop is set to true, onFocusChange is not called when onStartDateFocus or onEndDateFocus are invoked and disabled is assigned to the actual `<input>` DOM elements.
 ```
   disabled: PropTypes.bool,
@@ -457,18 +462,13 @@ Then, every Friday in the visible calendar would have the class `CalendarMonth__
 
 **Day interaction callbacks:**
 
-These callbacks get triggered when the relevant event ('click', 'mousedown', etc.) occurs on any visible `CalendarDay` component. The callback gets back 3 arguments, the day represented as a moment object, an array of strings representing the modifiers that are applicable to that day, and the event object itself.
+These callbacks get triggered when the relevant event ('click', 'mouseenter', etc.) occurs on any visible `CalendarDay` component. The callback gets back 3 arguments, the day represented as a moment object, an array of strings representing the modifiers that are applicable to that day, and the event object itself.
 
 `onDayTouchTap` has been implemented in-house and has not yet been thoroughly tested. We recommend using `onDayClick` whenever possible.
 ```
   onDayClick: PropTypes.func,
-  onDayMouseDown: PropTypes.func,
-  onDayMouseUp: PropTypes.func,
   onDayMouseEnter: PropTypes.func,
   onDayMouseLeave: PropTypes.func,
-  onDayTouchStart: PropTypes.func,
-  onDayTouchEnd: PropTypes.func,
-  onDayTouchTap: PropTypes.func,
 ```
 
 **Some other useful callbacks:**

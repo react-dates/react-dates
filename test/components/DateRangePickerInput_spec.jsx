@@ -107,6 +107,16 @@ describe('DateRangePickerInput', () => {
     });
   });
 
+  describe('props.customArrowIcon is a React Element', () => {
+    it('has custom icon', () => {
+      const wrapper = shallow(
+        <DateRangePickerInput
+          customArrowIcon={<span className="custom-arrow-icon" />}
+        />);
+      expect(wrapper.find('.DateRangePickerInput__calendar-icon .custom-arrow-icon'));
+    });
+  });
+
   describe('#onClearDatesMouseEnter', () => {
     it('sets state.isClearDatesHovered to true', () => {
       const wrapper = shallow(<DateRangePickerInput />);
