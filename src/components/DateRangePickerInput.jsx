@@ -36,6 +36,7 @@ const propTypes = {
   showCaret: PropTypes.bool,
   showDefaultInputIcon: PropTypes.bool,
   customInputIcon: PropTypes.node,
+  customArrowIcon: PropTypes.node,
 
   // i18n
   phrases: PropTypes.shape({
@@ -69,6 +70,7 @@ const defaultProps = {
   showCaret: false,
   showDefaultInputIcon: false,
   customInputIcon: null,
+  customArrowIcon: null,
 
   // i18n
   phrases: {
@@ -125,10 +127,12 @@ export default class DateRangePickerInput extends React.Component {
       showCaret,
       showDefaultInputIcon,
       customInputIcon,
+      customArrowIcon,
       phrases,
     } = this.props;
 
     const inputIcon = customInputIcon || (<CalendarIcon />);
+    const arrowIcon = customArrowIcon || (<RightArrow />);
 
     return (
       <div
@@ -160,7 +164,7 @@ export default class DateRangePickerInput extends React.Component {
         />
 
         <div className="DateRangePickerInput__arrow">
-          <RightArrow />
+          {arrowIcon}
         </div>
 
         <DateInput

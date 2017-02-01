@@ -41,6 +41,7 @@ const propTypes = {
   onDatesChange: PropTypes.func,
 
   customInputIcon: PropTypes.node,
+  customArrowIcon: PropTypes.node,
 
   // i18n
   phrases: PropTypes.shape({
@@ -75,6 +76,7 @@ const defaultProps = {
   onDatesChange() {},
 
   customInputIcon: null,
+  customArrowIcon: null,
 
   // i18n
   phrases: {
@@ -197,6 +199,7 @@ export default class DateRangePickerInputWithHandlers extends React.Component {
       showCaret,
       showDefaultInputIcon,
       customInputIcon,
+      customArrowIcon,
       disabled,
       required,
       phrases,
@@ -224,6 +227,7 @@ export default class DateRangePickerInputWithHandlers extends React.Component {
         showCaret={showCaret}
         showDefaultInputIcon={showDefaultInputIcon}
         customInputIcon={customInputIcon}
+        customArrowIcon={customArrowIcon}
         phrases={phrases}
         onStartDateChange={this.onStartDateChange}
         onStartDateFocus={this.onStartDateFocus}
