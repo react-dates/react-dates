@@ -27,13 +27,8 @@ const propTypes = {
   modifiers: PropTypes.object,
   orientation: ScrollableOrientationShape,
   onDayClick: PropTypes.func,
-  onDayMouseDown: PropTypes.func,
-  onDayMouseUp: PropTypes.func,
   onDayMouseEnter: PropTypes.func,
   onDayMouseLeave: PropTypes.func,
-  onDayTouchStart: PropTypes.func,
-  onDayTouchEnd: PropTypes.func,
-  onDayTouchTap: PropTypes.func,
   onMonthTransitionEnd: PropTypes.func,
   transformValue: PropTypes.string,
 
@@ -50,13 +45,8 @@ const defaultProps = {
   modifiers: {},
   orientation: HORIZONTAL_ORIENTATION,
   onDayClick() {},
-  onDayMouseDown() {},
-  onDayMouseUp() {},
   onDayMouseEnter() {},
   onDayMouseLeave() {},
-  onDayTouchStart() {},
-  onDayTouchEnd() {},
-  onDayTouchTap() {},
   onMonthTransitionEnd() {},
   transformValue: 'none',
 
@@ -160,12 +150,7 @@ export default class CalendarMonthGrid extends React.Component {
       transformValue,
       onDayMouseEnter,
       onDayMouseLeave,
-      onDayMouseDown,
-      onDayMouseUp,
       onDayClick,
-      onDayTouchStart,
-      onDayTouchEnd,
-      onDayTouchTap,
       onMonthTransitionEnd,
     } = this.props;
 
@@ -200,12 +185,7 @@ export default class CalendarMonthGrid extends React.Component {
               orientation={orientation}
               onDayMouseEnter={onDayMouseEnter}
               onDayMouseLeave={onDayMouseLeave}
-              onDayMouseDown={onDayMouseDown}
-              onDayMouseUp={onDayMouseUp}
               onDayClick={onDayClick}
-              onDayTouchStart={onDayTouchStart}
-              onDayTouchEnd={onDayTouchEnd}
-              onDayTouchTap={onDayTouchTap}
             />
           );
         })}

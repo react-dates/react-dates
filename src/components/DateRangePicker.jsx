@@ -6,7 +6,6 @@ import cx from 'classnames';
 import Portal from 'react-portal';
 
 import OutsideClickHandler from './OutsideClickHandler';
-import isTouchDevice from '../utils/isTouchDevice';
 import getResponsiveContainerStyles from '../utils/getResponsiveContainerStyles';
 
 import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
@@ -77,8 +76,6 @@ export default class DateRangePicker extends React.Component {
     this.state = {
       dayPickerContainerStyles: {},
     };
-
-    this.isTouchDevice = isTouchDevice();
 
     this.onOutsideClick = this.onOutsideClick.bind(this);
 

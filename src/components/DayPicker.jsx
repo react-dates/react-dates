@@ -37,13 +37,8 @@ const propTypes = {
   navNext: PropTypes.node,
 
   onDayClick: PropTypes.func,
-  onDayMouseDown: PropTypes.func,
-  onDayMouseUp: PropTypes.func,
   onDayMouseEnter: PropTypes.func,
   onDayMouseLeave: PropTypes.func,
-  onDayTouchStart: PropTypes.func,
-  onDayTouchEnd: PropTypes.func,
-  onDayTouchTap: PropTypes.func,
   onPrevMonthClick: PropTypes.func,
   onNextMonthClick: PropTypes.func,
   onOutsideClick: PropTypes.func,
@@ -66,13 +61,8 @@ const defaultProps = {
   navNext: null,
 
   onDayClick() {},
-  onDayMouseDown() {},
-  onDayMouseUp() {},
   onDayMouseEnter() {},
   onDayMouseLeave() {},
-  onDayTouchStart() {},
-  onDayTouchTap() {},
-  onDayTouchEnd() {},
   onPrevMonthClick() {},
   onNextMonthClick() {},
   onOutsideClick() {},
@@ -380,11 +370,6 @@ export default class DayPicker extends React.Component {
       modifiers,
       withPortal,
       onDayClick,
-      onDayMouseDown,
-      onDayMouseUp,
-      onDayTouchStart,
-      onDayTouchEnd,
-      onDayTouchTap,
       onDayMouseEnter,
       onDayMouseLeave,
       onOutsideClick,
@@ -467,11 +452,6 @@ export default class DayPicker extends React.Component {
               withPortal={withPortal}
               numberOfMonths={numberOfMonths * scrollableMonthMultiple}
               onDayClick={onDayClick}
-              onDayMouseDown={onDayMouseDown}
-              onDayMouseUp={onDayMouseUp}
-              onDayTouchStart={onDayTouchStart}
-              onDayTouchEnd={onDayTouchEnd}
-              onDayTouchTap={onDayTouchTap}
               onDayMouseEnter={onDayMouseEnter}
               onDayMouseLeave={onDayMouseLeave}
               onMonthTransitionEnd={this.updateStateAfterMonthTransition}
