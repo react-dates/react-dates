@@ -336,8 +336,8 @@ export default class SingleDatePicker extends React.Component {
       screenReaderInputMessage,
     } = this.props;
 
-    const dateString = this.getDateString(date);
-    const dateValue = toISODateString(date);
+    const displayValue = this.getDateString(date);
+    const inputValue = toISODateString(date);
 
     const onOutsideClick = (!withPortal && !withFullScreenPortal) ? this.onClearFocus : undefined;
 
@@ -354,8 +354,8 @@ export default class SingleDatePicker extends React.Component {
             phrases={phrases}
             onClearDate={this.clearDate}
             showClearDate={showClearDate}
-            dateValue={dateString}
-            inputValue={dateValue}
+            displayValue={displayValue}
+            inputValue={inputValue}
             onChange={this.onChange}
             onFocus={this.onFocus}
             onKeyDownShiftTab={this.onClearFocus}

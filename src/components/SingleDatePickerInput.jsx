@@ -1,10 +1,11 @@
 import React, { PropTypes } from 'react';
+import { forbidExtraProps } from 'airbnb-prop-types';
 import cx from 'classnames';
 
 import DateInput from './DateInput';
 import CloseButton from '../svg/close.svg';
 
-const propTypes = {
+const propTypes = forbidExtraProps({
   id: PropTypes.string.isRequired,
   placeholder: PropTypes.string, // also used as label
   displayValue: PropTypes.string,
@@ -26,7 +27,7 @@ const propTypes = {
   phrases: PropTypes.shape({
     clearDate: PropTypes.node,
   }),
-};
+});
 
 const defaultProps = {
   placeholder: 'Select Date',
