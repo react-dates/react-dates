@@ -339,7 +339,7 @@ export default class SingleDatePicker extends React.Component {
     const dateString = this.getDateString(date);
     const dateValue = toISODateString(date);
 
-    const onOutsideClick = (!withPortal && !withFullScreenPortal) ? this.onOutsideClick : undefined;
+    const onOutsideClick = (!withPortal && !withFullScreenPortal) ? this.onClearFocus : undefined;
 
     return (
       <div className="SingleDatePicker">
