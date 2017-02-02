@@ -108,4 +108,18 @@ describe('CalendarDay', () => {
       expect(onMouseLeaveStub).to.have.property('callCount', 1);
     });
   });
+
+  describe('#maybeRenderDetails', () => {
+    it('returns nothing if props.renderDetails is not provided', () => {
+      const wrapper = shallow(<CalendarDay />);
+      const detail = wrapper.instance().maybeRenderDetails();
+      expect(detail).to.equal(undefined);
+    });
+
+    it('calls props.renderDetails from #render', () => {
+      const renderSpy = sinon.stub();
+      shallow(<CalendarDay renderDetails={renderSpy} />);
+      expect(renderSpy).to.have.property('callCount', 1);
+    });
+  });
 });
