@@ -64,4 +64,76 @@ describe('CalendarMonth', () => {
       });
     });
   });
+
+  describe('#shouldComponentUpdate', () => {
+    it('isVisible change forces update', () => {
+      const props = {
+        month: moment('2016-01'),
+        isVisible: false,
+      };
+
+      const inst = shallow(<CalendarMonth {...props} />).instance();
+
+      expect(inst.shouldComponentUpdate({
+        ...inst.props,
+        isVisible: true,
+      }, inst.state)).to.equal(true);
+    });
+
+    it('modifiers change does not force update', () => {
+      const props = {
+        month: moment('2016-01'),
+        modifiers: { blocked: () => false },
+      };
+
+      const inst = shallow(<CalendarMonth {...props} />).instance();
+
+      expect(inst.shouldComponentUpdate({
+        ...inst.props,
+        modifiers: { blocked: () => true },
+      }, inst.state)).to.equal(false);
+    });
+  });
+
+  describe('#isMonthAffected', () => {
+    it('hover within month marks as affected', () => {
+      const props = {
+        month: moment('2016-01'),
+      };
+
+      const wrapper = shallow(<CalendarMonth {...props} />);
+
+      expect(wrapper.instance().isMonthAffected({
+        ...props,
+        hoverDate: moment('2016-01-15'),
+      })).to.equal(true);
+    });
+
+    it('hover outside month does not mark as affected', () => {
+      const props = {
+        month: moment('2016-01'),
+      };
+
+      const wrapper = shallow(<CalendarMonth {...props} />);
+
+      expect(wrapper.instance().isMonthAffected({
+        ...props,
+        hoverDate: moment('2016-02-01'),
+      })).to.equal(false);
+    });
+
+    it('startDate and hoverDate spanning month mark as affected', () => {
+      const props = {
+        month: moment('2016-06'),
+        startDate: moment('2016-05-01'),
+      };
+
+      const wrapper = shallow(<CalendarMonth {...props} />);
+
+      expect(wrapper.instance().isMonthAffected({
+        ...props,
+        hoverDate: moment('2016-07-01'),
+      })).to.equal(true);
+    });
+  });
 });

@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
-import shallowCompare from 'react-addons-shallow-compare';
 import ReactDOM from 'react-dom';
 import moment from 'moment';
+import momentPropTypes from 'react-moment-proptypes';
 import cx from 'classnames';
 
 import OutsideClickHandler from './OutsideClickHandler';
@@ -25,6 +25,10 @@ const PREV_TRANSITION = 'prev';
 const NEXT_TRANSITION = 'next';
 
 const propTypes = {
+  startDate: momentPropTypes.momentObj,
+  endDate: momentPropTypes.momentObj,
+  hoverDate: momentPropTypes.momentObj,
+
   enableOutsideDays: PropTypes.bool,
   numberOfMonths: PropTypes.number,
   modifiers: PropTypes.object,
@@ -48,6 +52,10 @@ const propTypes = {
 };
 
 const defaultProps = {
+  startDate: undefined,
+  endDate: undefined,
+  hoverDate: undefined,
+
   enableOutsideDays: false,
   numberOfMonths: 1,
   modifiers: {},
@@ -166,10 +174,6 @@ export default class DayPicker extends React.Component {
         this.adjustDayPickerHeight();
       }
     }
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return shallowCompare(this, nextProps, nextState);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -374,6 +378,9 @@ export default class DayPicker extends React.Component {
       onDayMouseLeave,
       onOutsideClick,
       monthFormat,
+      startDate,
+      endDate,
+      hoverDate,
     } = this.props;
 
     const numOfWeekHeaders = this.isVertical() ? 1 : numberOfMonths;
@@ -442,6 +449,9 @@ export default class DayPicker extends React.Component {
           >
             <CalendarMonthGrid
               ref="calendarMonthGrid"
+              startDate={startDate}
+              endDate={endDate}
+              hoverDate={hoverDate}
               transformValue={transformValue}
               enableOutsideDays={enableOutsideDays}
               firstVisibleMonthIndex={firstVisibleMonthIndex}
