@@ -49,7 +49,7 @@ const defaultProps = {
   onDayMouseEnter() {},
   onDayMouseLeave() {},
   onMonthTransitionEnd() {},
-  renderDetails: null,
+  renderDetails() {},
   transformValue: 'none',
 
   // i18n

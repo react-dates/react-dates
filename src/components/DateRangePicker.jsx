@@ -62,7 +62,7 @@ const defaultProps = {
   onPrevMonthClick() {},
   onNextMonthClick() {},
 
-  renderDetails: null,
+  renderDetails() {},
 
   // i18n
   displayFormat: () => moment.localeData().longDateFormat('L'),

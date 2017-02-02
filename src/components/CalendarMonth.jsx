@@ -42,7 +42,7 @@ const defaultProps = {
   onDayClick() {},
   onDayMouseEnter() {},
   onDayMouseLeave() {},
-  renderDetails: null,
+  renderDetails() {},
 
   // i18n
   monthFormat: 'MMMM YYYY', // english locale
