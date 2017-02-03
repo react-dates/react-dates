@@ -39,14 +39,9 @@ export default class CalendarDay extends React.Component {
     onDayMouseLeave(day, e);
   }
 
-  maybeRenderDetails(day) {
-    const { renderDetails } = this.props;
-    return renderDetails(day);
-  }
-
   render() {
-    const { day } = this.props;
-    const details = this.maybeRenderDetails(day);
+    const { day, renderDetails } = this.props;
+    const details = renderDetails(day);
     return (
       <div
         className="CalendarDay"
