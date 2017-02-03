@@ -2,8 +2,10 @@ import React, { PropTypes } from 'react';
 import shallowCompare from 'react-addons-shallow-compare';
 import momentPropTypes from 'react-moment-proptypes';
 import moment from 'moment';
+import cx from 'classnames';
 
 const propTypes = {
+  className: PropTypes.string.isRequired,
   day: momentPropTypes.momentObj,
   onDayClick: PropTypes.func,
   onDayMouseEnter: PropTypes.func,
@@ -11,6 +13,7 @@ const propTypes = {
 };
 
 const defaultProps = {
+  className: '',
   day: moment(),
   onDayClick() {},
   onDayMouseEnter() {},
@@ -38,17 +41,19 @@ export default class CalendarDay extends React.Component {
   }
 
   render() {
-    const { day } = this.props;
+    const { day, className } = this.props;
 
-    return (
-      <div
-        className="CalendarDay"
+    return (day ?
+      <td
+        className={className}
         onMouseEnter={e => this.onDayMouseEnter(day, e)}
         onMouseLeave={e => this.onDayMouseLeave(day, e)}
         onClick={e => this.onDayClick(day, e)}
       >
-        <span className="CalendarDay__day">{day.format('D')}</span>
-      </div>
+        {day.format('D')}
+      </td>
+      :
+      <td />
     );
   }
 }

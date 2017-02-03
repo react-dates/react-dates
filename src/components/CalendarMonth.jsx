@@ -109,16 +109,14 @@ export default class CalendarMonth extends React.Component {
                   }, modifiersForDay.map(mod => `CalendarMonth__day--${mod}`));
 
                   return (
-                    <td className={className} key={dayOfWeek}>
-                      {day &&
-                        <CalendarDay
-                          day={day}
-                          onDayMouseEnter={onDayMouseEnter}
-                          onDayMouseLeave={onDayMouseLeave}
-                          onDayClick={onDayClick}
-                        />
-                      }
-                    </td>
+                    <CalendarDay
+                      day={day}
+                      className={className}
+                      key={dayOfWeek}
+                      onDayMouseEnter={onDayMouseEnter}
+                      onDayMouseLeave={onDayMouseLeave}
+                      onDayClick={onDayClick}
+                    />
                   );
                 })}
               </tr>

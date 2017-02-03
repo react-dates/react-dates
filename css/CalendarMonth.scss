@@ -16,6 +16,11 @@
     border-collapse: collapse;
     border-spacing: 0;
   }
+
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
 }
 
 .CalendarMonth--horizontal {
