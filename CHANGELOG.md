@@ -1,5 +1,9 @@
 # Change Log
 
+## v6.0.1
+ - [fix] Attached SDP closes on outside click again ([#288](https://github.com/airbnb/react-dates/pull/288))
+ - [fix] SDP display value defaults to moment's `L` format again instead of ISO ([#285](https://github.com/airbnb/react-dates/pull/285))
+
 ## v6.0.0
  - [breaking] Remove hidden `label` element in favor of an `aria-label` property ([#280](https://github.com/airbnb/react-dates/pull/280))
  - [new] Add `customArrowIcon` prop ([#277](https://github.com/airbnb/react-dates/pull/277))
