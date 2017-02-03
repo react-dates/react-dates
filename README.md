@@ -212,6 +212,13 @@ The `navPrev` and `navNext` props are used to assign custom icons to the "Next",
   navNext: PropTypes.node,
 ```
 
+**Custom content in calendar days:**
+
+If you want to add content to a specific day on the calendar, you can specify a `renderDetails` function which receives the `day` moment object as its only argument. Return either a valid JSX node to render (`element|string`) or something falsy (`false|null|undefined`).
+```
+  renderDetails: PropTypes.func,
+```
+
 **Some useful callbacks:**
 
 If you need to do something when the user navigates between months (for instance, check the availability of a listing), you can do so using the `onPrevMonthClick` and `onNextMonthClick` props.
