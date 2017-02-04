@@ -264,10 +264,11 @@ export default class SingleDatePicker extends React.Component {
       withFullScreenPortal,
       focused,
       initialVisibleMonth,
+      modifiers,
     } = this.props;
     const { dayPickerContainerStyles } = this.state;
 
-    const modifiers = {
+    const defaultModifiers = {
       today: day => this.isToday(day),
       blocked: day => this.isBlocked(day),
       'blocked-calendar': day => isDayBlocked(day),
@@ -277,6 +278,8 @@ export default class SingleDatePicker extends React.Component {
       hovered: day => this.isHovered(day),
       selected: day => this.isSelected(day),
     };
+
+    const finalModifiers = Object.assign({}, defaultModifiers, modifiers);
 
     const onOutsideClick = (!withFullScreenPortal && withPortal) ? this.onClearFocus : undefined;
 
@@ -289,7 +292,7 @@ export default class SingleDatePicker extends React.Component {
         <DayPicker
           orientation={orientation}
           enableOutsideDays={enableOutsideDays}
-          modifiers={modifiers}
+          modifiers={finalModifiers}
           numberOfMonths={numberOfMonths}
           onDayClick={this.onDayClick}
           onDayMouseEnter={this.onDayMouseEnter}

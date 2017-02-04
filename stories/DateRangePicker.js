@@ -88,6 +88,25 @@ const TestCustomArrowIcon = () => (
   </span>
 );
 
+const ModifierStyle = ({ dayKey, background, color }) => {
+  const html = [
+    '<style>',
+    `.CalendarMonth__day--${dayKey} {`,
+    `background: ${background};`,
+    `color: ${color};`,
+    '}',
+    '</style>',
+  ].join('\n');
+  return (
+    <div
+      dangerouslySetInnerHTML={{
+        __html: html,
+      }}
+    />
+  );
+};
+
+
 class TestWrapper extends React.Component {
   constructor(props) {
     super(props);
@@ -281,4 +300,18 @@ storiesOf('DateRangePicker', module)
     <DateRangePickerWrapper
       screenReaderInputMessage='Here you could inform screen reader users of the date format, minimum nights, blocked out dates, etc'
     />
-  ));
+  ))
+  .addWithInfo('with modifier', () => (
+    <div>
+      <ModifierStyle
+        dayKey="sunday"
+        background="#ff5a5f"
+        color="#ffffff"
+      />
+      <DateRangePickerWrapper
+        modifiers={{
+          sunday: (day) => (moment.weekdays(day.weekday()) === 'Sunday'),
+        }}
+      />
+    </div>
+  ))
