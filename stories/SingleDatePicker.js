@@ -44,6 +44,24 @@ const TestNextIcon = props => (
   </span>
 );
 
+const ModifierStyle = ({ dayKey, background, color }) => {
+  const html = [
+    '<style>',
+    `.CalendarMonth__day--${dayKey} {`,
+    `background: ${background};`,
+    `color: ${color};`,
+    '}',
+    '</style>',
+  ].join('\n');
+  return (
+    <div
+      dangerouslySetInnerHTML={{
+        __html: html,
+      }}
+    />
+  );
+};
+
 storiesOf('SingleDatePicker', module)
   .addWithInfo('default', () => (
     <SingleDatePickerWrapper />
@@ -141,4 +159,18 @@ storiesOf('SingleDatePicker', module)
     <SingleDatePickerWrapper
       screenReaderInputMessage='Here you could inform screen reader users of the date format, minimum nights, blocked out dates, etc'
     />
+  ))
+  .addWithInfo('with modifier', () => (
+    <div>
+      <ModifierStyle
+        dayKey="saturday"
+        background="#ff5a5f"
+        color="#ffffff"
+      />
+      <SingleDatePickerWrapper
+        modifiers={{
+          saturday: (day) => (moment.weekdays(day.weekday()) === 'Saturday'),
+        }}
+      />
+    </div>
   ));

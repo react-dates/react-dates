@@ -47,6 +47,7 @@ const propTypes = {
   onPrevMonthClick: PropTypes.func,
   onNextMonthClick: PropTypes.func,
   onOutsideClick: PropTypes.func,
+  modifiers: PropTypes.object,
 
   // i18n
   monthFormat: PropTypes.string,
@@ -81,6 +82,7 @@ const defaultProps = {
   onPrevMonthClick() {},
   onNextMonthClick() {},
   onOutsideClick() {},
+  modifiers: {},
 
   // i18n
   monthFormat: 'MMMM YYYY',
@@ -236,9 +238,10 @@ export default class DayPickerRangeController extends React.Component {
       enableOutsideDays,
       initialVisibleMonth,
       focusedInput,
+      modifiers,
     } = this.props;
 
-    const modifiers = {
+    const defaultModifiers = {
       today: day => this.isToday(day),
       blocked: day => this.isBlocked(day),
       'blocked-calendar': day => isDayBlocked(day),
@@ -260,12 +263,14 @@ export default class DayPickerRangeController extends React.Component {
       'selected-span': day => this.isInSelectedSpan(day),
     };
 
+    const finalModifiers = Object.assign({}, defaultModifiers, modifiers);
+
     return (
       <DayPicker
         ref={(ref) => { this.dayPicker = ref; }}
         orientation={orientation}
         enableOutsideDays={enableOutsideDays}
-        modifiers={modifiers}
+        modifiers={finalModifiers}
         numberOfMonths={numberOfMonths}
         onDayClick={this.onDayClick}
         onDayMouseEnter={this.onDayMouseEnter}
