@@ -25,69 +25,79 @@ describe('DateRangePicker', () => {
     });
 
     it('renders .DateRangePicker__picker class', () => {
-      const wrapper = shallow(<DateRangePicker />);
+      const wrapper = shallow(<DateRangePicker focusedInput={START_DATE} />);
       expect(wrapper.find('.DateRangePicker__picker')).to.have.length(1);
     });
 
     it('renders <DateRangePickerInputWithHandlers />', () => {
-      const wrapper = shallow(<DateRangePicker />);
+      const wrapper = shallow(<DateRangePicker focusedInput={START_DATE} />);
       expect(wrapper.find(DateRangePickerInputController)).to.have.length(1);
     });
 
     it('renders <DayPickerRangeController />', () => {
-      const wrapper = shallow(<DateRangePicker />);
+      const wrapper = shallow(<DateRangePicker focusedInput={START_DATE} />);
       expect(wrapper.find(DayPickerRangeController)).to.have.length(1);
     });
 
     describe('props.orientation === VERTICAL_ORIENTATION', () => {
       it('renders .DateRangePicker__picker--vertical class', () => {
-        const wrapper = shallow(<DateRangePicker orientation={VERTICAL_ORIENTATION} />);
+        const wrapper = shallow(
+          <DateRangePicker orientation={VERTICAL_ORIENTATION} focusedInput={START_DATE} />,
+        );
         expect(wrapper.find('.DateRangePicker__picker--vertical')).to.have.length(1);
       });
     });
 
     describe('props.orientation === HORIZONTAL_ORIENTATION', () => {
       it('renders .DateRangePicker__picker--horizontal class', () => {
-        const wrapper = shallow(<DateRangePicker orientation={HORIZONTAL_ORIENTATION} />);
+        const wrapper = shallow(
+          <DateRangePicker orientation={HORIZONTAL_ORIENTATION} focusedInput={START_DATE} />,
+        );
         expect(wrapper.find('.DateRangePicker__picker--horizontal')).to.have.length(1);
       });
 
       it('renders <DayPickerRangeController /> with props.numberOfMonths === 2', () => {
-        const wrapper = shallow(<DateRangePicker orientation={HORIZONTAL_ORIENTATION} />);
+        const wrapper = shallow(
+          <DateRangePicker orientation={HORIZONTAL_ORIENTATION} focusedInput={START_DATE} />,
+        );
         expect(wrapper.find(DayPickerRangeController).props().numberOfMonths).to.equal(2);
       });
     });
 
     describe('props.anchorDirection === ANCHOR_LEFT', () => {
       it('renders .DateRangePicker__picker--direction-left class', () => {
-        const wrapper = shallow(<DateRangePicker anchorDirection={ANCHOR_LEFT} />);
+        const wrapper = shallow(
+          <DateRangePicker anchorDirection={ANCHOR_LEFT} focusedInput={START_DATE} />,
+        );
         expect(wrapper.find('.DateRangePicker__picker--direction-left')).to.have.length(1);
       });
     });
 
     describe('props.orientation === ANCHOR_RIGHT', () => {
       it('renders .DateRangePicker__picker--direction-right class', () => {
-        const wrapper = shallow(<DateRangePicker anchorDirection={ANCHOR_RIGHT} />);
+        const wrapper = shallow(
+          <DateRangePicker anchorDirection={ANCHOR_RIGHT} focusedInput={START_DATE} />,
+        );
         expect(wrapper.find('.DateRangePicker__picker--direction-right')).to.have.length(1);
       });
     });
 
     describe('props.withPortal is truthy', () => {
       it('renders .DateRangePicker__picker--portal class', () => {
-        const wrapper = shallow(<DateRangePicker withPortal />);
+        const wrapper = shallow(<DateRangePicker withPortal focusedInput={START_DATE} />);
         expect(wrapper.find('.DateRangePicker__picker--portal')).to.have.length(1);
       });
 
       describe('<Portal />', () => {
         it('is rendered', () => {
-          const wrapper = shallow(<DateRangePicker withPortal />);
+          const wrapper = shallow(<DateRangePicker withPortal focusedInput={START_DATE} />);
           expect(wrapper.find(Portal)).to.have.length(1);
         });
 
-        it('isOpened prop is false if props.focusedInput === null', () => {
+        it('is not rendered if props.focusedInput === null', () => {
           const wrapper =
             shallow(<DateRangePicker focusedInput={null} withPortal />);
-          expect(wrapper.find(Portal).props().isOpened).to.equal(false);
+          expect(wrapper.find(Portal)).to.have.length(0);
         });
 
         it('isOpened prop is true if props.focusedInput !== null', () => {
@@ -99,30 +109,32 @@ describe('DateRangePicker', () => {
 
     describe('props.withFullScreenPortal is truthy', () => {
       it('renders .DateRangePicker__picker--portal class', () => {
-        const wrapper = shallow(<DateRangePicker withFullScreenPortal />);
+        const wrapper = shallow(<DateRangePicker withFullScreenPortal focusedInput={START_DATE} />);
         expect(wrapper.find('.DateRangePicker__picker--portal')).to.have.length(1);
       });
 
       it('renders .DateRangePicker__picker--full-screen-portal class', () => {
-        const wrapper = shallow(<DateRangePicker withFullScreenPortal />);
+        const wrapper = shallow(<DateRangePicker withFullScreenPortal focusedInput={START_DATE} />);
         expect(wrapper.find('.DateRangePicker__picker--full-screen-portal')).to.have.length(1);
       });
 
-      it('renders .DateRangePicker__close class', () => {
+      it('does not render <DayPickerRangeController>', () => {
         const wrapper = shallow(<DateRangePicker withFullScreenPortal />);
-        expect(wrapper.find('.DateRangePicker__close')).to.have.length(1);
+        expect(wrapper.find(DayPickerRangeController)).to.have.length(0);
       });
 
       describe('<Portal />', () => {
         it('is rendered', () => {
-          const wrapper = shallow(<DateRangePicker withFullScreenPortal />);
+          const wrapper = shallow(
+            <DateRangePicker withFullScreenPortal focusedInput={START_DATE} />,
+          );
           expect(wrapper.find(Portal)).to.have.length(1);
         });
 
-        it('isOpened prop is false if props.focusedInput === null', () => {
+        it('is not rendered if props.focusedInput === null', () => {
           const wrapper =
             shallow(<DateRangePicker focusedInput={null} withFullScreenPortal />);
-          expect(wrapper.find(Portal).props().isOpened).to.equal(false);
+          expect(wrapper.find(Portal)).to.have.length(0);
         });
 
         it('isOpened prop is true if props.focusedInput !== null', () => {
@@ -134,14 +146,14 @@ describe('DateRangePicker', () => {
     });
 
     describe('props.focusedInput', () => {
-      it('shows datepicker if props.focusedInput != null', () => {
+      it('renders <DayPickerRangeController> if props.focusedInput != null', () => {
         const wrapper = shallow(<DateRangePicker focusedInput={START_DATE} />);
-        expect(wrapper.find('.DateRangePicker__picker--show')).to.have.length(1);
+        expect(wrapper.find(DayPickerRangeController)).to.have.length(1);
       });
 
-      it('hides datepicker if props.focusedInput = null', () => {
+      it('does not render <DayPickerRangeController> if props.focusedInput = null', () => {
         const wrapper = shallow(<DateRangePicker focusedInput={null} />);
-        expect(wrapper.find('.DateRangePicker__picker--invisible')).to.have.length(1);
+        expect(wrapper.find(DayPickerRangeController)).to.have.length(0);
       });
     });
   });
