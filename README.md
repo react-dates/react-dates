@@ -243,7 +243,7 @@ The `phrases` prop is an object that contains all the English language phrases c
   }),
 ```
 
-** Display picker when clicked on clear button: **
+**Display picker when clicked on clear button:**
 
 The `reopenPickerOnClearDates` prop helps to control whether to show the date picker when the clear option is clicked. This is set to `false` by default
 which means that the picker does not open when the clear button is clicked by default. To display the picker one must explicitly set it to `true`.
@@ -252,7 +252,7 @@ which means that the picker does not open when the clear button is clicked by de
     reopenPickerOnClearDates: PropTypes.bool,
 ```
 
-** Keep picker open on date selection: **
+**Keep picker open on date selection:**
 
 The `keepOpenOnDateSelect` prop allows you to better control in what scenario the `DayPicker` stays visible or not. If it is set to false (the default value), once a date range has been successfully selected, the `DayPicker` will close. If true, it will stay open.
 
@@ -405,7 +405,7 @@ The `phrases` prop is an object that contains all the English language phrases c
   })
 ```
 
-** Display picker when clicked on clear button: **
+**Display picker when clicked on clear button:**
 
 The `reopenPickerOnClearDates` prop helps to control whether to show the date picker when the clear option is clicked. This is set to `false` by default
 which means that the picker does not open when the clear button is clicked by default. To display the picker one must explicitly set it to `true`.
@@ -414,7 +414,7 @@ which means that the picker does not open when the clear button is clicked by de
     reopenPickerOnClearDates: PropTypes.bool,
 ```
 
-** Keep picker open on date selection: **
+**Keep picker open on date selection:**
 
 The `keepOpenOnDateSelect` prop allows you to better control in what scenario the `DayPicker` stays visible or not. If it is set to false (the default value), once a date range has been successfully selected, the `DayPicker` will close. If true, it will stay open.
 
