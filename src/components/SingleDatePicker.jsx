@@ -60,6 +60,8 @@ const defaultProps = {
   onPrevMonthClick() {},
   onNextMonthClick() {},
 
+  renderDetails() {},
+
   // i18n
   displayFormat: () => moment.localeData().longDateFormat('L'),
   monthFormat: 'MMMM YYYY',
@@ -264,6 +266,7 @@ export default class SingleDatePicker extends React.Component {
       withFullScreenPortal,
       focused,
       initialVisibleMonth,
+      renderDetails,
     } = this.props;
     const { dayPickerContainerStyles } = this.state;
 
@@ -303,6 +306,7 @@ export default class SingleDatePicker extends React.Component {
           onOutsideClick={onOutsideClick}
           navPrev={navPrev}
           navNext={navNext}
+          renderDetails={renderDetails}
         />
 
         {withFullScreenPortal &&

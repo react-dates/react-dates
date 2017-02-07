@@ -60,6 +60,11 @@ storiesOf('DayPicker', module)
       navNext={<TestNextIcon />}
     />
   ))
+  .addWithInfo('with custom details', () => (
+    <DayPicker
+      renderDetails={day => day.day() % 6 === 5 && '😻'}
+    />
+  ))
   .addWithInfo('vertical with fixed-width container', () => (
     <div style={{ width: '400px' }}>
       <DayPicker

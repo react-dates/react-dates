@@ -40,6 +40,8 @@ export default {
   onPrevMonthClick: PropTypes.func,
   onNextMonthClick: PropTypes.func,
 
+  renderDetails: PropTypes.func,
+
   // i18n
   displayFormat: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   monthFormat: PropTypes.string,

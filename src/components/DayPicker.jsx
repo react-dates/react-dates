@@ -43,6 +43,8 @@ const propTypes = {
   onNextMonthClick: PropTypes.func,
   onOutsideClick: PropTypes.func,
 
+  renderDetails: PropTypes.func,
+
   // i18n
   monthFormat: PropTypes.string,
 };
@@ -67,6 +69,7 @@ const defaultProps = {
   onNextMonthClick() {},
   onOutsideClick() {},
 
+  renderDetails() {},
   // i18n
   monthFormat: 'MMMM YYYY',
 };
@@ -372,6 +375,7 @@ export default class DayPicker extends React.Component {
       onDayClick,
       onDayMouseEnter,
       onDayMouseLeave,
+      renderDetails,
       onOutsideClick,
       monthFormat,
     } = this.props;
@@ -454,6 +458,7 @@ export default class DayPicker extends React.Component {
               onDayClick={onDayClick}
               onDayMouseEnter={onDayMouseEnter}
               onDayMouseLeave={onDayMouseLeave}
+              renderDetails={renderDetails}
               onMonthTransitionEnd={this.updateStateAfterMonthTransition}
               monthFormat={monthFormat}
             />
