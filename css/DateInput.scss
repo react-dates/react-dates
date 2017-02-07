@@ -50,6 +50,13 @@ $caret-top: $react-dates-spacing-vertical-picker - $react-dates-width-tooltip-ar
   border: 0;
   height: 100%;
   width: 100%;
+
+  &[readonly] {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
 }
 
 .DateInput__display-text {

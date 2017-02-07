@@ -4,10 +4,10 @@
 .DayPickerNavigation__next {
   cursor: pointer;
   line-height: 0.78;
-  user-select: none;
   -webkit-user-select: none; /* Chrome/Safari */
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* IE10+ */
+  user-select: none;
 }
 
 .DayPickerNavigation__prev--default,
