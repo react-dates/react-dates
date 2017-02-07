@@ -4,6 +4,7 @@ import shallowCompare from 'react-addons-shallow-compare';
 import momentPropTypes from 'react-moment-proptypes';
 import moment from 'moment';
 import cx from 'classnames';
+import range from 'lodash.range';
 
 import CalendarMonth from './CalendarMonth';
 
@@ -19,6 +20,7 @@ import {
 } from '../../constants';
 
 const propTypes = {
+  addTransitionMonths: PropTypes.bool,
   enableOutsideDays: PropTypes.bool,
   firstVisibleMonthIndex: PropTypes.number,
   initialMonth: momentPropTypes.momentObj,
@@ -37,6 +39,7 @@ const propTypes = {
 };
 
 const defaultProps = {
+  addTransitionMonths: true,
   enableOutsideDays: false,
   firstVisibleMonthIndex: 0,
   initialMonth: moment(),
@@ -54,23 +57,26 @@ const defaultProps = {
   monthFormat: 'MMMM YYYY', // english locale
 };
 
-function getMonths(initialMonth, numberOfMonths) {
-  let month = initialMonth.clone().subtract(1, 'month');
-
-  const months = [];
-  for (let i = 0; i < numberOfMonths + 2; i++) {
-    months.push(month);
-    month = month.clone().add(1, 'month');
+export function getMonths({ initialMonth, numberOfMonths, addTransitionMonths }) {
+  let monthRange;
+  if (addTransitionMonths) {
+    monthRange = range(-1, numberOfMonths + 1);
+  } else {
+    monthRange = range(0, numberOfMonths);
   }
 
-  return months;
+  return monthRange.map((offset) => initialMonth.clone().add(offset, 'month'));
 }
 
 export default class CalendarMonthGrid extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      months: getMonths(props.initialMonth, props.numberOfMonths),
+      months: getMonths({
+        initialMonth: props.initialMonth,
+        numberOfMonths: props.numberOfMonths,
+        addTransitionMonths: props.addTransitionMonths,
+      }),
     };
 
     this.isTransitionEndSupported = isTransitionEndSupported();
@@ -84,29 +90,19 @@ export default class CalendarMonthGrid extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     const { initialMonth, numberOfMonths } = nextProps;
-    const { months } = this.state;
 
     const hasMonthChanged = !this.props.initialMonth.isSame(initialMonth, 'month');
     const hasNumberOfMonthsChanged = this.props.numberOfMonths !== numberOfMonths;
-    let newMonths = months;
 
-    if (hasMonthChanged && !hasNumberOfMonthsChanged) {
-      if (initialMonth.isAfter(this.props.initialMonth)) {
-        newMonths = months.slice(1);
-        newMonths.push(months[months.length - 1].clone().add(1, 'month'));
-      } else {
-        newMonths = months.slice(0, months.length - 1);
-        newMonths.unshift(months[0].clone().subtract(1, 'month'));
-      }
+    if (hasMonthChanged || hasNumberOfMonthsChanged) {
+      this.setState({
+        months: getMonths({
+          initialMonth: initialMonth,
+          numberOfMonths: numberOfMonths,
+          addTransitionMonths: nextProps.addTransitionMonths,
+        }),
+      });
     }
-
-    if (hasNumberOfMonthsChanged) {
-      newMonths = getMonths(initialMonth, numberOfMonths);
-    }
-
-    this.setState({
-      months: newMonths,
-    });
   }
 
   shouldComponentUpdate(nextProps, nextState) {

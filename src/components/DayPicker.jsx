@@ -382,14 +382,16 @@ export default class DayPicker extends React.Component {
       weekHeaders.push(this.renderWeekHeader(i));
     }
 
-    let firstVisibleMonthIndex = 1;
-    if (monthTransition === PREV_TRANSITION) {
-      firstVisibleMonthIndex -= 1;
-    } else if (monthTransition === NEXT_TRANSITION) {
-      firstVisibleMonthIndex += 1;
-    }
-
     const verticalScrollable = this.props.orientation === VERTICAL_SCROLLABLE;
+
+    let firstVisibleMonthIndex;
+    if (monthTransition === PREV_TRANSITION || verticalScrollable) {
+      firstVisibleMonthIndex = 0;
+    } else if (monthTransition === NEXT_TRANSITION) {
+      firstVisibleMonthIndex = 2;
+    } else {
+      firstVisibleMonthIndex = 1;
+    }
 
     const dayPickerClassNames = cx('DayPicker', {
       'DayPicker--horizontal': this.isHorizontal(),
@@ -441,6 +443,7 @@ export default class DayPicker extends React.Component {
             style={transitionContainerStyle}
           >
             <CalendarMonthGrid
+              addTransitionMonths={orientation !== VERTICAL_SCROLLABLE}
               ref="calendarMonthGrid"
               transformValue={transformValue}
               enableOutsideDays={enableOutsideDays}

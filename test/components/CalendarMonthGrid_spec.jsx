@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import moment from 'moment';
 
 import CalendarMonth from '../../src/components/CalendarMonth';
-import CalendarMonthGrid from '../../src/components/CalendarMonthGrid';
+import CalendarMonthGrid, { getMonths } from '../../src/components/CalendarMonthGrid';
 
 import { HORIZONTAL_ORIENTATION, VERTICAL_ORIENTATION } from '../../constants';
 
@@ -73,5 +73,77 @@ describe('CalendarMonthGrid', () => {
       ), {});
 
     expect(Object.keys(collisions).length).to.equal(months.length);
+  });
+
+  describe('#getMonths', () => {
+    it('returns the same number of months when addTransitionMonths is false', () => {
+      expect(getMonths({
+        initialMonth: moment(),
+        numberOfMonths: 2,
+        addTransitionMonths: false,
+      })).to.have.length(2);
+    });
+
+    it('adds additional month before and after when addTransitionMonths is true', () => {
+      expect(getMonths({
+        initialMonth: moment(),
+        numberOfMonths: 10,
+        addTransitionMonths: true,
+      })).to.have.length(12);
+    });
+
+    it('prepends previous month when addTransitionMonths is true', () => {
+      const initialMonth = moment();
+      const prevMonth = initialMonth.clone().subtract(1, 'month');
+
+      const months = getMonths({
+        initialMonth,
+        numberOfMonths: 2,
+        addTransitionMonths: true,
+      });
+
+      expect(months[0].format('YYYY-MM')).to.equal(prevMonth.format('YYYY-MM'));
+    });
+
+    it('appends additional month when addTransitionMonths is true', () => {
+      const initialMonth = moment();
+      const numberOfMonths = 2;
+
+      // Example:
+      // initialMonth = Jan
+      // numberOfMonths = 2
+      // followingMonth = Jan + 2 = Mar
+      // expected months = [ Dec, Jan, Feb, Mar ]
+      const followingMonth = initialMonth.clone().add(numberOfMonths, 'month');
+
+      const months = getMonths({
+        initialMonth,
+        numberOfMonths,
+        addTransitionMonths: true,
+      });
+
+      expect(
+        months[months.length - 1].format('YYYY-MM')
+      ).to.equal(followingMonth.format('YYYY-MM'));
+    });
+  });
+
+  describe('#componentWillReceiveProps', () => {
+    it('updates months when numberOfMonths changes', () => {
+      const initialMonth = moment();
+      const wrapper = shallow(
+        <CalendarMonthGrid
+          addTransitionMonths={false}
+          numberOfMonths={2}
+          initialMonth={initialMonth}
+        />
+      );
+
+      wrapper.instance().componentWillReceiveProps({
+        initialMonth,
+        numberOfMonths: 4,
+      });
+      expect(wrapper.state('months')).to.have.length(4);
+    });
   });
 });
