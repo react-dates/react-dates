@@ -38,6 +38,32 @@ describe('getCalendarMonthWeeks', () => {
     });
   });
 
+  describe('padding when enableOutsideDays is false', () => {
+    let weeksWithPadding;
+
+    before(() => {
+      // using specific month Feb 2017 to manually compare with calendar
+      weeksWithPadding = getCalendarMonthWeeks(moment('2017-02-01'), false);
+    });
+
+    it('null pads leading days', () => {
+      const firstWeek = weeksWithPadding[0];
+      expect(firstWeek[0]).to.equal(null); // Sun Jan 29
+      expect(firstWeek[1]).to.equal(null); // Mon Jan 30
+      expect(firstWeek[2]).to.equal(null); // Tue Jan 31
+      expect(firstWeek[3]).to.not.equal(null); // Wed Feb 1
+    });
+
+    it('null pads trailing days', () => {
+      const lastWeek = weeksWithPadding[weeksWithPadding.length - 1];
+      expect(lastWeek[2]).to.not.equal(null); // Tue Feb 28
+      expect(lastWeek[3]).to.equal(null); // Wed Mar 1
+      expect(lastWeek[4]).to.equal(null); // Thu Mar 2
+      expect(lastWeek[5]).to.equal(null); // Fri Mar 3
+      expect(lastWeek[6]).to.equal(null); // Sat Mar 4
+    });
+  });
+
   describe('Daylight Savings Time issues', () => {
     it('last of February does not equal first of March', () => {
       const february = getCalendarMonthWeeks(today.clone().month(1));
