@@ -46,10 +46,6 @@ const defaultProps = {
   monthFormat: 'MMMM YYYY', // english locale
 };
 
-export function getModifiersForDay(modifiers, day) {
-  return day ? Object.keys(modifiers).filter(key => modifiers[key](day)) : [];
-}
-
 export default class CalendarMonth extends React.Component {
   constructor(props) {
     super(props);
@@ -102,25 +98,17 @@ export default class CalendarMonth extends React.Component {
           <tbody className="js-CalendarMonth__grid">
             {weeks.map((week, i) => (
               <tr key={i}>
-                {week.map((day, dayOfWeek) => {
-                  const modifiersForDay = getModifiersForDay(modifiers, day);
-                  const className = cx('CalendarMonth__day', {
-                    'CalendarMonth__day--outside': !day || day.month() !== month.month(),
-                  }, modifiersForDay.map(mod => `CalendarMonth__day--${mod}`));
-
-                  return (
-                    <td className={className} key={dayOfWeek}>
-                      {day &&
-                        <CalendarDay
-                          day={day}
-                          onDayMouseEnter={onDayMouseEnter}
-                          onDayMouseLeave={onDayMouseLeave}
-                          onDayClick={onDayClick}
-                        />
-                      }
-                    </td>
-                  );
-                })}
+                {week.map((day, dayOfWeek) => (
+                  <CalendarDay
+                    day={day}
+                    isOutsideDay={!day || day.month() !== month.month()}
+                    modifiers={modifiers}
+                    key={dayOfWeek}
+                    onDayMouseEnter={onDayMouseEnter}
+                    onDayMouseLeave={onDayMouseLeave}
+                    onDayClick={onDayClick}
+                  />
+                ))}
               </tr>
             ))}
           </tbody>
