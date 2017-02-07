@@ -30,6 +30,7 @@ const propTypes = {
   onDayMouseEnter: PropTypes.func,
   onDayMouseLeave: PropTypes.func,
   onMonthTransitionEnd: PropTypes.func,
+  renderDay: PropTypes.func,
   transformValue: PropTypes.string,
 
   // i18n
@@ -48,6 +49,7 @@ const defaultProps = {
   onDayMouseEnter() {},
   onDayMouseLeave() {},
   onMonthTransitionEnd() {},
+  renderDay: null,
   transformValue: 'none',
 
   // i18n
@@ -144,6 +146,7 @@ export default class CalendarMonthGrid extends React.Component {
       onDayMouseEnter,
       onDayMouseLeave,
       onDayClick,
+      renderDay,
       onMonthTransitionEnd,
     } = this.props;
 
@@ -179,6 +182,7 @@ export default class CalendarMonthGrid extends React.Component {
               onDayMouseEnter={onDayMouseEnter}
               onDayMouseLeave={onDayMouseLeave}
               onDayClick={onDayClick}
+              renderDay={renderDay}
             />
           );
         })}

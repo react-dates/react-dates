@@ -141,4 +141,10 @@ storiesOf('SingleDatePicker', module)
     <SingleDatePickerWrapper
       screenReaderInputMessage='Here you could inform screen reader users of the date format, minimum nights, blocked out dates, etc'
     />
+  ))
+  .addWithInfo('with custom daily details', () => (
+    <SingleDatePickerWrapper
+      numberOfMonths={1}
+      renderDay={day => day.format('ddd')}
+    />
   ));
