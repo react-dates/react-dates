@@ -10,7 +10,7 @@ export default function getCalendarMonthWeeks(month, enableOutsideDays) {
 
   // days belonging to the previous month
   for (let i = 0; i < currentDay.weekday(); i++) {
-    const prevDay = enableOutsideDays && currentDay.clone().subtract(i + 1, 'day');
+    const prevDay = enableOutsideDays ? currentDay.clone().subtract(i + 1, 'day') : null;
     currentWeek.unshift(prevDay);
   }
 
@@ -29,7 +29,7 @@ export default function getCalendarMonthWeeks(month, enableOutsideDays) {
   if (currentDay.weekday() !== 0) {
     // days belonging to the next month
     for (let k = currentDay.weekday(), count = 0; k < 7; k++, count++) {
-      const nextDay = enableOutsideDays && currentDay.clone().add(count, 'day');
+      const nextDay = enableOutsideDays ? currentDay.clone().add(count, 'day') : null;
       currentWeek.push(nextDay);
     }
 
