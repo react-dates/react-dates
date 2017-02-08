@@ -26,7 +26,7 @@
 }
 
 .CalendarDay--outside {
-  border: 0;
+  border: 1px solid rgba(0, 0, 0, 0);
   cursor: default;
 
   &:active {

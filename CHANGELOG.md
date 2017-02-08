@@ -1,5 +1,11 @@
 # Change Log
 
+## v6.0.2
+- [fix] Fix `day` prop type warning to `CalendarDay` ([#305](https://github.com/airbnb/react-dates/pull/305))
+- [fix] Remove blinking cursor in iOS ([#304](https://github.com/airbnb/react-dates/pull/304))
+- [fix] Do not render `DayPicker` when not visible ([#286](https://github.com/airbnb/react-dates/pull/286))
+- [fix] Simplify `CalendarDay` DOM ([#291](https://github.com/airbnb/react-dates/pull/291))
+
 ## v6.0.1
  - [fix] Attached SDP closes on outside click again ([#288](https://github.com/airbnb/react-dates/pull/288))
  - [fix] SDP display value defaults to moment's `L` format again instead of ISO ([#285](https://github.com/airbnb/react-dates/pull/285))
