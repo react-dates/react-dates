@@ -1,7 +1,6 @@
 /* eslint react/no-array-index-key: 0 */
 
 import React, { PropTypes } from 'react';
-import shallowCompare from 'react-addons-shallow-compare';
 import momentPropTypes from 'react-moment-proptypes';
 import moment from 'moment';
 import cx from 'classnames';
@@ -48,7 +47,7 @@ const defaultProps = {
   monthFormat: 'MMMM YYYY', // english locale
 };
 
-export default class CalendarMonth extends React.Component {
+export default class CalendarMonth extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -63,10 +62,6 @@ export default class CalendarMonth extends React.Component {
         weeks: getCalendarMonthWeeks(month, enableOutsideDays),
       });
     }
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return shallowCompare(this, nextProps, nextState);
   }
 
   render() {
