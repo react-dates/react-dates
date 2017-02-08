@@ -236,7 +236,11 @@ export default class DayPickerRangeController extends React.Component {
       enableOutsideDays,
       initialVisibleMonth,
       focusedInput,
+      startDate,
+      endDate,
     } = this.props;
+
+    const { hoverDate } = this.state;
 
     const modifiers = {
       today: day => this.isToday(day),
@@ -263,6 +267,9 @@ export default class DayPickerRangeController extends React.Component {
     return (
       <DayPicker
         ref={(ref) => { this.dayPicker = ref; }}
+        startDate={startDate}
+        endDate={endDate}
+        hoverDate={hoverDate}
         orientation={orientation}
         enableOutsideDays={enableOutsideDays}
         modifiers={modifiers}

@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import shallowCompare from 'react-addons-shallow-compare';
 import momentPropTypes from 'react-moment-proptypes';
 import moment from 'moment';
 import cx from 'classnames';
@@ -19,6 +18,10 @@ import {
 } from '../../constants';
 
 const propTypes = {
+  startDate: momentPropTypes.momentObj,
+  endDate: momentPropTypes.momentObj,
+  hoverDate: momentPropTypes.momentObj,
+
   enableOutsideDays: PropTypes.bool,
   firstVisibleMonthIndex: PropTypes.number,
   initialMonth: momentPropTypes.momentObj,
@@ -37,6 +40,10 @@ const propTypes = {
 };
 
 const defaultProps = {
+  startDate: undefined,
+  endDate: undefined,
+  hoverDate: undefined,
+
   enableOutsideDays: false,
   firstVisibleMonthIndex: 0,
   initialMonth: moment(),
@@ -109,10 +116,6 @@ export default class CalendarMonthGrid extends React.Component {
     });
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    return shallowCompare(this, nextProps, nextState);
-  }
-
   componentDidUpdate() {
     const { isAnimating, onMonthTransitionEnd } = this.props;
 
@@ -145,6 +148,9 @@ export default class CalendarMonthGrid extends React.Component {
       onDayMouseLeave,
       onDayClick,
       onMonthTransitionEnd,
+      startDate,
+      endDate,
+      hoverDate,
     } = this.props;
 
 
@@ -169,6 +175,9 @@ export default class CalendarMonthGrid extends React.Component {
             (i >= firstVisibleMonthIndex) && (i < firstVisibleMonthIndex + numberOfMonths);
           return (
             <CalendarMonth
+              startDate={startDate}
+              endDate={endDate}
+              hoverDate={hoverDate}
               key={month.format('YYYY-MM')}
               month={month}
               isVisible={isVisible}

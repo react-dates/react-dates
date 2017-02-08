@@ -97,8 +97,10 @@
     "airbnb-prop-types": "^2.1.0",
     "array-includes": "^3.0.2",
     "classnames": "^2.2.5",
+    "lodash.omit": "^4.5.0",
     "react-moment-proptypes": "^1.2.1",
-    "react-portal": "^3.0.0"
+    "react-portal": "^3.0.0",
+    "shallowequal": "^0.2.2"
   },
   "peerDependencies": {
     "moment": "2.10 - 2.14 || ^2.15.1",

@@ -1,7 +1,8 @@
 /* eslint react/no-array-index-key: 0 */
 
 import React, { PropTypes } from 'react';
-import shallowCompare from 'react-addons-shallow-compare';
+import omit from 'lodash.omit';
+import shallowequal from 'shallowequal';
 import momentPropTypes from 'react-moment-proptypes';
 import moment from 'moment';
 import cx from 'classnames';
@@ -9,6 +10,7 @@ import cx from 'classnames';
 import CalendarDay from './CalendarDay';
 
 import getCalendarMonthWeeks from '../utils/getCalendarMonthWeeks';
+import doDateRangesOverlap from '../utils/doDateRangesOverlap';
 
 import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
 
@@ -19,6 +21,10 @@ import {
 } from '../../constants';
 
 const propTypes = {
+  startDate: momentPropTypes.momentObj,
+  endDate: momentPropTypes.momentObj,
+  hoverDate: momentPropTypes.momentObj,
+
   month: momentPropTypes.momentObj,
   isVisible: PropTypes.bool,
   enableOutsideDays: PropTypes.bool,
@@ -33,6 +39,10 @@ const propTypes = {
 };
 
 const defaultProps = {
+  startDate: undefined,
+  endDate: undefined,
+  hoverDate: undefined,
+
   month: moment(),
   isVisible: true,
   enableOutsideDays: false,
@@ -52,6 +62,8 @@ export default class CalendarMonth extends React.Component {
     this.state = {
       weeks: getCalendarMonthWeeks(props.month, props.enableOutsideDays),
     };
+
+    this.isMonthAffected = this.isMonthAffected.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -64,7 +76,51 @@ export default class CalendarMonth extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    return shallowCompare(this, nextProps, nextState);
+    // startDate, endDate, and hoverDate are already accounted for in the range
+    // overlap check above. modifiers is currently redefined with every render
+    // and would always trigger an update.
+    const propsToSkip = ['modifiers', 'startDate', 'endDate', 'hoverDate'];
+
+    return this.isMonthAffected(nextProps) ||
+      !shallowequal(this.state, nextState) ||
+      !shallowequal(omit(this.props, propsToSkip), omit(nextProps, propsToSkip));
+  }
+
+  isMonthAffected(nextProps) {
+    const {
+      month,
+      startDate,
+      endDate,
+      hoverDate,
+    } = this.props;
+
+    // Each CalendarMonth component should stay linked to the same month, but
+    // if this ever changes, we need to rerender.
+    if (!month.isSame(nextProps.month, 'month')) {
+      return true;
+    }
+
+    // Find all the dates that could affect this month's render
+    const allModifiedDays = [
+      startDate,
+      endDate,
+      hoverDate,
+      nextProps.startDate,
+      nextProps.endDate,
+      nextProps.hoverDate,
+    ].filter(date => !!date);
+
+    // Check if these dates overlap with month
+    if (allModifiedDays.length > 0) {
+      return doDateRangesOverlap(
+        moment.min(...allModifiedDays),
+        moment.max(...allModifiedDays),
+        month.clone().startOf('month'),
+        month.clone().endOf('month'),
+      );
+    }
+
+    return false;
   }
 
   render() {
