@@ -277,8 +277,14 @@ storiesOf('DateRangePicker', module)
       customArrowIcon={<TestCustomArrowIcon />}
     />
   ))
+  .addWithInfo('with custom daily details', () => (
+    <DateRangePickerWrapper
+      renderDay={day => day.format('ddd')}
+    />
+  ))
   .addWithInfo('with screen reader message', () => (
     <DateRangePickerWrapper
       screenReaderInputMessage='Here you could inform screen reader users of the date format, minimum nights, blocked out dates, etc'
     />
   ));
+

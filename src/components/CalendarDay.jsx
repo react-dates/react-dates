@@ -7,19 +7,21 @@ import cx from 'classnames';
 const propTypes = {
   day: momentPropTypes.momentObj,
   isOutsideDay: PropTypes.bool,
+  modifiers: PropTypes.object,
   onDayClick: PropTypes.func,
   onDayMouseEnter: PropTypes.func,
   onDayMouseLeave: PropTypes.func,
-  modifiers: PropTypes.object,
+  renderDay: PropTypes.func,
 };
 
 const defaultProps = {
   day: moment(),
   isOutsideDay: false,
+  modifiers: {},
   onDayClick() {},
   onDayMouseEnter() {},
   onDayMouseLeave() {},
-  modifiers: {},
+  renderDay: null,
 };
 
 export function getModifiersForDay(modifiers, day) {
@@ -51,6 +53,7 @@ export default class CalendarDay extends React.Component {
       day,
       isOutsideDay,
       modifiers,
+      renderDay,
     } = this.props;
 
     const className = cx('CalendarDay', {
@@ -64,7 +67,7 @@ export default class CalendarDay extends React.Component {
         onMouseLeave={e => this.onDayMouseLeave(day, e)}
         onClick={e => this.onDayClick(day, e)}
       >
-        {day.format('D')}
+        {renderDay ? renderDay(day) : day.format('D')}
       </td>
       :
       <td />
