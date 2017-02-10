@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import shallowCompare from 'react-addons-shallow-compare';
 import momentPropTypes from 'react-moment-proptypes';
 import moment from 'moment';
 import cx from 'classnames';
@@ -68,7 +67,7 @@ function getMonths(initialMonth, numberOfMonths) {
   return months;
 }
 
-export default class CalendarMonthGrid extends React.Component {
+export default class CalendarMonthGrid extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -109,10 +108,6 @@ export default class CalendarMonthGrid extends React.Component {
     this.setState({
       months: newMonths,
     });
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return shallowCompare(this, nextProps, nextState);
   }
 
   componentDidUpdate() {

@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import shallowCompare from 'react-addons-shallow-compare';
 import momentPropTypes from 'react-moment-proptypes';
 import moment from 'moment';
 import cx from 'classnames';
@@ -28,11 +27,7 @@ export function getModifiersForDay(modifiers, day) {
   return day ? Object.keys(modifiers).filter(key => modifiers[key](day)) : [];
 }
 
-export default class CalendarDay extends React.Component {
-  shouldComponentUpdate(nextProps, nextState) {
-    return shallowCompare(this, nextProps, nextState);
-  }
-
+export default class CalendarDay extends React.PureComponent {
   onDayClick(day, e) {
     const { onDayClick } = this.props;
     onDayClick(day, e);
