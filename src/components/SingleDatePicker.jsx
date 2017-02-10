@@ -2,6 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import cx from 'classnames';
 import Portal from 'react-portal';
+import { addEventListener, removeEventListener } from 'consolidated-events';
 
 import OutsideClickHandler from './OutsideClickHandler';
 import toMomentObject from '../utils/toMomentObject';
@@ -95,7 +96,11 @@ export default class SingleDatePicker extends React.Component {
 
   /* istanbul ignore next */
   componentDidMount() {
-    window.addEventListener('resize', this.responsivizePickerPosition);
+    this.resizeHandle = addEventListener(
+      window,
+      'resize',
+      this.responsivizePickerPosition,
+    );
     this.responsivizePickerPosition();
   }
 
@@ -111,7 +116,7 @@ export default class SingleDatePicker extends React.Component {
 
   /* istanbul ignore next */
   componentWillUnmount() {
-    window.removeEventListener('resize', this.responsivizePickerPosition);
+    removeEventListener(this.resizeHandle);
   }
 
   onChange(dateString) {

@@ -97,6 +97,7 @@
     "airbnb-prop-types": "^2.1.0",
     "array-includes": "^3.0.2",
     "classnames": "^2.2.5",
+    "consolidated-events": "^1.0.1",
     "react-moment-proptypes": "^1.2.1",
     "react-portal": "^3.0.0"
   },

@@ -4,6 +4,7 @@ import shallowCompare from 'react-addons-shallow-compare';
 import moment from 'moment';
 import cx from 'classnames';
 import Portal from 'react-portal';
+import { addEventListener, removeEventListener } from 'consolidated-events';
 
 import OutsideClickHandler from './OutsideClickHandler';
 import getResponsiveContainerStyles from '../utils/getResponsiveContainerStyles';
@@ -86,7 +87,11 @@ export default class DateRangePicker extends React.Component {
   }
 
   componentDidMount() {
-    window.addEventListener('resize', this.responsivizePickerPosition);
+    this.resizeHandle = addEventListener(
+      window,
+      'resize',
+      this.responsivizePickerPosition,
+    );
     this.responsivizePickerPosition();
   }
 
@@ -102,7 +107,7 @@ export default class DateRangePicker extends React.Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.responsivizePickerPosition);
+    removeEventListener(this.resizeHandle);
   }
 
   onOutsideClick() {
