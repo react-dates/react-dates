@@ -1,5 +1,8 @@
 # Change Log
 
+## v7.0.0
+- [breaking] Simplify `CalendarDay` DOM ([#291](https://github.com/airbnb/react-dates/pull/291))
+
 ## v6.1.0
 - [fix] Revert "Simplify `CalendarDay` DOM ([#291](https://github.com/airbnb/react-dates/pull/291))"
 - [new] Add `renderDay` prop to customize the content of the `CalendarDay` component ([#307](https://github.com/airbnb/react-dates/pull/307))
