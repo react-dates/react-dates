@@ -91,6 +91,7 @@ export default class DateRangePicker extends React.Component {
       window,
       'resize',
       this.responsivizePickerPosition,
+      { passive: true },
     );
     this.responsivizePickerPosition();
   }
