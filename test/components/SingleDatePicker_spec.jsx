@@ -18,7 +18,8 @@ import SingleDatePicker from '../../src/components/SingleDatePicker';
 
 import isSameDay from '../../src/utils/isSameDay';
 
-const today = moment();
+// Set to noon to mimic how days in the picker are configured internally
+const today = moment().startOf('day').hours(12);
 
 describe('SingleDatePicker', () => {
   describe('#render', () => {
