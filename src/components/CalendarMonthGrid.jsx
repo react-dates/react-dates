@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import ReactDOM from 'react-dom';
 import shallowCompare from 'react-addons-shallow-compare';
 import momentPropTypes from 'react-moment-proptypes';
 import moment from 'moment';
@@ -60,7 +59,7 @@ function getMonths(initialMonth, numberOfMonths) {
   let month = initialMonth.clone().subtract(1, 'month');
 
   const months = [];
-  for (let i = 0; i < numberOfMonths + 2; i++) {
+  for (let i = 0; i < numberOfMonths + 2; i += 1) {
     months.push(month);
     month = month.clone().add(1, 'month');
   }
@@ -80,7 +79,6 @@ export default class CalendarMonthGrid extends React.Component {
   }
 
   componentDidMount() {
-    this.container = ReactDOM.findDOMNode(this.containerRef);
     this.container.addEventListener('transitionend', this.onTransitionEnd);
   }
 
@@ -162,7 +160,7 @@ export default class CalendarMonthGrid extends React.Component {
 
     return (
       <div
-        ref={(ref) => { this.containerRef = ref; }}
+        ref={(ref) => { this.container = ref; }}
         className={className}
         style={getTransformStyles(transformValue)}
         onTransitionEnd={onMonthTransitionEnd}
