@@ -289,8 +289,9 @@ export default class SingleDatePicker extends React.Component {
       withPortal,
       withFullScreenPortal,
       focused,
-      initialVisibleMonth,
       renderDay,
+      date,
+      initialVisibleMonth,
     } = this.props;
     const { dayPickerContainerStyles } = this.state;
 
@@ -305,14 +306,8 @@ export default class SingleDatePicker extends React.Component {
       selected: day => this.isSelected(day),
     };
 
-<<<<<<< HEAD
-    const onOutsideClick = (!withFullScreenPortal && withPortal)
-      ? this.onClearFocus
-      : undefined;
-=======
-    const onOutsideClick = !withFullScreenPortal ? this.onClearFocus : undefined;
-    const onInitialVisibleMonth = initialVisibleMonth ? initialVisibleMonth : () => (date || moment())
->>>>>>> Now, SingleDatePicker will use 'date' value as initialVisibleMonth if not specified instead the current day
+    const onOutsideClick = (!withFullScreenPortal && withPortal) ? this.onClearFocus : undefined;
+    const initialVisibleMonthThunk = initialVisibleMonth || (() => (date || moment()));
 
     return (
       <div
@@ -333,7 +328,7 @@ export default class SingleDatePicker extends React.Component {
           monthFormat={monthFormat}
           withPortal={withPortal || withFullScreenPortal}
           hidden={!focused}
-          initialVisibleMonth={onInitialVisibleMonth}
+          initialVisibleMonth={initialVisibleMonthThunk}
           onOutsideClick={onOutsideClick}
           navPrev={navPrev}
           navNext={navNext}
