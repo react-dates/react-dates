@@ -1,10 +1,14 @@
 # Change Log
 
+## v6.1.0
+- [fix] Revert "Simplify `CalendarDay` DOM ([#291](https://github.com/airbnb/react-dates/pull/291))"
+- [new] Add `renderDay` prop to customize the content of the `CalendarDay` component ([#307](https://github.com/airbnb/react-dates/pull/307))
+
 ## v6.0.2
 - [fix] Fix `day` prop type warning to `CalendarDay` ([#305](https://github.com/airbnb/react-dates/pull/305))
 - [fix] Remove blinking cursor in iOS ([#304](https://github.com/airbnb/react-dates/pull/304))
 - [fix] Do not render `DayPicker` when not visible ([#286](https://github.com/airbnb/react-dates/pull/286))
-- [fix] Simplify `CalendarDay` DOM ([#291](https://github.com/airbnb/react-dates/pull/291))
+- [breaking] Simplify `CalendarDay` DOM ([#291](https://github.com/airbnb/react-dates/pull/291))
 
 ## v6.0.1
  - [fix] Attached SDP closes on outside click again ([#288](https://github.com/airbnb/react-dates/pull/288))
