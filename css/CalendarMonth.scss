@@ -4,10 +4,6 @@
   text-align: center;
   padding: 0 13px;
   vertical-align: top;
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 
   &:first-of-type {
     position: absolute;
@@ -20,6 +16,11 @@
     border-collapse: collapse;
     border-spacing: 0;
   }
+
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .CalendarMonth--horizontal {
@@ -47,111 +48,4 @@
 
 .CalendarMonth--vertical-scrollable .CalendarMonth__caption {
   padding: 5px 0;
-}
-
-// This order is important.
-.CalendarMonth__day {
-  border: 1px solid lighten($react-dates-color-border-light, 3);
-  padding: 0;
-  box-sizing: border-box;
-  color: $react-dates-color-gray;
-  cursor: pointer;
-  width: 39px;
-  height: 38px;
-
-  &:active {
-    background: darken($react-dates-color-white, 5%);
-  }
-}
-
-.CalendarMonth__day--highlighted-calendar {
-  background: $react-dates-color-highlighted;
-  color: $react-dates-color-gray;
-  cursor: default;
-
-  &:active {
-    background: $react-dates-color-secondary;
-  }
-}
-
-.CalendarMonth__day--outside {
-  border: 0;
-  cursor: default;
-
-  &:active {
-    background: $react-dates-color-white;
-  }
-}
-
-.CalendarMonth__day--hovered {
-  background: lighten($react-dates-color-border-light, 3);
-  border: 1px double darken($react-dates-color-border-light, 3);
-  color: inherit;
-}
-
-.CalendarMonth__day--blocked-minimum-nights {
-  color: $react-dates-color-gray-lighter;
-  background: $react-dates-color-white;
-  border: 1px solid lighten($react-dates-color-border-light, 3);
-  cursor: default;
-
-  &:active {
-    background: $react-dates-color-white;
-  }
-}
-
-.CalendarMonth__day--selected-span {
-  background: $react-dates-color-primary-shade-2;
-  border: 1px double $react-dates-color-primary-shade-1;
-  color: $react-dates-color-white;
-
-  &.CalendarMonth__day--hovered,
-  &:active {
-    background: $react-dates-color-primary-shade-1;
-    border: 1px double $react-dates-color-primary;
-  }
-
-  &.CalendarMonth__day--last-in-range {
-    border-right: $react-dates-color-primary;
-  }
-}
-
-.CalendarMonth__day--hovered-span,
-.CalendarMonth__day--after-hovered-start {
-  background: $react-dates-color-primary-shade-4;
-  border: 1px double $react-dates-color-primary-shade-3;
-  color: $react-dates-color-secondary;
-}
-
-.CalendarMonth__day--selected-start,
-.CalendarMonth__day--selected-end,
-.CalendarMonth__day--selected {
-  background: $react-dates-color-primary;
-  border: 1px double $react-dates-color-primary;
-  color: $react-dates-color-white;
-
-  &:active {
-    background: $react-dates-color-primary;
-  }
-}
-
-.CalendarMonth__day--blocked-calendar {
-  background: $react-dates-color-gray-lighter;
-  color: $react-dates-color-gray-light;
-  cursor: default;
-
-  &:active {
-    background: $react-dates-color-gray-lighter;
-  }
-}
-
-.CalendarMonth__day--blocked-out-of-range {
-  color: $react-dates-color-gray-lighter;
-  background: $react-dates-color-white;
-  border: 1px solid lighten($react-dates-color-border-light, 3);
-  cursor: default;
-
-  &:active {
-    background: $react-dates-color-white;
-  }
 }
