@@ -2,12 +2,9 @@ import React, { PropTypes } from 'react';
 import shallowCompare from 'react-addons-shallow-compare';
 import momentPropTypes from 'react-moment-proptypes';
 import moment from 'moment';
-import cx from 'classnames';
 
 const propTypes = {
   day: momentPropTypes.momentObj,
-  isOutsideDay: PropTypes.bool,
-  modifiers: PropTypes.object,
   onDayClick: PropTypes.func,
   onDayMouseEnter: PropTypes.func,
   onDayMouseLeave: PropTypes.func,
@@ -16,17 +13,11 @@ const propTypes = {
 
 const defaultProps = {
   day: moment(),
-  isOutsideDay: false,
-  modifiers: {},
   onDayClick() {},
   onDayMouseEnter() {},
   onDayMouseLeave() {},
   renderDay: null,
 };
-
-export function getModifiersForDay(modifiers, day) {
-  return day ? Object.keys(modifiers).filter(key => modifiers[key](day)) : [];
-}
 
 export default class CalendarDay extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
@@ -51,26 +42,20 @@ export default class CalendarDay extends React.Component {
   render() {
     const {
       day,
-      isOutsideDay,
-      modifiers,
       renderDay,
     } = this.props;
 
-    const className = cx('CalendarDay', {
-      'CalendarDay--outside': !day || isOutsideDay,
-    }, getModifiersForDay(modifiers, day).map(mod => `CalendarDay--${mod}`));
-
-    return (day ?
-      <td
-        className={className}
+    return (
+      <div
+        className="CalendarDay"
         onMouseEnter={e => this.onDayMouseEnter(day, e)}
         onMouseLeave={e => this.onDayMouseLeave(day, e)}
         onClick={e => this.onDayClick(day, e)}
       >
-        {renderDay ? renderDay(day) : day.format('D')}
-      </td>
-      :
-      <td />
+        <span className="CalendarDay__day">
+          {renderDay ? renderDay(day) : day.format('D')}
+        </span>
+      </div>
     );
   }
 }
