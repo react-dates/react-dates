@@ -12,7 +12,8 @@ import isInclusivelyAfterDay from '../../src/utils/isInclusivelyAfterDay';
 
 import { START_DATE, END_DATE } from '../../constants';
 
-const today = moment().startOf('day');
+// Set to noon to mimic how days in the picker are configured internally
+const today = moment().startOf('day').hours(12);
 
 describe('DayPickerRangeController', () => {
   describe('#render()', () => {
@@ -298,6 +299,19 @@ describe('DayPickerRangeController', () => {
               <DayPickerRangeController
                 focusedInput={END_DATE}
                 startDate={startDate}
+                minimumNights={MIN_NIGHTS}
+              />,
+            );
+            expect(wrapper.instance().doesNotMeetMinimumNights(testDate)).to.equal(false);
+          });
+
+          it('handles time differences of less than 1 full day properly', () => {
+            const partialDate = moment(startDate).add(5, 'minutes');
+            const testDate = moment(startDate).add(MIN_NIGHTS, 'days');
+            const wrapper = shallow(
+              <DayPickerRangeController
+                focusedInput={END_DATE}
+                startDate={partialDate}
                 minimumNights={MIN_NIGHTS}
               />,
             );

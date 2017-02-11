@@ -163,7 +163,7 @@ export default class DayPickerRangeController extends React.Component {
     if (focusedInput !== END_DATE) return false;
 
     if (startDate) {
-      const dayDiff = day.diff(startDate, 'days');
+      const dayDiff = day.diff(startDate.clone().startOf('day').hour(12), 'days');
       return dayDiff < minimumNights && dayDiff >= 0;
     }
     return isOutsideRange(moment(day).subtract(minimumNights, 'days'));
