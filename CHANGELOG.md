@@ -1,5 +1,8 @@
 # Change Log
 
+## v7.0.1
+- [fix] Fix minimum nights issues for startDates/endDates with time ([#310](https://github.com/airbnb/react-dates/pull/310))
+
 ## v7.0.0
 - [breaking] Simplify `CalendarDay` DOM ([#291](https://github.com/airbnb/react-dates/pull/291))
 
