@@ -132,7 +132,7 @@ export default class DateRangePicker extends React.Component {
   }
 
   getDayPickerDOMNode() {
-    return ReactDOM.findDOMNode(this.dayPicker);
+    return ReactDOM.findDOMNode(this.dayPicker); // eslint-disable-line react/no-find-dom-node
   }
 
   isOpened() {
@@ -235,7 +235,6 @@ export default class DateRangePicker extends React.Component {
           endDate={endDate}
           monthFormat={monthFormat}
           withPortal={withPortal || withFullScreenPortal}
-          hidden={!this.isOpened()}
           initialVisibleMonth={initialVisibleMonth}
           onOutsideClick={onOutsideClick}
           navPrev={navPrev}

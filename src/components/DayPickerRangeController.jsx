@@ -38,7 +38,6 @@ const propTypes = {
   numberOfMonths: PropTypes.number,
   orientation: ScrollableOrientationShape,
   withPortal: PropTypes.bool,
-  hidden: PropTypes.bool,
   initialVisibleMonth: PropTypes.func,
 
   navPrev: PropTypes.node,
@@ -72,7 +71,6 @@ const defaultProps = {
   numberOfMonths: 1,
   orientation: HORIZONTAL_ORIENTATION,
   withPortal: false,
-  hidden: false,
 
   initialVisibleMonth: () => moment(),
 
