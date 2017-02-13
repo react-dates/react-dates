@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import { expect } from 'chai';
 import sinon from 'sinon-sandbox';
 import { shallow } from 'enzyme';
@@ -173,6 +174,45 @@ describe('DateRangePicker', () => {
         shallow(<DateRangePicker focusedInput={START_DATE} onFocusChange={onFocusChangeStub} />);
       wrapper.instance().onOutsideClick();
       expect(onFocusChangeStub.callCount).to.equal(1);
+    });
+  });
+
+  describe('initialVisibleMonth', () => {
+    describe('initialVisibleMonth is passed in', () => {
+      it('DayPickerRangeController.props.initialVisibleMonth is equal to initialVisibleMonth', () => {
+        const initialVisibleMonth = () => {};
+        const wrapper = shallow(
+          <DateRangePicker focusedInput={START_DATE} initialVisibleMonth={initialVisibleMonth} />,
+        );
+        const dayPicker = wrapper.find(DayPickerRangeController);
+        expect(dayPicker.props().initialVisibleMonth).to.equal(initialVisibleMonth);
+      });
+    });
+
+    describe('initialVisibleMonth is not passed in', () => {
+      it('DayPickerRangeController.props.initialVisibleMonth evaluates to startDate', () => {
+        const startDate = moment().add(10, 'days');
+        const wrapper =
+          shallow(<DateRangePicker focusedInput={START_DATE} startDate={startDate} />);
+        const dayPicker = wrapper.find(DayPickerRangeController);
+        expect(dayPicker.props().initialVisibleMonth()).to.equal(startDate);
+      });
+
+      it('DayPickerRangeController.props.initialVisibleMonth evaluates to endDate if !startDate', () => {
+        const endDate = moment().add(5, 'days');
+        const wrapper =
+          shallow(<DateRangePicker focusedInput={START_DATE} endDate={endDate} />);
+        const dayPicker = wrapper.find(DayPickerRangeController);
+        expect(dayPicker.props().initialVisibleMonth()).to.equal(endDate);
+      });
+
+      it('DayPickerRangeController.props.initialVisibleMonth evaluates to today if !startDate && !endDate', () => {
+        const today = moment();
+        const wrapper =
+          shallow(<DateRangePicker focusedInput={START_DATE} />);
+        const dayPicker = wrapper.find(DayPickerRangeController);
+        expect(dayPicker.props().initialVisibleMonth().isSame(today, 'day')).to.equal(true);
+      });
     });
   });
 });

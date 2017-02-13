@@ -549,4 +549,31 @@ describe('SingleDatePicker', () => {
       });
     });
   });
+
+  describe('initialVisibleMonth', () => {
+    describe('initialVisibleMonth is passed in', () => {
+      it('DayPicker.props.initialVisibleMonth is equal to initialVisibleMonth', () => {
+        const initialVisibleMonth = () => {};
+        const wrapper =
+          shallow(<SingleDatePicker initialVisibleMonth={initialVisibleMonth} focused />);
+        const dayPicker = wrapper.find(DayPicker);
+        expect(dayPicker.props().initialVisibleMonth).to.equal(initialVisibleMonth);
+      });
+    });
+
+    describe('initialVisibleMonth is not passed in', () => {
+      it('DayPicker.props.initialVisibleMonth evaluates to date', () => {
+        const date = moment().add(10, 'days');
+        const wrapper = shallow(<SingleDatePicker date={date} focused />);
+        const dayPicker = wrapper.find(DayPicker);
+        expect(dayPicker.props().initialVisibleMonth()).to.equal(date);
+      });
+
+      it('DayPickerRangeController.props.initialVisibleMonth evaluates to today if !startDate && !endDate', () => {
+        const wrapper = shallow(<SingleDatePicker focused />);
+        const dayPicker = wrapper.find(DayPicker);
+        expect(dayPicker.props().initialVisibleMonth().isSame(today, 'day')).to.equal(true);
+      });
+    });
+  });
 });

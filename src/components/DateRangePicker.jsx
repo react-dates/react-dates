@@ -48,7 +48,7 @@ const defaultProps = {
   required: false,
   reopenPickerOnClearDates: false,
   keepOpenOnDateSelect: false,
-  initialVisibleMonth: () => moment(),
+  initialVisibleMonth: null,
   navPrev: null,
   navNext: null,
 
@@ -207,19 +207,21 @@ export default class DateRangePicker extends React.Component {
       withPortal,
       withFullScreenPortal,
       enableOutsideDays,
-      initialVisibleMonth,
       focusedInput,
       startDate,
       endDate,
       minimumNights,
       keepOpenOnDateSelect,
       renderDay,
+      initialVisibleMonth,
     } = this.props;
     const { dayPickerContainerStyles } = this.state;
 
     const onOutsideClick = (!withFullScreenPortal && withPortal)
       ? this.onOutsideClick
       : undefined;
+    const initialVisibleMonthThunk =
+      initialVisibleMonth || (() => (startDate || endDate || moment()));
 
     return (
       <div
@@ -241,7 +243,7 @@ export default class DateRangePicker extends React.Component {
           endDate={endDate}
           monthFormat={monthFormat}
           withPortal={withPortal || withFullScreenPortal}
-          initialVisibleMonth={initialVisibleMonth}
+          initialVisibleMonth={initialVisibleMonthThunk}
           onOutsideClick={onOutsideClick}
           navPrev={navPrev}
           navNext={navNext}

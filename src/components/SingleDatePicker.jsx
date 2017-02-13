@@ -56,7 +56,7 @@ const defaultProps = {
   withPortal: false,
   withFullScreenPortal: false,
   screenReaderInputMessage: '',
-  initialVisibleMonth: () => moment(),
+  initialVisibleMonth: null,
 
   onPrevMonthClick() {},
   onNextMonthClick() {},
@@ -289,8 +289,9 @@ export default class SingleDatePicker extends React.Component {
       withPortal,
       withFullScreenPortal,
       focused,
-      initialVisibleMonth,
       renderDay,
+      date,
+      initialVisibleMonth,
     } = this.props;
     const { dayPickerContainerStyles } = this.state;
 
@@ -305,9 +306,8 @@ export default class SingleDatePicker extends React.Component {
       selected: day => this.isSelected(day),
     };
 
-    const onOutsideClick = (!withFullScreenPortal && withPortal)
-      ? this.onClearFocus
-      : undefined;
+    const onOutsideClick = (!withFullScreenPortal && withPortal) ? this.onClearFocus : undefined;
+    const initialVisibleMonthThunk = initialVisibleMonth || (() => (date || moment()));
 
     return (
       <div
@@ -328,7 +328,7 @@ export default class SingleDatePicker extends React.Component {
           monthFormat={monthFormat}
           withPortal={withPortal || withFullScreenPortal}
           hidden={!focused}
-          initialVisibleMonth={initialVisibleMonth}
+          initialVisibleMonth={initialVisibleMonthThunk}
           onOutsideClick={onOutsideClick}
           navPrev={navPrev}
           navNext={navNext}
