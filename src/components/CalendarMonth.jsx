@@ -24,6 +24,7 @@ const propTypes = {
   enableOutsideDays: PropTypes.bool,
   modifiers: PropTypes.object,
   orientation: ScrollableOrientationShape,
+  daySize: PropTypes.number,
   onDayClick: PropTypes.func,
   onDayMouseEnter: PropTypes.func,
   onDayMouseLeave: PropTypes.func,
@@ -39,6 +40,7 @@ const defaultProps = {
   enableOutsideDays: false,
   modifiers: {},
   orientation: HORIZONTAL_ORIENTATION,
+  daySize: 39,
   onDayClick() {},
   onDayMouseEnter() {},
   onDayMouseLeave() {},
@@ -80,6 +82,7 @@ export default class CalendarMonth extends React.Component {
       onDayMouseEnter,
       onDayMouseLeave,
       renderDay,
+      daySize,
     } = this.props;
 
     const { weeks } = this.state;
@@ -104,6 +107,7 @@ export default class CalendarMonth extends React.Component {
                 {week.map((day, dayOfWeek) => (
                   <CalendarDay
                     day={day}
+                    daySize={daySize}
                     isOutsideDay={!day || day.month() !== month.month()}
                     modifiers={modifiers}
                     key={dayOfWeek}

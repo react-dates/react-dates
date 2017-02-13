@@ -7,37 +7,41 @@ import SingleDatePickerWrapper from '../examples/SingleDatePickerWrapper';
 import { VERTICAL_ORIENTATION, ANCHOR_RIGHT } from '../constants';
 
 const TestInput = props => (
-   <div style={{ marginTop: 16 }} >
-     <input
-       {...props}
-       type="text"
-       style={{
-         height: 48,
-         width: 284,
-         fontSize: 18,
-         fontWeight: 200,
-         padding: '12px 16px',
-       }}
-     />
+  <div style={{ marginTop: 16 }} >
+    <input
+      {...props}
+      type="text"
+      style={{
+        height: 48,
+        width: 284,
+        fontSize: 18,
+        fontWeight: 200,
+        padding: '12px 16px',
+      }}
+    />
   </div>
 );
-const TestPrevIcon = props => (
-  <span style={{
+
+const TestPrevIcon = () => (
+  <span
+    style={{
       border: '1px solid #dce0e0',
       backgroundColor: '#fff',
       color: '#484848',
-      padding: '3px'
+      padding: '3px',
     }}
   >
     Prev
   </span>
 );
-const TestNextIcon = props => (
-  <span style={{
-    border: '1px solid #dce0e0',
-    backgroundColor: '#fff',
-    color: '#484848',
-    padding: '3px'
+
+const TestNextIcon = () => (
+  <span
+    style={{
+      border: '1px solid #dce0e0',
+      backgroundColor: '#fff',
+      color: '#484848',
+      padding: '3px',
     }}
   >
     Next
@@ -54,13 +58,18 @@ storiesOf('SingleDatePicker', module)
     />
   ))
   .addWithInfo('as part of a form', () => (
-     <div>
-       <SingleDatePickerWrapper />
-       <TestInput placeholder="Input 1" />
-       <TestInput placeholder="Input 2" />
-       <TestInput placeholder="Input 3" />
-     </div>
-   ))
+    <div>
+      <SingleDatePickerWrapper />
+      <TestInput placeholder="Input 1" />
+      <TestInput placeholder="Input 2" />
+      <TestInput placeholder="Input 3" />
+    </div>
+  ))
+  .addWithInfo('with custom day size', () => (
+    <SingleDatePickerWrapper
+      daySize={50}
+    />
+  ))
   .addWithInfo('anchored right', () => (
     <div style={{ float: 'right' }}>
       <SingleDatePickerWrapper
@@ -71,6 +80,12 @@ storiesOf('SingleDatePicker', module)
   .addWithInfo('vertical', () => (
     <SingleDatePickerWrapper
       orientation={VERTICAL_ORIENTATION}
+    />
+  ))
+  .addWithInfo('vertical with custom day size', () => (
+    <SingleDatePickerWrapper
+      orientation={VERTICAL_ORIENTATION}
+      daySize={50}
     />
   ))
   .addWithInfo('horizontal with portal', () => (

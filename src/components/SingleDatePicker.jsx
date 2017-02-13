@@ -58,6 +58,8 @@ const defaultProps = {
   screenReaderInputMessage: '',
   initialVisibleMonth: null,
 
+  daySize: 39,
+
   onPrevMonthClick() {},
   onNextMonthClick() {},
 
@@ -292,6 +294,7 @@ export default class SingleDatePicker extends React.Component {
       renderDay,
       date,
       initialVisibleMonth,
+      daySize,
     } = this.props;
     const { dayPickerContainerStyles } = this.state;
 
@@ -333,6 +336,7 @@ export default class SingleDatePicker extends React.Component {
           navPrev={navPrev}
           navNext={navNext}
           renderDay={renderDay}
+          daySize={daySize}
         />
 
         {withFullScreenPortal &&
