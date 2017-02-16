@@ -13,6 +13,7 @@ const propTypes = {
   // example props for the demo
   autoFocus: PropTypes.bool,
   initialDate: momentPropTypes.momentObj,
+
   ...omit(SingleDatePickerShape, [
     'date',
     'onDateChange',
