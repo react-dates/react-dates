@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import momentPropTypes from 'react-moment-proptypes';
+import { forbidExtraProps } from 'airbnb-prop-types';
 import moment from 'moment';
 
 import isTouchDevice from '../utils/isTouchDevice';
@@ -19,7 +20,7 @@ import {
 
 import DayPicker from './DayPicker';
 
-const propTypes = {
+const propTypes = forbidExtraProps({
   startDate: momentPropTypes.momentObj,
   endDate: momentPropTypes.momentObj,
   onDatesChange: PropTypes.func,
@@ -50,7 +51,7 @@ const propTypes = {
 
   // i18n
   monthFormat: PropTypes.string,
-};
+});
 
 const defaultProps = {
   startDate: undefined, // TODO: use null

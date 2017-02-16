@@ -30,40 +30,43 @@ import {
 const propTypes = SingleDatePickerShape;
 
 const defaultProps = {
+  // required props for a functional interactive SingleDatePicker
   date: null,
   focused: false,
+
+  // input related props
+  id: 'date',
+  placeholder: 'Date',
   disabled: false,
   required: false,
+  screenReaderInputMessage: '',
   showClearDate: false,
-  reopenPickerOnClearDate: false,
-  keepOpenOnDateSelect: false,
 
-  navPrev: null,
-  navNext: null,
-
-  onDateChange() {},
-  onFocusChange() {},
-
-  isDayBlocked: () => false,
-  isDayHighlighted: () => false,
-  disabledDays: [],
-  isOutsideRange: day => !isInclusivelyAfterDay(day, moment()),
-  enableOutsideDays: false,
-  numberOfMonths: 2,
+  // calendar presentation and interaction related props
   orientation: HORIZONTAL_ORIENTATION,
   anchorDirection: ANCHOR_LEFT,
   horizontalMargin: 0,
   withPortal: false,
   withFullScreenPortal: false,
-  screenReaderInputMessage: '',
   initialVisibleMonth: null,
+  numberOfMonths: 2,
+  keepOpenOnDateSelect: false,
+  reopenPickerOnClearDate: false,
 
+  // navigation related props
+  navPrev: null,
+  navNext: null,
   onPrevMonthClick() {},
   onNextMonthClick() {},
 
+  // day presentation and interaction related props
   renderDay: null,
+  enableOutsideDays: false,
+  isDayBlocked: () => false,
+  isOutsideRange: day => !isInclusivelyAfterDay(day, moment()),
+  isDayHighlighted: () => {},
 
-  // i18n
+  // internationalization props
   displayFormat: () => moment.localeData().longDateFormat('L'),
   monthFormat: 'MMMM YYYY',
   phrases: {
