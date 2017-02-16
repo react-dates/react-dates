@@ -10,6 +10,9 @@ addDecorator((story) => {
 
 function loadStories() {
   require('../stories/DateRangePicker');
+  require('../stories/DateRangePicker_input');
+  require('../stories/DateRangePicker_calendar');
+  require('../stories/DateRangePicker_day');
   require('../stories/SingleDatePicker');
   require('../stories/DayPicker');
 }

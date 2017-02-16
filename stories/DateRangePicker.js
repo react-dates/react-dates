@@ -116,7 +116,7 @@ class TestWrapper extends React.Component {
   }
 }
 
-storiesOf('DateRangePicker', module)
+storiesOf('DateRangePicker (DRP)', module)
   .addWithInfo('default', () => (
     <DateRangePickerWrapper />
   ))
@@ -130,62 +130,6 @@ storiesOf('DateRangePicker', module)
       <TestInput placeholder="Input 2" />
       <TestInput placeholder="Input 3" />
     </div>
-  ))
-  .addWithInfo('single month', () => (
-    <DateRangePickerWrapper numberOfMonths={1} />
-  ))
-  .addWithInfo('3 months', () => (
-    <DateRangePickerWrapper numberOfMonths={3} />
-  ))
-  .addWithInfo('anchored right', () => (
-    <div style={{ float: 'right' }}>
-      <DateRangePickerWrapper
-        anchorDirection={ANCHOR_RIGHT}
-      />
-    </div>
-  ))
-  .addWithInfo('vertical', () => (
-    <DateRangePickerWrapper
-      orientation={VERTICAL_ORIENTATION}
-    />
-  ))
-  .addWithInfo('vertical anchored right', () => (
-    <div style={{ float: 'right' }}>
-      <DateRangePickerWrapper
-        orientation={VERTICAL_ORIENTATION}
-        anchorDirection={ANCHOR_RIGHT}
-      />
-    </div>
-  ))
-  .addWithInfo('horizontal with portal', () => (
-    <DateRangePickerWrapper
-      withPortal
-    />
-  ))
-  .addWithInfo('horizontal with fullscreen portal', () => (
-    <DateRangePickerWrapper withFullScreenPortal />
-  ))
-  .addWithInfo('vertical with full screen portal', () => (
-    <DateRangePickerWrapper
-      orientation={VERTICAL_ORIENTATION}
-      withFullScreenPortal
-    />
-  ))
-  .addWithInfo('with clear dates button', () => (
-    <DateRangePickerWrapper
-      showClearDates
-    />
-  ))
-  .addWithInfo('reopens DayPicker on clear dates', () => (
-    <DateRangePickerWrapper
-      showClearDates
-      reopenPickerOnClearDates
-    />
-  ))
-  .addWithInfo('does not autoclose the DayPicker on date selection', () => (
-    <DateRangePickerWrapper
-      keepOpenOnDateSelect
-    />
   ))
   .addWithInfo('non-english locale', () => {
     moment.locale('zh-cn');
@@ -201,90 +145,4 @@ storiesOf('DateRangePicker', module)
         }}
       />
     );
-  })
-  .addWithInfo('with custom display format', () => (
-    <DateRangePickerWrapper
-      displayFormat="MMM D"
-    />
-  ))
-  .addWithInfo('with custom arrows', () => (
-    <DateRangePickerWrapper
-      navPrev={<TestPrevIcon />}
-      navNext={<TestNextIcon />}
-    />
-  ))
-  .addWithInfo('with minimum nights set', () => (
-    <DateRangePickerWrapper
-      minimumNights={3}
-    />
-  ))
-  .addWithInfo('allows a single night', () => (
-    <DateRangePickerWrapper
-      minimumNights={0}
-    />
-  ))
-  .addWithInfo('allows all days', () => (
-    <DateRangePickerWrapper
-      isOutsideRange={() => false}
-    />
-  ))
-  .addWithInfo('allows next two weeks only', () => (
-    <DateRangePickerWrapper
-      isOutsideRange={day =>
-        !isInclusivelyAfterDay(day, moment()) ||
-        isInclusivelyAfterDay(day, moment().add(2, 'weeks'))
-      }
-    />
-  ))
-  .addWithInfo('with outside days enabled', () => (
-    <DateRangePickerWrapper
-      numberOfMonths={1}
-      enableOutsideDays
-    />
-  ))
-  .addWithInfo('with some blocked dates', () => (
-    <DateRangePickerWrapper
-      isDayBlocked={day1 => datesList.some(day2 => isSameDay(day1, day2))}
-    />
-  ))
-  .addWithInfo('with some highlighted dates', () => (
-    <DateRangePickerWrapper
-      isDayHighlighted={day1 => datesList.some(day2 => isSameDay(day1, day2))}
-    />
-  ))
-  .addWithInfo('with month specified on open', () => (
-    <DateRangePickerWrapper
-      initialVisibleMonth={() => moment('04 2017', 'MM YYYY')}
-    />
-  ))
-  .addWithInfo('blocks fridays', () => (
-    <DateRangePickerWrapper
-      isDayBlocked={day => moment.weekdays(day.weekday()) === 'Friday'}
-    />
-  ))
-  .addWithInfo('with show calendar icon', () => (
-    <DateRangePickerWrapper
-      showDefaultInputIcon={true}
-    />
-  ))
-  .addWithInfo('with custom show calendar icon', () => (
-    <DateRangePickerWrapper
-      customInputIcon={<TestCustomInputIcon />}
-    />
-  ))
-  .addWithInfo('with custom arrow icon', () => (
-    <DateRangePickerWrapper
-      customArrowIcon={<TestCustomArrowIcon />}
-    />
-  ))
-  .addWithInfo('with custom daily details', () => (
-    <DateRangePickerWrapper
-      renderDay={day => day.format('ddd')}
-    />
-  ))
-  .addWithInfo('with screen reader message', () => (
-    <DateRangePickerWrapper
-      screenReaderInputMessage='Here you could inform screen reader users of the date format, minimum nights, blocked out dates, etc'
-    />
-  ));
-
+  });
