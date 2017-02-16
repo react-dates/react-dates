@@ -20,11 +20,12 @@ const datesList = [
 
 storiesOf('SDP - Day Props', module)
   .addWithInfo('default', () => (
-    <SingleDatePickerWrapper />
+    <SingleDatePickerWrapper autoFocus />
   ))
   .addWithInfo('allows all days, including past days', () => (
     <SingleDatePickerWrapper
       isOutsideRange={() => false}
+      autoFocus
     />
   ))
   .addWithInfo('allows next two weeks only', () => (
@@ -33,26 +34,31 @@ storiesOf('SDP - Day Props', module)
         !isInclusivelyAfterDay(day, moment()) ||
         isInclusivelyAfterDay(day, moment().add(2, 'weeks'))
       }
+      autoFocus
     />
   ))
   .addWithInfo('with some blocked dates', () => (
     <SingleDatePickerWrapper
       isDayBlocked={day1 => datesList.some(day2 => isSameDay(day1, day2))}
+      autoFocus
     />
   ))
   .addWithInfo('with some highlighted dates', () => (
     <SingleDatePickerWrapper
       isDayHighlighted={day1 => datesList.some(day2 => isSameDay(day1, day2))}
+      autoFocus
     />
   ))
   .addWithInfo('blocks fridays', () => (
     <SingleDatePickerWrapper
       isDayBlocked={day => moment.weekdays(day.weekday()) === 'Friday'}
+      autoFocus
     />
   ))
   .addWithInfo('with custom daily details', () => (
     <SingleDatePickerWrapper
       numberOfMonths={1}
       renderDay={day => day.format('ddd')}
+      autoFocus
     />
   ));

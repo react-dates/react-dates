@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
+import momentPropTypes from 'react-moment-proptypes';
 import moment from 'moment';
 import omit from 'lodash.omit';
 
@@ -8,14 +9,23 @@ import SingleDatePickerShape from '../src/shapes/SingleDatePickerShape';
 import { HORIZONTAL_ORIENTATION, ANCHOR_LEFT } from '../constants';
 import isInclusivelyAfterDay from '../src/utils/isInclusivelyAfterDay';
 
-const propTypes = omit(SingleDatePickerShape, [
-  'date',
-  'onDateChange',
-  'focused',
-  'onFocusChange',
-]);
+const propTypes = {
+  // example props for the demo
+  autoFocus: PropTypes.bool,
+  initialDate: momentPropTypes.momentObj,
+  ...omit(SingleDatePickerShape, [
+    'date',
+    'onDateChange',
+    'focused',
+    'onFocusChange',
+  ]),
+};
 
 const defaultProps = {
+  // example props for the demo
+  autoFocus: false,
+  initialDate: null,
+
   // input related props
   id: 'date',
   placeholder: 'Date',
@@ -61,8 +71,8 @@ class SingleDatePickerWrapper extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      focused: false,
-      date: null,
+      focused: props.autoFocus,
+      date: props.initialDate,
     };
 
     this.onDateChange = this.onDateChange.bind(this);

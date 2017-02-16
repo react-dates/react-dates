@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
+import momentPropTypes from 'react-moment-proptypes';
 import moment from 'moment';
 import omit from 'lodash.omit';
 
@@ -8,15 +9,28 @@ import DateRangePickerShape from '../src/shapes/DateRangePickerShape';
 import { START_DATE, END_DATE, HORIZONTAL_ORIENTATION, ANCHOR_LEFT } from '../constants';
 import isInclusivelyAfterDay from '../src/utils/isInclusivelyAfterDay';
 
-const propTypes = omit(DateRangePickerShape, [
-  'startDate',
-  'endDate',
-  'onDatesChange',
-  'focusedInput',
-  'onFocusChange',
-]);
+const propTypes = {
+  // example props for the demo
+  autoFocus: PropTypes.bool,
+  autoFocusEndDate: PropTypes.bool,
+  initialStartDate: momentPropTypes.momentObj,
+  initialEndDate: momentPropTypes.momentObj,
+  ...omit(DateRangePickerShape, [
+    'startDate',
+    'endDate',
+    'onDatesChange',
+    'focusedInput',
+    'onFocusChange',
+  ]),
+};
 
 const defaultProps = {
+  // example props for the demo
+  autoFocus: false,
+  autoFocusEndDate: false,
+  initialStartDate: null,
+  initialEndDate: null,
+
   // input related props
   startDateId: START_DATE,
   startDatePlaceholderText: 'Start Date',
@@ -67,10 +81,18 @@ const defaultProps = {
 class DateRangePickerWrapper extends React.Component {
   constructor(props) {
     super(props);
+
+    let focusedInput = null;
+    if (props.autoFocus) {
+      focusedInput = START_DATE;
+    } else if (props.autoFocusEndDate) {
+      focusedInput = END_DATE;
+    }
+
     this.state = {
-      focusedInput: null,
-      startDate: null,
-      endDate: null,
+      focusedInput,
+      startDate: props.initialStartDate,
+      endDate: props.initialEndDate,
     };
 
     this.onDatesChange = this.onDatesChange.bind(this);

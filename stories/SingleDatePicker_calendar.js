@@ -34,58 +34,67 @@ const TestNextIcon = () => (
 
 storiesOf('SDP - Calendar Props', module)
   .addWithInfo('default', () => (
-    <SingleDatePickerWrapper />
+    <SingleDatePickerWrapper autoFocus />
   ))
   .addWithInfo('single month', () => (
     <SingleDatePickerWrapper
       numberOfMonths={1}
+      autoFocus
     />
   ))
   .addWithInfo('anchored right', () => (
     <div style={{ float: 'right' }}>
       <SingleDatePickerWrapper
         anchorDirection={ANCHOR_RIGHT}
+        autoFocus
       />
     </div>
   ))
   .addWithInfo('vertical', () => (
     <SingleDatePickerWrapper
       orientation={VERTICAL_ORIENTATION}
+      autoFocus
     />
   ))
   .addWithInfo('horizontal with portal', () => (
     <SingleDatePickerWrapper
       withPortal
+      autoFocus
     />
   ))
   .addWithInfo('horizontal with fullscreen portal', () => (
-    <SingleDatePickerWrapper withFullScreenPortal />
+    <SingleDatePickerWrapper withFullScreenPortal autoFocus />
   ))
   .addWithInfo('vertical with full screen portal', () => (
     <SingleDatePickerWrapper
       orientation={VERTICAL_ORIENTATION}
       withFullScreenPortal
+      autoFocus
     />
   ))
   .addWithInfo('does not autoclose the DayPicker on date selection', () => (
     <SingleDatePickerWrapper
       keepOpenOnDateSelect
+      autoFocus
     />
   ))
   .addWithInfo('with month specified on open', () => (
     <SingleDatePickerWrapper
       initialVisibleMonth={() => moment('01 2017', 'MM YYYY')}
+      autoFocus
     />
   ))
   .addWithInfo('with custom arrows', () => (
     <SingleDatePickerWrapper
       navPrev={<TestPrevIcon />}
       navNext={<TestNextIcon />}
+      autoFocus
     />
   ))
   .addWithInfo('with outside days enabled', () => (
     <SingleDatePickerWrapper
       numberOfMonths={1}
       enableOutsideDays
+      autoFocus
     />
   ));

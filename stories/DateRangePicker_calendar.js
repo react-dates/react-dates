@@ -34,24 +34,26 @@ const TestNextIcon = () => (
 
 storiesOf('DRP - Calendar Props', module)
   .addWithInfo('default', () => (
-    <DateRangePickerWrapper />
+    <DateRangePickerWrapper autoFocus />
   ))
   .addWithInfo('single month', () => (
-    <DateRangePickerWrapper numberOfMonths={1} />
+    <DateRangePickerWrapper numberOfMonths={1} autoFocus />
   ))
   .addWithInfo('3 months', () => (
-    <DateRangePickerWrapper numberOfMonths={3} />
+    <DateRangePickerWrapper numberOfMonths={3} autoFocus />
   ))
   .addWithInfo('anchored right', () => (
     <div style={{ float: 'right' }}>
       <DateRangePickerWrapper
         anchorDirection={ANCHOR_RIGHT}
+        autoFocus
       />
     </div>
   ))
   .addWithInfo('vertical', () => (
     <DateRangePickerWrapper
       orientation={VERTICAL_ORIENTATION}
+      autoFocus
     />
   ))
   .addWithInfo('vertical anchored right', () => (
@@ -59,43 +61,49 @@ storiesOf('DRP - Calendar Props', module)
       <DateRangePickerWrapper
         orientation={VERTICAL_ORIENTATION}
         anchorDirection={ANCHOR_RIGHT}
+        autoFocus
       />
     </div>
   ))
   .addWithInfo('horizontal with portal', () => (
     <DateRangePickerWrapper
       withPortal
+      autoFocus
     />
   ))
   .addWithInfo('horizontal with fullscreen portal', () => (
-    <DateRangePickerWrapper withFullScreenPortal />
+    <DateRangePickerWrapper withFullScreenPortal autoFocus />
   ))
   .addWithInfo('vertical with full screen portal', () => (
     <DateRangePickerWrapper
       orientation={VERTICAL_ORIENTATION}
       withFullScreenPortal
+      autoFocus
     />
   ))
   .addWithInfo('does not autoclose the DayPicker on date selection', () => (
     <DateRangePickerWrapper
       keepOpenOnDateSelect
+      autoFocus
     />
   ))
   .addWithInfo('with custom month navigation', () => (
     <DateRangePickerWrapper
       navPrev={<TestPrevIcon />}
       navNext={<TestNextIcon />}
+      autoFocus
     />
   ))
   .addWithInfo('with outside days enabled', () => (
     <DateRangePickerWrapper
       numberOfMonths={1}
       enableOutsideDays
+      autoFocus
     />
   ))
   .addWithInfo('with month specified on open', () => (
     <DateRangePickerWrapper
       initialVisibleMonth={() => moment('04 2017', 'MM YYYY')}
+      autoFocus
     />
   ));
-
