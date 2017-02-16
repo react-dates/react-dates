@@ -14,6 +14,9 @@ function loadStories() {
   require('../stories/DateRangePicker_calendar');
   require('../stories/DateRangePicker_day');
   require('../stories/SingleDatePicker');
+  require('../stories/SingleDatePicker_input');
+  require('../stories/SingleDatePicker_calendar');
+  require('../stories/SingleDatePicker_day');
   require('../stories/DayPicker');
 }
 

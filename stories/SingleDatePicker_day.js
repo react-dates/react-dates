@@ -2,10 +2,10 @@ import React from 'react';
 import moment from 'moment';
 import { storiesOf } from '@kadira/storybook';
 
-import isSameDay from '../src/utils/isSameDay';
 import isInclusivelyAfterDay from '../src/utils/isInclusivelyAfterDay';
+import isSameDay from '../src/utils/isSameDay';
 
-import DateRangePickerWrapper from '../examples/DateRangePickerWrapper';
+import SingleDatePickerWrapper from '../examples/SingleDatePickerWrapper';
 
 const datesList = [
   moment(),
@@ -18,27 +18,17 @@ const datesList = [
   moment().add(13, 'days'),
 ];
 
-storiesOf('DRP - Day Props', module)
+storiesOf('SDP - Day Props', module)
   .addWithInfo('default', () => (
-    <DateRangePickerWrapper />
-  ))
-  .addWithInfo('with minimum nights set', () => (
-    <DateRangePickerWrapper
-      minimumNights={3}
-    />
-  ))
-  .addWithInfo('allows single day range', () => (
-    <DateRangePickerWrapper
-      minimumNights={0}
-    />
+    <SingleDatePickerWrapper />
   ))
   .addWithInfo('allows all days, including past days', () => (
-    <DateRangePickerWrapper
+    <SingleDatePickerWrapper
       isOutsideRange={() => false}
     />
   ))
   .addWithInfo('allows next two weeks only', () => (
-    <DateRangePickerWrapper
+    <SingleDatePickerWrapper
       isOutsideRange={day =>
         !isInclusivelyAfterDay(day, moment()) ||
         isInclusivelyAfterDay(day, moment().add(2, 'weeks'))
@@ -46,23 +36,23 @@ storiesOf('DRP - Day Props', module)
     />
   ))
   .addWithInfo('with some blocked dates', () => (
-    <DateRangePickerWrapper
+    <SingleDatePickerWrapper
       isDayBlocked={day1 => datesList.some(day2 => isSameDay(day1, day2))}
     />
   ))
   .addWithInfo('with some highlighted dates', () => (
-    <DateRangePickerWrapper
+    <SingleDatePickerWrapper
       isDayHighlighted={day1 => datesList.some(day2 => isSameDay(day1, day2))}
     />
   ))
   .addWithInfo('blocks fridays', () => (
-    <DateRangePickerWrapper
+    <SingleDatePickerWrapper
       isDayBlocked={day => moment.weekdays(day.weekday()) === 'Friday'}
     />
   ))
   .addWithInfo('with custom daily details', () => (
-    <DateRangePickerWrapper
+    <SingleDatePickerWrapper
+      numberOfMonths={1}
       renderDay={day => day.format('ddd')}
     />
   ));
-
