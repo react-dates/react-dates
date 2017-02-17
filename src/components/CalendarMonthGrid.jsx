@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import shallowCompare from 'react-addons-shallow-compare';
 import momentPropTypes from 'react-moment-proptypes';
+import { forbidExtraProps } from 'airbnb-prop-types';
 import moment from 'moment';
 import cx from 'classnames';
 import { addEventListener, removeEventListener } from 'consolidated-events';
@@ -18,7 +19,7 @@ import {
   VERTICAL_SCROLLABLE,
 } from '../../constants';
 
-const propTypes = {
+const propTypes = forbidExtraProps({
   enableOutsideDays: PropTypes.bool,
   firstVisibleMonthIndex: PropTypes.number,
   initialMonth: momentPropTypes.momentObj,
@@ -35,7 +36,7 @@ const propTypes = {
 
   // i18n
   monthFormat: PropTypes.string,
-};
+});
 
 const defaultProps = {
   enableOutsideDays: false,

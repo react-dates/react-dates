@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import moment from 'moment';
 
 import momentPropTypes from 'react-moment-proptypes';
+import { forbidExtraProps } from 'airbnb-prop-types';
 
 import DateRangePickerInput from './DateRangePickerInput';
 
@@ -14,7 +15,7 @@ import isInclusivelyBeforeDay from '../utils/isInclusivelyBeforeDay';
 
 import { START_DATE, END_DATE } from '../../constants';
 
-const propTypes = {
+const propTypes = forbidExtraProps({
   startDate: momentPropTypes.momentObj,
   startDateId: PropTypes.string,
   startDatePlaceholderText: PropTypes.string,
@@ -48,7 +49,7 @@ const propTypes = {
   phrases: PropTypes.shape({
     clearDates: PropTypes.node,
   }),
-};
+});
 
 const defaultProps = {
   startDate: null,

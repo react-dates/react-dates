@@ -1,9 +1,10 @@
 import React, { PropTypes } from 'react';
+import { forbidExtraProps } from 'airbnb-prop-types';
 import cx from 'classnames';
 
 import isTouchDevice from '../utils/isTouchDevice';
 
-const propTypes = {
+const propTypes = forbidExtraProps({
   id: PropTypes.string.isRequired,
   placeholder: PropTypes.string, // also used as label
   displayValue: PropTypes.string,
@@ -18,7 +19,7 @@ const propTypes = {
   onFocus: PropTypes.func,
   onKeyDownShiftTab: PropTypes.func,
   onKeyDownTab: PropTypes.func,
-};
+});
 
 const defaultProps = {
   placeholder: 'Select Date',

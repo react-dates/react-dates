@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import shallowCompare from 'react-addons-shallow-compare';
 import ReactDOM from 'react-dom';
+import { forbidExtraProps } from 'airbnb-prop-types';
 import moment from 'moment';
 import cx from 'classnames';
 
@@ -24,53 +25,57 @@ const MONTH_PADDING = 23;
 const PREV_TRANSITION = 'prev';
 const NEXT_TRANSITION = 'next';
 
-const propTypes = {
+const propTypes = forbidExtraProps({
+  // calendar presentation props
   enableOutsideDays: PropTypes.bool,
   numberOfMonths: PropTypes.number,
-  modifiers: PropTypes.object,
   orientation: ScrollableOrientationShape,
   withPortal: PropTypes.bool,
+  onOutsideClick: PropTypes.func,
   hidden: PropTypes.bool,
   initialVisibleMonth: PropTypes.func,
 
+  // navigation props
   navPrev: PropTypes.node,
   navNext: PropTypes.node,
+  onPrevMonthClick: PropTypes.func,
+  onNextMonthClick: PropTypes.func,
 
+  // day props
+  modifiers: PropTypes.object,
+  renderDay: PropTypes.func,
   onDayClick: PropTypes.func,
   onDayMouseEnter: PropTypes.func,
   onDayMouseLeave: PropTypes.func,
-  onPrevMonthClick: PropTypes.func,
-  onNextMonthClick: PropTypes.func,
-  onOutsideClick: PropTypes.func,
 
-  renderDay: PropTypes.func,
-
-  // i18n
+  // internationalization
   monthFormat: PropTypes.string,
-};
+});
 
 const defaultProps = {
+  // calendar presentation props
   enableOutsideDays: false,
-  numberOfMonths: 1,
-  modifiers: {},
+  numberOfMonths: 2,
   orientation: HORIZONTAL_ORIENTATION,
   withPortal: false,
+  onOutsideClick() {},
   hidden: false,
-
   initialVisibleMonth: () => moment(),
 
+  // navigation props
   navPrev: null,
   navNext: null,
+  onPrevMonthClick() {},
+  onNextMonthClick() {},
 
+  // day props
+  modifiers: {},
+  renderDay: null,
   onDayClick() {},
   onDayMouseEnter() {},
   onDayMouseLeave() {},
-  onPrevMonthClick() {},
-  onNextMonthClick() {},
-  onOutsideClick() {},
 
-  renderDay: null,
-  // i18n
+  // internationalization
   monthFormat: 'MMMM YYYY',
 };
 
@@ -326,7 +331,7 @@ export default class DayPicker extends React.Component {
         onNextMonthClick={onNextMonthClick}
         navPrev={navPrev}
         navNext={navNext}
-        orientation={orientation}j
+        orientation={orientation}
       />
     );
   }
@@ -454,7 +459,6 @@ export default class DayPicker extends React.Component {
               isAnimating={isCalendarMonthGridAnimating}
               modifiers={modifiers}
               orientation={orientation}
-              withPortal={withPortal}
               numberOfMonths={numberOfMonths * scrollableMonthMultiple}
               onDayClick={onDayClick}
               onDayMouseEnter={onDayMouseEnter}

@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { forbidExtraProps } from 'airbnb-prop-types';
 import cx from 'classnames';
 
 import LeftArrow from '../svg/arrow-left.svg';
@@ -12,14 +13,15 @@ import {
   VERTICAL_SCROLLABLE,
 } from '../../constants';
 
-const propTypes = {
+const propTypes = forbidExtraProps({
   navPrev: PropTypes.node,
   navNext: PropTypes.node,
   orientation: ScrollableOrientationShape,
 
   onPrevMonthClick: PropTypes.func,
   onNextMonthClick: PropTypes.func,
-};
+});
+
 const defaultProps = {
   navPrev: null,
   navNext: null,
