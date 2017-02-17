@@ -1,12 +1,11 @@
 import { PropTypes } from 'react';
 import momentPropTypes from 'react-moment-proptypes';
-import { forbidExtraProps } from 'airbnb-prop-types';
 
 import FocusedInputShape from '../shapes/FocusedInputShape';
 import OrientationShape from '../shapes/OrientationShape';
 import anchorDirectionShape from '../shapes/AnchorDirectionShape';
 
-export default forbidExtraProps({
+export default {
   // required props for a functional interactive DateRangePicker
   startDate: momentPropTypes.momentObj,
   endDate: momentPropTypes.momentObj,
@@ -60,4 +59,4 @@ export default forbidExtraProps({
     closeDatePicker: PropTypes.node,
     clearDates: PropTypes.node,
   }),
-});
+};

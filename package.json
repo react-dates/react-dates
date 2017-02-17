@@ -95,7 +95,7 @@
     "webpack": "^1.14.0"
   },
   "dependencies": {
-    "airbnb-prop-types": "^2.1.0",
+    "airbnb-prop-types": "^2.2.0",
     "array-includes": "^3.0.2",
     "classnames": "^2.2.5",
     "consolidated-events": "^1.0.1",

@@ -15,6 +15,7 @@ const propTypes = {
   autoFocusEndDate: PropTypes.bool,
   initialStartDate: momentPropTypes.momentObj,
   initialEndDate: momentPropTypes.momentObj,
+
   ...omit(DateRangePickerShape, [
     'startDate',
     'endDate',
@@ -109,10 +110,18 @@ class DateRangePickerWrapper extends React.Component {
 
   render() {
     const { focusedInput, startDate, endDate } = this.state;
+
+    const props = omit(this.props, [
+      'autoFocus',
+      'autoFocusEndDate',
+      'initialStartDate',
+      'initialEndDate',
+    ]);
+
     return (
       <div>
         <DateRangePicker
-          {...this.props}
+          {...props}
           onDatesChange={this.onDatesChange}
           onFocusChange={this.onFocusChange}
           focusedInput={focusedInput}

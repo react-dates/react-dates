@@ -4,6 +4,7 @@ import shallowCompare from 'react-addons-shallow-compare';
 import moment from 'moment';
 import cx from 'classnames';
 import Portal from 'react-portal';
+import { forbidExtraProps } from 'airbnb-prop-types';
 import { addEventListener, removeEventListener } from 'consolidated-events';
 
 import OutsideClickHandler from './OutsideClickHandler';
@@ -27,7 +28,7 @@ import {
   ANCHOR_RIGHT,
 } from '../../constants';
 
-const propTypes = DateRangePickerShape;
+const propTypes = forbidExtraProps(DateRangePickerShape);
 
 const defaultProps = {
   // required props for a functional interactive DateRangePicker

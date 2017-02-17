@@ -1,11 +1,10 @@
 import { PropTypes } from 'react';
 import momentPropTypes from 'react-moment-proptypes';
-import { forbidExtraProps } from 'airbnb-prop-types';
 
 import OrientationShape from '../shapes/OrientationShape';
 import anchorDirectionShape from '../shapes/AnchorDirectionShape';
 
-export default forbidExtraProps({
+export default {
   // required props for a functional interactive SingleDatePicker
   date: momentPropTypes.momentObj,
   onDateChange: PropTypes.func.isRequired,
@@ -51,4 +50,4 @@ export default forbidExtraProps({
   phrases: PropTypes.shape({
     closeDatePicker: PropTypes.node,
   }),
-});
+};
