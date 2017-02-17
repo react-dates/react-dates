@@ -49,6 +49,8 @@
   "devDependencies": {
     "@kadira/react-storybook-addon-info": "^3.3.0",
     "@kadira/storybook": "^2.35.3",
+    "@kadira/storybook-addon-options": "^1.0.1",
+    "@kadira/storybook-addons": "^1.6.1",
     "airbnb-js-shims": "^1.0.1",
     "babel-cli": "^6.22.2",
     "babel-core": "^6.22.1",
@@ -89,6 +91,7 @@
     "rimraf": "^2.5.4",
     "safe-publish-latest": "^1.1.1",
     "sass-loader": "^4.1.1",
+    "shallowequal": "^0.2.2",
     "sinon": "^1.17.7",
     "sinon-sandbox": "^1.0.2",
     "style-loader": "^0.13.1",

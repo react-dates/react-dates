@@ -31,13 +31,13 @@ const TestCustomArrowIcon = () => (
 );
 
 storiesOf('DRP - Input Props', module)
-  .addWithInfo('default', () => (
+  .addWithDocs('default', () => (
     <DateRangePickerWrapper
       initialStartDate={moment().add(3, 'days')}
       initialEndDate={moment().add(10, 'days')}
     />
   ))
-  .addWithInfo('with clear dates button', () => (
+  .addWithDocs('with clear dates button', () => (
     <DateRangePickerWrapper
       initialStartDate={moment().add(3, 'days')}
       initialEndDate={moment().add(10, 'days')}

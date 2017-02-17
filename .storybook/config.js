@@ -1,6 +1,8 @@
 import moment from 'moment';
 import { configure, addDecorator, setAddon } from '@kadira/storybook';
 import infoAddon from '@kadira/react-storybook-addon-info';
+import { setOptions } from '@kadira/storybook-addon-options';
+import docsAddons from '../docs-addon';
 import '../css/styles.scss';
 
 addDecorator((story) => {
@@ -20,6 +22,14 @@ function loadStories() {
   require('../stories/DayPicker');
 }
 
+setOptions({
+  name: 'react-dates',
+  url: 'https://github.com/airbnb/react-dates',
+  downPanelInRight: true,
+});
+
 setAddon(infoAddon);
+
+setAddon(docsAddons);
 
 configure(loadStories, module);
