@@ -10,7 +10,6 @@ import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 import DateRangePickerInput from './DateRangePickerInput';
 
 import toMomentObject from '../utils/toMomentObject';
-import toLocalizedDateString from '../utils/toLocalizedDateString';
 import toISODateString from '../utils/toISODateString';
 
 import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
@@ -45,6 +44,8 @@ const propTypes = forbidExtraProps({
   onFocusChange: PropTypes.func,
   onDatesChange: PropTypes.func,
 
+  renderInputText: PropTypes.func,
+
   customInputIcon: PropTypes.node,
   customArrowIcon: PropTypes.node,
   customCloseIcon: PropTypes.node,
@@ -76,6 +77,7 @@ const defaultProps = {
   withFullScreenPortal: false,
   isOutsideRange: day => !isInclusivelyAfterDay(day, moment()),
   displayFormat: () => moment.localeData().longDateFormat('L'),
+  renderInputText: null,
 
   onFocusChange() {},
   onDatesChange() {},
@@ -175,10 +177,18 @@ export default class DateRangePickerInputWithHandlers extends React.Component {
 
   getDateString(date) {
     const displayFormat = this.getDisplayFormat();
-    if (date && displayFormat) {
-      return date && date.format(displayFormat);
+    return date.format(displayFormat);
+  }
+
+  getDateText(date, inputReference) {
+    const { renderInputText } = this.props;
+    if (!date) {
+      return null;
     }
-    return toLocalizedDateString(date);
+    if (renderInputText) {
+      return renderInputText(date, this.getDisplayFormat(), inputReference);
+    }
+    return this.getDateString(date);
   }
 
   clearDates() {
@@ -211,19 +221,19 @@ export default class DateRangePickerInputWithHandlers extends React.Component {
       phrases,
     } = this.props;
 
-    const startDateString = this.getDateString(startDate);
+    const startDateText = this.getDateText(startDate, START_DATE);
     const startDateValue = toISODateString(startDate);
-    const endDateString = this.getDateString(endDate);
+    const endDateText = this.getDateText(endDate, END_DATE);
     const endDateValue = toISODateString(endDate);
 
     return (
       <DateRangePickerInput
-        startDate={startDateString}
+        startDate={startDateText}
         startDateValue={startDateValue}
         startDateId={startDateId}
         startDatePlaceholderText={startDatePlaceholderText}
         isStartDateFocused={isStartDateFocused}
-        endDate={endDateString}
+        endDate={endDateText}
         endDateValue={endDateValue}
         endDateId={endDateId}
         endDatePlaceholderText={endDatePlaceholderText}

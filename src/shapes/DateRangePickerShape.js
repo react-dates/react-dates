@@ -30,6 +30,7 @@ export default {
   customInputIcon: PropTypes.node,
   customArrowIcon: PropTypes.node,
   customCloseIcon: PropTypes.node,
+  renderInputText: PropTypes.func,
 
   // calendar presentation and interaction related props
   orientation: OrientationShape,
