@@ -199,6 +199,16 @@ If the `required` prop is set to true, the input will have to be filled before t
   required: PropTypes.bool,
 ```
 
+To replace the presentation of input value, you may provide `props.renderInputText` as in following signature:
+```js
+  renderInputText: (date, displayFormat) => string | React.element
+```
+This function will not be called if date is `null`. (Placeholder will be rendered instead)<br/>
+Use `props.displayFormat` if you only need to change display format.
+```js
+  renderInputText: PropTypes.func,
+```
+
 The `screenReaderInputMessage` prop accepts a contextual message for screen readers. When an input is focused, the `screenReaderInputMessage` prop value is read. This can inform users about constraints, such as the date format, minimum nights, blocked out dates, etc.
 ```js
   screenReaderInputMessage: PropTypes.string,

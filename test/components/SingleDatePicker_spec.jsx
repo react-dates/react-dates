@@ -384,6 +384,54 @@ describe('SingleDatePicker', () => {
       });
     });
 
+    describe('matches custom input text render', () => {
+      const customFormat = 'MM[foobar]DD';
+      const customDate = moment(today).add(5, 'days');
+
+      it('calls props.renderInputText with correct arguments', () => {
+        const renderInputTextStub = sinon.stub();
+        shallow(
+          <SingleDatePicker
+            date={customDate}
+            displayFormat={customFormat}
+            renderInputText={renderInputTextStub}
+          />,
+        );
+        expect(renderInputTextStub.callCount).to.equal(1);
+
+        const [date, format] = renderInputTextStub.getCall(0).args;
+        expect(format).to.equal(customFormat);
+        expect(date.format(customFormat)).to.equal(customDate.format(customFormat));
+      });
+
+      describe('props.renderInputText', () => {
+        it('is not called with null date', () => {
+          const renderInputTextStub = sinon.stub();
+          shallow(
+            <SingleDatePicker
+              date={null}
+              renderInputText={renderInputTextStub}
+            />,
+          );
+          expect(renderInputTextStub.callCount).to.equal(0);
+        });
+
+        it('is called when date appears', () => {
+          const renderInputTextStub = sinon.stub();
+          const wrapper = shallow(
+            <SingleDatePicker
+              date={null}
+              renderInputText={renderInputTextStub}
+            />,
+          );
+          wrapper.setProps({
+            date: customDate,
+          });
+          expect(renderInputTextStub.callCount).to.equal(1);
+        });
+      });
+    });
+
     describe('invalid date string', () => {
       const invalidDateString = 'foobar';
       it('calls props.onDateChange once', () => {

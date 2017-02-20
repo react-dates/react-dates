@@ -181,6 +181,18 @@ describe('DateInput', () => {
       wrapper.instance().onChange(evt);
       expect(onChangeStub.getCall(0).args[0]).to.equal(evt.target.value);
     });
+
+    it('ignores props.onChange value when received new prop value', () => {
+      const customDisplayValue = 'Custom Date Display';
+      const onChangeStub = sinon.stub();
+      const wrapper = shallow(<DateInput id="date" onChange={onChangeStub} displayValue={null} />);
+      wrapper.instance().onChange(evt);
+      wrapper.setProps({
+        displayValue: customDisplayValue,
+      });
+      expect(wrapper.state().dateString).to.equal('');
+      expect(wrapper.find('.DateInput__display-text').text()).to.equal(customDisplayValue);
+    });
   });
 
   describe('#onKeyDown', () => {
