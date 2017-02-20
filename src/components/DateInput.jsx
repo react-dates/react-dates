@@ -42,12 +42,15 @@ export default class DateInput extends React.Component {
     super(props);
     this.state = {
       dateString: '',
+      isTouchDevice: false,
     };
 
     this.onChange = this.onChange.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
+  }
 
-    this.isTouchDevice = isTouchDevice();
+  componentDidMount() {
+    this.setState({ isTouchDevice: isTouchDevice() });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -89,7 +92,10 @@ export default class DateInput extends React.Component {
   }
 
   render() {
-    const { dateString } = this.state;
+    const {
+      dateString,
+      isTouchDevice: isTouch,
+    } = this.state;
     const {
       id,
       placeholder,
@@ -128,7 +134,7 @@ export default class DateInput extends React.Component {
           placeholder={placeholder}
           autoComplete="off"
           disabled={disabled}
-          readOnly={this.isTouchDevice}
+          readOnly={isTouch}
           required={required}
           aria-describedby={screenReaderMessage && screenReaderMessageId}
         />
