@@ -30,6 +30,19 @@ const TestNextIcon = props => (
   </span>
 );
 
+const TestCaption = () => (
+  <div
+    style={{
+      padding: '10px 21px',
+      borderTop: '1px solid #dce0e0',
+      color: '#484848',
+
+    }}
+  >
+    &#x2755; Some useful info here
+  </div>
+);
+
 storiesOf('DayPicker', module)
   .addWithInfo('default', () => (
     <DayPicker />
@@ -72,4 +85,11 @@ storiesOf('DayPicker', module)
         orientation={VERTICAL_ORIENTATION}
       />
     </div>
+  ))
+  .addWithInfo('with caption', () => (
+    <DayPicker
+      renderCalendarCaption={() => (
+        <TestCaption />
+      )}
+    />
   ));

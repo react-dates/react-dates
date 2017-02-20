@@ -136,6 +136,11 @@ By default, we do not show days from the previous month and the next month in th
    initialVisibleMonth: PropTypes.func,
 ```
 
+Optionally you can provide calendar caption block renderer.
+```js
+   renderCalendarCaption: PropTypes.func,
+```
+
 **DayPicker presentation:**
 
 The `orientation` prop indicates whether months are stacked on top of each other or displayed side-by-side. You can import the `HORIZONTAL_ORIENTATION` and `VERTICAL_ORIENTATION` constants from `react-dates/constants`.

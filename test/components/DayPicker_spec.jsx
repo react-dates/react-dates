@@ -64,6 +64,15 @@ describe('DayPicker', () => {
       });
     });
 
+    describe('renderCaption', () => {
+      it('caption exists', () => {
+        const testCaptionClass = 'test-cation-container';
+        const captionElement = <div className={testCaptionClass} />;
+        const wrapper = shallow(<DayPicker renderCalendarCaption={() => captionElement} />);
+        expect(wrapper.find(`.${testCaptionClass}`)).to.have.lengthOf(1);
+      });
+    });
+
     describe('CalendarMonthGrid', () => {
       it('component exists', () => {
         const wrapper = shallow(<DayPicker />);
