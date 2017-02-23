@@ -95,11 +95,13 @@ class DayPickerRangeControllerWrapper extends React.Component {
 
   onFocusChange(focusedInput) {
     this.setState({
+      // Force the focusedInput to always be truthy so that dates are always selectable
       focusedInput: !focusedInput ? START_DATE : focusedInput,
     });
   }
 
   render() {
+    const { showInputs } = this.props;
     const { focusedInput, startDate, endDate } = this.state;
 
     const props = omit(this.props, [
@@ -109,8 +111,18 @@ class DayPickerRangeControllerWrapper extends React.Component {
       'initialEndDate',
     ]);
 
+    const startDateString = startDate && startDate.format('YYYY-MM-DD');
+    const endDateString = endDate && endDate.format('YYYY-MM-DD');
+
     return (
       <div>
+        {showInputs &&
+          <div style={{ marginBottom: 16 }}>
+            <input type="text" name="start date" value={startDateString} readOnly />
+            <input type="text" name="end date" value={endDateString} readOnly />
+          </div>
+        }
+
         <DayPickerRangeController
           {...props}
           onDatesChange={this.onDatesChange}
