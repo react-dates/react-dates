@@ -13,3 +13,8 @@ html {
 *, *:before, *:after {
   box-sizing: inherit;
 }
+
+a {
+  color: #008489;
+  font-weight: bold;
+}
