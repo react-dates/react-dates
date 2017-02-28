@@ -25,16 +25,16 @@ describe('DayPickerRangeController', () => {
 
   describe('#onDayClick', () => {
     describe('day argument is a blocked day', () => {
-      it('props.onFocusChange is not called', () => {
-        const onFocusChangeStub = sinon.stub();
+      it('props.onSelectedInputChange is not called', () => {
+        const onSelectedInputChangeStub = sinon.stub();
         const wrapper = shallow(
           <DayPickerRangeController
-            onFocusChange={onFocusChangeStub}
+            onSelectedInputChange={onSelectedInputChangeStub}
             isDayBlocked={() => true}
           />,
         );
         wrapper.instance().onDayClick(today);
-        expect(onFocusChangeStub.callCount).to.equal(0);
+        expect(onSelectedInputChangeStub.callCount).to.equal(0);
       });
 
       it('props.onDatesChange is not called', () => {
@@ -50,37 +50,37 @@ describe('DayPickerRangeController', () => {
       });
     });
 
-    describe('props.focusedInput === START_DATE', () => {
-      describe('props.onFocusChange', () => {
+    describe('props.selectedInput === START_DATE', () => {
+      describe('props.onSelectedInputChange', () => {
         it('is called once', () => {
-          const onFocusChangeStub = sinon.stub();
+          const onSelectedInputChangeStub = sinon.stub();
           const wrapper = shallow(
             <DayPickerRangeController
-              focusedInput={START_DATE}
-              onFocusChange={onFocusChangeStub}
+              selectedInput={START_DATE}
+              onSelectedInputChange={onSelectedInputChangeStub}
             />,
           );
           wrapper.instance().onDayClick(today);
-          expect(onFocusChangeStub.callCount).to.equal(1);
+          expect(onSelectedInputChangeStub.callCount).to.equal(1);
         });
 
         it('is called with END_DATE', () => {
-          const onFocusChangeStub = sinon.stub();
+          const onSelectedInputChangeStub = sinon.stub();
           const wrapper = shallow(
             <DayPickerRangeController
-              focusedInput={START_DATE}
-              onFocusChange={onFocusChangeStub}
+              selectedInput={START_DATE}
+              onSelectedInputChange={onSelectedInputChangeStub}
             />,
           );
           wrapper.instance().onDayClick(today);
-          expect(onFocusChangeStub.getCall(0).args[0]).to.equal(END_DATE);
+          expect(onSelectedInputChangeStub.getCall(0).args[0]).to.equal(END_DATE);
         });
       });
 
       it('calls props.onDatesChange', () => {
         const onDatesChangeStub = sinon.stub();
         const wrapper = shallow(
-          <DayPickerRangeController focusedInput={START_DATE} onDatesChange={onDatesChangeStub} />,
+          <DayPickerRangeController selectedInput={START_DATE} onDatesChange={onDatesChangeStub} />,
         );
         wrapper.instance().onDayClick(today);
         expect(onDatesChangeStub.callCount).to.equal(1);
@@ -91,7 +91,7 @@ describe('DayPickerRangeController', () => {
           const onDatesChangeStub = sinon.stub();
           const wrapper = shallow(
             <DayPickerRangeController
-              focusedInput={START_DATE}
+              selectedInput={START_DATE}
               endDate={today}
               onDatesChange={onDatesChangeStub}
             />,
@@ -111,7 +111,7 @@ describe('DayPickerRangeController', () => {
           const tomorrow = moment(today).add(1, 'days');
           const wrapper = shallow(
             <DayPickerRangeController
-              focusedInput={START_DATE}
+              selectedInput={START_DATE}
               endDate={tomorrow}
               onDatesChange={onDatesChangeStub}
             />,
@@ -129,7 +129,7 @@ describe('DayPickerRangeController', () => {
           const onDatesChangeStub = sinon.stub();
           const wrapper = shallow(
             <DayPickerRangeController
-              focusedInput={START_DATE}
+              selectedInput={START_DATE}
               endDate={null}
               onDatesChange={onDatesChangeStub}
             />,
@@ -143,13 +143,13 @@ describe('DayPickerRangeController', () => {
       });
     });
 
-    describe('props.focusedInput === END_DATE', () => {
+    describe('props.selectedInput === END_DATE', () => {
       describe('arg is before props.startDate', () => {
         it('calls props.onDatesChange with startDate === arg and endDate === null', () => {
           const onDatesChangeStub = sinon.stub();
           const wrapper = shallow(
             <DayPickerRangeController
-              focusedInput={END_DATE}
+              selectedInput={END_DATE}
               startDate={moment(today).add(1, 'days')}
               onDatesChange={onDatesChangeStub}
             />,
@@ -167,7 +167,7 @@ describe('DayPickerRangeController', () => {
             const onDatesChangeStub = sinon.stub();
             const wrapper = shallow(
               <DayPickerRangeController
-                focusedInput={END_DATE}
+                selectedInput={END_DATE}
                 onDatesChange={onDatesChangeStub}
               />,
             );
@@ -178,58 +178,58 @@ describe('DayPickerRangeController', () => {
           },
         );
 
-        describe('props.onFocusChange', () => {
+        describe('props.onSelectedInputChange', () => {
           describe('props.startDate === null', () => {
             it('is called once', () => {
-              const onFocusChangeStub = sinon.stub();
+              const onSelectedInputChangeStub = sinon.stub();
               const wrapper = shallow(
                 <DayPickerRangeController
-                  focusedInput={END_DATE}
-                  onFocusChange={onFocusChangeStub}
+                  selectedInput={END_DATE}
+                  onSelectedInputChange={onSelectedInputChangeStub}
                 />,
               );
               wrapper.instance().onDayClick(today);
-              expect(onFocusChangeStub.callCount).to.equal(1);
+              expect(onSelectedInputChangeStub.callCount).to.equal(1);
             });
 
             it('is called with START_DATE', () => {
-              const onFocusChangeStub = sinon.stub();
+              const onSelectedInputChangeStub = sinon.stub();
               const wrapper = shallow(
                 <DayPickerRangeController
-                  focusedInput={END_DATE}
-                  onFocusChange={onFocusChangeStub}
+                  selectedInput={END_DATE}
+                  onSelectedInputChange={onSelectedInputChangeStub}
                 />,
               );
               wrapper.instance().onDayClick(today);
-              expect(onFocusChangeStub.getCall(0).args[0]).to.equal(START_DATE);
+              expect(onSelectedInputChangeStub.getCall(0).args[0]).to.equal(START_DATE);
             });
           });
 
           describe('props.startDate is truthy', () => {
             it('is called once', () => {
-              const onFocusChangeStub = sinon.stub();
+              const onSelectedInputChangeStub = sinon.stub();
               const wrapper = shallow(
                 <DayPickerRangeController
-                  focusedInput={END_DATE}
+                  selectedInput={END_DATE}
                   startDate={today}
-                  onFocusChange={onFocusChangeStub}
+                  onSelectedInputChange={onSelectedInputChangeStub}
                 />,
               );
               wrapper.instance().onDayClick(moment(today).add(1, 'days'));
-              expect(onFocusChangeStub.callCount).to.equal(1);
+              expect(onSelectedInputChangeStub.callCount).to.equal(1);
             });
 
             it('is called with null', () => {
-              const onFocusChangeStub = sinon.stub();
+              const onSelectedInputChangeStub = sinon.stub();
               const wrapper = shallow(
                 <DayPickerRangeController
-                  focusedInput={END_DATE}
+                  selectedInput={END_DATE}
                   startDate={today}
-                  onFocusChange={onFocusChangeStub}
+                  onSelectedInputChange={onSelectedInputChangeStub}
                 />,
               );
               wrapper.instance().onDayClick(moment(today).add(1, 'days'));
-              expect(onFocusChangeStub.getCall(0).args[0]).to.equal(null);
+              expect(onSelectedInputChangeStub.getCall(0).args[0]).to.equal(null);
             });
           });
         });
@@ -241,7 +241,7 @@ describe('DayPickerRangeController', () => {
             const onDatesChangeStub = sinon.stub();
             const wrapper = shallow(
               <DayPickerRangeController
-                focusedInput={END_DATE}
+                selectedInput={END_DATE}
                 minimumNights={0}
                 onDatesChange={onDatesChangeStub}
                 startDate={today}
@@ -280,12 +280,12 @@ describe('DayPickerRangeController', () => {
       const MIN_NIGHTS = 3;
       describe('state.startDate !== null', () => {
         const startDate = moment(today).add(3, 'days'); // rand day not equal to today
-        describe('props.focusedInput === END_DATE', () => {
+        describe('props.selectedInput === END_DATE', () => {
           it('returns true if arg is < props.minimumNights after props.startDate', () => {
             const testDate = moment(startDate).add(MIN_NIGHTS - 1, 'days');
             const wrapper = shallow(
               <DayPickerRangeController
-                focusedInput={END_DATE}
+                selectedInput={END_DATE}
                 startDate={startDate}
                 minimumNights={MIN_NIGHTS}
               />,
@@ -297,7 +297,7 @@ describe('DayPickerRangeController', () => {
             const testDate = moment(startDate).add(MIN_NIGHTS + 1, 'days');
             const wrapper = shallow(
               <DayPickerRangeController
-                focusedInput={END_DATE}
+                selectedInput={END_DATE}
                 startDate={startDate}
                 minimumNights={MIN_NIGHTS}
               />,
@@ -310,7 +310,7 @@ describe('DayPickerRangeController', () => {
             const testDate = moment(startDate).add(MIN_NIGHTS, 'days');
             const wrapper = shallow(
               <DayPickerRangeController
-                focusedInput={END_DATE}
+                selectedInput={END_DATE}
                 startDate={partialDate}
                 minimumNights={MIN_NIGHTS}
               />,
@@ -319,12 +319,12 @@ describe('DayPickerRangeController', () => {
           });
         });
 
-        describe('props.focusedInput !== END_DATE', () => {
+        describe('props.selectedInput !== END_DATE', () => {
           it('returns false', () => {
             const testDate = moment(startDate).add(MIN_NIGHTS - 1, 'days');
             const wrapper = shallow(
               <DayPickerRangeController
-                focusedInput={START_DATE}
+                selectedInput={START_DATE}
                 startDate={startDate}
                 minimumNights={MIN_NIGHTS}
               />,
@@ -335,13 +335,13 @@ describe('DayPickerRangeController', () => {
       });
 
       describe('props.startDate === null', () => {
-        describe('props.focusedInput === END_DATE', () => {
+        describe('props.selectedInput === END_DATE', () => {
           it('returns true if arg - props.minimumNights is outside allowed range', () => {
             const isOutsideRange = day => !isInclusivelyAfterDay(day, today);
             const testDate = moment(today).add(MIN_NIGHTS - 1, 'days');
             const wrapper = shallow(
               <DayPickerRangeController
-                focusedInput={END_DATE}
+                selectedInput={END_DATE}
                 startDate={null}
                 minimumNights={MIN_NIGHTS}
                 isOutsideRange={isOutsideRange}
@@ -355,7 +355,7 @@ describe('DayPickerRangeController', () => {
             const testDate = moment(today).add(MIN_NIGHTS, 'days');
             const wrapper = shallow(
               <DayPickerRangeController
-                focusedInput={END_DATE}
+                selectedInput={END_DATE}
                 startDate={null}
                 minimumNights={MIN_NIGHTS}
                 isOutsideRange={isOutsideRange}
@@ -365,12 +365,12 @@ describe('DayPickerRangeController', () => {
           });
         });
 
-        describe('state.focusedInput !== END_DATE', () => {
+        describe('state.selectedInput !== END_DATE', () => {
           it('returns false', () => {
             const testDate = moment(today).add(MIN_NIGHTS - 1, 'days');
             const wrapper = shallow(
               <DayPickerRangeController
-                focusedInput={START_DATE}
+                selectedInput={START_DATE}
                 startDate={null}
                 minimumNights={MIN_NIGHTS}
               />,

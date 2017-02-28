@@ -36,7 +36,7 @@ const defaultProps = {
   // required props for a functional interactive DateRangePicker
   startDate: null,
   endDate: null,
-  focusedInput: null,
+  selectedInput: null,
 
   // input related props
   startDateId: START_DATE,
@@ -110,7 +110,7 @@ export default class DateRangePicker extends React.Component {
     );
     this.responsivizePickerPosition();
 
-    if (this.props.focusedInput) {
+    if (this.props.selectedInput) {
       this.setState({
         isDateRangePickerInputFocused: true,
       });
@@ -122,7 +122,7 @@ export default class DateRangePicker extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (!prevProps.focusedInput && this.props.focusedInput && this.isOpened()) {
+    if (!prevProps.selectedInput && this.props.selectedInput && this.isOpened()) {
       // The date picker just changed from being closed to being open.
       this.responsivizePickerPosition();
     }
@@ -133,7 +133,7 @@ export default class DateRangePicker extends React.Component {
   }
 
   onOutsideClick() {
-    const { onFocusChange } = this.props;
+    const { onSelectedInputChange } = this.props;
     if (!this.isOpened()) return;
 
     this.setState({
@@ -142,13 +142,13 @@ export default class DateRangePicker extends React.Component {
       showKeyboardShortcuts: false,
     });
 
-    onFocusChange(null);
+    onSelectedInputChange(null);
   }
 
-  onDateRangePickerInputFocus(focusedInput) {
-    const { onFocusChange } = this.props;
+  onDateRangePickerInputFocus(selectedInput) {
+    const { onSelectedInputChange } = this.props;
 
-    if (focusedInput) {
+    if (selectedInput) {
       this.setState({
         isDateRangePickerInputFocused: true,
         isDayPickerFocused: false,
@@ -156,7 +156,7 @@ export default class DateRangePicker extends React.Component {
       });
     }
 
-    onFocusChange(focusedInput);
+    onSelectedInputChange(selectedInput);
   }
 
   onDayPickerFocus() {
@@ -199,8 +199,8 @@ export default class DateRangePicker extends React.Component {
   }
 
   isOpened() {
-    const { focusedInput } = this.props;
-    return focusedInput === START_DATE || focusedInput === END_DATE;
+    const { selectedInput } = this.props;
+    return selectedInput === START_DATE || selectedInput === END_DATE;
   }
 
   responsivizePickerPosition() {
@@ -268,11 +268,11 @@ export default class DateRangePicker extends React.Component {
       onPrevMonthClick,
       onNextMonthClick,
       onDatesChange,
-      onFocusChange,
+      onSelectedInputChange,
       withPortal,
       withFullScreenPortal,
       enableOutsideDays,
-      focusedInput,
+      selectedInput,
       startDate,
       endDate,
       minimumNights,
@@ -303,8 +303,8 @@ export default class DateRangePicker extends React.Component {
           onPrevMonthClick={onPrevMonthClick}
           onNextMonthClick={onNextMonthClick}
           onDatesChange={onDatesChange}
-          onFocusChange={onFocusChange}
-          focusedInput={focusedInput}
+          onSelectedInputChange={onSelectedInputChange}
+          selectedInput={selectedInput}
           startDate={startDate}
           endDate={endDate}
           monthFormat={monthFormat}
@@ -347,7 +347,7 @@ export default class DateRangePicker extends React.Component {
       endDate,
       endDateId,
       endDatePlaceholderText,
-      focusedInput,
+      selectedInput,
       screenReaderInputMessage,
       showClearDates,
       showDefaultInputIcon,
@@ -376,11 +376,11 @@ export default class DateRangePicker extends React.Component {
             startDate={startDate}
             startDateId={startDateId}
             startDatePlaceholderText={startDatePlaceholderText}
-            isStartDateFocused={focusedInput === START_DATE}
+            isStartDateSelected={selectedInput === START_DATE}
             endDate={endDate}
             endDateId={endDateId}
             endDatePlaceholderText={endDatePlaceholderText}
-            isEndDateFocused={focusedInput === END_DATE}
+            isEndDateSelected={selectedInput === END_DATE}
             displayFormat={displayFormat}
             showClearDates={showClearDates}
             showCaret={!withPortal && !withFullScreenPortal}
@@ -394,7 +394,7 @@ export default class DateRangePicker extends React.Component {
             isOutsideRange={isOutsideRange}
             withFullScreenPortal={withFullScreenPortal}
             onDatesChange={onDatesChange}
-            onFocusChange={this.onDateRangePickerInputFocus}
+            onSelectedInputChange={this.onDateRangePickerInputFocus}
             onArrowDown={this.onDayPickerFocus}
             onQuestionMark={this.showKeyboardShortcutsPanel}
             phrases={phrases}

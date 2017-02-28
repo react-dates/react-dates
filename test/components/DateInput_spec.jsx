@@ -130,17 +130,17 @@ describe('DateInput', () => {
         });
       });
 
-      describe('props.focused is falsey', () => {
-        it('does not have .DateInput__display-text--focused class ', () => {
-          const wrapper = shallow(<DateInput id="date" focused={false} />);
-          expect(wrapper.find('.DateInput__display-text--focused')).to.have.lengthOf(0);
+      describe('props.selected is falsey', () => {
+        it('does not have .DateInput__display-text--selected class ', () => {
+          const wrapper = shallow(<DateInput id="date" selected={false} />);
+          expect(wrapper.find('.DateInput__display-text--selected')).to.have.lengthOf(0);
         });
       });
 
-      describe('props.focused is truthy', () => {
-        it('has .DateInput__display-text--focused class', () => {
-          const wrapper = shallow(<DateInput id="date" focused />);
-          expect(wrapper.find('.DateInput__display-text--focused')).to.have.lengthOf(1);
+      describe('props.selected is truthy', () => {
+        it('has .DateInput__display-text--selected class', () => {
+          const wrapper = shallow(<DateInput id="date" selected />);
+          expect(wrapper.find('.DateInput__display-text--selected')).to.have.lengthOf(1);
         });
       });
 

@@ -59,7 +59,7 @@ Otherwise create a CSS file with the contents of `require.resolve('react-dates/l
   date={this.state.date}
   focused={this.state.focused}
   onDateChange={(date) => { this.setState({ date }); }}
-  onFocusChange={({ focused }) => { this.setState({ focused }); }}
+  onSelectedInputChange={({ focused }) => { this.setState({ focused }); }}
 />
 ```
 
@@ -89,14 +89,14 @@ as an argument.
 
 **Focus:**
 
-The `focusedInput` prop indicates which of the two inputs is currently focused, if either. You can import the `START_DATE` and `END_DATE` constants from `react-dates/constants`.
+The `selectedInput` prop indicates which of the two inputs is currently focused, if either. You can import the `START_DATE` and `END_DATE` constants from `react-dates/constants`.
 ```js
-  focusedInput: PropTypes.oneOf([START_DATE, END_DATE]),
+  selectedInput: PropTypes.oneOf([START_DATE, END_DATE]),
 ```
 
-`onFocusChange` is the callback necessary to update the focus state being held in the parent component and pass that back down to the `DateRangePicker` as a prop. `onFocusChange` receives either `START_DATE`, `END_DATE`, or `null` as an argument.
+`onSelectedInputChange` is the callback necessary to update the focus state being held in the parent component and pass that back down to the `DateRangePicker` as a prop. `onSelectedInputChange` receives either `START_DATE`, `END_DATE`, or `null` as an argument.
 ```js
-  onFocusChange: PropTypes.func,
+  onSelectedInputChange: PropTypes.func,
 ```
 
 **Date selection rules:**
@@ -189,7 +189,7 @@ To replace the default arrow icon, you may pass a React node to `props.customArr
   customArrowIcon: PropTypes.node,
 ```
 
-If the `disabled` prop is set to true, onFocusChange is not called when onStartDateFocus or onEndDateFocus are invoked and disabled is assigned to the actual `<input>` DOM elements.
+If the `disabled` prop is set to true, onSelectedInputChange is not called when onStartDateFocus or onEndDateFocus are invoked and disabled is assigned to the actual `<input>` DOM elements.
 ```js
   disabled: PropTypes.bool,
 ```
@@ -291,9 +291,9 @@ A boolean representing whether or not the date input is currently focused.
   focused: PropTypes.bool,
 ```
 
-`onFocusChange` is the callback necessary to update the focus state in the parent component. It expects a single argument of the form `{ focused: PropTypes.bool }`.
+`onSelectedInputChange` is the callback necessary to update the focus state in the parent component. It expects a single argument of the form `{ focused: PropTypes.bool }`.
 ```js
-  onFocusChange: PropTypes.func,
+  onSelectedInputChange: PropTypes.func,
 ```
 
 **Date selection rules:**
@@ -373,7 +373,7 @@ If the `showClearDate` prop is set to true, an `x` shows up in the input box tha
   showClearDate: PropTypes.bool,
 ```
 
-If the `disabled` prop is set to true, onFocusChange is not called when onStartDateFocus or onEndDateFocus are invoked and disabled is assigned to the actual `<input>` DOM elements.
+If the `disabled` prop is set to true, onSelectedInputChange is not called when onStartDateFocus or onEndDateFocus are invoked and disabled is assigned to the actual `<input>` DOM elements.
 ```js
   disabled: PropTypes.bool,
 ```

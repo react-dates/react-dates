@@ -15,10 +15,11 @@ import { START_DATE, END_DATE } from '../../constants';
 const propTypes = forbidExtraProps({
   startDateId: PropTypes.string,
   startDatePlaceholderText: PropTypes.string,
-  screenReaderMessage: PropTypes.string,
 
   endDateId: PropTypes.string,
   endDatePlaceholderText: PropTypes.string,
+
+  screenReaderMessage: PropTypes.string,
 
   onStartDateFocus: PropTypes.func,
   onEndDateFocus: PropTypes.func,
@@ -35,8 +36,8 @@ const propTypes = forbidExtraProps({
   endDate: PropTypes.string,
   endDateValue: PropTypes.string,
 
-  isStartDateFocused: PropTypes.bool,
-  isEndDateFocused: PropTypes.bool,
+  isStartDateSelected: PropTypes.bool, // stylizes the input to indicate that it will be filled
+  isEndDateSelected: PropTypes.bool, // stylizes the input to indicate that it will be filled
   showClearDates: PropTypes.bool,
   disabled: PropTypes.bool,
   required: PropTypes.bool,
@@ -46,7 +47,7 @@ const propTypes = forbidExtraProps({
   customArrowIcon: PropTypes.node,
 
   // accessibility
-  isFocused: PropTypes.bool,
+  isFocused: PropTypes.bool, // handles actual DOM focus
 
   // i18n
   phrases: PropTypes.shape(getPhrasePropTypes(DateRangePickerInputPhrases)),
@@ -73,8 +74,8 @@ const defaultProps = {
   endDate: '',
   endDateValue: '',
 
-  isStartDateFocused: false,
-  isEndDateFocused: false,
+  isStartDateSelected: false, // stylizes the input to indicate that it will be filled
+  isEndDateSelected: false, // stylizes the input to indicate that it will be filled
   showClearDates: false,
   disabled: false,
   required: false,
@@ -84,7 +85,7 @@ const defaultProps = {
   customArrowIcon: null,
 
   // accessibility
-  isFocused: false,
+  isFocused: false,  // handles actual DOM focus
 
   // i18n
   phrases: DateRangePickerInputPhrases,
@@ -121,7 +122,7 @@ export default class DateRangePickerInput extends React.Component {
       startDateId,
       startDatePlaceholderText,
       screenReaderMessage,
-      isStartDateFocused,
+      isStartDateSelected,
       onStartDateChange,
       onStartDateFocus,
       onStartDateShiftTab,
@@ -129,7 +130,7 @@ export default class DateRangePickerInput extends React.Component {
       endDateValue,
       endDateId,
       endDatePlaceholderText,
-      isEndDateFocused,
+      isEndDateSelected,
       onEndDateChange,
       onEndDateFocus,
       onEndDateTab,
@@ -175,8 +176,8 @@ export default class DateRangePickerInput extends React.Component {
           displayValue={startDate}
           inputValue={startDateValue}
           screenReaderMessage={screenReaderText}
-          focused={isStartDateFocused}
-          isFocused={isFocused}
+          focused={isFocused}
+          selected={isStartDateSelected}
           disabled={disabled}
           required={required}
           showCaret={showCaret}
@@ -202,8 +203,8 @@ export default class DateRangePickerInput extends React.Component {
           displayValue={endDate}
           inputValue={endDateValue}
           screenReaderMessage={screenReaderText}
-          focused={isEndDateFocused}
-          isFocused={isFocused}
+          focused={isFocused}
+          selected={isEndDateSelected}
           disabled={disabled}
           required={required}
           showCaret={showCaret}

@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import momentPropTypes from 'react-moment-proptypes';
 import shallowCompare from 'react-addons-shallow-compare';
 import ReactDOM from 'react-dom';
 import { forbidExtraProps } from 'airbnb-prop-types';
@@ -675,7 +674,7 @@ export default class DayPicker extends React.Component {
                 renderDay={renderDay}
                 onMonthTransitionEnd={this.updateStateAfterMonthTransition}
                 monthFormat={monthFormat}
-                focusedDate={shouldFocusDate ? focusedDate : null}
+                focusedDate={!isCalendarMonthGridAnimating ? focusedDate : null}
                 phrases={phrases}
               />
 

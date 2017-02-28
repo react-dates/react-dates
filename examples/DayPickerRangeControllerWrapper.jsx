@@ -80,29 +80,29 @@ class DayPickerRangeControllerWrapper extends React.Component {
     super(props);
 
     this.state = {
-      focusedInput: props.autoFocusEndDate ? END_DATE : START_DATE,
+      selectedInput: props.autoFocusEndDate ? END_DATE : START_DATE,
       startDate: props.initialStartDate,
       endDate: props.initialEndDate,
     };
 
     this.onDatesChange = this.onDatesChange.bind(this);
-    this.onFocusChange = this.onFocusChange.bind(this);
+    this.onSelectedInputChange = this.onSelectedInputChange.bind(this);
   }
 
   onDatesChange({ startDate, endDate }) {
     this.setState({ startDate, endDate });
   }
 
-  onFocusChange(focusedInput) {
+  onSelectedInputChange(selectedInput) {
     this.setState({
-      // Force the focusedInput to always be truthy so that dates are always selectable
-      focusedInput: !focusedInput ? START_DATE : focusedInput,
+      // Force the selectedInput to always be truthy so that dates are always selectable
+      selectedInput: !selectedInput ? START_DATE : selectedInput,
     });
   }
 
   render() {
     const { showInputs } = this.props;
-    const { focusedInput, startDate, endDate } = this.state;
+    const { selectedInput, startDate, endDate } = this.state;
 
     const props = omit(this.props, [
       'autoFocus',
@@ -126,8 +126,8 @@ class DayPickerRangeControllerWrapper extends React.Component {
         <DayPickerRangeController
           {...props}
           onDatesChange={this.onDatesChange}
-          onFocusChange={this.onFocusChange}
-          focusedInput={focusedInput}
+          onSelectedInputChange={this.onSelectedInputChange}
+          selectedInput={selectedInput}
           startDate={startDate}
           endDate={endDate}
         />

@@ -34,7 +34,7 @@ const propTypes = forbidExtraProps(SingleDatePickerShape);
 const defaultProps = {
   // required props for a functional interactive SingleDatePicker
   date: null,
-  focused: false,
+  selected: false,
 
   // input related props
   id: 'date',
@@ -112,6 +112,12 @@ export default class SingleDatePicker extends React.Component {
       { passive: true },
     );
     this.responsivizePickerPosition();
+
+    if (this.props.selected) {
+      this.setState({
+        isInputFocused: true,
+      });
+    }
   }
 
   componentWillUpdate() {
@@ -119,7 +125,7 @@ export default class SingleDatePicker extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (!prevProps.focused && this.props.focused) {
+    if (!prevProps.selected && this.props.selected) {
       this.responsivizePickerPosition();
     }
   }
@@ -130,13 +136,13 @@ export default class SingleDatePicker extends React.Component {
   }
 
   onChange(dateString) {
-    const { isOutsideRange, keepOpenOnDateSelect, onDateChange, onFocusChange } = this.props;
+    const { isOutsideRange, keepOpenOnDateSelect, onDateChange, onSelectChange } = this.props;
     const date = toMomentObject(dateString, this.getDisplayFormat());
 
     const isValid = date && !isOutsideRange(date);
     if (isValid) {
       onDateChange(date);
-      if (!keepOpenOnDateSelect) onFocusChange(false);
+      if (!keepOpenOnDateSelect) onSelectChange(false);
     } else {
       onDateChange(null);
     }
@@ -147,7 +153,7 @@ export default class SingleDatePicker extends React.Component {
     if (this.isBlocked(day)) return;
 
     this.props.onDateChange(day);
-    if (!this.props.keepOpenOnDateSelect) this.props.onFocusChange(false);
+    if (!this.props.keepOpenOnDateSelect) this.props.onSelectChange(false);
   }
 
   onDayMouseEnter(day) {
@@ -169,15 +175,15 @@ export default class SingleDatePicker extends React.Component {
     });
 
     if (!this.props.disabled) {
-      this.props.onFocusChange(true);
+      this.props.onSelectChange(true);
     }
   }
 
   onClearFocus() {
-    const { focused, onFocusChange } = this.props;
-    if (!focused) return;
+    const { selected, onSelectChange } = this.props;
+    if (!selected) return;
 
-    onFocusChange(false);
+    onSelectChange(false);
   }
 
   onDayPickerFocus() {
@@ -227,32 +233,32 @@ export default class SingleDatePicker extends React.Component {
   getFirstFocusableDay(newMonth) {
     const { date, numberOfMonths } = this.props;
 
-    let focusedDate = newMonth.clone().startOf('month');
+    let selectedDate = newMonth.clone().startOf('month');
     if (date) {
-      focusedDate = date.clone();
+      selectedDate = date.clone();
     }
 
-    if (this.isBlocked(focusedDate)) {
+    if (this.isBlocked(selectedDate)) {
       const days = [];
       const lastVisibleDay = newMonth.clone().add(numberOfMonths - 1, 'months').endOf('month');
-      let currentDay = focusedDate.clone();
+      let currentDay = selectedDate.clone();
       while (!currentDay.isAfter(lastVisibleDay)) {
         currentDay = currentDay.clone().add(1, 'day');
         days.push(currentDay);
       }
 
-      const viableDays = days.filter(day => !this.isBlocked(day) && day.isAfter(focusedDate));
-      if (viableDays.length > 0) focusedDate = viableDays[0];
+      const viableDays = days.filter(day => !this.isBlocked(day) && day.isAfter(selectedDate));
+      if (viableDays.length > 0) selectedDate = viableDays[0];
     }
 
-    return focusedDate;
+    return selectedDate;
   }
 
   clearDate() {
-    const { onDateChange, reopenPickerOnClearDate, onFocusChange } = this.props;
+    const { onDateChange, reopenPickerOnClearDate, onSelectChange } = this.props;
     onDateChange(null);
     if (reopenPickerOnClearDate) {
-      onFocusChange(true);
+      onSelectChange(true);
     }
   }
 
@@ -263,11 +269,11 @@ export default class SingleDatePicker extends React.Component {
       horizontalMargin,
       withPortal,
       withFullScreenPortal,
-      focused,
+      selected,
     } = this.props;
     const { dayPickerContainerStyles } = this.state;
 
-    if (!focused) {
+    if (!selected) {
       return;
     }
 
@@ -308,9 +314,9 @@ export default class SingleDatePicker extends React.Component {
   }
 
   maybeRenderDayPickerWithPortal() {
-    const { focused, withPortal, withFullScreenPortal } = this.props;
+    const { selected, withPortal, withFullScreenPortal } = this.props;
 
-    if (!focused) {
+    if (!selected) {
       return null;
     }
 
@@ -340,7 +346,7 @@ export default class SingleDatePicker extends React.Component {
       onNextMonthClick,
       withPortal,
       withFullScreenPortal,
-      focused,
+      selected,
       renderDay,
       date,
       initialVisibleMonth,
@@ -380,7 +386,7 @@ export default class SingleDatePicker extends React.Component {
           onNextMonthClick={onNextMonthClick}
           monthFormat={monthFormat}
           withPortal={withPortal || withFullScreenPortal}
-          hidden={!focused}
+          hidden={!selected}
           initialVisibleMonth={initialVisibleMonthThunk}
           onOutsideClick={onOutsideClick}
           navPrev={navPrev}
@@ -410,8 +416,8 @@ export default class SingleDatePicker extends React.Component {
     const {
       id,
       placeholder,
+      selected,
       disabled,
-      focused,
       required,
       showClearDate,
       date,
@@ -434,10 +440,10 @@ export default class SingleDatePicker extends React.Component {
           <SingleDatePickerInput
             id={id}
             placeholder={placeholder}
-            focused={focused}
+            selected={selected}
+            focused={isInputFocused}
             disabled={disabled}
             required={required}
-            isFocused={isInputFocused}
             showCaret={!withPortal && !withFullScreenPortal}
             onClearDate={this.clearDate}
             showClearDate={showClearDate}

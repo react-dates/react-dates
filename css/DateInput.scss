@@ -69,7 +69,7 @@ $caret-top: $react-dates-spacing-vertical-picker - $react-dates-width-tooltip-ar
   color: $react-dates-color-text;
 }
 
-.DateInput__display-text--focused {
+.DateInput__display-text--selected {
   background: $react-dates-color-focus;
   border-color: $react-dates-color-focus;
   border-radius: 3px;
