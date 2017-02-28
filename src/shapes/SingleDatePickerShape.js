@@ -12,8 +12,8 @@ export default {
   date: momentPropTypes.momentObj,
   onDateChange: PropTypes.func.isRequired,
 
-  focused: PropTypes.bool,
-  onFocusChange: PropTypes.func.isRequired,
+  selected: PropTypes.bool,
+  onSelectChange: PropTypes.func.isRequired,
 
   // input related props
   id: PropTypes.string.isRequired,

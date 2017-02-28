@@ -15,15 +15,15 @@ const dayPickerRangeControllerInfo = `The ${monospace('DayPickerRangeController'
   fully controlled version of the ${monospace('DayPicker')} that has built-in rules for selecting a
   date range. Unlike the ${monospace('DayPicker')}, which requires the consumer to explicitly define
   ${monospace('onDayMouseEnter')}, ${monospace('onDayMouseLeave')}, and ${monospace('onDayClick')}
-  handlers, the consumer needs simply to maintain the ${monospace('focusedInput')},
+  handlers, the consumer needs simply to maintain the ${monospace('selectedInput')},
   ${monospace('startDate')}, and ${monospace('endDate')} values in state and then pass these down as
-  props along with ${monospace('onFocusChange')} and ${monospace('onDatesChange')} callbacks that
+  props along with ${monospace('onSelectedInputChange')} and ${monospace('onDatesChange')} callbacks that
   update them appropriately. You can see an example of this implementation <a href=
   "https://github.com/airbnb/react-dates/blob/master/examples/DayPickerRangeControllerWrapper.jsx">
   here</a>. <br/><br/>
-  Note that the ${monospace('focusedInput')} prop may be ${monospace('null')}, but if this is the
+  Note that the ${monospace('selectedInput')} prop may be ${monospace('null')}, but if this is the
   case, dates are not selectable. As a result, in the example wrapper, we always force
-  ${monospace('focusedInput')} to be truthy in the ${monospace('onFocusChange')} method. <br/><br/>
+  ${monospace('selectedInput')} to be truthy in the ${monospace('onSelectedInputChange')} method. <br/><br/>
   The ${monospace('DayPickerRangeController')} is particularly useful if you are interested in the
   ${monospace('DateRangePicker')} functionality and calendar presentation, but would like to
   implement your own inputs.`;

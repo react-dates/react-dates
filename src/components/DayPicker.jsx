@@ -460,6 +460,7 @@ export default class DayPicker extends React.Component {
           >
             <CalendarMonthGrid
               ref={(ref) => { this.calendarMonthGrid = ref; }}
+              calendarMonthWidth={CALENDAR_MONTH_WIDTH}
               transformValue={transformValue}
               enableOutsideDays={enableOutsideDays}
               firstVisibleMonthIndex={firstVisibleMonthIndex}
@@ -475,8 +476,10 @@ export default class DayPicker extends React.Component {
               onMonthTransitionEnd={this.updateStateAfterMonthTransition}
               monthFormat={monthFormat}
             />
+
             {verticalScrollable && this.renderNavigation()}
           </div>
+
           {renderCalendarInfo && renderCalendarInfo()}
         </OutsideClickHandler>
       </div>

@@ -28,8 +28,8 @@ const propTypes = forbidExtraProps({
   endDate: momentPropTypes.momentObj,
   onDatesChange: PropTypes.func,
 
-  focusedInput: FocusedInputShape,
-  onFocusChange: PropTypes.func,
+  selectedInput: FocusedInputShape,
+  onSelectedInputChange: PropTypes.func,
 
   keepOpenOnDateSelect: PropTypes.bool,
   minimumNights: PropTypes.number,
@@ -63,8 +63,8 @@ const defaultProps = {
   endDate: undefined, // TODO: use null
   onDatesChange() {},
 
-  focusedInput: null,
-  onFocusChange() {},
+  selectedInput: null,
+  onSelectedInputChange() {},
 
   keepOpenOnDateSelect: false,
   minimumNights: 1,
@@ -119,26 +119,26 @@ export default class DayPickerRangeController extends React.Component {
     if (e) e.preventDefault();
     if (this.isBlocked(day)) return;
 
-    const { focusedInput } = this.props;
+    const { selectedInput } = this.props;
     let { startDate, endDate } = this.props;
 
-    if (focusedInput === START_DATE) {
-      this.props.onFocusChange(END_DATE);
+    if (selectedInput === START_DATE) {
+      this.props.onSelectedInputChange(END_DATE);
 
       startDate = day;
 
       if (isInclusivelyAfterDay(day, endDate)) {
         endDate = null;
       }
-    } else if (focusedInput === END_DATE) {
+    } else if (selectedInput === END_DATE) {
       const firstAllowedEndDate = startDate && startDate.clone().add(minimumNights, 'days');
 
       if (!startDate) {
         endDate = day;
-        this.props.onFocusChange(START_DATE);
+        this.props.onSelectedInputChange(START_DATE);
       } else if (isInclusivelyAfterDay(day, firstAllowedEndDate)) {
         endDate = day;
-        if (!keepOpenOnDateSelect) this.props.onFocusChange(null);
+        if (!keepOpenOnDateSelect) this.props.onSelectedInputChange(null);
       } else {
         startDate = day;
         endDate = null;
@@ -165,8 +165,8 @@ export default class DayPickerRangeController extends React.Component {
   }
 
   doesNotMeetMinimumNights(day) {
-    const { startDate, isOutsideRange, focusedInput, minimumNights } = this.props;
-    if (focusedInput !== END_DATE) return false;
+    const { startDate, isOutsideRange, selectedInput, minimumNights } = this.props;
+    if (selectedInput !== END_DATE) return false;
 
     if (startDate) {
       const dayDiff = day.diff(startDate.clone().startOf('day').hour(12), 'days');
@@ -244,7 +244,7 @@ export default class DayPickerRangeController extends React.Component {
       withPortal,
       enableOutsideDays,
       initialVisibleMonth,
-      focusedInput,
+      selectedInput,
       renderDay,
       renderCalendarInfo,
       startDate,
@@ -296,7 +296,7 @@ export default class DayPickerRangeController extends React.Component {
         onNextMonthClick={onNextMonthClick}
         monthFormat={monthFormat}
         withPortal={withPortal}
-        hidden={!focusedInput}
+        hidden={!selectedInput}
         initialVisibleMonth={initialVisibleMonth}
         onOutsideClick={onOutsideClick}
         navPrev={navPrev}

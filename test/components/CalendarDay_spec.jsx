@@ -18,6 +18,11 @@ describe('CalendarDay', () => {
       expect(wrapper.find('.CalendarDay')).to.have.lengthOf(1);
     });
 
+    it('has .CalendarDay__button class', () => {
+      const wrapper = shallow(<CalendarDay />);
+      expect(wrapper.find('.CalendarDay__button')).to.have.lengthOf(1);
+    });
+
     it('contains formatted day for single digit days', () => {
       const firstOfMonth = moment().startOf('month');
       const wrapper = shallow(<CalendarDay day={firstOfMonth} />);
@@ -50,7 +55,7 @@ describe('CalendarDay', () => {
 
     it('gets triggered by click', () => {
       const wrapper = shallow(<CalendarDay />);
-      wrapper.simulate('click');
+      wrapper.find('.CalendarDay__button').simulate('click');
       expect(onDayClickSpy).to.have.property('callCount', 1);
     });
 
@@ -74,7 +79,7 @@ describe('CalendarDay', () => {
 
     it('gets triggered by mouseenter', () => {
       const wrapper = shallow(<CalendarDay />);
-      wrapper.simulate('mouseenter');
+      wrapper.find('.CalendarDay__button').simulate('mouseenter');
       expect(onDayMouseEnterSpy).to.have.property('callCount', 1);
     });
 
@@ -98,7 +103,7 @@ describe('CalendarDay', () => {
 
     it('gets triggered by mouseleave', () => {
       const wrapper = shallow(<CalendarDay />);
-      wrapper.simulate('mouseleave');
+      wrapper.find('.CalendarDay__button').simulate('mouseleave');
       expect(onDayMouseLeaveSpy).to.have.property('callCount', 1);
     });
 

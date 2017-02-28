@@ -64,8 +64,8 @@ how to properly wrap the pickers in the [examples folder](https://github.com/air
 The `DateRangePicker` is a fully controlled component that allows users to select a date range. You can control the selected
 dates using the `startDate`, `endDate`, and `onDatesChange` props as shown below. The `DateRangePicker` also manages internal
 state for partial dates entered by typing (although `onDatesChange` will not trigger until a date has been entered
-completely in that case). Similarly, you can control which input is focused as well as calendar visibility (the calendar is
-only visible if `focusedInput` is defined) with the `focusedInput` and `onFocusChange` props as shown below.
+completely in that case). Similarly, you can control which input is selected as well as calendar visibility (the calendar is
+only visible if `selectedInput` is defined) with the `selectedInput` and `onFocusChange` props as shown below.
 
 Here is the minimum *REQUIRED* setup you need to get the `DateRangePicker` working:
 ```jsx
@@ -73,8 +73,8 @@ Here is the minimum *REQUIRED* setup you need to get the `DateRangePicker` worki
   startDate={this.state.startDate} // momentPropTypes.momentObj or null,
   endDate={this.state.endDate} // momentPropTypes.momentObj or null,
   onDatesChange={({ startDate, endDate }) => this.setState({ startDate, endDate })} // PropTypes.func.isRequired,
-  focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
-  onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
+  selectedInput={this.state.selectedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+  onFocusChange={selectedInput => this.setState({ selectedInput })} // PropTypes.func.isRequired,
 />
 ```
 
@@ -130,16 +130,16 @@ phrases: PropTypes.shape(getPhrasePropTypes(DateRangePickerPhrases)),
 The `SingleDatePicker` is a fully controlled component that allows users to select a single date. You can control the selected
 date using the `date` and `onDateChange` props as shown below. The `SingleDatePicker` also manages internal
 state for partial dates entered by typing (although `onDateChange` will not trigger until a date has been entered
-completely in that case). Similarly, you can control whether or not the input is focused (calendar visibility is also
-controlled with the same props) with the `focused` and `onFocusChange` props as shown below.
+completely in that case). Similarly, you can control whether or not the input is selected (calendar visibility is also
+controlled with the same props) with the `selected` and `onFocusChange` props as shown below.
 
 Here is the minimum *REQUIRED* setup you need to get the `SingleDatePicker` working:
 ```jsx
 <SingleDatePicker
   date={this.state.date} // momentPropTypes.momentObj or null
   onDateChange={date => this.setState({ date })} // PropTypes.func.isRequired
-  focused={this.state.focused} // PropTypes.bool
-  onFocusChange={({ focused }) => this.setState({ focused })} // PropTypes.func.isRequired
+  selected={this.state.selected} // PropTypes.bool
+  onFocusChange={({ selected }) => this.setState({ selected })} // PropTypes.func.isRequired
 />
 ```
 
@@ -188,7 +188,7 @@ phrases: PropTypes.shape(getPhrasePropTypes(SingleDatePickerPhrases)),
 #### DayPickerRangeController
 The `DayPickerRangeController` is a calendar-only version of the `DateRangePicker`. There are no inputs (which also means
 that currently, it is not keyboard accessible) and the calendar is always visible, but you can select a date range much in the same way you would with the `DateRangePicker`. You can control the selected
-dates using the `startDate`, `endDate`, and `onDatesChange` props as shown below. Similarly, you can control which input is focused with the `focusedInput` and `onFocusChange` props as shown below. The user will only be able to select a date if `focusedInput` is provided.
+dates using the `startDate`, `endDate`, and `onDatesChange` props as shown below. Similarly, you can control which input is selected with the `selectedInput` and `onFocusChange` props as shown below. The user will only be able to select a date if `selectedInput` is provided.
 
 Here is the minimum *REQUIRED* setup you need to get the `DayPickerRangeController` working:
 ```jsx
@@ -196,8 +196,8 @@ Here is the minimum *REQUIRED* setup you need to get the `DayPickerRangeControll
   startDate={this.state.startDate} // momentPropTypes.momentObj or null,
   endDate={this.state.endDate} // momentPropTypes.momentObj or null,
   onDatesChange={({ startDate, endDate }) => this.setState({ startDate, endDate })} // PropTypes.func.isRequired,
-  focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
-  onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
+  selectedInput={this.state.selectedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+  onFocusChange={selectedInput => this.setState({ selectedInput })} // PropTypes.func.isRequired,
 />
 ```
 

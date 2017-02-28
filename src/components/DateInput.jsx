@@ -10,7 +10,8 @@ const propTypes = forbidExtraProps({
   displayValue: PropTypes.string,
   inputValue: PropTypes.string,
   screenReaderMessage: PropTypes.string,
-  focused: PropTypes.bool,
+  focused: PropTypes.bool, // handles actual DOM focus
+  selected: PropTypes.bool, // stylizes the input to indicate that it will be filled
   disabled: PropTypes.bool,
   required: PropTypes.bool,
   showCaret: PropTypes.bool,
@@ -26,7 +27,8 @@ const defaultProps = {
   displayValue: '',
   inputValue: '',
   screenReaderMessage: '',
-  focused: false,
+  focused: false, // handles actual DOM focus
+  selected: false, // stylizes the input to indicate that it will be filled
   disabled: false,
   required: false,
   showCaret: false,
@@ -62,10 +64,10 @@ export default class DateInput extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { focused } = this.props;
-    if (prevProps.focused === focused) return;
+    const { focused, selected } = this.props;
+    if (prevProps.focused === focused && prevProps.selected === selected) return;
 
-    if (focused) {
+    if (focused && selected) {
       this.inputRef.focus();
       this.inputRef.select();
     } else {
@@ -96,13 +98,14 @@ export default class DateInput extends React.Component {
       dateString,
       isTouchDevice: isTouch,
     } = this.state;
+
     const {
       id,
       placeholder,
       displayValue,
       inputValue,
       screenReaderMessage,
-      focused,
+      selected,
       showCaret,
       onFocus,
       disabled,
@@ -116,7 +119,7 @@ export default class DateInput extends React.Component {
     return (
       <div
         className={cx('DateInput', {
-          'DateInput--with-caret': showCaret && focused,
+          'DateInput--with-caret': showCaret && selected,
           'DateInput--disabled': disabled,
         })}
       >
@@ -148,7 +151,7 @@ export default class DateInput extends React.Component {
         <div
           className={cx('DateInput__display-text', {
             'DateInput__display-text--has-input': !!value,
-            'DateInput__display-text--focused': focused,
+            'DateInput__display-text--selected': selected,
             'DateInput__display-text--disabled': disabled,
           })}
         >
