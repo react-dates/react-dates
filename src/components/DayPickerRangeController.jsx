@@ -3,6 +3,9 @@ import momentPropTypes from 'react-moment-proptypes';
 import { forbidExtraProps } from 'airbnb-prop-types';
 import moment from 'moment';
 
+import { DayPickerPhrases } from '../defaultPhrases';
+import getPhrasePropTypes from '../utils/getPhrasePropTypes';
+
 import isTouchDevice from '../utils/isTouchDevice';
 
 import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
@@ -51,6 +54,7 @@ const propTypes = forbidExtraProps({
 
   // i18n
   monthFormat: PropTypes.string,
+  phrases: PropTypes.shape(getPhrasePropTypes(DayPickerPhrases)),
 });
 
 const defaultProps = {
@@ -86,6 +90,7 @@ const defaultProps = {
 
   // i18n
   monthFormat: 'MMMM YYYY',
+  phrases: DayPickerPhrases,
 };
 
 export default class DayPickerRangeController extends React.Component {

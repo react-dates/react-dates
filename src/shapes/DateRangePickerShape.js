@@ -1,6 +1,9 @@
 import { PropTypes } from 'react';
 import momentPropTypes from 'react-moment-proptypes';
 
+import { DateRangePickerPhrases } from '../defaultPhrases';
+import getPhrasePropTypes from '../utils/getPhrasePropTypes';
+
 import FocusedInputShape from '../shapes/FocusedInputShape';
 import OrientationShape from '../shapes/OrientationShape';
 import anchorDirectionShape from '../shapes/AnchorDirectionShape';
@@ -55,8 +58,5 @@ export default {
   // internationalization props
   displayFormat: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   monthFormat: PropTypes.string,
-  phrases: PropTypes.shape({
-    closeDatePicker: PropTypes.node,
-    clearDates: PropTypes.node,
-  }),
+  phrases: PropTypes.shape(getPhrasePropTypes(DateRangePickerPhrases)),
 };

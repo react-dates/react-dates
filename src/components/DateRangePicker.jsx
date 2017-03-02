@@ -7,6 +7,8 @@ import Portal from 'react-portal';
 import { forbidExtraProps } from 'airbnb-prop-types';
 import { addEventListener, removeEventListener } from 'consolidated-events';
 
+import { DateRangePickerPhrases } from '../defaultPhrases';
+
 import OutsideClickHandler from './OutsideClickHandler';
 import getResponsiveContainerStyles from '../utils/getResponsiveContainerStyles';
 
@@ -77,10 +79,7 @@ const defaultProps = {
   // internationalization
   displayFormat: () => moment.localeData().longDateFormat('L'),
   monthFormat: 'MMMM YYYY',
-  phrases: {
-    closeDatePicker: 'Close',
-    clearDates: 'Clear Dates',
-  },
+  phrases: DateRangePickerPhrases,
 };
 
 export default class DateRangePicker extends React.Component {
