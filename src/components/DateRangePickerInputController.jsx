@@ -179,13 +179,13 @@ export default class DateRangePickerInputWithHandlers extends React.Component {
     return date.format(displayFormat);
   }
 
-  getDateText(date) {
+  getDateText(date, inputReference) {
     const { renderInputText } = this.props;
     if (!date) {
       return null;
     }
     if (renderInputText) {
-      return renderInputText(date, this.getDisplayFormat());
+      return renderInputText(date, this.getDisplayFormat(), inputReference);
     }
     return this.getDateString(date);
   }
@@ -219,9 +219,9 @@ export default class DateRangePickerInputWithHandlers extends React.Component {
       phrases,
     } = this.props;
 
-    const startDateText = this.getDateText(startDate);
+    const startDateText = this.getDateText(startDate, START_DATE);
     const startDateValue = toISODateString(startDate);
-    const endDateText = this.getDateText(endDate);
+    const endDateText = this.getDateText(endDate, END_DATE);
     const endDateValue = toISODateString(endDate);
 
     return (
