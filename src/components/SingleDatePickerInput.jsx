@@ -19,6 +19,7 @@ const propTypes = forbidExtraProps({
   required: PropTypes.bool,
   showCaret: PropTypes.bool,
   showClearDate: PropTypes.bool,
+  customCloseIcon: PropTypes.node,
 
   onChange: PropTypes.func,
   onClearDate: PropTypes.func,
@@ -40,6 +41,7 @@ const defaultProps = {
   required: false,
   showCaret: false,
   showClearDate: false,
+  customCloseIcon: null,
 
   onChange() {},
   onClearDate() {},
@@ -93,7 +95,10 @@ export default class SingleDatePickerInput extends React.Component {
       onKeyDownShiftTab,
       onKeyDownTab,
       screenReaderMessage,
+      customCloseIcon,
     } = this.props;
+
+    const closeIcon = customCloseIcon || (<CloseButton />);
 
     return (
       <div className="SingleDatePickerInput">
@@ -126,7 +131,9 @@ export default class SingleDatePickerInput extends React.Component {
             onMouseLeave={this.onClearDateMouseLeave}
             onClick={onClearDate}
           >
-            <CloseButton />
+            <div className="DateRangePickerInput__close">
+              {closeIcon}
+            </div>
           </button>
         }
       </div>

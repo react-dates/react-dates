@@ -50,6 +50,7 @@ const defaultProps = {
   showDefaultInputIcon: false,
   customInputIcon: null,
   customArrowIcon: null,
+  customCloseIcon: null,
 
   // calendar presentation and interaction related props
   orientation: HORIZONTAL_ORIENTATION,
@@ -222,6 +223,7 @@ export default class DateRangePicker extends React.Component {
       keepOpenOnDateSelect,
       renderDay,
       initialVisibleMonth,
+      customCloseIcon,
     } = this.props;
     const { dayPickerContainerStyles } = this.state;
 
@@ -230,6 +232,8 @@ export default class DateRangePicker extends React.Component {
       : undefined;
     const initialVisibleMonthThunk =
       initialVisibleMonth || (() => (startDate || endDate || moment()));
+
+    const closeIcon = customCloseIcon || (<CloseButton />);
 
     return (
       <div
@@ -272,7 +276,9 @@ export default class DateRangePicker extends React.Component {
             <span className="screen-reader-only">
               {this.props.phrases.closeDatePicker}
             </span>
-            <CloseButton />
+            <div className="DateRangePicker__close">
+              {closeIcon}
+            </div>
           </button>
         }
       </div>
@@ -293,6 +299,7 @@ export default class DateRangePicker extends React.Component {
       showDefaultInputIcon,
       customInputIcon,
       customArrowIcon,
+      customCloseIcon,
       disabled,
       required,
       phrases,
@@ -326,6 +333,7 @@ export default class DateRangePicker extends React.Component {
             showDefaultInputIcon={showDefaultInputIcon}
             customInputIcon={customInputIcon}
             customArrowIcon={customArrowIcon}
+            customCloseIcon={customCloseIcon}
             disabled={disabled}
             required={required}
             reopenPickerOnClearDates={reopenPickerOnClearDates}
