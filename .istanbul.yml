@@ -6,8 +6,7 @@ instrumentation:
     "lib/**",
     "public/**",
     "test/**",
-    "coverage/**",
-    "src/defaultPhrases.js"
+    "coverage/**"
   ]
 check:
   global:
