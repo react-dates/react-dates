@@ -1,5 +1,5 @@
 {
-  "name": "react-dates",
+  "name": "@kupibilet/react-dates",
   "version": "8.2.0",
   "description": "A responsive and accessible date range picker component built with React",
   "main": "index.js",
