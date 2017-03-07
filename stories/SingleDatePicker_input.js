@@ -29,6 +29,19 @@ storiesOf('SDP - Input Props', module)
       displayFormat="MMM D"
     />
   ))
+  .addWithInfo('with custom input text', () => (
+    <SingleDatePickerWrapper
+      renderInputText={(day) => (
+        <div>
+          {day && day.format('DD/MM')}
+          &nbsp;
+          <span>
+            {day && day.format('ddd')}
+          </span>
+        </div>
+      )}
+    />
+  ))
   .addWithInfo('with screen reader message', () => (
     <SingleDatePickerWrapper
       initialDate={moment().add(3, 'days')}

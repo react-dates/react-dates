@@ -172,6 +172,53 @@ describe('DateRangePickerInputController', () => {
       });
     });
 
+    describe('matches custom input text render', () => {
+      const customFormat = 'MM[foobar]DD';
+      const customDate = moment(today).add(5, 'days');
+      it('calls props.renderInputText with correct arguments', () => {
+        const renderInputTextStub = sinon.stub();
+        shallow(
+          <DateRangePickerInputController
+            endDate={customDate}
+            displayFormat={customFormat}
+            renderInputText={renderInputTextStub}
+          />,
+        );
+        expect(renderInputTextStub.callCount).to.equal(1);
+
+        const [date, format] = renderInputTextStub.getCall(0).args;
+        expect(format).to.equal(customFormat);
+        expect(date.format(customFormat)).to.equal(customDate.format(customFormat));
+      });
+
+      describe('props.renderInputText', () => {
+        it('is not called with null date', () => {
+          const renderInputTextStub = sinon.stub();
+          shallow(
+            <DateRangePickerInputController
+              endDate={null}
+              renderInputText={renderInputTextStub}
+            />,
+          );
+          expect(renderInputTextStub.callCount).to.equal(0);
+        });
+
+        it('is called when date appears', () => {
+          const renderInputTextStub = sinon.stub();
+          const wrapper = shallow(
+            <DateRangePickerInputController
+              endDate={null}
+              renderInputText={renderInputTextStub}
+            />,
+          );
+          wrapper.setProps({
+            endDate: customDate,
+          });
+          expect(renderInputTextStub.callCount).to.equal(1);
+        });
+      });
+    });
+
     describe('is not a valid date string', () => {
       const invalidDateString = 'foo';
       it('calls props.onDatesChange', () => {
@@ -427,6 +474,40 @@ describe('DateRangePickerInputController', () => {
           );
           wrapper.instance().onStartDateChange(customFormatDateString);
           expect(onFocusChangeStub.calledWith(END_DATE)).to.equal(true);
+        });
+      });
+    });
+
+    describe('matches custom input text render', () => {
+      const customFormat = 'MM[foobar]DD';
+      const customDate = moment(today).add(5, 'days');
+
+      it('calls props.renderInputText with correct arguments', () => {
+        const renderInputTextStub = sinon.stub();
+        shallow(
+          <DateRangePickerInputController
+            startDate={customDate}
+            displayFormat={customFormat}
+            renderInputText={renderInputTextStub}
+          />,
+        );
+        expect(renderInputTextStub.callCount).to.equal(1);
+
+        const [date, format] = renderInputTextStub.getCall(0).args;
+        expect(format).to.equal(customFormat);
+        expect(date.format(customFormat)).to.equal(customDate.format(customFormat));
+      });
+
+      describe('props.renderInputText', () => {
+        it('is not called with null date', () => {
+          const renderInputTextStub = sinon.stub();
+          shallow(
+            <DateRangePickerInputController
+              startDate={null}
+              renderInputText={renderInputTextStub}
+            />,
+          );
+          expect(renderInputTextStub.callCount).to.equal(0);
         });
       });
     });

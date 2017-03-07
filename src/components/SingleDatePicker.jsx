@@ -9,7 +9,6 @@ import { SingleDatePickerPhrases } from '../defaultPhrases';
 
 import OutsideClickHandler from './OutsideClickHandler';
 import toMomentObject from '../utils/toMomentObject';
-import toLocalizedDateString from '../utils/toLocalizedDateString';
 import toISODateString from '../utils/toISODateString';
 import getResponsiveContainerStyles from '../utils/getResponsiveContainerStyles';
 
@@ -44,6 +43,7 @@ const defaultProps = {
   required: false,
   screenReaderInputMessage: '',
   showClearDate: false,
+  renderInputText: null,
 
   // calendar presentation and interaction related props
   orientation: HORIZONTAL_ORIENTATION,
@@ -171,10 +171,18 @@ export default class SingleDatePicker extends React.Component {
 
   getDateString(date) {
     const displayFormat = this.getDisplayFormat();
-    if (date && displayFormat) {
-      return date && date.format(displayFormat);
+    return date.format(displayFormat);
+  }
+
+  getDateText(date) {
+    const { renderInputText } = this.props;
+    if (!date) {
+      return null;
     }
-    return toLocalizedDateString(date);
+    if (renderInputText) {
+      return renderInputText(date, this.getDisplayFormat());
+    }
+    return this.getDateString(date);
   }
 
   getDayPickerContainerClasses() {
@@ -369,7 +377,7 @@ export default class SingleDatePicker extends React.Component {
       screenReaderInputMessage,
     } = this.props;
 
-    const displayValue = this.getDateString(date);
+    const displayValue = this.getDateText(date);
     const inputValue = toISODateString(date);
 
     const onOutsideClick = (!withPortal && !withFullScreenPortal) ? this.onClearFocus : undefined;

@@ -59,6 +59,19 @@ storiesOf('DRP - Input Props', module)
       displayFormat="MMM D"
     />
   ))
+  .addWithInfo('with custom input text', () => (
+    <DateRangePickerWrapper
+      renderInputText={(day) => (
+        <div>
+          {day && day.format('DD/MM')}
+          &nbsp;
+          <span>
+            {day && day.format('ddd')}
+          </span>
+        </div>
+      )}
+    />
+  ))
   .addWithInfo('with show calendar icon', () => (
     <DateRangePickerWrapper
       initialStartDate={moment().add(3, 'days')}
