@@ -95,11 +95,11 @@
     "webpack": "^1.14.0"
   },
   "dependencies": {
-    "airbnb-prop-types": "^2.2.0",
+    "airbnb-prop-types": "^2.4.1",
     "array-includes": "^3.0.2",
     "classnames": "^2.2.5",
     "consolidated-events": "^1.0.1",
-    "react-moment-proptypes": "^1.2.1",
+    "react-moment-proptypes": "^1.3.0",
     "react-portal": "^3.0.0"
   },
   "peerDependencies": {
