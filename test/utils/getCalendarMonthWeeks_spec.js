@@ -9,6 +9,36 @@ const weeks = getCalendarMonthWeeks(today);
 const weeksWithOutsideDays = getCalendarMonthWeeks(today, true);
 
 describe('getCalendarMonthWeeks', () => {
+  describe('input validation', () => {
+    it('throws a TypeError if first arg is not a valid moment object', () => {
+      const invalidValues = [
+        null,
+        '2017-01-01T00:00:00Z',
+        new Date(),
+        moment.invalid(),
+      ];
+      invalidValues.forEach((value) => {
+        expect(() => getCalendarMonthWeeks(value))
+          .to.throw(TypeError, '`month` must be a valid moment object');
+      });
+    });
+
+    it('throws a TypeError if third arg is not an integer between 0 and 6', () => {
+      const invalidValues = [
+        null,
+        -1,
+        7,
+        '0',
+        '1',
+        1.5,
+      ];
+      invalidValues.forEach((value) => {
+        expect(() => getCalendarMonthWeeks(today, true, value))
+          .to.throw(TypeError, '`firstDayOfWeek` must be an integer between 0 and 6');
+      });
+    });
+  });
+
   it('returns an array of arrays', () => {
     expect(weeks).to.be.instanceof(Array);
 
@@ -155,6 +185,90 @@ describe('getCalendarMonthWeeks', () => {
       const hasNoNullElements = weeksWithOutsideDays
         .reduce((w1, w2) => w1 && w2.reduce((d1, d2) => d1 && !!d2, true), true);
       expect(hasNoNullElements).to.equal(true);
+    });
+  });
+
+  describe('setting firstDayOfWeek argument', () => {
+    // using these known dates to see if they appear at the right position of the calendar
+    // trying different firstDayOfWeek values
+    const january2017Start = moment('2017-01-01'); // Sunday
+    const january2017End = january2017Start.clone().endOf('month'); // Tuesday
+
+    it('month starts at [0][0] when first day is Sunday and first day of week is Sunday', () => {
+      const weeksInJanuary2017 = getCalendarMonthWeeks(january2017Start, false, 0); // 0: Sun
+      const firstDayOfMonth = weeksInJanuary2017[0][0];
+      const rightPosition = january2017Start.isSame(firstDayOfMonth, 'day');
+      expect(rightPosition).to.equal(true);
+    });
+
+    it('month ends at [n][2] when last day is Tuesday and first day of week is Sunday', () => {
+      const weeksInJanuary2017 = getCalendarMonthWeeks(january2017Start, false, 0); // 0: Sun
+      const lastDayOfMonth = weeksInJanuary2017[weeksInJanuary2017.length - 1][2];
+      const rightPosition = january2017End.isSame(lastDayOfMonth, 'day');
+      expect(rightPosition).to.equal(true);
+    });
+
+    it('month starts at [0][4] when first day is Sunday and first day of week is Wednesday', () => {
+      const weeksInJanuary2017 = getCalendarMonthWeeks(january2017Start, false, 3); // 3: Wed
+      const firstDayOfMonth = weeksInJanuary2017[0][4];
+      const rightPosition = january2017Start.isSame(firstDayOfMonth, 'day');
+      expect(rightPosition).to.equal(true);
+    });
+
+    it('month ends at [n][6] when last day is Tuesday and first day of week is Wednesday', () => {
+      const weeksInJanuary2017 = getCalendarMonthWeeks(january2017Start, false, 3);// 3: Wed
+      const lastDayOfMonth = weeksInJanuary2017[weeksInJanuary2017.length - 1][6];
+      const rightPosition = january2017End.isSame(lastDayOfMonth, 'day');
+      expect(rightPosition).to.equal(true);
+    });
+  });
+
+  describe('firstDayOfWeek default value locale-aware', () => {
+    // using these known dates to see if they appear at the right position of the calendar
+    // trying different firstDayOfWeek values
+    const january2017Start = moment('2017-01-01'); // Sunday
+    const january2017End = january2017Start.clone().endOf('month'); // Tuesday
+
+    describe('locale with Sunday as first day of week', () => {
+      before(() => {
+        moment.locale('en');
+        // moment.localeData().firstDayOfWeek() === 0 (Sunday)
+      });
+
+      it('month starts at [0][0] if first day is Sunday', () => {
+        const weeksInJanuary2017 = getCalendarMonthWeeks(january2017Start);
+        const firstDayOfMonth = weeksInJanuary2017[0][0];
+        const rightPosition = january2017Start.isSame(firstDayOfMonth, 'day');
+        expect(rightPosition).to.equal(true);
+      });
+
+      it('month ends at [n][2] if last day is Tuesday', () => {
+        const weeksInJanuary2017 = getCalendarMonthWeeks(january2017Start);
+        const lastDayOfMonth = weeksInJanuary2017[weeksInJanuary2017.length - 1][2];
+        const rightPosition = january2017End.isSame(lastDayOfMonth, 'day');
+        expect(rightPosition).to.equal(true);
+      });
+    });
+
+    describe('locale with Monday as first day of week', () => {
+      before(() => {
+        moment.locale('es');
+        // moment.localeData().firstDayOfWeek() === 1 (Monday)
+      });
+
+      it('month starts at [0][6] if first day is Sunday', () => {
+        const weeksInJanuary2017 = getCalendarMonthWeeks(january2017Start);
+        const firstDayOfMonth = weeksInJanuary2017[0][6];
+        const rightPosition = january2017Start.isSame(firstDayOfMonth, 'day');
+        expect(rightPosition).to.equal(true);
+      });
+
+      it('month ends at [n][1] if last day is Tuesday', () => {
+        const weeksInJanuary2017 = getCalendarMonthWeeks(january2017Start);
+        const lastDayOfMonth = weeksInJanuary2017[weeksInJanuary2017.length - 1][1];
+        const rightPosition = january2017End.isSame(lastDayOfMonth, 'day');
+        expect(rightPosition).to.equal(true);
+      });
     });
   });
 });

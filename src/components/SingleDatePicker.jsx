@@ -57,6 +57,7 @@ const defaultProps = {
   withPortal: false,
   withFullScreenPortal: false,
   initialVisibleMonth: null,
+  firstDayOfWeek: null,
   numberOfMonths: 2,
   keepOpenOnDateSelect: false,
   reopenPickerOnClearDate: false,
@@ -315,6 +316,9 @@ export default class SingleDatePicker extends React.Component {
       renderDay,
       renderCalendarInfo,
       hideKeyboardShortcutsPanel,
+      firstDayOfWeek,
+      date,
+      initialVisibleMonth,
       customCloseIcon,
       phrases,
       daySize,
@@ -360,6 +364,7 @@ export default class SingleDatePicker extends React.Component {
           isOutsideRange={isOutsideRange}
           isDayBlocked={isDayBlocked}
           isDayHighlighted={isDayHighlighted}
+          firstDayOfWeek={firstDayOfWeek}
         />
 
         {withFullScreenPortal && (

@@ -67,6 +67,7 @@ const propTypes = forbidExtraProps({
   onOutsideClick: PropTypes.func,
   renderDay: PropTypes.func,
   renderCalendarInfo: PropTypes.func,
+  firstDayOfWeek: PropTypes.oneOf([0, 1, 2, 3, 4, 5, 6]),
 
   // accessibility
   onBlur: PropTypes.func,
@@ -114,6 +115,7 @@ const defaultProps = {
 
   renderDay: null,
   renderCalendarInfo: null,
+  firstDayOfWeek: null,
 
   // accessibility
   onBlur() {},
@@ -806,6 +808,7 @@ export default class DayPickerRangeController extends React.Component {
       onOutsideClick,
       withPortal,
       enableOutsideDays,
+      firstDayOfWeek,
       hideKeyboardShortcutsPanel,
       daySize,
       focusedInput,
@@ -843,6 +846,7 @@ export default class DayPickerRangeController extends React.Component {
         navNext={navNext}
         renderDay={renderDay}
         renderCalendarInfo={renderCalendarInfo}
+        firstDayOfWeek={firstDayOfWeek}
         hideKeyboardShortcutsPanel={hideKeyboardShortcutsPanel}
         isFocused={isFocused}
         getFirstFocusableDay={this.getFirstFocusableDay}

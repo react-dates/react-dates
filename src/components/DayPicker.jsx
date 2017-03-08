@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import shallowCompare from 'react-addons-shallow-compare';
 import ReactDOM from 'react-dom';
-import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
+import { forbidExtraProps, nonNegativeInteger, range } from 'airbnb-prop-types';
 import moment from 'moment';
 import cx from 'classnames';
 import throttle from 'lodash/throttle';
@@ -48,6 +48,7 @@ const propTypes = forbidExtraProps({
   onOutsideClick: PropTypes.func,
   hidden: PropTypes.bool,
   initialVisibleMonth: PropTypes.func,
+  firstDayOfWeek: range(0, 7),
   renderCalendarInfo: PropTypes.func,
   hideKeyboardShortcutsPanel: PropTypes.bool,
   daySize: nonNegativeInteger,
@@ -90,6 +91,7 @@ export const defaultProps = {
   onOutsideClick() {},
   hidden: false,
   initialVisibleMonth: () => moment(),
+  firstDayOfWeek: null,
   renderCalendarInfo: null,
   hideKeyboardShortcutsPanel: false,
   daySize: DAY_SIZE,
@@ -682,11 +684,16 @@ export default class DayPicker extends React.Component {
       style = verticalStyle;
     }
 
+    let { firstDayOfWeek } = this.props;
+    if (firstDayOfWeek === null) {
+      firstDayOfWeek = moment.localeData().firstDayOfWeek();
+    }
+
     const header = [];
     for (let i = 0; i < 7; i += 1) {
       header.push(
         <li key={i} style={{ width: daySize }}>
-          <small>{moment().weekday(i).format('dd')}</small>
+          <small>{moment().day((i + firstDayOfWeek) % 7).format('dd')}</small>
         </li>,
       );
     }
@@ -725,6 +732,7 @@ export default class DayPicker extends React.Component {
       onDayClick,
       onDayMouseEnter,
       onDayMouseLeave,
+      firstDayOfWeek,
       renderMonth,
       renderDay,
       renderCalendarInfo,
@@ -842,6 +850,7 @@ export default class DayPicker extends React.Component {
                 onMonthTransitionEnd={this.updateStateAfterMonthTransition}
                 monthFormat={monthFormat}
                 daySize={daySize}
+                firstDayOfWeek={firstDayOfWeek}
                 isFocused={shouldFocusDate}
                 focusedDate={focusedDate}
                 phrases={phrases}

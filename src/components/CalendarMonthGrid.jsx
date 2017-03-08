@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import shallowCompare from 'react-addons-shallow-compare';
 import momentPropTypes from 'react-moment-proptypes';
-import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
+import { forbidExtraProps, nonNegativeInteger, range } from 'airbnb-prop-types';
 import moment from 'moment';
 import cx from 'classnames';
 import { addEventListener, removeEventListener } from 'consolidated-events';
@@ -45,6 +45,7 @@ const propTypes = forbidExtraProps({
   daySize: nonNegativeInteger,
   focusedDate: momentPropTypes.momentObj, // indicates focusable day
   isFocused: PropTypes.bool, // indicates whether or not to move focus to focusable day
+  firstDayOfWeek: range(0, 7),
 
   // i18n
   monthFormat: PropTypes.string,
@@ -69,6 +70,7 @@ const defaultProps = {
   daySize: DAY_SIZE,
   focusedDate: null,
   isFocused: false,
+  firstDayOfWeek: null,
 
   // i18n
   monthFormat: 'MMMM YYYY', // english locale
@@ -175,6 +177,7 @@ export default class CalendarMonthGrid extends React.Component {
       renderMonth,
       renderDay,
       onMonthTransitionEnd,
+      firstDayOfWeek,
       focusedDate,
       isFocused,
       phrases,
@@ -228,6 +231,7 @@ export default class CalendarMonthGrid extends React.Component {
               onDayClick={onDayClick}
               renderMonth={renderMonth}
               renderDay={renderDay}
+              firstDayOfWeek={firstDayOfWeek}
               daySize={daySize}
               focusedDate={isVisible ? focusedDate : null}
               isFocused={isFocused}

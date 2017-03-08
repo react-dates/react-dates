@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import momentPropTypes from 'react-moment-proptypes';
-import { nonNegativeInteger } from 'airbnb-prop-types';
+import { nonNegativeInteger, range } from 'airbnb-prop-types';
 
 import { DateRangePickerPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
@@ -44,7 +44,7 @@ export default {
   withFullScreenPortal: PropTypes.bool,
   daySize: nonNegativeInteger,
   isRTL: PropTypes.bool,
-
+  firstDayOfWeek: range(0, 7),
   initialVisibleMonth: PropTypes.func,
   numberOfMonths: PropTypes.number,
   keepOpenOnDateSelect: PropTypes.bool,
