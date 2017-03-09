@@ -1,5 +1,8 @@
 # Change Log
 
+## v8.1.1
+- [fix] Add missing `customCloseIcon` propType declarations ([#367](https://github.com/airbnb/react-dates/pull/367))
+
 ## v8.1.0
 - [new] Add `customCloseIcon` prop ([#356](https://github.com/airbnb/react-dates/pull/356))
 
