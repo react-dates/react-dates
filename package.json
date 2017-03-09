@@ -1,6 +1,6 @@
 {
   "name": "react-dates",
-  "version": "7.0.1",
+  "version": "8.0.0",
   "description": "A responsive and accessible date range picker component built with React",
   "main": "index.js",
   "scripts": {
@@ -59,11 +59,11 @@
     "chai": "^3.5.0",
     "coveralls": "^2.11.15",
     "enzyme": "^2.7.1",
-    "eslint": "^3.15.0",
+    "eslint": "^3.17.1",
     "eslint-config-airbnb": "^14.1.0",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
-    "eslint-plugin-react": "^6.9.0",
+    "eslint-plugin-react": "^6.10.0",
     "git-directory-deploy": "^1.5.1",
     "imports-loader": "^0.7.1",
     "in-publish": "^2.0.0",
@@ -95,11 +95,11 @@
     "webpack": "^1.14.0"
   },
   "dependencies": {
-    "airbnb-prop-types": "^2.2.0",
+    "airbnb-prop-types": "^2.4.1",
     "array-includes": "^3.0.2",
     "classnames": "^2.2.5",
     "consolidated-events": "^1.0.1",
-    "react-moment-proptypes": "^1.2.1",
+    "react-moment-proptypes": "^1.3.0",
     "react-portal": "^3.0.0"
   },
   "peerDependencies": {

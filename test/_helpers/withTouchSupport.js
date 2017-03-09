@@ -1,6 +1,6 @@
-import wrap from 'mocha-wrap';
-import withGlobal from 'mocha-wrap/withGlobal';
-import withOverride from 'mocha-wrap/withOverride';
+const wrap = require('mocha-wrap');
+const withGlobal = require('mocha-wrap/withGlobal');
+const withOverride = require('mocha-wrap/withOverride');
 
 function withTouchSupport() {
   return this
