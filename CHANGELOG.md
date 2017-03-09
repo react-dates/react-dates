@@ -1,5 +1,8 @@
 # Change Log
 
+## v8.1.0
+- [new] Add `customCloseIcon` prop ([#356](https://github.com/airbnb/react-dates/pull/356))
+
 ## v8.0.0
 - [fix] Remove `$react-dates-width-day-picker` variable from `CalendarMonthGrid.scss`, allowing overrides ([#352](https://github.com/airbnb/react-dates/pull/352))
 - [new] Create `defaultPhrases` file for i18n ([#351](https://github.com/airbnb/react-dates/pull/351))
