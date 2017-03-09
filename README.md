@@ -189,6 +189,11 @@ To replace the default arrow icon, you may pass a React node to `props.customArr
   customArrowIcon: PropTypes.node,
 ```
 
+To replace the default close icon, you may pass a React node to `props.customCloseIcon`.
+```js
+  customCloseIcon: PropTypes.node,
+```
+
 If the `disabled` prop is set to true, onFocusChange is not called when onStartDateFocus or onEndDateFocus are invoked and disabled is assigned to the actual `<input>` DOM elements.
 ```js
   disabled: PropTypes.bool,

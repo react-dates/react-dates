@@ -30,6 +30,17 @@ const TestCustomArrowIcon = () => (
   </span>
 );
 
+const TestCustomCloseIcon = () => (
+  <span
+    style={{
+      border: '1px solid #dce0e0',
+      backgroundColor: '#fff',
+      color: '#484848',
+      padding: '3px',
+    }}
+  >'X'</span>
+);
+
 storiesOf('DRP - Input Props', module)
   .addWithInfo('default', () => (
     <DateRangePickerWrapper
@@ -78,6 +89,14 @@ storiesOf('DRP - Input Props', module)
       initialStartDate={moment().add(3, 'days')}
       initialEndDate={moment().add(10, 'days')}
       customArrowIcon={<TestCustomArrowIcon />}
+    />
+  ))
+  .addWithInfo('with custom close icon', () => (
+    <DateRangePickerWrapper
+      initialStartDate={moment().add(3, 'days')}
+      initialEndDate={moment().add(10, 'days')}
+      showClearDates
+      customCloseIcon={<TestCustomCloseIcon />}
     />
   ))
   .addWithInfo('with screen reader message', () => (

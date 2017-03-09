@@ -131,11 +131,13 @@ export default class DateRangePickerInput extends React.Component {
       showDefaultInputIcon,
       customInputIcon,
       customArrowIcon,
+      customCloseIcon,
       phrases,
     } = this.props;
 
     const inputIcon = customInputIcon || (<CalendarIcon />);
     const arrowIcon = customArrowIcon || (<RightArrow />);
+    const closeIcon = customCloseIcon || (<CloseButton />);
 
     return (
       <div
@@ -204,7 +206,9 @@ export default class DateRangePickerInput extends React.Component {
             <span className="screen-reader-only">
               {phrases.clearDates}
             </span>
-            <CloseButton />
+            <div className="DateRangePickerInput__close-icon">
+              {closeIcon}
+            </div>
           </button>
         }
       </div>

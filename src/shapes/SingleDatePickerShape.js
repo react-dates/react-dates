@@ -22,6 +22,7 @@ export default {
   required: PropTypes.bool,
   screenReaderInputMessage: PropTypes.string,
   showClearDate: PropTypes.bool,
+  customCloseIcon: PropTypes.node,
 
   // calendar presentation and interaction related props
   orientation: OrientationShape,

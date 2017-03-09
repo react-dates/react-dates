@@ -44,6 +44,7 @@ const defaultProps = {
   showDefaultInputIcon: false,
   customInputIcon: null,
   customArrowIcon: null,
+  customCloseIcon: null,
 
   // calendar presentation and interaction related props
   orientation: HORIZONTAL_ORIENTATION,
