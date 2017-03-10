@@ -1,10 +1,6 @@
 language: node_js
 node_js:
-  - "8"
-  - "7"
-  - "6"
-  - "4"
-  - "iojs"
+  - "node"
 before_script:
   - 'if [ -n "${KARMA-}" ]; then export DISPLAY=:99.0; fi'
   - 'if [ -n "${KARMA-}" ]; then sh -e /etc/init.d/xvfb start; fi'
@@ -17,21 +13,14 @@ script:
   - 'if [ -n "${COVERAGE-}" ] && [ "${TRAVIS_BRANCH-}" = "master" ]; then npm run cover; cat ./coverage/lcov.info | ./node_modules/.bin/coveralls ; fi'
 env:
   global:
-    - TEST=true
-  matrix:
-    - REACT=0.14
-    - REACT=15
-sudo: false
-matrix:
-  fast_finish: true
-  include:
-    - node_js: "node"
-      env: COVERAGE=true TEST=false
-    - node_js: "node"
-      env: KARMA=true TEST=false
-    - node_js: "node"
-      env: LINT=true TEST=false
-  allow_failures:
-    - node_js: "7"
-    - node_js: "iojs"
-    - env: KARMA=true TEST=false
+    - REACT=15 TEST=true
+
+deploy:
+  - provider: npm
+    email: v7rulnik@gmail.com
+    skip_cleanup: true
+    api_key: $NPM_TOKEN
+    on:
+      branch: master
+      tags: true
+      repo: kupibilet-frontend/react-dates
