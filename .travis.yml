@@ -1,10 +1,7 @@
 language: node_js
 node_js:
   - "6"
-  - "5"
-  - "4"
-  - "4.2"
-  - "iojs"
+  - "node"
 before_script:
   - 'if [ "${TRAVIS_NODE_VERSION}" = 6 ]; then export DISPLAY=:99.0; fi'
   - 'if [ "${TRAVIS_NODE_VERSION}" = 6 ]; then sh -e /etc/init.d/xvfb start; fi'
@@ -29,5 +26,12 @@ matrix:
 #      env: KARMA=true
     - node_js: "node"
       env: LINT=true
-  allow_failures:
-    - node_js: "iojs"
+deploy:
+  provider: npm
+  email: max@kupibilet.ru
+  api_key:
+    secure: miQMhcMlnKcH7V1t99AfuVex1YBwjm4HforlxCniGwfwb9jJ9SZTta1HMg2Hj0U7R3Zl53AiJiik+d+zgZ54SN0wbDC15y4FjRiAfJhuY/DlRWYLZUciqEocExKch8MhWI7OMyV4YyCFlI/fmpaPDgrjucQh17kiavA/zFtdUjrm9RLIyE+HzhSZbyi3wICHuBq5AkjTuCWptlZEO3wZRD5UKIZH/NR9L+hb3oJ+MiZI/D9mP/HxGnRwxmgLnzNI5fthOlxS9ttry+9AXvaWQmnmWL1Id+nqjqlifQGZvSirx313UNnGJMpmvRHWbB6IkQcZmE+66qM3NoFQ/zVRd883yM+ykF7d6AD0kEQy7QZRe0a0BahRFNxhx6bb6rg4k5pLVLMkKnd/p9bxqfydRyu/doe6cT4hQsEI2lS6NQldT87qL+Wmxv61hRzeFdpBEEYu6nuv2ObrBFhIsttZxK3HHSAmx35ywfSU+s1+K+vWYuwpHFoWWnya2kb33naKP/7itRYVmOO4/x1YxbchwwBU4bLOGLmv3Q+MCYmUQdpWDiQPrQLfqISScJIb3geot7nip2qJXaTTCm1JJrQn5VRusYIxfbcn9f3Pc6Fow9UWvhWlfydwVj8tmD7bMbicxB1+A0vLcBQYVCx2lOn2GHLLipepv3RFnCSem+6mf3k=
+  on:
+    branch: master
+    tags: true
+    repo: kupibilet-frontend/react-dates
