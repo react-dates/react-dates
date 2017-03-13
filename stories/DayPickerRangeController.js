@@ -75,6 +75,18 @@ const TestNextIcon = () => (
   </span>
 );
 
+const TestCustomInfoPanel = () => (
+  <div
+    style={{
+      padding: '10px 21px',
+      borderTop: '1px solid #dce0e0',
+      color: '#484848',
+    }}
+  >
+    &#x2755; Some useful info here
+  </div>
+);
+
 const datesList = [
   moment(),
   moment().add(1, 'days'),
@@ -233,5 +245,15 @@ storiesOf('DayPickerRangeController', module)
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
       renderDay={day => day.format('ddd')}
+    />
+  ))
+  .addWithInfo('with info panel', () => (
+    <DayPickerRangeControllerWrapper
+      onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
+      onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
+      onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
+      renderCalendarInfo={() => (
+        <TestCustomInfoPanel />
+      )}
     />
   ));

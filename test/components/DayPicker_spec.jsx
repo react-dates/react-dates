@@ -64,12 +64,12 @@ describe('DayPicker', () => {
       });
     });
 
-    describe('renderCaption', () => {
-      it('caption exists', () => {
-        const testCaptionClass = 'test-cation-container';
-        const captionElement = <div className={testCaptionClass} />;
-        const wrapper = shallow(<DayPicker renderCalendarCaption={() => captionElement} />);
-        expect(wrapper.find(`.${testCaptionClass}`)).to.have.lengthOf(1);
+    describe('renderCalendarInfo', () => {
+      it('info exists', () => {
+        const testInfoClass = 'test-info-container';
+        const infoElement = <div className={testInfoClass} />;
+        const wrapper = shallow(<DayPicker renderCalendarInfo={() => infoElement} />);
+        expect(wrapper.find(`.${testInfoClass}`)).to.have.lengthOf(1);
       });
     });
 

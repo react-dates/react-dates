@@ -32,13 +32,12 @@ const TestNextIcon = () => (
   </span>
 );
 
-const TestCaption = () => (
+const TestCustomInfoPanel = () => (
   <div
     style={{
       padding: '10px 21px',
       borderTop: '1px solid #dce0e0',
       color: '#484848',
-
     }}
   >
     &#x2755; Some useful info here
@@ -111,10 +110,10 @@ storiesOf('SDP - Calendar Props', module)
       autoFocus
     />
   ))
-  .addWithInfo('with caption', () => (
+  .addWithInfo('with info panel', () => (
     <SingleDatePickerWrapper
-      renderCalendarCaption={() => (
-        <TestCaption />
+      renderCalendarInfo={() => (
+        <TestCustomInfoPanel />
       )}
       autoFocus
     />

@@ -138,7 +138,7 @@ By default, we do not show days from the previous month and the next month in th
 
 Optionally you can provide calendar caption block renderer.
 ```js
-   renderCalendarCaption: PropTypes.func,
+   renderCalendarInfo: PropTypes.func,
 ```
 
 **DayPicker presentation:**
