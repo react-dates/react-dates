@@ -41,6 +41,7 @@ export default {
   numberOfMonths: PropTypes.number,
   keepOpenOnDateSelect: PropTypes.bool,
   reopenPickerOnClearDates: PropTypes.bool,
+  renderCalendarInfo: PropTypes.func,
 
   // navigation related props
   navPrev: PropTypes.node,

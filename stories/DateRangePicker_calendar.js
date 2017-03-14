@@ -32,6 +32,18 @@ const TestNextIcon = () => (
   </span>
 );
 
+const TestCustomInfoPanel = () => (
+  <div
+    style={{
+      padding: '10px 21px',
+      borderTop: '1px solid #dce0e0',
+      color: '#484848',
+    }}
+  >
+    &#x2755; Some useful info here
+  </div>
+);
+
 storiesOf('DRP - Calendar Props', module)
   .addWithInfo('default', () => (
     <DateRangePickerWrapper autoFocus />
@@ -104,6 +116,14 @@ storiesOf('DRP - Calendar Props', module)
   .addWithInfo('with month specified on open', () => (
     <DateRangePickerWrapper
       initialVisibleMonth={() => moment('04 2017', 'MM YYYY')}
+      autoFocus
+    />
+  ))
+  .addWithInfo('with info panel', () => (
+    <DateRangePickerWrapper
+      renderCalendarInfo={() => (
+        <TestCustomInfoPanel />
+      )}
       autoFocus
     />
   ));

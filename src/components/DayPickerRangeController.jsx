@@ -51,6 +51,7 @@ const propTypes = forbidExtraProps({
   onNextMonthClick: PropTypes.func,
   onOutsideClick: PropTypes.func,
   renderDay: PropTypes.func,
+  renderCalendarInfo: PropTypes.func,
 
   // i18n
   monthFormat: PropTypes.string,
@@ -87,6 +88,7 @@ const defaultProps = {
   onOutsideClick() {},
 
   renderDay: null,
+  renderCalendarInfo: null,
 
   // i18n
   monthFormat: 'MMMM YYYY',
@@ -244,6 +246,7 @@ export default class DayPickerRangeController extends React.Component {
       initialVisibleMonth,
       focusedInput,
       renderDay,
+      renderCalendarInfo,
     } = this.props;
 
     const modifiers = {
@@ -288,6 +291,7 @@ export default class DayPickerRangeController extends React.Component {
         navPrev={navPrev}
         navNext={navNext}
         renderDay={renderDay}
+        renderCalendarInfo={renderCalendarInfo}
       />
     );
   }

@@ -32,6 +32,18 @@ const TestNextIcon = () => (
   </span>
 );
 
+const TestCustomInfoPanel = () => (
+  <div
+    style={{
+      padding: '10px 21px',
+      borderTop: '1px solid #dce0e0',
+      color: '#484848',
+    }}
+  >
+    &#x2755; Some useful info here
+  </div>
+);
+
 storiesOf('SDP - Calendar Props', module)
   .addWithInfo('default', () => (
     <SingleDatePickerWrapper autoFocus />
@@ -95,6 +107,14 @@ storiesOf('SDP - Calendar Props', module)
     <SingleDatePickerWrapper
       numberOfMonths={1}
       enableOutsideDays
+      autoFocus
+    />
+  ))
+  .addWithInfo('with info panel', () => (
+    <SingleDatePickerWrapper
+      renderCalendarInfo={() => (
+        <TestCustomInfoPanel />
+      )}
       autoFocus
     />
   ));

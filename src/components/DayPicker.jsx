@@ -37,6 +37,7 @@ const propTypes = forbidExtraProps({
   onOutsideClick: PropTypes.func,
   hidden: PropTypes.bool,
   initialVisibleMonth: PropTypes.func,
+  renderCalendarInfo: PropTypes.func,
 
   // navigation props
   navPrev: PropTypes.node,
@@ -65,6 +66,7 @@ const defaultProps = {
   onOutsideClick() {},
   hidden: false,
   initialVisibleMonth: () => moment(),
+  renderCalendarInfo: null,
 
   // navigation props
   navPrev: null,
@@ -387,6 +389,7 @@ export default class DayPicker extends React.Component {
       onDayMouseEnter,
       onDayMouseLeave,
       renderDay,
+      renderCalendarInfo,
       onOutsideClick,
       monthFormat,
     } = this.props;
@@ -474,6 +477,7 @@ export default class DayPicker extends React.Component {
             />
             {verticalScrollable && this.renderNavigation()}
           </div>
+          {renderCalendarInfo && renderCalendarInfo()}
         </OutsideClickHandler>
       </div>
     );

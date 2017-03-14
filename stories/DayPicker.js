@@ -7,27 +7,41 @@ import {
   VERTICAL_SCROLLABLE,
 } from '../constants';
 
-const TestPrevIcon = props => (
-  <span style={{
+const TestPrevIcon = () => (
+  <span
+    style={{
       border: '1px solid #dce0e0',
       backgroundColor: '#fff',
       color: '#484848',
-      padding: '3px'
+      padding: '3px',
     }}
   >
     Prev
   </span>
 );
-const TestNextIcon = props => (
-  <span style={{
-    border: '1px solid #dce0e0',
-    backgroundColor: '#fff',
-    color: '#484848',
-    padding: '3px'
+const TestNextIcon = () => (
+  <span
+    style={{
+      border: '1px solid #dce0e0',
+      backgroundColor: '#fff',
+      color: '#484848',
+      padding: '3px',
     }}
   >
     Next
   </span>
+);
+
+const TestCustomInfoPanel = () => (
+  <div
+    style={{
+      padding: '10px 21px',
+      borderTop: '1px solid #dce0e0',
+      color: '#484848',
+    }}
+  >
+    &#x2755; Some useful info here
+  </div>
 );
 
 storiesOf('DayPicker', module)
@@ -72,4 +86,11 @@ storiesOf('DayPicker', module)
         orientation={VERTICAL_ORIENTATION}
       />
     </div>
+  ))
+  .addWithInfo('with info panel', () => (
+    <DayPicker
+      renderCalendarInfo={() => (
+        <TestCustomInfoPanel />
+      )}
+    />
   ));
