@@ -1,5 +1,8 @@
 # Change Log
 
+## v8.2.0
+- [new] Add `renderCalendarInfo` prop to DRP and SDP ([#341](https://github.com/airbnb/react-dates/pull/341))
+
 ## v8.1.1
 - [fix] Add missing `customCloseIcon` propType declarations ([#367](https://github.com/airbnb/react-dates/pull/367))
 
