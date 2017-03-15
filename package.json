@@ -89,7 +89,7 @@
     "rimraf": "^2.5.4",
     "safe-publish-latest": "^1.1.1",
     "sass-loader": "^4.1.1",
-    "sinon": "^1.17.7",
+    "sinon": "^2.0.0",
     "sinon-sandbox": "^1.0.2",
     "style-loader": "^0.13.1",
     "webpack": "^1.14.0"
