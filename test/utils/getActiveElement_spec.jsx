@@ -7,13 +7,6 @@ const describeIfNoWindow = typeof document === 'undefined' ? describe : describe
 const test = 'FOOBARBAZ';
 
 describeIfNoWindow('getActiveElement', () => {
-  describe('without `document`', () => {
-    it('returns false', () => {
-      expect(typeof document).to.equal('undefined');
-      expect(getActiveElement()).to.equal(false);
-    });
-  });
-
   wrap()
   .withGlobal('document', () => ({}))
   .describe('with `document`', () => {

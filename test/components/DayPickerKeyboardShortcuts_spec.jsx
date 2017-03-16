@@ -211,15 +211,6 @@ describe('DayPickerKeyboardShortcuts', () => {
           expect(wrapper.find('.DayPickerKeyboardShortcuts__close').is('button')).to.equal(true);
         });
 
-        it('renders a CloseButton', () => {
-          const wrapper = shallow(
-            <DayPickerKeyboardShortcuts
-              showKeyboardShortcutsPanel
-            />,
-          );
-          expect(wrapper.find('.DayPickerKeyboardShortcuts__close').find(CloseButton)).to.have.lengthOf(1);
-        });
-
         it('calls props.closeKeyboardShortcutsPanel if clicked', () => {
           const closeKeyboardShortcutsPanelStub = sinon.stub();
           const wrapper = shallow(
