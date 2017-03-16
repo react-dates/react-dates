@@ -258,20 +258,26 @@ describe('DayPickerRangeController', () => {
 
   describe('#onDayMouseEnter', () => {
     it('sets state.hoverDate to the day arg', () => {
-      const wrapper = shallow(<DayPickerRangeController />);
+      const onDayHover = sinon.stub();
+      const wrapper = shallow(<DayPickerRangeController onDayHover={onDayHover} />);
       wrapper.instance().onDayMouseEnter(today);
-      expect(wrapper.state().hoverDate).to.equal(today);
+      const arg = onDayHover.getCall(0).args[0];
+      expect(arg).to.equal(today);
     });
   });
 
-  describe('#onDayMouseLeave', () => {
+  describe('#onCalendarMouseLeave', () => {
     it('sets state.hoverDate to null', () => {
-      const wrapper = shallow(<DayPickerRangeController />);
-      wrapper.setState({
-        hoverDate: today,
-      });
-      wrapper.instance().onDayMouseLeave(today);
-      expect(wrapper.state().hoverDate).to.equal(null);
+      const onDayHover = sinon.stub();
+      const wrapper = shallow(<DayPickerRangeController onDayHover={onDayHover} />);
+
+      wrapper.instance().onDayMouseEnter(today);
+      const firstCallArg = onDayHover.getCall(0).args[0];
+      expect(firstCallArg).to.equal(today);
+
+      wrapper.instance().onCalendarMouseLeave();
+      const secondCallArg = onDayHover.getCall(1).args[0];
+      expect(secondCallArg).to.equal(null);
     });
   });
 
@@ -452,125 +458,6 @@ describe('DayPickerRangeController', () => {
         const wrapper =
           shallow(<DayPickerRangeController endDate={moment(today).add(1, 'days')} />);
         expect(wrapper.instance().isEndDate(today)).to.equal(false);
-      });
-    });
-
-    describe('#isHovered', () => {
-      it('returns true if arg === state.hoverDate', () => {
-        const wrapper = shallow(<DayPickerRangeController />);
-        wrapper.setState({
-          hoverDate: today,
-        });
-        expect(wrapper.instance().isHovered(today)).to.equal(true);
-      });
-
-      it('returns false if arg !== state.hoverDate', () => {
-        const wrapper = shallow(<DayPickerRangeController />);
-        wrapper.setState({
-          hoverDate: moment(today).add(1, 'days'),
-        });
-        expect(wrapper.instance().isHovered(today)).to.equal(false);
-      });
-    });
-
-    describe('#isInHoveredSpan', () => {
-      describe('props.endDate === null', () => {
-        it('returns true if arg is in between props.startDate and state.hoverDate', () => {
-          const HOVER_DATE_DIFF = 5;
-          const wrapper = shallow(<DayPickerRangeController startDate={today} endDate={null} />);
-          wrapper.setState({
-            hoverDate: moment(today).add(HOVER_DATE_DIFF, 'days'),
-          });
-          const testDate = moment(today).add(HOVER_DATE_DIFF - 1, 'days');
-          expect(wrapper.instance().isInHoveredSpan(testDate)).to.equal(true);
-        });
-
-        it('returns true if arg is equal to state.hoverDate', () => {
-          const testDate = moment(today).add(3, 'days');
-          const wrapper = shallow(<DayPickerRangeController startDate={today} endDate={null} />);
-          wrapper.setState({
-            hoverDate: testDate,
-          });
-          expect(wrapper.instance().isInHoveredSpan(testDate)).to.equal(true);
-        });
-
-        it('returns false if arg is < props.startDate', () => {
-          const wrapper = shallow(<DayPickerRangeController startDate={today} endDate={null} />);
-          wrapper.setState({
-            hoverDate: moment(today).add(3, 'days'),
-          });
-          const testDate = moment(today).subtract(1, 'days');
-          expect(wrapper.instance().isInHoveredSpan(testDate)).to.equal(false);
-        });
-
-        it('returns false if arg is > state.hoverDate', () => {
-          const hoverDate = moment(today).add(3, 'days');
-          const wrapper = shallow(<DayPickerRangeController startDate={today} endDate={null} />);
-          wrapper.setState({
-            hoverDate,
-          });
-          const testDate = moment(hoverDate).add(1, 'days');
-          expect(wrapper.instance().isInHoveredSpan(testDate)).to.equal(false);
-        });
-      });
-
-      describe('props.startDate === null', () => {
-        it('returns true if arg is in between state.hoverDate and props.endDate', () => {
-          const endDate = moment(today).add(5, 'days');
-          const wrapper = shallow(
-            <DayPickerRangeController
-              startDate={null}
-              endDate={moment(today).add(5, 'days')}
-            />,
-          );
-          wrapper.setState({
-            hoverDate: today,
-          });
-          const testDate = moment(endDate).subtract(1, 'days');
-          expect(wrapper.instance().isInHoveredSpan(testDate)).to.equal(true);
-        });
-
-        it('returns true if arg is equal to state.hoverDate', () => {
-          const wrapper = shallow(
-            <DayPickerRangeController
-              startDate={null}
-              endDate={moment(today).add(5, 'days')}
-            />,
-          );
-          wrapper.setState({
-            hoverDate: today,
-          });
-          expect(wrapper.instance().isInHoveredSpan(today)).to.equal(true);
-        });
-
-        it('returns false if arg is < state.hoverDate', () => {
-          const wrapper = shallow(
-            <DayPickerRangeController
-              startDate={null}
-              endDate={moment(today).add(5, 'days')}
-            />,
-          );
-          wrapper.setState({
-            hoverDate: today,
-          });
-          const testDate = moment(today).subtract(1, 'days');
-          expect(wrapper.instance().isInHoveredSpan(testDate)).to.equal(false);
-        });
-
-        it('returns false if arg is > props.endDate', () => {
-          const endDate = moment(today).add(5, 'days');
-          const wrapper = shallow(
-            <DayPickerRangeController
-              startDate={null}
-              endDate={endDate}
-            />,
-          );
-          wrapper.setState({
-            hoverDate: today,
-          });
-          const testDate = moment(endDate).add(1, 'days');
-          expect(wrapper.instance().isInHoveredSpan(testDate)).to.equal(false);
-        });
       });
     });
 

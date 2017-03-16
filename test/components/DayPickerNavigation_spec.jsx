@@ -78,11 +78,24 @@ describe('DayPickerNavigation', () => {
   });
 
   describe('interactions', () => {
+    it('is not triggered by prev month button click when prev month is in the past from now', () => {
+      const onPrevMonthStub = sinon.stub();
+      const prevMonthButton = shallow(
+        <DayPickerNavigation
+          onPrevMonthClick={onPrevMonthStub}
+          canNavPrev={false}
+        />,
+      ).find('.DayPickerNavigation__prev');
+      prevMonthButton.simulate('click');
+      expect(onPrevMonthStub).to.have.property('callCount', 0);
+    });
+
     it('is triggered by prev month button click', () => {
       const onPrevMonthStub = sinon.stub();
       const prevMonthButton = shallow(
         <DayPickerNavigation
           onPrevMonthClick={onPrevMonthStub}
+          canNavPrev
         />,
       ).find('.DayPickerNavigation__prev');
       prevMonthButton.simulate('click');
@@ -91,11 +104,25 @@ describe('DayPickerNavigation', () => {
   });
 
   describe('interactions', () => {
+    it('is not triggered by next month button click when next month isOutsideRange`d`', () => {
+      const onPrevMonthStub = sinon.stub();
+      const prevMonthButton = shallow(
+        <DayPickerNavigation
+          onPrevMonthClick={onPrevMonthStub}
+          canNavPrev={false}
+        />,
+      ).find('.DayPickerNavigation__prev');
+      prevMonthButton.simulate('click');
+      expect(onPrevMonthStub).to.have.property('callCount', 0);
+    });
+
+
     it('is triggered by next month button click', () => {
       const onNextMonthStub = sinon.stub();
       const nextMonthButton = shallow(
         <DayPickerNavigation
           onNextMonthClick={onNextMonthStub}
+          canNavNext
         />,
       ).find('.DayPickerNavigation__next');
       nextMonthButton.simulate('click');
