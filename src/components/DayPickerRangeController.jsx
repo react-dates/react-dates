@@ -210,6 +210,22 @@ export default class DayPickerRangeController extends React.Component {
     return (isForwardRange || isBackwardRange) && isValidDayHovered;
   }
 
+  isPreviousWeekToHoveredAndSameMonth(day) {
+    return isPreviousWeek(this.state.hoverDate, day) && isSameMonth(this.state.hoverDate, day);
+  }
+
+  isNextWeekToHoveredAndSameMonth(day) {
+    return isNextWeek(this.state.hoverDate, day) && isSameMonth(this.state.hoverDate, day);
+  }
+
+  isPreviousDayToHovered(day) {
+    return isPreviousDay(this.state.hoverDate, day);
+  }
+
+  isNextDayToHovered(day) {
+    return isNextDay(this.state.hoverDate, day);
+  }
+
   isInSelectedSpan(day) {
     const { startDate, endDate } = this.props;
     return day.isBetween(startDate, endDate);
@@ -263,6 +279,10 @@ export default class DayPickerRangeController extends React.Component {
       valid: day => !this.isBlocked(day),
       // before anything has been set or after both are set
       hovered: day => this.isHovered(day),
+      'hovered-previous-day': day => this.isPreviousDayToHovered(day),
+      'hovered-next-day': day => this.isNextDayToHovered(day),
+      'hovered-previous-week': day => this.isPreviousWeekToHoveredAndSameMonth(day),
+      'hovered-next-week': day => this.isNextWeekToHoveredAndSameMonth(day),
 
       // while start date has been set, but end date has not been
       'hovered-span': day => this.isInHoveredSpan(day),
