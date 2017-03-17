@@ -122,7 +122,7 @@ export default class DateInput extends React.Component {
       >
         <input
           aria-label={placeholder}
-          className="DateInput__input"
+          className="DateInput__input needsclick"
           type="text"
           id={id}
           name={id}
