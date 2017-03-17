@@ -10,7 +10,11 @@ import isTouchDevice from '../utils/isTouchDevice';
 
 import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
 import isNextDay from '../utils/isNextDay';
+import isNextWeek from '../utils/isNextWeek';
+import isPreviousDay from '../utils/isPreviousDay';
+import isPreviousWeek from '../utils/isPreviousWeek';
 import isSameDay from '../utils/isSameDay';
+import isSameMonth from '../utils/isSameMonth';
 
 import FocusedInputShape from '../shapes/FocusedInputShape';
 import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
