@@ -78,7 +78,7 @@
     "lodash.omit": "^4.5.0",
     "mocha": "^3.2.0",
     "mocha-wrap": "^2.1.0",
-    "moment": "^2.17.1",
+    "moment": "^2.17.1 && < 2.18.0",
     "node-sass": "^4.4.0",
     "raw-loader": "^0.5.1",
     "react": "^15.4.2",
@@ -103,7 +103,7 @@
     "react-portal": "^3.0.0"
   },
   "peerDependencies": {
-    "moment": "2.10 - 2.14 || ^2.15.1",
+    "moment": "(2.10 - 2.14 || ^2.15.1) && < 2.18.0",
     "react": ">=0.14",
     "react-dom": ">=0.14",
     "react-addons-shallow-compare": ">=0.14"
