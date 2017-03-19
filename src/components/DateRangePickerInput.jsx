@@ -147,7 +147,7 @@ export default class DateRangePickerInput extends React.Component {
           'DateRangePickerInput--disabled': disabled,
         })}
       >
-        {(showDefaultInputIcon || customInputIcon !== null) &&
+        {(showDefaultInputIcon || customInputIcon !== null) && (
           <button
             type="button"
             aria-label={phrases.focusStartDate}
@@ -156,7 +156,7 @@ export default class DateRangePickerInput extends React.Component {
           >
             {inputIcon}
           </button>
-        }
+        )}
 
         <DateInput
           id={startDateId}
@@ -194,7 +194,7 @@ export default class DateRangePickerInput extends React.Component {
           onKeyDownTab={onEndDateTab}
         />
 
-        {showClearDates &&
+        {showClearDates && (
           <button
             type="button"
             className={cx('DateRangePickerInput__clear-dates', {
@@ -212,7 +212,7 @@ export default class DateRangePickerInput extends React.Component {
               {closeIcon}
             </div>
           </button>
-        }
+        )}
       </div>
     );
   }

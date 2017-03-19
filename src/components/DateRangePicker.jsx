@@ -270,7 +270,7 @@ export default class DateRangePicker extends React.Component {
           renderCalendarInfo={renderCalendarInfo}
         />
 
-        {withFullScreenPortal &&
+        {withFullScreenPortal && (
           <button
             className="DateRangePicker__close"
             type="button"
@@ -283,7 +283,7 @@ export default class DateRangePicker extends React.Component {
               {closeIcon}
             </div>
           </button>
-        }
+        )}
       </div>
     );
   }

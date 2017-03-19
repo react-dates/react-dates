@@ -344,7 +344,7 @@ export default class SingleDatePicker extends React.Component {
           renderCalendarInfo={renderCalendarInfo}
         />
 
-        {withFullScreenPortal &&
+        {withFullScreenPortal && (
           <button
             className="SingleDatePicker__close"
             type="button"
@@ -357,7 +357,7 @@ export default class SingleDatePicker extends React.Component {
               {closeIcon}
             </div>
           </button>
-        }
+        )}
       </div>
     );
   }

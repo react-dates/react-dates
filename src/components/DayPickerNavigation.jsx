@@ -80,7 +80,7 @@ export default function DayPickerNavigation(props) {
 
   return (
     <div className={navClassNames}>
-      {!isVerticalScrollable &&
+      {!isVerticalScrollable && (
         <span
           aria-label={phrases.jumpToPrevMonth}
           className={prevClassNames}
@@ -88,7 +88,7 @@ export default function DayPickerNavigation(props) {
         >
           {navPrevIcon}
         </span>
-      }
+      )}
 
       <span
         aria-label={phrases.jumpToNextMonth}
