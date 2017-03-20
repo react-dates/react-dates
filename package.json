@@ -63,7 +63,7 @@
     "eslint-config-airbnb": "^14.1.0",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
-    "eslint-plugin-react": "6.10.0",
+    "eslint-plugin-react": "^6.10.3",
     "git-directory-deploy": "^1.5.1",
     "imports-loader": "^0.7.1",
     "in-publish": "^2.0.0",
