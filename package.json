@@ -92,7 +92,7 @@
     "sinon": "^2.0.0",
     "sinon-sandbox": "^1.0.2",
     "style-loader": "^0.14.0",
-    "webpack": "^1.14.0"
+    "webpack": "^2.3.0"
   },
   "dependencies": {
     "airbnb-prop-types": "^2.4.1",
