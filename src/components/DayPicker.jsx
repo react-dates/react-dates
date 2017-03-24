@@ -26,6 +26,7 @@ import getActiveElement from '../utils/getActiveElement';
 import isDayVisible from '../utils/isDayVisible';
 
 import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
+import DayOfWeekShape from '../shapes/DayOfWeekShape';
 
 import {
   HORIZONTAL_ORIENTATION,
@@ -48,7 +49,7 @@ const propTypes = forbidExtraProps({
   onOutsideClick: PropTypes.func,
   hidden: PropTypes.bool,
   initialVisibleMonth: PropTypes.func,
-  firstDayOfWeek: range(0, 7),
+  firstDayOfWeek: DayOfWeekShape,
   renderCalendarInfo: PropTypes.func,
   hideKeyboardShortcutsPanel: PropTypes.bool,
   daySize: nonNegativeInteger,
@@ -685,7 +686,7 @@ export default class DayPicker extends React.Component {
     }
 
     let { firstDayOfWeek } = this.props;
-    if (firstDayOfWeek === null) {
+    if (firstDayOfWeek == null) {
       firstDayOfWeek = moment.localeData().firstDayOfWeek();
     }
 

@@ -23,6 +23,7 @@ import toISOMonthString from '../utils/toISOMonthString';
 
 import FocusedInputShape from '../shapes/FocusedInputShape';
 import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
+import DayOfWeekShape from '../shapes/DayOfWeekShape';
 
 import {
   START_DATE,
@@ -67,7 +68,7 @@ const propTypes = forbidExtraProps({
   onOutsideClick: PropTypes.func,
   renderDay: PropTypes.func,
   renderCalendarInfo: PropTypes.func,
-  firstDayOfWeek: PropTypes.oneOf([0, 1, 2, 3, 4, 5, 6]),
+  firstDayOfWeek: DayOfWeekShape,
 
   // accessibility
   onBlur: PropTypes.func,

@@ -18,6 +18,7 @@ import isSameDay from '../utils/isSameDay';
 import toISODateString from '../utils/toISODateString';
 
 import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
+import DayOfWeekShape from '../shapes/DayOfWeekShape';
 
 import {
   HORIZONTAL_ORIENTATION,
@@ -38,7 +39,7 @@ const propTypes = forbidExtraProps({
   onDayMouseLeave: PropTypes.func,
   renderMonth: PropTypes.func,
   renderDay: PropTypes.func,
-  firstDayOfWeek: PropTypes.oneOf([0, 1, 2, 3, 4, 5, 6]),
+  firstDayOfWeek: DayOfWeekShape,
 
   focusedDate: momentPropTypes.momentObj, // indicates focusable day
   isFocused: PropTypes.bool, // indicates whether or not to move focus to focusable day
@@ -78,7 +79,7 @@ export default class CalendarMonth extends React.Component {
       weeks: getCalendarMonthWeeks(
         props.month,
         props.enableOutsideDays,
-        props.firstDayOfWeek === null ? moment.localeData().firstDayOfWeek() : props.firstDayOfWeek,
+        props.firstDayOfWeek == null ? moment.localeData().firstDayOfWeek() : props.firstDayOfWeek,
       ),
     };
   }
@@ -92,7 +93,7 @@ export default class CalendarMonth extends React.Component {
         weeks: getCalendarMonthWeeks(
           month,
           enableOutsideDays,
-          firstDayOfWeek === null ? moment.localeData().firstDayOfWeek() : firstDayOfWeek,
+          firstDayOfWeek == null ? moment.localeData().firstDayOfWeek() : firstDayOfWeek,
         ),
       });
     }

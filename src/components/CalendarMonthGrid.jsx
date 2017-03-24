@@ -19,6 +19,7 @@ import toISOMonthString from '../utils/toISOMonthString';
 import isAfterDay from '../utils/isAfterDay';
 
 import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
+import DayOfWeekShape from '../shapes/DayOfWeekShape';
 
 import {
   HORIZONTAL_ORIENTATION,
@@ -45,7 +46,7 @@ const propTypes = forbidExtraProps({
   daySize: nonNegativeInteger,
   focusedDate: momentPropTypes.momentObj, // indicates focusable day
   isFocused: PropTypes.bool, // indicates whether or not to move focus to focusable day
-  firstDayOfWeek: range(0, 7),
+  firstDayOfWeek: DayOfWeekShape,
 
   // i18n
   monthFormat: PropTypes.string,

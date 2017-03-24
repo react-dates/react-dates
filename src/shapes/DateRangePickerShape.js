@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import momentPropTypes from 'react-moment-proptypes';
-import { nonNegativeInteger, range } from 'airbnb-prop-types';
+import { nonNegativeInteger } from 'airbnb-prop-types';
 
 import { DateRangePickerPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
@@ -8,6 +8,7 @@ import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 import FocusedInputShape from '../shapes/FocusedInputShape';
 import OrientationShape from '../shapes/OrientationShape';
 import anchorDirectionShape from '../shapes/AnchorDirectionShape';
+import DayOfWeekShape from '../shapes/DayOfWeekShape';
 
 export default {
   // required props for a functional interactive DateRangePicker
@@ -44,7 +45,7 @@ export default {
   withFullScreenPortal: PropTypes.bool,
   daySize: nonNegativeInteger,
   isRTL: PropTypes.bool,
-  firstDayOfWeek: range(0, 7),
+  firstDayOfWeek: DayOfWeekShape,
   initialVisibleMonth: PropTypes.func,
   numberOfMonths: PropTypes.number,
   keepOpenOnDateSelect: PropTypes.bool,
