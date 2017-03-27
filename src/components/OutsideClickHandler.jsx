@@ -1,15 +1,16 @@
 import React, { PropTypes } from 'react';
-import ReactDOM from 'react-dom';
+import { forbidExtraProps } from 'airbnb-prop-types';
+import { addEventListener, removeEventListener } from 'consolidated-events';
 
 const propTypes = {
   children: PropTypes.node,
   onOutsideClick: PropTypes.func,
 };
 
-const defaultProps = {
+const defaultProps = forbidExtraProps({
   children: <span />,
   onOutsideClick: () => {},
-};
+});
 
 export default class OutsideClickHandler extends React.Component {
   constructor(props) {
@@ -18,25 +19,22 @@ export default class OutsideClickHandler extends React.Component {
   }
 
   componentDidMount() {
-    if (document.addEventListener) {
-      // `useCapture` flag is set to true so that a `stopPropagation` in the children will
-      // not prevent all outside click handlers from firing - maja
-      document.addEventListener('click', this.onOutsideClick, true);
-    } else {
-      document.attachEvent('onclick', this.onOutsideClick);
-    }
+    // `capture` flag is set to true so that a `stopPropagation` in the children
+    // will not prevent all outside click handlers from firing - maja
+    this.clickHandle = addEventListener(
+      document,
+      'click',
+      this.onOutsideClick,
+      { capture: true },
+    );
   }
 
   componentWillUnmount() {
-    if (document.removeEventListener) {
-      document.removeEventListener('click', this.onOutsideClick, true);
-    } else {
-      document.detachEvent('onclick', this.onOutsideClick);
-    }
+    removeEventListener(this.clickHandle);
   }
 
   onOutsideClick(e) {
-    const isDescendantOfRoot = ReactDOM.findDOMNode(this.refs.childNode).contains(e.target);
+    const isDescendantOfRoot = this.childNode.contains(e.target);
     if (!isDescendantOfRoot) {
       this.props.onOutsideClick(e);
     }
@@ -44,7 +42,7 @@ export default class OutsideClickHandler extends React.Component {
 
   render() {
     return (
-      <div ref="childNode">
+      <div ref={(ref) => { this.childNode = ref; }}>
         {this.props.children}
       </div>
     );

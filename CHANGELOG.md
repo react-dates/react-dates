@@ -1,5 +1,26 @@
 # Change Log
 
+## v8.2.1
+- [fix] Add `needsclick` to inputs to disable fastclick ([#377](https://github.com/airbnb/react-dates/pull/377))
+- [deps] Update `style-loader`, `sinon`, `babel-loader`, `coveralls`, and `karma-webpack` ([#379](https://github.com/airbnb/react-dates/pull/379), [#372](https://github.com/airbnb/react-dates/pull/372), [#373](https://github.com/airbnb/react-dates/pull/373))
+
+## v8.2.0
+- [new] Add `renderCalendarInfo` prop to DRP and SDP ([#341](https://github.com/airbnb/react-dates/pull/341))
+
+## v8.1.1
+- [fix] Add missing `customCloseIcon` propType declarations ([#367](https://github.com/airbnb/react-dates/pull/367))
+
+## v8.1.0
+- [new] Add `customCloseIcon` prop ([#356](https://github.com/airbnb/react-dates/pull/356))
+
+## v8.0.0
+- [fix] Remove `$react-dates-width-day-picker` variable from `CalendarMonthGrid.scss`, allowing overrides ([#352](https://github.com/airbnb/react-dates/pull/352))
+- [new] Create `defaultPhrases` file for i18n ([#351](https://github.com/airbnb/react-dates/pull/351))
+- [fix] Set `isTouchDevice` on `componentDidMount` ([#336](https://github.com/airbnb/react-dates/pull/336))
+- [fix] Change `CalendarMonthGrid` background to use `$react-dates-color-white` ([#342](https://github.com/airbnb/react-dates/pull/342))
+- [breaking] Make `onFocusChange` and `onDate(s)Change` props required and `forbidExtraProps` on all components ([#332](https://github.com/airbnb/react-dates/pull/332))
+- [fix] Fix caption alignment when using bootstrap ([#323](https://github.com/airbnb/react-dates/pull/323))
+
 ## v7.0.1
 - [fix] Fix minimum nights issues for startDates/endDates with time ([#310](https://github.com/airbnb/react-dates/pull/310))
 

@@ -6,7 +6,7 @@ instrumentation:
     "lib/**",
     "public/**",
     "test/**",
-    "coverage/**",
+    "coverage/**"
   ]
 check:
   global:

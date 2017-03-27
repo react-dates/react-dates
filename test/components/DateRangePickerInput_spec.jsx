@@ -101,7 +101,7 @@ describe('DateRangePickerInput', () => {
             <DateRangePickerInput
               customInputIcon={<span className="custom-icon" />}
             />);
-          expect(wrapper.find('.DateRangePickerInput__calendar-icon .custom-icon'));
+          expect(wrapper.find('.DateRangePickerInput__calendar-icon .custom-icon')).to.have.lengthOf(1);
         });
       });
     });
@@ -113,7 +113,18 @@ describe('DateRangePickerInput', () => {
         <DateRangePickerInput
           customArrowIcon={<span className="custom-arrow-icon" />}
         />);
-      expect(wrapper.find('.DateRangePickerInput__calendar-icon .custom-arrow-icon'));
+      expect(wrapper.find('.DateRangePickerInput .custom-arrow-icon')).to.have.lengthOf(1);
+    });
+  });
+
+  describe('props.customCloseIcon is a React Element', () => {
+    it('has custom icon', () => {
+      const wrapper = shallow(
+        <DateRangePickerInput
+          showClearDates
+          customCloseIcon={<span className="custom-close-icon" />}
+        />);
+      expect(wrapper.find('.DateRangePickerInput .custom-close-icon')).to.have.lengthOf(1);
     });
   });
 

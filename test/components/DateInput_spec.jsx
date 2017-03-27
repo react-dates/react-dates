@@ -206,4 +206,34 @@ describe('DateInput', () => {
       expect(onKeyDownTabStub.callCount).to.equal(0);
     });
   });
+
+  describe('touch device detection', () => {
+    it('indicates no touch support on the client', () => {
+      const wrapper = shallow(<DateInput id="date" />);
+      expect(wrapper.state()).to.contain.keys({ isTouchDevice: false });
+    });
+
+    it('does not set readOnly when not a touch device', () => {
+      const wrapper = shallow(<DateInput id="date" />);
+      expect(!!wrapper.find('input').prop('readOnly')).to.equal(false);
+    });
+
+    it('sets readOnly when a touch device', () => {
+      const wrapper = shallow(<DateInput id="date" />);
+      wrapper.setState({ isTouchDevice: true });
+      wrapper.update();
+      expect(!!wrapper.find('input').prop('readOnly')).to.equal(true);
+    });
+
+    /*
+      // Skip this test until we can figure out how to use `withTouchSupport` with karma
+      wrap()
+      .withTouchSupport()
+      .it('sets isTouchDevice state when is a touch device', () => {
+        const wrapper = shallow(<DateInput id="date" />);
+        wrapper.instance().componentDidMount();
+        expect(wrapper.state()).to.contain.keys({ isTouchDevice: true });
+      });
+    */
+  });
 });

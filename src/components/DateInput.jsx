@@ -1,9 +1,10 @@
 import React, { PropTypes } from 'react';
+import { forbidExtraProps } from 'airbnb-prop-types';
 import cx from 'classnames';
 
 import isTouchDevice from '../utils/isTouchDevice';
 
-const propTypes = {
+const propTypes = forbidExtraProps({
   id: PropTypes.string.isRequired,
   placeholder: PropTypes.string, // also used as label
   displayValue: PropTypes.string,
@@ -18,7 +19,7 @@ const propTypes = {
   onFocus: PropTypes.func,
   onKeyDownShiftTab: PropTypes.func,
   onKeyDownTab: PropTypes.func,
-};
+});
 
 const defaultProps = {
   placeholder: 'Select Date',
@@ -41,12 +42,15 @@ export default class DateInput extends React.Component {
     super(props);
     this.state = {
       dateString: '',
+      isTouchDevice: false,
     };
 
     this.onChange = this.onChange.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
+  }
 
-    this.isTouchDevice = isTouchDevice();
+  componentDidMount() {
+    this.setState({ isTouchDevice: isTouchDevice() });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -88,7 +92,10 @@ export default class DateInput extends React.Component {
   }
 
   render() {
-    const { dateString } = this.state;
+    const {
+      dateString,
+      isTouchDevice: isTouch,
+    } = this.state;
     const {
       id,
       placeholder,
@@ -115,7 +122,7 @@ export default class DateInput extends React.Component {
       >
         <input
           aria-label={placeholder}
-          className="DateInput__input"
+          className="DateInput__input needsclick"
           type="text"
           id={id}
           name={id}
@@ -127,7 +134,7 @@ export default class DateInput extends React.Component {
           placeholder={placeholder}
           autoComplete="off"
           disabled={disabled}
-          readOnly={this.isTouchDevice}
+          readOnly={isTouch}
           required={required}
           aria-describedby={screenReaderMessage && screenReaderMessageId}
         />

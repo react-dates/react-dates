@@ -54,6 +54,17 @@ describe('SingleDatePickerInput', () => {
           expect(wrapper.find('.SingleDatePickerInput__clear-date--hide')).to.have.lengthOf(0);
         });
     });
+
+    describe('props.customCloseIcon is a React Element', () => {
+      it('has custom icon', () => {
+        const wrapper = shallow(
+          <SingleDatePickerInput
+            showClearDate
+            customCloseIcon={<span className="custom-close-icon" />}
+          />);
+        expect(wrapper.find('.SingleDatePickerInput .custom-close-icon')).to.have.lengthOf(1);
+      });
+    });
   });
 
   describe('#onClearDateMouseEnter', () => {
