@@ -91,7 +91,7 @@
     "sass-loader": "^4.1.1",
     "sinon": "^2.0.0",
     "sinon-sandbox": "^1.0.2",
-    "style-loader": "^0.15.0",
+    "style-loader": "^0.16.1",
     "webpack": "^1.14.0"
   },
   "dependencies": {
