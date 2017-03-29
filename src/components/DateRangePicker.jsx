@@ -345,6 +345,11 @@ export default class DateRangePicker extends React.Component {
             withFullScreenPortal={withFullScreenPortal}
             onDatesChange={onDatesChange}
             onFocusChange={onFocusChange}
+            focusDayPicker={() => {
+              if (this.dayPicker) {
+                setTimeout(() => this.dayPicker.focus(), 0);
+              }
+            }}
             phrases={phrases}
             screenReaderMessage={screenReaderInputMessage}
           />
