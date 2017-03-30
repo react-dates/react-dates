@@ -2,6 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import { configure, addDecorator, setAddon } from '@kadira/storybook';
 import infoAddon from '@kadira/react-storybook-addon-info';
+import { setOptions } from '@kadira/storybook-addon-options';
 import '../css/styles.scss';
 
 addDecorator((story) => {
@@ -42,6 +43,11 @@ addDecorator(story => (
     </div>
   </div>
 ));
+
+setOptions({
+  name: 'REACT-DATES',
+  url: 'https://github.com/airbnb/react-dates',
+});
 
 function loadStories() {
   require('../stories/DateRangePicker');
