@@ -44,6 +44,8 @@ const propTypes = forbidExtraProps({
   customArrowIcon: PropTypes.node,
   customCloseIcon: PropTypes.node,
 
+  isFocused: PropTypes.bool, // describes actual DOM focus
+
   // i18n
   phrases: PropTypes.shape(getPhrasePropTypes(DateRangePickerInputPhrases)),
 });
@@ -77,6 +79,8 @@ const defaultProps = {
   customInputIcon: null,
   customArrowIcon: null,
   customCloseIcon: null,
+
+  isFocused: false,
 
   // i18n
   phrases: DateRangePickerInputPhrases,
@@ -134,6 +138,7 @@ export default class DateRangePickerInput extends React.Component {
       customInputIcon,
       customArrowIcon,
       customCloseIcon,
+      isFocused,
       phrases,
     } = this.props;
 
@@ -165,6 +170,7 @@ export default class DateRangePickerInput extends React.Component {
           inputValue={startDateValue}
           screenReaderMessage={screenReaderMessage}
           focused={isStartDateFocused}
+          isFocused={isFocused}
           disabled={disabled}
           required={required}
           showCaret={showCaret}
@@ -185,6 +191,7 @@ export default class DateRangePickerInput extends React.Component {
           inputValue={endDateValue}
           screenReaderMessage={screenReaderMessage}
           focused={isEndDateFocused}
+          isFocused={isFocused}
           disabled={disabled}
           required={required}
           showCaret={showCaret}

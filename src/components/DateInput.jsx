@@ -19,6 +19,8 @@ const propTypes = forbidExtraProps({
   onFocus: PropTypes.func,
   onKeyDownShiftTab: PropTypes.func,
   onKeyDownTab: PropTypes.func,
+
+  isFocused: PropTypes.bool, // describes actual DOM focus
 });
 
 const defaultProps = {
@@ -35,6 +37,8 @@ const defaultProps = {
   onFocus() {},
   onKeyDownShiftTab() {},
   onKeyDownTab() {},
+
+  isFocused: false,
 };
 
 export default class DateInput extends React.Component {
@@ -62,10 +66,10 @@ export default class DateInput extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { focused } = this.props;
-    if (prevProps.focused === focused) return;
+    const { focused, isFocused } = this.props;
+    if (prevProps.focused === focused && prevProps.isFocused === isFocused) return;
 
-    if (focused) {
+    if (focused && isFocused) {
       this.inputRef.focus();
       this.inputRef.select();
     } else {

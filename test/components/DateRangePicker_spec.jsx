@@ -177,6 +177,140 @@ describe('DateRangePicker', () => {
     });
   });
 
+  describe('#onDateRangePickerInputFocus', () => {
+    it('calls onFocusChange', () => {
+      const onFocusChangeStub = sinon.stub();
+      const wrapper = shallow(
+        <DateRangePicker
+          onDatesChange={sinon.stub()}
+          onFocusChange={onFocusChangeStub}
+        />,
+      );
+      wrapper.instance().onDateRangePickerInputFocus();
+      expect(onFocusChangeStub.callCount).to.equal(1);
+    });
+
+    it('calls onFocusChange with arg', () => {
+      const test = 'foobar';
+      const onFocusChangeStub = sinon.stub();
+      const wrapper = shallow(
+        <DateRangePicker
+          onDatesChange={sinon.stub()}
+          onFocusChange={onFocusChangeStub}
+        />,
+      );
+      wrapper.instance().onDateRangePickerInputFocus(test);
+      expect(onFocusChangeStub.getCall(0).args[0]).to.equal(test);
+    });
+
+    describe('new focusedInput is truthy', () => {
+      let onDayPickerFocusSpy;
+      beforeEach(() => {
+        onDayPickerFocusSpy = sinon.spy(DateRangePicker.prototype, 'onDayPickerFocus');
+      });
+
+      afterEach(() => {
+        sinon.restore();
+      });
+
+      it('calls onDayPickerFocus if focusedInput and withPortal/withFullScreenPortal', () => {
+        const wrapper = shallow(
+          <DateRangePicker
+            onDatesChange={sinon.stub()}
+            onFocusChange={sinon.stub()}
+            withPortal
+          />,
+        );
+        wrapper.instance().onDateRangePickerInputFocus(START_DATE);
+        expect(onDayPickerFocusSpy.callCount).to.equal(1);
+      });
+
+      it('calls onDayPickerFocus if focusedInput and withFullScreenPortal', () => {
+        const wrapper = shallow(
+          <DateRangePicker
+            onDatesChange={sinon.stub()}
+            onFocusChange={sinon.stub()}
+            withFullScreenPortal
+          />,
+        );
+        wrapper.instance().onDateRangePickerInputFocus(START_DATE);
+        expect(onDayPickerFocusSpy.callCount).to.equal(1);
+      });
+
+      it('calls onDayPickerBlur if focusedInput and !withPortal/!withFullScreenPortal', () => {
+        const onDayPickerBlurSpy = sinon.spy(DateRangePicker.prototype, 'onDayPickerBlur');
+        const wrapper = shallow(
+          <DateRangePicker
+            onDatesChange={sinon.stub()}
+            onFocusChange={sinon.stub()}
+          />,
+        );
+        wrapper.instance().onDateRangePickerInputFocus(START_DATE);
+        expect(onDayPickerBlurSpy.callCount).to.equal(1);
+      });
+    });
+  });
+
+  describe('#onDayPickerFocus', () => {
+    it('sets state.isDateRangePickerInputFocused to false', () => {
+      const wrapper = shallow(
+        <DateRangePicker
+          onDatesChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />,
+      );
+      wrapper.setState({
+        isDateRangePickerInputFocused: true,
+      });
+      wrapper.instance().onDayPickerFocus();
+      expect(wrapper.state().isDateRangePickerInputFocused).to.equal(false);
+    });
+
+    it('sets state.isDayPickerFocused to true', () => {
+      const wrapper = shallow(
+        <DateRangePicker
+          onDatesChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />,
+      );
+      wrapper.setState({
+        isDayPickerFocused: false,
+      });
+      wrapper.instance().onDayPickerFocus();
+      expect(wrapper.state().isDayPickerFocused).to.equal(true);
+    });
+  });
+
+  describe('#onDayPickerBlur', () => {
+    it('sets state.isDateRangePickerInputFocused to true', () => {
+      const wrapper = shallow(
+        <DateRangePicker
+          onDatesChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />,
+      );
+      wrapper.setState({
+        isDateRangePickerInputFocused: false,
+      });
+      wrapper.instance().onDayPickerBlur();
+      expect(wrapper.state().isDateRangePickerInputFocused).to.equal(true);
+    });
+
+    it('sets state.isDayPickerFocused to false', () => {
+      const wrapper = shallow(
+        <DateRangePicker
+          onDatesChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />,
+      );
+      wrapper.setState({
+        isDayPickerFocused: true,
+      });
+      wrapper.instance().onDayPickerBlur();
+      expect(wrapper.state().isDayPickerFocused).to.equal(false);
+    });
+  });
+
   describe('initialVisibleMonth', () => {
     describe('initialVisibleMonth is passed in', () => {
       it('DayPickerRangeController.props.initialVisibleMonth is equal to initialVisibleMonth', () => {

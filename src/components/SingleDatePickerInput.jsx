@@ -15,6 +15,7 @@ const propTypes = forbidExtraProps({
   inputValue: PropTypes.string,
   screenReaderMessage: PropTypes.string,
   focused: PropTypes.bool,
+  isFocused: PropTypes.bool, // describes actual DOM focus
   disabled: PropTypes.bool,
   required: PropTypes.bool,
   showCaret: PropTypes.bool,
@@ -37,6 +38,7 @@ const defaultProps = {
   inputValue: '',
   screenReaderMessage: '',
   focused: false,
+  isFocused: false,
   disabled: false,
   required: false,
   showCaret: false,
@@ -84,6 +86,7 @@ export default class SingleDatePickerInput extends React.Component {
       displayValue,
       inputValue,
       focused,
+      isFocused,
       disabled,
       required,
       showCaret,
@@ -109,6 +112,7 @@ export default class SingleDatePickerInput extends React.Component {
           inputValue={inputValue}
           screenReaderMessage={screenReaderMessage}
           focused={focused}
+          isFocused={isFocused}
           disabled={disabled}
           required={required}
           showCaret={showCaret}
