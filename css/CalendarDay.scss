@@ -62,6 +62,22 @@
     border: 1px double $react-dates-color-primary;
   }
 
+  &.CalendarDay--hovered-previous-day {
+    border-right: 1px double $react-dates-color-primary;
+  }
+
+  &.CalendarDay--hovered-next-day {
+    border-left: 1px double $react-dates-color-primary;
+  }
+
+  &.CalendarDay--hovered-previous-week {
+    border-bottom: 1px double $react-dates-color-primary;
+  }
+
+  &.CalendarDay--hovered-next-week {
+    border-top: 1px double $react-dates-color-primary;
+  }
+
   &.CalendarDay--last-in-range {
     border-right: $react-dates-color-primary;
   }
