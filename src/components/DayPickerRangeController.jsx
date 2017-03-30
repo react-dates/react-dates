@@ -10,10 +10,18 @@ import isTouchDevice from '../utils/isTouchDevice';
 
 import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
 import isNextDay from '../utils/isNextDay';
-import isSameDay from '../utils/isSameDay';
+import isSameDayOriginal from '../utils/isSameDay';
 
 import FocusedInputShape from '../shapes/FocusedInputShape';
 import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
+
+function isSameDay(a, b) {
+  const start = window.performance.now();
+  const returnValue = isSameDayOriginal(a, b);
+  window.jperf.totalIsSameDay.ms += window.performance.now() - start;
+  window.jperf.totalIsSameDay.callCount++;
+  return returnValue;
+}
 
 import {
   START_DATE,
@@ -109,6 +117,30 @@ export default class DayPickerRangeController extends React.Component {
     this.state = {
       hoverDate: null,
     };
+
+    window.jperf = {
+      totalIsSameDay: {
+        callCount: 0,
+        ms: 0,
+      },
+    };
+
+    setTimeout(() => {
+      try {
+        document.querySelector('button[aria-label="Available. Friday. March 10, 2017"]').click();
+        document.querySelector('button[aria-label="Available. Wednesday. April 12, 2017"]').click();
+
+        // document.querySelector('button[aria-label="Available. Thursday. March 9, 2017"]').click();
+        // document.querySelector('button[aria-label="Available. Thursday. April 13, 2017"]').click();
+
+        // console.log(JSON.stringify(window.jperf, undefined, 2));
+        for (var key in window.jperf) {
+          window.jperf[key].ms = Math.round(window.jperf[key].ms);
+        }
+        console.table(window.jperf);
+      } catch(e) {
+      }
+    }, 2000);
 
     this.isTouchDevice = isTouchDevice();
     this.today = moment();
@@ -311,6 +343,26 @@ export default class DayPickerRangeController extends React.Component {
       'selected-end': day => this.isEndDate(day),
       'selected-span': day => this.isInSelectedSpan(day),
     };
+
+    const { jperf: perf } = window;
+    Object.keys(modifiers).forEach(mod => {
+      if (!perf.hasOwnProperty(mod)) {
+        perf[mod] = {
+          ms: 0,
+          callCount: 0,
+        };
+      }
+      const originalMod = modifiers[mod];
+      modifiers[mod] = (v1, v2, v3, v4, v5) => {
+        const start = window.performance.now();
+        const returnVal = originalMod(v1, v2, v3, v4, v5);
+        const end = window.performance.now()
+        // perf[mod].ms += Math.round(end - start);
+        perf[mod].ms += end - start;
+        perf[mod].callCount += 1;
+        return returnVal;
+      };
+    });
 
     return (
       <DayPicker

@@ -3,6 +3,7 @@ import moment from 'moment';
 import { storiesOf } from '@kadira/storybook';
 
 import DateRangePickerWrapper from '../examples/DateRangePickerWrapper';
+import VerticalScrollableDatePicker from '../src/components/VerticalScrollableDatePicker';
 
 const TestInput = props => (
   <div style={{ marginTop: 16 }}>
@@ -51,6 +52,14 @@ class TestWrapper extends React.Component {
 storiesOf('DateRangePicker (DRP)', module)
   .addWithInfo('default', () => (
     <DateRangePickerWrapper />
+  ))
+  .addWithInfo('VerticalScrollableDatePicker', () => (
+    <div style={{
+      width: `${320}px`, // iphone se with safari chrome
+      height: `${460}px`,
+    }}>
+    <VerticalScrollableDatePicker />
+    </div>
   ))
   .addWithInfo('hidden with display: none', () => (
     <TestWrapper />
