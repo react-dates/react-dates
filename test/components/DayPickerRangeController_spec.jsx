@@ -9,6 +9,7 @@ import DayPickerRangeController from '../../src/components/DayPickerRangeControl
 import DayPicker from '../../src/components/DayPicker';
 
 import isInclusivelyAfterDay from '../../src/utils/isInclusivelyAfterDay';
+import * as isTouchDeviceModule from '../../src/utils/isTouchDevice';
 
 import { START_DATE, END_DATE } from '../../constants';
 
@@ -774,6 +775,81 @@ describe('DayPickerRangeController', () => {
         const wrapper = shallow(<DayPickerRangeController />);
         expect(wrapper.instance().isToday(moment(today).subtract(1, 'months'))).to.equal(false);
       });
+    });
+  });
+
+  describe('modifier optimization', () => {
+    it('includes hover modifiers for non-touch device', () => {
+      sinon.stub(isTouchDeviceModule, 'default', () => false);
+
+      const wrapper = shallow(<DayPickerRangeController />);
+
+      const modifiers = wrapper.find(DayPicker).prop('modifiers');
+      expect(modifiers).to.include.keys('hovered');
+      expect(modifiers).to.include.keys('hovered-span');
+      expect(modifiers).to.include.keys('after-hovered-start');
+    });
+
+    it('excludes hover modifiers for touch device', () => {
+      sinon.stub(isTouchDeviceModule, 'default', () => true);
+
+      const wrapper = shallow(<DayPickerRangeController />);
+
+      const modifiers = wrapper.find(DayPicker).prop('modifiers');
+      expect(modifiers).to.not.include.keys('hovered');
+      expect(modifiers).to.not.include.keys('hovered-span');
+      expect(modifiers).to.not.include.keys('after-hovered-start');
+    });
+
+    it('includes start modifiers when startDate is set', () => {
+      const wrapper = shallow(<DayPickerRangeController startDate={moment()} />);
+
+      const modifiers = wrapper.find(DayPicker).prop('modifiers');
+      expect(modifiers).to.include.keys('selected-start');
+    });
+
+    it('excludes start modifiers when startDate is unset', () => {
+      const wrapper = shallow(<DayPickerRangeController />);
+
+      const modifiers = wrapper.find(DayPicker).prop('modifiers');
+      expect(modifiers).to.not.include.keys('selected-start');
+    });
+
+    it('includes end modifiers when endDate is set', () => {
+      const wrapper = shallow(<DayPickerRangeController endDate={moment()} />);
+
+      const modifiers = wrapper.find(DayPicker).prop('modifiers');
+      expect(modifiers).to.include.keys('selected-end');
+      expect(modifiers).to.include.keys('blocked-minimum-nights');
+    });
+
+    it('excludes end modifiers when endDate is unset', () => {
+      const wrapper = shallow(<DayPickerRangeController />);
+
+      const modifiers = wrapper.find(DayPicker).prop('modifiers');
+      expect(modifiers).to.not.include.keys('selected-end');
+      expect(modifiers).to.not.include.keys('blocked-minimum-nights');
+    });
+
+    it('includes start/end modifiers when both set', () => {
+      const wrapper = shallow(
+        <DayPickerRangeController
+          startDate={moment()}
+          endDate={moment().add(1, 'days')}
+        />,
+      );
+
+      const modifiers = wrapper.find(DayPicker).prop('modifiers');
+      expect(modifiers).to.include.keys('selected-span');
+      expect(modifiers).to.include.keys('last-in-range');
+    });
+
+    it('excludes start/end modifiers when both unset', () => {
+      const wrapper = shallow(<DayPickerRangeController />);
+
+      const modifiers = wrapper.find(DayPicker).prop('modifiers');
+      expect(modifiers).to.not.include.keys('selected-span');
+      expect(modifiers).to.not.include.keys('last-in-range');
     });
   });
 });
