@@ -779,6 +779,10 @@ describe('DayPickerRangeController', () => {
   });
 
   describe('modifier optimization', () => {
+    afterEach(() => {
+      sinon.restore();
+    });
+
     it('includes hover modifiers for non-touch device', () => {
       sinon.stub(isTouchDeviceModule, 'default', () => false);
 
