@@ -247,6 +247,8 @@ export default class DayPickerRangeController extends React.Component {
       focusedInput,
       renderDay,
       renderCalendarInfo,
+      startDate,
+      endDate,
     } = this.props;
 
     const modifiers = {
@@ -254,17 +256,22 @@ export default class DayPickerRangeController extends React.Component {
       blocked: day => this.isBlocked(day),
       'blocked-calendar': day => isDayBlocked(day),
       'blocked-out-of-range': day => isOutsideRange(day),
-      'blocked-minimum-nights': day => this.doesNotMeetMinimumNights(day),
       'highlighted-calendar': day => isDayHighlighted(day),
       valid: day => !this.isBlocked(day),
 
-      // once a start date and end date have been set
-      'selected-start': day => this.isStartDate(day),
-      'selected-end': day => this.isEndDate(day),
-      'selected-span': day => this.isInSelectedSpan(day),
-      'last-in-range': day => this.isLastInRange(day),
-
-      // Avoid computing hover modifiers for touch devices
+      // Modifiers are computed for every CalendarDay, so we omit where
+      // logically possible.
+      ...startDate && {
+        'selected-start': day => this.isStartDate(day),
+      },
+      ...endDate && {
+        'selected-end': day => this.isEndDate(day),
+        'blocked-minimum-nights': day => this.doesNotMeetMinimumNights(day),
+      },
+      ...(startDate && endDate) && {
+        'selected-span': day => this.isInSelectedSpan(day),
+        'last-in-range': day => this.isLastInRange(day),
+      },
       ...!this.isTouchDevice && {
         // before anything has been set or after both are set
         hovered: day => this.isHovered(day),
