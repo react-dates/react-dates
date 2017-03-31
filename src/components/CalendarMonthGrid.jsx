@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import shallowCompare from 'react-addons-shallow-compare';
 import momentPropTypes from 'react-moment-proptypes';
-import { forbidExtraProps } from 'airbnb-prop-types';
+import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
 import moment from 'moment';
 import cx from 'classnames';
 import { addEventListener, removeEventListener } from 'consolidated-events';
@@ -10,6 +10,7 @@ import CalendarMonth from './CalendarMonth';
 
 import isTransitionEndSupported from '../utils/isTransitionEndSupported';
 import getTransformStyles from '../utils/getTransformStyles';
+import getCalendarMonthWidth from '../utils/getCalendarMonthWidth';
 
 import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
 
@@ -17,6 +18,7 @@ import {
   HORIZONTAL_ORIENTATION,
   VERTICAL_ORIENTATION,
   VERTICAL_SCROLLABLE,
+  DAY_SIZE,
 } from '../../constants';
 
 const propTypes = forbidExtraProps({
@@ -33,6 +35,7 @@ const propTypes = forbidExtraProps({
   onMonthTransitionEnd: PropTypes.func,
   renderDay: PropTypes.func,
   transformValue: PropTypes.string,
+  daySize: nonNegativeInteger,
 
   // i18n
   monthFormat: PropTypes.string,
@@ -52,6 +55,7 @@ const defaultProps = {
   onMonthTransitionEnd() {},
   renderDay: null,
   transformValue: 'none',
+  daySize: DAY_SIZE,
 
   // i18n
   monthFormat: 'MMMM YYYY', // english locale
@@ -147,6 +151,7 @@ export default class CalendarMonthGrid extends React.Component {
       monthFormat,
       orientation,
       transformValue,
+      daySize,
       onDayMouseEnter,
       onDayMouseLeave,
       onDayClick,
@@ -154,21 +159,33 @@ export default class CalendarMonthGrid extends React.Component {
       onMonthTransitionEnd,
     } = this.props;
 
-
     const { months } = this.state;
+    const isVertical = orientation === VERTICAL_ORIENTATION;
+    const isVerticalScrollable = orientation === VERTICAL_SCROLLABLE;
 
     const className = cx('CalendarMonthGrid', {
       'CalendarMonthGrid--horizontal': orientation === HORIZONTAL_ORIENTATION,
-      'CalendarMonthGrid--vertical': orientation === VERTICAL_ORIENTATION,
-      'CalendarMonthGrid--vertical-scrollable': orientation === VERTICAL_SCROLLABLE,
+      'CalendarMonthGrid--vertical': isVertical,
+      'CalendarMonthGrid--vertical-scrollable': isVerticalScrollable,
       'CalendarMonthGrid--animating': isAnimating,
     });
+
+    const calendarMonthWidth = getCalendarMonthWidth(daySize);
+
+    const width = isVertical || isVerticalScrollable ?
+      calendarMonthWidth :
+      (numberOfMonths + 2) * calendarMonthWidth;
+
+    const style = {
+      ...getTransformStyles(transformValue),
+      width,
+    };
 
     return (
       <div
         ref={(ref) => { this.container = ref; }}
         className={className}
-        style={getTransformStyles(transformValue)}
+        style={style}
         onTransitionEnd={onMonthTransitionEnd}
       >
         {months.map((month, i) => {
@@ -187,6 +204,7 @@ export default class CalendarMonthGrid extends React.Component {
               onDayMouseLeave={onDayMouseLeave}
               onDayClick={onDayClick}
               renderDay={renderDay}
+              daySize={daySize}
             />
           );
         })}

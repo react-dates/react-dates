@@ -39,7 +39,6 @@
 .DayPicker__week-header {
   color: $react-dates-color-placeholder-text;
   position: absolute;
-  width: $react-dates-width-day-picker;
   top: 62px;
   z-index: 2;
   padding: 0 13px;
@@ -53,13 +52,11 @@
 
   li {
     display: inline-block;
-    width: 39px;
     text-align: center;
   }
 }
 
 .DayPicker--vertical .DayPicker__week-header {
-  margin-left: -1 * $react-dates-width-day-picker / 2;
   left: 50%;
 }
 
