@@ -1,5 +1,11 @@
 # Change Log
 
+## v9.0.0
+- [fix] Only send down relevant modifiers down the tree ([#412](https://github.com/airbnb/react-dates/pull/412))
+- [fix] Optimise `isSameDay` method ([#415](https://github.com/airbnb/react-dates/pull/415))
+- [fix] Blur input for portal implementations (and on touch devices) ([#410](https://github.com/airbnb/react-dates/pull/410))
+- [breaking] Add `daySize` prop to scale the pickers properly ([#406](https://github.com/airbnb/react-dates/pull/406))
+
 ## v8.2.1
 - [fix] Add `needsclick` to inputs to disable fastclick ([#377](https://github.com/airbnb/react-dates/pull/377))
 - [deps] Update `style-loader`, `sinon`, `babel-loader`, `coveralls`, and `karma-webpack` ([#379](https://github.com/airbnb/react-dates/pull/379), [#372](https://github.com/airbnb/react-dates/pull/372), [#373](https://github.com/airbnb/react-dates/pull/373))
