@@ -12,6 +12,7 @@ import DateRangePickerInput from './DateRangePickerInput';
 import toMomentObject from '../utils/toMomentObject';
 import toLocalizedDateString from '../utils/toLocalizedDateString';
 import toISODateString from '../utils/toISODateString';
+import isTouchDevice from '../utils/isTouchDevice';
 
 import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
 import isInclusivelyBeforeDay from '../utils/isInclusivelyBeforeDay';
@@ -44,6 +45,7 @@ const propTypes = forbidExtraProps({
 
   onFocusChange: PropTypes.func,
   onDatesChange: PropTypes.func,
+  focusDayPicker: PropTypes.func,
 
   customInputIcon: PropTypes.node,
   customArrowIcon: PropTypes.node,
@@ -79,6 +81,7 @@ const defaultProps = {
 
   onFocusChange() {},
   onDatesChange() {},
+  focusDayPicker() {},
 
   customInputIcon: null,
   customArrowIcon: null,
@@ -139,6 +142,10 @@ export default class DateRangePickerInputWithHandlers extends React.Component {
     } else if (!disabled) {
       onFocusChange(END_DATE);
     }
+
+    if (isTouchDevice()) {
+      this.props.focusDayPicker();
+    }
   }
 
   onStartDateChange(startDateString) {
@@ -165,6 +172,10 @@ export default class DateRangePickerInputWithHandlers extends React.Component {
   onStartDateFocus() {
     if (!this.props.disabled) {
       this.props.onFocusChange(START_DATE);
+    }
+
+    if (isTouchDevice()) {
+      this.props.focusDayPicker();
     }
   }
 
