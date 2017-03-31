@@ -15,6 +15,15 @@ describe('isSameDay', () => {
     expect(isSameDay(today, tomorrow)).to.equal(false);
   });
 
+  it('returns false for same days of week', () => {
+    // Flags accidentally use of moment's day() function, which returns index
+    // within the week.
+    expect(isSameDay(
+      moment('2000-01-01'),
+      moment('2000-01-08'),
+    )).to.equal(false);
+  });
+
   describe('non-moment object arguments', () => {
     it('is false if first argument is not a moment object', () => {
       expect(isSameDay(null, today)).to.equal(false);
