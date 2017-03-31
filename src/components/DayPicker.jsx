@@ -52,6 +52,9 @@ const propTypes = forbidExtraProps({
   onDayMouseEnter: PropTypes.func,
   onDayMouseLeave: PropTypes.func,
 
+  isFocused: PropTypes.bool,
+  onBlur: PropTypes.func,
+
   // internationalization
   monthFormat: PropTypes.string,
   phrases: PropTypes.shape(getPhrasePropTypes(DayPickerPhrases)),
@@ -80,6 +83,9 @@ const defaultProps = {
   onDayClick() {},
   onDayMouseEnter() {},
   onDayMouseLeave() {},
+
+  isFocused: false,
+  onBlur() {},
 
   // internationalization
   monthFormat: 'MMMM YYYY',
@@ -165,6 +171,10 @@ export default class DayPicker extends React.Component {
       this.adjustDayPickerHeight();
       this.initializeDayPickerWidth();
     }
+
+    if (this.props.isFocused) {
+      this.container.focus();
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -192,6 +202,10 @@ export default class DayPicker extends React.Component {
       if (this.isHorizontal()) {
         this.adjustDayPickerHeight();
       }
+    }
+
+    if (!prevProps.isFocused && this.props.isFocused) {
+      this.container.focus();
     }
   }
 
@@ -447,37 +461,49 @@ export default class DayPicker extends React.Component {
     return (
       <div className={dayPickerClassNames} style={dayPickerStyle} >
         <OutsideClickHandler onOutsideClick={onOutsideClick}>
-          {!verticalScrollable && this.renderNavigation()}
-
-          <div className="DayPicker__week-headers">
+          <div
+            className="DayPicker__week-headers"
+            aria-hidden="true"
+            role="presentation"
+          >
             {weekHeaders}
           </div>
 
           <div
-            className={transitionContainerClasses}
-            ref={(ref) => { this.transitionContainer = ref; }}
-            style={transitionContainerStyle}
+            className="DayPicker__focus-region"
+            ref={(ref) => { this.container = ref; }}
+            role="region"
+            tabIndex={-1}
           >
-            <CalendarMonthGrid
-              ref={(ref) => { this.calendarMonthGrid = ref; }}
-              transformValue={transformValue}
-              enableOutsideDays={enableOutsideDays}
-              firstVisibleMonthIndex={firstVisibleMonthIndex}
-              initialMonth={currentMonth}
-              isAnimating={isCalendarMonthGridAnimating}
-              modifiers={modifiers}
-              orientation={orientation}
-              numberOfMonths={numberOfMonths * scrollableMonthMultiple}
-              onDayClick={onDayClick}
-              onDayMouseEnter={onDayMouseEnter}
-              onDayMouseLeave={onDayMouseLeave}
-              renderDay={renderDay}
-              onMonthTransitionEnd={this.updateStateAfterMonthTransition}
-              monthFormat={monthFormat}
-            />
-            {verticalScrollable && this.renderNavigation()}
+            {!verticalScrollable && this.renderNavigation()}
+
+            <div
+              className={transitionContainerClasses}
+              ref={(ref) => { this.transitionContainer = ref; }}
+              style={transitionContainerStyle}
+            >
+              <CalendarMonthGrid
+                ref={(ref) => { this.calendarMonthGrid = ref; }}
+                transformValue={transformValue}
+                enableOutsideDays={enableOutsideDays}
+                firstVisibleMonthIndex={firstVisibleMonthIndex}
+                initialMonth={currentMonth}
+                isAnimating={isCalendarMonthGridAnimating}
+                modifiers={modifiers}
+                orientation={orientation}
+                numberOfMonths={numberOfMonths * scrollableMonthMultiple}
+                onDayClick={onDayClick}
+                onDayMouseEnter={onDayMouseEnter}
+                onDayMouseLeave={onDayMouseLeave}
+                renderDay={renderDay}
+                onMonthTransitionEnd={this.updateStateAfterMonthTransition}
+                monthFormat={monthFormat}
+              />
+              {verticalScrollable && this.renderNavigation()}
+            </div>
+
+            {renderCalendarInfo && renderCalendarInfo()}
           </div>
-          {renderCalendarInfo && renderCalendarInfo()}
         </OutsideClickHandler>
       </div>
     );

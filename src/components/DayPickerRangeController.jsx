@@ -53,6 +53,9 @@ const propTypes = forbidExtraProps({
   renderDay: PropTypes.func,
   renderCalendarInfo: PropTypes.func,
 
+  onBlur: PropTypes.func,
+  isFocused: PropTypes.bool,
+
   // i18n
   monthFormat: PropTypes.string,
   phrases: PropTypes.shape(getPhrasePropTypes(DayPickerPhrases)),
@@ -90,6 +93,9 @@ const defaultProps = {
   renderDay: null,
   renderCalendarInfo: null,
 
+  onBlur() {},
+  isFocused: false,
+
   // i18n
   monthFormat: 'MMMM YYYY',
   phrases: DayPickerPhrases,
@@ -115,7 +121,7 @@ export default class DayPickerRangeController extends React.Component {
   }
 
   onDayClick(day, e) {
-    const { keepOpenOnDateSelect, minimumNights } = this.props;
+    const { keepOpenOnDateSelect, minimumNights, onBlur } = this.props;
     if (e) e.preventDefault();
     if (this.isBlocked(day)) return;
 
@@ -146,6 +152,7 @@ export default class DayPickerRangeController extends React.Component {
     }
 
     this.props.onDatesChange({ startDate, endDate });
+    onBlur();
   }
 
   onDayMouseEnter(day) {
@@ -249,6 +256,9 @@ export default class DayPickerRangeController extends React.Component {
       renderCalendarInfo,
       startDate,
       endDate,
+      onBlur,
+      isFocused,
+      phrases,
     } = this.props;
 
     const modifiers = {
@@ -303,6 +313,9 @@ export default class DayPickerRangeController extends React.Component {
         navNext={navNext}
         renderDay={renderDay}
         renderCalendarInfo={renderCalendarInfo}
+        isFocused={isFocused}
+        onBlur={onBlur}
+        phrases={phrases}
       />
     );
   }

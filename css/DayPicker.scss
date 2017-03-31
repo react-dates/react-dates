@@ -23,6 +23,11 @@
   position: initial;
 }
 
+// we can revisit this styling during the a11y picker
+.DayPicker__focus-region {
+  outline: none;
+}
+
 .DayPicker__week-headers {
   position: relative;
 }
