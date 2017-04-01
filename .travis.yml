@@ -15,7 +15,7 @@ script:
   - 'if [ -n "${TEST-}" ]; then npm run tests-only ; fi'
   - 'if [ -n "${KARMA-}" ]; then npm run tests-karma ; fi'
 after_success:
-  - 'if [ "${TRAVIS_NODE_VERSION}" = "4.2" ]; then npm run cover; cat ./coverage/lcov.info | ./node_modules/.bin/coveralls ; fi'
+  - 'if [ "${TRAVIS_NODE_VERSION}" = "4.6" ]; then npm run cover; cat ./coverage/lcov.info | ./node_modules/.bin/coveralls ; fi'
 env:
   global:
     - TEST=true
