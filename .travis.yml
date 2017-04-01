@@ -1,33 +1,35 @@
 language: node_js
 node_js:
+  - "7"
   - "6"
-  - "5"
   - "4"
-  - "4.2"
+  - "4.6"
   - "iojs"
 before_script:
-  - 'if [ "${TRAVIS_NODE_VERSION}" = 6 ]; then export DISPLAY=:99.0; fi'
-  - 'if [ "${TRAVIS_NODE_VERSION}" = 6 ]; then sh -e /etc/init.d/xvfb start; fi'
-  - 'if [ "${TRAVIS_NODE_VERSION}" = 6 ]; then sleep 3; fi'
+  - 'if [ -n "${KARMA-}" ]; then export DISPLAY=:99.0; fi'
+  - 'if [ -n "${KARMA-}" ]; then sh -e /etc/init.d/xvfb start; fi'
+  - 'if [ -n "${KARMA-}" ]; then sleep 3; fi'
+  - 'if [ -n "${REACT-}" ] && [ -n "${TEST-}" ]; then sh install-relevant-react.sh; fi'
 script:
   - 'if [ -n "${LINT-}" ]; then npm run lint ; fi'
   - 'if [ -n "${TEST-}" ]; then npm run tests-only ; fi'
   - 'if [ -n "${KARMA-}" ]; then npm run tests-karma ; fi'
-  - 'if [ -n "${REACT-}" ]; then npm run tests-only; fi'
 after_success:
   - 'if [ "${TRAVIS_NODE_VERSION}" = "4.2" ]; then npm run cover; cat ./coverage/lcov.info | ./node_modules/.bin/coveralls ; fi'
 env:
   global:
-    - REACT=0.14
-  matrix:
     - TEST=true
+  matrix:
+    - REACT=0.14
+    - REACT=15
 sudo: false
 matrix:
   fast_finish: true
   include:
-#    - node_js: "node"
-#      env: KARMA=true
+    - node_js: "node"
+      env: KARMA=true
     - node_js: "node"
       env: LINT=true
   allow_failures:
     - node_js: "iojs"
+    - env: KARMA=true
