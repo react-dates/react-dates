@@ -110,14 +110,15 @@ export function calculateDimension(el, axis, borderBox = false, withMargin = fal
     return 0;
   }
 
-  const axisStart = (axis === 'width') ? 'Left' : 'Top';
-  const axisEnd = (axis === 'width') ? 'Right' : 'Bottom';
+  const axisStart = axis === 'width' ? 'Left' : 'Top';
+  const axisEnd = axis === 'width' ? 'Right' : 'Bottom';
 
   // Only read styles if we need to
-  const style = (!borderBox || withMargin) ? window.getComputedStyle(el) : {};
+  const style = (!borderBox || withMargin) ? window.getComputedStyle(el) : null;
 
   // Offset includes border and padding
-  let size = (axis === 'width') ? el.offsetWidth : el.offsetHeight;
+  const { offsetWidth, offsetHeight } = el;
+  let size = axis === 'width' ? offsetWidth : offsetHeight;
 
   // Get the inner size
   if (!borderBox) {
@@ -131,10 +132,7 @@ export function calculateDimension(el, axis, borderBox = false, withMargin = fal
 
   // Apply margin
   if (withMargin) {
-    size += (
-      parseFloat(style[`margin${axisStart}`]) +
-      parseFloat(style[`margin${axisEnd}`])
-    );
+    size += (parseFloat(style[`margin${axisStart}`]) + parseFloat(style[`margin${axisEnd}`]));
   }
 
   return size;

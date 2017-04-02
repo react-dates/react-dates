@@ -14,6 +14,8 @@ import {
   VERTICAL_SCROLLABLE,
 } from '../../constants';
 
+const event = { preventDefault() {} };
+
 describe('DayPicker', () => {
   describe('#render', () => {
     describe('renderWeekHeader', () => {
@@ -141,8 +143,7 @@ describe('DayPicker', () => {
   describe('#onPrevMonthClick', () => {
     let translateFirstDayPickerForAnimationSpy;
     beforeEach(() => {
-      translateFirstDayPickerForAnimationSpy =
-        sinon.stub(DayPicker.prototype, 'translateFirstDayPickerForAnimation');
+      translateFirstDayPickerForAnimationSpy = sinon.stub(DayPicker.prototype, 'translateFirstDayPickerForAnimation');
       sinon.stub(DayPicker.prototype, 'adjustDayPickerHeight');
       sinon.stub(DayPicker.prototype, 'updateStateAfterMonthTransition');
     });
@@ -154,13 +155,13 @@ describe('DayPicker', () => {
     it('calls props.onPrevMonthClick', () => {
       const onPrevMonthClickSpy = sinon.stub();
       const wrapper = shallow(<DayPicker onPrevMonthClick={onPrevMonthClickSpy} />);
-      wrapper.instance().onPrevMonthClick();
+      wrapper.instance().onPrevMonthClick(event);
       expect(onPrevMonthClickSpy).to.have.property('callCount', 1);
     });
 
     it('calls translateFirstDayPickerForAnimation', () => {
       const wrapper = shallow(<DayPicker />);
-      wrapper.instance().onPrevMonthClick();
+      wrapper.instance().onPrevMonthClick(event);
       expect(translateFirstDayPickerForAnimationSpy).to.have.property('callCount', 1);
     });
 
@@ -184,7 +185,7 @@ describe('DayPicker', () => {
     it('calls props.onNextMonthClick', () => {
       const onNextMonthClickSpy = sinon.stub();
       const wrapper = shallow(<DayPicker onNextMonthClick={onNextMonthClickSpy} />);
-      wrapper.instance().onNextMonthClick();
+      wrapper.instance().onNextMonthClick(event);
       expect(onNextMonthClickSpy).to.have.property('callCount', 1);
     });
 
@@ -197,6 +198,12 @@ describe('DayPicker', () => {
 
   describe('#multiplyScrollableMonths', () => {
     it('increments scrollableMonthMultiple', () => {
+      const wrapper = shallow(<DayPicker />);
+      wrapper.instance().multiplyScrollableMonths(event);
+      expect(wrapper.state().scrollableMonthMultiple).to.equal(2);
+    });
+
+    it('increments scrollableMonthMultiple without an event', () => {
       const wrapper = shallow(<DayPicker />);
       wrapper.instance().multiplyScrollableMonths();
       expect(wrapper.state().scrollableMonthMultiple).to.equal(2);
@@ -337,55 +344,74 @@ describe('DayPicker', () => {
     });
   });
 
-  /* Requires a DOM */
-  describe.skip('calculateDimension()', () => {
-    let testElement = null;
-
-    beforeEach(() => {
-      testElement = document.createElement('div');
-
-      testElement.style.width = '100px';
-      testElement.style.height = '250px';
-      testElement.style.padding = '15px 10px';
-      testElement.style.border = '1px solid red';
-      testElement.style.margin = '3px 6px 5px 2px';
-      testElement.boxSizing = 'border-box';
-    });
-
+  describe('calculateDimension()', () => {
     it('returns 0 for an empty element', () => {
       expect(calculateDimension(null, 'width')).to.equal(0);
+      expect(calculateDimension(null, 'width', false)).to.equal(0);
+      expect(calculateDimension(null, 'width', true)).to.equal(0);
     });
 
-    it('calculates border-box height', () => {
-      expect(calculateDimension(testElement, 'height', true)).to.equal(282);
+    describe('borderBox true', () => {
+      const el = {
+        offsetWidth: 17,
+        offsetHeight: 42,
+      };
+
+      it('returns el.offsetWidth for "width"', () => {
+        expect(calculateDimension(el, 'width', true)).to.equal(el.offsetWidth);
+      });
+
+      it('returns el.offsetHeight for "height"', () => {
+        expect(calculateDimension(el, 'height', true)).to.equal(el.offsetHeight);
+      });
     });
 
-    it('calculates border-box height with margin', () => {
-      expect(calculateDimension(testElement, 'height', true, true)).to.equal(290);
-    });
+    /* Requires a DOM */
+    describe.skip('withMargin false and borderBox true', () => {
+      let testElement = null;
 
-    it('calculates border-box width', () => {
-      expect(calculateDimension(testElement, 'width', true)).to.equal(122);
-    });
+      beforeEach(() => {
+        testElement = document.createElement('div');
 
-    it('calculates border-box width with margin', () => {
-      expect(calculateDimension(testElement, 'width', true, true)).to.equal(130);
-    });
+        testElement.style.width = '100px';
+        testElement.style.height = '250px';
+        testElement.style.padding = '15px 10px';
+        testElement.style.border = '1px solid red';
+        testElement.style.margin = '3px 6px 5px 2px';
+        testElement.boxSizing = 'border-box';
+      });
 
-    it('calculates content-box height', () => {
-      expect(calculateDimension(testElement, 'height')).to.equal(250);
-    });
+      it('calculates border-box height', () => {
+        expect(calculateDimension(testElement, 'height', true)).to.equal(282);
+      });
 
-    it('calculates content-box height with margin', () => {
-      expect(calculateDimension(testElement, 'height', false, true)).to.equal(258);
-    });
+      it('calculates border-box height with margin', () => {
+        expect(calculateDimension(testElement, 'height', true, true)).to.equal(290);
+      });
 
-    it('calculates content-box width', () => {
-      expect(calculateDimension(testElement, 'width')).to.equal(100);
-    });
+      it('calculates border-box width', () => {
+        expect(calculateDimension(testElement, 'width', true)).to.equal(122);
+      });
 
-    it('calculates content-box width with margin', () => {
-      expect(calculateDimension(testElement, 'width', false, true)).to.equal(108);
+      it('calculates border-box width with margin', () => {
+        expect(calculateDimension(testElement, 'width', true, true)).to.equal(130);
+      });
+
+      it('calculates content-box height', () => {
+        expect(calculateDimension(testElement, 'height')).to.equal(250);
+      });
+
+      it('calculates content-box height with margin', () => {
+        expect(calculateDimension(testElement, 'height', false, true)).to.equal(258);
+      });
+
+      it('calculates content-box width', () => {
+        expect(calculateDimension(testElement, 'width')).to.equal(100);
+      });
+
+      it('calculates content-box width with margin', () => {
+        expect(calculateDimension(testElement, 'width', false, true)).to.equal(108);
+      });
     });
   });
 });
