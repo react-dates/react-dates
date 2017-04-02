@@ -9,10 +9,10 @@ before_script:
   - 'if [ -n "${KARMA-}" ]; then export DISPLAY=:99.0; fi'
   - 'if [ -n "${KARMA-}" ]; then sh -e /etc/init.d/xvfb start; fi'
   - 'if [ -n "${KARMA-}" ]; then sleep 3; fi'
-  - 'if [ -n "${REACT-}" ] && [ -n "${TEST-}" ]; then sh install-relevant-react.sh; fi'
+  - 'if [ -n "${REACT-}" ] && [ "${TEST-}" = true ]; then sh install-relevant-react.sh; fi'
 script:
   - 'if [ -n "${LINT-}" ]; then npm run lint ; fi'
-  - 'if [ -n "${TEST-}" ]; then npm run tests-only ; fi'
+  - 'if [ "${TEST-}" = true ]; then npm run tests-only ; fi'
   - 'if [ -n "${KARMA-}" ]; then npm run tests-karma ; fi'
 after_success:
   - 'if [ "${TRAVIS_NODE_VERSION}" = "4.6" ]; then npm run cover; cat ./coverage/lcov.info | ./node_modules/.bin/coveralls ; fi'
@@ -27,9 +27,9 @@ matrix:
   fast_finish: true
   include:
     - node_js: "node"
-      env: KARMA=true
+      env: KARMA=true TEST=false
     - node_js: "node"
-      env: LINT=true
+      env: LINT=true TEST=false
   allow_failures:
     - node_js: "iojs"
-    - env: KARMA=true
+    - env: KARMA=true TEST=false
