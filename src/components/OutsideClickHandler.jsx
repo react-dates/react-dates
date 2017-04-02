@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { forbidExtraProps } from 'airbnb-prop-types';
+// import { forbidExtraProps } from 'airbnb-prop-types'; // TODO: add to propTypes; semver-major
 import { addEventListener, removeEventListener } from 'consolidated-events';
 
 const propTypes = {
@@ -7,10 +7,10 @@ const propTypes = {
   onOutsideClick: PropTypes.func,
 };
 
-const defaultProps = forbidExtraProps({
+const defaultProps = {
   children: <span />,
-  onOutsideClick: () => {},
-});
+  onOutsideClick() {},
+};
 
 export default class OutsideClickHandler extends React.Component {
   constructor(props) {
