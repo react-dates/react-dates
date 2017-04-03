@@ -52,8 +52,11 @@ storiesOf('DayPicker', module)
   .addWithInfo('with custom day size', () => (
     <DayPicker daySize={50} />
   ))
-  .addWithInfo('more than one month', () => (
-    <DayPicker numberOfMonths={2} />
+  .addWithInfo('single month', () => (
+    <DayPicker numberOfMonths={1} />
+  ))
+  .addWithInfo('3 months', () => (
+    <DayPicker numberOfMonths={3} />
   ))
   .addWithInfo('vertical', () => (
     <DayPicker
