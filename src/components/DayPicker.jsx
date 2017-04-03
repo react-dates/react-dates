@@ -486,7 +486,10 @@ export default class DayPicker extends React.Component {
     const transformValue = `${transformType}(${translationValue}px)`;
 
     return (
-      <div className={dayPickerClassNames} style={dayPickerStyle} >
+      <div
+        className={dayPickerClassNames}
+        style={dayPickerStyle}
+      >
         <OutsideClickHandler onOutsideClick={onOutsideClick}>
           <div
             className="DayPicker__week-headers"
@@ -496,9 +499,10 @@ export default class DayPicker extends React.Component {
             {weekHeaders}
           </div>
 
-          <div
+          <div // eslint-disable-line jsx-a11y/no-static-element-interactions
             className="DayPicker__focus-region"
             ref={(ref) => { this.container = ref; }}
+            onClick={(e) => { e.stopPropagation(); }}
             role="region"
             tabIndex={-1}
           >

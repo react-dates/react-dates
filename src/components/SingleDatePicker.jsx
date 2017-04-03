@@ -366,10 +366,11 @@ export default class SingleDatePicker extends React.Component {
     const closeIcon = customCloseIcon || (<CloseButton />);
 
     return (
-      <div
+      <div // eslint-disable-line jsx-a11y/no-static-element-interactions
         ref={(ref) => { this.dayPickerContainer = ref; }}
         className={this.getDayPickerContainerClasses()}
         style={dayPickerContainerStyles}
+        onClick={onOutsideClick}
       >
         <DayPicker
           orientation={orientation}
@@ -385,7 +386,6 @@ export default class SingleDatePicker extends React.Component {
           withPortal={withPortal || withFullScreenPortal}
           hidden={!focused}
           initialVisibleMonth={initialVisibleMonthThunk}
-          onOutsideClick={onOutsideClick}
           navPrev={navPrev}
           navNext={navNext}
           renderDay={renderDay}
