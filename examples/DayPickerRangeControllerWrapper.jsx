@@ -6,6 +6,7 @@ import moment from 'moment';
 import omit from 'lodash.omit';
 
 import DayPickerRangeController from '../src/components/DayPickerRangeController';
+import { defaultProps as DayPickerDefaultProps } from '../src/components/DayPicker';
 
 import ScrollableOrientationShape from '../src/shapes/ScrollableOrientationShape';
 
@@ -61,7 +62,7 @@ const defaultProps = {
   // calendar presentation and interaction related props
   orientation: HORIZONTAL_ORIENTATION,
   withPortal: false,
-  initialVisibleMonth: () => moment(),
+  initialVisibleMonth: DayPickerDefaultProps.initialVisibleMonth,
   numberOfMonths: 2,
   onOutsideClick() {},
   keepOpenOnDateSelect: false,

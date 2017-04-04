@@ -62,7 +62,7 @@ const propTypes = forbidExtraProps({
   phrases: PropTypes.shape(getPhrasePropTypes(DayPickerPhrases)),
 });
 
-const defaultProps = {
+export const defaultProps = {
   // calendar presentation props
   enableOutsideDays: false,
   numberOfMonths: 2,

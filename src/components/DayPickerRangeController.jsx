@@ -22,7 +22,7 @@ import {
   DAY_SIZE,
 } from '../../constants';
 
-import DayPicker from './DayPicker';
+import DayPicker, { defaultProps as DayPickerDefaultProps } from './DayPicker';
 
 const propTypes = forbidExtraProps({
   startDate: momentPropTypes.momentObj,
@@ -83,7 +83,7 @@ const defaultProps = {
   orientation: HORIZONTAL_ORIENTATION,
   withPortal: false,
 
-  initialVisibleMonth: () => moment(),
+  initialVisibleMonth: DayPickerDefaultProps.initialVisibleMonth,
   daySize: DAY_SIZE,
 
   navPrev: null,
