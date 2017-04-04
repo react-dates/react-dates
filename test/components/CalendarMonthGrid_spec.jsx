@@ -74,4 +74,27 @@ describe('CalendarMonthGrid', () => {
 
     expect(Object.keys(collisions).length).to.equal(months.length);
   });
+
+  it('works with the same number of months', () => {
+    const initialMonth = moment();
+    const wrapper = shallow(<CalendarMonthGrid numberOfMonths={12} initialMonth={initialMonth} />);
+
+    wrapper.instance().componentWillReceiveProps({
+      initialMonth,
+      numberOfMonths: 12,
+      firstVisibleMonthIndex: 0,
+    });
+
+    const months = wrapper.state().months;
+
+    const collisions = months
+      .map(m => m.format('YYYY-MM'))
+      .reduce((acc, m) => Object.assign(
+        {},
+        acc,
+        { [m]: true },
+      ), {});
+
+    expect(Object.keys(collisions).length).to.equal(months.length);
+  });
 });
