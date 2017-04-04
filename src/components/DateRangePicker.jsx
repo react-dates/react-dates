@@ -292,10 +292,11 @@ export default class DateRangePicker extends React.Component {
     const closeIcon = customCloseIcon || (<CloseButton />);
 
     return (
-      <div
+      <div // eslint-disable-line jsx-a11y/no-static-element-interactions
         ref={(ref) => { this.dayPickerContainer = ref; }}
         className={this.getDayPickerContainerClasses()}
         style={dayPickerContainerStyles}
+        onClick={onOutsideClick}
       >
         <DayPickerRangeController
           ref={(ref) => { this.dayPicker = ref; }}
@@ -313,7 +314,6 @@ export default class DateRangePicker extends React.Component {
           withPortal={withPortal || withFullScreenPortal}
           daySize={daySize}
           initialVisibleMonth={initialVisibleMonthThunk}
-          onOutsideClick={onOutsideClick}
           navPrev={navPrev}
           navNext={navNext}
           minimumNights={minimumNights}
