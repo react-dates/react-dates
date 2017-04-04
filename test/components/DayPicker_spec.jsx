@@ -60,7 +60,10 @@ describe('DayPicker', () => {
 
       describe('props.orientation === VERTICAL_ORIENTATION', () => {
         it('.transition-container--vertical class exists', () => {
-          const wrapper = shallow(<DayPicker orientation={VERTICAL_ORIENTATION} />);
+          const wrapper = shallow(
+            <DayPicker orientation={VERTICAL_ORIENTATION} />,
+            { lifecycleExperimental: true },
+          );
           expect(wrapper.find('.transition-container--vertical')).to.have.lengthOf(1);
         });
       });
@@ -115,14 +118,20 @@ describe('DayPicker', () => {
     });
 
     it('returns false if props.orientation === VERTICAL_ORIENTATION', () => {
-      const wrapper = shallow(<DayPicker orientation={VERTICAL_ORIENTATION} />);
+      const wrapper = shallow(
+        <DayPicker orientation={VERTICAL_ORIENTATION} />,
+        { lifecycleExperimental: true },
+      );
       expect(wrapper.instance().isHorizontal()).to.equal(false);
     });
   });
 
   describe('#isVertical', () => {
     it('returns true if props.orientation === VERTICAL_ORIENTATION', () => {
-      const wrapper = shallow(<DayPicker orientation={VERTICAL_ORIENTATION} />);
+      const wrapper = shallow(
+        <DayPicker orientation={VERTICAL_ORIENTATION} />,
+        { lifecycleExperimental: true },
+      );
       expect(wrapper.instance().isVertical()).to.equal(true);
     });
 
@@ -134,7 +143,10 @@ describe('DayPicker', () => {
 
   describe('props.orientation === VERTICAL_SCROLLABLE', () => {
     it('uses multiplyScrollableMonths instead of onNextMonthClick', () => {
-      const wrapper = shallow(<DayPicker orientation={VERTICAL_SCROLLABLE} />);
+      const wrapper = shallow(
+        <DayPicker orientation={VERTICAL_SCROLLABLE} />,
+        { lifecycleExperimental: true },
+      );
       const nav = wrapper.find(DayPickerNavigation);
       expect(nav.prop('onNextMonthClick')).to.equal(wrapper.instance().multiplyScrollableMonths);
     });
