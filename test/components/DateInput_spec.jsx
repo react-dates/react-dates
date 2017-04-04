@@ -225,6 +225,50 @@ describe('DateInput', () => {
       expect(!!wrapper.find('input').prop('readOnly')).to.equal(true);
     });
 
+    describe('focus/isFocused', () => {
+      const el = {
+        blur() {},
+        focus() {},
+        select() {},
+      };
+
+      beforeEach(() => {
+        sinon.spy(el, 'blur');
+        sinon.spy(el, 'focus');
+        sinon.spy(el, 'select');
+      });
+
+      it('focuses and selects inputRef when becoming focused', () => {
+        const wrapper = shallow(
+          <DateInput id="date" focused={false} isFocused={false} />,
+          { lifecycleExperimental: true },
+        );
+
+        wrapper.instance().inputRef = el;
+
+        wrapper.setProps({ focused: true, isFocused: true });
+
+        expect(el.blur).to.have.property('callCount', 0);
+        expect(el.focus).to.have.property('callCount', 1);
+        expect(el.select).to.have.property('callCount', 1);
+      });
+
+      it('blurs when becoming unfocused', () => {
+        const wrapper = shallow(
+          <DateInput id="date" focused isFocused />,
+          { lifecycleExperimental: true },
+        );
+
+        wrapper.instance().inputRef = el;
+
+        wrapper.setProps({ focused: false, isFocused: false });
+
+        expect(el.blur).to.have.property('callCount', 1);
+        expect(el.focus).to.have.property('callCount', 0);
+        expect(el.select).to.have.property('callCount', 0);
+      });
+    });
+
     /*
       // Skip this test until we can figure out how to use `withTouchSupport` with karma
       wrap()

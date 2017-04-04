@@ -15,10 +15,10 @@
   ],
   "all": true,
   "check-coverage": true,
-  "statements": 82,
-  "branches": 83,
+  "statements": 83,
+  "branches": 84,
   "lines": 82,
-  "functions": 68,
+  "functions": 69,
   "sourceMap": false,
   "instrument": false
 }
