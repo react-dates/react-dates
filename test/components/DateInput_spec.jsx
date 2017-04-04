@@ -238,6 +238,10 @@ describe('DateInput', () => {
         sinon.spy(el, 'select');
       });
 
+      afterEach(() => {
+        sinon.restore();
+      });
+
       it('focuses and selects inputRef when becoming focused', () => {
         const wrapper = shallow(
           <DateInput id="date" focused={false} isFocused={false} />,
