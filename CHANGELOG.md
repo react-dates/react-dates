@@ -1,5 +1,8 @@
 # Change Log
 
+## v9.0.1
+- [fix] Fixes `withPortal` implementation in Firefox ([#421](https://github.com/airbnb/react-dates/pull/421))
+
 ## v9.0.0
 - [fix] Only send down relevant modifiers down the tree ([#412](https://github.com/airbnb/react-dates/pull/412))
 - [fix] Optimise `isSameDay` method ([#415](https://github.com/airbnb/react-dates/pull/415))
