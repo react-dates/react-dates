@@ -111,5 +111,10 @@
     "react": ">=0.14",
     "react-dom": ">=0.14",
     "react-addons-shallow-compare": ">=0.14"
+  },
+  "greenkeeper": {
+    "ignore": [
+      "webpack"
+    ]
   }
 }
