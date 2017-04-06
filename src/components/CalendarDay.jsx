@@ -7,6 +7,7 @@ import cx from 'classnames';
 
 import { CalendarDayPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
+import getPhrase from '../utils/getPhrase';
 
 import { BLOCKED_MODIFIER, DAY_SIZE } from '../../constants';
 
@@ -83,7 +84,10 @@ export default class CalendarDay extends React.Component {
       modifiers,
       renderDay,
       tabIndex,
-      phrases: { unavailable, available },
+      phrases: {
+        chooseAvailableDate,
+        dateIsUnavailable,
+      },
     } = this.props;
 
     if (!day) return <td />;
@@ -95,25 +99,29 @@ export default class CalendarDay extends React.Component {
     }, modifiersForDay.map(mod => `CalendarDay--${mod}`));
 
 
-    let availabilityText = '';
-    if (BLOCKED_MODIFIER in modifiers) {
-      availabilityText = modifiers[BLOCKED_MODIFIER](day) ? unavailable : available;
+    const formattedDate = `${day.format('dddd')}, ${day.format('LL')}`;
+
+    let ariaLabel = getPhrase(chooseAvailableDate, {
+      checkin_date: formattedDate,
+      checkout_date: formattedDate,
+    });
+
+    if (BLOCKED_MODIFIER in modifiers && modifiers[BLOCKED_MODIFIER](day)) {
+      ariaLabel = getPhrase(dateIsUnavailable, { date: formattedDate });
     }
 
-    const ariaLabel = `${availabilityText} ${day.format('dddd')}. ${day.format('LL')}`;
     const daySizeStyles = {
       width: daySize,
       height: daySize - 1,
     };
 
     return (
-      <td className={className}>
+      <td className={className} style={daySizeStyles}>
         <button
           type="button"
           ref={(ref) => { this.buttonRef = ref; }}
           className="CalendarDay__button"
           aria-label={ariaLabel}
-          style={daySizeStyles}
           onMouseEnter={(e) => { this.onDayMouseEnter(day, e); }}
           onMouseLeave={(e) => { this.onDayMouseLeave(day, e); }}
           onMouseUp={(e) => { e.currentTarget.blur(); }}

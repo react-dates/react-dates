@@ -391,7 +391,7 @@ describe('DayPicker', () => {
         });
 
         it('calls closeKeyboardShortcutsPanel if state.showKeyboardShortcuts === true', () => {
-          const closeKeyboardShortcutsPanelSpy = sinon.stub(DayPicker.prototype, 'closeKeyboardShortcutsPanelSpy');
+          const closeKeyboardShortcutsPanelSpy = sinon.stub(DayPicker.prototype, 'closeKeyboardShortcutsPanel');
           const wrapper = shallow(<DayPicker />);
           wrapper.setState({
             focusedDate: today,
@@ -510,18 +510,6 @@ describe('DayPicker', () => {
 
         wrapper.instance().getFocusedDay(today);
         expect(getFirstFocusableDayStub.getCall(0).args[0].isSame(today, 'day')).to.equal(true);
-      });
-
-      it('calls getFirstFocusableDay with state.currentMonth if no arg', () => {
-        const test = moment().add(3, 'months');
-        const getFirstFocusableDayStub = sinon.stub();
-        const wrapper = shallow(<DayPicker getFirstFocusableDay={getFirstFocusableDayStub} />);
-        wrapper.setState({
-          currentMonth: test,
-        });
-        getFirstFocusableDayStub.reset(); // getFirstFocusableDay gets called in the constructor
-        wrapper.instance().getFocusedDay();
-        expect(getFirstFocusableDayStub.getCall(0).args[0].isSame(test, 'day')).to.equal(true);
       });
 
       it('returns getFirstFocusableDay() value', () => {

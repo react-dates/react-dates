@@ -2,8 +2,8 @@ const closeDatePicker = 'Close';
 const focusStartDate = 'Interact with the calendar and add the check-in date for your trip.';
 const clearDate = 'Clear Date';
 const clearDates = 'Clear Dates';
-const jumpToPrevMonth = 'Move forward to switch to the previous month';
-const jumpToNextMonth = 'Move backward to switch to the next month';
+const jumpToPrevMonth = 'Move backward to switch to the previous month';
+const jumpToNextMonth = 'Move forward to switch to the next month';
 const keyboardShortcuts = 'Keyboard Shortcuts';
 const showKeyboardShortcutsPanel = 'Open the keyboard shortcuts panel';
 const hideKeyboardShortcutsPanel = 'Close the shortcuts panel';
@@ -23,8 +23,14 @@ const moveFocustoStartAndEndOfWeek = 'Go to the first or last day of a week';
 const returnFocusToInput = 'Return to the date input field';
 const keyboardNavigationInstructions = `Press the down arrow key to interact with the calendar and
   select a date. Press the question mark key to get the keyboard shortcuts for changing dates.`;
-const available = 'Available.';
-const unavailable = 'Unavailable.';
+
+// eslint-disable-next-line camelcase
+const chooseAvailableStartDate = ({ checkin_date }) => `Choose ${checkin_date} as your check-in date. It's available.`;
+
+// eslint-disable-next-line camelcase
+const chooseAvailableEndDate = ({ checkout_date }) => `Choose ${checkout_date} as your check-out date. It's available.`;
+const dateIsUnavailable = ({ date }) => `Not available. ${date}`;
+
 
 export default {
   closeDatePicker,
@@ -51,8 +57,10 @@ export default {
   moveFocustoStartAndEndOfWeek,
   returnFocusToInput,
   keyboardNavigationInstructions,
-  available,
-  unavailable,
+
+  chooseAvailableStartDate,
+  chooseAvailableEndDate,
+  dateIsUnavailable,
 };
 
 export const DateRangePickerPhrases = {
@@ -79,8 +87,9 @@ export const DateRangePickerPhrases = {
   moveFocustoStartAndEndOfWeek,
   returnFocusToInput,
   keyboardNavigationInstructions,
-  available,
-  unavailable,
+  chooseAvailableStartDate,
+  chooseAvailableEndDate,
+  dateIsUnavailable,
 };
 
 export const DateRangePickerInputPhrases = {
@@ -112,8 +121,9 @@ export const SingleDatePickerPhrases = {
   moveFocustoStartAndEndOfWeek,
   returnFocusToInput,
   keyboardNavigationInstructions,
-  available,
-  unavailable,
+  chooseAvailableStartDate,
+  chooseAvailableEndDate,
+  dateIsUnavailable,
 };
 
 export const SingleDatePickerInputPhrases = {
@@ -141,8 +151,8 @@ export const DayPickerPhrases = {
   moveFocusByOneMonth,
   moveFocustoStartAndEndOfWeek,
   returnFocusToInput,
-  available,
-  unavailable,
+  chooseAvailableDate: chooseAvailableStartDate,
+  dateIsUnavailable,
 };
 
 export const DayPickerKeyboardShortcutsPhrases = {
@@ -171,6 +181,6 @@ export const DayPickerNavigationPhrases = {
 };
 
 export const CalendarDayPhrases = {
-  available,
-  unavailable,
+  chooseAvailableDate: chooseAvailableStartDate,
+  dateIsUnavailable,
 };

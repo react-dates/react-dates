@@ -272,7 +272,7 @@ export default class DayPicker extends React.Component {
   }
 
   onKeyDown(e) {
-    e.stopPropagation();
+    if (e) e.stopPropagation();
 
     const { onBlur } = this.props;
     const { focusedDate, showKeyboardShortcuts } = this.state;
@@ -291,10 +291,12 @@ export default class DayPicker extends React.Component {
 
     switch (e.key) {
       case 'ArrowUp':
+        if (e) e.preventDefault();
         newFocusedDate.subtract(1, 'week');
         didTransitionMonth = this.maybeTransitionPrevMonth(newFocusedDate);
         break;
       case 'ArrowLeft':
+        if (e) e.preventDefault();
         newFocusedDate.subtract(1, 'day');
         didTransitionMonth = this.maybeTransitionPrevMonth(newFocusedDate);
         break;
@@ -308,10 +310,12 @@ export default class DayPicker extends React.Component {
         break;
 
       case 'ArrowDown':
+        if (e) e.preventDefault();
         newFocusedDate.add(1, 'week');
         didTransitionMonth = this.maybeTransitionNextMonth(newFocusedDate);
         break;
       case 'ArrowRight':
+        if (e) e.preventDefault();
         newFocusedDate.add(1, 'day');
         didTransitionMonth = this.maybeTransitionNextMonth(newFocusedDate);
         break;
@@ -392,14 +396,11 @@ export default class DayPicker extends React.Component {
   }
 
   getFocusedDay(newMonth) {
-    // TODO(maja): figure out which month var I should be using
     const { getFirstFocusableDay } = this.props;
-    const { currentMonth } = this.state;
 
     let focusedDate;
     if (getFirstFocusableDay) {
-      const month = newMonth || currentMonth;
-      focusedDate = getFirstFocusableDay(month);
+      focusedDate = getFirstFocusableDay(newMonth);
     }
 
     if (newMonth && (!focusedDate || !this.isDayVisible(focusedDate, newMonth))) {
