@@ -220,6 +220,40 @@ describe('DateRangePicker', () => {
       wrapper.instance().onOutsideClick();
       expect(wrapper.state().showKeyboardShortcuts).to.equal(false);
     });
+
+    it('does not call props.onClose if props.focusedInput = null', () => {
+      const onCloseStub = sinon.stub();
+      const wrapper = shallow(
+        <DateRangePicker
+          focusedInput={null}
+          onClose={onCloseStub}
+          onFocusChange={() => null}
+        />,
+      );
+      wrapper.instance().onOutsideClick();
+      expect(onCloseStub.callCount).to.equal(0);
+    });
+
+    it('calls props.onClose with startDate and endDate if props.focusedInput != null', () => {
+      const startDate = moment();
+      const endDate = startDate.add(1, 'days');
+      const onCloseStub = sinon.stub();
+      const wrapper = shallow(
+        <DateRangePicker
+          startDate={startDate}
+          endDate={endDate}
+          focusedInput={START_DATE}
+          onClose={onCloseStub}
+          onFocusChange={() => null}
+        />,
+      );
+
+      wrapper.instance().onOutsideClick();
+      expect(onCloseStub.callCount).to.equal(1);
+      const args = onCloseStub.getCall(0).args[0];
+      expect(args.startDate).to.equal(startDate);
+      expect(args.endDate).to.equal(endDate);
+    });
   });
 
   describe('#onDateRangePickerInputFocus', () => {

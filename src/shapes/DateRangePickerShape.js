@@ -18,6 +18,8 @@ export default {
   focusedInput: FocusedInputShape,
   onFocusChange: PropTypes.func.isRequired,
 
+  onClose: PropTypes.func,
+
   // input related props
   startDateId: PropTypes.string.isRequired,
   startDatePlaceholderText: PropTypes.string,

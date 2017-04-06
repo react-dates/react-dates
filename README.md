@@ -111,6 +111,7 @@ navPrev: PropTypes.node,
 navNext: PropTypes.node,
 onPrevMonthClick: PropTypes.func,
 onNextMonthClick: PropTypes.func,
+onClose: PropTypes.func,
 
 // day presentation and interaction related props
 renderDay: PropTypes.func,
@@ -171,6 +172,7 @@ navPrev: PropTypes.node,
 navNext: PropTypes.node,
 onPrevMonthClick: PropTypes.func,
 onNextMonthClick: PropTypes.func,
+onClose: PropTypes.func,
 
 // day presentation and interaction related props
 renderDay: PropTypes.func,

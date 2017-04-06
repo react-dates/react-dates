@@ -44,6 +44,7 @@ const propTypes = forbidExtraProps({
   displayFormat: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
 
   onFocusChange: PropTypes.func,
+  onClose: PropTypes.func,
   onDatesChange: PropTypes.func,
   onArrowDown: PropTypes.func,
   onQuestionMark: PropTypes.func,
@@ -84,6 +85,7 @@ const defaultProps = {
   displayFormat: () => moment.localeData().longDateFormat('L'),
 
   onFocusChange() {},
+  onClose() {},
   onDatesChange() {},
   onArrowDown() {},
   onQuestionMark() {},
@@ -112,7 +114,10 @@ export default class DateRangePickerInputController extends React.Component {
   }
 
   onClearFocus() {
-    this.props.onFocusChange(null);
+    const { onFocusChange, onClose, startDate, endDate } = this.props;
+
+    onFocusChange(null);
+    onClose({ startDate, endDate });
   }
 
   onEndDateChange(endDateString) {
@@ -121,7 +126,6 @@ export default class DateRangePickerInputController extends React.Component {
       isOutsideRange,
       keepOpenOnDateSelect,
       onDatesChange,
-      onFocusChange,
     } = this.props;
 
     const endDate = toMomentObject(endDateString, this.getDisplayFormat());
@@ -130,7 +134,7 @@ export default class DateRangePickerInputController extends React.Component {
       !isInclusivelyBeforeDay(endDate, startDate);
     if (isEndDateValid) {
       onDatesChange({ startDate, endDate });
-      if (!keepOpenOnDateSelect) onFocusChange(null);
+      if (!keepOpenOnDateSelect) this.onClearFocus();
     } else {
       onDatesChange({
         startDate,
