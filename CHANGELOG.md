@@ -1,5 +1,8 @@
 # Change Log
 
+## v10.0.0
+- [breaking] Added keyboard accessibility to react-dates ([#301](https://github.com/airbnb/react-dates/pull/301))
+
 ## v9.0.1
 - [fix] Fixes `withPortal` implementation in Firefox ([#421](https://github.com/airbnb/react-dates/pull/421))
 
