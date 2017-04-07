@@ -95,6 +95,7 @@ export default class DateRangePicker extends React.Component {
       dayPickerContainerStyles: {},
       isDateRangePickerInputFocused: false,
       isDayPickerFocused: false,
+      showKeyboardShortcuts: false,
     };
 
     this.isTouchDevice = false;
@@ -103,6 +104,7 @@ export default class DateRangePicker extends React.Component {
     this.onDateRangePickerInputFocus = this.onDateRangePickerInputFocus.bind(this);
     this.onDayPickerFocus = this.onDayPickerFocus.bind(this);
     this.onDayPickerBlur = this.onDayPickerBlur.bind(this);
+    this.showKeyboardShortcutsPanel = this.showKeyboardShortcutsPanel.bind(this);
 
     this.responsivizePickerPosition = this.responsivizePickerPosition.bind(this);
   }
@@ -137,7 +139,7 @@ export default class DateRangePicker extends React.Component {
   }
 
   componentWillUnmount() {
-    removeEventListener(this.resizeHandle);
+    if (this.resizeHandle) removeEventListener(this.resizeHandle);
   }
 
   onOutsideClick() {
@@ -147,6 +149,7 @@ export default class DateRangePicker extends React.Component {
     this.setState({
       isDateRangePickerInputFocused: false,
       isDayPickerFocused: false,
+      showKeyboardShortcuts: false,
     });
 
     onFocusChange(null);
@@ -168,9 +171,13 @@ export default class DateRangePicker extends React.Component {
   }
 
   onDayPickerFocus() {
+    const { focusedInput, onFocusChange } = this.props;
+    if (!focusedInput) onFocusChange(START_DATE);
+
     this.setState({
       isDateRangePickerInputFocused: false,
       isDayPickerFocused: true,
+      showKeyboardShortcuts: false,
     });
   }
 
@@ -178,6 +185,7 @@ export default class DateRangePicker extends React.Component {
     this.setState({
       isDateRangePickerInputFocused: true,
       isDayPickerFocused: false,
+      showKeyboardShortcuts: false,
     });
   }
 
@@ -235,6 +243,14 @@ export default class DateRangePicker extends React.Component {
     }
   }
 
+  showKeyboardShortcutsPanel() {
+    this.setState({
+      isDateRangePickerInputFocused: false,
+      isDayPickerFocused: true,
+      showKeyboardShortcuts: true,
+    });
+  }
+
   maybeRenderDayPickerWithPortal() {
     const { withPortal, withFullScreenPortal } = this.props;
 
@@ -280,8 +296,9 @@ export default class DateRangePicker extends React.Component {
       renderCalendarInfo,
       initialVisibleMonth,
       customCloseIcon,
+      phrases,
     } = this.props;
-    const { dayPickerContainerStyles, isDayPickerFocused } = this.state;
+    const { dayPickerContainerStyles, isDayPickerFocused, showKeyboardShortcuts } = this.state;
 
     const onOutsideClick = (!withFullScreenPortal && withPortal)
       ? this.onOutsideClick
@@ -324,7 +341,9 @@ export default class DateRangePicker extends React.Component {
           renderDay={renderDay}
           renderCalendarInfo={renderCalendarInfo}
           isFocused={isDayPickerFocused}
+          showKeyboardShortcuts={showKeyboardShortcuts}
           onBlur={this.onDayPickerBlur}
+          phrases={phrases}
         />
 
         {withFullScreenPortal && (
@@ -332,10 +351,8 @@ export default class DateRangePicker extends React.Component {
             className="DateRangePicker__close"
             type="button"
             onClick={this.onOutsideClick}
+            aria-label={phrases.closeDatePicker}
           >
-            <span className="screen-reader-only">
-              {this.props.phrases.closeDatePicker}
-            </span>
             <div className="DateRangePicker__close">
               {closeIcon}
             </div>
@@ -403,6 +420,8 @@ export default class DateRangePicker extends React.Component {
             withFullScreenPortal={withFullScreenPortal}
             onDatesChange={onDatesChange}
             onFocusChange={this.onDateRangePickerInputFocus}
+            onArrowDown={this.onDayPickerFocus}
+            onQuestionMark={this.showKeyboardShortcutsPanel}
             phrases={phrases}
             screenReaderMessage={screenReaderInputMessage}
             isFocused={isDateRangePickerInputFocused}

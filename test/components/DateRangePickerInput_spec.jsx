@@ -20,14 +20,14 @@ describe('DateRangePickerInput', () => {
 
     describe('props.disabled is falsey', () => {
       it('does not have .DateRangePickerInput--disabled class ', () => {
-        const wrapper = shallow(<DateRangePickerInput id="date" disabled={false} />);
+        const wrapper = shallow(<DateRangePickerInput disabled={false} />);
         expect(wrapper.find('.DateRangePickerInput--disabled')).to.have.lengthOf(0);
       });
     });
 
     describe('props.disabled is truthy', () => {
       it('has .DateRangePickerInput--disabled class', () => {
-        const wrapper = shallow(<DateRangePickerInput id="date" disabled />);
+        const wrapper = shallow(<DateRangePickerInput disabled />);
         expect(wrapper.find('.DateRangePickerInput--disabled')).to.have.lengthOf(1);
       });
     });
@@ -195,16 +195,16 @@ describe('DateRangePickerInput', () => {
 
   describe('calendar icon interaction', () => {
     describe('onClick', () => {
-      it('props.onStartDateFocus gets triggered', () => {
-        const onStartDateFocusSpy = sinon.spy();
+      it('props.onArrowDown gets triggered', () => {
+        const onArrowDownSpy = sinon.spy();
         const wrapper = shallow(
           <DateRangePickerInput
-            onStartDateFocus={onStartDateFocusSpy}
+            onArrowDown={onArrowDownSpy}
             showDefaultInputIcon
           />);
         const calendarIconWrapper = wrapper.find('.DateRangePickerInput__calendar-icon');
         calendarIconWrapper.simulate('click');
-        expect(onStartDateFocusSpy.called).to.equal(true);
+        expect(onArrowDownSpy.callCount).to.equal(1);
       });
     });
   });

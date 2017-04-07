@@ -5,6 +5,7 @@ import Portal from 'react-portal';
 import { forbidExtraProps } from 'airbnb-prop-types';
 import { addEventListener, removeEventListener } from 'consolidated-events';
 
+import SingleDatePickerShape from '../shapes/SingleDatePickerShape';
 import { SingleDatePickerPhrases } from '../defaultPhrases';
 
 import OutsideClickHandler from './OutsideClickHandler';
@@ -21,8 +22,6 @@ import CloseButton from '../svg/close.svg';
 
 import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
 import isSameDay from '../utils/isSameDay';
-
-import SingleDatePickerShape from '../shapes/SingleDatePickerShape';
 
 import {
   HORIZONTAL_ORIENTATION,
@@ -106,6 +105,8 @@ export default class SingleDatePicker extends React.Component {
     this.onClearFocus = this.onClearFocus.bind(this);
     this.clearDate = this.clearDate.bind(this);
 
+    this.getFirstFocusableDay = this.getFirstFocusableDay.bind(this);
+
     this.responsivizePickerPosition = this.responsivizePickerPosition.bind(this);
   }
 
@@ -161,7 +162,7 @@ export default class SingleDatePicker extends React.Component {
     if (this.isBlocked(day)) return;
 
     this.props.onDateChange(day);
-    if (!this.props.keepOpenOnDateSelect) this.props.onFocusChange({ focused: null });
+    if (!this.props.keepOpenOnDateSelect) this.props.onFocusChange({ focused: false });
   }
 
   onDayMouseEnter(day) {
@@ -245,6 +246,30 @@ export default class SingleDatePicker extends React.Component {
   getDisplayFormat() {
     const { displayFormat } = this.props;
     return typeof displayFormat === 'string' ? displayFormat : displayFormat();
+  }
+
+  getFirstFocusableDay(newMonth) {
+    const { date, numberOfMonths } = this.props;
+
+    let focusedDate = newMonth.clone().startOf('month');
+    if (date) {
+      focusedDate = date.clone();
+    }
+
+    if (this.isBlocked(focusedDate)) {
+      const days = [];
+      const lastVisibleDay = newMonth.clone().add(numberOfMonths - 1, 'months').endOf('month');
+      let currentDay = focusedDate.clone();
+      while (!currentDay.isAfter(lastVisibleDay)) {
+        currentDay = currentDay.clone().add(1, 'day');
+        days.push(currentDay);
+      }
+
+      const viableDays = days.filter(day => !this.isBlocked(day) && day.isAfter(focusedDate));
+      if (viableDays.length > 0) focusedDate = viableDays[0];
+    }
+
+    return focusedDate;
   }
 
   clearDate() {
@@ -391,6 +416,7 @@ export default class SingleDatePicker extends React.Component {
           renderDay={renderDay}
           renderCalendarInfo={renderCalendarInfo}
           isFocused={isDayPickerFocused}
+          getFirstFocusableDay={this.getFirstFocusableDay}
           onBlur={this.onDayPickerBlur}
           phrases={phrases}
           daySize={daySize}
@@ -398,13 +424,11 @@ export default class SingleDatePicker extends React.Component {
 
         {withFullScreenPortal && (
           <button
+            aria-label={phrases.closeDatePicker}
             className="SingleDatePicker__close"
             type="button"
             onClick={this.onClearFocus}
           >
-            <span className="screen-reader-only">
-              {this.props.phrases.closeDatePicker}
-            </span>
             <div className="SingleDatePicker__close-icon">
               {closeIcon}
             </div>
@@ -418,8 +442,8 @@ export default class SingleDatePicker extends React.Component {
     const {
       id,
       placeholder,
-      focused,
       disabled,
+      focused,
       required,
       showClearDate,
       date,
@@ -447,7 +471,6 @@ export default class SingleDatePicker extends React.Component {
             disabled={disabled}
             required={required}
             showCaret={!withPortal && !withFullScreenPortal}
-            phrases={phrases}
             onClearDate={this.clearDate}
             showClearDate={showClearDate}
             displayValue={displayValue}
@@ -456,7 +479,9 @@ export default class SingleDatePicker extends React.Component {
             onFocus={this.onFocus}
             onKeyDownShiftTab={this.onClearFocus}
             onKeyDownTab={this.onClearFocus}
+            onKeyDownArrowDown={this.onDayPickerFocus}
             screenReaderMessage={screenReaderInputMessage}
+            phrases={phrases}
           />
 
           {this.maybeRenderDayPickerWithPortal()}

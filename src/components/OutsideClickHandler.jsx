@@ -30,7 +30,7 @@ export default class OutsideClickHandler extends React.Component {
   }
 
   componentWillUnmount() {
-    removeEventListener(this.clickHandle);
+    if (this.clickHandle) removeEventListener(this.clickHandle);
   }
 
   onOutsideClick(e) {

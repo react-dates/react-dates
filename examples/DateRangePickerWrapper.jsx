@@ -5,6 +5,7 @@ import omit from 'lodash.omit';
 
 import DateRangePicker from '../src/components/DateRangePicker';
 
+import { DateRangePickerPhrases } from '../src/defaultPhrases';
 import DateRangePickerShape from '../src/shapes/DateRangePickerShape';
 import { START_DATE, END_DATE, HORIZONTAL_ORIENTATION, ANCHOR_LEFT } from '../constants';
 import isInclusivelyAfterDay from '../src/utils/isInclusivelyAfterDay';
@@ -74,10 +75,7 @@ const defaultProps = {
   // internationalization
   displayFormat: () => moment.localeData().longDateFormat('L'),
   monthFormat: 'MMMM YYYY',
-  phrases: {
-    closeDatePicker: 'Close',
-    clearDates: 'Clear Dates',
-  },
+  phrases: DateRangePickerPhrases,
 };
 
 class DateRangePickerWrapper extends React.Component {
@@ -112,6 +110,9 @@ class DateRangePickerWrapper extends React.Component {
   render() {
     const { focusedInput, startDate, endDate } = this.state;
 
+    // autoFocus, autoFocusEndDate, initialStartDate and initialEndDate are helper props for the
+    // example wrapper but are not props on the SingleDatePicker itself and
+    // thus, have to be omitted.
     const props = omit(this.props, [
       'autoFocus',
       'autoFocusEndDate',

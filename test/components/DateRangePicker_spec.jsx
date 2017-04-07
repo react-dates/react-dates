@@ -175,6 +175,51 @@ describe('DateRangePicker', () => {
       wrapper.instance().onOutsideClick();
       expect(onFocusChangeStub.callCount).to.equal(1);
     });
+
+    it('sets state.isDateRangePickerInputFocused to false', () => {
+      const wrapper = shallow(
+        <DateRangePicker
+          focusedInput={START_DATE}
+          onFocusChange={sinon.stub()}
+          onDatesChange={sinon.stub()}
+        />,
+      );
+      wrapper.setState({
+        isDateRangePickerInputFocused: true,
+      });
+      wrapper.instance().onOutsideClick();
+      expect(wrapper.state().isDateRangePickerInputFocused).to.equal(false);
+    });
+
+    it('sets state.isDayPickerFocused to false', () => {
+      const wrapper = shallow(
+        <DateRangePicker
+          focusedInput={START_DATE}
+          onFocusChange={sinon.stub()}
+          onDatesChange={sinon.stub()}
+        />,
+      );
+      wrapper.setState({
+        isDayPickerFocused: true,
+      });
+      wrapper.instance().onOutsideClick();
+      expect(wrapper.state().isDayPickerFocused).to.equal(false);
+    });
+
+    it('sets state.showKeyboardShortcuts to false', () => {
+      const wrapper = shallow(
+        <DateRangePicker
+          focusedInput={START_DATE}
+          onFocusChange={sinon.stub()}
+          onDatesChange={sinon.stub()}
+        />,
+      );
+      wrapper.setState({
+        showKeyboardShortcuts: true,
+      });
+      wrapper.instance().onOutsideClick();
+      expect(wrapper.state().showKeyboardShortcuts).to.equal(false);
+    });
   });
 
   describe('#onDateRangePickerInputFocus', () => {
@@ -279,6 +324,63 @@ describe('DateRangePicker', () => {
       wrapper.instance().onDayPickerFocus();
       expect(wrapper.state().isDayPickerFocused).to.equal(true);
     });
+
+    it('sets state.showKeyboardShortcuts to false', () => {
+      const wrapper = shallow(
+        <DateRangePicker
+          onDatesChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />,
+      );
+      wrapper.setState({
+        showKeyboardShortcuts: true,
+      });
+      wrapper.instance().onDayPickerFocus();
+      expect(wrapper.state().showKeyboardShortcuts).to.equal(false);
+    });
+
+    describe('focusedInput is truthy', () => {
+      it('does not call onFocusChange', () => {
+        const onFocusChangeStub = sinon.stub();
+        const wrapper = shallow(
+          <DateRangePicker
+            focusedInput={START_DATE}
+            onDatesChange={sinon.stub()}
+            onFocusChange={onFocusChangeStub}
+          />,
+        );
+        wrapper.instance().onDayPickerFocus();
+        expect(onFocusChangeStub.callCount).to.equal(0);
+      });
+    });
+
+    describe('focusedInput is falsey', () => {
+      it('calls onFocusChange', () => {
+        const onFocusChangeStub = sinon.stub();
+        const wrapper = shallow(
+          <DateRangePicker
+            focusedInput={null}
+            onDatesChange={sinon.stub()}
+            onFocusChange={onFocusChangeStub}
+          />,
+        );
+        wrapper.instance().onDayPickerFocus();
+        expect(onFocusChangeStub.callCount).to.equal(1);
+      });
+
+      it('calls onFocusChange with START_DATE as arg', () => {
+        const onFocusChangeStub = sinon.stub();
+        const wrapper = shallow(
+          <DateRangePicker
+            focusedInput={null}
+            onDatesChange={sinon.stub()}
+            onFocusChange={onFocusChangeStub}
+          />,
+        );
+        wrapper.instance().onDayPickerFocus();
+        expect(onFocusChangeStub.getCall(0).args[0]).to.equal(START_DATE);
+      });
+    });
   });
 
   describe('#onDayPickerBlur', () => {
@@ -308,6 +410,64 @@ describe('DateRangePicker', () => {
       });
       wrapper.instance().onDayPickerBlur();
       expect(wrapper.state().isDayPickerFocused).to.equal(false);
+    });
+
+    it('sets state.showKeyboardShortcuts to false', () => {
+      const wrapper = shallow(
+        <DateRangePicker
+          onDatesChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />,
+      );
+      wrapper.setState({
+        showKeyboardShortcuts: true,
+      });
+      wrapper.instance().onDayPickerBlur();
+      expect(wrapper.state().showKeyboardShortcuts).to.equal(false);
+    });
+  });
+
+  describe('#showKeyboardShortcutsPanel', () => {
+    it('sets state.isDateRangePickerInputFocused to false', () => {
+      const wrapper = shallow(
+        <DateRangePicker
+          onDatesChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />,
+      );
+      wrapper.setState({
+        isDateRangePickerInputFocused: true,
+      });
+      wrapper.instance().showKeyboardShortcutsPanel();
+      expect(wrapper.state().isDateRangePickerInputFocused).to.equal(false);
+    });
+
+    it('sets state.isDayPickerFocused to true', () => {
+      const wrapper = shallow(
+        <DateRangePicker
+          onDatesChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />,
+      );
+      wrapper.setState({
+        isDayPickerFocused: false,
+      });
+      wrapper.instance().showKeyboardShortcutsPanel();
+      expect(wrapper.state().isDayPickerFocused).to.equal(true);
+    });
+
+    it('sets state.showKeyboardShortcuts to true', () => {
+      const wrapper = shallow(
+        <DateRangePicker
+          onDatesChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />,
+      );
+      wrapper.setState({
+        showKeyboardShortcuts: false,
+      });
+      wrapper.instance().showKeyboardShortcutsPanel();
+      expect(wrapper.state().showKeyboardShortcuts).to.equal(true);
     });
   });
 

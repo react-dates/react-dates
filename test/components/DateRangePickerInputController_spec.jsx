@@ -12,7 +12,6 @@ import DateRangePickerInput from '../../src/components/DateRangePickerInput';
 import isSameDay from '../../src/utils/isSameDay';
 
 import {
-  VERTICAL_ORIENTATION,
   START_DATE,
   END_DATE,
 } from '../../constants';
@@ -579,13 +578,12 @@ describe('DateRangePickerInputController', () => {
       });
     });
 
-    describe('props.startDate = moment and props.orientation = VERTICAL_ORIENTATION', () => {
+    describe('props.startDate = moment', () => {
       it('calls props.onFocusChange once with arg END_DATE', () => {
         const onFocusChangeStub = sinon.stub();
         const wrapper = shallow(
           <DateRangePickerInputController
             startDate={moment(today)}
-            orientation={VERTICAL_ORIENTATION}
             onFocusChange={onFocusChangeStub}
           />,
         );

@@ -5,6 +5,8 @@ import sinon from 'sinon-sandbox';
 
 import DateInput from '../../src/components/DateInput';
 
+const event = { preventDefault() {}, stopPropagation() {} };
+
 describe('DateInput', () => {
   describe('#render', () => {
     it('is .DateInput class', () => {
@@ -181,13 +183,25 @@ describe('DateInput', () => {
       wrapper.instance().onChange(evt);
       expect(onChangeStub.getCall(0).args[0]).to.equal(evt.target.value);
     });
+
+    it('calls props.onKeyDownQuestionMark if last typed character is ?', () => {
+      const onKeyDownQuestionMarkStub = sinon.stub();
+      const wrapper = shallow(
+        <DateInput
+          id="date"
+          onKeyDownQuestionMark={onKeyDownQuestionMarkStub}
+        />,
+      );
+      wrapper.instance().onChange({ target: { value: 'foobar?' } });
+      expect(onKeyDownQuestionMarkStub.callCount).to.equal(1);
+    });
   });
 
   describe('#onKeyDown', () => {
     it('calls props.onKeyDownTab if e.key === `Tab` and e.shiftKey === false', () => {
       const onKeyDownTabStub = sinon.stub();
       const wrapper = shallow(<DateInput id="date" onKeyDownTab={onKeyDownTabStub} />);
-      wrapper.instance().onKeyDown({ key: 'Tab', shiftKey: false });
+      wrapper.instance().onKeyDown({ ...event, key: 'Tab', shiftKey: false });
       expect(onKeyDownTabStub.callCount).to.equal(1);
     });
 
@@ -195,15 +209,47 @@ describe('DateInput', () => {
       const onKeyDownShiftTabStub = sinon.stub();
       const wrapper =
         shallow(<DateInput id="date" onKeyDownShiftTab={onKeyDownShiftTabStub} />);
-      wrapper.instance().onKeyDown({ key: 'Tab', shiftKey: true });
+      wrapper.instance().onKeyDown({ ...event, key: 'Tab', shiftKey: true });
       expect(onKeyDownShiftTabStub.callCount).to.equal(1);
     });
 
     it('does not call props.onKeyDownTab if e.key !== `Tab`', () => {
       const onKeyDownTabStub = sinon.stub();
       const wrapper = shallow(<DateInput id="date" onKeyDownTab={onKeyDownTabStub} />);
-      wrapper.instance().onKeyDown({ key: 'foo' });
+      wrapper.instance().onKeyDown({ ...event, key: 'foo' });
       expect(onKeyDownTabStub.callCount).to.equal(0);
+    });
+
+    it('calls props.onKeyDownArrowDown if e.key === `ArrowDown`', () => {
+      const onKeyDownArrowDownStub = sinon.stub();
+      const wrapper = shallow(<DateInput id="date" onKeyDownArrowDown={onKeyDownArrowDownStub} />);
+      wrapper.instance().onKeyDown({ ...event, key: 'ArrowDown' });
+      expect(onKeyDownArrowDownStub.callCount).to.equal(1);
+    });
+
+    it('does not call props.onKeyDownArrowDown if e.key !== `ArrowDown`', () => {
+      const onKeyDownArrowDownStub = sinon.stub();
+      const wrapper = shallow(<DateInput id="date" onKeyDownArrowDown={onKeyDownArrowDownStub} />);
+      wrapper.instance().onKeyDown({ ...event, key: 'foo' });
+      expect(onKeyDownArrowDownStub.callCount).to.equal(0);
+    });
+
+    it('calls props.onKeyDownQuestionMark if e.key === `?`', () => {
+      const onKeyDownQuestionMarkStub = sinon.stub();
+      const wrapper = shallow(
+        <DateInput id="date" onKeyDownQuestionMark={onKeyDownQuestionMarkStub} />,
+      );
+      wrapper.instance().onKeyDown({ ...event, key: '?' });
+      expect(onKeyDownQuestionMarkStub.callCount).to.equal(1);
+    });
+
+    it('does not call props.onKeyDownQuestionMark if e.key !== `?`', () => {
+      const onKeyDownQuestionMarkStub = sinon.stub();
+      const wrapper = shallow(
+        <DateInput id="date" onKeyDownQuestionMark={onKeyDownQuestionMarkStub} />,
+      );
+      wrapper.instance().onKeyDown({ ...event, key: 'foo' });
+      expect(onKeyDownQuestionMarkStub.callCount).to.equal(0);
     });
   });
 
