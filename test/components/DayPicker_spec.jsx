@@ -175,6 +175,15 @@ describe('DayPicker', () => {
         sinon.stub(DayPicker.prototype, 'translateFirstDayPickerForAnimation');
       });
 
+      it('sets state.withMouseInteractions to false', () => {
+        const wrapper = shallow(<DayPicker />);
+        wrapper.setState({
+          withMouseInteractions: true,
+        });
+        wrapper.instance().onKeyDown({ ...event });
+        expect(wrapper.state().withMouseInteractions).to.equal(false);
+      });
+
       describe('ArrowUp', () => {
         it('calls maybeTransitionPrevMonth', () => {
           const maybeTransitionPrevMonthSpy = sinon.spy(DayPicker.prototype, 'maybeTransitionPrevMonth');

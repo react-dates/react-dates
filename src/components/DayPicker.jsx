@@ -21,6 +21,7 @@ import DayPickerKeyboardShortcuts, {
 import getTransformStyles from '../utils/getTransformStyles';
 import getCalendarMonthWidth from '../utils/getCalendarMonthWidth';
 import isTouchDevice from '../utils/isTouchDevice';
+import getActiveElement from '../utils/getActiveElement';
 
 import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
 
@@ -185,6 +186,7 @@ export default class DayPicker extends React.Component {
       showKeyboardShortcuts: props.showKeyboardShortcuts,
       onKeyboardShortcutsPanelClose() {},
       isTouchDevice: isTouchDevice(),
+      withMouseInteractions: true,
     };
 
     this.onKeyDown = this.onKeyDown.bind(this);
@@ -244,6 +246,7 @@ export default class DayPicker extends React.Component {
           showKeyboardShortcuts,
           onKeyboardShortcutsPanelClose,
           focusedDate,
+          withMouseInteractions: false,
         });
       } else {
         this.setState({ focusedDate: null });
@@ -272,7 +275,9 @@ export default class DayPicker extends React.Component {
   }
 
   onKeyDown(e) {
-    if (e) e.stopPropagation();
+    e.stopPropagation();
+
+    this.setState({ withMouseInteractions: false });
 
     const { onBlur } = this.props;
     const { focusedDate, showKeyboardShortcuts } = this.state;
@@ -284,46 +289,50 @@ export default class DayPicker extends React.Component {
 
     // focus might be anywhere when the keyboard shortcuts panel is opened so we want to
     // return it to wherever it was before when the panel was opened
-    const activeElement = typeof document !== 'undefined' && document.activeElement;
+    const activeElement = getActiveElement();
     const onKeyboardShortcutsPanelClose = () => {
       if (activeElement) activeElement.focus();
     };
 
     switch (e.key) {
       case 'ArrowUp':
-        if (e) e.preventDefault();
+        e.preventDefault();
         newFocusedDate.subtract(1, 'week');
         didTransitionMonth = this.maybeTransitionPrevMonth(newFocusedDate);
         break;
       case 'ArrowLeft':
-        if (e) e.preventDefault();
+        e.preventDefault();
         newFocusedDate.subtract(1, 'day');
         didTransitionMonth = this.maybeTransitionPrevMonth(newFocusedDate);
         break;
       case 'Home':
+        e.preventDefault();
         newFocusedDate.startOf('week');
         didTransitionMonth = this.maybeTransitionPrevMonth(newFocusedDate);
         break;
       case 'PageUp':
+        e.preventDefault();
         newFocusedDate.subtract(1, 'month');
         didTransitionMonth = this.maybeTransitionPrevMonth(newFocusedDate);
         break;
 
       case 'ArrowDown':
-        if (e) e.preventDefault();
+        e.preventDefault();
         newFocusedDate.add(1, 'week');
         didTransitionMonth = this.maybeTransitionNextMonth(newFocusedDate);
         break;
       case 'ArrowRight':
-        if (e) e.preventDefault();
+        e.preventDefault();
         newFocusedDate.add(1, 'day');
         didTransitionMonth = this.maybeTransitionNextMonth(newFocusedDate);
         break;
       case 'End':
+        e.preventDefault();
         newFocusedDate.endOf('week');
         didTransitionMonth = this.maybeTransitionNextMonth(newFocusedDate);
         break;
       case 'PageDown':
+        e.preventDefault();
         newFocusedDate.add(1, 'month');
         didTransitionMonth = this.maybeTransitionNextMonth(newFocusedDate);
         break;
@@ -509,6 +518,15 @@ export default class DayPicker extends React.Component {
       translationValue: 0,
       nextFocusedDate: null,
       focusedDate: newFocusedDate,
+    }, () => {
+      // we don't want to focus on the relevant calendar day after a month transition
+      // if the user is navigating around using a mouse
+      if (this.state.withMouseInteractions) {
+        const activeElement = getActiveElement();
+        if (activeElement && activeElement !== document.body) {
+          activeElement.blur();
+        }
+      }
     });
   }
 
@@ -738,6 +756,7 @@ export default class DayPicker extends React.Component {
             ref={(ref) => { this.container = ref; }}
             onClick={(e) => { e.stopPropagation(); }}
             onKeyDown={throttle(this.onKeyDown, 300)}
+            onMouseUp={() => { this.setState({ withMouseInteractions: true }); }}
             role="region"
             tabIndex={-1}
           >

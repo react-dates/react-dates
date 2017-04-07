@@ -25,12 +25,12 @@ const keyboardNavigationInstructions = `Press the down arrow key to interact wit
   select a date. Press the question mark key to get the keyboard shortcuts for changing dates.`;
 
 // eslint-disable-next-line camelcase
-const chooseAvailableStartDate = ({ checkin_date }) => `Choose ${checkin_date} as your check-in date. It's available.`;
+const chooseAvailableStartDate = ({ date }) => `Choose ${date} as your check-in date. It's available.`;
 
 // eslint-disable-next-line camelcase
-const chooseAvailableEndDate = ({ checkout_date }) => `Choose ${checkout_date} as your check-out date. It's available.`;
+const chooseAvailableEndDate = ({ date }) => `Choose ${date} as your check-out date. It's available.`;
+const chooseAvailableDate = ({ date }) => date;
 const dateIsUnavailable = ({ date }) => `Not available. ${date}`;
-
 
 export default {
   closeDatePicker,
@@ -121,8 +121,7 @@ export const SingleDatePickerPhrases = {
   moveFocustoStartAndEndOfWeek,
   returnFocusToInput,
   keyboardNavigationInstructions,
-  chooseAvailableStartDate,
-  chooseAvailableEndDate,
+  chooseAvailableDate,
   dateIsUnavailable,
 };
 
@@ -151,7 +150,9 @@ export const DayPickerPhrases = {
   moveFocusByOneMonth,
   moveFocustoStartAndEndOfWeek,
   returnFocusToInput,
-  chooseAvailableDate: chooseAvailableStartDate,
+  chooseAvailableStartDate,
+  chooseAvailableEndDate,
+  chooseAvailableDate,
   dateIsUnavailable,
 };
 
@@ -181,6 +182,6 @@ export const DayPickerNavigationPhrases = {
 };
 
 export const CalendarDayPhrases = {
-  chooseAvailableDate: chooseAvailableStartDate,
+  chooseAvailableDate,
   dateIsUnavailable,
 };
