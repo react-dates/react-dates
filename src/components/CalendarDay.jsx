@@ -102,8 +102,7 @@ export default class CalendarDay extends React.Component {
     const formattedDate = `${day.format('dddd')}, ${day.format('LL')}`;
 
     let ariaLabel = getPhrase(chooseAvailableDate, {
-      checkin_date: formattedDate,
-      checkout_date: formattedDate,
+      date: formattedDate,
     });
 
     if (BLOCKED_MODIFIER in modifiers && modifiers[BLOCKED_MODIFIER](day)) {
