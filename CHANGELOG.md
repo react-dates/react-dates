@@ -1,5 +1,8 @@
 # Change Log
 
+## v10.0.1
+- [fix] Fix a few nits as a result of the accessibility PR ([#429](https://github.com/airbnb/react-dates/pull/429))
+
 ## v10.0.0
 - [breaking] Added keyboard accessibility to react-dates ([#301](https://github.com/airbnb/react-dates/pull/301))
 
