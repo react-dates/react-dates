@@ -333,6 +333,39 @@ describe('SingleDatePicker', () => {
         wrapper.instance().onChange(futureDateString);
         expect(onFocusChangeStub.getCall(0).args[0].focused).to.equal(false);
       });
+
+      it('calls props.onClose once', () => {
+        const onCloseStub = sinon.stub();
+        const wrapper = shallow(
+          <SingleDatePicker
+            id="date"
+            onDateChange={() => {}}
+            onFocusChange={() => {}}
+            onClose={onCloseStub}
+          />,
+        );
+        wrapper.instance().onChange(futureDateString);
+        expect(onCloseStub.callCount).to.equal(1);
+      });
+
+      it('calls props.onClose with { startDate, endDate } as arg', () => {
+        const startDate = moment();
+        const onCloseStub = sinon.stub();
+        const wrapper = shallow(
+          <SingleDatePicker
+            id="date"
+            startDate={startDate}
+            onDateChange={() => {}}
+            onFocusChange={() => {}}
+            onClose={onCloseStub}
+          />,
+        );
+        wrapper.instance().onChange(futureDateString);
+        expect(onCloseStub.getCall(0).args[0].startDate).to.equal(startDate);
+
+        const newDate = onCloseStub.getCall(0).args[0].endDate;
+        expect(isSameDay(newDate, moment(futureDateString))).to.equal(true);
+      });
     });
 
     describe('matches custom display format', () => {
@@ -495,6 +528,41 @@ describe('SingleDatePicker', () => {
         wrapper.instance().onDayClick(moment());
         expect(onFocusChangeStub.callCount).to.equal(0);
       });
+
+      it('props.onClose is not called', () => {
+        const onCloseStub = sinon.stub();
+        const wrapper = shallow(
+          <SingleDatePicker
+            id="date"
+            onDateChange={() => {}}
+            onFocusChange={() => {}}
+            onClose={onCloseStub}
+            isDayBlocked={() => true}
+          />,
+        );
+        wrapper.instance().onDayClick(moment());
+        expect(onCloseStub.callCount).to.equal(0);
+      });
+
+      it('calls props.onClose with { startDate, endDate } as arg', () => {
+        const startDate = moment();
+        const endDate = moment().add(5, 'days');
+        const onCloseStub = sinon.stub();
+        const wrapper = shallow(
+          <SingleDatePicker
+            id="date"
+            startDate={startDate}
+            endDate={endDate}
+            onDateChange={() => {}}
+            onFocusChange={() => {}}
+            onClose={onCloseStub}
+          />,
+        );
+
+        wrapper.instance().onDayClick(endDate);
+        expect(onCloseStub.getCall(0).args[0].startDate).to.equal(startDate);
+        expect(onCloseStub.getCall(0).args[0].endDate).to.equal(endDate);
+      });
     });
 
     describe('day arg is not blocked', () => {
@@ -514,6 +582,20 @@ describe('SingleDatePicker', () => {
         );
         wrapper.instance().onDayClick(moment());
         expect(onFocusChangeStub.callCount).to.equal(1);
+      });
+
+      it('props.onClose is called', () => {
+        const onCloseStub = sinon.stub();
+        const wrapper = shallow(
+          <SingleDatePicker
+            id="date"
+            onDateChange={() => {}}
+            onFocusChange={() => {}}
+            onClose={onCloseStub}
+          />,
+        );
+        wrapper.instance().onDayClick(moment());
+        expect(onCloseStub.callCount).to.equal(1);
       });
     });
   });

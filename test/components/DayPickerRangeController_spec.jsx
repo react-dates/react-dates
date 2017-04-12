@@ -238,6 +238,28 @@ describe('DayPickerRangeController', () => {
             });
           });
         });
+
+        describe('props.onClose', () => {
+          describe('props.startDate is truthy', () => {
+            it('is called with startDate and endDate', () => {
+              const onCloseStub = sinon.stub();
+              const wrapper = shallow(
+                <DayPickerRangeController
+                  focusedInput={END_DATE}
+                  startDate={today}
+                  onClose={onCloseStub}
+                />,
+              );
+
+              const endDate = moment(today).add(1, 'days');
+
+              wrapper.instance().onDayClick(endDate);
+              const args = onCloseStub.getCall(0).args[0];
+              expect(args.startDate).to.equal(today);
+              expect(args.endDate).to.equal(endDate);
+            });
+          });
+        });
       });
 
       describe('minimumNights is 0', () => {

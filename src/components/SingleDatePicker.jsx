@@ -66,6 +66,7 @@ const defaultProps = {
 
   onPrevMonthClick() {},
   onNextMonthClick() {},
+  onClose() {},
 
   // day presentation and interaction related props
   renderDay: null,
@@ -145,13 +146,23 @@ export default class SingleDatePicker extends React.Component {
   }
 
   onChange(dateString) {
-    const { isOutsideRange, keepOpenOnDateSelect, onDateChange, onFocusChange } = this.props;
-    const date = toMomentObject(dateString, this.getDisplayFormat());
+    const {
+      startDate,
+      isOutsideRange,
+      keepOpenOnDateSelect,
+      onDateChange,
+      onFocusChange,
+      onClose,
+    } = this.props;
+    const endDate = toMomentObject(dateString, this.getDisplayFormat());
 
-    const isValid = date && !isOutsideRange(date);
+    const isValid = endDate && !isOutsideRange(endDate);
     if (isValid) {
-      onDateChange(date);
-      if (!keepOpenOnDateSelect) onFocusChange({ focused: false });
+      onDateChange(endDate);
+      if (!keepOpenOnDateSelect) {
+        onFocusChange({ focused: false });
+        onClose({ startDate, endDate });
+      }
     } else {
       onDateChange(null);
     }
@@ -160,9 +171,20 @@ export default class SingleDatePicker extends React.Component {
   onDayClick(day, e) {
     if (e) e.preventDefault();
     if (this.isBlocked(day)) return;
+    const {
+      onDateChange,
+      keepOpenOnDateSelect,
+      onFocusChange,
+      onClose,
+      startDate,
+      endDate,
+    } = this.props;
 
-    this.props.onDateChange(day);
-    if (!this.props.keepOpenOnDateSelect) this.props.onFocusChange({ focused: false });
+    onDateChange(day);
+    if (!keepOpenOnDateSelect) {
+      onFocusChange({ focused: null });
+      onClose({ startDate, endDate });
+    }
   }
 
   onDayMouseEnter(day) {
@@ -193,7 +215,7 @@ export default class SingleDatePicker extends React.Component {
   }
 
   onClearFocus() {
-    const { focused, onFocusChange } = this.props;
+    const { startDate, endDate, focused, onFocusChange, onClose } = this.props;
     if (!focused) return;
 
     this.setState({
@@ -202,6 +224,7 @@ export default class SingleDatePicker extends React.Component {
     });
 
     onFocusChange({ focused: false });
+    onClose({ startDate, endDate });
   }
 
   onDayPickerFocus() {

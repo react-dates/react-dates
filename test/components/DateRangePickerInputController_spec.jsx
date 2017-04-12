@@ -89,6 +89,25 @@ describe('DateRangePickerInputController', () => {
       wrapper.instance().onClearFocus();
       expect(onFocusChangeStub.calledWith(null)).to.equal(true);
     });
+
+    it('calls props.onClose with startDate and endDate args', () => {
+      const onCloseStub = sinon.stub();
+      const endDate = moment(today).add(1, 'days');
+
+      const wrapper = shallow(
+        <DateRangePickerInputController
+          onFocusChange={() => null}
+          onClose={onCloseStub}
+          startDate={today}
+          endDate={endDate}
+        />,
+      );
+
+      wrapper.instance().onClearFocus();
+      const args = onCloseStub.getCall(0).args[0];
+      expect(args.startDate).to.equal(today);
+      expect(args.endDate).to.equal(endDate);
+    });
   });
 
   describe('#onEndDateChange', () => {
