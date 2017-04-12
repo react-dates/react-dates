@@ -1,5 +1,8 @@
 # Change Log
 
+## v10.1.0
+- [new] Adds `onClose` callback ([#397](https://github.com/airbnb/react-dates/pull/397))
+
 ## v10.0.1
 - [fix] Fix a few nits as a result of the accessibility PR ([#429](https://github.com/airbnb/react-dates/pull/429))
 
