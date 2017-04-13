@@ -260,8 +260,15 @@ export default class DayPicker extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    const { orientation, daySize } = this.props;
     const { monthTransition, currentMonth, focusedDate } = this.state;
     if (monthTransition || !currentMonth.isSame(prevState.currentMonth)) {
+      if (this.isHorizontal()) {
+        this.adjustDayPickerHeight();
+      }
+    }
+
+    if (orientation !== prevProps.orentation || daySize !== prevProps.daySize) {
       if (this.isHorizontal()) {
         this.adjustDayPickerHeight();
       }
