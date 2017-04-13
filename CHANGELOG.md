@@ -1,5 +1,8 @@
 # Change Log
 
+## v10.1.1
+- [fix] Remove unnecessary `onClose` instances on the `SDPInput` and `DateInput` components
+
 ## v10.1.0
 - [new] Adds `onClose` callback ([#397](https://github.com/airbnb/react-dates/pull/397))
 
