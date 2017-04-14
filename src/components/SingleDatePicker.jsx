@@ -69,6 +69,9 @@ const defaultProps = {
   onNextMonthClick() {},
   onClose() {},
 
+  // month presentation and interaction related props
+  renderMonth: null,
+
   // day presentation and interaction related props
   renderDay: null,
   enableOutsideDays: false,
@@ -389,6 +392,7 @@ export default class SingleDatePicker extends React.Component {
       withPortal,
       withFullScreenPortal,
       focused,
+      renderMonth,
       renderDay,
       renderCalendarInfo,
       date,
@@ -439,6 +443,7 @@ export default class SingleDatePicker extends React.Component {
           hideKeyboardShortcutsPanel={hideKeyboardShortcutsPanel}
           navPrev={navPrev}
           navNext={navNext}
+          renderMonth={renderMonth}
           renderDay={renderDay}
           renderCalendarInfo={renderCalendarInfo}
           isFocused={isDayPickerFocused}

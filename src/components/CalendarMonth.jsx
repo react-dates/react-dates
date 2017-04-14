@@ -35,6 +35,7 @@ const propTypes = forbidExtraProps({
   onDayClick: PropTypes.func,
   onDayMouseEnter: PropTypes.func,
   onDayMouseLeave: PropTypes.func,
+  renderMonth: PropTypes.func,
   renderDay: PropTypes.func,
 
   focusedDate: momentPropTypes.momentObj, // indicates focusable day
@@ -55,6 +56,7 @@ const defaultProps = {
   onDayClick() {},
   onDayMouseEnter() {},
   onDayMouseLeave() {},
+  renderMonth: null,
   renderDay: null,
 
   focusedDate: null,
@@ -96,6 +98,7 @@ export default class CalendarMonth extends React.Component {
       onDayClick,
       onDayMouseEnter,
       onDayMouseLeave,
+      renderMonth,
       renderDay,
       daySize,
       focusedDate,
@@ -104,7 +107,7 @@ export default class CalendarMonth extends React.Component {
     } = this.props;
 
     const { weeks } = this.state;
-    const monthTitle = month.format(monthFormat);
+    const monthTitle = renderMonth ? renderMonth(month) : month.format(monthFormat);
 
     const calendarMonthClasses = cx('CalendarMonth', {
       'CalendarMonth--horizontal': orientation === HORIZONTAL_ORIENTATION,

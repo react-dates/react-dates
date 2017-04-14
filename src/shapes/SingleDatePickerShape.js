@@ -47,6 +47,9 @@ export default {
   onNextMonthClick: PropTypes.func,
   onClose: PropTypes.func,
 
+  // month presentation and interaction related props
+  renderMonth: PropTypes.func,
+
   // day presentation and interaction related props
   renderDay: PropTypes.func,
   enableOutsideDays: PropTypes.bool,

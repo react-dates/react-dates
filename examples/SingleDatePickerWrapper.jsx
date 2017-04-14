@@ -54,6 +54,9 @@ const defaultProps = {
   onPrevMonthClick() {},
   onNextMonthClick() {},
 
+  // month presentation and interaction related props
+  renderMonth: null,
+
   // day presentation and interaction related props
   renderDay: null,
   enableOutsideDays: false,
