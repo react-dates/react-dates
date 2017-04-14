@@ -116,6 +116,7 @@ export default class DayPickerRangeController extends React.Component {
     super(props);
     this.state = {
       hoverDate: null,
+      phrases: props.phrases,
     };
 
     this.isTouchDevice = isTouchDevice();
@@ -125,6 +126,27 @@ export default class DayPickerRangeController extends React.Component {
     this.onDayMouseEnter = this.onDayMouseEnter.bind(this);
     this.onDayMouseLeave = this.onDayMouseLeave.bind(this);
     this.getFirstFocusableDay = this.getFirstFocusableDay.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { focusedInput, phrases } = nextProps;
+
+    if (focusedInput !== this.props.focusedInput || phrases !== this.props.phrases) {
+      // set the appropriate CalendarDay phrase based on focusedInput
+      let chooseAvailableDate = phrases.chooseAvailableDate;
+      if (focusedInput === START_DATE) {
+        chooseAvailableDate = phrases.chooseAvailableStartDate;
+      } else if (focusedInput === END_DATE) {
+        chooseAvailableDate = phrases.chooseAvailableEndDate;
+      }
+
+      this.setState({
+        phrases: {
+          ...phrases,
+          chooseAvailableDate,
+        },
+      });
+    }
   }
 
   componentWillUpdate() {
@@ -302,8 +324,9 @@ export default class DayPickerRangeController extends React.Component {
       onBlur,
       isFocused,
       showKeyboardShortcuts,
-      phrases,
     } = this.props;
+
+    const { phrases } = this.state;
 
     const modifiers = {
       today: day => this.isToday(day),
@@ -336,19 +359,6 @@ export default class DayPickerRangeController extends React.Component {
       },
     };
 
-    // set the appropriate CalendarDay phrase based on focusedInput
-    let chooseAvailableDate = phrases.chooseAvailableDate;
-    if (focusedInput === START_DATE) {
-      chooseAvailableDate = phrases.chooseAvailableStartDate;
-    } else if (focusedInput === END_DATE) {
-      chooseAvailableDate = phrases.chooseAvailableEndDate;
-    }
-
-    const calendarDayPhrases = {
-      ...phrases,
-      chooseAvailableDate,
-    };
-
     return (
       <DayPicker
         ref={(ref) => { this.dayPicker = ref; }}
@@ -375,7 +385,7 @@ export default class DayPickerRangeController extends React.Component {
         getFirstFocusableDay={this.getFirstFocusableDay}
         onBlur={onBlur}
         showKeyboardShortcuts={showKeyboardShortcuts}
-        phrases={calendarDayPhrases}
+        phrases={phrases}
       />
     );
   }

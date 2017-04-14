@@ -28,6 +28,137 @@ describe('DayPickerRangeController', () => {
     });
   });
 
+  describe('#componentWillReceiveProps', () => {
+    const phrases = {
+      chooseAvailableDate: 'test1',
+      chooseAvailableStartDate: 'test2',
+      chooseAvailableEndDate: 'test3',
+    };
+
+    describe('neither props.focusedInput nor props.phrases have changed', () => {
+      it('state.phrases does not change', () => {
+        const phrasesObject = { hello: 'world' };
+        const wrapper = shallow(
+          <DayPickerRangeController
+            focusedInput={null}
+            onDatesChange={sinon.stub()}
+            onFocusChange={sinon.stub()}
+            phrases={phrases}
+          />,
+        );
+        wrapper.setState({ phrases: phrasesObject });
+        wrapper.instance().componentWillReceiveProps({ focusedInput: null, phrases });
+        expect(wrapper.state().phrases).to.equal(phrasesObject);
+      });
+    });
+
+    describe('props.focusedInput has changed', () => {
+      describe('new focusedInput is START_DATE', () => {
+        it('state.phrases.chooseAvailableDate equals props.phrases.chooseAvailableStartDate', () => {
+          const wrapper = shallow(
+            <DayPickerRangeController
+              focusedInput={null}
+              onDatesChange={sinon.stub()}
+              onFocusChange={sinon.stub()}
+              phrases={phrases}
+            />,
+          );
+          wrapper.setState({ phrases: {} });
+          wrapper.instance().componentWillReceiveProps({ focusedInput: START_DATE, phrases });
+          const newAvailableDatePhrase = wrapper.state().phrases.chooseAvailableDate;
+          expect(newAvailableDatePhrase).to.equal(phrases.chooseAvailableStartDate);
+        });
+      });
+
+      describe('new focusedInput is END_DATE', () => {
+        it('state.phrases.chooseAvailableDate equals props.phrases.chooseAvailableEndDate', () => {
+          const wrapper = shallow(
+            <DayPickerRangeController
+              focusedInput={null}
+              onDatesChange={sinon.stub()}
+              onFocusChange={sinon.stub()}
+              phrases={phrases}
+            />,
+          );
+          wrapper.setState({ phrases: {} });
+          wrapper.instance().componentWillReceiveProps({ focusedInput: END_DATE, phrases });
+          const newAvailableDatePhrase = wrapper.state().phrases.chooseAvailableDate;
+          expect(newAvailableDatePhrase).to.equal(phrases.chooseAvailableEndDate);
+        });
+      });
+
+      describe('new focusedInput is null', () => {
+        it('state.phrases.chooseAvailableDate equals props.phrases.chooseAvailableDate', () => {
+          const wrapper = shallow(
+            <DayPickerRangeController
+              focusedInput={START_DATE}
+              onDatesChange={sinon.stub()}
+              onFocusChange={sinon.stub()}
+              phrases={phrases}
+            />,
+          );
+          wrapper.setState({ phrases: {} });
+          wrapper.instance().componentWillReceiveProps({ focusedInput: null, phrases });
+          const newAvailableDatePhrase = wrapper.state().phrases.chooseAvailableDate;
+          expect(newAvailableDatePhrase).to.equal(phrases.chooseAvailableDate);
+        });
+      });
+    });
+
+    describe('props.phrases has changed', () => {
+      describe('focusedInput is START_DATE', () => {
+        it('state.phrases.chooseAvailableDate equals props.phrases.chooseAvailableStartDate', () => {
+          const wrapper = shallow(
+            <DayPickerRangeController
+              focusedInput={START_DATE}
+              onDatesChange={sinon.stub()}
+              onFocusChange={sinon.stub()}
+              phrases={{}}
+            />,
+          );
+          wrapper.setState({ phrases: {} });
+          wrapper.instance().componentWillReceiveProps({ focusedInput: START_DATE, phrases });
+          const newAvailableDatePhrase = wrapper.state().phrases.chooseAvailableDate;
+          expect(newAvailableDatePhrase).to.equal(phrases.chooseAvailableStartDate);
+        });
+      });
+
+      describe('focusedInput is END_DATE', () => {
+        it('state.phrases.chooseAvailableDate equals props.phrases.chooseAvailableEndDate', () => {
+          const wrapper = shallow(
+            <DayPickerRangeController
+              focusedInput={END_DATE}
+              onDatesChange={sinon.stub()}
+              onFocusChange={sinon.stub()}
+              phrases={{}}
+            />,
+          );
+          wrapper.setState({ phrases: {} });
+          wrapper.instance().componentWillReceiveProps({ focusedInput: END_DATE, phrases });
+          const newAvailableDatePhrase = wrapper.state().phrases.chooseAvailableDate;
+          expect(newAvailableDatePhrase).to.equal(phrases.chooseAvailableEndDate);
+        });
+      });
+
+      describe('focusedInput is null', () => {
+        it('state.phrases.chooseAvailableDate equals props.phrases.chooseAvailableDate', () => {
+          const wrapper = shallow(
+            <DayPickerRangeController
+              focusedInput={null}
+              onDatesChange={sinon.stub()}
+              onFocusChange={sinon.stub()}
+              phrases={{}}
+            />,
+          );
+          wrapper.setState({ phrases: {} });
+          wrapper.instance().componentWillReceiveProps({ focusedInput: null, phrases });
+          const newAvailableDatePhrase = wrapper.state().phrases.chooseAvailableDate;
+          expect(newAvailableDatePhrase).to.equal(phrases.chooseAvailableDate);
+        });
+      });
+    });
+  });
+
   describe('#onDayClick', () => {
     describe('day argument is a blocked day', () => {
       it('props.onFocusChange is not called', () => {
