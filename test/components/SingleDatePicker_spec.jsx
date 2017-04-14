@@ -16,10 +16,17 @@ import DayPicker from '../../src/components/DayPicker';
 import SingleDatePickerInput from '../../src/components/SingleDatePickerInput';
 import SingleDatePicker from '../../src/components/SingleDatePicker';
 
+import toISODateString from '../../src/utils/toISODateString';
+import toISOMonthString from '../../src/utils/toISOMonthString';
 import isSameDay from '../../src/utils/isSameDay';
+import * as isDayVisible from '../../src/utils/isDayVisible';
 
 // Set to noon to mimic how days in the picker are configured internally
 const today = moment().startOf('day').hours(12);
+
+function getCallsByModifier(stub, modifier) {
+  return stub.getCalls().filter(call => call.args[call.args.length - 1] === modifier);
+}
 
 describe('SingleDatePicker', () => {
   afterEach(() => {
@@ -302,6 +309,236 @@ describe('SingleDatePicker', () => {
             />,
           );
           expect(wrapper.find(Portal).props().isOpened).to.equal(true);
+        });
+      });
+    });
+  });
+
+  describe('#componentWillReceiveProps', () => {
+    const props = {
+      ...SingleDatePicker.defaultProps,
+      onDateChange() {},
+      onFocusChange() {},
+    };
+
+    describe('modifiers', () => {
+      describe('selected modifier', () => {
+        describe('props.date did not change', () => {
+          it('does not call this.addModifier with `selected', () => {
+            const addModifierSpy = sinon.spy(SingleDatePicker.prototype, 'addModifier');
+            const date = today;
+            const wrapper = shallow(<SingleDatePicker {...props} date={date} />);
+            wrapper.instance().componentWillReceiveProps({ ...props, date });
+            expect(getCallsByModifier(addModifierSpy, 'selected').length).to.equal(0);
+          });
+
+          it('does not call this.deleteModifier with `selected', () => {
+            const deleteModifierSpy = sinon.spy(SingleDatePicker.prototype, 'deleteModifier');
+            const date = today;
+            const wrapper = shallow(<SingleDatePicker {...props} date={date} />);
+            wrapper.instance().componentWillReceiveProps({ ...props, date });
+            expect(getCallsByModifier(deleteModifierSpy, 'selected').length).to.equal(0);
+          });
+        });
+
+        describe('props.date changed', () => {
+          it('deleteModifier gets called with old date and `selected`', () => {
+            const deleteModifierSpy = sinon.spy(SingleDatePicker.prototype, 'deleteModifier');
+            const date = today;
+            const newDate = moment().add(1, 'day');
+            const wrapper = shallow(<SingleDatePicker {...props} date={date} />);
+            wrapper.instance().componentWillReceiveProps({ ...props, date: newDate });
+            const selectedCalls = getCallsByModifier(deleteModifierSpy, 'selected');
+            expect(selectedCalls.length).to.equal(1);
+            expect(selectedCalls[0].args[1]).to.equal(date);
+          });
+
+          it('addModifier gets called with new startDate and `selected-start`', () => {
+            const addModifierSpy = sinon.spy(SingleDatePicker.prototype, 'addModifier');
+            const date = today;
+            const newDate = moment().add(1, 'day');
+            const wrapper = shallow(<SingleDatePicker {...props} date={date} />);
+            wrapper.instance().componentWillReceiveProps({ ...props, date: newDate });
+            const selectedStartCalls = getCallsByModifier(addModifierSpy, 'selected');
+            expect(selectedStartCalls.length).to.equal(1);
+            expect(selectedStartCalls[0].args[1]).to.equal(newDate);
+          });
+        });
+      });
+
+      describe('blocked-calendar', () => {
+        describe('props.focused did not change', () => {
+          it('does not call isDayBlocked', () => {
+            const isDayBlockedStub = sinon.stub();
+            const wrapper = shallow(<SingleDatePicker {...props} />);
+            wrapper.instance().componentWillReceiveProps({
+              ...props,
+              isDayBlocked: isDayBlockedStub,
+            });
+            expect(isDayBlockedStub.callCount).to.equal(0);
+          });
+        });
+
+        describe('props.focused changed', () => {
+          const visibleDays = {
+            [toISOMonthString(today)]: {
+              [toISODateString(today)]: [],
+              [toISODateString(moment().add(1, 'day'))]: [],
+              [toISODateString(moment().add(2, 'day'))]: [],
+            },
+          };
+          const numVisibleDays = 3;
+
+          it('calls isDayBlocked for every visible day', () => {
+            const isDayBlockedStub = sinon.stub();
+            const wrapper = shallow(<SingleDatePicker {...props} />);
+            wrapper.setState({ visibleDays });
+            wrapper.instance().componentWillReceiveProps({
+              ...props,
+              focused: true,
+              isDayBlocked: isDayBlockedStub,
+            });
+            expect(isDayBlockedStub.callCount).to.equal(numVisibleDays);
+          });
+
+          it('if isDayBlocked(day) is true calls addModifier with `blocked-calendar` for each day', () => {
+            const addModifierSpy = sinon.spy(SingleDatePicker.prototype, 'addModifier');
+            const isDayBlockedStub = sinon.stub().returns(true);
+            const wrapper = shallow(<SingleDatePicker {...props} />);
+            wrapper.setState({ visibleDays });
+            wrapper.instance().componentWillReceiveProps({
+              ...props,
+              focused: true,
+              isDayBlocked: isDayBlockedStub,
+            });
+            const blockedCalendarCalls = getCallsByModifier(addModifierSpy, 'blocked-calendar');
+            expect(blockedCalendarCalls.length).to.equal(numVisibleDays);
+          });
+
+          it('if isDayBlocked(day) is false calls deleteModifier with day and `blocked-calendar`', () => {
+            const deleteModifierSpy =
+              sinon.spy(SingleDatePicker.prototype, 'deleteModifier');
+            const isDayBlockedStub = sinon.stub().returns(false);
+            const wrapper = shallow(<SingleDatePicker {...props} />);
+            wrapper.setState({ visibleDays });
+            wrapper.instance().componentWillReceiveProps({
+              ...props,
+              focused: true,
+              isDayBlocked: isDayBlockedStub,
+            });
+            const blockedCalendarCalls = getCallsByModifier(deleteModifierSpy, 'blocked-calendar');
+            expect(blockedCalendarCalls.length).to.equal(numVisibleDays);
+          });
+        });
+      });
+
+      describe('highlighted-calendar', () => {
+        describe('focusedInput did not change', () => {
+          it('does not call isDayHighlighted', () => {
+            const isDayHighlightedStub = sinon.stub();
+            const wrapper = shallow(<SingleDatePicker {...props} />);
+            wrapper.instance().componentWillReceiveProps({
+              ...props,
+              isDayHighlighted: isDayHighlightedStub,
+            });
+            expect(isDayHighlightedStub.callCount).to.equal(0);
+          });
+        });
+
+        describe('focusedInput changed', () => {
+          const visibleDays = {
+            [toISOMonthString(today)]: {
+              [toISODateString(today)]: [],
+              [toISODateString(moment().add(1, 'day'))]: [],
+              [toISODateString(moment().add(2, 'day'))]: [],
+            },
+          };
+          const numVisibleDays = 3;
+
+          it('calls isDayHighlighted for every visible day', () => {
+            const isDayHighlightedStub = sinon.stub();
+            const wrapper = shallow(<SingleDatePicker {...props} />);
+            wrapper.setState({ visibleDays });
+            wrapper.instance().componentWillReceiveProps({
+              ...props,
+              focused: true,
+              isDayHighlighted: isDayHighlightedStub,
+            });
+            expect(isDayHighlightedStub.callCount).to.equal(numVisibleDays);
+          });
+
+          it('if isDayHighlighted(day) is true calls addModifier with day and `highlighted-calendar`', () => {
+            const addModifierSpy = sinon.spy(SingleDatePicker.prototype, 'addModifier');
+            const isDayHighlightedStub = sinon.stub().returns(true);
+            const wrapper = shallow(<SingleDatePicker {...props} />);
+            wrapper.setState({ visibleDays });
+            wrapper.instance().componentWillReceiveProps({
+              ...props,
+              focused: true,
+              isDayHighlighted: isDayHighlightedStub,
+            });
+            const highlightedCalendarCalls = getCallsByModifier(addModifierSpy, 'highlighted-calendar');
+            expect(highlightedCalendarCalls.length).to.equal(numVisibleDays);
+          });
+
+          it('if isDayHighlighted(day) is false calls deleteModifier with day and `highlighted-calendar`', () => {
+            const deleteModifierSpy =
+              sinon.spy(SingleDatePicker.prototype, 'deleteModifier');
+            const isDayHighlightedStub = sinon.stub().returns(false);
+            const wrapper = shallow(<SingleDatePicker {...props} />);
+            wrapper.setState({ visibleDays });
+            wrapper.instance().componentWillReceiveProps({
+              ...props,
+              focused: true,
+              isDayHighlighted: isDayHighlightedStub,
+            });
+            const highlightedCalendarCalls = getCallsByModifier(deleteModifierSpy, 'highlighted-calendar');
+            expect(highlightedCalendarCalls.length).to.equal(numVisibleDays);
+          });
+        });
+      });
+
+      describe('today', () => {
+        describe('this.today matches today', () => {
+          it('does not call deleteModifier with `today`', () => {
+            const deleteModifierSpy =
+              sinon.spy(SingleDatePicker.prototype, 'deleteModifier');
+            const wrapper = shallow(<SingleDatePicker {...props} />);
+            wrapper.instance().today = today;
+            wrapper.instance().componentWillReceiveProps(props);
+            const todayCalls = getCallsByModifier(deleteModifierSpy, 'today');
+            expect(todayCalls.length).to.equal(0);
+          });
+
+          it('does not call addModifier with `today`', () => {
+            const addModifierSpy = sinon.spy(SingleDatePicker.prototype, 'addModifier');
+            const wrapper = shallow(<SingleDatePicker {...props} />);
+            wrapper.instance().today = today;
+            wrapper.instance().componentWillReceiveProps(props);
+            const todayCalls = getCallsByModifier(addModifierSpy, 'today');
+            expect(todayCalls.length).to.equal(0);
+          });
+        });
+
+        describe('this.today is no longer today', () => {
+          it('calls deleteModifier with this.today and `today` modifier', () => {
+            const deleteModifierSpy =
+              sinon.spy(SingleDatePicker.prototype, 'deleteModifier');
+            const wrapper = shallow(<SingleDatePicker {...props} />);
+            wrapper.instance().today = moment().subtract(1, 'day');
+            wrapper.instance().componentWillReceiveProps(props);
+            const todayCalls = getCallsByModifier(deleteModifierSpy, 'today');
+            expect(todayCalls.length).to.equal(1);
+          });
+
+          it('calls addModifier with new today and `today` modifiers', () => {
+            const addModifierSpy = sinon.spy(SingleDatePicker.prototype, 'addModifier');
+            const wrapper = shallow(<SingleDatePicker {...props} />);
+            wrapper.instance().today = moment().subtract(1, 'day');
+            wrapper.instance().componentWillReceiveProps(props);
+            const todayCalls = getCallsByModifier(addModifierSpy, 'today');
+            expect(todayCalls.length).to.equal(1);
+          });
         });
       });
     });
@@ -621,6 +858,44 @@ describe('SingleDatePicker', () => {
       wrapper.instance().onDayMouseEnter(today);
       expect(wrapper.state().hoverDate).to.equal(today);
     });
+
+    describe('modifiers', () => {
+      it('calls addModifier', () => {
+        const addModifierSpy = sinon.spy(SingleDatePicker.prototype, 'addModifier');
+        const wrapper = shallow(
+          <SingleDatePicker
+            onDateChange={sinon.stub()}
+            onFocusChange={sinon.stub()}
+          />,
+        );
+        wrapper.setState({
+          hoverDate: null,
+        });
+        addModifierSpy.reset();
+        wrapper.instance().onDayMouseEnter(today);
+        expect(addModifierSpy.callCount).to.equal(1);
+        expect(addModifierSpy.getCall(0).args[1]).to.equal(today);
+        expect(addModifierSpy.getCall(0).args[2]).to.equal('hovered');
+      });
+
+      it('calls deleteModifier', () => {
+        const deleteModifierSpy = sinon.spy(SingleDatePicker.prototype, 'deleteModifier');
+        const wrapper = shallow(
+          <SingleDatePicker
+            onDateChange={sinon.stub()}
+            onFocusChange={sinon.stub()}
+          />,
+        );
+        wrapper.setState({
+          hoverDate: today,
+        });
+        deleteModifierSpy.reset();
+        wrapper.instance().onDayMouseEnter(moment().add(10, 'days'));
+        expect(deleteModifierSpy.callCount).to.equal(1);
+        expect(deleteModifierSpy.getCall(0).args[1]).to.equal(today);
+        expect(deleteModifierSpy.getCall(0).args[2]).to.equal('hovered');
+      });
+    });
   });
 
   describe('#onDayMouseLeave', () => {
@@ -630,6 +905,24 @@ describe('SingleDatePicker', () => {
       );
       wrapper.instance().onDayMouseLeave();
       expect(wrapper.state().hoverDate).to.equal(null);
+    });
+
+    it('calls deleteModifier with hoverDate and `hovered` modifier', () => {
+      const deleteModifierSpy = sinon.spy(SingleDatePicker.prototype, 'deleteModifier');
+      const wrapper = shallow(
+        <SingleDatePicker
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />,
+      );
+      wrapper.setState({
+        hoverDate: today,
+      });
+      deleteModifierSpy.reset();
+      wrapper.instance().onDayMouseLeave(today);
+      expect(deleteModifierSpy.callCount).to.equal(1);
+      expect(deleteModifierSpy.getCall(0).args[1]).to.equal(today);
+      expect(deleteModifierSpy.getCall(0).args[2]).to.equal('hovered');
     });
   });
 
@@ -847,6 +1140,159 @@ describe('SingleDatePicker', () => {
     });
   });
 
+  describe('#onPrevMonthClick', () => {
+    it('updates state.currentMonth to subtract 1 month', () => {
+      const wrapper = shallow(
+        <SingleDatePicker
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />,
+      );
+      wrapper.setState({
+        currentMonth: today,
+      });
+      wrapper.instance().onPrevMonthClick();
+      expect(wrapper.state().currentMonth.month()).to.equal(today.month() - 1);
+    });
+
+    it('new visibleDays has previous month', () => {
+      const numberOfMonths = 2;
+      const wrapper = shallow(
+        <SingleDatePicker
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+          numberOfMonths={numberOfMonths}
+        />,
+      );
+      wrapper.setState({
+        currentMonth: today,
+      });
+      const newMonth = moment().subtract(1, 'month');
+      wrapper.instance().onPrevMonthClick();
+      const visibleDays = Object.keys(wrapper.state().visibleDays);
+      expect(visibleDays).to.include(toISOMonthString(newMonth));
+    });
+
+    it('new visibleDays does not have current last month', () => {
+      const numberOfMonths = 2;
+      const wrapper = shallow(
+        <SingleDatePicker
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+          numberOfMonths={numberOfMonths}
+        />,
+      );
+      wrapper.setState({
+        currentMonth: today,
+      });
+      wrapper.instance().onPrevMonthClick();
+      const visibleDays = Object.keys(wrapper.state().visibleDays);
+      expect(visibleDays).to.not.include(toISOMonthString(moment().add(numberOfMonths, 'months')));
+    });
+
+    it('calls this.getModifiers', () => {
+      const getModifiersSpy = sinon.spy(SingleDatePicker.prototype, 'getModifiers');
+      const wrapper = shallow(
+        <SingleDatePicker
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />,
+      );
+      getModifiersSpy.reset();
+      wrapper.instance().onPrevMonthClick();
+      expect(getModifiersSpy.callCount).to.equal(1);
+    });
+
+    it('calls props.onPrevMonthClick', () => {
+      const onPrevMonthClickStub = sinon.stub();
+      const wrapper = shallow(
+        <SingleDatePicker
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+          onPrevMonthClick={onPrevMonthClickStub}
+        />,
+      );
+      wrapper.instance().onPrevMonthClick();
+      expect(onPrevMonthClickStub.callCount).to.equal(1);
+    });
+  });
+
+  describe('#onNextMonthClick', () => {
+    it('updates state.currentMonth to add 1 month', () => {
+      const wrapper = shallow(
+        <SingleDatePicker
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />,
+      );
+      wrapper.setState({
+        currentMonth: today,
+      });
+      wrapper.instance().onNextMonthClick();
+      expect(wrapper.state().currentMonth.month()).to.equal(today.month() + 1);
+    });
+
+    it('new visibleDays has next month', () => {
+      const numberOfMonths = 2;
+      const wrapper = shallow(
+        <SingleDatePicker
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+          numberOfMonths={numberOfMonths}
+        />,
+      );
+      wrapper.setState({
+        currentMonth: today,
+      });
+      const newMonth = moment().add(numberOfMonths + 1, 'months');
+      wrapper.instance().onNextMonthClick();
+      const visibleDays = Object.keys(wrapper.state().visibleDays);
+      expect(visibleDays).to.include(toISOMonthString(newMonth));
+    });
+
+    it('new visibleDays does not have current month', () => {
+      const wrapper = shallow(
+        <SingleDatePicker
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+          numberOfMonths={2}
+        />,
+      );
+      wrapper.setState({
+        currentMonth: today,
+      });
+      wrapper.instance().onNextMonthClick();
+      const visibleDays = Object.keys(wrapper.state().visibleDays);
+      expect(visibleDays).to.not.include(toISOMonthString(today.clone().subtract(1, 'month')));
+    });
+
+    it('calls this.getModifiers', () => {
+      const getModifiersSpy = sinon.spy(SingleDatePicker.prototype, 'getModifiers');
+      const wrapper = shallow(
+        <SingleDatePicker
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />,
+      );
+      getModifiersSpy.reset();
+      wrapper.instance().onNextMonthClick();
+      expect(getModifiersSpy.callCount).to.equal(1);
+    });
+
+    it('calls props.onNextMonthClick', () => {
+      const onNextMonthClickStub = sinon.stub();
+      const wrapper = shallow(
+        <SingleDatePicker
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+          onNextMonthClick={onNextMonthClickStub}
+        />,
+      );
+      wrapper.instance().onNextMonthClick();
+      expect(onNextMonthClickStub.callCount).to.equal(1);
+    });
+  });
+
   describe('#getFirstFocusableDay', () => {
     it('returns first day of arg month if not blocked and props.date is falsey', () => {
       sinon.stub(SingleDatePicker.prototype, 'isBlocked').returns(false);
@@ -877,9 +1323,7 @@ describe('SingleDatePicker', () => {
 
     describe('desired date is blocked', () => {
       it('returns first unblocked visible day if exists', () => {
-        const isBlockedStub = sinon.stub(SingleDatePicker.prototype, 'isBlocked').returns(true);
-        isBlockedStub.onCall(8).returns(false);
-
+        const isBlockedStub = sinon.stub(SingleDatePicker.prototype, 'isBlocked');
         const date = moment().endOf('month').subtract(10, 'days');
         const wrapper = shallow(
           <SingleDatePicker
@@ -888,9 +1332,342 @@ describe('SingleDatePicker', () => {
             onDateChange={sinon.stub()}
           />,
         );
+
+        isBlockedStub.reset();
+        isBlockedStub.returns(true);
+        isBlockedStub.onCall(8).returns(false);
         const firstFocusableDay = wrapper.instance().getFirstFocusableDay(today);
         expect(firstFocusableDay.isSame(date.clone().add(8, 'days'), 'day')).to.equal(true);
       });
+    });
+  });
+
+  describe('#getModifiers', () => {
+    it('return object has the same number of days as input', () => {
+      const monthISO = toISOMonthString(today);
+      const visibleDays = {
+        [monthISO]: [today, moment().add(1, 'day'), moment().add(2, 'days')],
+      };
+      const wrapper = shallow(
+        <SingleDatePicker
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />,
+      );
+      const modifiers = wrapper.instance().getModifiers(visibleDays);
+      expect(Object.keys(modifiers[monthISO]).length).to.equal(visibleDays[monthISO].length);
+    });
+
+    it('calls this.getModifiersForDay for each day in input', () => {
+      const getModifiersForDaySpy =
+        sinon.spy(SingleDatePicker.prototype, 'getModifiersForDay');
+      const monthISO = toISOMonthString(today);
+      const visibleDays = {
+        [monthISO]: [today, moment().add(1, 'day'), moment().add(2, 'days')],
+      };
+      const wrapper = shallow(
+        <SingleDatePicker
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />,
+      );
+      getModifiersForDaySpy.reset();
+      wrapper.instance().getModifiers(visibleDays);
+
+      expect(getModifiersForDaySpy.callCount).to.equal(visibleDays[monthISO].length);
+    });
+  });
+
+  describe('#getModifiersForDay', () => {
+    it('only contains `valid` if all modifier methods return false', () => {
+      sinon.stub(SingleDatePicker.prototype, 'isToday').returns(false);
+      sinon.stub(SingleDatePicker.prototype, 'isBlocked').returns(false);
+      const isDayBlockedStub = sinon.stub().returns(false);
+      const isOutsideRangeStub = sinon.stub().returns(false);
+      const isDayHighlightedStub = sinon.stub().returns(false);
+      sinon.stub(SingleDatePicker.prototype, 'isSelected').returns(false);
+      sinon.stub(SingleDatePicker.prototype, 'isHovered').returns(false);
+      const wrapper = shallow(
+        <SingleDatePicker
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+          isDayBlocked={isDayBlockedStub}
+          isOutsideRange={isOutsideRangeStub}
+          isDayHighlighted={isDayHighlightedStub}
+        />,
+      );
+      const modifiers = wrapper.instance().getModifiersForDay(moment());
+      expect(modifiers.size).to.equal(1);
+      expect(modifiers.has('valid')).to.equal(true);
+    });
+
+    it('contains `today` if this.isToday returns true', () => {
+      sinon.stub(SingleDatePicker.prototype, 'isToday').returns(true);
+      const wrapper = shallow(
+        <SingleDatePicker
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />,
+      );
+      const modifiers = wrapper.instance().getModifiersForDay(moment());
+      expect(modifiers.has('today')).to.equal(true);
+    });
+
+    it('contains `blocked` if this.isBlocked returns true', () => {
+      sinon.stub(SingleDatePicker.prototype, 'isBlocked').returns(true);
+      const wrapper = shallow(
+        <SingleDatePicker
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />,
+      );
+      const modifiers = wrapper.instance().getModifiersForDay(moment());
+      expect(modifiers.has('blocked')).to.equal(true);
+    });
+
+    it('contains `blocked-calendar` if props.isDayBlocked returns true', () => {
+      const isDayBlockedStub = sinon.stub().returns(true);
+      const wrapper = shallow(
+        <SingleDatePicker
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+          isDayBlocked={isDayBlockedStub}
+        />,
+      );
+      const modifiers = wrapper.instance().getModifiersForDay(moment());
+      expect(modifiers.has('blocked-calendar')).to.equal(true);
+    });
+
+    it('contains `blocked-out-of-range` if props.isOutsideRange returns true', () => {
+      const isOutsideRangeStub = sinon.stub().returns(true);
+      const wrapper = shallow(
+        <SingleDatePicker
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+          isOutsideRange={isOutsideRangeStub}
+        />,
+      );
+      const modifiers = wrapper.instance().getModifiersForDay(moment());
+      expect(modifiers.has('blocked-out-of-range')).to.equal(true);
+    });
+
+    it('contains `highlighted-calendar` if props.isDayHighlighted returns true', () => {
+      const isDayHighlightedStub = sinon.stub().returns(true);
+      const wrapper = shallow(
+        <SingleDatePicker
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+          isDayHighlighted={isDayHighlightedStub}
+        />,
+      );
+      const modifiers = wrapper.instance().getModifiersForDay(moment());
+      expect(modifiers.has('highlighted-calendar')).to.equal(true);
+    });
+
+    it('contains `valid` if this.isBlocked returns false', () => {
+      sinon.stub(SingleDatePicker.prototype, 'isBlocked').returns(false);
+      const wrapper = shallow(
+        <SingleDatePicker
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />,
+      );
+      const modifiers = wrapper.instance().getModifiersForDay(moment());
+      expect(modifiers.has('valid')).to.equal(true);
+    });
+
+    it('contains `selected` if this.isSelected returns true', () => {
+      sinon.stub(SingleDatePicker.prototype, 'isSelected').returns(true);
+      const wrapper = shallow(
+        <SingleDatePicker
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />,
+      );
+      const modifiers = wrapper.instance().getModifiersForDay(moment());
+      expect(modifiers.has('selected')).to.equal(true);
+    });
+
+    it('contains `hovered` if this.isHovered returns true', () => {
+      sinon.stub(SingleDatePicker.prototype, 'isHovered').returns(true);
+      const wrapper = shallow(
+        <SingleDatePicker
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />,
+      );
+      const modifiers = wrapper.instance().getModifiersForDay(moment());
+      expect(modifiers.has('hovered')).to.equal(true);
+    });
+  });
+
+  describe('#addModifier', () => {
+    it('returns first arg if no day given', () => {
+      const updatedDays = { foo: 'bar' };
+      const wrapper = shallow(
+        <SingleDatePicker
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />,
+      );
+      const modifiers = wrapper.instance().addModifier(updatedDays);
+      expect(modifiers).to.equal(updatedDays);
+    });
+
+    it('returns first arg if day is not visible', () => {
+      const updatedDays = { foo: 'bar' };
+      const wrapper = shallow(
+        <SingleDatePicker
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />,
+      );
+      sinon.stub(isDayVisible, 'default').returns(false);
+      const modifiers = wrapper.instance().addModifier(updatedDays, moment());
+      expect(modifiers).to.equal(updatedDays);
+    });
+
+    it('has day args month ISO as key', () => {
+      const wrapper = shallow(
+        <SingleDatePicker
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />,
+      );
+      const modifiers = wrapper.instance().addModifier({}, today);
+      expect(Object.keys(modifiers)).to.contain(toISOMonthString(today));
+    });
+
+    it('has day ISO as key one layer down', () => {
+      const wrapper = shallow(
+        <SingleDatePicker
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />,
+      );
+      const modifiers = wrapper.instance().addModifier({}, today);
+      expect(Object.keys(modifiers[toISOMonthString(today)])).to.contain(toISODateString(today));
+    });
+
+    it('return value no longer has modifier arg for day if was in first arg', () => {
+      const modifierToAdd = 'foo';
+      const monthISO = toISOMonthString(today);
+      const todayISO = toISODateString(today);
+      const updatedDays = {
+        [monthISO]: { [todayISO]: new Set(['bar', 'baz']) },
+      };
+      const wrapper = shallow(
+        <SingleDatePicker
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />,
+      );
+      const modifiers = wrapper.instance().addModifier(updatedDays, today, modifierToAdd);
+      expect(Array.from(modifiers[monthISO][todayISO])).to.contain(modifierToAdd);
+    });
+
+    it('return value no longer has modifier arg for day if was in state', () => {
+      const modifierToAdd = 'foo';
+      const monthISO = toISOMonthString(today);
+      const todayISO = toISODateString(today);
+      const wrapper = shallow(
+        <SingleDatePicker
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />,
+      );
+      wrapper.setState({
+        visibleDays: {
+          [monthISO]: { [todayISO]: new Set(['bar', 'baz']) },
+        },
+      });
+      const modifiers = wrapper.instance().addModifier({}, today, modifierToAdd);
+      expect(Array.from(modifiers[monthISO][todayISO])).to.contain(modifierToAdd);
+    });
+  });
+
+  describe('#deleteModifier', () => {
+    it('returns first arg if no day given', () => {
+      const updatedDays = { foo: 'bar' };
+      const wrapper = shallow(
+        <SingleDatePicker
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />,
+      );
+      const modifiers = wrapper.instance().deleteModifier(updatedDays);
+      expect(modifiers).to.equal(updatedDays);
+    });
+
+    it('returns first arg if day is not visible', () => {
+      const updatedDays = { foo: 'bar' };
+      const wrapper = shallow(
+        <SingleDatePicker
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />,
+      );
+      sinon.stub(isDayVisible, 'default').returns(false);
+      const modifiers = wrapper.instance().deleteModifier(updatedDays, moment());
+      expect(modifiers).to.equal(updatedDays);
+    });
+
+    it('has day args month ISO as key', () => {
+      const wrapper = shallow(
+        <SingleDatePicker
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />,
+      );
+      const modifiers = wrapper.instance().deleteModifier({}, today);
+      expect(Object.keys(modifiers)).to.contain(toISOMonthString(today));
+    });
+
+    it('has day ISO as key one layer down', () => {
+      const wrapper = shallow(
+        <SingleDatePicker
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />,
+      );
+      const modifiers = wrapper.instance().addModifier({}, today);
+      expect(Object.keys(modifiers[toISOMonthString(today)])).to.contain(toISODateString(today));
+    });
+
+    it('return value no longer has modifier arg for day if was in first arg', () => {
+      const modifierToDelete = 'foo';
+      const monthISO = toISOMonthString(today);
+      const todayISO = toISODateString(today);
+      const updatedDays = {
+        [monthISO]: { [todayISO]: new Set([modifierToDelete, 'bar', 'baz']) },
+      };
+      const wrapper = shallow(
+        <SingleDatePicker
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />,
+      );
+      const modifiers = wrapper.instance().deleteModifier(updatedDays, today, modifierToDelete);
+      expect(Array.from(modifiers[monthISO][todayISO])).to.not.contain(modifierToDelete);
+    });
+
+    it('return value no longer has modifier arg for day if was in state', () => {
+      const modifierToDelete = 'foo';
+      const monthISO = toISOMonthString(today);
+      const todayISO = toISODateString(today);
+      const wrapper = shallow(
+        <SingleDatePicker
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />,
+      );
+      wrapper.setState({
+        visibleDays: {
+          [monthISO]: { [todayISO]: new Set([modifierToDelete, 'bar', 'baz']) },
+        },
+      });
+      const modifiers = wrapper.instance().deleteModifier({}, today, modifierToDelete);
+      expect(Array.from(modifiers[monthISO][todayISO])).to.not.contain(modifierToDelete);
     });
   });
 
@@ -1077,18 +1854,18 @@ describe('SingleDatePicker', () => {
   describe('initialVisibleMonth', () => {
     describe('initialVisibleMonth is passed in', () => {
       it('DayPicker.props.initialVisibleMonth is equal to initialVisibleMonth', () => {
-        const initialVisibleMonth = () => {};
+        const initialVisibleMonth = moment().add(7, 'months');
         const wrapper = shallow(
           <SingleDatePicker
             id="date"
             onDateChange={() => {}}
             onFocusChange={() => {}}
-            initialVisibleMonth={initialVisibleMonth}
+            initialVisibleMonth={() => initialVisibleMonth}
             focused
           />,
         );
         const dayPicker = wrapper.find(DayPicker);
-        expect(dayPicker.props().initialVisibleMonth).to.equal(initialVisibleMonth);
+        expect(dayPicker.props().initialVisibleMonth()).to.equal(initialVisibleMonth);
       });
     });
 
@@ -1108,7 +1885,7 @@ describe('SingleDatePicker', () => {
         expect(dayPicker.props().initialVisibleMonth()).to.equal(date);
       });
 
-      it('DayPickerRangeController.props.initialVisibleMonth evaluates to today if !startDate && !endDate', () => {
+      it('SingleDatePicker.props.initialVisibleMonth evaluates to today if !date', () => {
         const wrapper = shallow(
           <SingleDatePicker
             id="date"

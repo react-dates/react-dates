@@ -118,7 +118,7 @@ storiesOf('DRP - Calendar Props', module)
   ))
   .addWithInfo('with month specified on open', () => (
     <DateRangePickerWrapper
-      initialVisibleMonth={() => moment('04 2017', 'MM YYYY')}
+      initialVisibleMonth={() => moment().add(10, 'months')}
       autoFocus
     />
   ))

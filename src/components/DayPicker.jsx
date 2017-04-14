@@ -23,6 +23,7 @@ import getTransformStyles from '../utils/getTransformStyles';
 import getCalendarMonthWidth from '../utils/getCalendarMonthWidth';
 import isTouchDevice from '../utils/isTouchDevice';
 import getActiveElement from '../utils/getActiveElement';
+import isDayVisible from '../utils/isDayVisible';
 
 import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
 
@@ -382,10 +383,6 @@ export default class DayPicker extends React.Component {
 
     if (e) e.preventDefault();
 
-    if (this.props.onPrevMonthClick) {
-      this.props.onPrevMonthClick(e);
-    }
-
     let translationValue =
       this.isVertical() ? this.getMonthHeightByIndex(0) : this.dayPickerWidth;
 
@@ -414,10 +411,6 @@ export default class DayPicker extends React.Component {
 
     if (e) e.preventDefault();
 
-    if (this.props.onNextMonthClick) {
-      this.props.onNextMonthClick(e);
-    }
-
     let translationValue =
       this.isVertical() ? -this.getMonthHeightByIndex(1) : -this.dayPickerWidth;
 
@@ -434,14 +427,14 @@ export default class DayPicker extends React.Component {
   }
 
   getFocusedDay(newMonth) {
-    const { getFirstFocusableDay } = this.props;
+    const { getFirstFocusableDay, numberOfMonths } = this.props;
 
     let focusedDate;
     if (getFirstFocusableDay) {
       focusedDate = getFirstFocusableDay(newMonth);
     }
 
-    if (newMonth && (!focusedDate || !this.isDayVisible(focusedDate, newMonth))) {
+    if (newMonth && (!focusedDate || !isDayVisible(focusedDate, newMonth, numberOfMonths))) {
       focusedDate = newMonth.clone().startOf('month');
     }
 
@@ -453,11 +446,13 @@ export default class DayPicker extends React.Component {
   }
 
   maybeTransitionNextMonth(newFocusedDate) {
-    const { focusedDate } = this.state;
+    const { numberOfMonths } = this.props;
+    const { currentMonth, focusedDate } = this.state;
 
     const newFocusedDateMonth = newFocusedDate.month();
     const focusedDateMonth = focusedDate.month();
-    if (newFocusedDateMonth !== focusedDateMonth && !this.isDayVisible(newFocusedDate)) {
+    const isNewFocusedDateVisible = isDayVisible(newFocusedDate, currentMonth, numberOfMonths);
+    if (newFocusedDateMonth !== focusedDateMonth && !isNewFocusedDateVisible) {
       this.onNextMonthClick(newFocusedDate);
       return true;
     }
@@ -466,11 +461,13 @@ export default class DayPicker extends React.Component {
   }
 
   maybeTransitionPrevMonth(newFocusedDate) {
-    const { focusedDate } = this.state;
+    const { numberOfMonths } = this.props;
+    const { currentMonth, focusedDate } = this.state;
 
     const newFocusedDateMonth = newFocusedDate.month();
     const focusedDateMonth = focusedDate.month();
-    if (newFocusedDateMonth !== focusedDateMonth && !this.isDayVisible(newFocusedDate)) {
+    const isNewFocusedDateVisible = isDayVisible(newFocusedDate, currentMonth, numberOfMonths);
+    if (newFocusedDateMonth !== focusedDateMonth && !isNewFocusedDateVisible) {
       this.onPrevMonthClick(newFocusedDate);
       return true;
     }
@@ -484,17 +481,6 @@ export default class DayPicker extends React.Component {
     this.setState({
       scrollableMonthMultiple: this.state.scrollableMonthMultiple + 1,
     });
-  }
-
-  isDayVisible(day, newMonth) {
-    const { numberOfMonths } = this.props;
-    const { currentMonth } = this.state;
-
-    const month = newMonth || currentMonth;
-    const firstDayOfFirstMonth = month.clone().startOf('month');
-    const lastDayOfLastMonth = month.clone().add(numberOfMonths - 1, 'months').endOf('month');
-
-    return !day.isBefore(firstDayOfFirstMonth) && !day.isAfter(lastDayOfLastMonth);
   }
 
   isHorizontal() {
@@ -517,6 +503,11 @@ export default class DayPicker extends React.Component {
 
   updateStateAfterMonthTransition() {
     const {
+      onPrevMonthClick,
+      onNextMonthClick,
+    } = this.props;
+
+    const {
       currentMonth,
       monthTransition,
       focusedDate,
@@ -528,8 +519,10 @@ export default class DayPicker extends React.Component {
 
     const newMonth = currentMonth.clone();
     if (monthTransition === PREV_TRANSITION) {
+      if (onPrevMonthClick) onPrevMonthClick();
       newMonth.subtract(1, 'month');
     } else if (monthTransition === NEXT_TRANSITION) {
+      if (onNextMonthClick) onNextMonthClick();
       newMonth.add(1, 'month');
     }
 

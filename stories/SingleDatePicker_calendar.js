@@ -95,7 +95,7 @@ storiesOf('SDP - Calendar Props', module)
   ))
   .addWithInfo('with month specified on open', () => (
     <SingleDatePickerWrapper
-      initialVisibleMonth={() => moment('01 2017', 'MM YYYY')}
+      initialVisibleMonth={() => moment().add(10, 'months')}
       autoFocus
     />
   ))

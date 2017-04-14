@@ -1,8 +1,8 @@
 import moment from 'moment';
 
-import isSameDay from './isSameDay';
+import isAfterDay from './isAfterDay';
 
 export default function isInclusivelyBeforeDay(a, b) {
   if (!moment.isMoment(a) || !moment.isMoment(b)) return false;
-  return a.isBefore(b) || isSameDay(a, b);
+  return !isAfterDay(a, b);
 }
