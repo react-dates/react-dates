@@ -110,7 +110,7 @@
     "react-portal": "^3.0.0"
   },
   "peerDependencies": {
-    "moment": "(2.10 - 2.14 || ^2.15.1) && < 2.18.0",
+    "moment": "(2.10 - 2.14 || ^2.15.1) && < 2.18.0 || ~2.18.0",
     "react": ">=0.14",
     "react-dom": ">=0.14",
     "react-addons-shallow-compare": ">=0.14"
