@@ -56,6 +56,12 @@
   }
 }
 
+.DayPicker__week-header--rtl {
+  ul {
+    padding-right: 0;
+  }
+}
+
 .DayPicker--vertical .DayPicker__week-header {
   left: 50%;
 }

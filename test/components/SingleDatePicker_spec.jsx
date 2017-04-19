@@ -76,6 +76,19 @@ describe('SingleDatePicker', () => {
         expect(wrapper.find('.SingleDatePicker__picker')).to.have.lengthOf(1);
       });
 
+      it('has .SingleDatePicker__picker--rtl class', () => {
+        const wrapper = shallow(
+          <SingleDatePicker
+            id="date"
+            onDateChange={() => {}}
+            onFocusChange={() => {}}
+            focused
+            isRTL
+          />,
+        );
+        expect(wrapper.find('.SingleDatePicker__picker--rtl')).to.have.lengthOf(1);
+      });
+
       describe('props.focused === false', () => {
         it('does not render a <DayPicker>', () => {
           const wrapper = shallow(

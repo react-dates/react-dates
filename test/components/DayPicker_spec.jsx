@@ -55,6 +55,14 @@ describe('DayPicker', () => {
           expect(wrapper.find('.DayPicker__week-header')).to.have.lengthOf(1);
         });
       });
+
+      describe('props.isRTL === true', () => {
+        it('has .DayPicker__week-header--rtl element', () => {
+          const wrapper = shallow(<DayPicker isRTL />);
+          const firstChildOf = wrapper.find('.DayPicker__week-header--rtl').first();
+          expect(firstChildOf.is('.DayPicker__week-header--rtl')).to.equal(true);
+        });
+      });
     });
 
     describe('transitionContainer', () => {

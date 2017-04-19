@@ -60,6 +60,7 @@ const defaultProps = {
   renderCalendarInfo: null,
   hideKeyboardShortcutsPanel: false,
   daySize: DAY_SIZE,
+  isRTL: false,
 
   // navigation related props
   navPrev: null,
@@ -251,7 +252,7 @@ export default class SingleDatePicker extends React.Component {
   }
 
   getDayPickerContainerClasses() {
-    const { orientation, withPortal, withFullScreenPortal, anchorDirection } = this.props;
+    const { orientation, withPortal, withFullScreenPortal, anchorDirection, isRTL } = this.props;
     const { hoverDate } = this.state;
 
     const dayPickerClassName = cx('SingleDatePicker__picker', {
@@ -262,6 +263,7 @@ export default class SingleDatePicker extends React.Component {
       'SingleDatePicker__picker--portal': withPortal || withFullScreenPortal,
       'SingleDatePicker__picker--full-screen-portal': withFullScreenPortal,
       'SingleDatePicker__picker--valid-date-hovered': hoverDate && !this.isBlocked(hoverDate),
+      'SingleDatePicker__picker--rtl': isRTL,
     });
 
     return dayPickerClassName;
@@ -397,6 +399,7 @@ export default class SingleDatePicker extends React.Component {
       customCloseIcon,
       phrases,
       daySize,
+      isRTL,
     } = this.props;
     const { dayPickerContainerStyles, isDayPickerFocused } = this.state;
 
@@ -446,6 +449,7 @@ export default class SingleDatePicker extends React.Component {
           onBlur={this.onDayPickerBlur}
           phrases={phrases}
           daySize={daySize}
+          isRTL={isRTL}
         />
 
         {withFullScreenPortal && (
@@ -477,6 +481,7 @@ export default class SingleDatePicker extends React.Component {
       withPortal,
       withFullScreenPortal,
       screenReaderInputMessage,
+      isRTL,
     } = this.props;
 
     const { isInputFocused } = this.state;
@@ -508,6 +513,7 @@ export default class SingleDatePicker extends React.Component {
             onKeyDownArrowDown={this.onDayPickerFocus}
             screenReaderMessage={screenReaderInputMessage}
             phrases={phrases}
+            isRTL={isRTL}
           />
 
           {this.maybeRenderDayPickerWithPortal()}

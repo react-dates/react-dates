@@ -24,6 +24,9 @@ storiesOf('SingleDatePicker (SDP)', module)
   .addWithInfo('default', () => (
     <SingleDatePickerWrapper />
   ))
+  .addWithInfo('with RTL support', () => (
+    <SingleDatePickerWrapper isRTL />
+  ))
   .addWithInfo('as part of a form', () => (
     <div>
       <SingleDatePickerWrapper />

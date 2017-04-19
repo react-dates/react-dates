@@ -50,6 +50,7 @@ const propTypes = forbidExtraProps({
   renderCalendarInfo: PropTypes.func,
   hideKeyboardShortcutsPanel: PropTypes.bool,
   daySize: nonNegativeInteger,
+  isRTL: PropTypes.bool,
 
   // navigation props
   navPrev: PropTypes.node,
@@ -87,6 +88,7 @@ export const defaultProps = {
   renderCalendarInfo: null,
   hideKeyboardShortcutsPanel: false,
   daySize: DAY_SIZE,
+  isRTL: false,
 
   // navigation props
   navPrev: null,
@@ -171,6 +173,7 @@ export default class DayPicker extends React.Component {
     super(props);
 
     const currentMonth = props.hidden ? moment() : props.initialVisibleMonth();
+    const translationValueRTL = -getCalendarMonthWidth(props.daySize);
 
     let focusedDate = currentMonth.clone().startOf('month');
     if (props.getFirstFocusableDay) {
@@ -179,9 +182,10 @@ export default class DayPicker extends React.Component {
 
     this.hasSetInitialVisibleMonth = !props.hidden;
     this.state = {
+      translationValueRTL,
       currentMonth,
       monthTransition: null,
-      translationValue: 0,
+      translationValue: props.isRTL && this.isHorizontal() ? translationValueRTL : 0,
       scrollableMonthMultiple: 1,
       calendarMonthWidth: getCalendarMonthWidth(props.daySize),
       focusedDate: (!props.hidden || props.isFocused) ? focusedDate : null,
@@ -367,14 +371,21 @@ export default class DayPicker extends React.Component {
   }
 
   onPrevMonthClick(nextFocusedDate, e) {
+    const { translationValueRTL } = this.state;
+    const { isRTL } = this.props;
+
     if (e) e.preventDefault();
 
     if (this.props.onPrevMonthClick) {
       this.props.onPrevMonthClick(e);
     }
 
-    const translationValue =
+    let translationValue =
       this.isVertical() ? this.getMonthHeightByIndex(0) : this.dayPickerWidth;
+
+    if (isRTL && this.isHorizontal()) {
+      translationValue = translationValueRTL - this.dayPickerWidth;
+    }
 
     // The first CalendarMonth is always positioned absolute at top: 0 or left: 0
     // so we need to transform it to the appropriate location before the animation.
@@ -393,13 +404,21 @@ export default class DayPicker extends React.Component {
   }
 
   onNextMonthClick(nextFocusedDate, e) {
+    const { translationValueRTL } = this.state;
+    const { isRTL } = this.props;
+
     if (e) e.preventDefault();
+
     if (this.props.onNextMonthClick) {
       this.props.onNextMonthClick(e);
     }
 
-    const translationValue =
+    let translationValue =
       this.isVertical() ? -this.getMonthHeightByIndex(1) : -this.dayPickerWidth;
+
+    if (isRTL && this.isHorizontal()) {
+      translationValue = this.dayPickerWidth + translationValueRTL;
+    }
 
     this.setState({
       monthTransition: NEXT_TRANSITION,
@@ -498,6 +517,8 @@ export default class DayPicker extends React.Component {
       focusedDate,
       nextFocusedDate,
       withMouseInteractions,
+      translationValueRTL,
+      withMouseInteractions,
     } = this.state;
 
     if (!monthTransition) return;
@@ -526,7 +547,7 @@ export default class DayPicker extends React.Component {
     this.setState({
       currentMonth: newMonth,
       monthTransition: null,
-      translationValue: 0,
+      translationValue: (this.props.isRTL && this.isHorizontal()) ? translationValueRTL : 0,
       nextFocusedDate: null,
       focusedDate: newFocusedDate,
     }, () => {
@@ -561,8 +582,14 @@ export default class DayPicker extends React.Component {
   }
 
   translateFirstDayPickerForAnimation(translationValue) {
+    const shouldRTL = this.props.isRTL && this.isHorizontal();
+    let convertedTranslationValue = -translationValue;
+    if (shouldRTL) {
+      const positiveTranslationValue = Math.abs(translationValue - this.state.translationValueRTL);
+      convertedTranslationValue = positiveTranslationValue;
+    }
     const transformType = this.isVertical() ? 'translateY' : 'translateX';
-    const transformValue = `${transformType}(-${translationValue}px)`;
+    const transformValue = `${transformType}(${convertedTranslationValue}px)`;
 
     applyTransformStyles(
       this.transitionContainer.querySelector('.CalendarMonth'),
@@ -597,6 +624,7 @@ export default class DayPicker extends React.Component {
       navNext,
       orientation,
       phrases,
+      isRTL,
     } = this.props;
 
     let onNextMonthClick;
@@ -614,20 +642,18 @@ export default class DayPicker extends React.Component {
         navNext={navNext}
         orientation={orientation}
         phrases={phrases}
+        isRTL={isRTL}
       />
     );
   }
 
   renderWeekHeader(index) {
-    const { daySize, orientation } = this.props;
+    const { daySize, orientation, isRTL } = this.props;
     const { calendarMonthWidth } = this.state;
-
     const verticalScrollable = orientation === VERTICAL_SCROLLABLE;
-
     const horizontalStyle = {
       left: index * calendarMonthWidth,
     };
-
     const verticalStyle = {
       marginLeft: -calendarMonthWidth / 2,
     };
@@ -650,7 +676,7 @@ export default class DayPicker extends React.Component {
 
     return (
       <div
-        className="DayPicker__week-header"
+        className={cx('DayPicker__week-header', { 'DayPicker__week-header--rtl': isRTL })}
         key={`week-${index}`}
         style={style}
       >

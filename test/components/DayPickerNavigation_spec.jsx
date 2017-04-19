@@ -33,6 +33,11 @@ describe('DayPickerNavigation', () => {
         expect(wrapper.find('.DayPickerNavigation__prev')).to.have.lengthOf(1);
       });
 
+      it('has .DayPickerNavigation__prev--rtl class', () => {
+        const wrapper = shallow(<DayPickerNavigation isRTL />);
+        expect(wrapper.find('.DayPickerNavigation__prev--rtl')).to.have.lengthOf(1);
+      });
+
       it('has .DayPickerNavigation__prev on custom icon', () => {
         const wrapper = shallow(<DayPickerNavigation navPrev={<span>Prev</span>} />);
         expect(wrapper.find('.DayPickerNavigation__prev')).to.have.lengthOf(1);
@@ -58,6 +63,11 @@ describe('DayPickerNavigation', () => {
       it('.DayPickerNavigation__next class exists', () => {
         const wrapper = shallow(<DayPickerNavigation />);
         expect(wrapper.find('.DayPickerNavigation__next')).to.have.lengthOf(1);
+      });
+
+      it('.DayPickerNavigation__next--rtl class exists', () => {
+        const wrapper = shallow(<DayPickerNavigation isRTL />);
+        expect(wrapper.find('.DayPickerNavigation__next--rtl')).to.have.lengthOf(1);
       });
 
       it('has .DayPickerNavigation__next class on custom icon', () => {

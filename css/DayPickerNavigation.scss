@@ -42,8 +42,18 @@
     left: 22px;
   }
 
+  .DayPickerNavigation__prev--rtl {  
+    left: auto;
+    right: 22px;
+  }
+
   .DayPickerNavigation__next {
     right: 22px;
+  }
+
+  .DayPickerNavigation__next--rtl {  
+    right: auto;
+    left: 22px;
   }
 
   .DayPickerNavigation__prev--default,

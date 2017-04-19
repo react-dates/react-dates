@@ -11,6 +11,11 @@ describe('SingleDatePickerInput', () => {
       const wrapper = shallow(<SingleDatePickerInput id="date" />);
       expect(wrapper.is('.SingleDatePickerInput')).to.equal(true);
     });
+
+    it('is .SingleDatePickerInput--rtl class', () => {
+      const wrapper = shallow(<SingleDatePickerInput id="date" isRTL />);
+      expect(wrapper.is('.SingleDatePickerInput--rtl')).to.equal(true);
+    });
   });
 
   describe('clear date', () => {

@@ -46,6 +46,7 @@ const propTypes = forbidExtraProps({
   // i18n
   monthFormat: PropTypes.string,
   phrases: PropTypes.shape(getPhrasePropTypes(CalendarDayPhrases)),
+
 });
 
 const defaultProps = {
@@ -69,6 +70,7 @@ const defaultProps = {
   // i18n
   monthFormat: 'MMMM YYYY', // english locale
   phrases: CalendarDayPhrases,
+
 };
 
 function getMonths(initialMonth, numberOfMonths) {

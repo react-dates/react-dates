@@ -38,6 +38,7 @@ export default {
   renderCalendarInfo: PropTypes.func,
   hideKeyboardShortcutsPanel: PropTypes.bool,
   daySize: nonNegativeInteger,
+  isRTL: PropTypes.bool,
 
   // navigation related props
   navPrev: PropTypes.node,
