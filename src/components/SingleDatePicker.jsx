@@ -1,4 +1,4 @@
-import React from 'react';
+import Component from 'inferno-component';
 import moment from 'moment';
 import cx from 'classnames';
 import Portal from 'react-portal';
@@ -18,7 +18,7 @@ import isTouchDevice from '../utils/isTouchDevice';
 import SingleDatePickerInput from './SingleDatePickerInput';
 import DayPicker from './DayPicker';
 
-import CloseButton from '../svg/close.svg';
+import CloseButton from '../svg/close.jsx';
 
 import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
 import isSameDay from '../utils/isSameDay';
@@ -81,7 +81,7 @@ const defaultProps = {
   phrases: SingleDatePickerPhrases,
 };
 
-export default class SingleDatePicker extends React.Component {
+export default class SingleDatePicker extends Component {
   constructor(props) {
     super(props);
     this.state = {

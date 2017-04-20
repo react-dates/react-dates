@@ -1,4 +1,4 @@
-import React from 'react';
+import Component from 'inferno-component';
 import PropTypes from 'prop-types';
 import momentPropTypes from 'react-moment-proptypes';
 import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
@@ -111,7 +111,7 @@ const defaultProps = {
   phrases: DayPickerPhrases,
 };
 
-export default class DayPickerRangeController extends React.Component {
+export default class DayPickerRangeController extends Component {
   constructor(props) {
     super(props);
     this.state = {

@@ -1,4 +1,4 @@
-import React from 'react';
+import Component from 'inferno-component';
 import PropTypes from 'prop-types';
 import momentPropTypes from 'react-moment-proptypes';
 import moment from 'moment';
@@ -79,7 +79,7 @@ const defaultProps = {
   phrases: DateRangePickerPhrases,
 };
 
-class DateRangePickerWrapper extends React.Component {
+class DateRangePickerWrapper extends Component {
   constructor(props) {
     super(props);
 

@@ -1,6 +1,6 @@
 /* eslint react/no-array-index-key: 0 */
 
-import React from 'react';
+import Component from 'inferno-component';
 import PropTypes from 'prop-types';
 import shallowCompare from 'react-addons-shallow-compare';
 import momentPropTypes from 'react-moment-proptypes';
@@ -65,7 +65,7 @@ const defaultProps = {
   phrases: CalendarDayPhrases,
 };
 
-export default class CalendarMonth extends React.Component {
+export default class CalendarMonth extends Component {
   constructor(props) {
     super(props);
     this.state = {

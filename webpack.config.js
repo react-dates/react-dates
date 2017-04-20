@@ -34,22 +34,39 @@ module.exports = {
   },
   module: {
     loaders: [
-      {
-        test: /\.js/,
-        loader: 'babel-loader',
+    {
+        test: /\.(js|jsx)$/,
+        exclude: /(node_modules|bower_components)/,
         include: path.join(__dirname, 'src'),
+        loader: 'babel',
         query: {
-          presets: ['airbnb']
+          presets: ['es2015', 'stage-2'],
+          plugins: [
+          ['inferno', { imports: true }],
+          'syntax-jsx'
+          ],
+          // This is a feature of `babel-loader` for webpack (not Babel itself).
+          // It enables caching results in ./node_modules/.cache/babel-loader/
+          // directory for faster rebuilds.
+          cacheDirectory: true
         }
       },
-      {
-        test: /\.jsx/,
-        loader: 'babel-loader',
-        include: path.join(__dirname, 'src'),
-        query: {
-          presets: ['airbnb']
-        }
-      },
+      // {
+      //   test: /\.js/,
+      //   loader: 'babel-loader',
+      //   include: path.join(__dirname, 'src'),
+      //   query: {
+      //     presets: ['airbnb']
+      //   }
+      // },
+      // {
+      //   test: /\.jsx/,
+      //   loader: 'babel-loader',
+      //   include: path.join(__dirname, 'src'),
+      //   query: {
+      //     presets: ['airbnb']
+      //   }
+      // },
       // react-svg loads svg files as react components
       { test: /\.svg$/, loader: 'babel!react-svg', include: path.join(__dirname, 'src') },
     ],

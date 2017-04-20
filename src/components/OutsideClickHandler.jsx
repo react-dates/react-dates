@@ -1,4 +1,4 @@
-import React from 'react';
+import Component from 'inferno-component';
 import PropTypes from 'prop-types';
 
 // import { forbidExtraProps } from 'airbnb-prop-types'; // TODO: add to propTypes; semver-major
@@ -14,7 +14,7 @@ const defaultProps = {
   onOutsideClick() {},
 };
 
-export default class OutsideClickHandler extends React.Component {
+export default class OutsideClickHandler extends Component {
   constructor(props) {
     super(props);
     this.onOutsideClick = this.onOutsideClick.bind(this);

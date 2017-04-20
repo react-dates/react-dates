@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unused-prop-types */
-import React from 'react';
+import Component from 'inferno-component';
 import PropTypes from 'prop-types';
 import momentPropTypes from 'react-moment-proptypes';
 import { forbidExtraProps } from 'airbnb-prop-types';
@@ -79,7 +79,7 @@ const defaultProps = {
   monthFormat: 'MMMM YYYY',
 };
 
-class DayPickerRangeControllerWrapper extends React.Component {
+class DayPickerRangeControllerWrapper extends Component {
   constructor(props) {
     super(props);
 

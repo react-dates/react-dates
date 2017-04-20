@@ -1,9 +1,9 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import Component from 'inferno-component';
+import Inferno from 'inferno';
 import shallowCompare from 'react-addons-shallow-compare';
 import moment from 'moment';
 import cx from 'classnames';
-import Portal from 'react-portal';
+// import Portal from 'react-portal';
 import { forbidExtraProps } from 'airbnb-prop-types';
 import { addEventListener, removeEventListener } from 'consolidated-events';
 
@@ -18,7 +18,7 @@ import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
 import DateRangePickerInputController from './DateRangePickerInputController';
 import DayPickerRangeController from './DayPickerRangeController';
 
-import CloseButton from '../svg/close.svg';
+import CloseButton from '../svg/close.jsx';
 
 import DateRangePickerShape from '../shapes/DateRangePickerShape';
 
@@ -90,7 +90,9 @@ const defaultProps = {
   phrases: DateRangePickerPhrases,
 };
 
-export default class DateRangePicker extends React.Component {
+Inferno.options.findDOMNodeEnabled = true;
+
+export default class DateRangePicker extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -212,7 +214,7 @@ export default class DateRangePicker extends React.Component {
   }
 
   getDayPickerDOMNode() {
-    return ReactDOM.findDOMNode(this.dayPicker); // eslint-disable-line react/no-find-dom-node
+    return Inferno.findDOMNode(this.dayPicker); // eslint-disable-line react/no-find-dom-node
   }
 
   isOpened() {
@@ -229,20 +231,25 @@ export default class DateRangePicker extends React.Component {
     const { dayPickerContainerStyles } = this.state;
 
     const isAnchoredLeft = anchorDirection === ANCHOR_LEFT;
+    
     if (!withPortal && !withFullScreenPortal) {
-      const containerRect = this.dayPickerContainer.getBoundingClientRect();
-      const currentOffset = dayPickerContainerStyles[anchorDirection] || 0;
-      const containerEdge =
-        isAnchoredLeft ? containerRect[ANCHOR_RIGHT] : containerRect[ANCHOR_LEFT];
+      // kurdin's fix wrap with setTimeout of this.dayPickerContainer
+      setTimeout(() => { 
+        const containerRect = this.dayPickerContainer.getBoundingClientRect();
+        const currentOffset = dayPickerContainerStyles[anchorDirection] || 0;
+        const containerEdge =
+          isAnchoredLeft ? containerRect[ANCHOR_RIGHT] : containerRect[ANCHOR_LEFT];
 
-      this.setState({
-        dayPickerContainerStyles: getResponsiveContainerStyles(
-          anchorDirection,
-          currentOffset,
-          containerEdge,
-          horizontalMargin,
-        ),
-      });
+        this.setState({
+          dayPickerContainerStyles: getResponsiveContainerStyles(
+            anchorDirection,
+            currentOffset,
+            containerEdge,
+            horizontalMargin,
+          ),
+        });
+      }, 0);
+    
     }
   }
 
@@ -260,15 +267,19 @@ export default class DateRangePicker extends React.Component {
     if (!this.isOpened()) {
       return null;
     }
-
+    
+    {/*
     if (withPortal || withFullScreenPortal) {
       return (
+
         <Portal isOpened>
           {this.renderDayPicker()}
         </Portal>
+        
       );
     }
-
+    */}
+    
     return this.renderDayPicker();
   }
 
@@ -434,7 +445,7 @@ export default class DateRangePicker extends React.Component {
             isFocused={isDateRangePickerInputFocused}
           />
 
-          {this.maybeRenderDayPickerWithPortal()}
+          { this.maybeRenderDayPickerWithPortal() }
         </OutsideClickHandler>
       </div>
     );

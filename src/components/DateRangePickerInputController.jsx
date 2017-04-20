@@ -1,4 +1,4 @@
-import React from 'react';
+import Component from 'inferno-component';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 
@@ -101,7 +101,7 @@ const defaultProps = {
   phrases: DateRangePickerInputPhrases,
 };
 
-export default class DateRangePickerInputController extends React.Component {
+export default class DateRangePickerInputController extends Component {
   constructor(props) {
     super(props);
 

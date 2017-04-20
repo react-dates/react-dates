@@ -1,4 +1,4 @@
-import React from 'react';
+import Component from 'inferno-component';
 import PropTypes from 'prop-types';
 import { forbidExtraProps } from 'airbnb-prop-types';
 import cx from 'classnames';
@@ -51,7 +51,7 @@ const defaultProps = {
   isFocused: false,
 };
 
-export default class DateInput extends React.Component {
+export default class DateInput extends Component {
   constructor(props) {
     super(props);
     this.state = {

@@ -1,5 +1,6 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import Component from 'inferno-component';
+
 import shallowCompare from 'react-addons-shallow-compare';
 import momentPropTypes from 'react-moment-proptypes';
 import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
@@ -48,7 +49,7 @@ export function getModifiersForDay(modifiers, day) {
   return day ? Object.keys(modifiers).filter(key => modifiers[key](day)) : [];
 }
 
-export default class CalendarDay extends React.Component {
+export default class CalendarDay extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     return shallowCompare(this, nextProps, nextState);
   }

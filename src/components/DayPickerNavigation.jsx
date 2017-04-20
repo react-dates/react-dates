@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { forbidExtraProps } from 'airbnb-prop-types';
 import cx from 'classnames';
@@ -6,10 +5,10 @@ import cx from 'classnames';
 import { DayPickerNavigationPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 
-import LeftArrow from '../svg/arrow-left.svg';
-import RightArrow from '../svg/arrow-right.svg';
-import ChevronUp from '../svg/chevron-up.svg';
-import ChevronDown from '../svg/chevron-down.svg';
+import LeftArrow from '../svg/arrow-left.jsx';
+import RightArrow from '../svg/arrow-right.jsx';
+import ChevronUp from '../svg/chevron-up.jsx';
+import ChevronDown from '../svg/chevron-down.jsx';
 import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
 
 import {

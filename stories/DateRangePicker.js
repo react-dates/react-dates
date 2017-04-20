@@ -1,6 +1,5 @@
-import React from 'react';
-import moment from 'moment';
-import { storiesOf } from '@kadira/storybook';
+import Component from 'inferno-component';
+// import moment from 'moment';
 
 import DateRangePickerWrapper from '../examples/DateRangePickerWrapper';
 
@@ -20,7 +19,7 @@ const TestInput = props => (
   </div>
 );
 
-class TestWrapper extends React.Component {
+class TestWrapper extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -48,6 +47,9 @@ class TestWrapper extends React.Component {
   }
 }
 
+export { DateRangePickerWrapper, TestInput, TestWrapper };
+
+/*
 storiesOf('DateRangePicker (DRP)', module)
   .addWithInfo('default', () => (
     <DateRangePickerWrapper />
@@ -78,3 +80,4 @@ storiesOf('DateRangePicker (DRP)', module)
       />
     );
   });
+*/

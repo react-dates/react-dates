@@ -1,4 +1,4 @@
-import React from 'react';
+import Component from 'inferno-component';
 import PropTypes from 'prop-types';
 import { forbidExtraProps } from 'airbnb-prop-types';
 import cx from 'classnames';
@@ -7,7 +7,7 @@ import { SingleDatePickerInputPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 
 import DateInput from './DateInput';
-import CloseButton from '../svg/close.svg';
+import CloseButton from '../svg/close.jsx';
 
 const propTypes = forbidExtraProps({
   id: PropTypes.string.isRequired,
@@ -58,7 +58,7 @@ const defaultProps = {
   phrases: SingleDatePickerInputPhrases,
 };
 
-export default class SingleDatePickerInput extends React.Component {
+export default class SingleDatePickerInput extends Component {
   constructor(props) {
     super(props);
     this.state = {

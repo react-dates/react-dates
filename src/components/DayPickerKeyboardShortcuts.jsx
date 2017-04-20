@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 
 import { forbidExtraProps } from 'airbnb-prop-types';
@@ -7,7 +6,7 @@ import cx from 'classnames';
 import { DayPickerKeyboardShortcutsPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 
-import CloseButton from '../svg/close.svg';
+import CloseButton from '../svg/close.jsx';
 
 export const TOP_LEFT = 'top-left';
 export const TOP_RIGHT = 'top-right';
@@ -109,10 +108,14 @@ export default function DayPickerKeyboardShortcuts({
     ? phrases.hideKeyboardShortcutsPanel
     : phrases.showKeyboardShortcutsPanel;
 
+  // kurdin's fix
+  let on = {};
+  // \ kurdin's fix
+
   return (
     <div>
       <button
-        ref={(ref) => { this.showKeyboardShortcutsButton = ref; }}
+        ref={(ref) => { on.showKeyboardShortcutsButton = ref; }}
         className={cx('DayPickerKeyboardShortcuts__show', {
           'DayPickerKeyboardShortcuts__show--bottom-right': buttonLocation === BOTTOM_RIGHT,
           'DayPickerKeyboardShortcuts__show--top-right': buttonLocation === TOP_RIGHT,
@@ -122,7 +125,7 @@ export default function DayPickerKeyboardShortcuts({
         aria-label={toggleButtonText}
         onClick={() => {
           // we want to return focus to this button after closing the keyboard shortcuts panel
-          openKeyboardShortcutsPanel(() => { this.showKeyboardShortcutsButton.focus(); });
+          openKeyboardShortcutsPanel(() => { on.showKeyboardShortcutsButton.focus(); });
         }}
         onMouseUp={(e) => {
           e.currentTarget.blur();

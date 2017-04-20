@@ -1,4 +1,4 @@
-import React from 'react';
+import Component from 'inferno-component';
 import PropTypes from 'prop-types';
 import { forbidExtraProps } from 'airbnb-prop-types';
 import cx from 'classnames';
@@ -7,9 +7,9 @@ import { DateRangePickerInputPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 
 import DateInput from './DateInput';
-import RightArrow from '../svg/arrow-right.svg';
-import CloseButton from '../svg/close.svg';
-import CalendarIcon from '../svg/calendar.svg';
+import RightArrow from '../svg/arrow-right.jsx';
+import CloseButton from '../svg/close.jsx';
+import CalendarIcon from '../svg/calendar.jsx';
 
 import { START_DATE, END_DATE } from '../../constants';
 
@@ -93,7 +93,7 @@ const defaultProps = {
   phrases: DateRangePickerInputPhrases,
 };
 
-export default class DateRangePickerInput extends React.Component {
+export default class DateRangePickerInput extends Component {
   constructor(props) {
     super(props);
     this.state = {
