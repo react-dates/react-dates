@@ -1,7 +1,7 @@
 import Component from 'inferno-component';
 import PropTypes from 'prop-types';
 import momentPropTypes from 'react-moment-proptypes';
-import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
+import { forbidExtraProps } from '../airbnb-prop-types-inferno';
 import moment from 'moment';
 
 import { DayPickerPhrases } from '../defaultPhrases';
@@ -46,7 +46,7 @@ const propTypes = forbidExtraProps({
   orientation: ScrollableOrientationShape,
   withPortal: PropTypes.bool,
   initialVisibleMonth: PropTypes.func,
-  daySize: nonNegativeInteger,
+  daySize: PropTypes.number,
 
   navPrev: PropTypes.node,
   navNext: PropTypes.node,

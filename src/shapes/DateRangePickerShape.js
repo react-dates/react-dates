@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import momentPropTypes from 'react-moment-proptypes';
-import { nonNegativeInteger } from 'airbnb-prop-types';
 
 import { DateRangePickerPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
@@ -40,7 +39,7 @@ export default {
   horizontalMargin: PropTypes.number,
   withPortal: PropTypes.bool,
   withFullScreenPortal: PropTypes.bool,
-  daySize: nonNegativeInteger,
+  daySize: PropTypes.number,
 
   initialVisibleMonth: PropTypes.func,
   numberOfMonths: PropTypes.number,

@@ -2,7 +2,7 @@ import Component from 'inferno-component';
 import PropTypes from 'prop-types';
 import shallowCompare from 'react-addons-shallow-compare';
 import Inferno from 'inferno';
-import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
+import { forbidExtraProps } from '../airbnb-prop-types-inferno';
 import moment from 'moment';
 import cx from 'classnames';
 import throttle from 'lodash.throttle';
@@ -48,7 +48,7 @@ const propTypes = forbidExtraProps({
   hidden: PropTypes.bool,
   initialVisibleMonth: PropTypes.func,
   renderCalendarInfo: PropTypes.func,
-  daySize: nonNegativeInteger,
+  daySize: PropTypes.number,
 
   // navigation props
   navPrev: PropTypes.node,

@@ -1,4 +1,3 @@
-var webpack = require('webpack');
 var path = require('path');
 
 module.exports = {
@@ -9,6 +8,7 @@ module.exports = {
     extensions: ['', '.js', '.jsx']
   },
   output: {
+    publicPath: 'build',
     path: __dirname + '/build',
     filename: 'bundle.js'
   },
@@ -37,7 +37,5 @@ module.exports = {
         }
       }
     ]
-  },
-  plugins: [
-  ], 
+  }
 };

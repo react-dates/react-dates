@@ -4,7 +4,7 @@ import Component from 'inferno-component';
 import PropTypes from 'prop-types';
 import shallowCompare from 'react-addons-shallow-compare';
 import momentPropTypes from 'react-moment-proptypes';
-import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
+import { forbidExtraProps } from '../airbnb-prop-types-inferno';
 import moment from 'moment';
 import cx from 'classnames';
 
@@ -31,7 +31,7 @@ const propTypes = forbidExtraProps({
   enableOutsideDays: PropTypes.bool,
   modifiers: PropTypes.object,
   orientation: ScrollableOrientationShape,
-  daySize: nonNegativeInteger,
+  daySize: PropTypes.number,
   onDayClick: PropTypes.func,
   onDayMouseEnter: PropTypes.func,
   onDayMouseLeave: PropTypes.func,

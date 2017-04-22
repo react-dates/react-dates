@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import { forbidExtraProps } from 'airbnb-prop-types';
+import { forbidExtraProps } from '../airbnb-prop-types-inferno';
 import cx from 'classnames';
 
 import { DayPickerKeyboardShortcutsPhrases } from '../defaultPhrases';

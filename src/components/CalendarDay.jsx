@@ -3,7 +3,7 @@ import Component from 'inferno-component';
 
 import shallowCompare from 'react-addons-shallow-compare';
 import momentPropTypes from 'react-moment-proptypes';
-import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
+import { forbidExtraProps } from '../airbnb-prop-types-inferno';
 import moment from 'moment';
 import cx from 'classnames';
 
@@ -15,7 +15,7 @@ import { BLOCKED_MODIFIER, DAY_SIZE } from '../../constants';
 
 const propTypes = forbidExtraProps({
   day: momentPropTypes.momentObj,
-  daySize: nonNegativeInteger,
+  daySize: PropTypes.number,
   isOutsideDay: PropTypes.bool,
   modifiers: PropTypes.object,
   isFocused: PropTypes.bool,

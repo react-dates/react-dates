@@ -1,8 +1,8 @@
 import Component from 'inferno-component';
 import moment from 'moment';
 import cx from 'classnames';
-import Portal from 'react-portal';
-import { forbidExtraProps } from 'airbnb-prop-types';
+// import Portal from 'react-portal';
+import { forbidExtraProps } from '../airbnb-prop-types-inferno';
 import { addEventListener, removeEventListener } from 'consolidated-events';
 
 import SingleDatePickerShape from '../shapes/SingleDatePickerShape';
@@ -362,11 +362,14 @@ export default class SingleDatePicker extends Component {
     }
 
     if (withPortal || withFullScreenPortal) {
+      return this.renderDayPicker();
+      /*
       return (
         <Portal isOpened>
           {this.renderDayPicker()}
         </Portal>
       );
+      */
     }
 
     return this.renderDayPicker();

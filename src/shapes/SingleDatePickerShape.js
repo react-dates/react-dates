@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import momentPropTypes from 'react-moment-proptypes';
-import { nonNegativeInteger } from 'airbnb-prop-types';
 
 import { SingleDatePickerPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
@@ -36,7 +35,7 @@ export default {
   keepOpenOnDateSelect: PropTypes.bool,
   reopenPickerOnClearDate: PropTypes.bool,
   renderCalendarInfo: PropTypes.func,
-  daySize: nonNegativeInteger,
+  daySize: PropTypes.number,
 
   // navigation related props
   navPrev: PropTypes.node,

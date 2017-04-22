@@ -1,15 +1,7 @@
-// require('./css/flexbox.css');
-
-// var CrossfadeExample = require('./examples/crossfade-example');
-// var FlapBox = require('./examples/flap-box');
-// var ScrollingGroup = require('./examples/scrolling-group');
-// var ToggleBox = require('./examples/toggle-box');
-// var TriggerBox = require('./examples/trigger-box');
-
 import isSameDay from '../src/utils/isSameDay';
 import moment from 'moment';
 
-import { DateRangePickerWrapper } from '../stories/DateRangePicker';
+import DateRangePickerWrapper from '../examples/DateRangePickerWrapper';
 import '../css/styles.scss';
 
 const datesList = [
@@ -96,7 +88,7 @@ const MainComponent = () => {
             isOutsideRange={() => false}
       />
       </Demo>
-      <Demo title="DatePicker Localized" locale="_ru">
+      <Demo title="DatePicker Localized" locale="ru">
       <DateRangePickerWrapper
         showClearDates
         startDatePlaceholderText="Туда"

@@ -1,21 +1,19 @@
 {
-  "name": "react-dates",
+  "name": "inferno-dates",
   "version": "10.1.1",
-  "description": "A responsive and accessible date range picker component built with React",
+  "description": "A responsive and accessible date range picker component built with Inferno",
   "main": "index.js",
   "scripts": {
     "build": "npm run clean && npm run build:js && npm run build:css && npm run build:svg",
     "build:js": "babel src/ -d lib/ --ignore src/components",
     "build:css": "node-sass css/styles.scss lib/css/_datepicker.css",
     "build:svg": "webpack",
+    "build:demo": "./node_modules/.bin/webpack -p --config demo/webpack.config.prod.js",
     "clean": "rimraf lib",
     "precover": "rimraf coverage",
     "cover": "cross-env NODE_ENV=test node --max-old-space-size=2048 $(which nyc) npm run mocha test",
     "lint": "eslint --ext .js,.jsx src test",
     "mocha": "mocha ./test/_helpers",
-    "react:clean": "rimraf node_modules/react node_modules/react-dom node_modules/react-addons-test-utils",
-    "react:14": "rimraf node_modules/.bin/npm && npm run react:clean && npm i react@0.14 react-dom@0.14 react-addons-test-utils@0.14",
-    "react:15": "rimraf node_modules/.bin/npm && npm run react:clean && npm i react@15 react-dom@15 react-addons-test-utils@15",
     "pretest": "npm run --silent lint",
     "tests-only": "npm run mocha --silent test",
     "tests-karma": "karma start",
@@ -41,18 +39,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/airbnb/react-dates.git"
+    "url": "git+https://github.com/kurdin/inferno-dates.git"
   },
-  "author": "Maja Wichrowska <maja.wichrowska@airbnb.com>",
+  "author": "Sergey Kurdin",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/airbnb/react-dates/issues"
+    "url": "https://github.com/kurdin/inferno-dates/issues"
   },
-  "homepage": "https://github.com/airbnb/react-dates#readme",
+  "homepage": "https://github.com/kurdin/inferno-dates#readme",
   "devDependencies": {
-    "@kadira/react-storybook-addon-info": "^3.3.0",
-    "@kadira/storybook": "^2.35.3",
-    "@kadira/storybook-addon-options": "^1.0.2",
     "airbnb-js-shims": "^1.0.1",
     "babel-cli": "^6.22.2",
     "babel-loader": "^6.4.1",
@@ -74,7 +69,6 @@
     "eslint-config-airbnb": "^14.1.0",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
-    "eslint-plugin-react": "^6.10.3",
     "git-directory-deploy": "^1.5.1",
     "imports-loader": "^0.7.1",
     "in-publish": "^2.0.0",
@@ -92,12 +86,6 @@
     "node-sass": "^4.4.0",
     "nyc": "^10.1.2",
     "raw-loader": "^0.5.1",
-    "react": "^15.5.0",
-    "react-addons-shallow-compare": "^15.5.0",
-    "react-addons-test-utils": "^15.5.0",
-    "react-dom": "^15.5.0",
-    "react-svg-loader": "^1.1.1",
-    "react-test-renderer": "^15.5.4",
     "rimraf": "^2.5.4",
     "safe-publish-latest": "^1.1.1",
     "sass-loader": "^4.1.1",
@@ -109,8 +97,7 @@
     "inferno-component": "^3.0.5",
     "inferno-create-class": "^3.0.5",
     "inferno-create-element": "^3.0.5",
-    "inferno-transition-group": "^2.1.0",
-    "proptypes": "^0.14.4"
+    "inferno-transition-group": "^2.1.0"
   },
   "dependencies": {
     "airbnb-prop-types": "^2.4.1",
@@ -122,8 +109,8 @@
     "inferno": "^3.0.5",
     "lodash.throttle": "^4.1.1",
     "prop-types": "^15.5.6",
+    "react-addons-shallow-compare": "^15.5.2",
     "react-moment-proptypes": "^1.3.0",
-    "react-portal": "^3.0.0",
     "webpack-dev-server": "^1.16.1"
   },
   "peerDependencies": {
@@ -132,11 +119,7 @@
     "inferno-create-element": "^3.0.5",
     "inferno-transition-group": "^2.1.0",
     "object-assign": "^4.1.1",
-    "proptypes": "^0.14.4",
-    "moment": "(2.10 - 2.14 || ^2.15.1) && < 2.18.0",
-    "react": ">=0.14",
-    "react-dom": ">=0.14",
-    "react-addons-shallow-compare": ">=0.14"
+    "moment": "(2.10 - 2.14 || ^2.15.1) && < 2.18.0"
   },
   "greenkeeper": {
     "ignore": [

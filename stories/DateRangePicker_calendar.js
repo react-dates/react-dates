@@ -1,6 +1,4 @@
-import React from 'react';
 import moment from 'moment';
-import { storiesOf } from '@kadira/storybook';
 
 import { VERTICAL_ORIENTATION, ANCHOR_RIGHT } from '../constants';
 
@@ -44,6 +42,7 @@ const TestCustomInfoPanel = () => (
   </div>
 );
 
+/*
 storiesOf('DRP - Calendar Props', module)
   .addWithInfo('default', () => (
     <DateRangePickerWrapper autoFocus />
@@ -130,3 +129,4 @@ storiesOf('DRP - Calendar Props', module)
       autoFocus
     />
   ));
+  */

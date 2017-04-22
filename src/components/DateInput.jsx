@@ -1,6 +1,6 @@
 import Component from 'inferno-component';
 import PropTypes from 'prop-types';
-import { forbidExtraProps } from 'airbnb-prop-types';
+import { forbidExtraProps } from '../airbnb-prop-types-inferno';
 import cx from 'classnames';
 import throttle from 'lodash.throttle';
 

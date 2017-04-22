@@ -2,7 +2,7 @@ import Component from 'inferno-component';
 import PropTypes from 'prop-types';
 import shallowCompare from 'react-addons-shallow-compare';
 import momentPropTypes from 'react-moment-proptypes';
-import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
+import { forbidExtraProps } from '../airbnb-prop-types-inferno';
 import moment from 'moment';
 import cx from 'classnames';
 import { addEventListener, removeEventListener } from 'consolidated-events';
@@ -39,7 +39,7 @@ const propTypes = forbidExtraProps({
   onMonthTransitionEnd: PropTypes.func,
   renderDay: PropTypes.func,
   transformValue: PropTypes.string,
-  daySize: nonNegativeInteger,
+  daySize: PropTypes.number,
   focusedDate: momentPropTypes.momentObj, // indicates focusable day
   isFocused: PropTypes.bool, // indicates whether or not to move focus to focusable day
 
