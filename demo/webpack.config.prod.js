@@ -8,6 +8,12 @@ module.exports = {
   resolve: {
     extensions: ['', '.js', '.jsx']
   },
+  externals: {
+    // require("jquery") is external and available
+    //  on the global var jQuery
+    jquery: 'jQuery',
+    moment: 'moment'
+  },  
   output: {
     path: __dirname + '/build',
     filename: 'bundle.js'

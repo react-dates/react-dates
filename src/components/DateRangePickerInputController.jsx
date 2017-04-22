@@ -2,7 +2,7 @@ import Component from 'inferno-component';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 
-import momentPropTypes from 'react-moment-proptypes';
+import momentPropTypes from '../moment-proptypes-inferno';
 import { forbidExtraProps } from '../airbnb-prop-types-inferno';
 
 import { DateRangePickerInputPhrases } from '../defaultPhrases';

@@ -32,11 +32,6 @@ const Demo = (props) => {
     borderBottom: '1px solid #e5e5e5'
   };
 
-  let locale = props.locale ? props.locale : 'en';
-
-  moment.locale(locale);
-
-
   return (
     <div className="flex-box flex-row align-items-center" style={boxStyle}>
       <h3 style={headingStyle}>{props.title}</h3>
@@ -56,7 +51,7 @@ const MainComponent = () => {
             initialEndDate={moment().add(10, 'days')}
       />
       </Demo>
-      <Demo title="DatePicker with Custom Month">
+      <Demo title="DatePicker with Custom Month" locale="ru">
       <DateRangePickerWrapper
             displayFormat="MMM D"
             initialStartDate={moment().add(3, 'days')}
@@ -88,7 +83,7 @@ const MainComponent = () => {
             isOutsideRange={() => false}
       />
       </Demo>
-      <Demo title="DatePicker Localized" locale="ru">
+      <Demo title="DatePicker Localized">
       <DateRangePickerWrapper
         showClearDates
         startDatePlaceholderText="Туда"

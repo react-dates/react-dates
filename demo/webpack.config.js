@@ -1,3 +1,4 @@
+var webpack = require('webpack');
 var path = require('path');
 
 module.exports = {
@@ -7,6 +8,9 @@ module.exports = {
   resolve: {
     extensions: ['', '.js', '.jsx']
   },
+  externals: {
+    moment: 'moment'
+  },  
   output: {
     publicPath: 'build',
     path: __dirname + '/build',
@@ -37,5 +41,8 @@ module.exports = {
         }
       }
     ]
-  }
+  },
+  plugins: [
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
+  ]
 };

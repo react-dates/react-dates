@@ -1,6 +1,6 @@
 import Component from 'inferno-component';
 import PropTypes from 'prop-types';
-import momentPropTypes from 'react-moment-proptypes';
+import momentPropTypes from '../moment-proptypes-inferno';
 import { forbidExtraProps } from '../airbnb-prop-types-inferno';
 import moment from 'moment';
 

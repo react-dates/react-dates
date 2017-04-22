@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import momentPropTypes from 'react-moment-proptypes';
+import momentPropTypes from '../moment-proptypes-inferno';
 
 import { DateRangePickerPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';

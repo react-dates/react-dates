@@ -1,8 +1,8 @@
 /* eslint-disable react/no-unused-prop-types */
 import Component from 'inferno-component';
 import PropTypes from 'prop-types';
-import momentPropTypes from 'react-moment-proptypes';
-import { forbidExtraProps } from 'airbnb-prop-types';
+import momentPropTypes from '../src/moment-proptypes-inferno';
+import { forbidExtraProps } from '../src/airbnb-prop-types-inferno';
 import moment from 'moment';
 import omit from 'lodash.omit';
 
