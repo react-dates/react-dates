@@ -1,6 +1,6 @@
 {
   "name": "inferno-dates",
-  "version": "10.1.1",
+  "version": "10.1.2",
   "description": "A responsive and accessible date range picker component built with Inferno",
   "main": "index.js",
   "scripts": {
@@ -30,8 +30,6 @@
     "version:major": "npm --no-git-tag-version version major",
     "preversion": "npm run test && npm run check-changelog && npm run check-only-changelog-changed",
     "postversion": "git commit package.json CHANGELOG.md -m \"Version $npm_package_version\" && npm run tag && git push && git push --tags && npm publish --registry=https://registry.npmjs.org/",
-    "prepublish": "in-publish && safe-publish-latest && npm run build || not-in-publish",
-    "postpublish": "npm run gh-pages",
     "check-changelog": "expr $(git status --porcelain 2>/dev/null| grep \"^\\s*M.*CHANGELOG.md\" | wc -l) >/dev/null || (echo 'Please edit CHANGELOG.md' && exit 1)",
     "check-only-changelog-changed": "(expr $(git status --porcelain 2>/dev/null| grep -v \"CHANGELOG.md\" | wc -l) >/dev/null && echo 'Only CHANGELOG.md may have uncommitted changes' && exit 1) || exit 0",
     "demo": "./node_modules/.bin/webpack-dev-server --progress --colors --content-base demo --inline --config demo/webpack.config.js",
@@ -64,7 +62,6 @@
     "chai": "^3.5.0",
     "coveralls": "^2.12.0",
     "cross-env": "^4.0.0",
-    "enzyme": "^2.8.1",
     "eslint": "^3.17.1",
     "eslint-config-airbnb": "^14.1.0",
     "eslint-plugin-import": "^2.2.0",
@@ -91,7 +88,8 @@
     "sinon": "^2.0.0",
     "sinon-sandbox": "^1.0.2",
     "style-loader": "^0.16.1",
-    "webpack": "^1.14.0",
+    "webpack": "^1.12.9",
+    "webpack-dev-server": "^1.16.1",
     "inferno": "^3.0.5",
     "inferno-component": "^3.0.5",
     "inferno-create-class": "^3.0.5",
@@ -107,8 +105,7 @@
     "inferno": "^3.0.5",
     "lodash.throttle": "^4.1.1",
     "prop-types": "^15.5.6",
-    "react-addons-shallow-compare": "^15.5.2",
-    "webpack-dev-server": "^1.16.1"
+    "react-addons-shallow-compare": "^15.5.2"
   },
   "peerDependencies": {
     "inferno-component": "^3.0.5",
