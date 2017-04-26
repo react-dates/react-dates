@@ -52,6 +52,8 @@ export default {
   isDayBlocked: PropTypes.func,
   isOutsideRange: PropTypes.func,
   isDayHighlighted: PropTypes.func,
+  onDayMouseEnter: PropTypes.func,
+  onDayMouseLeave: PropTypes.func,
 
   // internationalization props
   displayFormat: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
