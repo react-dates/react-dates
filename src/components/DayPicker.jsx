@@ -48,6 +48,7 @@ const propTypes = forbidExtraProps({
   hidden: PropTypes.bool,
   initialVisibleMonth: PropTypes.func,
   renderCalendarInfo: PropTypes.func,
+  hideKeyboardShortcutsPanel: PropTypes.bool,
   daySize: nonNegativeInteger,
 
   // navigation props
@@ -84,6 +85,7 @@ export const defaultProps = {
   hidden: false,
   initialVisibleMonth: () => moment(),
   renderCalendarInfo: null,
+  hideKeyboardShortcutsPanel: false,
   daySize: DAY_SIZE,
 
   // navigation props
@@ -385,6 +387,7 @@ export default class DayPicker extends React.Component {
     this.setState({
       monthTransition: PREV_TRANSITION,
       translationValue,
+      focusedDate: null,
       nextFocusedDate,
     });
   }
@@ -401,6 +404,7 @@ export default class DayPicker extends React.Component {
     this.setState({
       monthTransition: NEXT_TRANSITION,
       translationValue,
+      focusedDate: null,
       nextFocusedDate,
     });
   }
@@ -488,7 +492,13 @@ export default class DayPicker extends React.Component {
   }
 
   updateStateAfterMonthTransition() {
-    const { currentMonth, monthTransition, focusedDate, nextFocusedDate } = this.state;
+    const {
+      currentMonth,
+      monthTransition,
+      focusedDate,
+      nextFocusedDate,
+      withMouseInteractions,
+    } = this.state;
 
     if (!monthTransition) return;
 
@@ -502,7 +512,7 @@ export default class DayPicker extends React.Component {
     let newFocusedDate = null;
     if (nextFocusedDate) {
       newFocusedDate = nextFocusedDate;
-    } else if (focusedDate) {
+    } else if (!focusedDate && !withMouseInteractions) {
       newFocusedDate = this.getFocusedDay(newMonth);
     }
 
@@ -522,7 +532,7 @@ export default class DayPicker extends React.Component {
     }, () => {
       // we don't want to focus on the relevant calendar day after a month transition
       // if the user is navigating around using a mouse
-      if (this.state.withMouseInteractions) {
+      if (withMouseInteractions) {
         const activeElement = getActiveElement();
         if (activeElement && activeElement !== document.body) {
           activeElement.blur();
@@ -674,6 +684,7 @@ export default class DayPicker extends React.Component {
       onDayMouseLeave,
       renderDay,
       renderCalendarInfo,
+      hideKeyboardShortcutsPanel,
       onOutsideClick,
       monthFormat,
       daySize,
@@ -792,7 +803,7 @@ export default class DayPicker extends React.Component {
               {verticalScrollable && this.renderNavigation()}
             </div>
 
-            {!isTouch &&
+            {!isTouch && !hideKeyboardShortcutsPanel &&
               <DayPickerKeyboardShortcuts
                 block={this.isVertical() && !withPortal}
                 buttonLocation={keyboardShortcutButtonLocation}

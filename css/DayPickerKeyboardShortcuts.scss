@@ -17,10 +17,11 @@
 .DayPickerKeyboardShortcuts__show {
   width: 22px;
   position: absolute;
+  z-index: $react-dates-z-index + 2;
 }
 
 .DayPickerKeyboardShortcuts__show--bottom-right {
-  border-top: 26px solid $react-dates-color-white;
+  border-top: 26px solid transparent;
   border-right: 33px solid $react-dates-color-primary;
   bottom: 0;
   right: 0;
@@ -36,7 +37,7 @@
 }
 
 .DayPickerKeyboardShortcuts__show--top-right {
-  border-bottom: 26px solid $react-dates-color-white;
+  border-bottom: 26px solid transparent;
   border-right: 33px solid $react-dates-color-primary;
   top: 0;
   right: 0;
@@ -52,7 +53,7 @@
 }
 
 .DayPickerKeyboardShortcuts__show--top-left {
-  border-bottom: 26px solid $react-dates-color-white;
+  border-bottom: 26px solid transparent;
   border-left: 33px solid $react-dates-color-primary;
   top: 0;
   left: 0;
@@ -73,6 +74,7 @@
 }
 
 .DayPickerKeyboardShortcuts__panel {
+  overflow: auto;
   background: $react-dates-color-white;
   border: 1px solid $react-dates-color-border;
   border-radius: 2px;
@@ -81,7 +83,7 @@
   bottom: 0;
   right: 0;
   left: 0;
-  z-index: 2;
+  z-index: $react-dates-z-index + 2;
   padding: 22px;
   margin: 33px;
 }
@@ -102,7 +104,7 @@
   position: absolute;
   right: 22px;
   top: 22px;
-  z-index: 2;
+  z-index: $react-dates-z-index + 2;
 
   svg {
     height: 15px;
@@ -126,7 +128,6 @@
 
 .KeyboardShortcutRow__key-container {
   display: inline-block;
-  width: 15%;
   white-space: nowrap;
   text-align: right;
   margin-right: 6px;
@@ -141,7 +142,9 @@
 }
 
 .KeyboardShortcutRow__action {
-  display: inline-block;
+  display: inline;
+  word-break: break-word;
+  margin-left: 8px;
 }
 
 .DayPickerKeyboardShortcuts__panel--block {

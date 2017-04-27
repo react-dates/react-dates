@@ -36,6 +36,7 @@ export default {
   keepOpenOnDateSelect: PropTypes.bool,
   reopenPickerOnClearDate: PropTypes.bool,
   renderCalendarInfo: PropTypes.func,
+  hideKeyboardShortcutsPanel: PropTypes.bool,
   daySize: nonNegativeInteger,
 
   // navigation related props
