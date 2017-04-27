@@ -25,7 +25,7 @@ $caret-top: $react-dates-spacing-vertical-picker - $react-dates-width-tooltip-ar
   border: $react-dates-width-tooltip-arrow / 2 solid transparent;
   border-top: 0;
   left: 22px;
-  z-index: 2;
+  z-index: $react-dates-z-index + 2;
 }
 
 .DateInput--with-caret::before {

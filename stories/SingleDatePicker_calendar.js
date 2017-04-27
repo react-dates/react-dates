@@ -120,4 +120,10 @@ storiesOf('SDP - Calendar Props', module)
       )}
       autoFocus
     />
+  ))
+  .addWithInfo('with keyboard shorcuts panel hidden', () => (
+    <SingleDatePickerWrapper
+      hideKeyboardShortcutsPanel
+      autoFocus
+    />
   ));

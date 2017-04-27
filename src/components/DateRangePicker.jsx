@@ -65,6 +65,7 @@ const defaultProps = {
   keepOpenOnDateSelect: false,
   reopenPickerOnClearDates: false,
   renderCalendarInfo: null,
+  hideKeyboardShortcutsPanel: false,
   daySize: DAY_SIZE,
 
   // navigation related props
@@ -298,6 +299,7 @@ export default class DateRangePicker extends React.Component {
       renderDay,
       renderCalendarInfo,
       initialVisibleMonth,
+      hideKeyboardShortcutsPanel,
       customCloseIcon,
       onClose,
       phrases,
@@ -336,6 +338,7 @@ export default class DateRangePicker extends React.Component {
           withPortal={withPortal || withFullScreenPortal}
           daySize={daySize}
           initialVisibleMonth={initialVisibleMonthThunk}
+          hideKeyboardShortcutsPanel={hideKeyboardShortcutsPanel}
           navPrev={navPrev}
           navNext={navNext}
           minimumNights={minimumNights}

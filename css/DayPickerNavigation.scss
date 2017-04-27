@@ -34,7 +34,7 @@
     border-radius: 3px;
     padding: 6px 9px;
     top: 18px;
-    z-index: 2;
+    z-index: $react-dates-z-index + 2;
     position: absolute;
   }
 
@@ -64,7 +64,7 @@
   left: 0;
   height: 52px;
   width: 100%;
-  z-index: 2;
+  z-index: $react-dates-z-index + 2;
 
   .DayPickerNavigation__prev,
   .DayPickerNavigation__next {

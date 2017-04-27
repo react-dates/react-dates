@@ -114,8 +114,8 @@ describe('DayPicker', () => {
     });
 
     describe('DayPickerKeyboardShortcuts', () => {
-      it('component exists if state.isTouchDevice is false', () => {
-        const wrapper = shallow(<DayPicker />);
+      it('component exists if state.isTouchDevice is false and hideKeyboardShortcutsPanel is false', () => {
+        const wrapper = shallow(<DayPicker hideKeyboardShortcutsPanel={false} />);
         wrapper.setState({ isTouchDevice: false });
         expect(wrapper.find(DayPickerKeyboardShortcuts)).to.have.lengthOf(1);
       });
@@ -123,6 +123,11 @@ describe('DayPicker', () => {
       it('component does not exist if isTouchDevice() is true', () => {
         const wrapper = shallow(<DayPicker />);
         wrapper.setState({ isTouchDevice: true });
+        expect(wrapper.find(DayPickerKeyboardShortcuts)).to.have.lengthOf(0);
+      });
+
+      it('component does not exist if hideKeyboardShortcutsPanel is true', () => {
+        const wrapper = shallow(<DayPicker hideKeyboardShortcutsPanel />);
         expect(wrapper.find(DayPickerKeyboardShortcuts)).to.have.lengthOf(0);
       });
     });

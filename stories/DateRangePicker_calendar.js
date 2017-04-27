@@ -129,4 +129,10 @@ storiesOf('DRP - Calendar Props', module)
       )}
       autoFocus
     />
+  ))
+  .addWithInfo('with keyboard shorcuts panel hidden', () => (
+    <DateRangePickerWrapper
+      hideKeyboardShortcutsPanel
+      autoFocus
+    />
   ));

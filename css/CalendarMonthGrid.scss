@@ -2,7 +2,7 @@
 
 .CalendarMonthGrid {
   background: $react-dates-color-white;
-  z-index: 0;
+  z-index: $react-dates-z-index;
   text-align: left;
 }
 
@@ -10,7 +10,7 @@
   -webkit-transition: -webkit-transform 0.2s ease-in-out;
   -moz-transition: -moz-transform 0.2s ease-in-out;
   transition: transform 0.2s ease-in-out;
-  z-index: 1;
+  z-index: $react-dates-z-index + 1;
 }
 
 .CalendarMonthGrid--horizontal {

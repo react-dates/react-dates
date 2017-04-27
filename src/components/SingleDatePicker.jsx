@@ -58,6 +58,7 @@ const defaultProps = {
   keepOpenOnDateSelect: false,
   reopenPickerOnClearDate: false,
   renderCalendarInfo: null,
+  hideKeyboardShortcutsPanel: false,
   daySize: DAY_SIZE,
 
   // navigation related props
@@ -392,6 +393,7 @@ export default class SingleDatePicker extends React.Component {
       renderCalendarInfo,
       date,
       initialVisibleMonth,
+      hideKeyboardShortcutsPanel,
       customCloseIcon,
       phrases,
       daySize,
@@ -434,6 +436,7 @@ export default class SingleDatePicker extends React.Component {
           withPortal={withPortal || withFullScreenPortal}
           hidden={!focused}
           initialVisibleMonth={initialVisibleMonthThunk}
+          hideKeyboardShortcutsPanel={hideKeyboardShortcutsPanel}
           navPrev={navPrev}
           navNext={navNext}
           renderDay={renderDay}

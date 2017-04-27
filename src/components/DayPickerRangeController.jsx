@@ -46,6 +46,7 @@ const propTypes = forbidExtraProps({
   orientation: ScrollableOrientationShape,
   withPortal: PropTypes.bool,
   initialVisibleMonth: PropTypes.func,
+  hideKeyboardShortcutsPanel: PropTypes.bool,
   daySize: nonNegativeInteger,
 
   navPrev: PropTypes.node,
@@ -87,7 +88,7 @@ const defaultProps = {
   numberOfMonths: 1,
   orientation: HORIZONTAL_ORIENTATION,
   withPortal: false,
-
+  hideKeyboardShortcutsPanel: false,
   initialVisibleMonth: DayPickerDefaultProps.initialVisibleMonth,
   daySize: DAY_SIZE,
 
@@ -315,6 +316,7 @@ export default class DayPickerRangeController extends React.Component {
       withPortal,
       enableOutsideDays,
       initialVisibleMonth,
+      hideKeyboardShortcutsPanel,
       daySize,
       focusedInput,
       renderDay,
@@ -381,6 +383,7 @@ export default class DayPickerRangeController extends React.Component {
         navNext={navNext}
         renderDay={renderDay}
         renderCalendarInfo={renderCalendarInfo}
+        hideKeyboardShortcutsPanel={hideKeyboardShortcutsPanel}
         isFocused={isFocused}
         getFirstFocusableDay={this.getFirstFocusableDay}
         onBlur={onBlur}
