@@ -16,7 +16,7 @@ const propTypes = forbidExtraProps({
   day: momentPropTypes.momentObj,
   daySize: nonNegativeInteger,
   isOutsideDay: PropTypes.bool,
-  modifiers: PropTypes.object,
+  modifiers: PropTypes.instanceOf(Set),
   isFocused: PropTypes.bool,
   tabIndex: PropTypes.oneOf([0, -1]),
   onDayClick: PropTypes.func,
@@ -32,7 +32,7 @@ const defaultProps = {
   day: moment(),
   daySize: DAY_SIZE,
   isOutsideDay: false,
-  modifiers: {},
+  modifiers: new Set(),
   isFocused: false,
   tabIndex: -1,
   onDayClick() {},
@@ -43,10 +43,6 @@ const defaultProps = {
   // internationalization
   phrases: CalendarDayPhrases,
 };
-
-export function getModifiersForDay(modifiers, day) {
-  return day ? Object.keys(modifiers).filter(key => modifiers[key](day)) : [];
-}
 
 export default class CalendarDay extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
@@ -93,12 +89,9 @@ export default class CalendarDay extends React.Component {
 
     if (!day) return <td />;
 
-    const modifiersForDay = getModifiersForDay(modifiers, day);
-
     const className = cx('CalendarDay', {
       'CalendarDay--outside': isOutsideDay,
-    }, modifiersForDay.map(mod => `CalendarDay--${mod}`));
-
+    }, Array.from(modifiers, mod => `CalendarDay--${mod}`));
 
     const formattedDate = `${day.format('dddd')}, ${day.format('LL')}`;
 

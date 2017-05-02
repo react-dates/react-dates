@@ -103,7 +103,6 @@
   },
   "dependencies": {
     "airbnb-prop-types": "^2.4.1",
-    "array-includes": "^3.0.2",
     "classnames": "^2.2.5",
     "consolidated-events": "^1.0.1",
     "lodash.throttle": "^4.1.1",

@@ -6,6 +6,8 @@ import sinon from 'sinon-sandbox';
 import { mount, shallow } from 'enzyme';
 import wrap from 'mocha-wrap';
 
+import * as isDayVisible from '../../src/utils/isDayVisible';
+
 import DayPicker, { calculateDimension } from '../../src/components/DayPicker';
 import CalendarMonthGrid from '../../src/components/CalendarMonthGrid';
 import DayPickerNavigation from '../../src/components/DayPickerNavigation';
@@ -457,13 +459,6 @@ describe('DayPicker', () => {
       translateFirstDayPickerForAnimationSpy = sinon.stub(DayPicker.prototype, 'translateFirstDayPickerForAnimation');
     });
 
-    it('calls props.onPrevMonthClick', () => {
-      const onPrevMonthClickSpy = sinon.stub();
-      const wrapper = shallow(<DayPicker onPrevMonthClick={onPrevMonthClickSpy} />);
-      wrapper.instance().onPrevMonthClick(event);
-      expect(onPrevMonthClickSpy).to.have.property('callCount', 1);
-    });
-
     it('calls translateFirstDayPickerForAnimation', () => {
       const wrapper = shallow(<DayPicker />);
       wrapper.instance().onPrevMonthClick(event);
@@ -485,13 +480,6 @@ describe('DayPicker', () => {
   });
 
   describe('#onNextMonthClick', () => {
-    it('calls props.onNextMonthClick', () => {
-      const onNextMonthClickSpy = sinon.stub();
-      const wrapper = shallow(<DayPicker onNextMonthClick={onNextMonthClickSpy} />);
-      wrapper.instance().onNextMonthClick(event);
-      expect(onNextMonthClickSpy).to.have.property('callCount', 1);
-    });
-
     it('sets state.monthTransition to "next"', () => {
       const wrapper = shallow(<DayPicker />);
       wrapper.instance().onNextMonthClick();
@@ -535,7 +523,7 @@ describe('DayPicker', () => {
       it('returns first day of arg if getFirstFocusableDay returns invisible day', () => {
         const test = moment().add(3, 'months');
         const getFirstFocusableDayStub = sinon.stub().returns(today);
-        sinon.stub(DayPicker.prototype, 'isDayVisible').returns(false);
+        sinon.stub(isDayVisible, 'default').returns(false);
         const wrapper = shallow(<DayPicker getFirstFocusableDay={getFirstFocusableDayStub} />);
         expect(wrapper.instance().getFocusedDay(test).isSame(test.startOf('month'), 'day')).to.equal(true);
       });
@@ -578,7 +566,7 @@ describe('DayPicker', () => {
       describe('arg is visible', () => {
         it('does not call `onNextMonthClick`', () => {
           const onNextMonthClickSpy = sinon.spy(DayPicker.prototype, 'onNextMonthClick');
-          sinon.stub(DayPicker.prototype, 'isDayVisible').returns(true);
+          sinon.stub(isDayVisible, 'default').returns(true);
           const nextMonth = moment().add(1, 'month');
           const wrapper = shallow(<DayPicker />);
           wrapper.state().focusedDate = nextMonth;
@@ -587,7 +575,7 @@ describe('DayPicker', () => {
         });
 
         it('returns false', () => {
-          sinon.stub(DayPicker.prototype, 'isDayVisible').returns(true);
+          sinon.stub(isDayVisible, 'default').returns(true);
           const nextMonth = moment().add(1, 'month');
           const wrapper = shallow(<DayPicker />);
           wrapper.state().focusedDate = nextMonth;
@@ -598,7 +586,7 @@ describe('DayPicker', () => {
       describe('arg is not visible', () => {
         it('calls `onNextMonthClick`', () => {
           const onNextMonthClickSpy = sinon.spy(DayPicker.prototype, 'onNextMonthClick');
-          sinon.stub(DayPicker.prototype, 'isDayVisible').returns(false);
+          sinon.stub(isDayVisible, 'default').returns(false);
           const nextMonth = moment().add(1, 'month');
           const wrapper = shallow(<DayPicker />);
           wrapper.state().focusedDate = nextMonth;
@@ -607,7 +595,7 @@ describe('DayPicker', () => {
         });
 
         it('returns true', () => {
-          sinon.stub(DayPicker.prototype, 'isDayVisible').returns(false);
+          sinon.stub(isDayVisible, 'default').returns(false);
           const nextMonth = moment().add(1, 'month');
           const wrapper = shallow(<DayPicker />);
           wrapper.state().focusedDate = nextMonth;
@@ -640,7 +628,7 @@ describe('DayPicker', () => {
       describe('arg is visible', () => {
         it('does not call `onPrevMonthClick`', () => {
           const onPrevMonthClickSpy = sinon.spy(DayPicker.prototype, 'onPrevMonthClick');
-          sinon.stub(DayPicker.prototype, 'isDayVisible').returns(true);
+          sinon.stub(isDayVisible, 'default').returns(true);
           const nextMonth = moment().add(1, 'month');
           const wrapper = shallow(<DayPicker />);
           wrapper.state().focusedDate = nextMonth;
@@ -649,7 +637,7 @@ describe('DayPicker', () => {
         });
 
         it('returns false', () => {
-          sinon.stub(DayPicker.prototype, 'isDayVisible').returns(true);
+          sinon.stub(isDayVisible, 'default').returns(true);
           const nextMonth = moment().add(1, 'month');
           const wrapper = shallow(<DayPicker />);
           wrapper.state().focusedDate = nextMonth;
@@ -664,7 +652,7 @@ describe('DayPicker', () => {
 
         it('calls `onPrevMonthClick`', () => {
           const onPrevMonthClickSpy = sinon.spy(DayPicker.prototype, 'onPrevMonthClick');
-          sinon.stub(DayPicker.prototype, 'isDayVisible').returns(false);
+          sinon.stub(isDayVisible, 'default').returns(false);
           const nextMonth = moment().add(1, 'month');
           const wrapper = shallow(<DayPicker />);
           wrapper.state().focusedDate = nextMonth;
@@ -673,7 +661,7 @@ describe('DayPicker', () => {
         });
 
         it('returns true', () => {
-          sinon.stub(DayPicker.prototype, 'isDayVisible').returns(false);
+          sinon.stub(isDayVisible, 'default').returns(false);
           const nextMonth = moment().add(1, 'month');
           const wrapper = shallow(<DayPicker />);
           wrapper.state().focusedDate = nextMonth;
@@ -694,37 +682,6 @@ describe('DayPicker', () => {
       const wrapper = shallow(<DayPicker />);
       wrapper.instance().multiplyScrollableMonths();
       expect(wrapper.state().scrollableMonthMultiple).to.equal(2);
-    });
-  });
-
-  describe('#isDayVisible', () => {
-    it('returns true if arg is in visible months', () => {
-      const test = moment().add(3, 'months');
-      const wrapper = shallow(<DayPicker numberOfMonths={1} />);
-      wrapper.setState({
-        currentMonth: moment().add(3, 'months'),
-      });
-
-      expect(wrapper.instance().isDayVisible(test)).to.equal(true);
-    });
-
-    it('returns false if arg is before first month', () => {
-      const wrapper = shallow(<DayPicker numberOfMonths={1} />);
-      wrapper.setState({
-        currentMonth: moment().add(3, 'months'),
-      });
-
-      expect(wrapper.instance().isDayVisible(today)).to.equal(false);
-    });
-
-    it('returns false if arg is after last month', () => {
-      const test = moment().add(4, 'months');
-      const wrapper = shallow(<DayPicker numberOfMonths={1} />);
-      wrapper.setState({
-        currentMonth: moment().add(3, 'months'),
-      });
-
-      expect(wrapper.instance().isDayVisible(test)).to.equal(false);
     });
   });
 

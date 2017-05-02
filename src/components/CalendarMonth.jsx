@@ -15,6 +15,7 @@ import CalendarDay from './CalendarDay';
 
 import getCalendarMonthWeeks from '../utils/getCalendarMonthWeeks';
 import isSameDay from '../utils/isSameDay';
+import toISODateString from '../utils/toISODateString';
 
 import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
 
@@ -132,13 +133,13 @@ export default class CalendarMonth extends React.Component {
                     isOutsideDay={!day || day.month() !== month.month()}
                     tabIndex={isVisible && isSameDay(day, focusedDate) ? 0 : -1}
                     isFocused={isFocused}
-                    modifiers={modifiers}
                     key={dayOfWeek}
                     onDayMouseEnter={onDayMouseEnter}
                     onDayMouseLeave={onDayMouseLeave}
                     onDayClick={onDayClick}
                     renderDay={renderDay}
                     phrases={phrases}
+                    modifiers={modifiers[toISODateString(day)]}
                   />
                 ))}
               </tr>
