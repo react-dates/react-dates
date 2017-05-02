@@ -48,17 +48,12 @@
     list-style: none;
     margin: 1px 0;
     padding-left: 0;
+    padding-right: 0;
   }
 
   li {
     display: inline-block;
     text-align: center;
-  }
-}
-
-.DayPicker__week-header--rtl {
-  ul {
-    padding-right: 0;
   }
 }
 

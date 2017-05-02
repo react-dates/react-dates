@@ -173,19 +173,20 @@ export default class DayPicker extends React.Component {
     super(props);
 
     const currentMonth = props.hidden ? moment() : props.initialVisibleMonth();
-    const translationValueRTL = -getCalendarMonthWidth(props.daySize);
 
     let focusedDate = currentMonth.clone().startOf('month');
     if (props.getFirstFocusableDay) {
       focusedDate = props.getFirstFocusableDay(currentMonth);
     }
 
+    const translationValue =
+      props.isRTL && this.isHorizontal() ? -getCalendarMonthWidth(props.daySize) : 0;
+
     this.hasSetInitialVisibleMonth = !props.hidden;
     this.state = {
-      translationValueRTL,
       currentMonth,
       monthTransition: null,
-      translationValue: props.isRTL && this.isHorizontal() ? translationValueRTL : 0,
+      translationValue,
       scrollableMonthMultiple: 1,
       calendarMonthWidth: getCalendarMonthWidth(props.daySize),
       focusedDate: (!props.hidden || props.isFocused) ? focusedDate : null,
@@ -371,7 +372,6 @@ export default class DayPicker extends React.Component {
   }
 
   onPrevMonthClick(nextFocusedDate, e) {
-    const { translationValueRTL } = this.state;
     const { isRTL } = this.props;
 
     if (e) e.preventDefault();
@@ -384,7 +384,7 @@ export default class DayPicker extends React.Component {
       this.isVertical() ? this.getMonthHeightByIndex(0) : this.dayPickerWidth;
 
     if (isRTL && this.isHorizontal()) {
-      translationValue = translationValueRTL - this.dayPickerWidth;
+      translationValue = -2 * this.dayPickerWidth;
     }
 
     // The first CalendarMonth is always positioned absolute at top: 0 or left: 0
@@ -404,7 +404,6 @@ export default class DayPicker extends React.Component {
   }
 
   onNextMonthClick(nextFocusedDate, e) {
-    const { translationValueRTL } = this.state;
     const { isRTL } = this.props;
 
     if (e) e.preventDefault();
@@ -417,7 +416,7 @@ export default class DayPicker extends React.Component {
       this.isVertical() ? -this.getMonthHeightByIndex(1) : -this.dayPickerWidth;
 
     if (isRTL && this.isHorizontal()) {
-      translationValue = this.dayPickerWidth + translationValueRTL;
+      translationValue = 0;
     }
 
     this.setState({
@@ -517,8 +516,6 @@ export default class DayPicker extends React.Component {
       focusedDate,
       nextFocusedDate,
       withMouseInteractions,
-      translationValueRTL,
-      withMouseInteractions,
     } = this.state;
 
     if (!monthTransition) return;
@@ -547,7 +544,7 @@ export default class DayPicker extends React.Component {
     this.setState({
       currentMonth: newMonth,
       monthTransition: null,
-      translationValue: (this.props.isRTL && this.isHorizontal()) ? translationValueRTL : 0,
+      translationValue: (this.props.isRTL && this.isHorizontal()) ? -this.dayPickerWidth : 0,
       nextFocusedDate: null,
       focusedDate: newFocusedDate,
     }, () => {
@@ -582,10 +579,11 @@ export default class DayPicker extends React.Component {
   }
 
   translateFirstDayPickerForAnimation(translationValue) {
-    const shouldRTL = this.props.isRTL && this.isHorizontal();
+    const { isRTL } = this.props;
+
     let convertedTranslationValue = -translationValue;
-    if (shouldRTL) {
-      const positiveTranslationValue = Math.abs(translationValue - this.state.translationValueRTL);
+    if (isRTL && this.isHorizontal()) {
+      const positiveTranslationValue = Math.abs(translationValue + this.dayPickerWidth);
       convertedTranslationValue = positiveTranslationValue;
     }
     const transformType = this.isVertical() ? 'translateY' : 'translateX';
@@ -648,7 +646,7 @@ export default class DayPicker extends React.Component {
   }
 
   renderWeekHeader(index) {
-    const { daySize, orientation, isRTL } = this.props;
+    const { daySize, orientation } = this.props;
     const { calendarMonthWidth } = this.state;
     const verticalScrollable = orientation === VERTICAL_SCROLLABLE;
     const horizontalStyle = {
@@ -676,7 +674,7 @@ export default class DayPicker extends React.Component {
 
     return (
       <div
-        className={cx('DayPicker__week-header', { 'DayPicker__week-header--rtl': isRTL })}
+        className="DayPicker__week-header"
         key={`week-${index}`}
         style={style}
       >

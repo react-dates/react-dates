@@ -105,9 +105,4 @@ storiesOf('DRP - Input Props', module)
       initialEndDate={moment().add(10, 'days')}
       screenReaderInputMessage="Here you could inform screen reader users of the date format, minimum nights, blocked out dates, etc"
     />
-  ))
-  .addWithInfo('with RTL support', () => (
-    <DateRangePickerWrapper
-      isRTL={true}
-    />
   ));

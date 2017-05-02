@@ -15,7 +15,6 @@ const propTypes = {
   // example props for the demo
   autoFocus: PropTypes.bool,
   initialDate: momentPropTypes.momentObj,
-  isRTL: PropTypes.bool,
 
   ...omit(SingleDatePickerShape, [
     'date',
@@ -48,6 +47,7 @@ const defaultProps = {
   numberOfMonths: 2,
   keepOpenOnDateSelect: false,
   reopenPickerOnClearDate: false,
+  isRTL: false,
 
   // navigation related props
   navPrev: null,

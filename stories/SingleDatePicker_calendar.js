@@ -126,4 +126,10 @@ storiesOf('SDP - Calendar Props', module)
       hideKeyboardShortcutsPanel
       autoFocus
     />
+  ))
+  .addWithInfo('with RTL support', () => (
+    <SingleDatePickerWrapper
+      isRTL
+      autoFocus
+    />
   ));
