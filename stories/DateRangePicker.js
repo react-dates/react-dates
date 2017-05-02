@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import momentJalaali from 'moment-jalaali';
 import { storiesOf } from '@kadira/storybook';
 
 import DateRangePickerWrapper from '../examples/DateRangePickerWrapper';
@@ -75,6 +76,16 @@ storiesOf('DateRangePicker (DRP)', module)
           closeDatePicker: '关闭',
           clearDates: '清除日期',
         }}
+      />
+    );
+  })
+  .addWithInfo('non-english locale (Persian)', () => {
+    moment.locale('fa');
+    return (
+      <DateRangePickerWrapper
+        placeholder="تقویم فارسی"
+        renderMonth={month => momentJalaali(month).format('jMMMM jYYYY')}
+        renderDay={day => momentJalaali(day).format('jD')}
       />
     );
   });

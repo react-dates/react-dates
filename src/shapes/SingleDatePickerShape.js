@@ -26,6 +26,7 @@ export default {
   customCloseIcon: PropTypes.node,
 
   // calendar presentation and interaction related props
+  renderMonth: PropTypes.func,
   orientation: OrientationShape,
   anchorDirection: anchorDirectionShape,
   horizontalMargin: PropTypes.number,
@@ -46,9 +47,6 @@ export default {
   onPrevMonthClick: PropTypes.func,
   onNextMonthClick: PropTypes.func,
   onClose: PropTypes.func,
-
-  // month presentation and interaction related props
-  renderMonth: PropTypes.func,
 
   // day presentation and interaction related props
   renderDay: PropTypes.func,

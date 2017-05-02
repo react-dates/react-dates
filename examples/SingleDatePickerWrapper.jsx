@@ -38,6 +38,7 @@ const defaultProps = {
   showClearDate: false,
 
   // calendar presentation and interaction related props
+  renderMonth: null,
   orientation: HORIZONTAL_ORIENTATION,
   anchorDirection: ANCHOR_LEFT,
   horizontalMargin: 0,
@@ -53,9 +54,6 @@ const defaultProps = {
   navNext: null,
   onPrevMonthClick() {},
   onNextMonthClick() {},
-
-  // month presentation and interaction related props
-  renderMonth: null,
 
   // day presentation and interaction related props
   renderDay: null,

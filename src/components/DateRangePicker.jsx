@@ -55,6 +55,7 @@ const defaultProps = {
   customCloseIcon: null,
 
   // calendar presentation and interaction related props
+  renderMonth: null,
   orientation: HORIZONTAL_ORIENTATION,
   anchorDirection: ANCHOR_LEFT,
   horizontalMargin: 0,
@@ -281,6 +282,7 @@ export default class DateRangePicker extends React.Component {
       numberOfMonths,
       orientation,
       monthFormat,
+      renderMonth,
       navPrev,
       navNext,
       onPrevMonthClick,
@@ -335,6 +337,7 @@ export default class DateRangePicker extends React.Component {
           startDate={startDate}
           endDate={endDate}
           monthFormat={monthFormat}
+          renderMonth={renderMonth}
           withPortal={withPortal || withFullScreenPortal}
           daySize={daySize}
           initialVisibleMonth={initialVisibleMonthThunk}

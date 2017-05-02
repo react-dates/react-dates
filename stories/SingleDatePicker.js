@@ -46,14 +46,13 @@ storiesOf('SingleDatePicker (SDP)', module)
       />
     );
   })
-    .addWithInfo('non-english locale (Persian)', () => {
-        moment.locale('fa');
-        // if (moment.locale().toString() === "fa") momentJalaali.loadPersian();
-        return (
-            <SingleDatePickerWrapper
-                placeholder="تقویم فارسی"
-                renderMonth = {(month) => momentJalaali(month).format("jMMMM jYYYY")}
-                renderDay= {(day) => momentJalaali(day).format("jD")}
-            />
-        );
-    });
+  .addWithInfo('non-english locale (Persian)', () => {
+    moment.locale('fa');
+    return (
+      <SingleDatePickerWrapper
+        placeholder="تقویم فارسی"
+        renderMonth={month => momentJalaali(month).format('jMMMM jYYYY')}
+        renderDay={day => momentJalaali(day).format('jD')}
+      />
+    );
+  });
