@@ -59,6 +59,7 @@ const defaultProps = {
   numberOfMonths: 2,
   keepOpenOnDateSelect: false,
   reopenPickerOnClearDates: false,
+  isRTL: false,
 
   // navigation related props
   navPrev: null,

@@ -135,4 +135,26 @@ storiesOf('DRP - Calendar Props', module)
       hideKeyboardShortcutsPanel
       autoFocus
     />
+  ))
+  .addWithInfo('with keyboard shorcuts panel hidden', () => (
+    <DateRangePickerWrapper
+      hideKeyboardShortcutsPanel
+      autoFocus
+    />
+  ))
+  .addWithInfo('with RTL support (and anchor right)', () => (
+    <div style={{ float: 'right' }}>
+      <DateRangePickerWrapper
+        anchorDirection={ANCHOR_RIGHT}
+        isRTL
+        autoFocus
+      />
+    </div>
+  ))
+  .addWithInfo('vertical with RTL support', () => (
+    <DateRangePickerWrapper
+      orientation={VERTICAL_ORIENTATION}
+      isRTL
+      autoFocus
+    />
   ));

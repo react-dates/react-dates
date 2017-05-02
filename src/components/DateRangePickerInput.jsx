@@ -8,6 +8,7 @@ import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 
 import DateInput from './DateInput';
 import RightArrow from '../svg/arrow-right.svg';
+import LeftArrow from '../svg/arrow-left.svg';
 import CloseButton from '../svg/close.svg';
 import CalendarIcon from '../svg/calendar.svg';
 
@@ -52,6 +53,8 @@ const propTypes = forbidExtraProps({
 
   // i18n
   phrases: PropTypes.shape(getPhrasePropTypes(DateRangePickerInputPhrases)),
+
+  isRTL: PropTypes.bool,
 });
 
 const defaultProps = {
@@ -91,6 +94,8 @@ const defaultProps = {
 
   // i18n
   phrases: DateRangePickerInputPhrases,
+
+  isRTL: false,
 };
 
 export default class DateRangePickerInput extends React.Component {
@@ -149,18 +154,19 @@ export default class DateRangePickerInput extends React.Component {
       customCloseIcon,
       isFocused,
       phrases,
+      isRTL,
     } = this.props;
 
     const inputIcon = customInputIcon || (<CalendarIcon />);
-    const arrowIcon = customArrowIcon || (<RightArrow />);
+    const arrowIcon = customArrowIcon || (isRTL ? <LeftArrow /> : <RightArrow />);
     const closeIcon = customCloseIcon || (<CloseButton />);
-
     const screenReaderText = screenReaderMessage || phrases.keyboardNavigationInstructions;
 
     return (
       <div
         className={cx('DateRangePickerInput', {
           'DateRangePickerInput--disabled': disabled,
+          'DateRangePickerInput--rtl': isRTL,
         })}
       >
         {(showDefaultInputIcon || customInputIcon !== null) && (

@@ -13,6 +13,11 @@ describe('DateRangePickerInput', () => {
       expect(wrapper.is('.DateRangePickerInput')).to.equal(true);
     });
 
+    it('is .DateRangePickerInput--rtl class', () => {
+      const wrapper = shallow(<DateRangePickerInput isRTL />);
+      expect(wrapper.is('.DateRangePickerInput--rtl')).to.equal(true);
+    });
+
     it('renders 2 <DateInput /> components', () => {
       const wrapper = shallow(<DateRangePickerInput />);
       expect(wrapper.find(DateInput)).to.have.lengthOf(2);

@@ -22,7 +22,7 @@ const propTypes = forbidExtraProps({
   showCaret: PropTypes.bool,
   showClearDate: PropTypes.bool,
   customCloseIcon: PropTypes.node,
-
+  isRTL: PropTypes.bool,
   onChange: PropTypes.func,
   onClearDate: PropTypes.func,
   onFocus: PropTypes.func,
@@ -46,6 +46,7 @@ const defaultProps = {
   showCaret: false,
   showClearDate: false,
   customCloseIcon: null,
+  isRTL: false,
 
   onChange() {},
   onClearDate() {},
@@ -103,13 +104,19 @@ export default class SingleDatePickerInput extends React.Component {
       onKeyDownArrowDown,
       screenReaderMessage,
       customCloseIcon,
+      isRTL,
     } = this.props;
 
     const closeIcon = customCloseIcon || (<CloseButton />);
     const screenReaderText = screenReaderMessage || phrases.keyboardNavigationInstructions;
 
     return (
-      <div className="SingleDatePickerInput">
+      <div
+        className={cx('SingleDatePickerInput', {
+          'SingleDatePickerInput--rtl': isRTL,
+        })}
+      >
+
         <DateInput
           id={id}
           placeholder={placeholder} // also used as label

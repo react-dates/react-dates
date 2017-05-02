@@ -30,6 +30,11 @@ describe('DateRangePicker', () => {
       expect(wrapper.find('.DateRangePicker__picker')).to.have.length(1);
     });
 
+    it('renders .DateRangePicker__picker--rtl class', () => {
+      const wrapper = shallow(<DateRangePicker focusedInput={START_DATE} isRTL />);
+      expect(wrapper.find('.DateRangePicker__picker--rtl')).to.have.length(1);
+    });
+
     it('renders <DateRangePickerInputWithHandlers />', () => {
       const wrapper = shallow(<DateRangePicker focusedInput={START_DATE} />);
       expect(wrapper.find(DateRangePickerInputController)).to.have.length(1);
