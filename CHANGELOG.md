@@ -1,5 +1,8 @@
 # Change Log
 
+## v11.0.0
+- [breaking] Dramatic rearchitecture of modifiers with the goal of improved performance ([#450](https://github.com/airbnb/react-dates/pull/450))
+
 ## v10.2.0
 - [new] Add RTL support to the DRP and the SDP with the `isRTL` prop ([#454](https://github.com/airbnb/react-dates/pull/454))
 - [new] Add `renderMonth` prop to DRP and SDP([#449](https://github.com/airbnb/react-dates/pull/449))
