@@ -79,6 +79,8 @@ const defaultProps = {
   isDayBlocked: () => false,
   isOutsideRange: day => !isInclusivelyAfterDay(day, moment()),
   isDayHighlighted: () => {},
+  onDayMouseEnter: () => {},
+  onDayMouseLeave: () => {},
 
   // internationalization props
   displayFormat: () => moment.localeData().longDateFormat('L'),
@@ -193,12 +195,14 @@ export default class SingleDatePicker extends React.Component {
   }
 
   onDayMouseEnter(day) {
+    this.props.onDayMouseEnter(day);
     this.setState({
       hoverDate: day,
     });
   }
 
-  onDayMouseLeave() {
+  onDayMouseLeave(day) {
+    this.props.onDayMouseLeave(day);
     this.setState({
       hoverDate: null,
     });
