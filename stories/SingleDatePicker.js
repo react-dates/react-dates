@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import momentJalaali from 'moment-jalaali';
 import { storiesOf } from '@kadira/storybook';
 
 import SingleDatePickerWrapper from '../examples/SingleDatePickerWrapper';
@@ -42,6 +43,16 @@ storiesOf('SingleDatePicker (SDP)', module)
           closeDatePicker: '关闭',
           clearDate: '清除日期',
         }}
+      />
+    );
+  })
+  .addWithInfo('non-english locale (Persian)', () => {
+    moment.locale('fa');
+    return (
+      <SingleDatePickerWrapper
+        placeholder="تقویم فارسی"
+        renderMonth={month => momentJalaali(month).format('jMMMM jYYYY')}
+        renderDay={day => momentJalaali(day).format('jD')}
       />
     );
   });
