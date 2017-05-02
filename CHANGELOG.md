@@ -1,5 +1,9 @@
 # Change Log
 
+## v10.2.0
+- [new] Add RTL support to the DRP and the SDP with the `isRTL` prop ([#454](https://github.com/airbnb/react-dates/pull/454))
+- [new] Add `renderMonth` prop to DRP and SDP([#449](https://github.com/airbnb/react-dates/pull/449))
+
 ## v10.1.2
 - [fix] Remove unused scss variables ([#475](https://github.com/airbnb/react-dates/pull/475))
 - [fix] Address some issues introduced by the accessibility PR in v10.0.0 ([#477](https://github.com/airbnb/react-dates/pull/477))
@@ -9,13 +13,13 @@
 - [fix] Remove unnecessary `onClose` instances on the `SDPInput` and `DateInput` components
 
 ## v10.1.0
-- [new] Adds `onClose` callback ([#397](https://github.com/airbnb/react-dates/pull/397))
+- [new] Add `onClose` callback ([#397](https://github.com/airbnb/react-dates/pull/397))
 
 ## v10.0.1
 - [fix] Fix a few nits as a result of the accessibility PR ([#429](https://github.com/airbnb/react-dates/pull/429))
 
 ## v10.0.0
-- [breaking] Added keyboard accessibility to react-dates ([#301](https://github.com/airbnb/react-dates/pull/301))
+- [breaking] Add keyboard accessibility to react-dates ([#301](https://github.com/airbnb/react-dates/pull/301))
 
 ## v9.0.1
 - [fix] Fixes `withPortal` implementation in Firefox ([#421](https://github.com/airbnb/react-dates/pull/421))
