@@ -698,7 +698,8 @@ export default class DayPickerRangeController extends React.Component {
 
   isHovered(day) {
     const { hoverDate } = this.state || {};
-    return isSameDay(day, hoverDate);
+    const { focusedInput } = this.props;
+    return focusedInput && isSameDay(day, hoverDate);
   }
 
   isInHoveredSpan(day) {
