@@ -1,4 +1,4 @@
-import assign from 'object.assign';
+import assign from 'object-assign';
 import has from 'has';
 const zeroWidthSpace = '\u200b';
 const semaphore = {};
