@@ -25,7 +25,6 @@
   box-sizing: border-box;
 
   &:active {
-    background: darken($react-dates-color-white, 5%);
     outline: 0;
   }
 }
@@ -88,6 +87,10 @@
   background: $react-dates-color-primary-shade-4;
   border: 1px double $react-dates-color-primary-shade-3;
   color: $react-dates-color-secondary;
+
+  &:active {
+    background: $react-dates-color-primary-shade-3;
+  }
 }
 
 .CalendarDay--selected-start,
