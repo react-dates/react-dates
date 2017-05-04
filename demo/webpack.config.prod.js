@@ -6,7 +6,7 @@ module.exports = {
   entry: './app.js',
   devtool: 'source-map',
   resolve: {
-    extensions: ['', '.js', '.jsx']
+    extensions: ['.js', '.jsx']
   },
   externals: {
     // require("jquery") is external and available
@@ -19,10 +19,10 @@ module.exports = {
     filename: 'bundle.js'
   },
   module: {
-    loaders: [
+    rules: [
       {
         test:   /\.scss$/,
-        loaders: ['style', 'raw', 'sass'],
+        loaders: ['style-loader', 'raw-loader', 'sass-loader'],
         include: path.resolve(__dirname, '../css/')
       },
       { test: /\.css$/, loader: 'style-loader!css-loader' },
@@ -36,14 +36,10 @@ module.exports = {
           ['inferno', { imports: true }],
           'syntax-jsx'
           ],
-          // This is a feature of `babel-loader` for webpack (not Babel itself).
-          // It enables caching results in ./node_modules/.cache/babel-loader/
-          // directory for faster rebuilds.
-          cacheDirectory: true
         }
       }
     ]
-  },
+  },  
   plugins: [
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new webpack.DefinePlugin({
