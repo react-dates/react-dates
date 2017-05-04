@@ -1,8 +1,9 @@
-import isSameDay from '../src/utils/isSameDay';
+import isSameDay from '../lib/utils/isSameDay';
 import moment from 'moment';
 
 import DateRangePickerWrapper from '../examples/DateRangePickerWrapper';
-import '../css/styles.scss';
+
+import '../lib/css/_datepicker.css';
 
 const datesList = [
   moment(),

@@ -6,7 +6,7 @@ import cx from 'classnames';
 import { DayPickerKeyboardShortcutsPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 
-import CloseButton from '../svg/close.jsx';
+import CloseButton from '../svg/close';
 
 export const TOP_LEFT = 'top-left';
 export const TOP_RIGHT = 'top-right';

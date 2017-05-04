@@ -1,15 +1,15 @@
 import Component from 'inferno-component';
 import PropTypes from 'prop-types';
-import momentPropTypes from '../src/moment-proptypes-inferno';
+import momentPropTypes from '../lib/moment-proptypes-inferno';
 import moment from 'moment';
 import omit from 'lodash.omit';
 
-import DateRangePicker from '../src/components/DateRangePicker';
+import { DateRangePicker } from '../index';
 
-import { DateRangePickerPhrases } from '../src/defaultPhrases';
-import DateRangePickerShape from '../src/shapes/DateRangePickerShape';
+import { DateRangePickerPhrases } from '../lib/defaultPhrases';
+import DateRangePickerShape from '../lib/shapes/DateRangePickerShape';
 import { START_DATE, END_DATE, HORIZONTAL_ORIENTATION, ANCHOR_LEFT } from '../constants';
-import isInclusivelyAfterDay from '../src/utils/isInclusivelyAfterDay';
+import isInclusivelyAfterDay from '../lib/utils/isInclusivelyAfterDay';
 
 const propTypes = {
   // example props for the demo

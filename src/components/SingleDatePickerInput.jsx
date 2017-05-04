@@ -7,7 +7,7 @@ import { SingleDatePickerInputPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 
 import DateInput from './DateInput';
-import CloseButton from '../svg/close.jsx';
+import CloseButton from '../svg/close';
 
 const propTypes = forbidExtraProps({
   id: PropTypes.string.isRequired,

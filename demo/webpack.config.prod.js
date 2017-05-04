@@ -31,7 +31,7 @@ module.exports = {
         exclude: /(node_modules|bower_components)/,
         loader: 'babel-loader',
         query: {
-          presets: ['es2015'],
+          presets: ['es2015', 'stage-2'],
           plugins: [
           ['inferno', { imports: true }],
           'syntax-jsx'

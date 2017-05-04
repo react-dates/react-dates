@@ -5,10 +5,10 @@ import cx from 'classnames';
 import { DayPickerNavigationPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 
-import LeftArrow from '../svg/arrow-left.jsx';
-import RightArrow from '../svg/arrow-right.jsx';
-import ChevronUp from '../svg/chevron-up.jsx';
-import ChevronDown from '../svg/chevron-down.jsx';
+import LeftArrow from '../svg/arrow-left';
+import RightArrow from '../svg/arrow-right';
+import ChevronUp from '../svg/chevron-up';
+import ChevronDown from '../svg/chevron-down';
 import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
 
 import {

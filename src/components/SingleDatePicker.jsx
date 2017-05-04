@@ -18,7 +18,7 @@ import isTouchDevice from '../utils/isTouchDevice';
 import SingleDatePickerInput from './SingleDatePickerInput';
 import DayPicker from './DayPicker';
 
-import CloseButton from '../svg/close.jsx';
+import CloseButton from '../svg/close';
 
 import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
 import isSameDay from '../utils/isSameDay';

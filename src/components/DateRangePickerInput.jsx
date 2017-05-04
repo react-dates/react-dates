@@ -7,9 +7,9 @@ import { DateRangePickerInputPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 
 import DateInput from './DateInput';
-import RightArrow from '../svg/arrow-right.jsx';
-import CloseButton from '../svg/close.jsx';
-import CalendarIcon from '../svg/calendar.jsx';
+import RightArrow from '../svg/arrow-right';
+import CloseButton from '../svg/close';
+import CalendarIcon from '../svg/calendar';
 
 import { START_DATE, END_DATE } from '../../constants';
 

@@ -1,8 +1,7 @@
 {
-  "presets": ["airbnb"],
-  "env": {
-    "test": {
-      "plugins": ["istanbul"]
-    }
-  }
+  "presets": ["es2015", "stage-2"],
+  "plugins": [
+    ['inferno', { imports: true }],
+    'syntax-jsx'
+  ]
 }
