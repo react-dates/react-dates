@@ -1,5 +1,8 @@
 # Change Log
 
+## v11.0.1
+- [fix] Fixes small modifier issues in the DRP after rearchitecture ([#489](https://github.com/airbnb/react-dates/pull/489))
+
 ## v11.0.0
 - [breaking] Dramatic rearchitecture of modifiers with the goal of improved performance ([#450](https://github.com/airbnb/react-dates/pull/450))
 
