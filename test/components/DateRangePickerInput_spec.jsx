@@ -13,6 +13,11 @@ describe('DateRangePickerInput', () => {
       expect(wrapper.is('.DateRangePickerInput')).to.equal(true);
     });
 
+    it('is .DateRangePickerInput--rtl class', () => {
+      const wrapper = shallow(<DateRangePickerInput isRTL />);
+      expect(wrapper.is('.DateRangePickerInput--rtl')).to.equal(true);
+    });
+
     it('renders 2 <DateInput /> components', () => {
       const wrapper = shallow(<DateRangePickerInput />);
       expect(wrapper.find(DateInput)).to.have.lengthOf(2);
@@ -20,14 +25,14 @@ describe('DateRangePickerInput', () => {
 
     describe('props.disabled is falsey', () => {
       it('does not have .DateRangePickerInput--disabled class ', () => {
-        const wrapper = shallow(<DateRangePickerInput id="date" disabled={false} />);
+        const wrapper = shallow(<DateRangePickerInput disabled={false} />);
         expect(wrapper.find('.DateRangePickerInput--disabled')).to.have.lengthOf(0);
       });
     });
 
     describe('props.disabled is truthy', () => {
       it('has .DateRangePickerInput--disabled class', () => {
-        const wrapper = shallow(<DateRangePickerInput id="date" disabled />);
+        const wrapper = shallow(<DateRangePickerInput disabled />);
         expect(wrapper.find('.DateRangePickerInput--disabled')).to.have.lengthOf(1);
       });
     });
@@ -68,19 +73,63 @@ describe('DateRangePickerInput', () => {
         it('has .DateRangePickerInput__clear-dates--hide class if there are no dates',
           () => {
             const wrapper = shallow(
-              <DateRangePickerInput showClearDates startDate={null} endDate={null} />
+              <DateRangePickerInput showClearDates startDate={null} endDate={null} />,
             );
             expect(wrapper.find('.DateRangePickerInput__clear-dates--hide')).to.have.lengthOf(1);
           });
 
         it('does not have .DateRangePickerInput__clear-dates--hide class if there are dates',
           () => {
-            const wrapper = shallow(
-              <DateRangePickerInput showClearDates startDate="2016-07-13" />
-            );
+            const wrapper = shallow(<DateRangePickerInput showClearDates startDate="2016-07-13" />);
             expect(wrapper.find('.DateRangePickerInput__clear-dates--hide')).to.have.lengthOf(0);
           });
       });
+    });
+
+    describe('show calendar icon', () => {
+      describe('props.showInputIcon is falsey', () => {
+        it('does not have .DateRangePickerInput__calendar-icon class', () => {
+          const wrapper = shallow(<DateRangePickerInput showDefaultInputIcon={false} />);
+          expect(wrapper.find('.DateRangePickerInput__calendar-icon')).to.have.lengthOf(0);
+        });
+      });
+
+      describe('props.showInputIcon is truthy', () => {
+        it('has .DateRangePickerInput__calendar-icon class', () => {
+          const wrapper = shallow(<DateRangePickerInput showDefaultInputIcon />);
+          expect(wrapper.find('.DateRangePickerInput__calendar-icon')).to.have.lengthOf(1);
+        });
+      });
+      describe('props.customInputIcon is a React Element', () => {
+        it('has custom icon', () => {
+          const wrapper = shallow(
+            <DateRangePickerInput
+              customInputIcon={<span className="custom-icon" />}
+            />);
+          expect(wrapper.find('.DateRangePickerInput__calendar-icon .custom-icon')).to.have.lengthOf(1);
+        });
+      });
+    });
+  });
+
+  describe('props.customArrowIcon is a React Element', () => {
+    it('has custom icon', () => {
+      const wrapper = shallow(
+        <DateRangePickerInput
+          customArrowIcon={<span className="custom-arrow-icon" />}
+        />);
+      expect(wrapper.find('.DateRangePickerInput .custom-arrow-icon')).to.have.lengthOf(1);
+    });
+  });
+
+  describe('props.customCloseIcon is a React Element', () => {
+    it('has custom icon', () => {
+      const wrapper = shallow(
+        <DateRangePickerInput
+          showClearDates
+          customCloseIcon={<span className="custom-close-icon" />}
+        />);
+      expect(wrapper.find('.DateRangePickerInput .custom-close-icon')).to.have.lengthOf(1);
     });
   });
 
@@ -110,7 +159,7 @@ describe('DateRangePickerInput', () => {
           <DateRangePickerInput
             onClearDates={onClearDatesSpy}
             showClearDates
-          />
+          />,
         );
         const clearDatesWrapper = wrapper.find('.DateRangePickerInput__clear-dates');
         clearDatesWrapper.simulate('click');
@@ -122,7 +171,7 @@ describe('DateRangePickerInput', () => {
       it('onClearDatesMouseEnter gets triggered', () => {
         const onClearDatesMouseEnterSpy = sinon.spy(
           DateRangePickerInput.prototype,
-          'onClearDatesMouseEnter'
+          'onClearDatesMouseEnter',
         );
         const wrapper = shallow(<DateRangePickerInput showClearDates />);
         const clearDatesWrapper = wrapper.find('.DateRangePickerInput__clear-dates');
@@ -137,7 +186,7 @@ describe('DateRangePickerInput', () => {
       it('onClearDatesMouseLeave gets triggered', () => {
         const onClearDatesMouseLeaveSpy = sinon.spy(
           DateRangePickerInput.prototype,
-          'onClearDatesMouseLeave'
+          'onClearDatesMouseLeave',
         );
         const wrapper = shallow(<DateRangePickerInput showClearDates />);
         const clearDatesWrapper = wrapper.find('.DateRangePickerInput__clear-dates');
@@ -145,6 +194,22 @@ describe('DateRangePickerInput', () => {
         clearDatesWrapper.simulate('mouseLeave');
 
         expect(onClearDatesMouseLeaveSpy.called).to.equal(true);
+      });
+    });
+  });
+
+  describe('calendar icon interaction', () => {
+    describe('onClick', () => {
+      it('props.onArrowDown gets triggered', () => {
+        const onArrowDownSpy = sinon.spy();
+        const wrapper = shallow(
+          <DateRangePickerInput
+            onArrowDown={onArrowDownSpy}
+            showDefaultInputIcon
+          />);
+        const calendarIconWrapper = wrapper.find('.DateRangePickerInput__calendar-icon');
+        calendarIconWrapper.simulate('click');
+        expect(onArrowDownSpy.callCount).to.equal(1);
       });
     });
   });

@@ -4,10 +4,10 @@
 .DayPickerNavigation__next {
   cursor: pointer;
   line-height: 0.78;
-  user-select: none;
   -webkit-user-select: none; /* Chrome/Safari */
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* IE10+ */
+  user-select: none;
 }
 
 .DayPickerNavigation__prev--default,
@@ -34,7 +34,7 @@
     border-radius: 3px;
     padding: 6px 9px;
     top: 18px;
-    z-index: 2;
+    z-index: $react-dates-z-index + 2;
     position: absolute;
   }
 
@@ -42,8 +42,18 @@
     left: 22px;
   }
 
+  .DayPickerNavigation__prev--rtl {  
+    left: auto;
+    right: 22px;
+  }
+
   .DayPickerNavigation__next {
     right: 22px;
+  }
+
+  .DayPickerNavigation__next--rtl {  
+    right: auto;
+    left: 22px;
   }
 
   .DayPickerNavigation__prev--default,
@@ -64,7 +74,7 @@
   left: 0;
   height: 52px;
   width: 100%;
-  z-index: 2;
+  z-index: $react-dates-z-index + 2;
 
   .DayPickerNavigation__prev,
   .DayPickerNavigation__next {
@@ -89,5 +99,13 @@
       width: 42px;
       fill: $react-dates-color-text
     }
+  }
+}
+
+.DayPickerNavigation--vertical-scrollable {
+  position: relative;
+
+  .DayPickerNavigation__next {
+    width: 100%;
   }
 }

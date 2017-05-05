@@ -38,3 +38,5 @@ lib
 
 # gh-pages
 _gh-pages
+
+.nyc_output

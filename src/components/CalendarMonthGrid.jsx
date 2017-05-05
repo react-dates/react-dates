@@ -1,41 +1,55 @@
-import React, { PropTypes } from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react';
+import PropTypes from 'prop-types';
 import shallowCompare from 'react-addons-shallow-compare';
 import momentPropTypes from 'react-moment-proptypes';
+import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
 import moment from 'moment';
 import cx from 'classnames';
+import { addEventListener, removeEventListener } from 'consolidated-events';
+
+import { CalendarDayPhrases } from '../defaultPhrases';
+import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 
 import CalendarMonth from './CalendarMonth';
 
 import isTransitionEndSupported from '../utils/isTransitionEndSupported';
 import getTransformStyles from '../utils/getTransformStyles';
+import getCalendarMonthWidth from '../utils/getCalendarMonthWidth';
+import toISOMonthString from '../utils/toISOMonthString';
+import isAfterDay from '../utils/isAfterDay';
 
-import OrientationShape from '../shapes/OrientationShape';
+import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
 
-import { HORIZONTAL_ORIENTATION, VERTICAL_ORIENTATION } from '../../constants';
+import {
+  HORIZONTAL_ORIENTATION,
+  VERTICAL_ORIENTATION,
+  VERTICAL_SCROLLABLE,
+  DAY_SIZE,
+} from '../../constants';
 
-const propTypes = {
+const propTypes = forbidExtraProps({
   enableOutsideDays: PropTypes.bool,
   firstVisibleMonthIndex: PropTypes.number,
   initialMonth: momentPropTypes.momentObj,
   isAnimating: PropTypes.bool,
   numberOfMonths: PropTypes.number,
   modifiers: PropTypes.object,
-  orientation: OrientationShape,
+  orientation: ScrollableOrientationShape,
   onDayClick: PropTypes.func,
-  onDayMouseDown: PropTypes.func,
-  onDayMouseUp: PropTypes.func,
   onDayMouseEnter: PropTypes.func,
   onDayMouseLeave: PropTypes.func,
-  onDayTouchStart: PropTypes.func,
-  onDayTouchEnd: PropTypes.func,
-  onDayTouchTap: PropTypes.func,
   onMonthTransitionEnd: PropTypes.func,
+  renderMonth: PropTypes.func,
+  renderDay: PropTypes.func,
   transformValue: PropTypes.string,
+  daySize: nonNegativeInteger,
+  focusedDate: momentPropTypes.momentObj, // indicates focusable day
+  isFocused: PropTypes.bool, // indicates whether or not to move focus to focusable day
 
   // i18n
   monthFormat: PropTypes.string,
-};
+  phrases: PropTypes.shape(getPhrasePropTypes(CalendarDayPhrases)),
+});
 
 const defaultProps = {
   enableOutsideDays: false,
@@ -46,31 +60,77 @@ const defaultProps = {
   modifiers: {},
   orientation: HORIZONTAL_ORIENTATION,
   onDayClick() {},
-  onDayMouseDown() {},
-  onDayMouseUp() {},
   onDayMouseEnter() {},
   onDayMouseLeave() {},
-  onDayTouchStart() {},
-  onDayTouchEnd() {},
-  onDayTouchTap() {},
   onMonthTransitionEnd() {},
-  transform: 'none',
+  renderMonth: null,
+  renderDay: null,
+  transformValue: 'none',
+  daySize: DAY_SIZE,
+  focusedDate: null,
+  isFocused: false,
 
   // i18n
   monthFormat: 'MMMM YYYY', // english locale
+  phrases: CalendarDayPhrases,
 };
+
+function getMonths(initialMonth, numberOfMonths) {
+  let month = initialMonth.clone().subtract(1, 'month');
+
+  const months = [];
+  for (let i = 0; i < numberOfMonths + 2; i += 1) {
+    months.push(month);
+    month = month.clone().add(1, 'month');
+  }
+
+  return months;
+}
 
 export default class CalendarMonthGrid extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      months: getMonths(props.initialMonth, props.numberOfMonths),
+    };
 
     this.isTransitionEndSupported = isTransitionEndSupported();
     this.onTransitionEnd = this.onTransitionEnd.bind(this);
   }
 
   componentDidMount() {
-    this.container = ReactDOM.findDOMNode(this.containerRef);
-    this.container.addEventListener('transitionend', this.onTransitionEnd);
+    this.eventHandle = addEventListener(
+      this.container,
+      'transitionend',
+      this.onTransitionEnd,
+    );
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { initialMonth, numberOfMonths } = nextProps;
+    const { months } = this.state;
+
+    const hasMonthChanged = !this.props.initialMonth.isSame(initialMonth, 'month');
+    const hasNumberOfMonthsChanged = this.props.numberOfMonths !== numberOfMonths;
+    let newMonths = months;
+
+    if (hasMonthChanged && !hasNumberOfMonthsChanged) {
+      if (isAfterDay(initialMonth, this.props.initialMonth)) {
+        newMonths = months.slice(1);
+        newMonths.push(months[months.length - 1].clone().add(1, 'month'));
+      } else {
+        newMonths = months.slice(0, months.length - 1);
+        newMonths.unshift(months[0].clone().subtract(1, 'month'));
+      }
+    }
+
+    if (hasNumberOfMonthsChanged) {
+      newMonths = getMonths(initialMonth, numberOfMonths);
+    }
+
+    this.setState({
+      months: newMonths,
+    });
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -88,7 +148,7 @@ export default class CalendarMonthGrid extends React.Component {
   }
 
   componentWillUnmount() {
-    this.container.removeEventListener('transitionend', this.onTransitionEnd);
+    removeEventListener(this.eventHandle);
   }
 
   onTransitionEnd() {
@@ -99,67 +159,79 @@ export default class CalendarMonthGrid extends React.Component {
     const {
       enableOutsideDays,
       firstVisibleMonthIndex,
-      initialMonth,
       isAnimating,
       modifiers,
       numberOfMonths,
       monthFormat,
       orientation,
       transformValue,
+      daySize,
       onDayMouseEnter,
       onDayMouseLeave,
-      onDayMouseDown,
-      onDayMouseUp,
       onDayClick,
-      onDayTouchStart,
-      onDayTouchEnd,
-      onDayTouchTap,
+      renderMonth,
+      renderDay,
       onMonthTransitionEnd,
+      focusedDate,
+      isFocused,
+      phrases,
     } = this.props;
 
-    let month = initialMonth.clone().subtract(1, 'month');
-
-    const months = [];
-    for (let i = 0; i < numberOfMonths + 2; i++) {
-      const isVisible =
-        (i >= firstVisibleMonthIndex) && (i < firstVisibleMonthIndex + numberOfMonths);
-
-      months.push(
-        <CalendarMonth
-          key={month.format('MM-YY')}
-          month={month}
-          isVisible={isVisible}
-          enableOutsideDays={enableOutsideDays}
-          modifiers={modifiers}
-          monthFormat={monthFormat}
-          orientation={orientation}
-          onDayMouseEnter={onDayMouseEnter}
-          onDayMouseLeave={onDayMouseLeave}
-          onDayMouseDown={onDayMouseDown}
-          onDayMouseUp={onDayMouseUp}
-          onDayClick={onDayClick}
-          onDayTouchStart={onDayTouchStart}
-          onDayTouchEnd={onDayTouchEnd}
-          onDayTouchTap={onDayTouchTap}
-        />
-      );
-      month = month.clone().add(1, 'month');
-    }
+    const { months } = this.state;
+    const isVertical = orientation === VERTICAL_ORIENTATION;
+    const isVerticalScrollable = orientation === VERTICAL_SCROLLABLE;
+    const isHorizontal = orientation === HORIZONTAL_ORIENTATION;
 
     const className = cx('CalendarMonthGrid', {
-      'CalendarMonthGrid--horizontal': orientation === HORIZONTAL_ORIENTATION,
-      'CalendarMonthGrid--vertical': orientation === VERTICAL_ORIENTATION,
+      'CalendarMonthGrid--horizontal': isHorizontal,
+      'CalendarMonthGrid--vertical': isVertical,
+      'CalendarMonthGrid--vertical-scrollable': isVerticalScrollable,
       'CalendarMonthGrid--animating': isAnimating,
     });
 
+    const calendarMonthWidth = getCalendarMonthWidth(daySize);
+
+    const width = isVertical || isVerticalScrollable ?
+      calendarMonthWidth :
+      (numberOfMonths + 2) * calendarMonthWidth;
+
+    const style = {
+      ...getTransformStyles(transformValue),
+      width,
+    };
+
     return (
       <div
-        ref={ref => { this.containerRef = ref; }}
+        ref={(ref) => { this.container = ref; }}
         className={className}
-        style={getTransformStyles(transformValue)}
+        style={style}
         onTransitionEnd={onMonthTransitionEnd}
       >
-        {months}
+        {months.map((month, i) => {
+          const isVisible =
+            (i >= firstVisibleMonthIndex) && (i < firstVisibleMonthIndex + numberOfMonths);
+          const monthString = toISOMonthString(month);
+          return (
+            <CalendarMonth
+              key={monthString}
+              month={month}
+              isVisible={isVisible}
+              enableOutsideDays={enableOutsideDays}
+              modifiers={modifiers[monthString]}
+              monthFormat={monthFormat}
+              orientation={orientation}
+              onDayMouseEnter={onDayMouseEnter}
+              onDayMouseLeave={onDayMouseLeave}
+              onDayClick={onDayClick}
+              renderMonth={renderMonth}
+              renderDay={renderDay}
+              daySize={daySize}
+              focusedDate={isVisible ? focusedDate : null}
+              isFocused={isFocused}
+              phrases={phrases}
+            />
+          );
+        })}
       </div>
     );
   }

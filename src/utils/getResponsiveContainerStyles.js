@@ -4,16 +4,15 @@ export default function getResponsiveContainerStyles(
   anchorDirection,
   currentOffset,
   containerEdge,
-  margin
+  margin,
 ) {
-  const newStyles = {};
-
-  const windowWidth = typeof window !== 'undefined' && window.innerWidth;
-  const calculatedOffset =
-    anchorDirection === ANCHOR_LEFT ? windowWidth - containerEdge : containerEdge;
+  const windowWidth = typeof window !== 'undefined' ? window.innerWidth : 0;
+  const calculatedOffset = anchorDirection === ANCHOR_LEFT
+    ? windowWidth - containerEdge
+    : containerEdge;
   const calculatedMargin = margin || 0;
 
-  newStyles[anchorDirection] = Math.min(currentOffset + calculatedOffset - calculatedMargin, 0);
-
-  return newStyles;
+  return {
+    [anchorDirection]: Math.min(currentOffset + calculatedOffset - calculatedMargin, 0),
+  };
 }

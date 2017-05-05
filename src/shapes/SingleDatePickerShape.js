@@ -1,46 +1,63 @@
-import { PropTypes } from 'react';
+import PropTypes from 'prop-types';
 import momentPropTypes from 'react-moment-proptypes';
+import { nonNegativeInteger } from 'airbnb-prop-types';
+
+import { SingleDatePickerPhrases } from '../defaultPhrases';
+import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 
 import OrientationShape from '../shapes/OrientationShape';
 import anchorDirectionShape from '../shapes/AnchorDirectionShape';
 
 export default {
+  // required props for a functional interactive SingleDatePicker
+  date: momentPropTypes.momentObj,
+  onDateChange: PropTypes.func.isRequired,
+
+  focused: PropTypes.bool,
+  onFocusChange: PropTypes.func.isRequired,
+
+  // input related props
   id: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
-  date: momentPropTypes.momentObj,
-  focused: PropTypes.bool,
-  showClearDate: PropTypes.bool,
-  reopenPickerOnClearDates: PropTypes.bool,
-  keepOpenOnDateSelect: PropTypes.bool,
   disabled: PropTypes.bool,
   required: PropTypes.bool,
+  screenReaderInputMessage: PropTypes.string,
+  showClearDate: PropTypes.bool,
+  customCloseIcon: PropTypes.node,
 
-  onDateChange: PropTypes.func,
-  onFocusChange: PropTypes.func,
-
-  isDayBlocked: PropTypes.func,
-  isOutsideRange: PropTypes.func,
-  enableOutsideDays: PropTypes.bool,
-  numberOfMonths: PropTypes.number,
+  // calendar presentation and interaction related props
+  renderMonth: PropTypes.func,
   orientation: OrientationShape,
-  initialVisibleMonth: PropTypes.func,
   anchorDirection: anchorDirectionShape,
   horizontalMargin: PropTypes.number,
+  withPortal: PropTypes.bool,
+  withFullScreenPortal: PropTypes.bool,
+  initialVisibleMonth: PropTypes.func,
+  numberOfMonths: PropTypes.number,
+  keepOpenOnDateSelect: PropTypes.bool,
+  reopenPickerOnClearDate: PropTypes.bool,
+  renderCalendarInfo: PropTypes.func,
+  hideKeyboardShortcutsPanel: PropTypes.bool,
+  daySize: nonNegativeInteger,
+  isRTL: PropTypes.bool,
 
+  // navigation related props
   navPrev: PropTypes.node,
   navNext: PropTypes.node,
 
-  // portal options
-  withPortal: PropTypes.bool,
-  withFullScreenPortal: PropTypes.bool,
-
   onPrevMonthClick: PropTypes.func,
   onNextMonthClick: PropTypes.func,
+  onClose: PropTypes.func,
 
-  // i18n
+  // day presentation and interaction related props
+  renderDay: PropTypes.func,
+  enableOutsideDays: PropTypes.bool,
+  isDayBlocked: PropTypes.func,
+  isOutsideRange: PropTypes.func,
+  isDayHighlighted: PropTypes.func,
+
+  // internationalization props
   displayFormat: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   monthFormat: PropTypes.string,
-  phrases: PropTypes.shape({
-    closeDatePicker: PropTypes.node,
-  }),
+  phrases: PropTypes.shape(getPhrasePropTypes(SingleDatePickerPhrases)),
 };

@@ -25,7 +25,7 @@ $caret-top: $react-dates-spacing-vertical-picker - $react-dates-width-tooltip-ar
   border: $react-dates-width-tooltip-arrow / 2 solid transparent;
   border-top: 0;
   left: 22px;
-  z-index: 2;
+  z-index: $react-dates-z-index + 2;
 }
 
 .DateInput--with-caret::before {
@@ -42,17 +42,6 @@ $caret-top: $react-dates-spacing-vertical-picker - $react-dates-width-tooltip-ar
   background: $react-dates-color-gray-lighter;
 }
 
-.DateInput__label {
-  border: 0;
-  clip: rect(0, 0, 0, 0);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px;
-}
-
 .DateInput__input {
   opacity: 0;
   position: absolute;
@@ -61,6 +50,13 @@ $caret-top: $react-dates-spacing-vertical-picker - $react-dates-width-tooltip-ar
   border: 0;
   height: 100%;
   width: 100%;
+
+  &[readonly] {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
 }
 
 .DateInput__display-text {

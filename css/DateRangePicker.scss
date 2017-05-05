@@ -17,26 +17,22 @@
 }
 
 .DateRangePicker__picker {
-  z-index: 1;
+  z-index: $react-dates-z-index + 1;
   background-color: $react-dates-color-white;
   position: absolute;
   top: $react-dates-spacing-vertical-picker;
 }
 
-.DateRangePicker__picker--show {
-  visibility: visible;
-}
-
-.DateRangePicker__picker--invisible {
-  visibility: hidden;
+.DateRangePicker__picker--rtl {    
+  direction: rtl;
 }
 
 .DateRangePicker__picker--direction-left {
-    left: 0;
+  left: 0;
 }
 
 .DateRangePicker__picker--direction-right {
-    right: 0;
+  right: 0;
 }
 
 .DateRangePicker__picker--portal {
@@ -66,7 +62,7 @@
   top: 0;
   right: 0;
   padding: 15px;
-  z-index: 2;
+  z-index: $react-dates-z-index + 2;
 
   svg {
     height: 15px;

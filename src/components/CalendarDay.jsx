@@ -1,104 +1,129 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import shallowCompare from 'react-addons-shallow-compare';
 import momentPropTypes from 'react-moment-proptypes';
+import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
 import moment from 'moment';
+import cx from 'classnames';
 
-export const TOUCHSTART_TIMEOUT = 200;
+import { CalendarDayPhrases } from '../defaultPhrases';
+import getPhrasePropTypes from '../utils/getPhrasePropTypes';
+import getPhrase from '../utils/getPhrase';
 
-const propTypes = {
+import { BLOCKED_MODIFIER, DAY_SIZE } from '../../constants';
+
+const propTypes = forbidExtraProps({
   day: momentPropTypes.momentObj,
-  modifiers: PropTypes.arrayOf(PropTypes.string),
+  daySize: nonNegativeInteger,
+  isOutsideDay: PropTypes.bool,
+  modifiers: PropTypes.instanceOf(Set),
+  isFocused: PropTypes.bool,
+  tabIndex: PropTypes.oneOf([0, -1]),
   onDayClick: PropTypes.func,
-  onDayMouseDown: PropTypes.func,
-  onDayMouseUp: PropTypes.func,
   onDayMouseEnter: PropTypes.func,
   onDayMouseLeave: PropTypes.func,
-  onDayTouchStart: PropTypes.func,
-  onDayTouchEnd: PropTypes.func,
-  onDayTouchTap: PropTypes.func,
-};
+  renderDay: PropTypes.func,
+
+  // internationalization
+  phrases: PropTypes.shape(getPhrasePropTypes(CalendarDayPhrases)),
+});
 
 const defaultProps = {
   day: moment(),
-  modifiers: [],
+  daySize: DAY_SIZE,
+  isOutsideDay: false,
+  modifiers: new Set(),
+  isFocused: false,
+  tabIndex: -1,
   onDayClick() {},
-  onDayMouseDown() {},
-  onDayMouseUp() {},
   onDayMouseEnter() {},
   onDayMouseLeave() {},
-  onDayTouchStart() {},
-  onDayTouchEnd() {},
-  onDayTouchTap() {},
+  renderDay: null,
+
+  // internationalization
+  phrases: CalendarDayPhrases,
 };
 
 export default class CalendarDay extends React.Component {
-  constructor(props) {
-    super(props);
-    this.hasActiveTouchStart = false;
-  }
-
   shouldComponentUpdate(nextProps, nextState) {
     return shallowCompare(this, nextProps, nextState);
   }
 
-  handleDayClick(day, modifiers, e) {
-    this.props.onDayClick(day, modifiers, e);
-  }
-
-  handleDayMouseDown(day, modifiers, e) {
-    this.props.onDayMouseDown(day, modifiers, e);
-  }
-
-  handleDayMouseUp(day, modifiers, e) {
-    this.props.onDayMouseUp(day, modifiers, e);
-  }
-
-  handleDayMouseEnter(day, modifiers, e) {
-    this.props.onDayMouseEnter(day, modifiers, e);
-  }
-
-  handleDayMouseLeave(day, modifiers, e) {
-    this.props.onDayMouseLeave(day, modifiers, e);
-  }
-
-  handleDayTouchStart(day, modifiers, e) {
-    this.hasActiveTouchStart = true;
-    setTimeout(() => {
-      this.hasActiveTouchStart = false;
-    }, TOUCHSTART_TIMEOUT);
-
-    this.props.onDayTouchStart(day, modifiers, e);
-  }
-
-  handleDayTouchEnd(day, modifiers, e) {
-    if (this.hasActiveTouchStart) {
-      this.hasActiveTouchStart = false;
-      this.handleDayTouchTap(day, modifiers, e);
+  componentDidUpdate(prevProps) {
+    const { isFocused, tabIndex } = this.props;
+    if (tabIndex === 0) {
+      if (isFocused || tabIndex !== prevProps.tabIndex) {
+        this.buttonRef.focus();
+      }
     }
-
-    this.props.onDayTouchEnd(day, modifiers, e);
   }
 
-  handleDayTouchTap(day, modifiers, e) {
-    this.props.onDayTouchTap(day, modifiers, e);
+  onDayClick(day, e) {
+    const { onDayClick } = this.props;
+    onDayClick(day, e);
+  }
+
+  onDayMouseEnter(day, e) {
+    const { onDayMouseEnter } = this.props;
+    onDayMouseEnter(day, e);
+  }
+
+  onDayMouseLeave(day, e) {
+    const { onDayMouseLeave } = this.props;
+    onDayMouseLeave(day, e);
   }
 
   render() {
-    const { day, modifiers } = this.props;
+    const {
+      day,
+      daySize,
+      isOutsideDay,
+      modifiers,
+      renderDay,
+      tabIndex,
+      phrases: {
+        chooseAvailableDate,
+        dateIsUnavailable,
+      },
+    } = this.props;
+
+    if (!day) return <td />;
+
+    const className = cx('CalendarDay', {
+      'CalendarDay--outside': isOutsideDay,
+    }, Array.from(modifiers, mod => `CalendarDay--${mod}`));
+
+    const formattedDate = `${day.format('dddd')}, ${day.format('LL')}`;
+
+    let ariaLabel = getPhrase(chooseAvailableDate, {
+      date: formattedDate,
+    });
+
+    if (BLOCKED_MODIFIER in modifiers && modifiers[BLOCKED_MODIFIER](day)) {
+      ariaLabel = getPhrase(dateIsUnavailable, { date: formattedDate });
+    }
+
+    const daySizeStyles = {
+      width: daySize,
+      height: daySize - 1,
+    };
 
     return (
-      <div
-        className="CalendarDay"
-        onMouseEnter={(e) => this.handleDayMouseEnter(day, modifiers, e)}
-        onMouseLeave={(e) => this.handleDayMouseLeave(day, modifiers, e)}
-        onMouseDown={(e) => this.handleDayMouseDown(day, modifiers, e)}
-        onMouseUp={(e) => this.handleDayMouseUp(day, modifiers, e)}
-        onClick={(e) => this.handleDayClick(day, modifiers, e)}
-        onTouchStart={(e) => this.handleDayTouchStart(day, modifiers, e)}
-        onTouchEnd={(e) => this.handleDayTouchEnd(day, modifiers, e)}
-      >
-        <span className="CalendarDay__day">{day.format('D')}</span>
-      </div>
+      <td className={className} style={daySizeStyles}>
+        <button
+          type="button"
+          ref={(ref) => { this.buttonRef = ref; }}
+          className="CalendarDay__button"
+          aria-label={ariaLabel}
+          onMouseEnter={(e) => { this.onDayMouseEnter(day, e); }}
+          onMouseLeave={(e) => { this.onDayMouseLeave(day, e); }}
+          onMouseUp={(e) => { e.currentTarget.blur(); }}
+          onClick={(e) => { this.onDayClick(day, e); }}
+          tabIndex={tabIndex}
+        >
+          {renderDay ? renderDay(day) : day.format('D')}
+        </button>
+      </td>
     );
   }
 }
