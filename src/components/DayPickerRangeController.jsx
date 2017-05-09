@@ -28,6 +28,7 @@ import {
   START_DATE,
   END_DATE,
   HORIZONTAL_ORIENTATION,
+  VERTICAL_SCROLLABLE,
   DAY_SIZE,
 } from '../../constants';
 
@@ -163,6 +164,7 @@ export default class DayPickerRangeController extends React.Component {
     this.onDayMouseLeave = this.onDayMouseLeave.bind(this);
     this.onPrevMonthClick = this.onPrevMonthClick.bind(this);
     this.onNextMonthClick = this.onNextMonthClick.bind(this);
+    this.onMultiplyScrollableMonths = this.onMultiplyScrollableMonths.bind(this);
     this.getFirstFocusableDay = this.getFirstFocusableDay.bind(this);
   }
 
@@ -256,7 +258,7 @@ export default class DayPickerRangeController extends React.Component {
       }
     }
 
-    if (didStartDateChange && startDate && !endDate) {
+    if (!this.isTouchDevice && didStartDateChange && startDate && !endDate) {
       const startSpan = startDate.clone().add(1, 'day');
       const endSpan = startDate.clone().add(minimumNights + 1, 'days');
       modifiers = this.addModifierToRange(modifiers, startSpan, endSpan, 'after-hovered-start');
@@ -468,11 +470,11 @@ export default class DayPickerRangeController extends React.Component {
       newVisibleDays[month] = visibleDays[month];
     });
 
-    const prevMonth = currentMonth.clone().subtract(1, 'months');
-    const prevMonthVisibleDays = getVisibleDays(prevMonth, 1, enableOutsideDays);
+    const prevMonth = currentMonth.clone().subtract(2, 'months');
+    const prevMonthVisibleDays = getVisibleDays(prevMonth, 1, enableOutsideDays, true);
 
     this.setState({
-      currentMonth: prevMonth,
+      currentMonth: currentMonth.clone().subtract(1, 'month'),
       visibleDays: {
         ...newVisibleDays,
         ...this.getModifiers(prevMonthVisibleDays),
@@ -491,8 +493,8 @@ export default class DayPickerRangeController extends React.Component {
       newVisibleDays[month] = visibleDays[month];
     });
 
-    const nextMonth = currentMonth.clone().add(numberOfMonths, 'month');
-    const nextMonthVisibleDays = getVisibleDays(nextMonth, 1, enableOutsideDays);
+    const nextMonth = currentMonth.clone().add(numberOfMonths + 1, 'month');
+    const nextMonthVisibleDays = getVisibleDays(nextMonth, 1, enableOutsideDays, true);
 
     this.setState({
       currentMonth: currentMonth.clone().add(1, 'month'),
@@ -503,6 +505,22 @@ export default class DayPickerRangeController extends React.Component {
     });
 
     onNextMonthClick();
+  }
+
+  onMultiplyScrollableMonths() {
+    const { numberOfMonths, enableOutsideDays } = this.props;
+    const { currentMonth, visibleDays } = this.state;
+
+    const numberOfVisibleMonths = Object.keys(visibleDays).length;
+    const nextMonth = currentMonth.clone().add(numberOfVisibleMonths, 'month');
+    const newVisibleDays = getVisibleDays(nextMonth, numberOfMonths, enableOutsideDays, true);
+
+    this.setState({
+      visibleDays: {
+        ...visibleDays,
+        ...this.getModifiers(newVisibleDays),
+      },
+    });
   }
 
   getFirstFocusableDay(newMonth) {
@@ -551,10 +569,12 @@ export default class DayPickerRangeController extends React.Component {
   }
 
   getStateForNewMonth(nextProps) {
-    const { initialVisibleMonth, numberOfMonths, enableOutsideDays } = nextProps;
+    const { initialVisibleMonth, numberOfMonths, enableOutsideDays, orientation } = nextProps;
     const currentMonth = initialVisibleMonth();
-    const visibleDays =
-      this.getModifiers(getVisibleDays(currentMonth, numberOfMonths, enableOutsideDays));
+    const withoutTransitionMonths = orientation === VERTICAL_SCROLLABLE;
+    const visibleDays = this.getModifiers(
+      getVisibleDays(currentMonth, numberOfMonths, enableOutsideDays, withoutTransitionMonths),
+    );
     return { currentMonth, visibleDays };
   }
 
@@ -755,6 +775,7 @@ export default class DayPickerRangeController extends React.Component {
         onDayMouseLeave={this.onDayMouseLeave}
         onPrevMonthClick={this.onPrevMonthClick}
         onNextMonthClick={this.onNextMonthClick}
+        onMultiplyScrollableMonths={this.onMultiplyScrollableMonths}
         monthFormat={monthFormat}
         renderMonth={renderMonth}
         withPortal={withPortal}

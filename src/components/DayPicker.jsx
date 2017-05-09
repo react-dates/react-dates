@@ -58,6 +58,7 @@ const propTypes = forbidExtraProps({
   navNext: PropTypes.node,
   onPrevMonthClick: PropTypes.func,
   onNextMonthClick: PropTypes.func,
+  onMultiplyScrollableMonths: PropTypes.func, // VERTICAL_SCROLLABLE daypickers only
 
   // month props
   renderMonth: PropTypes.func,
@@ -99,6 +100,7 @@ export const defaultProps = {
   navNext: null,
   onPrevMonthClick() {},
   onNextMonthClick() {},
+  onMultiplyScrollableMonths() {},
 
   // month props
   renderMonth: null,
@@ -476,7 +478,10 @@ export default class DayPicker extends React.Component {
   }
 
   multiplyScrollableMonths(e) {
+    const { onMultiplyScrollableMonths } = this.props;
     if (e) e.preventDefault();
+
+    if (onMultiplyScrollableMonths) onMultiplyScrollableMonths(e);
 
     this.setState({
       scrollableMonthMultiple: this.state.scrollableMonthMultiple + 1,
@@ -730,6 +735,7 @@ export default class DayPicker extends React.Component {
     }
 
     const verticalScrollable = this.props.orientation === VERTICAL_SCROLLABLE;
+    if (verticalScrollable) firstVisibleMonthIndex = 0;
 
     const dayPickerClassNames = cx('DayPicker', {
       'DayPicker--horizontal': this.isHorizontal(),
