@@ -51,6 +51,7 @@ const defaultProps = {
   placeholder: 'Date',
   disabled: false,
   required: false,
+  readOnly: false,
   screenReaderInputMessage: '',
   showClearDate: false,
   customCloseIcon: null,
@@ -735,6 +736,7 @@ export default class SingleDatePicker extends React.Component {
       disabled,
       focused,
       required,
+      readOnly,
       showClearDate,
       date,
       phrases,
@@ -761,6 +763,7 @@ export default class SingleDatePicker extends React.Component {
             isFocused={isInputFocused}
             disabled={disabled}
             required={required}
+            readOnly={readOnly}
             showCaret={!withPortal && !withFullScreenPortal}
             onClearDate={this.clearDate}
             showClearDate={showClearDate}
