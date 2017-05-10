@@ -21,6 +21,7 @@ export default {
   placeholder: PropTypes.string,
   disabled: PropTypes.bool,
   required: PropTypes.bool,
+  readOnly: PropTypes.bool,
   screenReaderInputMessage: PropTypes.string,
   showClearDate: PropTypes.bool,
   customCloseIcon: PropTypes.node,

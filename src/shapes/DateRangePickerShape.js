@@ -27,6 +27,7 @@ export default {
   endDatePlaceholderText: PropTypes.string,
   disabled: PropTypes.bool,
   required: PropTypes.bool,
+  readOnly: PropTypes.bool,
   screenReaderInputMessage: PropTypes.string,
   showClearDates: PropTypes.bool,
   showDefaultInputIcon: PropTypes.bool,

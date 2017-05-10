@@ -19,6 +19,7 @@ const propTypes = forbidExtraProps({
   isFocused: PropTypes.bool, // describes actual DOM focus
   disabled: PropTypes.bool,
   required: PropTypes.bool,
+  readOnly: PropTypes.bool,
   showCaret: PropTypes.bool,
   showClearDate: PropTypes.bool,
   customCloseIcon: PropTypes.node,
@@ -43,6 +44,7 @@ const defaultProps = {
   isFocused: false,
   disabled: false,
   required: false,
+  readOnly: false,
   showCaret: false,
   showClearDate: false,
   customCloseIcon: null,
@@ -93,6 +95,7 @@ export default class SingleDatePickerInput extends React.Component {
       isFocused,
       disabled,
       required,
+      readOnly,
       showCaret,
       showClearDate,
       phrases,
@@ -127,6 +130,7 @@ export default class SingleDatePickerInput extends React.Component {
           isFocused={isFocused}
           disabled={disabled}
           required={required}
+          readOnly={readOnly}
           showCaret={showCaret}
           onChange={onChange}
           onFocus={onFocus}

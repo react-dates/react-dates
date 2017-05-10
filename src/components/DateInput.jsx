@@ -15,6 +15,7 @@ const propTypes = forbidExtraProps({
   focused: PropTypes.bool,
   disabled: PropTypes.bool,
   required: PropTypes.bool,
+  readOnly: PropTypes.bool,
   showCaret: PropTypes.bool,
 
   onChange: PropTypes.func,
@@ -37,6 +38,7 @@ const defaultProps = {
   focused: false,
   disabled: false,
   required: false,
+  readOnly: false,
   showCaret: false,
 
   onChange() {},
@@ -143,6 +145,7 @@ export default class DateInput extends React.Component {
       onFocus,
       disabled,
       required,
+      readOnly,
     } = this.props;
 
     const displayText = displayValue || inputValue || dateString || placeholder || '';
@@ -170,7 +173,7 @@ export default class DateInput extends React.Component {
           placeholder={placeholder}
           autoComplete="off"
           disabled={disabled}
-          readOnly={isTouch}
+          readOnly={readOnly || isTouch}
           required={required}
           aria-describedby={screenReaderMessage && screenReaderMessageId}
         />
