@@ -1370,7 +1370,7 @@ describe('DayPickerRangeController', () => {
 
   describe('#onDayMouseEnter', () => {
     it('sets state.hoverDate to the day arg', () => {
-      const wrapper = shallow(<DayPickerRangeController />);
+      const wrapper = shallow(<DayPickerRangeController focusedInput={START_DATE} />);
       wrapper.instance().onDayMouseEnter(today);
       expect(wrapper.state().hoverDate).to.equal(today);
     });
@@ -1380,6 +1380,7 @@ describe('DayPickerRangeController', () => {
         const addModifierSpy = sinon.spy(DayPickerRangeController.prototype, 'addModifier');
         const wrapper = shallow(
           <DayPickerRangeController
+            focusedInput={START_DATE}
             onDatesChange={sinon.stub()}
             onFocusChange={sinon.stub()}
           />,
@@ -1398,6 +1399,7 @@ describe('DayPickerRangeController', () => {
         const deleteModifierSpy = sinon.spy(DayPickerRangeController.prototype, 'deleteModifier');
         const wrapper = shallow(
           <DayPickerRangeController
+            focusedInput={START_DATE}
             onDatesChange={sinon.stub()}
             onFocusChange={sinon.stub()}
           />,
@@ -1528,6 +1530,7 @@ describe('DayPickerRangeController', () => {
               <DayPickerRangeController
                 onDatesChange={sinon.stub()}
                 onFocusChange={sinon.stub()}
+                focusedInput={START_DATE}
                 minimumNights={minimumNights}
               />,
             );
@@ -1552,6 +1555,7 @@ describe('DayPickerRangeController', () => {
                 onDatesChange={sinon.stub()}
                 onFocusChange={sinon.stub()}
                 startDate={startDate}
+                focusedInput={START_DATE}
                 minimumNights={minimumNights}
               />,
             );
@@ -1577,6 +1581,7 @@ describe('DayPickerRangeController', () => {
                   onDatesChange={sinon.stub()}
                   onFocusChange={sinon.stub()}
                   startDate={startDate}
+                  focusedInput={START_DATE}
                   minimumNights={minimumNights}
                 />,
               );
@@ -1601,6 +1606,7 @@ describe('DayPickerRangeController', () => {
                   onDatesChange={sinon.stub()}
                   onFocusChange={sinon.stub()}
                   startDate={startDate}
+                  focusedInput={START_DATE}
                   minimumNights={minimumNights}
                 />,
               );
@@ -2718,8 +2724,17 @@ describe('DayPickerRangeController', () => {
     });
 
     describe('#isHovered', () => {
+      it('returns false if focusedInput is falsey', () => {
+        const wrapper = shallow(<DayPickerRangeController focusedInput={null} />);
+        wrapper.setState({
+          hoverDate: today,
+        });
+
+        expect(wrapper.instance().isHovered(today)).to.equal(false);
+      });
+
       it('returns true if arg === state.hoverDate', () => {
-        const wrapper = shallow(<DayPickerRangeController />);
+        const wrapper = shallow(<DayPickerRangeController focusedInput={START_DATE} />);
         wrapper.setState({
           hoverDate: today,
         });
@@ -2728,7 +2743,7 @@ describe('DayPickerRangeController', () => {
       });
 
       it('returns false if arg !== state.hoverDate', () => {
-        const wrapper = shallow(<DayPickerRangeController />);
+        const wrapper = shallow(<DayPickerRangeController focusedInput={START_DATE} />);
         wrapper.setState({
           hoverDate: moment(today).add(1, 'days'),
         });
