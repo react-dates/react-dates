@@ -602,7 +602,7 @@ describe('toMomentObject', () => {
     });
 
     it('parses internationalized format', () => {
-      const date = toMomentObject('1991/07/13');
+      const date = toMomentObject('13/07/1991');
 
       expect(date).not.to.equal(null);
       expect(date.month()).to.equal(6); // moment months are zero-indexed

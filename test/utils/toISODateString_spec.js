@@ -716,7 +716,7 @@ describe('toISODateString', () => {
     });
 
     it('localized date strings stay the same', () => {
-      const testDate = '1991/07/13';
+      const testDate = '13/07/1991';
       const dateString = toISODateString(testDate);
       expect(dateString).to.equal('1991-07-13');
     });

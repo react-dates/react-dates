@@ -706,25 +706,25 @@ describe('toLocalizedDateString', () => {
     it('converts moment object to localized date string', () => {
       const testDate = moment('1991-07-13');
       const dateString = toLocalizedDateString(testDate);
-      expect(dateString).to.equal('1991/07/13');
+      expect(dateString).to.equal('13/07/1991');
     });
 
     it('converts iso date string to localized date string', () => {
       const testDate = '1991-07-13';
       const dateString = toLocalizedDateString(testDate);
-      expect(dateString).to.equal('1991/07/13');
+      expect(dateString).to.equal('13/07/1991');
     });
 
     it('localized date strings stay the same', () => {
-      const testDate = '1991/07/13';
+      const testDate = '13/07/1991';
       const dateString = toLocalizedDateString(testDate);
-      expect(dateString).to.equal('1991/07/13');
+      expect(dateString).to.equal('13/07/1991');
     });
 
     it('converts custom format date strings with format passed in', () => {
       const testDate = '1991---13/07';
       const dateString = toLocalizedDateString(testDate, 'YYYY---DD/MM');
-      expect(dateString).to.equal('1991/07/13');
+      expect(dateString).to.equal('13/07/1991');
     });
   });
 
@@ -766,25 +766,25 @@ describe('toLocalizedDateString', () => {
     it('converts moment object to localized date string', () => {
       const testDate = moment('1991-07-13');
       const dateString = toLocalizedDateString(testDate);
-      expect(dateString).to.equal('1991-07-13');
+      expect(dateString).to.equal('1991年7月13日');
     });
 
     it('converts iso date string to localized date string', () => {
       const testDate = '1991-07-13';
       const dateString = toLocalizedDateString(testDate);
-      expect(dateString).to.equal('1991-07-13');
+      expect(dateString).to.equal('1991年7月13日');
     });
 
     it('localized date strings stay the same', () => {
-      const testDate = '1991-07-13';
+      const testDate = '1991年7月13日';
       const dateString = toLocalizedDateString(testDate);
-      expect(dateString).to.equal('1991-07-13');
+      expect(dateString).to.equal('1991年7月13日');
     });
 
     it('converts custom format date strings with format passed in', () => {
       const testDate = '1991---13/07';
       const dateString = toLocalizedDateString(testDate, 'YYYY---DD/MM');
-      expect(dateString).to.equal('1991-07-13');
+      expect(dateString).to.equal('1991年7月13日');
     });
   });
 
