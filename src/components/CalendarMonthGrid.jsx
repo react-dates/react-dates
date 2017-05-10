@@ -75,11 +75,12 @@ const defaultProps = {
   phrases: CalendarDayPhrases,
 };
 
-function getMonths(initialMonth, numberOfMonths) {
-  let month = initialMonth.clone().subtract(1, 'month');
+function getMonths(initialMonth, numberOfMonths, withoutTransitionMonths) {
+  let month = initialMonth.clone();
+  if (!withoutTransitionMonths) month = month.subtract(1, 'month');
 
   const months = [];
-  for (let i = 0; i < numberOfMonths + 2; i += 1) {
+  for (let i = 0; i < (withoutTransitionMonths ? numberOfMonths : numberOfMonths + 2); i += 1) {
     months.push(month);
     month = month.clone().add(1, 'month');
   }
@@ -90,8 +91,9 @@ function getMonths(initialMonth, numberOfMonths) {
 export default class CalendarMonthGrid extends React.Component {
   constructor(props) {
     super(props);
+    const withoutTransitionMonths = props.orientation === VERTICAL_SCROLLABLE;
     this.state = {
-      months: getMonths(props.initialMonth, props.numberOfMonths),
+      months: getMonths(props.initialMonth, props.numberOfMonths, withoutTransitionMonths),
     };
 
     this.isTransitionEndSupported = isTransitionEndSupported();
@@ -107,7 +109,7 @@ export default class CalendarMonthGrid extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { initialMonth, numberOfMonths } = nextProps;
+    const { initialMonth, numberOfMonths, orientation } = nextProps;
     const { months } = this.state;
 
     const hasMonthChanged = !this.props.initialMonth.isSame(initialMonth, 'month');
@@ -125,7 +127,8 @@ export default class CalendarMonthGrid extends React.Component {
     }
 
     if (hasNumberOfMonthsChanged) {
-      newMonths = getMonths(initialMonth, numberOfMonths);
+      const withoutTransitionMonths = orientation === VERTICAL_SCROLLABLE;
+      newMonths = getMonths(initialMonth, numberOfMonths, withoutTransitionMonths);
     }
 
     this.setState({
