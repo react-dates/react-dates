@@ -382,52 +382,54 @@ export default class DayPickerRangeController extends React.Component {
     const { startDate, endDate, focusedInput, minimumNights } = this.props;
     const { hoverDate, visibleDays } = this.state;
 
-    let modifiers = {};
-    modifiers = this.deleteModifier(modifiers, hoverDate, 'hovered');
-    modifiers = this.addModifier(modifiers, day, 'hovered');
+    if (focusedInput) {
+      let modifiers = {};
+      modifiers = this.deleteModifier(modifiers, hoverDate, 'hovered');
+      modifiers = this.addModifier(modifiers, day, 'hovered');
 
-    if (startDate && !endDate && focusedInput === END_DATE) {
-      if (isAfterDay(hoverDate, startDate)) {
-        const endSpan = hoverDate.clone().add(1, 'day');
-        modifiers = this.deleteModifierFromRange(modifiers, startDate, endSpan, 'hovered-span');
+      if (startDate && !endDate && focusedInput === END_DATE) {
+        if (isAfterDay(hoverDate, startDate)) {
+          const endSpan = hoverDate.clone().add(1, 'day');
+          modifiers = this.deleteModifierFromRange(modifiers, startDate, endSpan, 'hovered-span');
+        }
+
+        if (!this.isBlocked(day) && isAfterDay(day, startDate)) {
+          const endSpan = day.clone().add(1, 'day');
+          modifiers = this.addModifierToRange(modifiers, startDate, endSpan, 'hovered-span');
+        }
       }
 
-      if (!this.isBlocked(day) && isAfterDay(day, startDate)) {
-        const endSpan = day.clone().add(1, 'day');
-        modifiers = this.addModifierToRange(modifiers, startDate, endSpan, 'hovered-span');
+      if (!startDate && endDate && focusedInput === START_DATE) {
+        if (isBeforeDay(hoverDate, endDate)) {
+          modifiers = this.deleteModifierFromRange(modifiers, hoverDate, endDate, 'hovered-span');
+        }
+
+        if (!this.isBlocked(day) && isBeforeDay(day, endDate)) {
+          modifiers = this.addModifierToRange(modifiers, day, endDate, 'hovered-span');
+        }
       }
+
+      if (startDate) {
+        const startSpan = startDate.clone().add(1, 'day');
+        const endSpan = startDate.clone().add(minimumNights + 1, 'days');
+        modifiers = this.deleteModifierFromRange(modifiers, startSpan, endSpan, 'after-hovered-start');
+
+        if (isSameDay(day, startDate)) {
+          const newStartSpan = startDate.clone().add(1, 'day');
+          const newEndSpan = startDate.clone().add(minimumNights + 1, 'days');
+          modifiers =
+            this.addModifierToRange(modifiers, newStartSpan, newEndSpan, 'after-hovered-start');
+        }
+      }
+
+      this.setState({
+        hoverDate: day,
+        visibleDays: {
+          ...visibleDays,
+          ...modifiers,
+        },
+      });
     }
-
-    if (!startDate && endDate && focusedInput === START_DATE) {
-      if (isBeforeDay(hoverDate, endDate)) {
-        modifiers = this.deleteModifierFromRange(modifiers, hoverDate, endDate, 'hovered-span');
-      }
-
-      if (!this.isBlocked(day) && isBeforeDay(day, endDate)) {
-        modifiers = this.addModifierToRange(modifiers, day, endDate, 'hovered-span');
-      }
-    }
-
-    if (startDate) {
-      const startSpan = startDate.clone().add(1, 'day');
-      const endSpan = startDate.clone().add(minimumNights + 1, 'days');
-      modifiers = this.deleteModifierFromRange(modifiers, startSpan, endSpan, 'after-hovered-start');
-
-      if (isSameDay(day, startDate)) {
-        const newStartSpan = startDate.clone().add(1, 'day');
-        const newEndSpan = startDate.clone().add(minimumNights + 1, 'days');
-        modifiers =
-          this.addModifierToRange(modifiers, newStartSpan, newEndSpan, 'after-hovered-start');
-      }
-    }
-
-    this.setState({
-      hoverDate: day,
-      visibleDays: {
-        ...visibleDays,
-        ...modifiers,
-      },
-    });
   }
 
   onDayMouseLeave(day) {
@@ -699,7 +701,7 @@ export default class DayPickerRangeController extends React.Component {
   isHovered(day) {
     const { hoverDate } = this.state || {};
     const { focusedInput } = this.props;
-    return focusedInput && isSameDay(day, hoverDate);
+    return !!focusedInput && isSameDay(day, hoverDate);
   }
 
   isInHoveredSpan(day) {
