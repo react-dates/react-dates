@@ -42,6 +42,7 @@ const propTypes = forbidExtraProps({
   showClearDates: PropTypes.bool,
   disabled: PropTypes.bool,
   required: PropTypes.bool,
+  readOnly: PropTypes.bool,
   showCaret: PropTypes.bool,
   showDefaultInputIcon: PropTypes.bool,
   customInputIcon: PropTypes.node,
@@ -83,6 +84,7 @@ const defaultProps = {
   showClearDates: false,
   disabled: false,
   required: false,
+  readOnly: false,
   showCaret: false,
   showDefaultInputIcon: false,
   customInputIcon: null,
@@ -147,6 +149,7 @@ export default class DateRangePickerInput extends React.Component {
       showClearDates,
       disabled,
       required,
+      readOnly,
       showCaret,
       showDefaultInputIcon,
       customInputIcon,
@@ -190,6 +193,7 @@ export default class DateRangePickerInput extends React.Component {
           isFocused={isFocused}
           disabled={disabled}
           required={required}
+          readOnly={readOnly}
           showCaret={showCaret}
 
           onChange={onStartDateChange}
@@ -217,6 +221,7 @@ export default class DateRangePickerInput extends React.Component {
           isFocused={isFocused}
           disabled={disabled}
           required={required}
+          readOnly={readOnly}
           showCaret={showCaret}
 
           onChange={onEndDateChange}
