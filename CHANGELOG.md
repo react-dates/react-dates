@@ -1,5 +1,10 @@
 # Change Log
 
+## v11.2.0
+- [fix] Patch issues with vertical scrollable datepickers, after-hovered-start and month transitions ([#503](https://github.com/airbnb/react-dates/pull/503))
+- [new] Adds a `readOnly` prop on the DRP and SDP ([#501](https://github.com/airbnb/react-dates/pull/501))
+- [fix] Disable hover when `focusedInput` is falsey ([#483](https://github.com/airbnb/react-dates/pull/483))
+
 ## v11.0.1
 - [fix] Fixes small modifier issues in the DRP after rearchitecture ([#489](https://github.com/airbnb/react-dates/pull/489))
 
