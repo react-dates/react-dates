@@ -54,7 +54,7 @@
     "airbnb-js-shims": "^1.0.1",
     "babel-cli": "^6.22.2",
     "babel-core": "^6.22.1",
-    "babel-loader": "^6.4.1",
+    "babel-loader": "^7.0.0",
     "babel-plugin-istanbul": "^4.1.1",
     "babel-plugin-syntax-jsx": "^6.18.0",
     "babel-plugin-transform-replace-object-assign": "^0.2.1",
