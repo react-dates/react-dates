@@ -793,7 +793,7 @@ export default class DayPicker extends React.Component {
             {weekHeaders}
           </div>
 
-          <div // eslint-disable-line jsx-a11y/no-static-element-interactions
+          <div // eslint-disable-line jsx-a11y/no-noninteractive-element-interactions
             className="DayPicker__focus-region"
             ref={(ref) => { this.container = ref; }}
             onClick={(e) => { e.stopPropagation(); }}
