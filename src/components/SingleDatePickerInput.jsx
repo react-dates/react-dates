@@ -8,6 +8,7 @@ import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 
 import DateInput from './DateInput';
 import CloseButton from '../svg/close.svg';
+import CalendarIcon from '../svg/calendar.svg';
 
 const propTypes = forbidExtraProps({
   id: PropTypes.string.isRequired,
@@ -23,6 +24,8 @@ const propTypes = forbidExtraProps({
   showCaret: PropTypes.bool,
   showClearDate: PropTypes.bool,
   customCloseIcon: PropTypes.node,
+  showDefaultInputIcon: PropTypes.bool,
+  customInputIcon: PropTypes.node,
   isRTL: PropTypes.bool,
   onChange: PropTypes.func,
   onClearDate: PropTypes.func,
@@ -47,7 +50,9 @@ const defaultProps = {
   readOnly: false,
   showCaret: false,
   showClearDate: false,
+  showDefaultInputIcon: false,
   customCloseIcon: null,
+  customInputIcon: null,
   isRTL: false,
 
   onChange() {},
@@ -98,6 +103,7 @@ export default class SingleDatePickerInput extends React.Component {
       readOnly,
       showCaret,
       showClearDate,
+      showDefaultInputIcon,
       phrases,
       onClearDate,
       onChange,
@@ -107,9 +113,11 @@ export default class SingleDatePickerInput extends React.Component {
       onKeyDownArrowDown,
       screenReaderMessage,
       customCloseIcon,
+      customInputIcon,
       isRTL,
     } = this.props;
 
+    const inputIcon = customInputIcon || (<CalendarIcon />);
     const closeIcon = customCloseIcon || (<CloseButton />);
     const screenReaderText = screenReaderMessage || phrases.keyboardNavigationInstructions;
 
@@ -119,7 +127,16 @@ export default class SingleDatePickerInput extends React.Component {
           'SingleDatePickerInput--rtl': isRTL,
         })}
       >
-
+        {(showDefaultInputIcon || customInputIcon !== null) && (
+          <button
+            type="button"
+            className="SingleDatePickerInput__calendar-icon"
+            aria-label={phrases.focusStartDate}
+            onClick={onFocus}
+          >
+            {inputIcon}
+          </button>
+        )}
         <DateInput
           id={id}
           placeholder={placeholder} // also used as label

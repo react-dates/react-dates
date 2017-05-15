@@ -71,6 +71,32 @@ describe('SingleDatePickerInput', () => {
       });
     });
   });
+  
+  describe('show calendar icon', () => {
+    describe('props.showInputIcon is falsey', () => {
+      it('does not have .SingleDatePickerInput__calendar-icon class', () => {
+        const wrapper = shallow(<SingleDatePickerInput showDefaultInputIcon={false} />);
+        expect(wrapper.find('.SingleDatePickerInput__calendar-icon')).to.have.lengthOf(0);
+      });
+    });
+
+    describe('props.showInputIcon is truthy', () => {
+      it('has .SingleDatePickerInput__calendar-icon class', () => {
+        const wrapper = shallow(<SingleDatePickerInput showDefaultInputIcon />);
+        expect(wrapper.find('.SingleDatePickerInput__calendar-icon')).to.have.lengthOf(1);
+      });
+    });
+    describe('props.customInputIcon is a React Element', () => {
+      it('has custom icon', () => {
+        const wrapper = shallow(
+          <SingleDatePickerInput
+            customInputIcon={<span className="custom-icon" />}
+          />);
+        expect(wrapper.find('.SingleDatePickerInput__calendar-icon .custom-icon')).to.have.lengthOf(1);
+      });
+    });
+  });
+});
 
   describe('#onClearDateMouseEnter', () => {
     it('sets state.isClearDateHovered to true', () => {
