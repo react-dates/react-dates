@@ -48,6 +48,20 @@ storiesOf('DRP - Input Props', module)
       initialEndDate={moment().add(3, 'months').add(10, 'days')}
     />
   ))
+  .addWithInfo('disabled', () => (
+    <DateRangePickerWrapper
+      initialStartDate={moment().add(3, 'months')}
+      initialEndDate={moment().add(3, 'months').add(10, 'days')}
+      disabled
+    />
+  ))
+  .addWithInfo('readOnly', () => (
+    <DateRangePickerWrapper
+      initialStartDate={moment().add(3, 'months')}
+      initialEndDate={moment().add(3, 'months').add(10, 'days')}
+      readOnly
+    />
+  ))
   .addWithInfo('with clear dates button', () => (
     <DateRangePickerWrapper
       initialStartDate={moment().add(3, 'days')}

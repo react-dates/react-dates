@@ -10,6 +10,18 @@ storiesOf('SDP - Input Props', module)
       initialDate={moment().add(3, 'days')}
     />
   ))
+  .addWithInfo('disabled', () => (
+    <SingleDatePickerWrapper
+      initialDate={moment().add(3, 'days')}
+      disabled
+    />
+  ))
+  .addWithInfo('readOnly', () => (
+    <SingleDatePickerWrapper
+      initialDate={moment().add(3, 'days')}
+      readOnly
+    />
+  ))
   .addWithInfo('with clear dates button', () => (
     <SingleDatePickerWrapper
       initialDate={moment().add(3, 'days')}
