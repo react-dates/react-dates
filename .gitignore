@@ -40,3 +40,6 @@ lib
 _gh-pages
 
 .nyc_output
+
+# committing a yarn lockfile will break tests
+yarn.lock
