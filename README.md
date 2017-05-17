@@ -158,6 +158,8 @@ readOnly: PropTypes.bool,
 screenReaderInputMessage: PropTypes.string,
 showClearDate: PropTypes.bool,
 customCloseIcon: PropTypes.node,
+showDefaultInputIcon: PropTypes.bool,
+customInputIcon: PropTypes.node,
 
 // calendar presentation and interaction related props
 orientation: OrientationShape,
