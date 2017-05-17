@@ -796,6 +796,140 @@ describe('DayPickerRangeController', () => {
         });
       });
 
+      describe('blocked', () => {
+        describe.skip('focusedInput did not change', () => {
+          it('does not call isBlocked', () => {
+            const isBlockedStub =
+              sinon.stub(DayPickerRangeController.prototype, 'isBlocked');
+            const wrapper = shallow(<DayPickerRangeController {...props} />);
+            wrapper.instance().componentWillReceiveProps({
+              ...props,
+            });
+            expect(isBlockedStub.callCount).to.equal(0);
+          });
+        });
+
+        describe('focusedInput changed', () => {
+          const visibleDays = {
+            [toISOMonthString(today)]: {
+              [toISODateString(today)]: [],
+              [toISODateString(moment().add(1, 'day'))]: [],
+              [toISODateString(moment().add(2, 'day'))]: [],
+            },
+          };
+          const numVisibleDays = 3;
+
+          it.skip('calls isBlocked for every visible day', () => {
+            const isBlockedStub =
+              sinon.stub(DayPickerRangeController.prototype, 'isBlocked');
+            const wrapper = shallow(<DayPickerRangeController {...props} />);
+            wrapper.setState({ visibleDays });
+            wrapper.instance().componentWillReceiveProps({
+              ...props,
+              focusedInput: END_DATE,
+            });
+            expect(isBlockedStub.callCount).to.equal(numVisibleDays);
+          });
+
+          it('if isBlocked(day) is true calls addModifier with `blocked` for each day', () => {
+            const addModifierSpy = sinon.spy(DayPickerRangeController.prototype, 'addModifier');
+            const isBlockedStub =
+              sinon.stub(DayPickerRangeController.prototype, 'isBlocked').returns(true);
+            const wrapper = shallow(<DayPickerRangeController {...props} />);
+            wrapper.setState({ visibleDays });
+            wrapper.instance().componentWillReceiveProps({
+              ...props,
+              focusedInput: START_DATE,
+              isBlocked: isBlockedStub,
+            });
+            const blockedCalendarCalls = getCallsByModifier(addModifierSpy, 'blocked');
+            expect(blockedCalendarCalls.length).to.equal(numVisibleDays);
+          });
+
+          it('if isBlocked(day) is false calls deleteModifier with day and `blocked`', () => {
+            const deleteModifierSpy =
+              sinon.spy(DayPickerRangeController.prototype, 'deleteModifier');
+            const isBlockedStub =
+              sinon.stub(DayPickerRangeController.prototype, 'isBlocked').returns(false);
+            const wrapper = shallow(<DayPickerRangeController {...props} />);
+            wrapper.setState({ visibleDays });
+            wrapper.instance().componentWillReceiveProps({
+              ...props,
+              focusedInput: END_DATE,
+              isBlocked: isBlockedStub,
+            });
+            const blockedCalendarCalls = getCallsByModifier(deleteModifierSpy, 'blocked');
+            expect(blockedCalendarCalls.length).to.equal(numVisibleDays);
+          });
+        });
+      });
+
+      describe('blocked-out-of-range', () => {
+        describe('focusedInput did not change', () => {
+          it('does not call isOutsideRange', () => {
+            const isOutsideRangeStub = sinon.stub();
+            const wrapper = shallow(<DayPickerRangeController {...props} />);
+            wrapper.instance().componentWillReceiveProps({
+              ...props,
+              isOutsideRange: isOutsideRangeStub,
+            });
+            expect(isOutsideRangeStub.callCount).to.equal(0);
+          });
+        });
+
+        describe('focusedInput changed', () => {
+          const visibleDays = {
+            [toISOMonthString(today)]: {
+              [toISODateString(today)]: [],
+              [toISODateString(moment().add(1, 'day'))]: [],
+              [toISODateString(moment().add(2, 'day'))]: [],
+            },
+          };
+          const numVisibleDays = 3;
+
+          it('calls isOutsideRange for every visible day', () => {
+            const isOutsideRangeStub = sinon.stub();
+            const wrapper = shallow(<DayPickerRangeController {...props} />);
+            wrapper.setState({ visibleDays });
+            wrapper.instance().componentWillReceiveProps({
+              ...props,
+              focusedInput: END_DATE,
+              isOutsideRange: isOutsideRangeStub,
+            });
+            expect(isOutsideRangeStub.callCount).to.equal(numVisibleDays);
+          });
+
+          it('if isOutsideRange(day) is true calls addModifier with `blocked-out-of-range` for each day', () => {
+            const addModifierSpy = sinon.spy(DayPickerRangeController.prototype, 'addModifier');
+            const isOutsideRangeStub = sinon.stub().returns(true);
+            const wrapper = shallow(<DayPickerRangeController {...props} />);
+            wrapper.setState({ visibleDays });
+            wrapper.instance().componentWillReceiveProps({
+              ...props,
+              focusedInput: START_DATE,
+              isOutsideRange: isOutsideRangeStub,
+            });
+            const blockedCalendarCalls = getCallsByModifier(addModifierSpy, 'blocked-out-of-range');
+            expect(blockedCalendarCalls.length).to.equal(numVisibleDays);
+          });
+
+          it('if isOutsideRange(day) is false calls deleteModifier with day and `blocked-out-of-range`', () => {
+            const deleteModifierSpy =
+              sinon.spy(DayPickerRangeController.prototype, 'deleteModifier');
+            const isOutsideRangeStub = sinon.stub().returns(false);
+            const wrapper = shallow(<DayPickerRangeController {...props} />);
+            wrapper.setState({ visibleDays });
+            wrapper.instance().componentWillReceiveProps({
+              ...props,
+              focusedInput: END_DATE,
+              isOutsideRange: isOutsideRangeStub,
+            });
+            const blockedCalendarCalls = getCallsByModifier(deleteModifierSpy, 'blocked-out-of-range');
+            expect(blockedCalendarCalls.length).to.equal(numVisibleDays);
+          });
+        });
+      });
+
       describe('blocked-calendar', () => {
         describe('focusedInput did not change', () => {
           it('does not call isDayBlocked', () => {
