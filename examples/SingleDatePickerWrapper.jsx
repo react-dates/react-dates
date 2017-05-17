@@ -36,6 +36,8 @@ const defaultProps = {
   required: false,
   screenReaderInputMessage: '',
   showClearDate: false,
+  showDefaultInputIcon: false,
+  customInputIcon: null,
 
   // calendar presentation and interaction related props
   renderMonth: null,

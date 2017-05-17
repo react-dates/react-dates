@@ -54,6 +54,8 @@ const defaultProps = {
   readOnly: false,
   screenReaderInputMessage: '',
   showClearDate: false,
+  showDefaultInputIcon: false,
+  customInputIcon: null,
   customCloseIcon: null,
 
   // calendar presentation and interaction related props
@@ -738,6 +740,8 @@ export default class SingleDatePicker extends React.Component {
       required,
       readOnly,
       showClearDate,
+      showDefaultInputIcon,
+      customInputIcon,
       date,
       phrases,
       withPortal,
@@ -767,6 +771,8 @@ export default class SingleDatePicker extends React.Component {
             showCaret={!withPortal && !withFullScreenPortal}
             onClearDate={this.clearDate}
             showClearDate={showClearDate}
+            showDefaultInputIcon={showDefaultInputIcon}
+            customInputIcon={customInputIcon}
             displayValue={displayValue}
             inputValue={inputValue}
             onChange={this.onChange}
