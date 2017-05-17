@@ -721,9 +721,8 @@ export default class DayPicker extends React.Component {
       phrases,
     } = this.props;
 
-    const numOfWeekHeaders = this.isVertical() ? 1 : numberOfMonths;
     const weekHeaders = [];
-    for (let i = 0; i < numOfWeekHeaders; i += 1) {
+    for (let i = 0; i < numberOfMonths; i += 1) {
       weekHeaders.push(this.renderWeekHeader(i));
     }
 
@@ -751,9 +750,7 @@ export default class DayPicker extends React.Component {
 
     const horizontalWidth = (calendarMonthWidth * numberOfMonths) + (2 * DAY_PICKER_PADDING);
 
-    // this is a kind of made-up value that generally looks good. we'll
-    // probably want to let the user set this explicitly.
-    const verticalHeight = 1.75 * calendarMonthWidth;
+    const verticalHeight = (calendarMonthWidth * numberOfMonths) + (2 * MONTH_PADDING);
 
     const dayPickerStyle = {
       width: this.isHorizontal() && horizontalWidth,
