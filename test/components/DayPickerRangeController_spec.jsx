@@ -835,8 +835,7 @@ describe('DayPickerRangeController', () => {
 
           it('if isBlocked(day) is true calls addModifier with `blocked` for each day', () => {
             const addModifierSpy = sinon.spy(DayPickerRangeController.prototype, 'addModifier');
-            const isBlockedStub =
-              sinon.stub(DayPickerRangeController.prototype, 'isBlocked').returns(true);
+            sinon.stub(DayPickerRangeController.prototype, 'isBlocked').returns(true);
             const wrapper = shallow(<DayPickerRangeController {...props} />);
             wrapper.setState({ visibleDays });
             wrapper.instance().componentWillReceiveProps({
@@ -845,14 +844,12 @@ describe('DayPickerRangeController', () => {
             });
             const blockedCalendarCalls = getCallsByModifier(addModifierSpy, 'blocked');
             expect(blockedCalendarCalls.length).to.equal(numVisibleDays);
-            isBlockedStub.restore();
           });
 
           it('if isBlocked(day) is false calls deleteModifier with day and `blocked`', () => {
             const deleteModifierSpy =
               sinon.spy(DayPickerRangeController.prototype, 'deleteModifier');
-            const isBlockedStub =
-              sinon.stub(DayPickerRangeController.prototype, 'isBlocked').returns(false);
+            sinon.stub(DayPickerRangeController.prototype, 'isBlocked').returns(false);
             const wrapper = shallow(<DayPickerRangeController {...props} />);
             wrapper.setState({ visibleDays });
             wrapper.instance().componentWillReceiveProps({
@@ -861,7 +858,6 @@ describe('DayPickerRangeController', () => {
             });
             const blockedCalendarCalls = getCallsByModifier(deleteModifierSpy, 'blocked');
             expect(blockedCalendarCalls.length).to.equal(numVisibleDays);
-            isBlockedStub.restore();
           });
         });
       });
