@@ -797,11 +797,12 @@ describe('DayPickerRangeController', () => {
       });
 
       describe('blocked', () => {
-        describe.skip('focusedInput did not change', () => {
+        describe('focusedInput did not change', () => {
           it('does not call isBlocked', () => {
             const isBlockedStub =
               sinon.stub(DayPickerRangeController.prototype, 'isBlocked');
             const wrapper = shallow(<DayPickerRangeController {...props} />);
+            isBlockedStub.reset();
             wrapper.instance().componentWillReceiveProps({
               ...props,
             });
@@ -819,11 +820,12 @@ describe('DayPickerRangeController', () => {
           };
           const numVisibleDays = 3;
 
-          it.skip('calls isBlocked for every visible day', () => {
+          it('calls isBlocked for every visible day', () => {
             const isBlockedStub =
               sinon.stub(DayPickerRangeController.prototype, 'isBlocked');
             const wrapper = shallow(<DayPickerRangeController {...props} />);
             wrapper.setState({ visibleDays });
+            isBlockedStub.reset();
             wrapper.instance().componentWillReceiveProps({
               ...props,
               focusedInput: END_DATE,
@@ -840,10 +842,10 @@ describe('DayPickerRangeController', () => {
             wrapper.instance().componentWillReceiveProps({
               ...props,
               focusedInput: START_DATE,
-              isBlocked: isBlockedStub,
             });
             const blockedCalendarCalls = getCallsByModifier(addModifierSpy, 'blocked');
             expect(blockedCalendarCalls.length).to.equal(numVisibleDays);
+            isBlockedStub.restore();
           });
 
           it('if isBlocked(day) is false calls deleteModifier with day and `blocked`', () => {
@@ -856,10 +858,10 @@ describe('DayPickerRangeController', () => {
             wrapper.instance().componentWillReceiveProps({
               ...props,
               focusedInput: END_DATE,
-              isBlocked: isBlockedStub,
             });
             const blockedCalendarCalls = getCallsByModifier(deleteModifierSpy, 'blocked');
             expect(blockedCalendarCalls.length).to.equal(numVisibleDays);
+            isBlockedStub.restore();
           });
         });
       });
