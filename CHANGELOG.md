@@ -1,5 +1,8 @@
 # Change Log
 
+## v12.1.0
+- [new] Add `showDefaultInputIcon` and `customInputIcon` props to SDP ([#513](https://github.com/airbnb/react-dates/pull/513))
+
 ## v12.0.0
 - [breaking] Updates moment peer dependency to ^2.18.1 ([#505](https://github.com/airbnb/react-dates/pull/505))
 
