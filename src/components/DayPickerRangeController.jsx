@@ -246,7 +246,7 @@ export default class DayPickerRangeController extends React.Component {
         modifiers = this.deleteModifierFromRange(
           modifiers,
           startDate,
-          endDate,
+          endDate.clone().add(1, 'day'),
           'hovered-span',
         );
 

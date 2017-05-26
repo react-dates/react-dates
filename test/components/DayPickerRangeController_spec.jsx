@@ -455,17 +455,18 @@ describe('DayPickerRangeController', () => {
           });
 
           describe('new startDate and new endDate both exist', () => {
-            it('deleteModifierFromRange gets called with startDate, endDate, and `hovered-span`', () => {
+            it('deleteModifierFromRange gets called with startDate, endDate + 1 day, and `hovered-span`', () => {
               const deleteModifierFromRangeSpy =
                 sinon.spy(DayPickerRangeController.prototype, 'deleteModifierFromRange');
               const startDate = today;
               const endDate = today.clone().add(10, 'days');
+              const dayAfterEndDate = endDate.clone().add(1, 'day');
               const wrapper = shallow(<DayPickerRangeController {...props} />);
               wrapper.instance().componentWillReceiveProps({ ...props, startDate, endDate });
               const hoverSpanCalls = getCallsByModifier(deleteModifierFromRangeSpy, 'hovered-span');
               expect(hoverSpanCalls.length).to.equal(1);
               expect(hoverSpanCalls[0].args[1]).to.equal(startDate);
-              expect(hoverSpanCalls[0].args[2]).to.equal(endDate);
+              expect(isSameDay(hoverSpanCalls[0].args[2], dayAfterEndDate)).to.equal(true);
             });
           });
         });
