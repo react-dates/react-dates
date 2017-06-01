@@ -1,5 +1,10 @@
 # Change Log
 
+## v12.1.1
+- [fix] Remove `--hovered-span` modifier when selecting a new end date ([#523](https://github.com/airbnb/react-dates/pull/523))
+- [fix] Improve `isTouchDevice` detection logic ([#516](https://github.com/airbnb/react-dates/pull/516))
+- [fix] Recompute `--blocked` and `--blocked-outside-range` when `focusedInput` changes ([#522](https://github.com/airbnb/react-dates/pull/522))
+
 ## v12.1.0
 - [new] Add `showDefaultInputIcon` and `customInputIcon` props to SDP ([#513](https://github.com/airbnb/react-dates/pull/513))
 
