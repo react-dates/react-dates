@@ -1,9 +1,9 @@
 language: node_js
 node_js:
+  - "8"
   - "7"
   - "6"
   - "4"
-  - "4.6"
   - "iojs"
 before_script:
   - 'if [ -n "${KARMA-}" ]; then export DISPLAY=:99.0; fi'
@@ -31,5 +31,6 @@ matrix:
     - node_js: "node"
       env: LINT=true TEST=false
   allow_failures:
+    - node_js: "7"
     - node_js: "iojs"
     - env: KARMA=true TEST=false
