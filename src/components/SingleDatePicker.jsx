@@ -218,6 +218,12 @@ export default class SingleDatePicker extends React.Component {
       values(visibleDays).forEach((days) => {
         Object.keys(days).forEach((day) => {
           const momentObj = moment(day);
+          if (isOutsideRange(momentObj)) {
+            modifiers = this.addModifier(modifiers, momentObj, 'blocked-out-of-range');
+          } else {
+            modifiers = this.deleteModifier(modifiers, momentObj, 'blocked-out-of-range');
+          }
+
           if (isDayBlocked(momentObj)) {
             modifiers = this.addModifier(modifiers, momentObj, 'blocked-calendar');
           } else {
