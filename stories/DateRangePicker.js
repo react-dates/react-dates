@@ -88,4 +88,12 @@ storiesOf('DateRangePicker (DRP)', module)
         renderDay={day => momentJalaali(day).format('jD')}
       />
     );
-  });
+  })
+  .addWithInfo('customized for metamx', () => {
+    return (
+      <DateRangePickerWrapper
+        hideKeyboardShortcutsPanel
+        keepOpenOnDateSelect
+      />
+    )
+  })

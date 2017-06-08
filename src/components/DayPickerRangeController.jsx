@@ -781,37 +781,39 @@ export default class DayPickerRangeController extends React.Component {
     const { phrases, visibleDays } = this.state;
 
     return (
-      <DayPicker
-        ref={(ref) => { this.dayPicker = ref; }}
-        orientation={orientation}
-        enableOutsideDays={enableOutsideDays}
-        modifiers={visibleDays}
-        numberOfMonths={numberOfMonths}
-        onDayClick={this.onDayClick}
-        onDayMouseEnter={this.onDayMouseEnter}
-        onDayMouseLeave={this.onDayMouseLeave}
-        onPrevMonthClick={this.onPrevMonthClick}
-        onNextMonthClick={this.onNextMonthClick}
-        onMultiplyScrollableMonths={this.onMultiplyScrollableMonths}
-        monthFormat={monthFormat}
-        renderMonth={renderMonth}
-        withPortal={withPortal}
-        hidden={!focusedInput}
-        initialVisibleMonth={initialVisibleMonth}
-        daySize={daySize}
-        onOutsideClick={onOutsideClick}
-        navPrev={navPrev}
-        navNext={navNext}
-        renderDay={renderDay}
-        renderCalendarInfo={renderCalendarInfo}
-        hideKeyboardShortcutsPanel={hideKeyboardShortcutsPanel}
-        isFocused={isFocused}
-        getFirstFocusableDay={this.getFirstFocusableDay}
-        onBlur={onBlur}
-        showKeyboardShortcuts={showKeyboardShortcuts}
-        phrases={phrases}
-        isRTL={isRTL}
-      />
+      <div className="hello">
+        <DayPicker
+          ref={(ref) => { this.dayPicker = ref; }}
+          orientation={orientation}
+          enableOutsideDays={enableOutsideDays}
+          modifiers={visibleDays}
+          numberOfMonths={numberOfMonths}
+          onDayClick={this.onDayClick}
+          onDayMouseEnter={this.onDayMouseEnter}
+          onDayMouseLeave={this.onDayMouseLeave}
+          onPrevMonthClick={this.onPrevMonthClick}
+          onNextMonthClick={this.onNextMonthClick}
+          onMultiplyScrollableMonths={this.onMultiplyScrollableMonths}
+          monthFormat={monthFormat}
+          renderMonth={renderMonth}
+          withPortal={withPortal}
+          hidden={!focusedInput}
+          initialVisibleMonth={initialVisibleMonth}
+          daySize={daySize}
+          onOutsideClick={onOutsideClick}
+          navPrev={navPrev}
+          navNext={navNext}
+          renderDay={renderDay}
+          renderCalendarInfo={renderCalendarInfo}
+          hideKeyboardShortcutsPanel={hideKeyboardShortcutsPanel}
+          isFocused={isFocused}
+          getFirstFocusableDay={this.getFirstFocusableDay}
+          onBlur={onBlur}
+          showKeyboardShortcuts={showKeyboardShortcuts}
+          phrases={phrases}
+          isRTL={isRTL}
+        />
+      </div>
     );
   }
 }

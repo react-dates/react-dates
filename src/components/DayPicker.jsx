@@ -564,6 +564,7 @@ export default class DayPicker extends React.Component {
   }
 
   adjustDayPickerHeight() {
+    return
     const heights = [];
 
     Array.prototype.forEach.call(this.transitionContainer.querySelectorAll('.CalendarMonth'),
@@ -671,7 +672,7 @@ export default class DayPicker extends React.Component {
     for (let i = 0; i < 7; i += 1) {
       header.push(
         <li key={i} style={{ width: daySize }}>
-          <small>{moment().weekday(i).format('dd')}</small>
+          <span>{moment().weekday(i).format('dd')}</span>
         </li>,
       );
     }
@@ -753,10 +754,11 @@ export default class DayPicker extends React.Component {
 
     // this is a kind of made-up value that generally looks good. we'll
     // probably want to let the user set this explicitly.
-    const verticalHeight = 1.75 * calendarMonthWidth;
+    let verticalHeight = 1.75 * calendarMonthWidth;
+    verticalHeight = 350;
 
     const dayPickerStyle = {
-      width: this.isHorizontal() && horizontalWidth,
+      //width: this.isHorizontal() && horizontalWidth,
 
       // These values are to center the datepicker (approximately) on the page
       marginLeft: this.isHorizontal() && withPortal && -horizontalWidth / 2,
@@ -764,8 +766,9 @@ export default class DayPicker extends React.Component {
     };
 
     const transitionContainerStyle = {
-      width: this.isHorizontal() && horizontalWidth,
-      height: this.isVertical() && !verticalScrollable && !withPortal && verticalHeight,
+      //width: this.isHorizontal() && horizontalWidth,
+      //height: this.isVertical() && !verticalScrollable && !withPortal && verticalHeight,
+      height: verticalHeight
     };
 
     const isCalendarMonthGridAnimating = monthTransition !== null;
@@ -784,6 +787,15 @@ export default class DayPicker extends React.Component {
         className={dayPickerClassNames}
         style={dayPickerStyle}
       >
+        <div className="PresetContainer">
+          <div className="PresetItem">Today</div>
+          <div className="PresetItem">Past 24 hours</div>
+          <div className="PresetItem">Yesterday</div>
+          <div className="PresetItem">Past 7 days</div>
+          <div className="PresetItem">Last week</div>
+          <div className="PresetItem">Week to date</div>
+          <div className="PresetItem">Custom Range</div>
+        </div>
         <OutsideClickHandler onOutsideClick={onOutsideClick}>
           <div
             className="DayPicker__week-headers"
@@ -832,6 +844,16 @@ export default class DayPicker extends React.Component {
                 phrases={phrases}
               />
               {verticalScrollable && this.renderNavigation()}
+              <div className="ButtonBar">
+                <div className="DateField">
+                  <div>From</div>
+                  <input type="text"/>
+                </div>
+                <div className="DateField">
+                  <div>To</div>
+                  <input type="text"/>
+                </div>
+              </div>
             </div>
 
             {!isTouch && !hideKeyboardShortcutsPanel &&
