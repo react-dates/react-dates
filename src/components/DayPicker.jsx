@@ -209,6 +209,7 @@ export default class DayPicker extends React.Component {
     this.onKeyDown = this.onKeyDown.bind(this);
     this.onPrevMonthClick = this.onPrevMonthClick.bind(this);
     this.onNextMonthClick = this.onNextMonthClick.bind(this);
+    this.setCalendarMonthGridRef = this.setCalendarMonthGridRef.bind(this);
     this.multiplyScrollableMonths = this.multiplyScrollableMonths.bind(this);
     this.updateStateAfterMonthTransition = this.updateStateAfterMonthTransition.bind(this);
 
@@ -447,6 +448,10 @@ export default class DayPicker extends React.Component {
     return getMonthHeight(this.transitionContainer.querySelectorAll('.CalendarMonth')[i]);
   }
 
+  setCalendarMonthGridRef(ref) {
+    this.calendarMonthGrid = ref;
+  }
+
   maybeTransitionNextMonth(newFocusedDate) {
     const { numberOfMonths } = this.props;
     const { currentMonth, focusedDate } = this.state;
@@ -498,12 +503,17 @@ export default class DayPicker extends React.Component {
   }
 
   initializeDayPickerWidth() {
-    this.dayPickerWidth = calculateDimension(
+    if (this.calendarMonthGrid) {
       // eslint-disable-next-line react/no-find-dom-node
-      ReactDOM.findDOMNode(this.calendarMonthGrid).querySelector('.CalendarMonth'),
-      'width',
-      true,
-    );
+      const calendarMonthGridDOMNode = ReactDOM.findDOMNode(this.calendarMonthGrid);
+      if (calendarMonthGridDOMNode) {
+        this.dayPickerWidth = calculateDimension(
+          calendarMonthGridDOMNode.querySelector('.CalendarMonth'),
+          'width',
+          true,
+        );
+      }
+    }
   }
 
   updateStateAfterMonthTransition() {
@@ -538,12 +548,17 @@ export default class DayPicker extends React.Component {
       newFocusedDate = this.getFocusedDay(newMonth);
     }
 
-    // clear the previous transforms
-    applyTransformStyles(
+    if (this.calendarMonthGrid) {
       // eslint-disable-next-line react/no-find-dom-node
-      ReactDOM.findDOMNode(this.calendarMonthGrid).querySelector('.CalendarMonth'),
-      'none',
-    );
+      const calendarMonthGridDOMNode = ReactDOM.findDOMNode(this.calendarMonthGrid);
+      if (calendarMonthGridDOMNode) {
+        // clear the previous transforms
+        applyTransformStyles(
+          calendarMonthGridDOMNode.querySelector('.CalendarMonth'),
+          'none',
+        );
+      }
+    }
 
     this.setState({
       currentMonth: newMonth,
@@ -810,7 +825,7 @@ export default class DayPicker extends React.Component {
               style={transitionContainerStyle}
             >
               <CalendarMonthGrid
-                ref={(ref) => { this.calendarMonthGrid = ref; }}
+                ref={this.setCalendarMonthGridRef}
                 transformValue={transformValue}
                 enableOutsideDays={enableOutsideDays}
                 firstVisibleMonthIndex={firstVisibleMonthIndex}
