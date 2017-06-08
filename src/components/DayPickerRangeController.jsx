@@ -79,6 +79,17 @@ const propTypes = forbidExtraProps({
   phrases: PropTypes.shape(getPhrasePropTypes(DayPickerPhrases)),
 
   isRTL: PropTypes.bool,
+
+  // from and to fields draft versions
+  dateFromInput: PropTypes.string,
+  dateToInput: PropTypes.string,
+
+  // from and to fields when apply has been clicked
+  dateFrom: PropTypes.string,
+  dateTo: PropTypes.string
+
+  onDateFromInputChange: PropTypes.func,
+  onDateToInputChange: PropTypes.func
 });
 
 const defaultProps = {
@@ -776,6 +787,12 @@ export default class DayPickerRangeController extends React.Component {
       isFocused,
       showKeyboardShortcuts,
       isRTL,
+      dateFromInput,
+      dateToInput,
+      dateFrom,
+      dateTo,
+      onDateToInputChange,
+      onDateFromInputChange
     } = this.props;
 
     const { phrases, visibleDays } = this.state;
@@ -811,6 +828,12 @@ export default class DayPickerRangeController extends React.Component {
         showKeyboardShortcuts={showKeyboardShortcuts}
         phrases={phrases}
         isRTL={isRTL}
+        dateFromInput={dateFromInput}
+        dateToInput={dateToInput}
+        dateFrom={dateFrom}
+        dateTo={dateTo}
+        onDateToInputChange={onDateToInputChange}
+        onDateFromInputChange={onDateFromInputChange}
       />
     );
   }

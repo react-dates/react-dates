@@ -102,21 +102,25 @@
     "webpack": "^1.15.0"
   },
   "dependencies": {
+    "@metamx/meeseeks-atoms": "git+ssh://github.com/metamx/meeseeks-atoms.git#7d54d5b22928d952d8e3dc0c8e8639d665e808d6",
     "airbnb-prop-types": "^2.5.4",
     "classnames": "^2.2.5",
     "consolidated-events": "^1.0.1",
+    "css-loader": "^0.28.4",
+    "file-loader": "^0.11.2",
     "lodash.throttle": "^4.1.1",
     "object.assign": "^4.0.4",
     "object.values": "^1.0.4",
     "prop-types": "^15.5.10",
     "react-moment-proptypes": "^1.4.0",
-    "react-portal": "^3.1.0"
+    "react-portal": "^3.1.0",
+    "resolve-url-loader": "^2.0.2"
   },
   "peerDependencies": {
     "moment": "^2.18.1",
     "react": ">=0.14",
-    "react-dom": ">=0.14",
-    "react-addons-shallow-compare": ">=0.14"
+    "react-addons-shallow-compare": ">=0.14",
+    "react-dom": ">=0.14"
   },
   "greenkeeper": {
     "ignore": [
