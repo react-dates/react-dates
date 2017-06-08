@@ -1986,6 +1986,60 @@ describe('DayPickerRangeController', () => {
     });
   });
 
+  describe('#onMonthChange', () => {
+    it('updates state.currentMonth to be the passed month', () => {
+      const wrapper = shallow(
+        <DayPickerRangeController
+          onDatesChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />,
+      );
+      const date = moment().add('10', 'months');
+      wrapper.instance().onMonthChange(date);
+      expect(wrapper.state().currentMonth.isSame(date)).to.equal(true);
+    });
+
+    it('updates state.visibleDays to include the given date', () => {
+      const wrapper = shallow(
+        <DayPickerRangeController
+          onDatesChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />,
+      );
+      const date = moment().add('10', 'months');
+      wrapper.instance().onMonthChange(date);
+      const visibleDays = Object.keys(wrapper.state().visibleDays);
+      expect(visibleDays).to.include(toISOMonthString(date));
+    });
+  });
+
+  describe('#onYearChange', () => {
+    it('updates state.currentYear to be the passed date', () => {
+      const wrapper = shallow(
+        <DayPickerRangeController
+          onDatesChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />,
+      );
+      const date = moment().add('2', 'years');
+      wrapper.instance().onYearChange(date);
+      expect(wrapper.state().currentMonth.isSame(date)).to.equal(true);
+    });
+
+    it('updates state.visibleDays to include the given date', () => {
+      const wrapper = shallow(
+        <DayPickerRangeController
+          onDatesChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />,
+      );
+      const date = moment().add('2', 'years');
+      wrapper.instance().onYearChange(date);
+      const visibleDays = Object.keys(wrapper.state().visibleDays);
+      expect(visibleDays).to.include(toISOMonthString(date));
+    });
+  });
+
   describe('#onNextMonthClick', () => {
     it('updates state.currentMonth to add 1 month', () => {
       const wrapper = shallow(

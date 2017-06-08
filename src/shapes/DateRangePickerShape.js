@@ -62,6 +62,7 @@ export default {
   renderDay: PropTypes.func,
   minimumNights: PropTypes.number,
   enableOutsideDays: PropTypes.bool,
+  enableDropdowns: PropTypes.bool,
   isDayBlocked: PropTypes.func,
   isOutsideRange: PropTypes.func,
   isDayHighlighted: PropTypes.func,

@@ -159,6 +159,14 @@ storiesOf('DayPickerRangeController', module)
       navNext={<TestNextIcon />}
     />
   ))
+  .addWithInfo('with month selection dropdowns', () => (
+    <DayPickerRangeControllerWrapper
+      onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
+      onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
+      onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
+      enableDropdowns
+    />
+  ))
   .addWithInfo('with outside days enabled', () => (
     <DayPickerRangeControllerWrapper
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}

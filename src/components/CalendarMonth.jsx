@@ -12,6 +12,7 @@ import { CalendarDayPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 
 import CalendarDay from './CalendarDay';
+import MonthSelector from './MonthSelector';
 
 import getCalendarMonthWeeks from '../utils/getCalendarMonthWeeks';
 import isSameDay from '../utils/isSameDay';
@@ -30,12 +31,15 @@ const propTypes = forbidExtraProps({
   month: momentPropTypes.momentObj,
   isVisible: PropTypes.bool,
   enableOutsideDays: PropTypes.bool,
+  enableDropdowns: PropTypes.bool,
   modifiers: PropTypes.object,
   orientation: ScrollableOrientationShape,
   daySize: nonNegativeInteger,
   onDayClick: PropTypes.func,
   onDayMouseEnter: PropTypes.func,
   onDayMouseLeave: PropTypes.func,
+  onMonthSelect: PropTypes.func,
+  onYearSelect: PropTypes.func,
   renderMonth: PropTypes.func,
   renderDay: PropTypes.func,
 
@@ -51,12 +55,15 @@ const defaultProps = {
   month: moment(),
   isVisible: true,
   enableOutsideDays: false,
+  enableDropdowns: false,
   modifiers: {},
   orientation: HORIZONTAL_ORIENTATION,
   daySize: DAY_SIZE,
   onDayClick() {},
   onDayMouseEnter() {},
   onDayMouseLeave() {},
+  onMonthSelect() {},
+  onYearSelect() {},
   renderMonth: null,
   renderDay: null,
 
@@ -91,6 +98,7 @@ export default class CalendarMonth extends React.Component {
 
   render() {
     const {
+      enableDropdowns,
       month,
       monthFormat,
       orientation,
@@ -99,6 +107,8 @@ export default class CalendarMonth extends React.Component {
       onDayClick,
       onDayMouseEnter,
       onDayMouseLeave,
+      onMonthSelect,
+      onYearSelect,
       renderMonth,
       renderDay,
       daySize,
@@ -119,10 +129,21 @@ export default class CalendarMonth extends React.Component {
     return (
       <div className={calendarMonthClasses} data-visible={isVisible}>
         <table>
-          <caption className="CalendarMonth__caption js-CalendarMonth__caption">
-            <strong>{monthTitle}</strong>
-          </caption>
-
+          {enableDropdowns &&
+            <caption className="CalendarMonth__caption js-CalendarMonth__caption">
+              <MonthSelector
+                month={month}
+                onYearSelect={onYearSelect}
+                onMonthSelect={onMonthSelect}
+                phrases={phrases}
+              />
+            </caption>
+          }
+          {!enableDropdowns &&
+            <caption className="CalendarMonth__caption js-CalendarMonth__caption">
+              <strong>{monthTitle}</strong>
+            </caption>
+          }
           <tbody className="js-CalendarMonth__grid">
             {weeks.map((week, i) => (
               <tr key={i}>

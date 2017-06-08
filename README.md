@@ -106,6 +106,7 @@ numberOfMonths: PropTypes.number,
 keepOpenOnDateSelect: PropTypes.bool,
 reopenPickerOnClearDates: PropTypes.bool,
 renderCalendarInfo: PropTypes.func,
+enableDropdowns: PropTypes.bool,
 hideKeyboardShortcutsPanel: PropTypes.bool,
 isRTL: PropTypes.bool,
 
@@ -172,6 +173,7 @@ numberOfMonths: PropTypes.number,
 keepOpenOnDateSelect: PropTypes.bool,
 reopenPickerOnClearDate: PropTypes.bool,
 renderCalendarInfo: PropTypes.func,
+enableDropdowns: PropTypes.bool,
 hideKeyboardShortcutsPanel: PropTypes.bool,
 isRTL: PropTypes.bool,
 
@@ -220,6 +222,7 @@ The following is a list of other *OPTIONAL* props you may provide to the `DayPic
   withPortal: PropTypes.bool,
   initialVisibleMonth: PropTypes.func,
   renderCalendarInfo: PropTypes.func,
+  enableDropdowns: PropTypes.bool,
   onOutsideClick: PropTypes.func,
   keepOpenOnDateSelect: PropTypes.bool,
 

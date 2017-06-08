@@ -71,6 +71,7 @@ const defaultProps = {
   renderDay: null,
   minimumNights: 1,
   enableOutsideDays: false,
+  enableDropdowns: false,
   isDayBlocked: () => false,
   isOutsideRange: day => !isInclusivelyAfterDay(day, moment()),
   isDayHighlighted: () => false,

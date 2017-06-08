@@ -90,6 +90,11 @@ storiesOf('DayPicker', module)
       navNext={<TestNextIcon />}
     />
   ))
+  .addWithInfo('with month selection dropdowns', () => (
+    <DayPicker
+      enableDropdowns
+    />
+  ))
   .addWithInfo('with custom details', () => (
     <DayPicker
       renderDay={day => (day.day() % 6 === 5 ? '😻' : day.format('D'))}
