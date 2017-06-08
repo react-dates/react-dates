@@ -43,6 +43,10 @@
   z-index: $react-dates-z-index + 2;
   padding: 0 13px;
   text-align: left;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
 
   ul {
     list-style: none;
