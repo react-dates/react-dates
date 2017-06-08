@@ -79,6 +79,17 @@ const propTypes = forbidExtraProps({
   phrases: PropTypes.shape(getPhrasePropTypes(DayPickerPhrases)),
 
   isRTL: PropTypes.bool,
+
+  // from and to fields draft versions
+  dateFromInput: PropTypes.string,
+  dateToInput: PropTypes.string,
+
+  // from and to fields when apply has been clicked
+  dateFrom: PropTypes.string,
+  dateTo: PropTypes.string
+
+  onDateFromInputChange: PropTypes.func,
+  onDateToInputChange: PropTypes.func
 });
 
 const defaultProps = {
@@ -776,44 +787,54 @@ export default class DayPickerRangeController extends React.Component {
       isFocused,
       showKeyboardShortcuts,
       isRTL,
+      dateFromInput,
+      dateToInput,
+      dateFrom,
+      dateTo,
+      onDateToInputChange,
+      onDateFromInputChange
     } = this.props;
 
     const { phrases, visibleDays } = this.state;
 
     return (
-      <div className="hello">
-        <DayPicker
-          ref={(ref) => { this.dayPicker = ref; }}
-          orientation={orientation}
-          enableOutsideDays={enableOutsideDays}
-          modifiers={visibleDays}
-          numberOfMonths={numberOfMonths}
-          onDayClick={this.onDayClick}
-          onDayMouseEnter={this.onDayMouseEnter}
-          onDayMouseLeave={this.onDayMouseLeave}
-          onPrevMonthClick={this.onPrevMonthClick}
-          onNextMonthClick={this.onNextMonthClick}
-          onMultiplyScrollableMonths={this.onMultiplyScrollableMonths}
-          monthFormat={monthFormat}
-          renderMonth={renderMonth}
-          withPortal={withPortal}
-          hidden={!focusedInput}
-          initialVisibleMonth={initialVisibleMonth}
-          daySize={daySize}
-          onOutsideClick={onOutsideClick}
-          navPrev={navPrev}
-          navNext={navNext}
-          renderDay={renderDay}
-          renderCalendarInfo={renderCalendarInfo}
-          hideKeyboardShortcutsPanel={hideKeyboardShortcutsPanel}
-          isFocused={isFocused}
-          getFirstFocusableDay={this.getFirstFocusableDay}
-          onBlur={onBlur}
-          showKeyboardShortcuts={showKeyboardShortcuts}
-          phrases={phrases}
-          isRTL={isRTL}
-        />
-      </div>
+      <DayPicker
+        ref={(ref) => { this.dayPicker = ref; }}
+        orientation={orientation}
+        enableOutsideDays={enableOutsideDays}
+        modifiers={visibleDays}
+        numberOfMonths={numberOfMonths}
+        onDayClick={this.onDayClick}
+        onDayMouseEnter={this.onDayMouseEnter}
+        onDayMouseLeave={this.onDayMouseLeave}
+        onPrevMonthClick={this.onPrevMonthClick}
+        onNextMonthClick={this.onNextMonthClick}
+        onMultiplyScrollableMonths={this.onMultiplyScrollableMonths}
+        monthFormat={monthFormat}
+        renderMonth={renderMonth}
+        withPortal={withPortal}
+        hidden={!focusedInput}
+        initialVisibleMonth={initialVisibleMonth}
+        daySize={daySize}
+        onOutsideClick={onOutsideClick}
+        navPrev={navPrev}
+        navNext={navNext}
+        renderDay={renderDay}
+        renderCalendarInfo={renderCalendarInfo}
+        hideKeyboardShortcutsPanel={hideKeyboardShortcutsPanel}
+        isFocused={isFocused}
+        getFirstFocusableDay={this.getFirstFocusableDay}
+        onBlur={onBlur}
+        showKeyboardShortcuts={showKeyboardShortcuts}
+        phrases={phrases}
+        isRTL={isRTL}
+        dateFromInput={dateFromInput}
+        dateToInput={dateToInput}
+        dateFrom={dateFrom}
+        dateTo={dateTo}
+        onDateToInputChange={onDateToInputChange}
+        onDateFromInputChange={onDateFromInputChange}
+      />
     );
   }
 }

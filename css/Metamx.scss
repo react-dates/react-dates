@@ -1,5 +1,9 @@
+@font-face {
+  font-family: 'Proxima Nova';
+  src: url('proxima.ttf');
+}
+
 .DateRangePicker__picker {
-  min-height: 350px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 3px;
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -57,8 +61,8 @@
   font-size: 14px;
 }
 
-html {
-  font-family: "Proxima Nova";
+.DateRangePicker {
+  font-family: 'Proxima Nova';
   font-size: 13px;
   font-weight: 400;
   color: #1e1e1e;

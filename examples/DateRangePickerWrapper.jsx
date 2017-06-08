@@ -110,6 +110,30 @@ class DateRangePickerWrapper extends React.Component {
     this.setState({ focusedInput });
   }
 
+  onDateFromInputChange(event) {
+    this.setState({ dateFromInput: event.target.value })
+  },
+
+  onDateToInputChange(event) {
+    this.setState({ dateToInput: event.target.value })
+  },
+
+  onApplyClick() {
+    this.setState({
+      dateTo: this.state.dateToInput,
+      dateFrom: this.state.dateFromInput,
+    })
+  }
+
+  onCancelClick() {
+    this.setState({
+      startDate: null,
+      endDate: null,
+      dateTo: '',
+      dateFrom: ''
+    })
+  }
+
   render() {
     const { focusedInput, startDate, endDate } = this.state;
 
@@ -132,6 +156,11 @@ class DateRangePickerWrapper extends React.Component {
           focusedInput={focusedInput}
           startDate={startDate}
           endDate={endDate}
+
+          onDateFromInputChange={this.onDateFromInputChange}
+          onDateToInputChange={this.onDateToInputChange}
+          onApplyClick={this.onApplyClick}
+          onCancelClick={this.onCancelClick}
         />
       </div>
     );

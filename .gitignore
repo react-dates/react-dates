@@ -44,3 +44,6 @@ _gh-pages
 # Only apps should have lockfiles
 yarn.lock
 package-lock.json
+css
+.DS_Store
+css/.DS_Store

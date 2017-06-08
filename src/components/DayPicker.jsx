@@ -26,6 +26,7 @@ import getActiveElement from '../utils/getActiveElement';
 import isDayVisible from '../utils/isDayVisible';
 
 import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
+//import { Button } from '@metamx/meeseeks-atoms';
 
 import {
   HORIZONTAL_ORIENTATION,
@@ -79,6 +80,14 @@ const propTypes = forbidExtraProps({
   // internationalization
   monthFormat: PropTypes.string,
   phrases: PropTypes.shape(getPhrasePropTypes(DayPickerPhrases)),
+
+  // from and to fields draft versions
+  dateFromInput: PropTypes.string,
+  dateToInput: PropTypes.string,
+
+  // from and to fields when apply has been clicked
+  dateFrom: PropTypes.string,
+  dateTo: PropTypes.string
 });
 
 export const defaultProps = {
@@ -853,6 +862,8 @@ export default class DayPicker extends React.Component {
                   <div>To</div>
                   <input type="text"/>
                 </div>
+                <button className="cancel">Cancel</button>
+                <button className="cancel">Apply</button>
               </div>
             </div>
 

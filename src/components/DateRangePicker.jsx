@@ -92,6 +92,23 @@ const defaultProps = {
   displayFormat: () => moment.localeData().longDateFormat('L'),
   monthFormat: 'MMMM YYYY',
   phrases: DateRangePickerPhrases,
+
+  // from and to fields draft versions
+  dateFromInput: '',
+  dateToInput: '',
+
+  // from and to fields when apply has been clicked
+  dateFrom: '',
+  dateTo: '',
+
+  onDateFromInputChange() {},
+  onDateToInputChange() {}
+
+  dateFromInput: '',
+  dateToInput: '',
+
+  onApplyClick() {},
+  onCancelClick() {}
 };
 
 export default class DateRangePicker extends React.Component {
@@ -408,6 +425,12 @@ export default class DateRangePicker extends React.Component {
       onDatesChange,
       onClose,
       isRTL,
+      dateFromInput,
+      dateToInput,
+      dateFrom,
+      dateTo,
+      onDateToInputChange,
+      onDateFromInputChange
     } = this.props;
 
     const { isDateRangePickerInputFocused } = this.state;
@@ -428,7 +451,7 @@ export default class DateRangePicker extends React.Component {
             isEndDateFocused={focusedInput === END_DATE}
             displayFormat={displayFormat}
             showClearDates={showClearDates}
-            showCaret={!withPortal && !withFullScreenPortal}
+            showCaret={false}
             showDefaultInputIcon={showDefaultInputIcon}
             customInputIcon={customInputIcon}
             customArrowIcon={customArrowIcon}
@@ -449,6 +472,12 @@ export default class DateRangePicker extends React.Component {
             screenReaderMessage={screenReaderInputMessage}
             isFocused={isDateRangePickerInputFocused}
             isRTL={isRTL}
+            dateFromInput={dateFromInput}
+            dateToInput={dateToInput}
+            dateFrom={dateFrom}
+            dateTo={dateTo}
+            onDateToInputChange={onDateToInputChange}
+            onDateFromInputChange={onDateFromInputChange}
           />
 
           {this.maybeRenderDayPickerWithPortal()}

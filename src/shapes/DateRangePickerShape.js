@@ -70,4 +70,15 @@ export default {
   displayFormat: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   monthFormat: PropTypes.string,
   phrases: PropTypes.shape(getPhrasePropTypes(DateRangePickerPhrases)),
+
+  // from and to fields draft versions
+  dateFromInput: PropTypes.string,
+  dateToInput: PropTypes.string,
+
+  // from and to fields when apply has been clicked
+  dateFrom: PropTypes.string,
+  dateTo: PropTypes.string,
+
+  onDateFromInputChange() {},
+  onDateToInputChange() {}
 };
