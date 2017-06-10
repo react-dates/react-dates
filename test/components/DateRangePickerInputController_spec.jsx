@@ -69,6 +69,22 @@ describe('DateRangePickerInputController', () => {
       });
     });
 
+    it('calls onStartDateUserInputChange with empty string', () => {
+      const onStartDateUserInputChangeSpy =
+        sinon.spy(DateRangePickerInputController.prototype, 'onStartDateUserInputChange');
+      const wrapper = shallow(<DateRangePickerInputController />);
+      wrapper.instance().clearDates();
+      expect(onStartDateUserInputChangeSpy.getCall(0).args[0]).to.equal('');
+    });
+
+    it('calls onEndDateUserInputChange with empty string', () => {
+      const onEndDateUserInputChangeSpy =
+        sinon.spy(DateRangePickerInputController.prototype, 'onEndDateUserInputChange');
+      const wrapper = shallow(<DateRangePickerInputController />);
+      wrapper.instance().clearDates();
+      expect(onEndDateUserInputChangeSpy.getCall(0).args[0]).to.equal('');
+    });
+
     it('calls props.onDatesChange with arg { startDate: null, endDate: null }', () => {
       const onDatesChangeStub = sinon.stub();
       const wrapper = shallow(

@@ -26,6 +26,8 @@ const propTypes = forbidExtraProps({
   onEndDateFocus: PropTypes.func,
   onStartDateChange: PropTypes.func,
   onEndDateChange: PropTypes.func,
+  onStartDateUserInputChange: PropTypes.func,
+  onEndDateUserInputChange: PropTypes.func,
   onStartDateShiftTab: PropTypes.func,
   onEndDateTab: PropTypes.func,
   onClearDates: PropTypes.func,
@@ -34,8 +36,10 @@ const propTypes = forbidExtraProps({
 
   startDate: PropTypes.string,
   startDateValue: PropTypes.string,
+  startDateUserInputValue: PropTypes.string,
   endDate: PropTypes.string,
   endDateValue: PropTypes.string,
+  endDateUserInputValue: PropTypes.string,
 
   isStartDateFocused: PropTypes.bool,
   isEndDateFocused: PropTypes.bool,
@@ -68,6 +72,8 @@ const defaultProps = {
   onEndDateFocus() {},
   onStartDateChange() {},
   onEndDateChange() {},
+  onStartDateUserInputChange() {},
+  onEndDateUserInputChange() {},
   onStartDateShiftTab() {},
   onEndDateTab() {},
   onClearDates() {},
@@ -76,8 +82,10 @@ const defaultProps = {
 
   startDate: '',
   startDateValue: '',
+  startDateUserInputValue: '',
   endDate: '',
   endDateValue: '',
+  endDateUserInputValue: '',
 
   isStartDateFocused: false,
   isEndDateFocused: false,
@@ -128,19 +136,23 @@ export default class DateRangePickerInput extends React.Component {
     const {
       startDate,
       startDateValue,
+      startDateUserInputValue,
       startDateId,
       startDatePlaceholderText,
       screenReaderMessage,
       isStartDateFocused,
       onStartDateChange,
+      onStartDateUserInputChange,
       onStartDateFocus,
       onStartDateShiftTab,
       endDate,
       endDateValue,
+      endDateUserInputValue,
       endDateId,
       endDatePlaceholderText,
       isEndDateFocused,
       onEndDateChange,
+      onEndDateUserInputChange,
       onEndDateFocus,
       onEndDateTab,
       onArrowDown,
@@ -164,6 +176,8 @@ export default class DateRangePickerInput extends React.Component {
     const arrowIcon = customArrowIcon || (isRTL ? <LeftArrow /> : <RightArrow />);
     const closeIcon = customCloseIcon || (<CloseButton />);
     const screenReaderText = screenReaderMessage || phrases.keyboardNavigationInstructions;
+    const isClearDatesHidden =
+      !(startDate || endDate || startDateUserInputValue || endDateUserInputValue);
 
     return (
       <div
@@ -189,6 +203,7 @@ export default class DateRangePickerInput extends React.Component {
           placeholder={startDatePlaceholderText}
           displayValue={startDate}
           inputValue={startDateValue}
+          userInputValue={startDateUserInputValue}
           screenReaderMessage={screenReaderText}
           focused={isStartDateFocused}
           isFocused={isFocused}
@@ -198,6 +213,7 @@ export default class DateRangePickerInput extends React.Component {
           showCaret={showCaret}
 
           onChange={onStartDateChange}
+          onUserInputChange={onStartDateUserInputChange}
           onFocus={onStartDateFocus}
           onKeyDownShiftTab={onStartDateShiftTab}
           onKeyDownArrowDown={onArrowDown}
@@ -217,6 +233,7 @@ export default class DateRangePickerInput extends React.Component {
           placeholder={endDatePlaceholderText}
           displayValue={endDate}
           inputValue={endDateValue}
+          userInputValue={endDateUserInputValue}
           screenReaderMessage={screenReaderText}
           focused={isEndDateFocused}
           isFocused={isFocused}
@@ -226,6 +243,7 @@ export default class DateRangePickerInput extends React.Component {
           showCaret={showCaret}
 
           onChange={onEndDateChange}
+          onUserInputChange={onEndDateUserInputChange}
           onFocus={onEndDateFocus}
           onKeyDownTab={onEndDateTab}
           onKeyDownArrowDown={onArrowDown}
@@ -237,7 +255,7 @@ export default class DateRangePickerInput extends React.Component {
             type="button"
             aria-label={phrases.clearDates}
             className={cx('DateRangePickerInput__clear-dates', {
-              'DateRangePickerInput__clear-dates--hide': !(startDate || endDate),
+              'DateRangePickerInput__clear-dates--hide': isClearDatesHidden,
               'DateRangePickerInput__clear-dates--hover': isClearDatesHovered,
             })}
             onMouseEnter={this.onClearDatesMouseEnter}
