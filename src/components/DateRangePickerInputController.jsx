@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 
 import momentPropTypes from 'react-moment-proptypes';
-import { forbidExtraProps } from 'airbnb-prop-types';
+import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
 
 import { DateRangePickerInputPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
@@ -42,7 +42,7 @@ const propTypes = forbidExtraProps({
   keepOpenOnDateSelect: PropTypes.bool,
   reopenPickerOnClearDates: PropTypes.bool,
   withFullScreenPortal: PropTypes.bool,
-  minimumNights: PropTypes.number,
+  minimumNights: nonNegativeInteger,
   isOutsideRange: PropTypes.func,
   displayFormat: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
 
