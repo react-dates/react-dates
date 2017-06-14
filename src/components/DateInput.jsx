@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { forbidExtraProps } from 'airbnb-prop-types';
 import cx from 'classnames';
-import throttle from 'lodash.throttle';
+import throttle from 'lodash/throttle';
 
 import isTouchDevice from '../utils/isTouchDevice';
 

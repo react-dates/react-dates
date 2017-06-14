@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
 import moment from 'moment';
 import cx from 'classnames';
-import throttle from 'lodash.throttle';
+import throttle from 'lodash/throttle';
 
 import { DayPickerPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
