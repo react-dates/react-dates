@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import shallowCompare from 'react-addons-shallow-compare';
 import momentPropTypes from 'react-moment-proptypes';
 import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
 import moment from 'moment';
@@ -44,10 +43,7 @@ const defaultProps = {
   phrases: CalendarDayPhrases,
 };
 
-export default class CalendarDay extends React.Component {
-  shouldComponentUpdate(nextProps, nextState) {
-    return shallowCompare(this, nextProps, nextState);
-  }
+export default class CalendarDay extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
     const { isFocused, tabIndex } = this.props;
