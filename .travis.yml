@@ -14,8 +14,7 @@ script:
   - 'if [ -n "${LINT-}" ]; then npm run lint ; fi'
   - 'if [ "${TEST-}" = true ]; then npm run tests-only ; fi'
   - 'if [ -n "${KARMA-}" ]; then npm run tests-karma ; fi'
-after_success:
-  - 'if [ "${TRAVIS_NODE_VERSION}" = "4.6" ]; then npm run cover; cat ./coverage/lcov.info | ./node_modules/.bin/coveralls ; fi'
+  - 'if [ -n "${COVERAGE-}" ] && [ "${TRAVIS_BRANCH-}" = "master" ]; then npm run cover; cat ./coverage/lcov.info | ./node_modules/.bin/coveralls ; fi'
 env:
   global:
     - TEST=true
@@ -26,6 +25,8 @@ sudo: false
 matrix:
   fast_finish: true
   include:
+    - node_js: "node"
+      env: COVERAGE=true TEST=false
     - node_js: "node"
       env: KARMA=true TEST=false
     - node_js: "node"
