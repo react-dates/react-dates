@@ -87,7 +87,6 @@
     "nyc": "^10.3.2",
     "raw-loader": "^0.5.1",
     "react": "^15.5.4",
-    "react-addons-shallow-compare": "^15.5.2",
     "react-addons-test-utils": "^15.5.1",
     "react-dom": "^15.5.4",
     "react-svg-loader": "^1.1.1",
@@ -113,9 +112,8 @@
   },
   "peerDependencies": {
     "moment": "^2.18.1",
-    "react": ">=0.14",
-    "react-dom": ">=0.14",
-    "react-addons-shallow-compare": ">=0.14"
+    "react": ">=15.3.0",
+    "react-dom": ">=15.3.0"
   },
   "greenkeeper": {
     "ignore": [

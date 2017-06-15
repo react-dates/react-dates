@@ -2,7 +2,6 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import shallowCompare from 'react-addons-shallow-compare';
 import momentPropTypes from 'react-moment-proptypes';
 import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
 import moment from 'moment';
@@ -68,7 +67,7 @@ const defaultProps = {
   phrases: CalendarDayPhrases,
 };
 
-export default class CalendarMonth extends React.Component {
+export default class CalendarMonth extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -83,10 +82,6 @@ export default class CalendarMonth extends React.Component {
         weeks: getCalendarMonthWeeks(month, enableOutsideDays),
       });
     }
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return shallowCompare(this, nextProps, nextState);
   }
 
   render() {
