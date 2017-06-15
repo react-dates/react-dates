@@ -173,7 +173,7 @@ storiesOf('DayPickerRangeController', module)
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
-      initialVisibleMonth={() => moment('04 2017', 'MM YYYY')}
+      initialVisibleMonth={() => moment().add(10, 'months')}
     />
   ))
   .addWithInfo('with minimum nights set', () => (
