@@ -34,6 +34,7 @@ import isBeforeDay from '../utils/isBeforeDay';
 import {
   HORIZONTAL_ORIENTATION,
   VERTICAL_ORIENTATION,
+  VERTICAL_SCROLLABLE,
   ANCHOR_LEFT,
   ANCHOR_RIGHT,
   DAY_SIZE,
@@ -554,8 +555,18 @@ export default class SingleDatePicker extends React.Component {
   }
 
   deleteModifier(updatedDays, day, modifier) {
-    const { numberOfMonths, enableOutsideDays } = this.props;
-    const { currentMonth, visibleDays } = this.state;
+    const { numberOfMonths: numberOfVisibleMonths, enableOutsideDays, orientation } = this.props;
+    const { currentMonth: firstVisibleMonth, visibleDays } = this.state;
+
+    let currentMonth = firstVisibleMonth;
+    let numberOfMonths = numberOfVisibleMonths;
+    if (orientation !== VERTICAL_SCROLLABLE) {
+      currentMonth = currentMonth.clone().subtract(1, 'month');
+      numberOfMonths += 2;
+    }
+    if (!day || !isDayVisible(day, currentMonth, numberOfMonths, enableOutsideDays)) {
+      return updatedDays;
+    }
     if (!day || !isDayVisible(day, currentMonth, numberOfMonths, enableOutsideDays)) {
       return updatedDays;
     }
