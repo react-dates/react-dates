@@ -6,12 +6,12 @@ import cx from 'classnames';
 import Portal from 'react-portal';
 import { forbidExtraProps } from 'airbnb-prop-types';
 import { addEventListener, removeEventListener } from 'consolidated-events';
+import isTouchDevice from 'is-touch-device';
 
 import { DateRangePickerPhrases } from '../defaultPhrases';
 
 import OutsideClickHandler from './OutsideClickHandler';
 import getResponsiveContainerStyles from '../utils/getResponsiveContainerStyles';
-import isTouchDevice from '../utils/isTouchDevice';
 
 import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
 
