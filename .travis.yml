@@ -9,7 +9,7 @@ before_script:
   - 'if [ -n "${KARMA-}" ]; then export DISPLAY=:99.0; fi'
   - 'if [ -n "${KARMA-}" ]; then sh -e /etc/init.d/xvfb start; fi'
   - 'if [ -n "${KARMA-}" ]; then sleep 3; fi'
-  - 'if [ -n "${REACT-}" ] && [ "${TEST-}" = true ]; then sh install-relevant-react.sh; fi'
+  - 'if [ -n "${REACT-}" ] && [ "${TEST-}" = true ]; then sh install-relevant-react.sh && npm ls >/dev/null; fi'
 script:
   - 'if [ -n "${LINT-}" ]; then npm run lint ; fi'
   - 'if [ "${TEST-}" = true ]; then npm run tests-only ; fi'
