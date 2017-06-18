@@ -51,6 +51,7 @@
     "@kadira/react-storybook-addon-info": "^3.4.0",
     "@kadira/storybook": "^2.35.3",
     "@kadira/storybook-addon-options": "^1.0.2",
+    "@kadira/storybook-addons": "^1.6.1",
     "airbnb-js-shims": "^1.1.1",
     "babel-cli": "^6.24.1",
     "babel-core": "^6.25.0",
