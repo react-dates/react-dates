@@ -51,6 +51,7 @@ setOptions({
 });
 
 function loadStories() {
+  require('../stories/Kupibilet');
   require('../stories/DateRangePicker');
   require('../stories/DateRangePicker_input');
   require('../stories/DateRangePicker_calendar');
