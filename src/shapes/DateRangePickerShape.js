@@ -54,6 +54,7 @@ export default {
 
   // day presentation and interaction related props
   renderDay: PropTypes.func,
+  modifiers: PropTypes.object,
   minimumNights: PropTypes.number,
   enableOutsideDays: PropTypes.bool,
   isDayBlocked: PropTypes.func,

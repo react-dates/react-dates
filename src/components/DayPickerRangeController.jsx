@@ -37,6 +37,7 @@ const propTypes = forbidExtraProps({
   isOutsideRange: PropTypes.func,
   isDayBlocked: PropTypes.func,
   isDayHighlighted: PropTypes.func,
+  modifiers: PropTypes.object,
 
   // DayPicker props
   enableOutsideDays: PropTypes.bool,
@@ -219,6 +220,7 @@ export default class DayPickerRangeController extends React.Component {
       numberOfMonths,
       orientation,
       monthFormat,
+      modifiers,
       navPrev,
       navNext,
       dimensions,
@@ -233,7 +235,8 @@ export default class DayPickerRangeController extends React.Component {
       renderCalendarInfo,
     } = this.props;
 
-    const modifiers = {
+    const extendedModifiers = {
+      ...modifiers,
       today: day => this.isToday(day),
       blocked: day => this.isBlocked(day),
       'blocked-calendar': day => isDayBlocked(day),
@@ -255,7 +258,7 @@ export default class DayPickerRangeController extends React.Component {
         ref={(ref) => { this.dayPicker = ref; }}
         orientation={orientation}
         enableOutsideDays={enableOutsideDays}
-        modifiers={modifiers}
+        modifiers={extendedModifiers}
         dimensions={dimensions}
         numberOfMonths={numberOfMonths}
         onDayClick={this.onDayClick}
