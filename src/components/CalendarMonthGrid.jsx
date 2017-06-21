@@ -30,6 +30,7 @@ const propTypes = forbidExtraProps({
   onDayClick: PropTypes.func,
   onDayMouseEnter: PropTypes.func,
   onDayMouseLeave: PropTypes.func,
+  onCalendarMouseLeave: PropTypes.func,
   onMonthTransitionEnd: PropTypes.func,
   renderDay: PropTypes.func,
   transformValue: PropTypes.string,
@@ -49,6 +50,7 @@ const defaultProps = {
   onDayClick() {},
   onDayMouseEnter() {},
   onDayMouseLeave() {},
+  onCalendarMouseLeave() {},
   onMonthTransitionEnd() {},
   renderDay: null,
   transformValue: 'none',
@@ -151,6 +153,7 @@ export default class CalendarMonthGrid extends React.Component {
       onDayMouseLeave,
       onDayClick,
       renderDay,
+      onCalendarMouseLeave,
       onMonthTransitionEnd,
     } = this.props;
 
@@ -170,6 +173,7 @@ export default class CalendarMonthGrid extends React.Component {
         className={className}
         style={getTransformStyles(transformValue)}
         onTransitionEnd={onMonthTransitionEnd}
+        onMouseLeave={onCalendarMouseLeave}
       >
         {months.map((month, i) => {
           const isVisible =

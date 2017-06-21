@@ -14,6 +14,7 @@ export default {
 
   focused: PropTypes.bool,
   onFocusChange: PropTypes.func.isRequired,
+  onDayHover: PropTypes.func,
 
   // input related props
   id: PropTypes.string.isRequired,

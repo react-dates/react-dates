@@ -16,6 +16,7 @@ export default {
 
   focusedInput: FocusedInputShape,
   onFocusChange: PropTypes.func.isRequired,
+  onDayHover: PropTypes.func,
 
   // input related props
   startDateId: PropTypes.string.isRequired,

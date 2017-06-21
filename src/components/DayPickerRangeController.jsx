@@ -30,6 +30,7 @@ const propTypes = forbidExtraProps({
 
   focusedInput: FocusedInputShape,
   onFocusChange: PropTypes.func,
+  onDayHover: PropTypes.func,
 
   keepOpenOnDateSelect: PropTypes.bool,
   minimumNights: PropTypes.number,
@@ -107,7 +108,7 @@ export default class DayPickerRangeController extends React.Component {
 
     this.onDayClick = this.onDayClick.bind(this);
     this.onDayMouseEnter = this.onDayMouseEnter.bind(this);
-    this.onDayMouseLeave = this.onDayMouseLeave.bind(this);
+    this.onCalendarMouseLeave = this.onCalendarMouseLeave.bind(this);
   }
 
   componentWillUpdate() {
@@ -150,18 +151,19 @@ export default class DayPickerRangeController extends React.Component {
 
   onDayMouseEnter(day) {
     if (this.isTouchDevice) return;
+    const { onDayHover, isOutsideRange } = this.props;
 
-    this.setState({
-      hoverDate: day,
-    });
+    if (onDayHover && !isOutsideRange(day)) {
+      onDayHover(day);
+    }
   }
 
-  onDayMouseLeave() {
-    if (this.isTouchDevice) return;
+  onCalendarMouseLeave() {
+    const { onDayHover } = this.props;
 
-    this.setState({
-      hoverDate: null,
-    });
+    if (onDayHover) {
+      onDayHover(null);
+    }
   }
 
   doesNotMeetMinimumNights(day) {
@@ -184,26 +186,6 @@ export default class DayPickerRangeController extends React.Component {
 
   isEndDate(day) {
     return isSameDay(day, this.props.endDate);
-  }
-
-  isHovered(day) {
-    return isSameDay(day, this.state.hoverDate);
-  }
-
-  isInHoveredSpan(day) {
-    const { startDate, endDate } = this.props;
-    const { hoverDate } = this.state;
-
-    const isForwardRange = !!startDate && !endDate &&
-      (day.isBetween(startDate, hoverDate) ||
-       isSameDay(hoverDate, day));
-    const isBackwardRange = !!endDate && !startDate &&
-      (day.isBetween(hoverDate, endDate) ||
-       isSameDay(hoverDate, day));
-
-    const isValidDayHovered = hoverDate && !this.isBlocked(hoverDate);
-
-    return (isForwardRange || isBackwardRange) && isValidDayHovered;
   }
 
   isInSelectedSpan(day) {
@@ -257,12 +239,7 @@ export default class DayPickerRangeController extends React.Component {
       'blocked-minimum-nights': day => this.doesNotMeetMinimumNights(day),
       'highlighted-calendar': day => isDayHighlighted(day),
       valid: day => !this.isBlocked(day),
-      // before anything has been set or after both are set
-      hovered: day => this.isHovered(day),
 
-      // while start date has been set, but end date has not been
-      'hovered-span': day => this.isInHoveredSpan(day),
-      'after-hovered-start': day => this.isDayAfterHoveredStartDate(day),
       'last-in-range': day => this.isLastInRange(day),
 
       // once a start date and end date have been set
@@ -281,6 +258,7 @@ export default class DayPickerRangeController extends React.Component {
         onDayClick={this.onDayClick}
         onDayMouseEnter={this.onDayMouseEnter}
         onDayMouseLeave={this.onDayMouseLeave}
+        onCalendarMouseLeave={this.onCalendarMouseLeave}
         onPrevMonthClick={onPrevMonthClick}
         onNextMonthClick={onNextMonthClick}
         monthFormat={monthFormat}

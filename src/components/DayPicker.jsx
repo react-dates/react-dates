@@ -51,6 +51,7 @@ const propTypes = forbidExtraProps({
   onDayClick: PropTypes.func,
   onDayMouseEnter: PropTypes.func,
   onDayMouseLeave: PropTypes.func,
+  onCalendarMouseLeave: PropTypes.func,
 
   // internationalization
   monthFormat: PropTypes.string,
@@ -388,6 +389,7 @@ export default class DayPicker extends React.Component {
       onDayClick,
       onDayMouseEnter,
       onDayMouseLeave,
+      onCalendarMouseLeave,
       renderDay,
       renderCalendarInfo,
       onOutsideClick,
@@ -472,6 +474,7 @@ export default class DayPicker extends React.Component {
               onDayMouseEnter={onDayMouseEnter}
               onDayMouseLeave={onDayMouseLeave}
               renderDay={renderDay}
+              onCalendarMouseLeave={onCalendarMouseLeave}
               onMonthTransitionEnd={this.updateStateAfterMonthTransition}
               monthFormat={monthFormat}
             />
