@@ -226,6 +226,7 @@ export default class DateRangePicker extends React.Component {
       keepOpenOnDateSelect,
       renderDay,
       renderCalendarInfo,
+      dimensions,
       initialVisibleMonth,
       customCloseIcon,
     } = this.props;
@@ -271,6 +272,7 @@ export default class DateRangePicker extends React.Component {
           keepOpenOnDateSelect={keepOpenOnDateSelect}
           renderDay={renderDay}
           renderCalendarInfo={renderCalendarInfo}
+          dimensions={dimensions}
         />
 
         {withFullScreenPortal &&

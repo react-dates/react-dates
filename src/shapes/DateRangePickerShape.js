@@ -35,6 +35,7 @@ export default {
 
   // calendar presentation and interaction related props
   orientation: OrientationShape,
+  dimensions: PropTypes.object,
   anchorDirection: anchorDirectionShape,
   horizontalMargin: PropTypes.number,
   withPortal: PropTypes.bool,

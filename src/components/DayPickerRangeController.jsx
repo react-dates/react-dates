@@ -42,6 +42,7 @@ const propTypes = forbidExtraProps({
   enableOutsideDays: PropTypes.bool,
   numberOfMonths: PropTypes.number,
   orientation: ScrollableOrientationShape,
+  dimensions: PropTypes.object,
   withPortal: PropTypes.bool,
   initialVisibleMonth: PropTypes.func,
 
@@ -220,6 +221,7 @@ export default class DayPickerRangeController extends React.Component {
       monthFormat,
       navPrev,
       navNext,
+      dimensions,
       onOutsideClick,
       onPrevMonthClick,
       onNextMonthClick,
@@ -254,6 +256,7 @@ export default class DayPickerRangeController extends React.Component {
         orientation={orientation}
         enableOutsideDays={enableOutsideDays}
         modifiers={modifiers}
+        dimensions={dimensions}
         numberOfMonths={numberOfMonths}
         onDayClick={this.onDayClick}
         onDayMouseEnter={this.onDayMouseEnter}
