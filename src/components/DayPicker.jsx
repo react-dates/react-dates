@@ -50,6 +50,7 @@ const propTypes = forbidExtraProps({
   onDayMouseEnter: PropTypes.func,
   onDayMouseLeave: PropTypes.func,
   onCalendarMouseLeave: PropTypes.func,
+  isOutsideRange: PropTypes.func,
 
   // internationalization
   monthFormat: PropTypes.string,
@@ -328,7 +329,12 @@ export default class DayPicker extends React.Component {
       navPrev,
       navNext,
       orientation,
+      numberOfMonths,
+      isOutsideRange,
     } = this.props;
+    const { currentMonth } = this.state;
+    const canNavPrev = !isOutsideRange(moment(currentMonth).add(-1, 'month').endOf('month'));
+    const canNavNext = !isOutsideRange(moment(currentMonth).add(numberOfMonths, 'month').startOf('month'));
 
     let onNextMonthClick;
     if (orientation === VERTICAL_SCROLLABLE) {
@@ -343,6 +349,8 @@ export default class DayPicker extends React.Component {
         onNextMonthClick={onNextMonthClick}
         navPrev={navPrev}
         navNext={navNext}
+        canNavPrev={canNavPrev}
+        canNavNext={canNavNext}
         orientation={orientation}
       />
     );

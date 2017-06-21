@@ -261,6 +261,7 @@ export default class DayPickerRangeController extends React.Component {
         modifiers={extendedModifiers}
         dimensions={dimensions}
         numberOfMonths={numberOfMonths}
+        isOutsideRange={isOutsideRange}
         onDayClick={this.onDayClick}
         onDayMouseEnter={this.onDayMouseEnter}
         onDayMouseLeave={this.onDayMouseLeave}
