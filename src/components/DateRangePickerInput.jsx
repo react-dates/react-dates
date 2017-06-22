@@ -176,6 +176,7 @@ export default class DateRangePickerInput extends React.Component {
           <button
             type="button"
             className="DateRangePickerInput__calendar-icon"
+            disabled={disabled}
             aria-label={phrases.focusStartDate}
             onClick={onArrowDown}
           >
