@@ -1,0 +1,58 @@
+@import "variables";
+
+.CalendarYear {
+  text-align: center;
+  padding: 0 13px;
+  vertical-align: top;
+
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    caption: {
+      caption-side: initial;
+    }
+  }
+
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.CalendarYear--horizontal,
+.CalendarYear--vertical {
+  &:first-of-type {
+    position: absolute;
+    z-index: $react-dates-z-index - 1;
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+.CalendarYear--horizontal {
+  display: inline-block;
+  min-height: 100%;
+}
+
+.CalendarYear--vertical {
+  display: block;
+}
+
+.CalendarYear__caption {
+  color: $react-dates-color-gray-dark;
+  margin-top: 7px;
+  font-size: 18px;
+  text-align: center;
+  // necessary to not hide borders in FF
+  margin-bottom: 2px;
+  caption-side: initial;
+}
+
+.CalendarYear--horizontal .CalendarYear__caption,
+.CalendarYear--vertical .CalendarYear__caption {
+  padding: 15px 0 35px;
+}
+
+.CalendarYear--vertical-scrollable .CalendarYear__caption {
+  padding: 5px 0;
+}

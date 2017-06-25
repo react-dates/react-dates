@@ -1,0 +1,28 @@
+@import 'variables';
+
+.CalendarYearGrid {
+  background: $react-dates-color-white;
+  z-index: $react-dates-z-index;
+  text-align: left;
+}
+
+.CalendarYearGrid--animating {
+  -webkit-transition: -webkit-transform 0.2s ease-in-out;
+  -moz-transition: -moz-transform 0.2s ease-in-out;
+  transition: transform 0.2s ease-in-out;
+  z-index: $react-dates-z-index + 1;
+}
+
+.CalendarYearGrid--horizontal {
+  position: absolute;
+  left: 9px;
+}
+
+.CalendarYearGrid--vertical {
+  margin: 0 auto;
+}
+
+.CalendarYearGrid--vertical-scrollable {
+  margin: 0 auto;
+  overflow-y: scroll;
+}
