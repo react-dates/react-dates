@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { storiesOf } from '@kadira/storybook';
+import { storiesOf } from '@storybook/react';
 
 import { VERTICAL_ORIENTATION, ANCHOR_RIGHT } from '../constants';
 
@@ -127,12 +127,6 @@ storiesOf('DRP - Calendar Props', module)
       renderCalendarInfo={() => (
         <TestCustomInfoPanel />
       )}
-      autoFocus
-    />
-  ))
-  .addWithInfo('with keyboard shorcuts panel hidden', () => (
-    <DateRangePickerWrapper
-      hideKeyboardShortcutsPanel
       autoFocus
     />
   ))

@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import momentJalaali from 'moment-jalaali';
-import { storiesOf } from '@kadira/storybook';
+import { storiesOf } from '@storybook/react';
 
 import SingleDatePickerWrapper from '../examples/SingleDatePickerWrapper';
 
