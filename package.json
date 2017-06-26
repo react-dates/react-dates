@@ -86,7 +86,7 @@
     "moment": "^2.18.1",
     "moment-jalaali": "^0.6.1",
     "node-sass": "^4.5.3",
-    "nyc": "^10.3.2",
+    "nyc": "^11.0.3",
     "raw-loader": "^0.5.1",
     "react": "^0.14 || ^15.5.4",
     "react-addons-shallow-compare": "^0.14 || ^15.5.2",
