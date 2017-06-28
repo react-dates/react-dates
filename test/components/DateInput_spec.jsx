@@ -273,18 +273,18 @@ describe('DateInput', () => {
       expect(wrapper.state()).to.contain.keys({ isTouchDevice: false });
     });
 
-    it('sets readOnly when a touch device and props.readOnly === true', () => {
-      const wrapper = shallow(<DateInput id="date" readOnly />);
+    it('sets readOnly to true when no value was provided on a touch device', () => {
+      const wrapper = shallow(<DateInput id="date" />);
       wrapper.setState({ isTouchDevice: true });
       wrapper.update();
       expect(!!wrapper.find('input').prop('readOnly')).to.equal(true);
     });
 
-    it('sets readOnly when a touch device and props.readOnly === false', () => {
+    it('sets readOnly to provided value on a touch device', () => {
       const wrapper = shallow(<DateInput id="date" readOnly={false} />);
       wrapper.setState({ isTouchDevice: true });
       wrapper.update();
-      expect(!!wrapper.find('input').prop('readOnly')).to.equal(true);
+      expect(!!wrapper.find('input').prop('readOnly')).to.equal(false);
     });
 
     describe('focus/isFocused', () => {

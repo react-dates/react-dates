@@ -37,7 +37,7 @@ const defaultProps = {
   focused: false,
   disabled: false,
   required: false,
-  readOnly: false,
+  readOnly: null,
   showCaret: false,
 
   onChange() {},
@@ -172,7 +172,7 @@ export default class DateInput extends React.Component {
           placeholder={placeholder}
           autoComplete="off"
           disabled={disabled}
-          readOnly={readOnly || isTouch}
+          readOnly={typeof readOnly === 'boolean' ? readOnly : isTouch}
           required={required}
           aria-describedby={screenReaderMessage && screenReaderMessageId}
         />
