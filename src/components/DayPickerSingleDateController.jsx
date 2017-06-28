@@ -4,11 +4,10 @@ import momentPropTypes from 'react-moment-proptypes';
 import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
 import moment from 'moment';
 import values from 'object.values';
+import isTouchDevice from 'is-touch-device';
 
 import { DayPickerPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
-
-import isTouchDevice from '../utils/isTouchDevice';
 
 import isSameDay from '../utils/isSameDay';
 import isAfterDay from '../utils/isAfterDay';
