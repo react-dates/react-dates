@@ -1,5 +1,12 @@
 # Change Log
 
+## v12.2.0
+- [fix] Reevaluate `--blocked` and `--blocked-outside-range` modifiers in the SDP componentWilLReceiveProps ([https://github.com/airbnb/react-dates/pull/550](#550))
+- [fix] Deprecate `isTouchDevice` in favor of `is-touch-device` ([#576](https://github.com/airbnb/react-dates/pull/576))
+- [fix] Disable calendar icon when component is disabled ([#591](https://github.com/airbnb/react-dates/pull/591))
+- [fix] Fix issue where range does not clear on invisible months ([#575](https://github.com/airbnb/react-dates/pull/575))
+- [new] Add `DayPickerSingleDateController` component ([#573](https://github.com/airbnb/react-dates/pull/573))
+
 ## v12.1.2
 - [fix] Add null check for calendarMonthGrid ref ([#552](https://github.com/airbnb/react-dates/pull/552))
 
