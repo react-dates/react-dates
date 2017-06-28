@@ -84,6 +84,7 @@ const defaultProps = {
   renderDay: null,
   minimumNights: 1,
   enableOutsideDays: false,
+  enableDropdowns: false,
   isDayBlocked: () => false,
   isOutsideRange: day => !isInclusivelyAfterDay(day, moment()),
   isDayHighlighted: () => false,
@@ -298,6 +299,7 @@ export default class DateRangePicker extends React.Component {
       withFullScreenPortal,
       daySize,
       enableOutsideDays,
+      enableDropdowns,
       focusedInput,
       startDate,
       endDate,
@@ -333,6 +335,7 @@ export default class DateRangePicker extends React.Component {
           ref={(ref) => { this.dayPicker = ref; }}
           orientation={orientation}
           enableOutsideDays={enableOutsideDays}
+          enableDropdowns={enableDropdowns}
           numberOfMonths={numberOfMonths}
           onPrevMonthClick={onPrevMonthClick}
           onNextMonthClick={onNextMonthClick}

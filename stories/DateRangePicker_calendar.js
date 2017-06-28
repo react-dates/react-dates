@@ -109,6 +109,11 @@ storiesOf('DRP - Calendar Props', module)
       autoFocus
     />
   ))
+  .addWithInfo('with month selection dropdowns', () => (
+    <DateRangePickerWrapper
+      enableDropdowns
+    />
+  ))
   .addWithInfo('with outside days enabled', () => (
     <DateRangePickerWrapper
       numberOfMonths={1}

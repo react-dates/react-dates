@@ -61,6 +61,7 @@ const defaultProps = {
   // day presentation and interaction related props
   renderDay: null,
   enableOutsideDays: false,
+  enableDropdowns: false,
   isDayBlocked: () => false,
   isOutsideRange: day => !isInclusivelyAfterDay(day, moment()),
   isDayHighlighted: () => {},

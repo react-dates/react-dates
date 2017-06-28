@@ -1,12 +1,13 @@
 import React from 'react';
 import { expect } from 'chai';
+import sinon from 'sinon-sandbox';
 import { shallow } from 'enzyme';
 import moment from 'moment';
 
 import CalendarMonth from '../../src/components/CalendarMonth';
 import CalendarMonthGrid from '../../src/components/CalendarMonthGrid';
 
-import { HORIZONTAL_ORIENTATION, VERTICAL_ORIENTATION } from '../../constants';
+import { HORIZONTAL_ORIENTATION, VERTICAL_ORIENTATION, VERTICAL_SCROLLABLE } from '../../constants';
 
 import getTransformStyles from '../../src/utils/getTransformStyles';
 
@@ -96,5 +97,97 @@ describe('CalendarMonthGrid', () => {
       ), {});
 
     expect(Object.keys(collisions).length).to.equal(months.length);
+  });
+
+  describe('#onMonthSelect', () => {
+    describe('has transitionMonths', () => {
+      it('calls onMonthChange with the month that should render first', () => {
+        const onMonthChangeStub = sinon.stub();
+        const wrapper = shallow(
+          <CalendarMonthGrid
+            orientation={HORIZONTAL_ORIENTATION}
+            onMonthChange={onMonthChangeStub}
+          />,
+        );
+        const month1 = moment();
+        const month2 = moment().add(1, 'months');
+        const month3 = moment().add(2, 'months');
+        const months = [month1, month2, month3];
+        wrapper.setState({
+          months,
+        });
+        wrapper.instance().onMonthSelect(month3, 10);
+        const calledWithDate = month3.set('month', 10).subtract('1', 'months');
+        expect(onMonthChangeStub.calledWith(calledWithDate)).to.equal(true);
+      });
+    });
+
+    describe('doesnt have transitionMonths', () => {
+      it('calls onMonthChange with the month that should render first', () => {
+        const onMonthChangeStub = sinon.stub();
+        const wrapper = shallow(
+          <CalendarMonthGrid
+            orientation={VERTICAL_SCROLLABLE}
+            onMonthChange={onMonthChangeStub}
+          />,
+        );
+        const month1 = moment();
+        const month2 = moment().add(1, 'months');
+        const month3 = moment().add(2, 'months');
+        const months = [month1, month2, month3];
+        wrapper.instance().setState({
+          months,
+        });
+        wrapper.instance().onMonthSelect(month3, 10);
+        const calledWithDate = month3.set('month', 10).subtract('2', 'months');
+        expect(onMonthChangeStub.calledWith(calledWithDate)).to.equal(true);
+      });
+    });
+  });
+
+  describe('#onYearSelect', () => {
+    describe('has transitionMonths', () => {
+      it('calls onYearChange with the month that should render first', () => {
+        const onYearChangeStub = sinon.stub();
+        const wrapper = shallow(
+          <CalendarMonthGrid
+            orientation={HORIZONTAL_ORIENTATION}
+            onYearChange={onYearChangeStub}
+          />,
+        );
+        const month1 = moment();
+        const month2 = moment().add(1, 'months');
+        const month3 = moment().add(2, 'months');
+        const months = [month1, month2, month3];
+        wrapper.setState({
+          months,
+        });
+        wrapper.instance().onYearSelect(month3, '1999');
+        const calledWithDate = month3.set('year', '1999').subtract('1', 'months');
+        expect(onYearChangeStub.calledWith(calledWithDate)).to.equal(true);
+      });
+    });
+
+    describe('doesnt have transitionMonths', () => {
+      it('calls onMonthChange with the month that should render first', () => {
+        const onYearChangeStub = sinon.stub();
+        const wrapper = shallow(
+          <CalendarMonthGrid
+            orientation={VERTICAL_SCROLLABLE}
+            onYearChange={onYearChangeStub}
+          />,
+        );
+        const month1 = moment();
+        const month2 = moment().add(1, 'months');
+        const month3 = moment().add(2, 'months');
+        const months = [month1, month2, month3];
+        wrapper.setState({
+          months,
+        });
+        wrapper.instance().onYearSelect(month3, '1999');
+        const calledWithDate = month3.set('year', '1999').subtract('2', 'months');
+        expect(onYearChangeStub.calledWith(calledWithDate)).to.equal(true);
+      });
+    });
   });
 });

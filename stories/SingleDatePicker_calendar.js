@@ -113,6 +113,12 @@ storiesOf('SDP - Calendar Props', module)
       autoFocus
     />
   ))
+  .addWithInfo('with month selection dropdowns', () => (
+    <SingleDatePickerWrapper
+      enableDropdowns
+      autoFocus
+    />
+  ))
   .addWithInfo('with info panel', () => (
     <SingleDatePickerWrapper
       renderCalendarInfo={() => (

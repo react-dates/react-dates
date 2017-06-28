@@ -39,6 +39,18 @@ describe('CalendarMonth', () => {
       });
     });
 
+    describe('monthSelector', () => {
+      it('shows the month as a string by default', () => {
+        const wrapper = shallow(<CalendarMonth />);
+        expect(wrapper.find('MonthSelector')).to.have.lengthOf(0);
+      });
+
+      it('shows the month selector dropdowns when enabledDropdowns is true', () => {
+        const wrapper = shallow(<CalendarMonth enableDropdowns />);
+        expect(wrapper.find('MonthSelector')).to.have.lengthOf(1);
+      });
+    });
+
     describe('caption', () => {
       it('.CalendarMonth__caption class is present', () => {
         const caption = shallow(<CalendarMonth />).find('caption');

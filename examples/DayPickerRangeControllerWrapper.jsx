@@ -28,6 +28,7 @@ const propTypes = forbidExtraProps({
 
   // DayPicker props
   enableOutsideDays: PropTypes.bool,
+  enableDropdowns: PropTypes.bool,
   numberOfMonths: PropTypes.number,
   orientation: ScrollableOrientationShape,
   withPortal: PropTypes.bool,
@@ -61,6 +62,7 @@ const defaultProps = {
   isOutsideRange: day => !isInclusivelyAfterDay(day, moment()),
   isDayHighlighted: () => false,
   enableOutsideDays: false,
+  enableDropdowns: false,
 
   // calendar presentation and interaction related props
   orientation: HORIZONTAL_ORIENTATION,
