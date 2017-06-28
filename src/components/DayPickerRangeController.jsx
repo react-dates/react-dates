@@ -32,7 +32,7 @@ import {
   DAY_SIZE,
 } from '../../constants';
 
-import DayPicker, { defaultProps as DayPickerDefaultProps } from './DayPicker';
+import DayPicker from './DayPicker';
 
 const propTypes = forbidExtraProps({
   startDate: momentPropTypes.momentObj,
@@ -102,7 +102,7 @@ const defaultProps = {
   orientation: HORIZONTAL_ORIENTATION,
   withPortal: false,
   hideKeyboardShortcutsPanel: false,
-  initialVisibleMonth: DayPickerDefaultProps.initialVisibleMonth,
+  initialVisibleMonth: null,
   daySize: DAY_SIZE,
 
   navPrev: null,
@@ -584,8 +584,16 @@ export default class DayPickerRangeController extends React.Component {
   }
 
   getStateForNewMonth(nextProps) {
-    const { initialVisibleMonth, numberOfMonths, enableOutsideDays, orientation } = nextProps;
-    const currentMonth = initialVisibleMonth();
+    const {
+      initialVisibleMonth,
+      numberOfMonths,
+      enableOutsideDays,
+      orientation,
+      startDate,
+    } = nextProps;
+    const initialVisibleMonthThunk =
+      initialVisibleMonth || (startDate ? () => startDate : () => this.today);
+    const currentMonth = initialVisibleMonthThunk();
     const withoutTransitionMonths = orientation === VERTICAL_SCROLLABLE;
     const visibleDays = this.getModifiers(
       getVisibleDays(currentMonth, numberOfMonths, enableOutsideDays, withoutTransitionMonths),
