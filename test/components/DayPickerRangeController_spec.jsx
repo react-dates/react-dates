@@ -812,14 +812,18 @@ describe('DayPickerRangeController', () => {
         });
 
         describe('focusedInput changed', () => {
-          const visibleDays = {
-            [toISOMonthString(today)]: {
-              [toISODateString(today)]: [],
-              [toISODateString(moment().add(1, 'day'))]: [],
-              [toISODateString(moment().add(2, 'day'))]: [],
-            },
-          };
           const numVisibleDays = 3;
+          let visibleDays;
+          beforeEach(() => {
+            const startOfMonth = today.clone().startOf('month');
+            visibleDays = {
+              [toISOMonthString(startOfMonth)]: {
+                [toISODateString(startOfMonth)]: [],
+                [toISODateString(startOfMonth.clone().add(1, 'day'))]: [],
+                [toISODateString(startOfMonth.clone().add(2, 'days'))]: [],
+              },
+            };
+          });
 
           it('calls isBlocked for every visible day', () => {
             const isBlockedStub =
@@ -877,14 +881,18 @@ describe('DayPickerRangeController', () => {
         });
 
         describe('focusedInput changed', () => {
-          const visibleDays = {
-            [toISOMonthString(today)]: {
-              [toISODateString(today)]: [],
-              [toISODateString(moment().add(1, 'day'))]: [],
-              [toISODateString(moment().add(2, 'day'))]: [],
-            },
-          };
           const numVisibleDays = 3;
+          let visibleDays;
+          beforeEach(() => {
+            const startOfMonth = today.clone().startOf('month');
+            visibleDays = {
+              [toISOMonthString(startOfMonth)]: {
+                [toISODateString(startOfMonth)]: [],
+                [toISODateString(startOfMonth.clone().add(1, 'day'))]: [],
+                [toISODateString(startOfMonth.clone().add(2, 'days'))]: [],
+              },
+            };
+          });
 
           it('calls isOutsideRange for every visible day', () => {
             const isOutsideRangeStub = sinon.stub();
@@ -943,14 +951,18 @@ describe('DayPickerRangeController', () => {
         });
 
         describe('focusedInput changed', () => {
-          const visibleDays = {
-            [toISOMonthString(today)]: {
-              [toISODateString(today)]: [],
-              [toISODateString(moment().add(1, 'day'))]: [],
-              [toISODateString(moment().add(2, 'day'))]: [],
-            },
-          };
           const numVisibleDays = 3;
+          let visibleDays;
+          beforeEach(() => {
+            const startOfMonth = today.clone().startOf('month');
+            visibleDays = {
+              [toISOMonthString(startOfMonth)]: {
+                [toISODateString(startOfMonth)]: [],
+                [toISODateString(startOfMonth.clone().add(1, 'day'))]: [],
+                [toISODateString(startOfMonth.clone().add(2, 'days'))]: [],
+              },
+            };
+          });
 
           it('calls isDayBlocked for every visible day', () => {
             const isDayBlockedStub = sinon.stub();
@@ -1009,14 +1021,18 @@ describe('DayPickerRangeController', () => {
         });
 
         describe('focusedInput changed', () => {
-          const visibleDays = {
-            [toISOMonthString(today)]: {
-              [toISODateString(today)]: [],
-              [toISODateString(moment().add(1, 'day'))]: [],
-              [toISODateString(moment().add(2, 'day'))]: [],
-            },
-          };
           const numVisibleDays = 3;
+          let visibleDays;
+          beforeEach(() => {
+            const startOfMonth = today.clone().startOf('month');
+            visibleDays = {
+              [toISOMonthString(startOfMonth)]: {
+                [toISODateString(startOfMonth)]: [],
+                [toISODateString(startOfMonth.clone().add(1, 'day'))]: [],
+                [toISODateString(startOfMonth.clone().add(2, 'days'))]: [],
+              },
+            };
+          });
 
           it('calls isDayHighlighted for every visible day', () => {
             const isDayHighlightedStub = sinon.stub();

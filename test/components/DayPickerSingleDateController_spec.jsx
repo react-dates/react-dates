@@ -102,14 +102,18 @@ describe('DayPickerSingleDateController', () => {
         });
 
         describe('props.focused changed', () => {
-          const visibleDays = {
-            [toISOMonthString(today)]: {
-              [toISODateString(today)]: [],
-              [toISODateString(moment().add(1, 'day'))]: [],
-              [toISODateString(moment().add(2, 'day'))]: [],
-            },
-          };
           const numVisibleDays = 3;
+          let visibleDays;
+          beforeEach(() => {
+            const startOfMonth = today.clone().startOf('month');
+            visibleDays = {
+              [toISOMonthString(startOfMonth)]: {
+                [toISODateString(startOfMonth)]: [],
+                [toISODateString(startOfMonth.clone().add(1, 'day'))]: [],
+                [toISODateString(startOfMonth.clone().add(2, 'days'))]: [],
+              },
+            };
+          });
 
           it('calls isDayBlocked for every visible day', () => {
             const isDayBlockedStub = sinon.stub();
@@ -168,14 +172,18 @@ describe('DayPickerSingleDateController', () => {
         });
 
         describe('focusedInput changed', () => {
-          const visibleDays = {
-            [toISOMonthString(today)]: {
-              [toISODateString(today)]: [],
-              [toISODateString(moment().add(1, 'day'))]: [],
-              [toISODateString(moment().add(2, 'day'))]: [],
-            },
-          };
           const numVisibleDays = 3;
+          let visibleDays;
+          beforeEach(() => {
+            const startOfMonth = today.clone().startOf('month');
+            visibleDays = {
+              [toISOMonthString(startOfMonth)]: {
+                [toISODateString(startOfMonth)]: [],
+                [toISODateString(startOfMonth.clone().add(1, 'day'))]: [],
+                [toISODateString(startOfMonth.clone().add(2, 'days'))]: [],
+              },
+            };
+          });
 
           it('calls isDayHighlighted for every visible day', () => {
             const isDayHighlightedStub = sinon.stub();
