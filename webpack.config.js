@@ -17,7 +17,7 @@ module.exports = {
   entry: entries,
   output: {
     filename: '[name].js',
-    path: './lib/components/',
+    path: path.join(__dirname, 'lib/components/'),
     libraryTarget: 'commonjs2',
   },
   externals(context, request, callback) {
@@ -33,7 +33,7 @@ module.exports = {
     return callback(null, true);
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js/,
         loader: 'babel-loader',
@@ -50,11 +50,27 @@ module.exports = {
           presets: ['airbnb']
         }
       },
-      // react-svg loads svg files as react components
-      { test: /\.svg$/, loader: 'babel!react-svg', include: path.join(__dirname, 'src') },
-    ],
+      {
+        test: /\.svg$/,
+        use: [
+          {
+            loader: 'babel-loader',
+            query: {
+              presets: ['airbnb']
+            }
+          },
+          {
+            loader: 'react-svg-loader',
+            query: {
+              jsx: true
+            }
+          }
+        ],
+        include: path.join(__dirname, 'src'),
+      }
+    ]
   },
   resolve: {
-    extensions: ['', '.js', '.jsx'],
+    extensions: ['.js', '.jsx'],
   },
 };

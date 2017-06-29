@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { storiesOf } from '@kadira/storybook';
+import { storiesOf } from '@storybook/react';
 
 import isInclusivelyAfterDay from '../src/utils/isInclusivelyAfterDay';
 import isSameDay from '../src/utils/isSameDay';

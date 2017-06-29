@@ -27,7 +27,7 @@ module.exports = (config) => {
         }),
       ],
       module: {
-        loaders: [
+        rules: [
           {
             test: /\.jsx?$/,
             loader: 'babel-loader',
@@ -42,7 +42,20 @@ module.exports = (config) => {
           },
           {
             test: /\.svg$/,
-            loader: 'babel!react-svg',
+            use: [
+              {
+                loader: 'babel-loader',
+                query: {
+                  presets: ['airbnb'],
+                },
+              },
+              {
+                loader: 'react-svg-loader',
+                query: {
+                  jsx: true,
+                },
+              },
+            ],
             include: [
               path.join(__dirname, 'src'),
             ],
@@ -50,11 +63,11 @@ module.exports = (config) => {
           { test: /\.json$/, loader: 'json-loader' },
 
           // Inject the Airbnb shims into the bundle
-          { test: /test\/_helpers/, loader: 'imports?shims=airbnb-js-shims' },
+          { test: /test\/_helpers/, loader: 'imports-loader?shims=airbnb-js-shims' },
         ],
       },
       resolve: {
-        extensions: ['', '.js', '.jsx'],
+        extensions: ['.js', '.jsx'],
       },
     },
 
