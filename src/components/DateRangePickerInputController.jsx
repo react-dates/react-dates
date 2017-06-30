@@ -13,6 +13,8 @@ import DateRangePickerInput from './DateRangePickerInput';
 
 import IconPositionShape from '../shapes/IconPositionShape';
 
+import selectivelyDisabled from '../shapes/DateRangePickerShape';
+
 import toMomentObject from '../utils/toMomentObject';
 import toLocalizedDateString from '../utils/toLocalizedDateString';
 
@@ -38,7 +40,7 @@ const propTypes = forbidExtraProps({
   showDefaultInputIcon: PropTypes.bool,
   inputIconPosition: IconPositionShape,
   disabled: PropTypes.bool,
-  selectivelyDisabled: PropTypes.string,
+  selectivelyDisabled: selectivelyDisabled,
   required: PropTypes.bool,
   readOnly: PropTypes.bool,
   openDirection: openDirectionShape,
@@ -91,7 +93,7 @@ const defaultProps = {
   showDefaultInputIcon: false,
   inputIconPosition: ICON_BEFORE_POSITION,
   disabled: false,
-  selectivelDisabled: 'none',
+  selectivelyDisabled: 'none',
   required: false,
   readOnly: false,
   openDirection: OPEN_DOWN,

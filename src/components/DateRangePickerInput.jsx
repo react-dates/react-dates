@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 
+import selectivelyDisabled from '../shapes/DateRangePickerShape';
+
 import { DateRangePickerInputPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 import openDirectionShape from '../shapes/OpenDirectionShape';
@@ -49,7 +51,7 @@ const propTypes = forbidExtraProps({
   isEndDateFocused: PropTypes.bool,
   showClearDates: PropTypes.bool,
   disabled: PropTypes.bool,
-  selectivelyDisabled: PropTypes.string,
+  selectivelyDisabled: selectivelyDisabled,
   required: PropTypes.bool,
   readOnly: PropTypes.bool,
   openDirection: openDirectionShape,

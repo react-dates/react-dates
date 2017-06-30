@@ -30,7 +30,7 @@ export default {
   endDateId: PropTypes.string.isRequired,
   endDatePlaceholderText: PropTypes.string,
   disabled: PropTypes.bool,
-  selectivelyDisabled: PropTypes.string,
+  selectivelyDisabled: PropTypes.oneOf(['none','startDate','endDate']),
   required: PropTypes.bool,
   readOnly: PropTypes.bool,
   screenReaderInputMessage: PropTypes.string,
