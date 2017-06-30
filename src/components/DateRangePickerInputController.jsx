@@ -40,7 +40,7 @@ const propTypes = forbidExtraProps({
   showDefaultInputIcon: PropTypes.bool,
   inputIconPosition: IconPositionShape,
   disabled: PropTypes.bool,
-  selectivelyDisabled: selectivelyDisabled,
+  selectivelyDisabled,
   required: PropTypes.bool,
   readOnly: PropTypes.bool,
   openDirection: openDirectionShape,

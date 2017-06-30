@@ -51,7 +51,7 @@ const propTypes = forbidExtraProps({
   isEndDateFocused: PropTypes.bool,
   showClearDates: PropTypes.bool,
   disabled: PropTypes.bool,
-  selectivelyDisabled: selectivelyDisabled,
+  selectivelyDisabled,
   required: PropTypes.bool,
   readOnly: PropTypes.bool,
   openDirection: openDirectionShape,
