@@ -40,6 +40,7 @@ const defaultProps = {
   endDateId: END_DATE,
   endDatePlaceholderText: 'End Date',
   disabled: false,
+  selectivelyDisabled: 'none',
   required: false,
   screenReaderInputMessage: '',
   showClearDates: false,

@@ -53,6 +53,7 @@ const defaultProps = {
   startDatePlaceholderText: 'Start Date',
   endDatePlaceholderText: 'End Date',
   disabled: false,
+  selectivelyDisabled: 'none',
   required: false,
   readOnly: false,
   screenReaderInputMessage: '',
@@ -457,6 +458,7 @@ class DateRangePicker extends React.Component {
       customArrowIcon,
       customCloseIcon,
       disabled,
+      selectivelyDisabled,
       required,
       readOnly,
       openDirection,
@@ -511,6 +513,7 @@ class DateRangePicker extends React.Component {
             customArrowIcon={customArrowIcon}
             customCloseIcon={customCloseIcon}
             disabled={disabled}
+            selectivelyDisabled={selectivelyDisabled}
             required={required}
             readOnly={readOnly}
             openDirection={openDirection}

@@ -38,6 +38,7 @@ const propTypes = forbidExtraProps({
   showDefaultInputIcon: PropTypes.bool,
   inputIconPosition: IconPositionShape,
   disabled: PropTypes.bool,
+  selectivelyDisabled: PropTypes.string,
   required: PropTypes.bool,
   readOnly: PropTypes.bool,
   openDirection: openDirectionShape,
@@ -90,6 +91,7 @@ const defaultProps = {
   showDefaultInputIcon: false,
   inputIconPosition: ICON_BEFORE_POSITION,
   disabled: false,
+  selectivelDisabled: 'none',
   required: false,
   readOnly: false,
   openDirection: OPEN_DOWN,
@@ -264,6 +266,7 @@ export default class DateRangePickerInputController extends React.Component {
       customArrowIcon,
       customCloseIcon,
       disabled,
+      selectivelyDisabled,
       required,
       readOnly,
       openDirection,
@@ -294,6 +297,7 @@ export default class DateRangePickerInputController extends React.Component {
         isEndDateFocused={isEndDateFocused}
         isFocused={isFocused}
         disabled={disabled}
+        selectivelyDisabled={selectivelyDisabled}
         required={required}
         readOnly={readOnly}
         openDirection={openDirection}

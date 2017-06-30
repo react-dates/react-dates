@@ -49,6 +49,7 @@ const propTypes = forbidExtraProps({
   isEndDateFocused: PropTypes.bool,
   showClearDates: PropTypes.bool,
   disabled: PropTypes.bool,
+  selectivelyDisabled: PropTypes.string,
   required: PropTypes.bool,
   readOnly: PropTypes.bool,
   openDirection: openDirectionShape,
@@ -96,6 +97,7 @@ const defaultProps = {
   isEndDateFocused: false,
   showClearDates: false,
   disabled: false,
+  selectivelyDisabled: 'none',
   required: false,
   readOnly: false,
   openDirection: OPEN_DOWN,
@@ -141,6 +143,7 @@ function DateRangePickerInput({
   onClearDates,
   showClearDates,
   disabled,
+  selectivelyDisabled,
   required,
   readOnly,
   showCaret,
@@ -201,6 +204,9 @@ function DateRangePickerInput({
     </button>
   );
 
+  const isStartDateDisabled = ((selectivelyDisabled === 'startDate') || disabled);
+  const isEndDateDisabled = ((selectivelyDisabled === 'endDate') || disabled);
+
   return (
     <div
       {...css(
@@ -221,7 +227,7 @@ function DateRangePickerInput({
         screenReaderMessage={screenReaderText}
         focused={isStartDateFocused}
         isFocused={isFocused}
-        disabled={disabled}
+        disabled={isStartDateDisabled}
         required={required}
         readOnly={readOnly}
         showCaret={showCaret}
@@ -251,7 +257,7 @@ function DateRangePickerInput({
         screenReaderMessage={screenReaderText}
         focused={isEndDateFocused}
         isFocused={isFocused}
-        disabled={disabled}
+        disabled={isEndDateDisabled}
         required={required}
         readOnly={readOnly}
         showCaret={showCaret}
