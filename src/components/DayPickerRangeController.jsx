@@ -806,6 +806,7 @@ export default class DayPickerRangeController extends React.Component {
       onOutsideClick,
       withPortal,
       enableOutsideDays,
+      startDate,
       initialVisibleMonth,
       hideKeyboardShortcutsPanel,
       daySize,
@@ -819,6 +820,8 @@ export default class DayPickerRangeController extends React.Component {
     } = this.props;
 
     const { phrases, visibleDays } = this.state;
+    const initialVisibleMonthThunk =
+      initialVisibleMonth || (startDate ? () => startDate : () => moment());
 
     return (
       <DayPicker
@@ -837,7 +840,7 @@ export default class DayPickerRangeController extends React.Component {
         renderMonth={renderMonth}
         withPortal={withPortal}
         hidden={!focusedInput}
-        initialVisibleMonth={initialVisibleMonth}
+        initialVisibleMonth={initialVisibleMonthThunk}
         daySize={daySize}
         onOutsideClick={onOutsideClick}
         navPrev={navPrev}
