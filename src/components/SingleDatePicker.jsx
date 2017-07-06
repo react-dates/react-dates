@@ -309,6 +309,7 @@ export default class SingleDatePicker extends React.Component {
       navNext,
       withPortal,
       withFullScreenPortal,
+      keepOpenOnDateSelect,
       initialVisibleMonth,
       renderMonth,
       renderDay,
@@ -344,6 +345,7 @@ export default class SingleDatePicker extends React.Component {
           monthFormat={monthFormat}
           withPortal={withPortal || withFullScreenPortal}
           focused={focused}
+          keepOpenOnDateSelect={keepOpenOnDateSelect}
           hideKeyboardShortcutsPanel={hideKeyboardShortcutsPanel}
           initialVisibleMonth={initialVisibleMonth}
           navPrev={navPrev}
