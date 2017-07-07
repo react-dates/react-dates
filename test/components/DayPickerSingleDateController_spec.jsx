@@ -500,29 +500,62 @@ describe('DayPickerSingleDateController', () => {
         expect(onDateChangeStub.callCount).to.equal(1);
       });
 
-      it('props.onFocusChange is called', () => {
-        const onFocusChangeStub = sinon.stub();
-        const wrapper = shallow(
-          <DayPickerSingleDateController
-            onDateChange={() => {}}
-            onFocusChange={onFocusChangeStub}
-          />,
-        );
-        wrapper.instance().onDayClick(moment());
-        expect(onFocusChangeStub.callCount).to.equal(1);
+      describe('props.keepOpenOnDateSelect is false', () => {
+        it('props.onFocusChange is called', () => {
+          const onFocusChangeStub = sinon.stub();
+          const wrapper = shallow(
+            <DayPickerSingleDateController
+              onDateChange={() => {}}
+              onFocusChange={onFocusChangeStub}
+              keepOpenOnDateSelect={false}
+            />,
+          );
+          wrapper.instance().onDayClick(moment());
+          expect(onFocusChangeStub.callCount).to.equal(1);
+        });
+
+        it('props.onClose is called', () => {
+          const onCloseStub = sinon.stub();
+          const wrapper = shallow(
+            <DayPickerSingleDateController
+              onDateChange={() => {}}
+              onFocusChange={() => {}}
+              onClose={onCloseStub}
+              keepOpenOnDateSelect={false}
+            />,
+          );
+          wrapper.instance().onDayClick(moment());
+          expect(onCloseStub.callCount).to.equal(1);
+        });
       });
 
-      it('props.onClose is called', () => {
-        const onCloseStub = sinon.stub();
-        const wrapper = shallow(
-          <DayPickerSingleDateController
-            onDateChange={() => {}}
-            onFocusChange={() => {}}
-            onClose={onCloseStub}
-          />,
-        );
-        wrapper.instance().onDayClick(moment());
-        expect(onCloseStub.callCount).to.equal(1);
+      describe('props.keepOpenOnDateSelect is true', () => {
+        it('props.onFocusChange is not called', () => {
+          const onFocusChangeStub = sinon.stub();
+          const wrapper = shallow(
+            <DayPickerSingleDateController
+              onDateChange={() => {}}
+              onFocusChange={onFocusChangeStub}
+              keepOpenOnDateSelect
+            />,
+          );
+          wrapper.instance().onDayClick(moment());
+          expect(onFocusChangeStub.callCount).to.equal(0);
+        });
+
+        it('props.onClose is not called', () => {
+          const onCloseStub = sinon.stub();
+          const wrapper = shallow(
+            <DayPickerSingleDateController
+              onDateChange={() => {}}
+              onFocusChange={() => {}}
+              onClose={onCloseStub}
+              keepOpenOnDateSelect
+            />,
+          );
+          wrapper.instance().onDayClick(moment());
+          expect(onCloseStub.callCount).to.equal(0);
+        });
       });
     });
   });
