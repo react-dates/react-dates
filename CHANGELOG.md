@@ -1,5 +1,9 @@
 # Change Log
 
+## 12.2.4
+- [fix] Fix `initialVisibleMonth` error in the `DayPickerRangeController` component ([#617](https://github.com/airbnb/react-dates/pull/617))
+- [fix] Pass through missing `keepOpenOnDateSelect` prop to the `DayPickerSingleDateController` component ([#620](https://github.com/airbnb/react-dates/pull/620))
+
 ## 12.2.3
 - [fix] Export `DayPickerSingleDateController` in index.js ([#609](https://github.com/airbnb/react-dates/pull/609))
 
