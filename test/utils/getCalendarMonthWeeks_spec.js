@@ -71,7 +71,7 @@ describe('getCalendarMonthWeeks', () => {
   describe('padding when enableOutsideDays is false', () => {
     let weeksWithPadding;
 
-    before(() => {
+    beforeEach(() => {
       // using specific month Feb 2017 to manually compare with calendar
       weeksWithPadding = getCalendarMonthWeeks(moment('2017-02-01'), false);
     });
@@ -230,9 +230,8 @@ describe('getCalendarMonthWeeks', () => {
     const january2017End = january2017Start.clone().endOf('month'); // Tuesday
 
     describe('locale with Sunday as first day of week', () => {
-      before(() => {
+      beforeEach(() => {
         moment.locale('en');
-        // moment.localeData().firstDayOfWeek() === 0 (Sunday)
       });
 
       it('month starts at [0][0] if first day is Sunday', () => {
@@ -251,9 +250,8 @@ describe('getCalendarMonthWeeks', () => {
     });
 
     describe('locale with Monday as first day of week', () => {
-      before(() => {
+      beforeEach(() => {
         moment.locale('es');
-        // moment.localeData().firstDayOfWeek() === 1 (Monday)
       });
 
       it('month starts at [0][6] if first day is Sunday', () => {

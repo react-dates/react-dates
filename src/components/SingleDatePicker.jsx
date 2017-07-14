@@ -317,8 +317,6 @@ export default class SingleDatePicker extends React.Component {
       renderCalendarInfo,
       hideKeyboardShortcutsPanel,
       firstDayOfWeek,
-      date,
-      initialVisibleMonth,
       customCloseIcon,
       phrases,
       daySize,
