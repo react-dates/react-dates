@@ -400,6 +400,7 @@ export default class DateRangePicker extends React.Component {
       readOnly,
       phrases,
       isOutsideRange,
+      minimumNights,
       withPortal,
       withFullScreenPortal,
       displayFormat,
@@ -439,6 +440,7 @@ export default class DateRangePicker extends React.Component {
             reopenPickerOnClearDates={reopenPickerOnClearDates}
             keepOpenOnDateSelect={keepOpenOnDateSelect}
             isOutsideRange={isOutsideRange}
+            minimumNights={minimumNights}
             withFullScreenPortal={withFullScreenPortal}
             onDatesChange={onDatesChange}
             onFocusChange={this.onDateRangePickerInputFocus}
