@@ -1,39 +1,48 @@
-export default function getCalendarMonthWeeks(month, enableOutsideDays) {
-  // set utc offset to get correct dates in future (when timezone changes)
-  const baseDate = month.clone();
-  const firstOfMonth = baseDate.clone().startOf('month').hour(12);
-  const lastOfMonth = baseDate.clone().endOf('month').hour(12);
+import moment from 'moment';
 
-  const currentDay = firstOfMonth.clone();
-  let currentWeek = [];
+import { WEEKDAYS } from '../../constants';
+
+export default function getCalendarMonthWeeks(
+  month,
+  enableOutsideDays,
+  firstDayOfWeek = moment.localeData().firstDayOfWeek(),
+) {
+  if (!moment.isMoment(month) || !month.isValid()) {
+    throw new TypeError('`month` must be a valid moment object');
+  }
+  if (WEEKDAYS.indexOf(firstDayOfWeek) === -1) {
+    throw new TypeError('`firstDayOfWeek` must be an integer between 0 and 6');
+  }
+
+  // set utc offset to get correct dates in future (when timezone changes)
+  const firstOfMonth = month.clone().startOf('month').hour(12);
+  const lastOfMonth = month.clone().endOf('month').hour(12);
+
+  // calculate the exact first and last days to fill the entire matrix
+  // (considering days outside month)
+  const prevDays = ((firstOfMonth.day() + 7 - firstDayOfWeek) % 7);
+  const nextDays = ((firstDayOfWeek + 6 - lastOfMonth.day()) % 7);
+  const firstDay = firstOfMonth.clone().subtract(prevDays, 'day');
+  const lastDay = lastOfMonth.clone().add(nextDays, 'day');
+
+  const totalDays = lastDay.diff(firstDay, 'days') + 1;
+
+  const currentDay = firstDay.clone();
   const weeksInMonth = [];
 
-  // days belonging to the previous month
-  for (let i = 0; i < currentDay.weekday(); i += 1) {
-    const prevDay = enableOutsideDays ? currentDay.clone().subtract(i + 1, 'day') : null;
-    currentWeek.unshift(prevDay);
-  }
-
-  while (currentDay < lastOfMonth) {
-    currentWeek.push(currentDay.clone());
-    currentDay.add(1, 'd');
-
-    if (currentDay.weekday() === 0) {
-      weeksInMonth.push(currentWeek);
-      currentWeek = [];
-    }
-  }
-
-  // weekday() returns the index of the day of the week according to the locale
-  // this means if the week starts on Monday, weekday() will return 0 for a Monday date, not 1
-  if (currentDay.weekday() !== 0) {
-    // days belonging to the next month
-    for (let k = currentDay.weekday(), count = 0; k < 7; k += 1, count += 1) {
-      const nextDay = enableOutsideDays ? currentDay.clone().add(count, 'day') : null;
-      currentWeek.push(nextDay);
+  for (let i = 0; i < totalDays; i += 1) {
+    if (i % 7 === 0) {
+      weeksInMonth.push([]);
     }
 
-    weeksInMonth.push(currentWeek);
+    let day = null;
+    if ((i >= prevDays && i < (totalDays - nextDays)) || enableOutsideDays) {
+      day = currentDay.clone();
+    }
+
+    weeksInMonth[weeksInMonth.length - 1].push(day);
+
+    currentDay.add(1, 'day');
   }
 
   return weeksInMonth;

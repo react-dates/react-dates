@@ -26,6 +26,7 @@ import getActiveElement from '../utils/getActiveElement';
 import isDayVisible from '../utils/isDayVisible';
 
 import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
+import DayOfWeekShape from '../shapes/DayOfWeekShape';
 
 import {
   HORIZONTAL_ORIENTATION,
@@ -48,6 +49,7 @@ const propTypes = forbidExtraProps({
   onOutsideClick: PropTypes.func,
   hidden: PropTypes.bool,
   initialVisibleMonth: PropTypes.func,
+  firstDayOfWeek: DayOfWeekShape,
   renderCalendarInfo: PropTypes.func,
   hideKeyboardShortcutsPanel: PropTypes.bool,
   daySize: nonNegativeInteger,
@@ -90,6 +92,7 @@ export const defaultProps = {
   onOutsideClick() {},
   hidden: false,
   initialVisibleMonth: () => moment(),
+  firstDayOfWeek: null,
   renderCalendarInfo: null,
   hideKeyboardShortcutsPanel: false,
   daySize: DAY_SIZE,
@@ -682,11 +685,16 @@ export default class DayPicker extends React.Component {
       style = verticalStyle;
     }
 
+    let { firstDayOfWeek } = this.props;
+    if (firstDayOfWeek == null) {
+      firstDayOfWeek = moment.localeData().firstDayOfWeek();
+    }
+
     const header = [];
     for (let i = 0; i < 7; i += 1) {
       header.push(
         <li key={i} style={{ width: daySize }}>
-          <small>{moment().weekday(i).format('dd')}</small>
+          <small>{moment().day((i + firstDayOfWeek) % 7).format('dd')}</small>
         </li>,
       );
     }
@@ -725,6 +733,7 @@ export default class DayPicker extends React.Component {
       onDayClick,
       onDayMouseEnter,
       onDayMouseLeave,
+      firstDayOfWeek,
       renderMonth,
       renderDay,
       renderCalendarInfo,
@@ -842,6 +851,7 @@ export default class DayPicker extends React.Component {
                 onMonthTransitionEnd={this.updateStateAfterMonthTransition}
                 monthFormat={monthFormat}
                 daySize={daySize}
+                firstDayOfWeek={firstDayOfWeek}
                 isFocused={shouldFocusDate}
                 focusedDate={focusedDate}
                 phrases={phrases}
