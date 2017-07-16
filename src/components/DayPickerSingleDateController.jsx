@@ -543,7 +543,7 @@ export default class DayPickerSingleDateController extends React.Component {
       renderCalendarInfo,
       isFocused,
       isRTL,
-      phrases
+      phrases,
     } = this.props;
 
     const { currentMonth, visibleDays } = this.state;
