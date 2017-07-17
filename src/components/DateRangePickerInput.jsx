@@ -45,6 +45,7 @@ const propTypes = forbidExtraProps({
   readOnly: PropTypes.bool,
   showCaret: PropTypes.bool,
   showDefaultInputIcon: PropTypes.bool,
+  showInputIconRight: PropTypes.bool,
   customInputIcon: PropTypes.node,
   customArrowIcon: PropTypes.node,
   customCloseIcon: PropTypes.node,
@@ -87,6 +88,7 @@ const defaultProps = {
   readOnly: false,
   showCaret: false,
   showDefaultInputIcon: false,
+  showInputIconRight: false,
   customInputIcon: null,
   customArrowIcon: null,
   customCloseIcon: null,
@@ -152,6 +154,7 @@ export default class DateRangePickerInput extends React.Component {
       readOnly,
       showCaret,
       showDefaultInputIcon,
+      showInputIconRight,
       customInputIcon,
       customArrowIcon,
       customCloseIcon,
@@ -172,7 +175,8 @@ export default class DateRangePickerInput extends React.Component {
           'DateRangePickerInput--rtl': isRTL,
         })}
       >
-        {(showDefaultInputIcon || customInputIcon !== null) && (
+
+        {(!showInputIconRight && (showDefaultInputIcon || customInputIcon !== null)) && (
           <button
             type="button"
             className="DateRangePickerInput__calendar-icon"
@@ -249,6 +253,19 @@ export default class DateRangePickerInput extends React.Component {
             </div>
           </button>
         )}
+
+        {(showInputIconRight && (showDefaultInputIcon || customInputIcon !== null)) && (
+          <button
+            type="button"
+            className="DateRangePickerInput__calendar-icon"
+            disabled={disabled}
+            aria-label={phrases.focusStartDate}
+            onClick={onArrowDown}
+          >
+            {inputIcon}
+          </button>
+        )}
+
       </div>
     );
   }

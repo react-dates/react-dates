@@ -51,6 +51,7 @@ const defaultProps = {
   screenReaderInputMessage: '',
   showClearDates: false,
   showDefaultInputIcon: false,
+  showInputIconRight: false,
   customInputIcon: null,
   customArrowIcon: null,
   customCloseIcon: null,
@@ -395,6 +396,7 @@ export default class DateRangePicker extends React.Component {
       screenReaderInputMessage,
       showClearDates,
       showDefaultInputIcon,
+      showInputIconRight,
       customInputIcon,
       customArrowIcon,
       customCloseIcon,
@@ -434,6 +436,7 @@ export default class DateRangePicker extends React.Component {
             showClearDates={showClearDates}
             showCaret={!withPortal && !withFullScreenPortal}
             showDefaultInputIcon={showDefaultInputIcon}
+            showInputIconRight={showInputIconRight}
             customInputIcon={customInputIcon}
             customArrowIcon={customArrowIcon}
             customCloseIcon={customCloseIcon}

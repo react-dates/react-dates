@@ -25,6 +25,7 @@ const propTypes = forbidExtraProps({
   showClearDate: PropTypes.bool,
   customCloseIcon: PropTypes.node,
   showDefaultInputIcon: PropTypes.bool,
+  showInputIconRight: PropTypes.bool,
   customInputIcon: PropTypes.node,
   isRTL: PropTypes.bool,
   onChange: PropTypes.func,
@@ -51,6 +52,7 @@ const defaultProps = {
   showCaret: false,
   showClearDate: false,
   showDefaultInputIcon: false,
+  showInputIconRight: false,
   customCloseIcon: null,
   customInputIcon: null,
   isRTL: false,
@@ -104,6 +106,7 @@ export default class SingleDatePickerInput extends React.Component {
       showCaret,
       showClearDate,
       showDefaultInputIcon,
+      showInputIconRight,
       phrases,
       onClearDate,
       onChange,
@@ -127,7 +130,7 @@ export default class SingleDatePickerInput extends React.Component {
           'SingleDatePickerInput--rtl': isRTL,
         })}
       >
-        {(showDefaultInputIcon || customInputIcon !== null) && (
+        {(!showInputIconRight && (showDefaultInputIcon || customInputIcon !== null)) && (
           <button
             type="button"
             className="SingleDatePickerInput__calendar-icon"
@@ -174,6 +177,18 @@ export default class SingleDatePickerInput extends React.Component {
             </div>
           </button>
         )}
+        {(showInputIconRight && (showDefaultInputIcon || customInputIcon !== null)) && (
+          <button
+            type="button"
+            className="SingleDatePickerInput__calendar-icon"
+            disabled={disabled}
+            aria-label={phrases.focusStartDate}
+            onClick={onFocus}
+          >
+            {inputIcon}
+          </button>
+        )}
+
       </div>
     );
   }
