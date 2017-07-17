@@ -23,6 +23,7 @@ import toISOMonthString from '../utils/toISOMonthString';
 
 import FocusedInputShape from '../shapes/FocusedInputShape';
 import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
+import DayOfWeekShape from '../shapes/DayOfWeekShape';
 
 import {
   START_DATE,
@@ -67,6 +68,7 @@ const propTypes = forbidExtraProps({
   onOutsideClick: PropTypes.func,
   renderDay: PropTypes.func,
   renderCalendarInfo: PropTypes.func,
+  firstDayOfWeek: DayOfWeekShape,
 
   // accessibility
   onBlur: PropTypes.func,
@@ -114,6 +116,7 @@ const defaultProps = {
 
   renderDay: null,
   renderCalendarInfo: null,
+  firstDayOfWeek: null,
 
   // accessibility
   onBlur() {},
@@ -806,6 +809,7 @@ export default class DayPickerRangeController extends React.Component {
       onOutsideClick,
       withPortal,
       enableOutsideDays,
+      firstDayOfWeek,
       hideKeyboardShortcutsPanel,
       daySize,
       focusedInput,
@@ -843,6 +847,7 @@ export default class DayPickerRangeController extends React.Component {
         navNext={navNext}
         renderDay={renderDay}
         renderCalendarInfo={renderCalendarInfo}
+        firstDayOfWeek={firstDayOfWeek}
         hideKeyboardShortcutsPanel={hideKeyboardShortcutsPanel}
         isFocused={isFocused}
         getFirstFocusableDay={this.getFirstFocusableDay}

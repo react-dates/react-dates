@@ -15,4 +15,5 @@ module.exports = {
 
   DAY_SIZE: 39,
   BLOCKED_MODIFIER: 'blocked',
+  WEEKDAYS: [0, 1, 2, 3, 4, 5, 6],
 };
