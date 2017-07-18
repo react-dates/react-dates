@@ -1,5 +1,5 @@
 {
-  "name": "react-dates-custom",
+  "name": "react-dates",
   "version": "12.2.4",
   "description": "A responsive and accessible date range picker component built with React",
   "main": "index.js",

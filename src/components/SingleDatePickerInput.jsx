@@ -77,6 +77,7 @@ export default class SingleDatePickerInput extends React.Component {
 
     this.onClearDateMouseEnter = this.onClearDateMouseEnter.bind(this);
     this.onClearDateMouseLeave = this.onClearDateMouseLeave.bind(this);
+    this.renderInputIcon = this.renderInputIcon.bind(this);
   }
 
   onClearDateMouseEnter() {
@@ -89,6 +90,18 @@ export default class SingleDatePickerInput extends React.Component {
     this.setState({
       isClearDateHovered: false,
     });
+  }
+
+  renderInputIcon(inputIcon) {
+    return <button
+      type="button"
+      className="SingleDatePickerInput__calendar-icon"
+      disabled={this.props.disabled}
+      aria-label={this.props.phrases.focusStartDate}
+      onClick={this.props.onFocus}
+    >
+      {inputIcon}
+    </button>;
   }
 
   render() {
@@ -131,15 +144,7 @@ export default class SingleDatePickerInput extends React.Component {
         })}
       >
         {(!showInputIconRight && (showDefaultInputIcon || customInputIcon !== null)) && (
-          <button
-            type="button"
-            className="SingleDatePickerInput__calendar-icon"
-            disabled={disabled}
-            aria-label={phrases.focusStartDate}
-            onClick={onFocus}
-          >
-            {inputIcon}
-          </button>
+          this.renderInputIcon(inputIcon)
         )}
         <DateInput
           id={id}
@@ -178,15 +183,7 @@ export default class SingleDatePickerInput extends React.Component {
           </button>
         )}
         {(showInputIconRight && (showDefaultInputIcon || customInputIcon !== null)) && (
-          <button
-            type="button"
-            className="SingleDatePickerInput__calendar-icon"
-            disabled={disabled}
-            aria-label={phrases.focusStartDate}
-            onClick={onFocus}
-          >
-            {inputIcon}
-          </button>
+          this.renderInputIcon(inputIcon)
         )}
 
       </div>
