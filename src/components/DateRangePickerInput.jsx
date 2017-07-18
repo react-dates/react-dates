@@ -127,7 +127,7 @@ export default class DateRangePickerInput extends React.Component {
   }
 
   renderInputIcon(inputIcon) {
-    return <button
+    return (<button
       type="button"
       className="DateRangePickerInput__calendar-icon"
       disabled={this.props.disabled}
@@ -135,7 +135,7 @@ export default class DateRangePickerInput extends React.Component {
       onClick={this.props.onArrowDown}
     >
       {inputIcon}
-    </button>;
+    </button>);
   }
 
   render() {

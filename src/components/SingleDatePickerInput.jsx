@@ -93,7 +93,7 @@ export default class SingleDatePickerInput extends React.Component {
   }
 
   renderInputIcon(inputIcon) {
-    return <button
+    return (<button
       type="button"
       className="SingleDatePickerInput__calendar-icon"
       disabled={this.props.disabled}
@@ -101,7 +101,7 @@ export default class SingleDatePickerInput extends React.Component {
       onClick={this.props.onFocus}
     >
       {inputIcon}
-    </button>;
+    </button>);
   }
 
   render() {
