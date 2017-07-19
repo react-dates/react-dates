@@ -34,7 +34,7 @@ const propTypes = forbidExtraProps({
   showClearDates: PropTypes.bool,
   showCaret: PropTypes.bool,
   showDefaultInputIcon: PropTypes.bool,
-  inputIconPosition: PropTypes.oneOf('before', 'after'),
+  inputIconPosition: PropTypes.oneOf(['before', 'after']),
   disabled: PropTypes.bool,
   required: PropTypes.bool,
   readOnly: PropTypes.bool,

@@ -27,7 +27,7 @@ export default {
   showClearDate: PropTypes.bool,
   customCloseIcon: PropTypes.node,
   showDefaultInputIcon: PropTypes.bool,
-  inputIconPosition: PropTypes.oneOf('before', 'after'),
+  inputIconPosition: PropTypes.oneOf(['before', 'after']),
   customInputIcon: PropTypes.node,
 
   // calendar presentation and interaction related props

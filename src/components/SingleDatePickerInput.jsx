@@ -25,7 +25,7 @@ const propTypes = forbidExtraProps({
   showClearDate: PropTypes.bool,
   customCloseIcon: PropTypes.node,
   showDefaultInputIcon: PropTypes.bool,
-  inputIconPosition: PropTypes.oneOf('before', 'after'),
+  inputIconPosition: PropTypes.oneOf(['before', 'after']),
   customInputIcon: PropTypes.node,
   isRTL: PropTypes.bool,
   onChange: PropTypes.func,

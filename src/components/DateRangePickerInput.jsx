@@ -45,7 +45,7 @@ const propTypes = forbidExtraProps({
   readOnly: PropTypes.bool,
   showCaret: PropTypes.bool,
   showDefaultInputIcon: PropTypes.bool,
-  inputIconPosition: PropTypes.oneOf('before', 'after'),
+  inputIconPosition: PropTypes.oneOf(['before', 'after']),
   customInputIcon: PropTypes.node,
   customArrowIcon: PropTypes.node,
   customCloseIcon: PropTypes.node,
