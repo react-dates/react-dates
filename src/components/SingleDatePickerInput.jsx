@@ -93,7 +93,7 @@ export default class SingleDatePickerInput extends React.Component {
   }
 
   renderInputIcon(inputIcon) {
-    const {disabled, phrases.focusStartDate, onFocus} = this.props;
+    const { disabled, phrases.focusStartDate, onFocus } = this.props;
 
     return (
       <button

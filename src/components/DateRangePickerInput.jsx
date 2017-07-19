@@ -127,7 +127,7 @@ export default class DateRangePickerInput extends React.Component {
   }
 
   renderInputIcon(inputIcon) {
-    const {disabled, phrases.focusStartDate, onArrowDown} = this.props;
+    const { disabled, phrases.focusStartDate, onArrowDown } = this.props;
 
     return (
       <button
