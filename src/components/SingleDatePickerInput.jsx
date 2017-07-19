@@ -153,6 +153,7 @@ function SingleDatePickerInput({
       disabled={disabled}
       aria-label={phrases.focusStartDate}
       onClick={onFocus}
+      tabIndex="-1"
     >
       {calendarIcon}
     </button>

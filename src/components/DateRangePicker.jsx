@@ -563,6 +563,7 @@ class DateRangePicker extends React.PureComponent {
             type="button"
             onClick={this.onOutsideClick}
             aria-label={phrases.closeDatePicker}
+            tabIndex="-1"
           >
             {closeIcon}
           </button>
