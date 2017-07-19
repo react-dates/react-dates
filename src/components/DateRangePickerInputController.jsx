@@ -34,7 +34,7 @@ const propTypes = forbidExtraProps({
   showClearDates: PropTypes.bool,
   showCaret: PropTypes.bool,
   showDefaultInputIcon: PropTypes.bool,
-  showInputIconRight: PropTypes.bool,
+  inputIconPosition: PropTypes.oneOf('before', 'after'),
   disabled: PropTypes.bool,
   required: PropTypes.bool,
   readOnly: PropTypes.bool,
@@ -80,7 +80,7 @@ const defaultProps = {
   showClearDates: false,
   showCaret: false,
   showDefaultInputIcon: false,
-  showInputIconRight: false,
+  inputIconPosition: 'before',
   disabled: false,
   required: false,
   readOnly: false,
@@ -229,7 +229,7 @@ export default class DateRangePickerInputController extends React.Component {
       showClearDates,
       showCaret,
       showDefaultInputIcon,
-      showInputIconRight,
+      inputIconPosition,
       customInputIcon,
       customArrowIcon,
       customCloseIcon,
@@ -266,7 +266,7 @@ export default class DateRangePickerInputController extends React.Component {
         readOnly={readOnly}
         showCaret={showCaret}
         showDefaultInputIcon={showDefaultInputIcon}
-        showInputIconRight={showInputIconRight}
+        inputIconPosition={inputIconPosition}
         customInputIcon={customInputIcon}
         customArrowIcon={customArrowIcon}
         customCloseIcon={customCloseIcon}

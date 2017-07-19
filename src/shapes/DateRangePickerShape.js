@@ -32,7 +32,7 @@ export default {
   screenReaderInputMessage: PropTypes.string,
   showClearDates: PropTypes.bool,
   showDefaultInputIcon: PropTypes.bool,
-  showInputIconRight: PropTypes.bool,
+  inputIconPosition: PropTypes.oneOf('before', 'after'),
   customInputIcon: PropTypes.node,
   customArrowIcon: PropTypes.node,
   customCloseIcon: PropTypes.node,

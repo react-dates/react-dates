@@ -45,7 +45,7 @@ const propTypes = forbidExtraProps({
   readOnly: PropTypes.bool,
   showCaret: PropTypes.bool,
   showDefaultInputIcon: PropTypes.bool,
-  showInputIconRight: PropTypes.bool,
+  inputIconPosition: PropTypes.oneOf('before', 'after'),
   customInputIcon: PropTypes.node,
   customArrowIcon: PropTypes.node,
   customCloseIcon: PropTypes.node,
@@ -88,7 +88,7 @@ const defaultProps = {
   readOnly: false,
   showCaret: false,
   showDefaultInputIcon: false,
-  showInputIconRight: false,
+  inputIconPosition: 'before',
   customInputIcon: null,
   customArrowIcon: null,
   customCloseIcon: null,
@@ -127,15 +127,19 @@ export default class DateRangePickerInput extends React.Component {
   }
 
   renderInputIcon(inputIcon) {
-    return (<button
-      type="button"
-      className="DateRangePickerInput__calendar-icon"
-      disabled={this.props.disabled}
-      aria-label={this.props.phrases.focusStartDate}
-      onClick={this.props.onArrowDown}
-    >
-      {inputIcon}
-    </button>);
+    const {disabled, phrases.focusStartDate, onArrowDown} = this.props;
+
+    return (
+      <button
+        type="button"
+        className="DateRangePickerInput__calendar-icon"
+        disabled={disabled}
+        aria-label={phrases.focusStartDate}
+        onClick={onArrowDown}
+      >
+        {inputIcon}
+      </button>
+    );
   }
 
   render() {
@@ -167,7 +171,7 @@ export default class DateRangePickerInput extends React.Component {
       readOnly,
       showCaret,
       showDefaultInputIcon,
-      showInputIconRight,
+      inputIconPosition,
       customInputIcon,
       customArrowIcon,
       customCloseIcon,
@@ -189,7 +193,7 @@ export default class DateRangePickerInput extends React.Component {
         })}
       >
 
-        {(!showInputIconRight && (showDefaultInputIcon || customInputIcon !== null)) && (
+        {(inputIconPosition === 'before' && (showDefaultInputIcon || customInputIcon !== null)) && (
           this.renderInputIcon(inputIcon)
         )}
 
@@ -259,7 +263,7 @@ export default class DateRangePickerInput extends React.Component {
           </button>
         )}
 
-        {(showInputIconRight && (showDefaultInputIcon || customInputIcon !== null)) && (
+        {(inputIconPosition === 'after' && (showDefaultInputIcon || customInputIcon !== null)) && (
           this.renderInputIcon(inputIcon)
         )}
 

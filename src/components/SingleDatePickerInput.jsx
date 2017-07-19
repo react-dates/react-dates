@@ -25,7 +25,7 @@ const propTypes = forbidExtraProps({
   showClearDate: PropTypes.bool,
   customCloseIcon: PropTypes.node,
   showDefaultInputIcon: PropTypes.bool,
-  showInputIconRight: PropTypes.bool,
+  inputIconPosition: PropTypes.oneOf('before', 'after'),
   customInputIcon: PropTypes.node,
   isRTL: PropTypes.bool,
   onChange: PropTypes.func,
@@ -52,7 +52,7 @@ const defaultProps = {
   showCaret: false,
   showClearDate: false,
   showDefaultInputIcon: false,
-  showInputIconRight: false,
+  inputIconPosition: 'before',
   customCloseIcon: null,
   customInputIcon: null,
   isRTL: false,
@@ -93,15 +93,19 @@ export default class SingleDatePickerInput extends React.Component {
   }
 
   renderInputIcon(inputIcon) {
-    return (<button
-      type="button"
-      className="SingleDatePickerInput__calendar-icon"
-      disabled={this.props.disabled}
-      aria-label={this.props.phrases.focusStartDate}
-      onClick={this.props.onFocus}
-    >
-      {inputIcon}
-    </button>);
+    const {disabled, phrases.focusStartDate, onFocus} = this.props;
+
+    return (
+      <button
+        type="button"
+        className="SingleDatePickerInput__calendar-icon"
+        disabled={disabled}
+        aria-label={phrases.focusStartDate}
+        onClick={onFocus}
+      >
+        {inputIcon}
+      </button>
+    );
   }
 
   render() {
@@ -119,7 +123,7 @@ export default class SingleDatePickerInput extends React.Component {
       showCaret,
       showClearDate,
       showDefaultInputIcon,
-      showInputIconRight,
+      inputIconPosition,
       phrases,
       onClearDate,
       onChange,
@@ -143,7 +147,7 @@ export default class SingleDatePickerInput extends React.Component {
           'SingleDatePickerInput--rtl': isRTL,
         })}
       >
-        {(!showInputIconRight && (showDefaultInputIcon || customInputIcon !== null)) && (
+        {(inputIconPosition === 'before' && (showDefaultInputIcon || customInputIcon !== null)) && (
           this.renderInputIcon(inputIcon)
         )}
         <DateInput
@@ -182,7 +186,7 @@ export default class SingleDatePickerInput extends React.Component {
             </div>
           </button>
         )}
-        {(showInputIconRight && (showDefaultInputIcon || customInputIcon !== null)) && (
+        {(inputIconPosition === 'after' && (showDefaultInputIcon || customInputIcon !== null)) && (
           this.renderInputIcon(inputIcon)
         )}
 
