@@ -7,6 +7,8 @@ import { SingleDatePickerInputPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 
 import DateInput from './DateInput';
+import IconPositionShape from '../shapes/IconPositionShape';
+
 import CloseButton from '../svg/close.svg';
 import CalendarIcon from '../svg/calendar.svg';
 
@@ -25,7 +27,7 @@ const propTypes = forbidExtraProps({
   showClearDate: PropTypes.bool,
   customCloseIcon: PropTypes.node,
   showDefaultInputIcon: PropTypes.bool,
-  inputIconPosition: PropTypes.oneOf(['before', 'after']),
+  inputIconPosition: IconPositionShape,
   customInputIcon: PropTypes.node,
   isRTL: PropTypes.bool,
   onChange: PropTypes.func,
@@ -92,7 +94,7 @@ export default class SingleDatePickerInput extends React.Component {
     });
   }
 
-  renderInputIcon(inputIcon) {
+  renderInputIcon(calendarIcon) {
     const { disabled, phrases, onFocus } = this.props;
 
     return (
@@ -103,7 +105,7 @@ export default class SingleDatePickerInput extends React.Component {
         aria-label={phrases.focusStartDate}
         onClick={onFocus}
       >
-        {inputIcon}
+        {calendarIcon}
       </button>
     );
   }
@@ -137,9 +139,11 @@ export default class SingleDatePickerInput extends React.Component {
       isRTL,
     } = this.props;
 
-    const inputIcon = customInputIcon || (<CalendarIcon />);
+    const calendarIcon = customInputIcon || (<CalendarIcon />);
     const closeIcon = customCloseIcon || (<CloseButton />);
     const screenReaderText = screenReaderMessage || phrases.keyboardNavigationInstructions;
+    const inputIcon = (showDefaultInputIcon || customInputIcon !== null) &&
+      (this.renderInputIcon(calendarIcon));
 
     return (
       <div
@@ -147,9 +151,9 @@ export default class SingleDatePickerInput extends React.Component {
           'SingleDatePickerInput--rtl': isRTL,
         })}
       >
-        {(inputIconPosition === 'before' && (showDefaultInputIcon || customInputIcon !== null)) && (
-          this.renderInputIcon(inputIcon)
-        )}
+
+        { inputIconPosition === 'before' && inputIcon }
+
         <DateInput
           id={id}
           placeholder={placeholder} // also used as label
@@ -186,9 +190,8 @@ export default class SingleDatePickerInput extends React.Component {
             </div>
           </button>
         )}
-        {(inputIconPosition === 'after' && (showDefaultInputIcon || customInputIcon !== null)) && (
-          this.renderInputIcon(inputIcon)
-        )}
+
+        { inputIconPosition === 'after' && inputIcon }
 
       </div>
     );

@@ -10,6 +10,9 @@ module.exports = {
   VERTICAL_ORIENTATION: 'vertical',
   VERTICAL_SCROLLABLE: 'verticalScrollable',
 
+  BEFORE_POSITION: 'before',
+  AFTER_POSITION: 'after',
+
   ANCHOR_LEFT: 'left',
   ANCHOR_RIGHT: 'right',
 

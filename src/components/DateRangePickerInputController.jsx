@@ -10,6 +10,8 @@ import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 
 import DateRangePickerInput from './DateRangePickerInput';
 
+import IconPositionShape from '../shapes/IconPositionShape';
+
 import toMomentObject from '../utils/toMomentObject';
 import toLocalizedDateString from '../utils/toLocalizedDateString';
 import toISODateString from '../utils/toISODateString';
@@ -34,7 +36,7 @@ const propTypes = forbidExtraProps({
   showClearDates: PropTypes.bool,
   showCaret: PropTypes.bool,
   showDefaultInputIcon: PropTypes.bool,
-  inputIconPosition: PropTypes.oneOf(['before', 'after']),
+  inputIconPosition: IconPositionShape,
   disabled: PropTypes.bool,
   required: PropTypes.bool,
   readOnly: PropTypes.bool,

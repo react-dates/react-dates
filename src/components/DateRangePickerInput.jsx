@@ -7,6 +7,8 @@ import { DateRangePickerInputPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 
 import DateInput from './DateInput';
+import IconPositionShape from '../shapes/IconPositionShape';
+
 import RightArrow from '../svg/arrow-right.svg';
 import LeftArrow from '../svg/arrow-left.svg';
 import CloseButton from '../svg/close.svg';
@@ -45,7 +47,7 @@ const propTypes = forbidExtraProps({
   readOnly: PropTypes.bool,
   showCaret: PropTypes.bool,
   showDefaultInputIcon: PropTypes.bool,
-  inputIconPosition: PropTypes.oneOf(['before', 'after']),
+  inputIconPosition: IconPositionShape,
   customInputIcon: PropTypes.node,
   customArrowIcon: PropTypes.node,
   customCloseIcon: PropTypes.node,
@@ -126,7 +128,7 @@ export default class DateRangePickerInput extends React.Component {
     });
   }
 
-  renderInputIcon(inputIcon) {
+  renderInputIcon(calendarIcon) {
     const { disabled, phrases, onArrowDown } = this.props;
 
     return (
@@ -137,7 +139,7 @@ export default class DateRangePickerInput extends React.Component {
         aria-label={phrases.focusStartDate}
         onClick={onArrowDown}
       >
-        {inputIcon}
+        {calendarIcon}
       </button>
     );
   }
@@ -180,10 +182,12 @@ export default class DateRangePickerInput extends React.Component {
       isRTL,
     } = this.props;
 
-    const inputIcon = customInputIcon || (<CalendarIcon />);
+    const calendarIcon = customInputIcon || (<CalendarIcon />);
     const arrowIcon = customArrowIcon || (isRTL ? <LeftArrow /> : <RightArrow />);
     const closeIcon = customCloseIcon || (<CloseButton />);
     const screenReaderText = screenReaderMessage || phrases.keyboardNavigationInstructions;
+    const inputIcon = (showDefaultInputIcon || customInputIcon !== null) &&
+      (this.renderInputIcon(calendarIcon));
 
     return (
       <div
@@ -193,9 +197,7 @@ export default class DateRangePickerInput extends React.Component {
         })}
       >
 
-        {(inputIconPosition === 'before' && (showDefaultInputIcon || customInputIcon !== null)) && (
-          this.renderInputIcon(inputIcon)
-        )}
+        { inputIconPosition === 'before' && inputIcon }
 
         <DateInput
           id={startDateId}
@@ -263,9 +265,7 @@ export default class DateRangePickerInput extends React.Component {
           </button>
         )}
 
-        {(inputIconPosition === 'after' && (showDefaultInputIcon || customInputIcon !== null)) && (
-          this.renderInputIcon(inputIcon)
-        )}
+        { inputIconPosition === 'after' && inputIcon }
 
       </div>
     );
