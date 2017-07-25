@@ -30,7 +30,6 @@ import {
 } from '../constants';
 
 import DayPicker from './DayPicker';
-import OutsideClickHandler from './OutsideClickHandler';
 
 const propTypes = forbidExtraProps({
   date: momentPropTypes.momentObj,
@@ -596,6 +595,7 @@ export default class DayPickerSingleDateController extends React.Component {
       renderMonth,
       navPrev,
       navNext,
+      onOutsideClick,
       withPortal,
       focused,
       enableOutsideDays,
@@ -610,7 +610,6 @@ export default class DayPickerSingleDateController extends React.Component {
       isRTL,
       phrases,
       dayAriaLabelFormat,
-      onOutsideClick,
       onBlur,
       showKeyboardShortcuts,
       weekDayFormat,
@@ -621,7 +620,7 @@ export default class DayPickerSingleDateController extends React.Component {
 
     const { currentMonth, visibleDays } = this.state;
 
-    const dayPickerComponent = (
+    return (
       <DayPicker
         orientation={orientation}
         enableOutsideDays={enableOutsideDays}
@@ -638,6 +637,7 @@ export default class DayPickerSingleDateController extends React.Component {
         hideKeyboardShortcutsPanel={hideKeyboardShortcutsPanel}
         initialVisibleMonth={() => currentMonth}
         firstDayOfWeek={firstDayOfWeek}
+        onOutsideClick={onOutsideClick}
         navPrev={navPrev}
         navNext={navNext}
         renderMonth={renderMonth}
@@ -659,18 +659,6 @@ export default class DayPickerSingleDateController extends React.Component {
         transitionDuration={transitionDuration}
       />
     );
-
-    if (onOutsideClick) {
-      return (
-        <OutsideClickHandler
-          onOutsideClick={onOutsideClick}
-        >
-          {dayPickerComponent}
-        </OutsideClickHandler>
-      );
-    }
-
-    return dayPickerComponent;
   }
 }
 
