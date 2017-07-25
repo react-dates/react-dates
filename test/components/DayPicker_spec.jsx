@@ -796,6 +796,23 @@ describe('DayPicker', () => {
           expect(adjustDayPickerHeightSpy.calledTwice).to.equal(false);
         });
 
+        it('calls adjustDayPickerHeight if orientation has changed from HORIZONTAL_ORIENTATION to VERTICAL_ORIENTATION', () => {
+          const wrapper = mount(<DayPicker orientation={HORIZONTAL_ORIENTATION} />);
+          wrapper.setState({
+            orientation: VERTICAL_ORIENTATION,
+          });
+          expect(adjustDayPickerHeightSpy).to.have.property('callCount', 2);
+        });
+
+        it('calls adjustDayPickerHeight if daySize has changed', () => {
+          const wrapper = mount(<DayPicker daySize={39} orientation={HORIZONTAL_ORIENTATION} />);
+          wrapper.setState({
+            daySize: 40,
+            orientation: HORIZONTAL_ORIENTATION,
+          });
+          expect(adjustDayPickerHeightSpy).to.have.property('callCount', 2);
+        });
+
         it('calls updateStateAfterMonthTransition if state.monthTransition is truthy', () => {
           const wrapper = mount(<DayPicker orientation={HORIZONTAL_ORIENTATION} />);
           wrapper.setState({
@@ -828,6 +845,23 @@ describe('DayPicker', () => {
             monthTransition: null,
           });
           expect(adjustDayPickerHeightSpy.called).to.equal(false);
+        });
+
+        it('calls adjustDayPickerHeight if orientation has changed from VERTICAL_ORIENTATION to HORIZONTAL_ORIENTATION', () => {
+          const wrapper = mount(<DayPicker orientation={VERTICAL_ORIENTATION} />);
+          wrapper.setState({
+            orientation: HORIZONTAL_ORIENTATION,
+          });
+          expect(adjustDayPickerHeightSpy).to.have.property('callCount', 2);
+        });
+
+        it('calls adjustDayPickerHeight if daySize has changed', () => {
+          const wrapper = mount(<DayPicker daySize={39} orientation={VERTICAL_ORIENTATION} />);
+          wrapper.setState({
+            daySize: 40,
+            orientation: VERTICAL_ORIENTATION,
+          });
+          expect(adjustDayPickerHeightSpy).to.have.property('callCount', 2);
         });
 
         it('calls updateStateAfterMonthTransition if state.monthTransition is truthy', () => {
