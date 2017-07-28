@@ -130,6 +130,7 @@ isDayHighlighted: PropTypes.func,
 // internationalization props
 displayFormat: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
 monthFormat: PropTypes.string,
+weekDayFormat: PropTypes.string,
 phrases: PropTypes.shape(getPhrasePropTypes(DateRangePickerPhrases)),
 ```
 
@@ -198,6 +199,7 @@ isDayHighlighted: PropTypes.func,
 // internationalization props
 displayFormat: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
 monthFormat: PropTypes.string,
+weekDayFormat: PropTypes.string,
 phrases: PropTypes.shape(getPhrasePropTypes(SingleDatePickerPhrases)),
 ```
 
@@ -244,6 +246,7 @@ The following is a list of other *OPTIONAL* props you may provide to the `DayPic
 
   // internationalization props
   monthFormat: PropTypes.string,
+  weekDayFormat: PropTypes.string,
   phrases: PropTypes.shape(getPhrasePropTypes(DayPickerPhrases)),
 />
 ```

@@ -109,4 +109,9 @@ storiesOf('DayPicker', module)
         <TestCustomInfoPanel />
       )}
     />
+  ))
+  .addWithInfo('with custom week day format', () => (
+    <DayPicker
+      weekDayFormat='ddd'
+    />
   ));

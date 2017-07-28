@@ -89,6 +89,7 @@ const defaultProps = {
   // internationalization props
   displayFormat: () => moment.localeData().longDateFormat('L'),
   monthFormat: 'MMMM YYYY',
+  weekDayFormat: 'dd',
   phrases: SingleDatePickerPhrases,
 };
 
@@ -338,6 +339,7 @@ export default class SingleDatePicker extends React.Component {
       isOutsideRange,
       isDayBlocked,
       isDayHighlighted,
+      weekDayFormat,
     } = this.props;
     const { dayPickerContainerStyles, isDayPickerFocused } = this.state;
 
@@ -379,6 +381,7 @@ export default class SingleDatePicker extends React.Component {
           isDayBlocked={isDayBlocked}
           isDayHighlighted={isDayHighlighted}
           firstDayOfWeek={firstDayOfWeek}
+          weekDayFormat={weekDayFormat}
         />
 
         {withFullScreenPortal && (
