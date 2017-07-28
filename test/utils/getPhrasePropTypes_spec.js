@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { PropTypes } from 'react';
+import PropTypes from 'prop-types';
 
 import getPhrasePropTypes from '../../src/utils/getPhrasePropTypes';
 
