@@ -321,19 +321,22 @@ export default class SingleDatePicker extends Component {
     const isAnchoredLeft = anchorDirection === ANCHOR_LEFT;
 
     if (!withPortal && !withFullScreenPortal) {
-      const containerRect = this.dayPickerContainer.getBoundingClientRect();
-      const currentOffset = dayPickerContainerStyles[anchorDirection] || 0;
-      const containerEdge =
-        isAnchoredLeft ? containerRect[ANCHOR_RIGHT] : containerRect[ANCHOR_LEFT];
+      // kurdin's fix wrap with setTimeout of this.dayPickerContainer
+         setTimeout(() => {
+          const containerRect = this.dayPickerContainer.getBoundingClientRect();
+          const currentOffset = dayPickerContainerStyles[anchorDirection] || 0;
+          const containerEdge =
+            isAnchoredLeft ? containerRect[ANCHOR_RIGHT] : containerRect[ANCHOR_LEFT];
 
-      this.setState({
-        dayPickerContainerStyles: getResponsiveContainerStyles(
-          anchorDirection,
-          currentOffset,
-          containerEdge,
-          horizontalMargin,
-        ),
-      });
+          this.setState({
+            dayPickerContainerStyles: getResponsiveContainerStyles(
+              anchorDirection,
+              currentOffset,
+              containerEdge,
+              horizontalMargin,
+            ),
+          });
+       }, 0);  
     }
   }
 
