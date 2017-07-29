@@ -12,7 +12,8 @@ import IconPositionShape from '../shapes/IconPositionShape';
 import CloseButton from '../svg/close.svg';
 import CalendarIcon from '../svg/calendar.svg';
 
-import { ICON_BEFORE_POSITION, ICON_AFTER_POSITION } from '../../constants';
+import openDirectionShape from '../shapes/OpenDirectionShape';
+import { ICON_BEFORE_POSITION, ICON_AFTER_POSITION, OPEN_DOWN } from '../../constants';
 
 const propTypes = forbidExtraProps({
   id: PropTypes.string.isRequired,
@@ -25,6 +26,7 @@ const propTypes = forbidExtraProps({
   disabled: PropTypes.bool,
   required: PropTypes.bool,
   readOnly: PropTypes.bool,
+  openDirection: openDirectionShape,
   showCaret: PropTypes.bool,
   showClearDate: PropTypes.bool,
   customCloseIcon: PropTypes.node,
@@ -53,6 +55,7 @@ const defaultProps = {
   disabled: false,
   required: false,
   readOnly: false,
+  openDirection: OPEN_DOWN,
   showCaret: false,
   showClearDate: false,
   showDefaultInputIcon: false,
@@ -107,6 +110,7 @@ export default class SingleDatePickerInput extends React.Component {
       disabled,
       required,
       readOnly,
+      openDirection,
       showCaret,
       showClearDate,
       showDefaultInputIcon,
@@ -159,6 +163,7 @@ export default class SingleDatePickerInput extends React.Component {
           disabled={disabled}
           required={required}
           readOnly={readOnly}
+          openDirection={openDirection}
           showCaret={showCaret}
           onChange={onChange}
           onFocus={onFocus}

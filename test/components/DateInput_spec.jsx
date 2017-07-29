@@ -3,6 +3,8 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon-sandbox';
 
+import { OPEN_DOWN, OPEN_UP } from '../../constants';
+
 import DateInput from '../../src/components/DateInput';
 
 const event = { preventDefault() {}, stopPropagation() {} };
@@ -25,6 +27,20 @@ describe('DateInput', () => {
       it('has .DateInput--disabled class', () => {
         const wrapper = shallow(<DateInput id="date" disabled />);
         expect(wrapper.find('.DateInput--disabled')).to.have.lengthOf(1);
+      });
+    });
+
+    describe('props.openDirection === OPEN_DOWN', () => {
+      it('renders .DateInput--open-down class', () => {
+        const wrapper = shallow(<DateInput id="date" openDirection={OPEN_DOWN} />);
+        expect(wrapper.find('.DateInput--open-down')).to.have.lengthOf(1);
+      });
+    });
+
+    describe('props.openDirection === OPEN_UP', () => {
+      it('renders .DateInput--open-up class', () => {
+        const wrapper = shallow(<DateInput id="date" openDirection={OPEN_UP} />);
+        expect(wrapper.find('.DateInput--open-up')).to.have.lengthOf(1);
       });
     });
 

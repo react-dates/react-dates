@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import { storiesOf } from '@storybook/react';
 
-import { VERTICAL_ORIENTATION, ANCHOR_RIGHT } from '../constants';
+import { VERTICAL_ORIENTATION, ANCHOR_RIGHT, OPEN_UP } from '../constants';
 
 import DateRangePickerWrapper from '../examples/DateRangePickerWrapper';
 
@@ -47,6 +47,14 @@ const TestCustomInfoPanel = () => (
 storiesOf('DRP - Calendar Props', module)
   .addWithInfo('default', () => (
     <DateRangePickerWrapper autoFocus />
+  ))
+  .addWithInfo('open up', () => (
+    <div style={{ marginTop: '450px' }}>
+      <DateRangePickerWrapper
+        openDirection={OPEN_UP}
+        autoFocus
+      />
+    </div>
   ))
   .addWithInfo('single month', () => (
     <DateRangePickerWrapper numberOfMonths={1} autoFocus />

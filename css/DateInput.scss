@@ -1,13 +1,15 @@
-$caret-top: $react-dates-spacing-vertical-picker - $react-dates-width-tooltip-arrow / 2;
+$input-height: $react-dates-input-line-height + $react-dates-input-padding * 2 + $react-dates-input-displaytext-padding-vertical * 2;
+$caret-top-down: $react-dates-spacing-vertical-picker - $react-dates-width-tooltip-arrow / 2;
+$caret-top-up: $input-height - $react-dates-spacing-vertical-picker;
 
 .DateInput {
   // font
   font-weight: 200;
-  font-size: 18px;
-  line-height: 24px;
+  font-size: $react-dates-input-font-size;
+  line-height: $react-dates-input-line-height;
   color: $react-dates-color-placeholder-text;
   margin: 0;
-  padding: 8px;
+  padding: $react-dates-input-padding;
 
   background: $react-dates-color-white;
   position: relative;
@@ -23,19 +25,38 @@ $caret-top: $react-dates-spacing-vertical-picker - $react-dates-width-tooltip-ar
   position: absolute;
   bottom: auto;
   border: $react-dates-width-tooltip-arrow / 2 solid transparent;
-  border-top: 0;
   left: 22px;
   z-index: $react-dates-z-index + 2;
 }
 
-.DateInput--with-caret::before {
-  top: $caret-top;
+.DateInput--open-down.DateInput--with-caret::before,
+.DateInput--open-down.DateInput--with-caret::after {
+  border-top: 0;
+}
+
+.DateInput--open-down.DateInput--with-caret::before {
+  top: $caret-top-down;
   border-bottom-color: rgba(0, 0, 0, 0.1);
 }
 
-.DateInput--with-caret::after {
-  top: $caret-top + 1;
+.DateInput--open-down.DateInput--with-caret::after {
+  top: $caret-top-down + 1;
   border-bottom-color: $react-dates-color-white;
+}
+
+.DateInput--open-up.DateInput--with-caret::before,
+.DateInput--open-up.DateInput--with-caret::after {
+  border-bottom: 0;
+}
+
+.DateInput--open-up.DateInput--with-caret::before {
+  top: $caret-top-up;
+  border-top-color: rgba(0, 0, 0, 0.1);
+}
+
+.DateInput--open-up.DateInput--with-caret::after {
+  top: $caret-top-up - 1;
+  border-top-color: $react-dates-color-white;
 }
 
 .DateInput--disabled {
@@ -60,7 +81,7 @@ $caret-top: $react-dates-spacing-vertical-picker - $react-dates-width-tooltip-ar
 }
 
 .DateInput__display-text {
-  padding: 4px 8px;
+  padding: $react-dates-input-displaytext-padding-vertical $react-dates-input-displaytext-padding-horizontal;
   white-space: nowrap;
   overflow: hidden;
 }
