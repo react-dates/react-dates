@@ -101,17 +101,17 @@
     "webpack": "^2.6.1"
   },
   "dependencies": {
-    "airbnb-prop-types": "^2.5.4",
+    "airbnb-prop-types": "^2.8.0",
     "ajv": "^5.2.2",
     "ajv-keywords": "^2.1.0",
     "classnames": "^2.2.5",
-    "consolidated-events": "^1.0.1",
+    "consolidated-events": "^1.1.0",
     "is-touch-device": "^1.0.1",
     "lodash": "^4.1.1",
     "object.assign": "^4.0.4",
     "object.values": "^1.0.4",
     "prop-types": "^15.5.10",
-    "react-moment-proptypes": "^1.4.0",
+    "react-moment-proptypes": "^1.5.0",
     "react-portal": "^3.1.0"
   },
   "peerDependencies": {
