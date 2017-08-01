@@ -14,7 +14,7 @@
     "lint": "eslint --ext .js,.jsx src test",
     "mocha": "mocha ./test/_helpers",
     "storybook:uninstall": "npm uninstall --no-save @storybook/react && rimraf node_modules/@storybook node_modules/react-modal node_modules/react-dom-factories node_modules/react-svg-loader",
-    "react:clean": "npm run storybook:uninstall && npm install ajv ajv-keywords && npm uninstall --no-save react react-dom react-addons-test-utils react-test-renderer && rimraf node_modules/react-test-renderer node_modules/react && npm prune",
+    "react:clean": "npm run storybook:uninstall && npm install --no-save ajv ajv-keywords && npm uninstall --no-save react react-dom react-addons-test-utils react-test-renderer && rimraf node_modules/react-test-renderer node_modules/react && npm prune",
     "react:14": "rimraf node_modules/.bin/npm && npm run react:clean && npm i --no-save react@0.14 react-dom@0.14 react-addons-test-utils@0.14 && npm run storybook:uninstall && npm prune",
     "react:15": "rimraf node_modules/.bin/npm && npm run react:clean && npm i --no-save react@15 react-dom@15 react-addons-test-utils@15 react-test-renderer@15 && npm run storybook:uninstall && npm prune",
     "pretest": "npm run --silent lint",
@@ -102,8 +102,6 @@
   },
   "dependencies": {
     "airbnb-prop-types": "^2.8.0",
-    "ajv": "^5.2.2",
-    "ajv-keywords": "^2.1.0",
     "classnames": "^2.2.5",
     "consolidated-events": "^1.1.0",
     "is-touch-device": "^1.0.1",
