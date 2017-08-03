@@ -547,9 +547,10 @@ export default class DayPickerSingleDateController extends React.Component {
       renderCalendarInfo,
       isFocused,
       isRTL,
+      phrases,
     } = this.props;
 
-    const { phrases, currentMonth, visibleDays } = this.state;
+    const { currentMonth, visibleDays } = this.state;
 
     return (
       <DayPicker

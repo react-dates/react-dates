@@ -120,7 +120,7 @@ export default class SingleDatePicker extends React.Component {
       window,
       'resize',
       this.responsivizePickerPosition,
-    { passive: true },
+      { passive: true },
     );
     this.responsivizePickerPosition();
 

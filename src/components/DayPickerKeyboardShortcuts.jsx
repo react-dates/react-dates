@@ -104,8 +104,7 @@ export default function DayPickerKeyboardShortcuts({
   },
   ];
 
-  const toggleButtonText =
-    showKeyboardShortcutsPanel
+  const toggleButtonText = showKeyboardShortcutsPanel
     ? phrases.hideKeyboardShortcutsPanel
     : phrases.showKeyboardShortcutsPanel;
 
