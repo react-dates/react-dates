@@ -14,7 +14,7 @@ import { BLOCKED_MODIFIER, DAY_SIZE } from '../../constants';
 
 const propTypes = forbidExtraProps({
   day: momentPropTypes.momentObj,
-  daySize: nonNegativeInteger,
+  daySize: nonNegativeInteger(),
   isOutsideDay: PropTypes.bool,
   modifiers: PropTypes.instanceOf(Set),
   isFocused: PropTypes.bool,
