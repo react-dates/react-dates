@@ -28,6 +28,7 @@ import {
 } from '../../constants';
 
 import DayPicker from './DayPicker';
+import OutsideClickHandler from './OutsideClickHandler';
 
 const propTypes = forbidExtraProps({
   date: momentPropTypes.momentObj,
@@ -105,7 +106,7 @@ const defaultProps = {
 
   onPrevMonthClick() {},
   onNextMonthClick() {},
-  onOutsideClick() {},
+  onOutsideClick: null,
 
   renderDay: null,
   renderCalendarInfo: null,
@@ -565,40 +566,51 @@ export default class DayPickerSingleDateController extends React.Component {
       isFocused,
       isRTL,
       phrases,
+      onOutsideClick,
     } = this.props;
 
     const { currentMonth, visibleDays } = this.state;
 
-    return (
-      <DayPicker
-        orientation={orientation}
-        enableOutsideDays={enableOutsideDays}
-        modifiers={visibleDays}
-        numberOfMonths={numberOfMonths}
-        onDayClick={this.onDayClick}
-        onDayMouseEnter={this.onDayMouseEnter}
-        onDayMouseLeave={this.onDayMouseLeave}
-        onPrevMonthClick={this.onPrevMonthClick}
-        onNextMonthClick={this.onNextMonthClick}
-        monthFormat={monthFormat}
-        withPortal={withPortal}
-        hidden={!focused}
-        hideKeyboardShortcutsPanel={hideKeyboardShortcutsPanel}
-        initialVisibleMonth={() => currentMonth}
-        firstDayOfWeek={firstDayOfWeek}
-        navPrev={navPrev}
-        navNext={navNext}
-        renderMonth={renderMonth}
-        renderDay={renderDay}
-        renderCalendarInfo={renderCalendarInfo}
-        isFocused={isFocused}
-        getFirstFocusableDay={this.getFirstFocusableDay}
-        onBlur={this.onDayPickerBlur}
-        phrases={phrases}
-        daySize={daySize}
-        isRTL={isRTL}
-      />
-    );
+    const dayPickerComponent = (<DayPicker
+      orientation={orientation}
+      enableOutsideDays={enableOutsideDays}
+      modifiers={visibleDays}
+      numberOfMonths={numberOfMonths}
+      onDayClick={this.onDayClick}
+      onDayMouseEnter={this.onDayMouseEnter}
+      onDayMouseLeave={this.onDayMouseLeave}
+      onPrevMonthClick={this.onPrevMonthClick}
+      onNextMonthClick={this.onNextMonthClick}
+      monthFormat={monthFormat}
+      withPortal={withPortal}
+      hidden={!focused}
+      hideKeyboardShortcutsPanel={hideKeyboardShortcutsPanel}
+      initialVisibleMonth={() => currentMonth}
+      firstDayOfWeek={firstDayOfWeek}
+      navPrev={navPrev}
+      navNext={navNext}
+      renderMonth={renderMonth}
+      renderDay={renderDay}
+      renderCalendarInfo={renderCalendarInfo}
+      isFocused={isFocused}
+      getFirstFocusableDay={this.getFirstFocusableDay}
+      onBlur={this.onDayPickerBlur}
+      phrases={phrases}
+      daySize={daySize}
+      isRTL={isRTL}
+    />);
+
+    if (onOutsideClick) {
+      return (
+        <OutsideClickHandler
+          onOutsideClick={onOutsideClick}
+        >
+          {dayPickerComponent}
+        </OutsideClickHandler>
+      );
+    }
+
+    return dayPickerComponent;
   }
 }
 
