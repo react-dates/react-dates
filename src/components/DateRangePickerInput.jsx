@@ -41,9 +41,9 @@ const propTypes = forbidExtraProps({
   onArrowDown: PropTypes.func,
   onQuestionMark: PropTypes.func,
 
-  startDate: PropTypes.string,
+  startDate: PropTypes.node,
   startDateValue: PropTypes.string,
-  endDate: PropTypes.string,
+  endDate: PropTypes.node,
   endDateValue: PropTypes.string,
 
   isStartDateFocused: PropTypes.bool,

@@ -50,6 +50,8 @@ const propTypes = forbidExtraProps({
   isOutsideRange: PropTypes.func,
   displayFormat: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
 
+  renderInputText: PropTypes.func,
+
   onFocusChange: PropTypes.func,
   onClose: PropTypes.func,
   onDatesChange: PropTypes.func,
@@ -212,6 +214,17 @@ export default class DateRangePickerInputController extends React.Component {
     return toLocalizedDateString(date);
   }
 
+  getDateText(date, inputReference) {
+    const { renderInputText } = this.props;
+    if (!date) {
+      return null;
+    }
+    if (renderInputText) {
+      return renderInputText(date, this.getDisplayFormat(), inputReference);
+    }
+    return this.getDateString(date);
+  }
+
   clearDates() {
     const { onDatesChange, reopenPickerOnClearDates, onFocusChange } = this.props;
     onDatesChange({ startDate: null, endDate: null });
@@ -249,9 +262,9 @@ export default class DateRangePickerInputController extends React.Component {
       isRTL,
     } = this.props;
 
-    const startDateString = this.getDateString(startDate);
+    const startDateString = this.getDateText(startDate, START_DATE);
     const startDateValue = toISODateString(startDate);
-    const endDateString = this.getDateString(endDate);
+    const endDateString = this.getDateText(endDate, END_DATE);
     const endDateValue = toISODateString(endDate);
 
     return (
