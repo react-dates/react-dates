@@ -491,15 +491,16 @@ export default class DayPickerRangeController extends React.Component {
     const prevMonth = currentMonth.clone().subtract(2, 'months');
     const prevMonthVisibleDays = getVisibleDays(prevMonth, 1, enableOutsideDays, true);
 
+    const newCurrentMonth = currentMonth.clone().subtract(1, 'month');
     this.setState({
-      currentMonth: currentMonth.clone().subtract(1, 'month'),
+      currentMonth: newCurrentMonth,
       visibleDays: {
         ...newVisibleDays,
         ...this.getModifiers(prevMonthVisibleDays),
       },
     });
 
-    onPrevMonthClick(this.state.currentMonth.clone());
+    onPrevMonthClick(newCurrentMonth);
   }
 
   onNextMonthClick() {
@@ -514,15 +515,16 @@ export default class DayPickerRangeController extends React.Component {
     const nextMonth = currentMonth.clone().add(numberOfMonths + 1, 'month');
     const nextMonthVisibleDays = getVisibleDays(nextMonth, 1, enableOutsideDays, true);
 
+    const newCurrentMonth = currentMonth.clone().add(1, 'month');
     this.setState({
-      currentMonth: currentMonth.clone().add(1, 'month'),
+      currentMonth: newCurrentMonth,
       visibleDays: {
         ...newVisibleDays,
         ...this.getModifiers(nextMonthVisibleDays),
       },
     });
 
-    onNextMonthClick(this.state.currentMonth.clone());
+    onNextMonthClick(newCurrentMonth);
   }
 
   onMultiplyScrollableMonths() {

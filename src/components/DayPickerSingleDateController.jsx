@@ -331,7 +331,7 @@ export default class DayPickerSingleDateController extends React.Component {
       },
     });
 
-    onPrevMonthClick(this.state.currentMonth.clone());
+    onPrevMonthClick(prevMonth);
   }
 
   onNextMonthClick() {
@@ -346,15 +346,16 @@ export default class DayPickerSingleDateController extends React.Component {
     const nextMonth = currentMonth.clone().add(numberOfMonths, 'month');
     const nextMonthVisibleDays = getVisibleDays(nextMonth, 1, enableOutsideDays);
 
+    const newCurrentMonth = currentMonth.clone().add(1, 'month');
     this.setState({
-      currentMonth: currentMonth.clone().add(1, 'month'),
+      currentMonth: newCurrentMonth,
       visibleDays: {
         ...newVisibleDays,
         ...this.getModifiers(nextMonthVisibleDays),
       },
     });
 
-    onNextMonthClick(this.state.currentMonth.clone());
+    onNextMonthClick(newCurrentMonth);
   }
 
 
