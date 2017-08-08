@@ -331,7 +331,7 @@ export default class DayPickerSingleDateController extends React.Component {
       },
     });
 
-    onPrevMonthClick();
+    onPrevMonthClick(this.state.currentMonth.clone());
   }
 
   onNextMonthClick() {
@@ -354,7 +354,7 @@ export default class DayPickerSingleDateController extends React.Component {
       },
     });
 
-    onNextMonthClick();
+    onNextMonthClick(this.state.currentMonth.clone());
   }
 
 
