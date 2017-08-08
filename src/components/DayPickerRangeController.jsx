@@ -39,6 +39,7 @@ const propTypes = forbidExtraProps({
   startDate: momentPropTypes.momentObj,
   endDate: momentPropTypes.momentObj,
   onDatesChange: PropTypes.func,
+  onDayHover: PropTypes.func,
 
   focusedInput: FocusedInputShape,
   onFocusChange: PropTypes.func,
@@ -159,9 +160,6 @@ export default class DayPickerRangeController extends React.Component {
       'blocked-minimum-nights': day => this.doesNotMeetMinimumNights(day),
       'selected-span': day => this.isInSelectedSpan(day),
       'last-in-range': day => this.isLastInRange(day),
-      hovered: day => this.isHovered(day),
-      'hovered-span': day => this.isInHoveredSpan(day),
-      'after-hovered-start': day => this.isDayAfterHoveredStartDate(day),
     };
 
     const { currentMonth, visibleDays } = this.getStateForNewMonth(props);
@@ -171,7 +169,6 @@ export default class DayPickerRangeController extends React.Component {
     const chooseAvailableDate = getChooseAvailableDatePhrase(props.phrases, props.focusedInput);
 
     this.state = {
-      hoverDate: null,
       currentMonth,
       phrases: {
         ...props.phrases,
@@ -182,9 +179,9 @@ export default class DayPickerRangeController extends React.Component {
 
     this.onDayClick = this.onDayClick.bind(this);
     this.onDayMouseEnter = this.onDayMouseEnter.bind(this);
-    this.onDayMouseLeave = this.onDayMouseLeave.bind(this);
     this.onPrevMonthClick = this.onPrevMonthClick.bind(this);
     this.onNextMonthClick = this.onNextMonthClick.bind(this);
+    this.onCalendarMouseLeave = this.onCalendarMouseLeave.bind(this);
     this.onMultiplyScrollableMonths = this.onMultiplyScrollableMonths.bind(this);
     this.getFirstFocusableDay = this.getFirstFocusableDay.bind(this);
     this.setDayPickerRef = this.setDayPickerRef.bind(this);
@@ -273,13 +270,6 @@ export default class DayPickerRangeController extends React.Component {
       }
 
       if (startDate && endDate) {
-        modifiers = this.deleteModifierFromRange(
-          modifiers,
-          startDate,
-          endDate.clone().add(1, 'day'),
-          'hovered-span',
-        );
-
         modifiers = this.addModifierToRange(
           modifiers,
           startDate.clone().add(1, 'day'),
@@ -287,12 +277,6 @@ export default class DayPickerRangeController extends React.Component {
           'selected-span',
         );
       }
-    }
-
-    if (!this.isTouchDevice && didStartDateChange && startDate && !endDate) {
-      const startSpan = startDate.clone().add(1, 'day');
-      const endSpan = startDate.clone().add(minimumNights + 1, 'days');
-      modifiers = this.addModifierToRange(modifiers, startSpan, endSpan, 'after-hovered-start');
     }
 
     if (minimumNights > 0 || minimumNights !== this.props.minimumNights) {
@@ -423,89 +407,19 @@ export default class DayPickerRangeController extends React.Component {
 
   onDayMouseEnter(day) {
     if (this.isTouchDevice) return;
-    const { startDate, endDate, focusedInput, minimumNights } = this.props;
-    const { hoverDate, visibleDays } = this.state;
+    const { onDayHover, isOutsideRange } = this.props;
 
-    if (focusedInput) {
-      let modifiers = {};
-      modifiers = this.deleteModifier(modifiers, hoverDate, 'hovered');
-      modifiers = this.addModifier(modifiers, day, 'hovered');
-
-      if (startDate && !endDate && focusedInput === END_DATE) {
-        if (isAfterDay(hoverDate, startDate)) {
-          const endSpan = hoverDate.clone().add(1, 'day');
-          modifiers = this.deleteModifierFromRange(modifiers, startDate, endSpan, 'hovered-span');
-        }
-
-        if (!this.isBlocked(day) && isAfterDay(day, startDate)) {
-          const endSpan = day.clone().add(1, 'day');
-          modifiers = this.addModifierToRange(modifiers, startDate, endSpan, 'hovered-span');
-        }
-      }
-
-      if (!startDate && endDate && focusedInput === START_DATE) {
-        if (isBeforeDay(hoverDate, endDate)) {
-          modifiers = this.deleteModifierFromRange(modifiers, hoverDate, endDate, 'hovered-span');
-        }
-
-        if (!this.isBlocked(day) && isBeforeDay(day, endDate)) {
-          modifiers = this.addModifierToRange(modifiers, day, endDate, 'hovered-span');
-        }
-      }
-
-      if (startDate) {
-        const startSpan = startDate.clone().add(1, 'day');
-        const endSpan = startDate.clone().add(minimumNights + 1, 'days');
-        modifiers = this.deleteModifierFromRange(modifiers, startSpan, endSpan, 'after-hovered-start');
-
-        if (isSameDay(day, startDate)) {
-          const newStartSpan = startDate.clone().add(1, 'day');
-          const newEndSpan = startDate.clone().add(minimumNights + 1, 'days');
-          modifiers =
-            this.addModifierToRange(modifiers, newStartSpan, newEndSpan, 'after-hovered-start');
-        }
-      }
-
-      this.setState({
-        hoverDate: day,
-        visibleDays: {
-          ...visibleDays,
-          ...modifiers,
-        },
-      });
+    if (onDayHover && !isOutsideRange(day)) {
+      onDayHover(day);
     }
   }
 
-  onDayMouseLeave(day) {
-    const { startDate, endDate, minimumNights } = this.props;
-    const { hoverDate, visibleDays } = this.state;
-    if (this.isTouchDevice || !hoverDate) return;
+  onCalendarMouseLeave() {
+    const { onDayHover } = this.props;
 
-    let modifiers = {};
-    modifiers = this.deleteModifier(modifiers, hoverDate, 'hovered');
-
-    if (startDate && !endDate && isAfterDay(hoverDate, startDate)) {
-      const endSpan = hoverDate.clone().add(1, 'day');
-      modifiers = this.deleteModifierFromRange(modifiers, startDate, endSpan, 'hovered-span');
+    if (onDayHover) {
+      onDayHover(null);
     }
-
-    if (!startDate && endDate && isAfterDay(endDate, hoverDate)) {
-      modifiers = this.deleteModifierFromRange(modifiers, hoverDate, endDate, 'hovered-span');
-    }
-
-    if (startDate && isSameDay(day, startDate)) {
-      const startSpan = startDate.clone().add(1, 'day');
-      const endSpan = startDate.clone().add(minimumNights + 1, 'days');
-      modifiers = this.deleteModifierFromRange(modifiers, startSpan, endSpan, 'after-hovered-start');
-    }
-
-    this.setState({
-      hoverDate: null,
-      visibleDays: {
-        ...visibleDays,
-        ...modifiers,
-      },
-    });
   }
 
   onPrevMonthClick() {
@@ -778,37 +692,8 @@ export default class DayPickerRangeController extends React.Component {
     return isOutsideRange(moment(day).subtract(minimumNights, 'days'));
   }
 
-  isDayAfterHoveredStartDate(day) {
-    const { startDate, endDate, minimumNights } = this.props;
-    const { hoverDate } = this.state || {};
-    return !!startDate && !endDate && !this.isBlocked(day) && isNextDay(hoverDate, day) &&
-      minimumNights > 0 && isSameDay(hoverDate, startDate);
-  }
-
   isEndDate(day) {
     return isSameDay(day, this.props.endDate);
-  }
-
-  isHovered(day) {
-    const { hoverDate } = this.state || {};
-    const { focusedInput } = this.props;
-    return !!focusedInput && isSameDay(day, hoverDate);
-  }
-
-  isInHoveredSpan(day) {
-    const { startDate, endDate } = this.props;
-    const { hoverDate } = this.state || {};
-
-    const isForwardRange = !!startDate && !endDate &&
-      (day.isBetween(startDate, hoverDate) ||
-       isSameDay(hoverDate, day));
-    const isBackwardRange = !!endDate && !startDate &&
-      (day.isBetween(hoverDate, endDate) ||
-       isSameDay(hoverDate, day));
-
-    const isValidDayHovered = hoverDate && !this.isBlocked(hoverDate);
-
-    return (isForwardRange || isBackwardRange) && isValidDayHovered;
   }
 
   isInSelectedSpan(day) {
@@ -868,7 +753,7 @@ export default class DayPickerRangeController extends React.Component {
         numberOfMonths={numberOfMonths}
         onDayClick={this.onDayClick}
         onDayMouseEnter={this.onDayMouseEnter}
-        onDayMouseLeave={this.onDayMouseLeave}
+        onCalendarMouseLeave={this.onCalendarMouseLeave}
         onPrevMonthClick={this.onPrevMonthClick}
         onNextMonthClick={this.onNextMonthClick}
         onMultiplyScrollableMonths={this.onMultiplyScrollableMonths}

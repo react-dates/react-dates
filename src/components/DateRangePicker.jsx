@@ -83,6 +83,7 @@ const defaultProps = {
 
   onPrevMonthClick() {},
   onNextMonthClick() {},
+  onDayHover: null,
 
   onClose() {},
 
@@ -319,6 +320,7 @@ export default class DateRangePicker extends React.Component {
       onNextMonthClick,
       onDatesChange,
       onFocusChange,
+      onDayHover,
       withPortal,
       withFullScreenPortal,
       daySize,
@@ -366,6 +368,7 @@ export default class DateRangePicker extends React.Component {
           onDatesChange={onDatesChange}
           onFocusChange={onFocusChange}
           onClose={onClose}
+          onDayHover={onDayHover}
           focusedInput={focusedInput}
           startDate={startDate}
           endDate={endDate}

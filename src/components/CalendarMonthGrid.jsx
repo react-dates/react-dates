@@ -38,7 +38,7 @@ const propTypes = forbidExtraProps({
   orientation: ScrollableOrientationShape,
   onDayClick: PropTypes.func,
   onDayMouseEnter: PropTypes.func,
-  onDayMouseLeave: PropTypes.func,
+  onCalendarMouseLeave: PropTypes.func,
   onMonthTransitionEnd: PropTypes.func,
   renderMonth: PropTypes.func,
   renderDay: PropTypes.func,
@@ -63,7 +63,7 @@ const defaultProps = {
   orientation: HORIZONTAL_ORIENTATION,
   onDayClick() {},
   onDayMouseEnter() {},
-  onDayMouseLeave() {},
+  onCalendarMouseLeave: null,
   onMonthTransitionEnd() {},
   renderMonth: null,
   renderDay: null,
@@ -178,7 +178,7 @@ export default class CalendarMonthGrid extends React.Component {
       transformValue,
       daySize,
       onDayMouseEnter,
-      onDayMouseLeave,
+      onCalendarMouseLeave,
       onDayClick,
       renderMonth,
       renderDay,
@@ -218,6 +218,7 @@ export default class CalendarMonthGrid extends React.Component {
         className={className}
         style={style}
         onTransitionEnd={onMonthTransitionEnd}
+        onMouseLeave={onCalendarMouseLeave}
       >
         {months.map((month, i) => {
           const isVisible =
@@ -233,7 +234,6 @@ export default class CalendarMonthGrid extends React.Component {
               monthFormat={monthFormat}
               orientation={orientation}
               onDayMouseEnter={onDayMouseEnter}
-              onDayMouseLeave={onDayMouseLeave}
               onDayClick={onDayClick}
               renderMonth={renderMonth}
               renderDay={renderDay}
