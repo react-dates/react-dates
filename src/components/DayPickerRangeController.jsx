@@ -187,16 +187,21 @@ export default class DayPickerRangeController extends React.Component {
     } = nextProps;
     let { visibleDays } = this.state;
 
+    let recomputeBlockedDays = false;
+
     if (isOutsideRange !== this.props.isOutsideRange) {
       this.modifiers['blocked-out-of-range'] = day => isOutsideRange(day);
+      recomputeBlockedDays = true;
     }
 
     if (isDayBlocked !== this.props.isDayBlocked) {
       this.modifiers['blocked-calendar'] = day => isDayBlocked(day);
+      recomputeBlockedDays = true;
     }
 
     if (isDayHighlighted !== this.props.isDayHighlighted) {
       this.modifiers['highlighted-calendar'] = day => isDayHighlighted(day);
+      recomputeBlockedDays = true;
     }
 
     const didStartDateChange = startDate !== this.props.startDate;
@@ -288,7 +293,7 @@ export default class DayPickerRangeController extends React.Component {
       }
     }
 
-    if (didFocusChange) {
+    if (didFocusChange || recomputeBlockedDays) {
       values(visibleDays).forEach((days) => {
         Object.keys(days).forEach((day) => {
           const momentObj = moment(day);
