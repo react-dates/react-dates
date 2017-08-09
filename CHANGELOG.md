@@ -1,5 +1,11 @@
 # Change Log
 
+## 12.4.0
+- [fix] Pass `onPrevMonthClick`/`onNextMonthClick` props through the SDP ([#657](https://github.com/airbnb/react-dates/pull/657))
+- [fix] Recalculate modifiers when prop modifiers change ([#668](https://github.com/airbnb/react-dates/pull/
+668))
+- [new] Pass back month as argument to `onPrevMonthClick`/`onNextMonthClick` props ([#667](https://github.com/airbnb/react-dates/pull/667))
+
 ## 12.3.0
 - [fix] Allows users to type in same-day start date and end date when `minimumNights` is 0 ([#555](https://github.com/airbnb/react-dates/pull/555))
 - [new] Add `firstDayOfWeek` prop ([#371](https://github.com/airbnb/react-dates/pull/371))
