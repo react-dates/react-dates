@@ -231,7 +231,7 @@ export default class DayPickerSingleDateController extends React.Component {
             modifiers = this.deleteModifier(modifiers, momentObj, 'blocked');
           }
 
-          if (recomputeOutsideRange) {
+          if (didFocusChange || recomputeOutsideRange) {
             if (isOutsideRange(momentObj)) {
               modifiers = this.addModifier(modifiers, momentObj, 'blocked-out-of-range');
             } else {
@@ -239,7 +239,7 @@ export default class DayPickerSingleDateController extends React.Component {
             }
           }
 
-          if (recomputeDayBlocked) {
+          if (didFocusChange || recomputeDayBlocked) {
             if (isDayBlocked(momentObj)) {
               modifiers = this.addModifier(modifiers, momentObj, 'blocked-calendar');
             } else {
@@ -247,7 +247,7 @@ export default class DayPickerSingleDateController extends React.Component {
             }
           }
 
-          if (recomputeDayHighlighted) {
+          if (didFocusChange || recomputeDayHighlighted) {
             if (isDayHighlighted(momentObj)) {
               modifiers = this.addModifier(modifiers, momentObj, 'highlighted-calendar');
             } else {
