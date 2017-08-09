@@ -705,7 +705,7 @@ describe('DayPickerSingleDateController', () => {
       expect(getModifiersSpy.callCount).to.equal(1);
     });
 
-    it('calls props.onPrevMonthClick', () => {
+    it('calls props.onPrevMonthClick with new month', () => {
       const onPrevMonthClickStub = sinon.stub();
       const wrapper = shallow(
         <DayPickerSingleDateController
@@ -714,8 +714,14 @@ describe('DayPickerSingleDateController', () => {
           onPrevMonthClick={onPrevMonthClickStub}
         />,
       );
+      wrapper.setState({
+        currentMonth: today,
+      });
+      const newMonth = moment().subtract(1, 'month');
       wrapper.instance().onPrevMonthClick();
       expect(onPrevMonthClickStub.callCount).to.equal(1);
+      expect(onPrevMonthClickStub.firstCall.args[0].year()).to.equal(newMonth.year());
+      expect(onPrevMonthClickStub.firstCall.args[0].month()).to.equal(newMonth.month());
     });
   });
 
@@ -781,7 +787,7 @@ describe('DayPickerSingleDateController', () => {
       expect(getModifiersSpy.callCount).to.equal(1);
     });
 
-    it('calls props.onNextMonthClick', () => {
+    it('calls props.onNextMonthClick with new month', () => {
       const onNextMonthClickStub = sinon.stub();
       const wrapper = shallow(
         <DayPickerSingleDateController
@@ -790,8 +796,14 @@ describe('DayPickerSingleDateController', () => {
           onNextMonthClick={onNextMonthClickStub}
         />,
       );
+      wrapper.setState({
+        currentMonth: today,
+      });
+      const newMonth = moment().add(1, 'month');
       wrapper.instance().onNextMonthClick();
       expect(onNextMonthClickStub.callCount).to.equal(1);
+      expect(onNextMonthClickStub.firstCall.args[0].year()).to.equal(newMonth.year());
+      expect(onNextMonthClickStub.firstCall.args[0].month()).to.equal(newMonth.month());
     });
   });
 
