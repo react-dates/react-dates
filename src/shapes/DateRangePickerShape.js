@@ -43,7 +43,7 @@ export default {
   horizontalMargin: PropTypes.number,
   withPortal: PropTypes.bool,
   withFullScreenPortal: PropTypes.bool,
-  daySize: nonNegativeInteger,
+  daySize: nonNegativeInteger(),
   isRTL: PropTypes.bool,
   firstDayOfWeek: DayOfWeekShape,
   initialVisibleMonth: PropTypes.func,

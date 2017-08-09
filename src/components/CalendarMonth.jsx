@@ -33,7 +33,7 @@ const propTypes = forbidExtraProps({
   enableOutsideDays: PropTypes.bool,
   modifiers: PropTypes.object,
   orientation: ScrollableOrientationShape,
-  daySize: nonNegativeInteger,
+  daySize: nonNegativeInteger(),
   onDayClick: PropTypes.func,
   onDayMouseEnter: PropTypes.func,
   onDayMouseLeave: PropTypes.func,

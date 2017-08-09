@@ -58,7 +58,7 @@ const propTypes = forbidExtraProps({
   withPortal: PropTypes.bool,
   initialVisibleMonth: PropTypes.func,
   hideKeyboardShortcutsPanel: PropTypes.bool,
-  daySize: nonNegativeInteger,
+  daySize: nonNegativeInteger(),
 
   navPrev: PropTypes.node,
   navNext: PropTypes.node,

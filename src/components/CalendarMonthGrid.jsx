@@ -43,7 +43,7 @@ const propTypes = forbidExtraProps({
   renderMonth: PropTypes.func,
   renderDay: PropTypes.func,
   transformValue: PropTypes.string,
-  daySize: nonNegativeInteger,
+  daySize: nonNegativeInteger(),
   focusedDate: momentPropTypes.momentObj, // indicates focusable day
   isFocused: PropTypes.bool, // indicates whether or not to move focus to focusable day
   firstDayOfWeek: DayOfWeekShape,

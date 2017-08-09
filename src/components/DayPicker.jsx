@@ -52,7 +52,7 @@ const propTypes = forbidExtraProps({
   firstDayOfWeek: DayOfWeekShape,
   renderCalendarInfo: PropTypes.func,
   hideKeyboardShortcutsPanel: PropTypes.bool,
-  daySize: nonNegativeInteger,
+  daySize: nonNegativeInteger(),
   isRTL: PropTypes.bool,
 
   // navigation props
