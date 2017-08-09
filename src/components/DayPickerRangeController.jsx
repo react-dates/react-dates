@@ -10,7 +10,6 @@ import { DayPickerPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 
 import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
-import isNextDay from '../utils/isNextDay';
 import isSameDay from '../utils/isSameDay';
 import isAfterDay from '../utils/isAfterDay';
 import isBeforeDay from '../utils/isBeforeDay';
@@ -49,7 +48,6 @@ const propTypes = forbidExtraProps({
   minimumNights: PropTypes.number,
   isOutsideRange: PropTypes.func,
   isDayBlocked: PropTypes.func,
-  isDayHighlighted: PropTypes.func,
 
   // DayPicker props
   renderMonth: PropTypes.func,
@@ -97,7 +95,6 @@ const defaultProps = {
   minimumNights: 1,
   isOutsideRange() {},
   isDayBlocked() {},
-  isDayHighlighted() {},
 
   // DayPicker props
   renderMonth: null,
@@ -153,13 +150,10 @@ export default class DayPickerRangeController extends React.Component {
       blocked: day => this.isBlocked(day),
       'blocked-calendar': day => props.isDayBlocked(day),
       'blocked-out-of-range': day => props.isOutsideRange(day),
-      'highlighted-calendar': day => props.isDayHighlighted(day),
-      valid: day => !this.isBlocked(day),
       'selected-start': day => this.isStartDate(day),
       'selected-end': day => this.isEndDate(day),
-      'blocked-minimum-nights': day => this.doesNotMeetMinimumNights(day),
       'selected-span': day => this.isInSelectedSpan(day),
-      'last-in-range': day => this.isLastInRange(day),
+      beforeStart: day => this.isBeforeStart(day),
     };
 
     const { currentMonth, visibleDays } = this.getStateForNewMonth(props);
@@ -192,10 +186,8 @@ export default class DayPickerRangeController extends React.Component {
       startDate,
       endDate,
       focusedInput,
-      minimumNights,
       isOutsideRange,
       isDayBlocked,
-      isDayHighlighted,
       phrases,
       initialVisibleMonth,
       numberOfMonths,
@@ -205,7 +197,6 @@ export default class DayPickerRangeController extends React.Component {
 
     let recomputeOutsideRange = false;
     let recomputeDayBlocked = false;
-    let recomputeDayHighlighted = false;
 
     if (isOutsideRange !== this.props.isOutsideRange) {
       this.modifiers['blocked-out-of-range'] = day => isOutsideRange(day);
@@ -217,13 +208,7 @@ export default class DayPickerRangeController extends React.Component {
       recomputeDayBlocked = true;
     }
 
-    if (isDayHighlighted !== this.props.isDayHighlighted) {
-      this.modifiers['highlighted-calendar'] = day => isDayHighlighted(day);
-      recomputeDayHighlighted = true;
-    }
-
-    const recomputePropModifiers =
-      recomputeOutsideRange || recomputeDayBlocked || recomputeDayHighlighted;
+    const recomputePropModifiers = recomputeOutsideRange || recomputeDayBlocked;
 
     const didStartDateChange = startDate !== this.props.startDate;
     const didEndDateChange = endDate !== this.props.endDate;
@@ -279,28 +264,7 @@ export default class DayPickerRangeController extends React.Component {
       }
     }
 
-    if (minimumNights > 0 || minimumNights !== this.props.minimumNights) {
-      if (didFocusChange || didStartDateChange) {
-        const startSpan = this.props.startDate ? this.props.startDate : this.today;
-        modifiers = this.deleteModifierFromRange(
-          modifiers,
-          startSpan,
-          startSpan.clone().add(minimumNights, 'days'),
-          'blocked-minimum-nights',
-        );
-      }
-
-      if (startDate && focusedInput === END_DATE) {
-        modifiers = this.addModifierToRange(
-          modifiers,
-          startDate,
-          startDate.clone().add(minimumNights, 'days'),
-          'blocked-minimum-nights',
-        );
-      }
-    }
-
-    if (didFocusChange || recomputePropModifiers) {
+    if (didFocusChange || recomputePropModifiers || didStartDateChange) {
       values(visibleDays).forEach((days) => {
         Object.keys(days).forEach((day) => {
           const momentObj = moment(day);
@@ -309,6 +273,14 @@ export default class DayPickerRangeController extends React.Component {
             modifiers = this.addModifier(modifiers, momentObj, 'blocked');
           } else {
             modifiers = this.deleteModifier(modifiers, momentObj, 'blocked');
+          }
+
+          if (didStartDateChange) {
+            if (momentObj.isBefore(startDate, 'day')) {
+              modifiers = this.addModifier(modifiers, momentObj, 'beforeStart');
+            } else {
+              modifiers = this.deleteModifier(modifiers, momentObj, 'beforeStart');
+            }
           }
 
           if (didFocusChange || recomputeOutsideRange) {
@@ -324,14 +296,6 @@ export default class DayPickerRangeController extends React.Component {
               modifiers = this.addModifier(modifiers, momentObj, 'blocked-calendar');
             } else {
               modifiers = this.deleteModifier(modifiers, momentObj, 'blocked-calendar');
-            }
-          }
-
-          if (didFocusChange || recomputeDayHighlighted) {
-            if (isDayHighlighted(momentObj)) {
-              modifiers = this.addModifier(modifiers, momentObj, 'highlighted-calendar');
-            } else {
-              modifiers = this.deleteModifier(modifiers, momentObj, 'highlighted-calendar');
             }
           }
         });
@@ -681,17 +645,6 @@ export default class DayPickerRangeController extends React.Component {
     return days;
   }
 
-  doesNotMeetMinimumNights(day) {
-    const { startDate, isOutsideRange, focusedInput, minimumNights } = this.props;
-    if (focusedInput !== END_DATE) return false;
-
-    if (startDate) {
-      const dayDiff = day.diff(startDate.clone().startOf('day').hour(12), 'days');
-      return dayDiff < minimumNights && dayDiff >= 0;
-    }
-    return isOutsideRange(moment(day).subtract(minimumNights, 'days'));
-  }
-
   isEndDate(day) {
     return isSameDay(day, this.props.endDate);
   }
@@ -701,21 +654,21 @@ export default class DayPickerRangeController extends React.Component {
     return day.isBetween(startDate, endDate);
   }
 
-  isLastInRange(day) {
-    return this.isInSelectedSpan(day) && isNextDay(day, this.props.endDate);
-  }
-
   isStartDate(day) {
     return isSameDay(day, this.props.startDate);
   }
 
   isBlocked(day) {
     const { isDayBlocked, isOutsideRange } = this.props;
-    return isDayBlocked(day) || isOutsideRange(day) || this.doesNotMeetMinimumNights(day);
+    return isDayBlocked(day) || isOutsideRange(day);
   }
 
   isToday(day) {
     return isSameDay(day, this.today);
+  }
+
+  isBeforeStart(day) {
+    return day.isBefore(this.props.startDate, 'day');
   }
 
   render() {
