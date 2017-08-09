@@ -175,17 +175,27 @@ export default class DayPickerSingleDateController extends React.Component {
     } = nextProps;
     let { visibleDays } = this.state;
 
+    let recomputeOutsideRange = false;
+    let recomputeDayBlocked = false;
+    let recomputeDayHighlighted = false;
+
     if (isOutsideRange !== this.props.isOutsideRange) {
       this.modifiers['blocked-out-of-range'] = day => isOutsideRange(day);
+      recomputeOutsideRange = true;
     }
 
     if (isDayBlocked !== this.props.isDayBlocked) {
       this.modifiers['blocked-calendar'] = day => isDayBlocked(day);
+      recomputeDayBlocked = true;
     }
 
     if (isDayHighlighted !== this.props.isDayHighlighted) {
       this.modifiers['highlighted-calendar'] = day => isDayHighlighted(day);
+      recomputeDayHighlighted = true;
     }
+
+    const recomputePropModifiers =
+      recomputeOutsideRange || recomputeDayBlocked || recomputeDayHighlighted;
 
     if (
       initialVisibleMonth !== this.props.initialVisibleMonth ||
@@ -211,7 +221,7 @@ export default class DayPickerSingleDateController extends React.Component {
       modifiers = this.addModifier(modifiers, date, 'selected');
     }
 
-    if (didFocusChange) {
+    if (didFocusChange || recomputePropModifiers) {
       values(visibleDays).forEach((days) => {
         Object.keys(days).forEach((day) => {
           const momentObj = moment(day);
@@ -221,22 +231,28 @@ export default class DayPickerSingleDateController extends React.Component {
             modifiers = this.deleteModifier(modifiers, momentObj, 'blocked');
           }
 
-          if (isOutsideRange(momentObj)) {
-            modifiers = this.addModifier(modifiers, momentObj, 'blocked-out-of-range');
-          } else {
-            modifiers = this.deleteModifier(modifiers, momentObj, 'blocked-out-of-range');
+          if (didFocusChange || recomputeOutsideRange) {
+            if (isOutsideRange(momentObj)) {
+              modifiers = this.addModifier(modifiers, momentObj, 'blocked-out-of-range');
+            } else {
+              modifiers = this.deleteModifier(modifiers, momentObj, 'blocked-out-of-range');
+            }
           }
 
-          if (isDayBlocked(momentObj)) {
-            modifiers = this.addModifier(modifiers, momentObj, 'blocked-calendar');
-          } else {
-            modifiers = this.deleteModifier(modifiers, momentObj, 'blocked-calendar');
+          if (didFocusChange || recomputeDayBlocked) {
+            if (isDayBlocked(momentObj)) {
+              modifiers = this.addModifier(modifiers, momentObj, 'blocked-calendar');
+            } else {
+              modifiers = this.deleteModifier(modifiers, momentObj, 'blocked-calendar');
+            }
           }
 
-          if (isDayHighlighted(momentObj)) {
-            modifiers = this.addModifier(modifiers, momentObj, 'highlighted-calendar');
-          } else {
-            modifiers = this.deleteModifier(modifiers, momentObj, 'highlighted-calendar');
+          if (didFocusChange || recomputeDayHighlighted) {
+            if (isDayHighlighted(momentObj)) {
+              modifiers = this.addModifier(modifiers, momentObj, 'highlighted-calendar');
+            } else {
+              modifiers = this.deleteModifier(modifiers, momentObj, 'highlighted-calendar');
+            }
           }
         });
       });
