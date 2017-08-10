@@ -571,34 +571,36 @@ export default class DayPickerSingleDateController extends React.Component {
 
     const { currentMonth, visibleDays } = this.state;
 
-    const dayPickerComponent = (<DayPicker
-      orientation={orientation}
-      enableOutsideDays={enableOutsideDays}
-      modifiers={visibleDays}
-      numberOfMonths={numberOfMonths}
-      onDayClick={this.onDayClick}
-      onDayMouseEnter={this.onDayMouseEnter}
-      onDayMouseLeave={this.onDayMouseLeave}
-      onPrevMonthClick={this.onPrevMonthClick}
-      onNextMonthClick={this.onNextMonthClick}
-      monthFormat={monthFormat}
-      withPortal={withPortal}
-      hidden={!focused}
-      hideKeyboardShortcutsPanel={hideKeyboardShortcutsPanel}
-      initialVisibleMonth={() => currentMonth}
-      firstDayOfWeek={firstDayOfWeek}
-      navPrev={navPrev}
-      navNext={navNext}
-      renderMonth={renderMonth}
-      renderDay={renderDay}
-      renderCalendarInfo={renderCalendarInfo}
-      isFocused={isFocused}
-      getFirstFocusableDay={this.getFirstFocusableDay}
-      onBlur={this.onDayPickerBlur}
-      phrases={phrases}
-      daySize={daySize}
-      isRTL={isRTL}
-    />);
+    const dayPickerComponent = (
+      <DayPicker
+        orientation={orientation}
+        enableOutsideDays={enableOutsideDays}
+        modifiers={visibleDays}
+        numberOfMonths={numberOfMonths}
+        onDayClick={this.onDayClick}
+        onDayMouseEnter={this.onDayMouseEnter}
+        onDayMouseLeave={this.onDayMouseLeave}
+        onPrevMonthClick={this.onPrevMonthClick}
+        onNextMonthClick={this.onNextMonthClick}
+        monthFormat={monthFormat}
+        withPortal={withPortal}
+        hidden={!focused}
+        hideKeyboardShortcutsPanel={hideKeyboardShortcutsPanel}
+        initialVisibleMonth={() => currentMonth}
+        firstDayOfWeek={firstDayOfWeek}
+        navPrev={navPrev}
+        navNext={navNext}
+        renderMonth={renderMonth}
+        renderDay={renderDay}
+        renderCalendarInfo={renderCalendarInfo}
+        isFocused={isFocused}
+        getFirstFocusableDay={this.getFirstFocusableDay}
+        onBlur={this.onDayPickerBlur}
+        phrases={phrases}
+        daySize={daySize}
+        isRTL={isRTL}
+      />
+    );
 
     if (onOutsideClick) {
       return (
