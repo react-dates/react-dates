@@ -18,8 +18,6 @@ import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
 import DateRangePickerInputController from './DateRangePickerInputController';
 import DayPickerRangeController from './DayPickerRangeController';
 
-import CloseButton from '../svg/close.svg';
-
 import DateRangePickerShape from '../shapes/DateRangePickerShape';
 
 import {
@@ -347,7 +345,7 @@ export default class DateRangePicker extends React.Component {
     const initialVisibleMonthThunk =
       initialVisibleMonth || (() => (startDate || endDate || moment()));
 
-    const closeIcon = customCloseIcon || (<CloseButton />);
+    const closeIcon = customCloseIcon || null;
 
     return (
       <div // eslint-disable-line jsx-a11y/no-static-element-interactions

@@ -6,10 +6,6 @@ import cx from 'classnames';
 import { DayPickerNavigationPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 
-import LeftArrow from '../svg/arrow-left.svg';
-import RightArrow from '../svg/arrow-right.svg';
-import ChevronUp from '../svg/chevron-up.svg';
-import ChevronDown from '../svg/chevron-down.svg';
 import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
 
 import {
@@ -72,17 +68,11 @@ export default function DayPickerNavigation(props) {
   let isDefaultNavNext = false;
   if (!navPrevIcon) {
     isDefaultNavPrev = true;
-    navPrevIcon = isVertical ? <ChevronUp /> : <LeftArrow />;
-    if (isRTL && !isVertical) {
-      navPrevIcon = <RightArrow />;
-    }
+    navPrevIcon = null;
   }
   if (!navNextIcon) {
     isDefaultNavNext = true;
-    navNextIcon = isVertical ? <ChevronDown /> : <RightArrow />;
-    if (isRTL && !isVertical) {
-      navNextIcon = <LeftArrow />;
-    }
+    navNextIcon = null;
   }
 
   const navClassNames = cx('DayPickerNavigation', {

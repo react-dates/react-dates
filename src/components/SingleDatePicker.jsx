@@ -19,8 +19,6 @@ import toISODateString from '../utils/toISODateString';
 import SingleDatePickerInput from './SingleDatePickerInput';
 import DayPickerSingleDateController from './DayPickerSingleDateController';
 
-import CloseButton from '../svg/close.svg';
-
 import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
 
 import {
@@ -356,7 +354,7 @@ export default class SingleDatePicker extends React.Component {
     const { dayPickerContainerStyles, isDayPickerFocused } = this.state;
 
     const onOutsideClick = (!withFullScreenPortal && withPortal) ? this.onClearFocus : undefined;
-    const closeIcon = customCloseIcon || (<CloseButton />);
+    const closeIcon = customCloseIcon || null;
 
     return (
       <div // eslint-disable-line jsx-a11y/no-static-element-interactions

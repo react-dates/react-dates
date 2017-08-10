@@ -8,12 +8,8 @@ import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 import openDirectionShape from '../shapes/OpenDirectionShape';
 
 import DateInput from './DateInput';
-import IconPositionShape from '../shapes/IconPositionShape';
 
-import RightArrow from '../svg/arrow-right.svg';
-import LeftArrow from '../svg/arrow-left.svg';
-import CloseButton from '../svg/close.svg';
-import CalendarIcon from '../svg/calendar.svg';
+import IconPositionShape from '../shapes/IconPositionShape';
 
 import {
   START_DATE,
@@ -22,6 +18,8 @@ import {
   ICON_AFTER_POSITION,
   OPEN_DOWN,
 } from '../../constants';
+
+const Null = () => null
 
 const propTypes = forbidExtraProps({
   startDateId: PropTypes.string,
@@ -175,9 +173,9 @@ export default class DateRangePickerInput extends React.Component {
       isRTL,
     } = this.props;
 
-    const calendarIcon = customInputIcon || (<CalendarIcon />);
-    const arrowIcon = customArrowIcon || (isRTL ? <LeftArrow /> : <RightArrow />);
-    const closeIcon = customCloseIcon || (<CloseButton />);
+    const inputIcon = customInputIcon || <Null/>;
+    const arrowIcon = customArrowIcon || <Null/>;
+    const closeIcon = customCloseIcon || <Null/>;
     const screenReaderText = screenReaderMessage || phrases.keyboardNavigationInstructions;
     const inputIcon = (showDefaultInputIcon || customInputIcon !== null) && (
       <button

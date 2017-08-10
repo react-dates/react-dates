@@ -58,12 +58,6 @@ module.exports = {
             query: {
               presets: ['airbnb']
             }
-          },
-          {
-            loader: 'react-svg-loader',
-            query: {
-              jsx: true
-            }
           }
         ],
         include: path.join(__dirname, 'src'),
