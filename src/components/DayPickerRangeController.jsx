@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import momentPropTypes from 'react-moment-proptypes';
 import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
 import moment from 'moment';
-import values from 'object.values';
 import isTouchDevice from 'is-touch-device';
 
 import { DayPickerPhrases } from '../defaultPhrases';
@@ -265,7 +264,7 @@ export default class DayPickerRangeController extends React.Component {
     }
 
     if (didFocusChange || recomputePropModifiers || didStartDateChange) {
-      values(visibleDays).forEach((days) => {
+      Object.values(visibleDays).forEach((days) => {
         Object.keys(days).forEach((day) => {
           const momentObj = moment(day);
 
