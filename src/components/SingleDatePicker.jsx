@@ -29,6 +29,7 @@ import {
   ANCHOR_LEFT,
   ANCHOR_RIGHT,
   DAY_SIZE,
+  ICON_BEFORE_POSITION,
 } from '../../constants';
 
 const propTypes = forbidExtraProps(SingleDatePickerShape);
@@ -47,7 +48,7 @@ const defaultProps = {
   screenReaderInputMessage: '',
   showClearDate: false,
   showDefaultInputIcon: false,
-  inputIconPosition: 'before',
+  inputIconPosition: ICON_BEFORE_POSITION,
   customInputIcon: null,
   customCloseIcon: null,
 

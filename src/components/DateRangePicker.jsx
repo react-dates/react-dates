@@ -30,6 +30,7 @@ import {
   ANCHOR_LEFT,
   ANCHOR_RIGHT,
   DAY_SIZE,
+  ICON_BEFORE_POSITION,
 } from '../../constants';
 
 const propTypes = forbidExtraProps(DateRangePickerShape);
@@ -51,7 +52,7 @@ const defaultProps = {
   screenReaderInputMessage: '',
   showClearDates: false,
   showDefaultInputIcon: false,
-  inputIconPosition: 'before',
+  inputIconPosition: ICON_BEFORE_POSITION,
   customInputIcon: null,
   customArrowIcon: null,
   customCloseIcon: null,

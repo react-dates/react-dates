@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 
 import {
-  BEFORE_POSITION,
+  ICON_BEFORE_POSITION,
   AFTER_POSITION,
 } from '../../constants';
 
-export default PropTypes.oneOf([BEFORE_POSITION, AFTER_POSITION]);
+export default PropTypes.oneOf([ICON_BEFORE_POSITION, AFTER_POSITION]);

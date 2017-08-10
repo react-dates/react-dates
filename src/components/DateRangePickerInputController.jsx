@@ -19,7 +19,7 @@ import toISODateString from '../utils/toISODateString';
 import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
 import isBeforeDay from '../utils/isBeforeDay';
 
-import { START_DATE, END_DATE } from '../../constants';
+import { START_DATE, END_DATE, ICON_BEFORE_POSITION } from '../../constants';
 
 const propTypes = forbidExtraProps({
   startDate: momentPropTypes.momentObj,
@@ -82,7 +82,7 @@ const defaultProps = {
   showClearDates: false,
   showCaret: false,
   showDefaultInputIcon: false,
-  inputIconPosition: 'before',
+  inputIconPosition: ICON_BEFORE_POSITION,
   disabled: false,
   required: false,
   readOnly: false,

@@ -12,6 +12,8 @@ import IconPositionShape from '../shapes/IconPositionShape';
 import CloseButton from '../svg/close.svg';
 import CalendarIcon from '../svg/calendar.svg';
 
+import { ICON_BEFORE_POSITION } from '../../constants';
+
 const propTypes = forbidExtraProps({
   id: PropTypes.string.isRequired,
   placeholder: PropTypes.string, // also used as label
@@ -54,7 +56,7 @@ const defaultProps = {
   showCaret: false,
   showClearDate: false,
   showDefaultInputIcon: false,
-  inputIconPosition: 'before',
+  inputIconPosition: ICON_BEFORE_POSITION,
   customCloseIcon: null,
   customInputIcon: null,
   isRTL: false,
@@ -79,7 +81,6 @@ export default class SingleDatePickerInput extends React.Component {
 
     this.onClearDateMouseEnter = this.onClearDateMouseEnter.bind(this);
     this.onClearDateMouseLeave = this.onClearDateMouseLeave.bind(this);
-    this.renderInputIcon = this.renderInputIcon.bind(this);
   }
 
   onClearDateMouseEnter() {
@@ -92,22 +93,6 @@ export default class SingleDatePickerInput extends React.Component {
     this.setState({
       isClearDateHovered: false,
     });
-  }
-
-  renderInputIcon(calendarIcon) {
-    const { disabled, phrases, onFocus } = this.props;
-
-    return (
-      <button
-        type="button"
-        className="SingleDatePickerInput__calendar-icon"
-        disabled={disabled}
-        aria-label={phrases.focusStartDate}
-        onClick={onFocus}
-      >
-        {calendarIcon}
-      </button>
-    );
   }
 
   render() {
@@ -142,8 +127,17 @@ export default class SingleDatePickerInput extends React.Component {
     const calendarIcon = customInputIcon || (<CalendarIcon />);
     const closeIcon = customCloseIcon || (<CloseButton />);
     const screenReaderText = screenReaderMessage || phrases.keyboardNavigationInstructions;
-    const inputIcon = (showDefaultInputIcon || customInputIcon !== null) &&
-      (this.renderInputIcon(calendarIcon));
+    const inputIcon = (showDefaultInputIcon || customInputIcon !== null) && (
+      <button
+        type="button"
+        className="SingleDatePickerInput__calendar-icon"
+        disabled={disabled}
+        aria-label={phrases.focusStartDate}
+        onClick={onFocus}
+      >
+        {calendarIcon}
+      </button>
+    );
 
     return (
       <div
@@ -152,7 +146,7 @@ export default class SingleDatePickerInput extends React.Component {
         })}
       >
 
-        { inputIconPosition === 'before' && inputIcon }
+        { inputIconPosition === ICON_BEFORE_POSITION && inputIcon }
 
         <DateInput
           id={id}
