@@ -101,7 +101,7 @@
     "webpack": "^2.6.1"
   },
   "dependencies": {
-    "airbnb-prop-types": "^2.8.0",
+    "airbnb-prop-types": "^2.8.1",
     "classnames": "^2.2.5",
     "consolidated-events": "^1.1.0",
     "is-touch-device": "^1.0.1",
