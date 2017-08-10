@@ -10,6 +10,7 @@ import isTouchDevice from 'is-touch-device';
 
 import { DayPickerPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
+import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
 
 import OutsideClickHandler from './OutsideClickHandler';
 import CalendarMonthGrid from './CalendarMonthGrid';
@@ -61,6 +62,7 @@ const propTypes = forbidExtraProps({
   onPrevMonthClick: PropTypes.func,
   onNextMonthClick: PropTypes.func,
   onMultiplyScrollableMonths: PropTypes.func, // VERTICAL_SCROLLABLE daypickers only
+  isOutsideRange: PropTypes.func,
 
   // month props
   renderMonth: PropTypes.func,
@@ -105,6 +107,7 @@ export const defaultProps = {
   onPrevMonthClick() {},
   onNextMonthClick() {},
   onMultiplyScrollableMonths() {},
+  isOutsideRange: day => !isInclusivelyAfterDay(day, moment()),
 
   // month props
   renderMonth: null,
@@ -660,10 +663,15 @@ export default class DayPicker extends React.Component {
     const {
       navPrev,
       navNext,
+      numberOfMonths,
+      isOutsideRange,
       orientation,
       phrases,
       isRTL,
     } = this.props;
+    const { currentMonth } = this.state;
+    const canNavPrev = !isOutsideRange(moment(currentMonth).add(-1, 'month').endOf('month'));
+    const canNavNext = !isOutsideRange(moment(currentMonth).add(numberOfMonths, 'month').startOf('month'));
 
     let onNextMonthClick;
     if (orientation === VERTICAL_SCROLLABLE) {
@@ -678,6 +686,8 @@ export default class DayPicker extends React.Component {
         onNextMonthClick={onNextMonthClick}
         navPrev={navPrev}
         navNext={navNext}
+        canNavPrev={canNavPrev}
+        canNavNext={canNavNext}
         orientation={orientation}
         phrases={phrases}
         isRTL={isRTL}

@@ -20,6 +20,8 @@ import {
 const propTypes = forbidExtraProps({
   navPrev: PropTypes.node,
   navNext: PropTypes.node,
+  canNavPrev: PropTypes.bool,
+  canNavNext: PropTypes.bool,
   orientation: ScrollableOrientationShape,
 
   onPrevMonthClick: PropTypes.func,
@@ -44,10 +46,16 @@ const defaultProps = {
   isRTL: false,
 };
 
+const blurNav = (e) => {
+  e.currentTarget.blur();
+};
+
 export default function DayPickerNavigation(props) {
   const {
     navPrev,
     navNext,
+    canNavPrev,
+    canNavNext,
     onPrevMonthClick,
     onNextMonthClick,
     orientation,
@@ -85,39 +93,35 @@ export default function DayPickerNavigation(props) {
   const prevClassNames = cx('DayPickerNavigation__prev', {
     'DayPickerNavigation__prev--default': isDefaultNavPrev,
     'DayPickerNavigation__prev--rtl': isRTL,
+    'DayPickerNavigation__prev--disabled': !canNavPrev,
   });
   const nextClassNames = cx('DayPickerNavigation__next', {
     'DayPickerNavigation__next--default': isDefaultNavNext,
     'DayPickerNavigation__next--rtl': isRTL,
+    'DayPickerNavigation__next--disabled': !canNavNext,
   });
 
   return (
     <div className={navClassNames}>
       {!isVerticalScrollable && (
-        <button
-          type="button"
-          aria-label={phrases.jumpToPrevMonth}
-          className={prevClassNames}
-          onClick={onPrevMonthClick}
-          onMouseUp={(e) => {
-            e.currentTarget.blur();
-          }}
-        >
-          {navPrevIcon}
-        </button>
+        React.cloneElement(navPrevIcon, {
+          type: 'button',
+          'aria-label': phrases.jumpToPrevMonth,
+          className: prevClassNames,
+          onClick: canNavPrev && onPrevMonthClick,
+          onMouseUp: blurNav,
+        })
       )}
 
-      <button
-        type="button"
-        aria-label={phrases.jumpToNextMonth}
-        className={nextClassNames}
-        onClick={onNextMonthClick}
-        onMouseUp={(e) => {
-          e.currentTarget.blur();
-        }}
-      >
-        {navNextIcon}
-      </button>
+      {
+        React.cloneElement(navNextIcon, {
+          type: 'button',
+          'aria-label': phrases.jumpToNextMonth,
+          className: nextClassNames,
+          onClick: canNavNext && onNextMonthClick,
+          onMouseUp: blurNav,
+        })
+      }
     </div>
   );
 }
