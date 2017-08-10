@@ -25,9 +25,9 @@ export default {
 
   // input related props
   startDateId: PropTypes.string.isRequired,
-  startDatePlaceholderText: PropTypes.string,
+  startDatePlaceholderText: PropTypes.node,
   endDateId: PropTypes.string.isRequired,
-  endDatePlaceholderText: PropTypes.string,
+  endDatePlaceholderText: PropTypes.node,
   disabled: PropTypes.bool,
   required: PropTypes.bool,
   readOnly: PropTypes.bool,

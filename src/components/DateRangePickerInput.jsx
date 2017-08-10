@@ -25,11 +25,11 @@ import {
 
 const propTypes = forbidExtraProps({
   startDateId: PropTypes.string,
-  startDatePlaceholderText: PropTypes.string,
+  startDatePlaceholderText: PropTypes.node,
   screenReaderMessage: PropTypes.string,
 
   endDateId: PropTypes.string,
-  endDatePlaceholderText: PropTypes.string,
+  endDatePlaceholderText: PropTypes.node,
 
   onStartDateFocus: PropTypes.func,
   onEndDateFocus: PropTypes.func,
