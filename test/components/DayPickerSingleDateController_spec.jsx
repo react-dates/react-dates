@@ -1410,14 +1410,14 @@ describe('DayPickerSingleDateController', () => {
           onOutsideClick={() => null}
         />,
       );
-      expect(wrapper.find(OutsideClickHandler).length).to.equal(1);
+      expect(wrapper.find(OutsideClickHandler)).to.have.lengthOf(1);
     });
 
     it('should NOT render OutsideClickHandler without onOutsideClick prop', () => {
       const wrapper = shallow(
         <DayPickerSingleDateController />,
       );
-      expect(wrapper.find(OutsideClickHandler).length).to.equal(0);
+      expect(wrapper.find(OutsideClickHandler)).to.have.lengthOf(0);
     });
   });
 });
