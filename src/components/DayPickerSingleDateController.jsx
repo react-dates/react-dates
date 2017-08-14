@@ -28,6 +28,7 @@ import {
 } from '../../constants';
 
 import DayPicker from './DayPicker';
+import OutsideClickHandler from './OutsideClickHandler';
 
 const propTypes = forbidExtraProps({
   date: momentPropTypes.momentObj,
@@ -105,7 +106,7 @@ const defaultProps = {
 
   onPrevMonthClick() {},
   onNextMonthClick() {},
-  onOutsideClick() {},
+  onOutsideClick: null,
 
   renderDay: null,
   renderCalendarInfo: null,
@@ -565,11 +566,12 @@ export default class DayPickerSingleDateController extends React.Component {
       isFocused,
       isRTL,
       phrases,
+      onOutsideClick,
     } = this.props;
 
     const { currentMonth, visibleDays } = this.state;
 
-    return (
+    const dayPickerComponent = (
       <DayPicker
         orientation={orientation}
         enableOutsideDays={enableOutsideDays}
@@ -599,6 +601,18 @@ export default class DayPickerSingleDateController extends React.Component {
         isRTL={isRTL}
       />
     );
+
+    if (onOutsideClick) {
+      return (
+        <OutsideClickHandler
+          onOutsideClick={onOutsideClick}
+        >
+          {dayPickerComponent}
+        </OutsideClickHandler>
+      );
+    }
+
+    return dayPickerComponent;
   }
 }
 
