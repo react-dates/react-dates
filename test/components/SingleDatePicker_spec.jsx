@@ -738,6 +738,13 @@ describe('SingleDatePicker', () => {
       });
     });
 
+    it('calls onUserInputChange with empty string', () => {
+      const onUserInputChangeSpy = sinon.spy(SingleDatePicker.prototype, 'onUserInputChange');
+      const wrapper = shallow(<SingleDatePicker />);
+      wrapper.instance().clearDate();
+      expect(onUserInputChangeSpy.getCall(0).args[0]).to.equal('');
+    });
+
     it('calls props.onDateChange with null date', () => {
       const onDateChangeStub = sinon.stub();
       const wrapper = shallow(

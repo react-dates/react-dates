@@ -10,6 +10,7 @@ const propTypes = forbidExtraProps({
   placeholder: PropTypes.string, // also used as label
   displayValue: PropTypes.string,
   inputValue: PropTypes.string,
+  userInputValue: PropTypes.string,
   screenReaderMessage: PropTypes.string,
   focused: PropTypes.bool,
   disabled: PropTypes.bool,
@@ -18,6 +19,7 @@ const propTypes = forbidExtraProps({
   showCaret: PropTypes.bool,
 
   onChange: PropTypes.func,
+  onUserInputChange: PropTypes.func,
   onFocus: PropTypes.func,
   onKeyDownShiftTab: PropTypes.func,
   onKeyDownTab: PropTypes.func,
@@ -33,6 +35,7 @@ const defaultProps = {
   placeholder: 'Select Date',
   displayValue: '',
   inputValue: '',
+  userInputValue: '',
   screenReaderMessage: '',
   focused: false,
   disabled: false,
@@ -41,6 +44,7 @@ const defaultProps = {
   showCaret: false,
 
   onChange() {},
+  onUserInputChange() {},
   onFocus() {},
   onKeyDownShiftTab() {},
   onKeyDownTab() {},
@@ -56,7 +60,6 @@ export default class DateInput extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      dateString: '',
       isTouchDevice: false,
     };
 
@@ -70,9 +73,7 @@ export default class DateInput extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (!this.props.displayValue && nextProps.displayValue) {
-      this.setState({
-        dateString: '',
-      });
+      nextProps.onUserInputChange('');
     }
   }
 
@@ -89,7 +90,7 @@ export default class DateInput extends React.Component {
   }
 
   onChange(e) {
-    const { onChange, onKeyDownQuestionMark } = this.props;
+    const { onChange, onKeyDownQuestionMark, onUserInputChange } = this.props;
     const dateString = e.target.value;
 
     // In Safari, onKeyDown does not consistently fire ahead of onChange. As a result, we need to
@@ -98,7 +99,7 @@ export default class DateInput extends React.Component {
     if (dateString[dateString.length - 1] === '?') {
       onKeyDownQuestionMark(e);
     } else {
-      this.setState({ dateString });
+      onUserInputChange(dateString);
       onChange(dateString);
     }
   }
@@ -130,7 +131,6 @@ export default class DateInput extends React.Component {
 
   render() {
     const {
-      dateString,
       isTouchDevice: isTouch,
     } = this.state;
     const {
@@ -138,6 +138,7 @@ export default class DateInput extends React.Component {
       placeholder,
       displayValue,
       inputValue,
+      userInputValue,
       screenReaderMessage,
       focused,
       showCaret,
@@ -147,8 +148,8 @@ export default class DateInput extends React.Component {
       readOnly,
     } = this.props;
 
-    const displayText = displayValue || inputValue || dateString || placeholder || '';
-    const value = inputValue || displayValue || dateString || '';
+    const displayText = displayValue || inputValue || userInputValue || placeholder || '';
+    const value = inputValue || displayValue || userInputValue || '';
     const screenReaderMessageId = `DateInput__screen-reader-message-${id}`;
 
     return (

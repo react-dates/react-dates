@@ -73,6 +73,7 @@ const defaultProps = {
   onPrevMonthClick() {},
   onNextMonthClick() {},
   onClose() {},
+  onDateChange() {},
 
   // month presentation and interaction related props
   renderMonth: null,
@@ -97,6 +98,7 @@ export default class SingleDatePicker extends React.Component {
     this.isTouchDevice = false;
 
     this.state = {
+      userInputValue: '',
       dayPickerContainerStyles: {},
       isDayPickerFocused: false,
       isInputFocused: false,
@@ -106,6 +108,7 @@ export default class SingleDatePicker extends React.Component {
     this.onDayPickerBlur = this.onDayPickerBlur.bind(this);
 
     this.onChange = this.onChange.bind(this);
+    this.onUserInputChange = this.onUserInputChange.bind(this);
     this.onFocus = this.onFocus.bind(this);
     this.onClearFocus = this.onClearFocus.bind(this);
     this.clearDate = this.clearDate.bind(this);
@@ -180,6 +183,12 @@ export default class SingleDatePicker extends React.Component {
     }
   }
 
+  onUserInputChange(userInputValue) {
+    this.setState({
+      userInputValue,
+    });
+  }
+
   onClearFocus() {
     const { startDate, endDate, focused, onFocusChange, onClose } = this.props;
     if (!focused) return;
@@ -238,6 +247,7 @@ export default class SingleDatePicker extends React.Component {
 
   clearDate() {
     const { onDateChange, reopenPickerOnClearDate, onFocusChange } = this.props;
+    this.onUserInputChange('');
     onDateChange(null);
     if (reopenPickerOnClearDate) {
       onFocusChange({ focused: true });
@@ -404,7 +414,7 @@ export default class SingleDatePicker extends React.Component {
       isRTL,
     } = this.props;
 
-    const { isInputFocused } = this.state;
+    const { userInputValue, isInputFocused } = this.state;
 
     const displayValue = this.getDateString(date);
     const inputValue = toISODateString(date);
@@ -429,7 +439,9 @@ export default class SingleDatePicker extends React.Component {
             customInputIcon={customInputIcon}
             displayValue={displayValue}
             inputValue={inputValue}
+            userInputValue={userInputValue}
             onChange={this.onChange}
+            onUserInputChange={this.onUserInputChange}
             onFocus={this.onFocus}
             onKeyDownShiftTab={this.onClearFocus}
             onKeyDownTab={this.onClearFocus}

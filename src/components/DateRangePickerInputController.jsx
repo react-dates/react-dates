@@ -112,11 +112,17 @@ const defaultProps = {
 export default class DateRangePickerInputController extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      startDateUserInputValue: '',
+      endDateUserInputValue: '',
+    };
 
     this.onClearFocus = this.onClearFocus.bind(this);
     this.onStartDateChange = this.onStartDateChange.bind(this);
+    this.onStartDateUserInputChange = this.onStartDateUserInputChange.bind(this);
     this.onStartDateFocus = this.onStartDateFocus.bind(this);
     this.onEndDateChange = this.onEndDateChange.bind(this);
+    this.onEndDateUserInputChange = this.onEndDateUserInputChange.bind(this);
     this.onEndDateFocus = this.onEndDateFocus.bind(this);
     this.clearDates = this.clearDates.bind(this);
   }
@@ -165,6 +171,12 @@ export default class DateRangePickerInputController extends React.Component {
     }
   }
 
+  onEndDateUserInputChange(endDateUserInputValue) {
+    this.setState({
+      endDateUserInputValue,
+    });
+  }
+
   onStartDateChange(startDateString) {
     const startDate = toMomentObject(startDateString, this.getDisplayFormat());
 
@@ -192,6 +204,12 @@ export default class DateRangePickerInputController extends React.Component {
     }
   }
 
+  onStartDateUserInputChange(startDateUserInputValue) {
+    this.setState({
+      startDateUserInputValue,
+    });
+  }
+
   getDisplayFormat() {
     const { displayFormat } = this.props;
     return typeof displayFormat === 'string' ? displayFormat : displayFormat();
@@ -207,6 +225,8 @@ export default class DateRangePickerInputController extends React.Component {
 
   clearDates() {
     const { onDatesChange, reopenPickerOnClearDates, onFocusChange } = this.props;
+    this.onStartDateUserInputChange('');
+    this.onEndDateUserInputChange('');
     onDatesChange({ startDate: null, endDate: null });
     if (reopenPickerOnClearDates) {
       onFocusChange(START_DATE);
@@ -240,6 +260,11 @@ export default class DateRangePickerInputController extends React.Component {
       isRTL,
     } = this.props;
 
+    const {
+      startDateUserInputValue,
+      endDateUserInputValue,
+    } = this.state;
+
     const startDateString = this.getDateString(startDate);
     const startDateValue = toISODateString(startDate);
     const endDateString = this.getDateString(endDate);
@@ -249,11 +274,13 @@ export default class DateRangePickerInputController extends React.Component {
       <DateRangePickerInput
         startDate={startDateString}
         startDateValue={startDateValue}
+        startDateUserInputValue={startDateUserInputValue}
         startDateId={startDateId}
         startDatePlaceholderText={startDatePlaceholderText}
         isStartDateFocused={isStartDateFocused}
         endDate={endDateString}
         endDateValue={endDateValue}
+        endDateUserInputValue={endDateUserInputValue}
         endDateId={endDateId}
         endDatePlaceholderText={endDatePlaceholderText}
         isEndDateFocused={isEndDateFocused}
@@ -268,9 +295,11 @@ export default class DateRangePickerInputController extends React.Component {
         customCloseIcon={customCloseIcon}
         phrases={phrases}
         onStartDateChange={this.onStartDateChange}
+        onStartDateUserInputChange={this.onStartDateUserInputChange}
         onStartDateFocus={this.onStartDateFocus}
         onStartDateShiftTab={this.onClearFocus}
         onEndDateChange={this.onEndDateChange}
+        onEndDateUserInputChange={this.onEndDateUserInputChange}
         onEndDateFocus={this.onEndDateFocus}
         onEndDateTab={this.onClearFocus}
         showClearDates={showClearDates}

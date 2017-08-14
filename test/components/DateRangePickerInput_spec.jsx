@@ -70,17 +70,29 @@ describe('DateRangePickerInput', () => {
             expect(wrapper.find('.DateRangePickerInput__clear-dates--hover')).to.have.lengthOf(0);
           });
 
-        it('has .DateRangePickerInput__clear-dates--hide class if there are no dates',
+        it('has .DateRangePickerInput__clear-dates--hide class if there are no dates and no user input',
           () => {
             const wrapper = shallow(
-              <DateRangePickerInput showClearDates startDate={null} endDate={null} />,
-            );
+              <DateRangePickerInput
+                showClearDates
+                startDate={null}
+                endDate={null}
+                startDateUserInputValue={null}
+                endDateUserInputValue={null}
+              />);
             expect(wrapper.find('.DateRangePickerInput__clear-dates--hide')).to.have.lengthOf(1);
           });
 
         it('does not have .DateRangePickerInput__clear-dates--hide class if there are dates',
           () => {
             const wrapper = shallow(<DateRangePickerInput showClearDates startDate="2016-07-13" />);
+            expect(wrapper.find('.DateRangePickerInput__clear-dates--hide')).to.have.lengthOf(0);
+          });
+
+        it('does not have .DateRangePickerInput__clear-dates--hide class if there is user input',
+          () => {
+            const wrapper = shallow(
+              <DateRangePickerInput showClearDates startDateUserInputValue="foobar" />);
             expect(wrapper.find('.DateRangePickerInput__clear-dates--hide')).to.have.lengthOf(0);
           });
       });

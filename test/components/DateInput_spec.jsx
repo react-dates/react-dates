@@ -52,13 +52,10 @@ describe('DateInput', () => {
         expect(wrapper.find('input').props().value).to.equal(DISPLAY_VALUE);
       });
 
-      it('has value === state.dateString if neither inputValue or displayValue are passed in',
+      it('has value === props.userInputValue if neither inputValue or displayValue are passed in',
         () => {
           const DATE_STRING = 'foobar';
-          const wrapper = shallow(<DateInput id="date" />);
-          wrapper.setState({
-            dateString: DATE_STRING,
-          });
+          const wrapper = shallow(<DateInput id="date" userInputValue={DATE_STRING} />);
           expect(wrapper.find('input').props().value).to.equal(DATE_STRING);
         },
       );
@@ -178,10 +175,18 @@ describe('DateInput', () => {
 
   describe('#onChange', () => {
     const evt = { target: { value: 'foobar' } };
-    it('sets state.dateString to e.target.value', () => {
-      const wrapper = shallow(<DateInput id="date" />);
+    it('calls props.onUserInputChange once', () => {
+      const onUserInputChangeStub = sinon.stub();
+      const wrapper = shallow(<DateInput id="date" onUserInputChange={onUserInputChangeStub} />);
       wrapper.instance().onChange(evt);
-      expect(wrapper.state().dateString).to.equal('foobar');
+      expect(onUserInputChangeStub.callCount).to.equal(1);
+    });
+
+    it('calls props.onUserInputChange with e.target.value as arg', () => {
+      const onUserInputChangeStub = sinon.stub();
+      const wrapper = shallow(<DateInput id="date" onUserInputChange={onUserInputChangeStub} />);
+      wrapper.instance().onChange(evt);
+      expect(onUserInputChangeStub.getCall(0).args[0]).to.equal(evt.target.value);
     });
 
     it('calls props.onChange once', () => {

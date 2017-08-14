@@ -46,9 +46,14 @@ describe('SingleDatePickerInput', () => {
           expect(wrapper.find('.SingleDatePickerInput__clear-date--hover')).to.have.lengthOf(0);
         });
 
-      it('has .SingleDatePickerInput__clear-date--hide class if there is no date',
+      it('has .SingleDatePickerInput__clear-date--hide class if there is no date and no user input',
         () => {
-          const wrapper = shallow(<SingleDatePickerInput showClearDate displayValue={null} />);
+          const wrapper = shallow(
+            <SingleDatePickerInput
+              showClearDate
+              displayValue={null}
+              userInputValue={null}
+            />);
           expect(wrapper.find('.SingleDatePickerInput__clear-date--hide')).to.have.lengthOf(1);
         });
 
@@ -56,6 +61,13 @@ describe('SingleDatePickerInput', () => {
         () => {
           const wrapper =
             shallow(<SingleDatePickerInput showClearDate displayValue="2016-07-13" />);
+          expect(wrapper.find('.SingleDatePickerInput__clear-date--hide')).to.have.lengthOf(0);
+        });
+
+      it('does not have .SingleDatePickerInput__clear-date--hide class if there is user input',
+        () => {
+          const wrapper =
+            shallow(<SingleDatePickerInput showClearDate userInputValue="foobar" />);
           expect(wrapper.find('.SingleDatePickerInput__clear-date--hide')).to.have.lengthOf(0);
         });
     });
