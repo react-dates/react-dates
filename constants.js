@@ -11,7 +11,7 @@ module.exports = {
   VERTICAL_SCROLLABLE: 'verticalScrollable',
 
   ICON_BEFORE_POSITION: 'before',
-  AFTER_POSITION: 'after',
+  ICON_AFTER_POSITION: 'after',
 
   ANCHOR_LEFT: 'left',
   ANCHOR_RIGHT: 'right',

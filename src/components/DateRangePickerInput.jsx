@@ -14,7 +14,7 @@ import LeftArrow from '../svg/arrow-left.svg';
 import CloseButton from '../svg/close.svg';
 import CalendarIcon from '../svg/calendar.svg';
 
-import { START_DATE, END_DATE, ICON_BEFORE_POSITION } from '../../constants';
+import { START_DATE, END_DATE, ICON_BEFORE_POSITION, ICON_AFTER_POSITION } from '../../constants';
 
 const propTypes = forbidExtraProps({
   startDateId: PropTypes.string,
@@ -189,7 +189,7 @@ export default class DateRangePickerInput extends React.Component {
         })}
       >
 
-        { inputIconPosition === ICON_BEFORE_POSITION && inputIcon }
+        {inputIconPosition === ICON_BEFORE_POSITION && inputIcon}
 
         <DateInput
           id={startDateId}
@@ -257,7 +257,7 @@ export default class DateRangePickerInput extends React.Component {
           </button>
         )}
 
-        { inputIconPosition === 'after' && inputIcon }
+        {inputIconPosition === ICON_AFTER_POSITION && inputIcon}
 
       </div>
     );

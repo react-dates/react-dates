@@ -12,7 +12,7 @@ import IconPositionShape from '../shapes/IconPositionShape';
 import CloseButton from '../svg/close.svg';
 import CalendarIcon from '../svg/calendar.svg';
 
-import { ICON_BEFORE_POSITION } from '../../constants';
+import { ICON_BEFORE_POSITION, ICON_AFTER_POSITION } from '../../constants';
 
 const propTypes = forbidExtraProps({
   id: PropTypes.string.isRequired,
@@ -146,7 +146,7 @@ export default class SingleDatePickerInput extends React.Component {
         })}
       >
 
-        { inputIconPosition === ICON_BEFORE_POSITION && inputIcon }
+        {inputIconPosition === ICON_BEFORE_POSITION && inputIcon}
 
         <DateInput
           id={id}
@@ -185,7 +185,7 @@ export default class SingleDatePickerInput extends React.Component {
           </button>
         )}
 
-        { inputIconPosition === 'after' && inputIcon }
+        {inputIconPosition === ICON_AFTER_POSITION && inputIcon}
 
       </div>
     );
