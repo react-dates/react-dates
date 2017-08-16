@@ -15,6 +15,6 @@
   },
 
   "settings": {
-    // "propWrapperFunctions": ["forbidExtraProps"] // uncomment when https://github.com/yannickcr/eslint-plugin-react/commit/5ad93b4365cc42ff6a6c858fed76b7a2d0c17222 is published
+     "propWrapperFunctions": ["forbidExtraProps"]
   }
 }
