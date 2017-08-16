@@ -567,6 +567,9 @@ export default class DayPickerSingleDateController extends React.Component {
       isRTL,
       phrases,
       onOutsideClick,
+      onBlur,
+      minimumNights,
+      showKeyboardShortcuts,
     } = this.props;
 
     const { currentMonth, visibleDays } = this.state;
@@ -595,10 +598,12 @@ export default class DayPickerSingleDateController extends React.Component {
         renderCalendarInfo={renderCalendarInfo}
         isFocused={isFocused}
         getFirstFocusableDay={this.getFirstFocusableDay}
-        onBlur={this.onDayPickerBlur}
+        onBlur={onBlur}
         phrases={phrases}
         daySize={daySize}
         isRTL={isRTL}
+        minimumNights={minimumNights}
+        showKeyboardShortcuts={showKeyboardShortcuts}
       />
     );
 
