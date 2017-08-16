@@ -55,6 +55,11 @@ storiesOf('DayPicker', module)
   .addWithInfo('single month', () => (
     <DayPicker numberOfMonths={1} />
   ))
+
+  .addWithInfo('single month with years enabled', () => (
+    <DayPicker numberOfMonths={1} isYearsEnabled />
+  ))
+
   .addWithInfo('3 months', () => (
     <DayPicker numberOfMonths={3} />
   ))

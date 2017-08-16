@@ -1,0 +1,64 @@
+$monthWidth: 60%;
+
+.MonthYearSwitch {
+  height: 21px;
+
+  button {
+    border: 1px solid $react-dates-color-border-light;
+    background-color: $react-dates-color-white;
+    color: $react-dates-color-placeholder-text;
+    cursor: pointer;
+    border-radius: 3px;
+    padding: 3px 6px;
+    vertical-align: middle;
+    z-index: $react-dates-z-index + 2;
+
+    &:focus,
+    &:hover {
+      border: 1px solid $react-dates-color-border-medium;
+    }
+
+    &:active {
+      background: darken($react-dates-color-white, 5%);
+    }
+
+    svg {
+      height: 13px;
+      width: 13px;
+      fill: $react-dates-color-gray-light;
+    }
+
+    + button {
+      margin-left: 3px;
+    }
+  }
+
+  .Month,
+  .Year {
+    display: inline-block;
+  }
+
+  .Month--title,
+  .Year--title {
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .Month {
+    text-align: left;
+    width: $monthWidth;
+
+    .Month--title {
+      margin-left: 10px;
+    }
+  }
+
+  .Year {
+    text-align: right;
+    width: 100% - $monthWidth;
+
+    .Year--title {
+      margin-right: 10px;
+    }
+  }
+}
