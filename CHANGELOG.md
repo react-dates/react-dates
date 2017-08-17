@@ -2,8 +2,7 @@
 
 ## 12.4.0
 - [fix] Pass `onPrevMonthClick`/`onNextMonthClick` props through the SDP ([#657](https://github.com/airbnb/react-dates/pull/657))
-- [fix] Recalculate modifiers when prop modifiers change ([#668](https://github.com/airbnb/react-dates/pull/
-668))
+- [fix] Recalculate modifiers when prop modifiers change ([#668](https://github.com/airbnb/react-dates/pull/668))
 - [new] Pass back month as argument to `onPrevMonthClick`/`onNextMonthClick` props ([#667](https://github.com/airbnb/react-dates/pull/667))
 
 ## 12.3.0
