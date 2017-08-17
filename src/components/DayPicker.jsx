@@ -39,6 +39,8 @@ const MONTH_PADDING = 23;
 const DAY_PICKER_PADDING = 9;
 const PREV_TRANSITION = 'prev';
 const NEXT_TRANSITION = 'next';
+const MONTH_SELECTION_TRANSITION = 'month_selection';
+const YEAR_SELECTION_TRANSITION = 'year_selection';
 
 const propTypes = forbidExtraProps({
   // calendar presentation props
@@ -54,12 +56,15 @@ const propTypes = forbidExtraProps({
   hideKeyboardShortcutsPanel: PropTypes.bool,
   daySize: nonNegativeInteger,
   isRTL: PropTypes.bool,
+  isYearsEnabled: PropTypes.bool,
 
   // navigation props
   navPrev: PropTypes.node,
   navNext: PropTypes.node,
   onPrevMonthClick: PropTypes.func,
   onNextMonthClick: PropTypes.func,
+  onMonthChange: PropTypes.func,
+  onYearChange: PropTypes.func,
   onMultiplyScrollableMonths: PropTypes.func, // VERTICAL_SCROLLABLE daypickers only
 
   // month props
@@ -97,12 +102,15 @@ export const defaultProps = {
   hideKeyboardShortcutsPanel: false,
   daySize: DAY_SIZE,
   isRTL: false,
+  isYearsEnabled: false,
 
   // navigation props
   navPrev: null,
   navNext: null,
   onPrevMonthClick() {},
   onNextMonthClick() {},
+  onMonthChange() {},
+  onYearChange() {},
   onMultiplyScrollableMonths() {},
 
   // month props
@@ -212,7 +220,11 @@ export default class DayPicker extends React.Component {
     this.onKeyDown = this.onKeyDown.bind(this);
     this.onPrevMonthClick = this.onPrevMonthClick.bind(this);
     this.onNextMonthClick = this.onNextMonthClick.bind(this);
+    this.onMonthChange = this.onMonthChange.bind(this);
+    this.onYearChange = this.onYearChange.bind(this);
     this.setCalendarMonthGridRef = this.setCalendarMonthGridRef.bind(this);
+    this.onMonthChange = this.onMonthChange.bind(this);
+    this.onYearChange = this.onYearChange.bind(this);
     this.multiplyScrollableMonths = this.multiplyScrollableMonths.bind(this);
     this.updateStateAfterMonthTransition = this.updateStateAfterMonthTransition.bind(this);
 
@@ -432,6 +444,30 @@ export default class DayPicker extends React.Component {
     });
   }
 
+  onMonthChange(newMonth) {
+    // Translation value is a hack to force an invisible transition that
+    // properly rerenders the CalendarMonthGrid
+    this.setState({
+      monthTransition: MONTH_SELECTION_TRANSITION,
+      translationValue: 0.00001,
+      focusedDate: null,
+      nextFocusedDate: newMonth,
+      currentMonth: newMonth,
+    });
+  }
+
+  onYearChange(newMonth) {
+    // Translation value is a hack to force an invisible transition that
+    // properly rerenders the CalendarMonthGrid
+    this.setState({
+      monthTransition: YEAR_SELECTION_TRANSITION,
+      translationValue: 0.0001,
+      focusedDate: null,
+      nextFocusedDate: newMonth,
+      currentMonth: newMonth,
+    });
+  }
+
   getFocusedDay(newMonth) {
     const { getFirstFocusableDay, numberOfMonths } = this.props;
 
@@ -523,6 +559,8 @@ export default class DayPicker extends React.Component {
     const {
       onPrevMonthClick,
       onNextMonthClick,
+      onMonthChange,
+      onYearChange,
     } = this.props;
 
     const {
@@ -533,15 +571,34 @@ export default class DayPicker extends React.Component {
       withMouseInteractions,
     } = this.state;
 
+
     if (!monthTransition) return;
 
+
     const newMonth = currentMonth.clone();
-    if (monthTransition === PREV_TRANSITION) {
-      if (onPrevMonthClick) onPrevMonthClick();
-      newMonth.subtract(1, 'month');
-    } else if (monthTransition === NEXT_TRANSITION) {
-      if (onNextMonthClick) onNextMonthClick();
-      newMonth.add(1, 'month');
+
+    switch (monthTransition) {
+      case PREV_TRANSITION: {
+        if (onPrevMonthClick) onPrevMonthClick();
+        newMonth.subtract(1, 'month');
+        break;
+      }
+      case NEXT_TRANSITION: {
+        if (onNextMonthClick) onNextMonthClick();
+        newMonth.add(1, 'month');
+        break;
+      }
+      case MONTH_SELECTION_TRANSITION: {
+        if (onMonthChange) onMonthChange(newMonth);
+        break;
+      }
+      case YEAR_SELECTION_TRANSITION: {
+        if (onYearChange) onYearChange(newMonth);
+        break;
+      }
+      default: {
+        break;
+      }
     }
 
     let newFocusedDate = null;
@@ -742,6 +799,7 @@ export default class DayPicker extends React.Component {
       monthFormat,
       daySize,
       isFocused,
+      isYearsEnabled,
       phrases,
     } = this.props;
 
@@ -826,7 +884,7 @@ export default class DayPicker extends React.Component {
             role="region"
             tabIndex={-1}
           >
-            {!verticalScrollable && this.renderNavigation()}
+            {!verticalScrollable && !isYearsEnabled && this.renderNavigation()}
 
             <div
               className={transitionContainerClasses}
@@ -846,6 +904,8 @@ export default class DayPicker extends React.Component {
                 onDayClick={onDayClick}
                 onDayMouseEnter={onDayMouseEnter}
                 onDayMouseLeave={onDayMouseLeave}
+                onMonthChange={this.onMonthChange}
+                onYearChange={this.onYearChange}
                 renderMonth={renderMonth}
                 renderDay={renderDay}
                 onMonthTransitionEnd={this.updateStateAfterMonthTransition}
@@ -853,10 +913,11 @@ export default class DayPicker extends React.Component {
                 daySize={daySize}
                 firstDayOfWeek={firstDayOfWeek}
                 isFocused={shouldFocusDate}
+                isYearsEnabled={isYearsEnabled}
                 focusedDate={focusedDate}
                 phrases={phrases}
               />
-              {verticalScrollable && this.renderNavigation()}
+              {verticalScrollable && !isYearsEnabled && this.renderNavigation()}
             </div>
 
             {!isTouch && !hideKeyboardShortcutsPanel &&

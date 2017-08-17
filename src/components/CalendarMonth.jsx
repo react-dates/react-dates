@@ -12,6 +12,7 @@ import { CalendarDayPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 
 import CalendarDay from './CalendarDay';
+import MonthYearSwitch from './MonthYearSwitch';
 
 import getCalendarMonthWeeks from '../utils/getCalendarMonthWeeks';
 import isSameDay from '../utils/isSameDay';
@@ -37,6 +38,8 @@ const propTypes = forbidExtraProps({
   onDayClick: PropTypes.func,
   onDayMouseEnter: PropTypes.func,
   onDayMouseLeave: PropTypes.func,
+  onSelectMonth: PropTypes.func,
+  onSelectYear: PropTypes.func,
   renderMonth: PropTypes.func,
   renderDay: PropTypes.func,
   firstDayOfWeek: DayOfWeekShape,
@@ -59,12 +62,15 @@ const defaultProps = {
   onDayClick() {},
   onDayMouseEnter() {},
   onDayMouseLeave() {},
+  onSelectMonth() {},
+  onSelectYear() {},
   renderMonth: null,
   renderDay: null,
   firstDayOfWeek: null,
 
   focusedDate: null,
   isFocused: false,
+  isYearsEnabled: false,
 
   // i18n
   monthFormat: 'MMMM YYYY', // english locale
@@ -113,11 +119,14 @@ export default class CalendarMonth extends React.Component {
       onDayClick,
       onDayMouseEnter,
       onDayMouseLeave,
+      onSelectMonth,
+      onSelectYear,
       renderMonth,
       renderDay,
       daySize,
       focusedDate,
       isFocused,
+      isYearsEnabled,
       phrases,
     } = this.props;
 
@@ -134,9 +143,14 @@ export default class CalendarMonth extends React.Component {
       <div className={calendarMonthClasses} data-visible={isVisible}>
         <table>
           <caption className="CalendarMonth__caption js-CalendarMonth__caption">
-            <strong>{monthTitle}</strong>
+            { isYearsEnabled ?
+              <MonthYearSwitch
+                date={month}
+                onSelectMonth={onSelectMonth}
+                onSelectYear={onSelectYear}
+              />
+              : monthTitle }
           </caption>
-
           <tbody className="js-CalendarMonth__grid">
             {weeks.map((week, i) => (
               <tr key={i}>
