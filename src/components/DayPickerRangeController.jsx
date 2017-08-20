@@ -234,6 +234,15 @@ export default class DayPickerRangeController extends React.Component {
 
     let modifiers = {};
 
+    if (modifiers.length && !startDate && !endDate) {
+      modifiers = this.deleteModifierFromRange(
+        modifiers,
+        initialVisibleMonth(),
+        initialVisibleMonth().add(numberOfMonths, 'months').endOf('month'),
+        'hovered-span',
+      );
+    }
+
     if (didStartDateChange) {
       modifiers = this.deleteModifier(modifiers, this.props.startDate, 'selected-start');
       modifiers = this.addModifier(modifiers, startDate, 'selected-start');
