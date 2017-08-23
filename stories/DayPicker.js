@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import { storiesOf } from '@storybook/react';
 import DayPicker from '../src/components/DayPicker';
 
@@ -93,6 +94,11 @@ storiesOf('DayPicker', module)
   .addWithInfo('with custom details', () => (
     <DayPicker
       renderDay={day => (day.day() % 6 === 5 ? '😻' : day.format('D'))}
+    />
+  ))
+  .addWithInfo('with custom week headers', () => (
+    <DayPicker
+      renderWeekHeaderDay={day => <b>{moment().day(day).format('ddd')}</b>}
     />
   ))
   .addWithInfo('vertical with fixed-width container', () => (

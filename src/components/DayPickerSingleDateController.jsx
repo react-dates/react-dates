@@ -46,6 +46,7 @@ const propTypes = forbidExtraProps({
 
   // DayPicker props
   renderMonth: PropTypes.func,
+  renderWeekHeaderDay: PropTypes.func,
   enableOutsideDays: PropTypes.bool,
   numberOfMonths: PropTypes.number,
   orientation: ScrollableOrientationShape,
@@ -92,6 +93,7 @@ const defaultProps = {
 
   // DayPicker props
   renderMonth: null,
+  renderWeekHeaderDay: null,
   enableOutsideDays: false,
   numberOfMonths: 1,
   orientation: HORIZONTAL_ORIENTATION,
@@ -553,6 +555,7 @@ export default class DayPickerSingleDateController extends React.Component {
       orientation,
       monthFormat,
       renderMonth,
+      renderWeekHeaderDay,
       navPrev,
       navNext,
       withPortal,
@@ -594,6 +597,7 @@ export default class DayPickerSingleDateController extends React.Component {
         navPrev={navPrev}
         navNext={navNext}
         renderMonth={renderMonth}
+        renderWeekHeaderDay={renderWeekHeaderDay}
         renderDay={renderDay}
         renderCalendarInfo={renderCalendarInfo}
         isFocused={isFocused}
