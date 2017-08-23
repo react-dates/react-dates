@@ -101,6 +101,7 @@ export default class CalendarMonthGrid extends React.Component {
 
     this.isTransitionEndSupported = isTransitionEndSupported();
     this.onTransitionEnd = this.onTransitionEnd.bind(this);
+    this.setContainerRef = this.setContainerRef.bind(this);
   }
 
   componentDidMount() {
@@ -161,6 +162,10 @@ export default class CalendarMonthGrid extends React.Component {
     this.props.onMonthTransitionEnd();
   }
 
+  setContainerRef(ref) {
+    this.container = ref;
+  }
+
   render() {
     const {
       enableOutsideDays,
@@ -209,7 +214,7 @@ export default class CalendarMonthGrid extends React.Component {
 
     return (
       <div
-        ref={(ref) => { this.container = ref; }}
+        ref={this.setContainerRef}
         className={className}
         style={style}
         onTransitionEnd={onMonthTransitionEnd}

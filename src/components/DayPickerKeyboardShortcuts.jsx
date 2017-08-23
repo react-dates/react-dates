@@ -60,12 +60,29 @@ KeyboardShortcutRow.propTypes = {
 };
 
 export default class DayPickerKeyboardShortcuts extends React.Component {
+  constructor(...args) {
+    super(...args);
+
+    this.onClick = this.onClick.bind(this);
+    this.setShowKeyboardShortcutsButtonRef = this.setShowKeyboardShortcutsButtonRef.bind(this);
+  }
+
+  onClick() {
+    const { openKeyboardShortcutsPanel } = this.props;
+
+    // we want to return focus to this button after closing the keyboard shortcuts panel
+    openKeyboardShortcutsPanel(() => { this.showKeyboardShortcutsButton.focus(); });
+  }
+
+  setShowKeyboardShortcutsButtonRef(ref) {
+    this.showKeyboardShortcutsButton = ref;
+  }
+
   render() {
     const {
       block,
       buttonLocation,
       showKeyboardShortcutsPanel,
-      openKeyboardShortcutsPanel,
       closeKeyboardShortcutsPanel,
       phrases,
     } = this.props;
@@ -114,7 +131,7 @@ export default class DayPickerKeyboardShortcuts extends React.Component {
     return (
       <div>
         <button
-          ref={(ref) => { this.showKeyboardShortcutsButton = ref; }}
+          ref={this.setShowKeyboardShortcutsButtonRef}
           className={cx('DayPickerKeyboardShortcuts__show', {
             'DayPickerKeyboardShortcuts__show--bottom-right': buttonLocation === BOTTOM_RIGHT,
             'DayPickerKeyboardShortcuts__show--top-right': buttonLocation === TOP_RIGHT,
@@ -122,10 +139,7 @@ export default class DayPickerKeyboardShortcuts extends React.Component {
           })}
           type="button"
           aria-label={toggleButtonText}
-          onClick={() => {
-            // we want to return focus to this button after closing the keyboard shortcuts panel
-            openKeyboardShortcutsPanel(() => { this.showKeyboardShortcutsButton.focus(); });
-          }}
+          onClick={this.onClick}
           onMouseUp={(e) => {
             e.currentTarget.blur();
           }}

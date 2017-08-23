@@ -55,6 +55,7 @@ const defaultProps = {
 export default class DateInput extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       dateString: '',
       isTouchDevice: false,
@@ -62,6 +63,7 @@ export default class DateInput extends React.Component {
 
     this.onChange = this.onChange.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
+    this.setInputRef = this.setInputRef.bind(this);
   }
 
   componentDidMount() {
@@ -128,6 +130,10 @@ export default class DateInput extends React.Component {
     }
   }
 
+  setInputRef(ref) {
+    this.inputRef = ref;
+  }
+
   render() {
     const {
       dateString,
@@ -164,7 +170,7 @@ export default class DateInput extends React.Component {
           type="text"
           id={id}
           name={id}
-          ref={(ref) => { this.inputRef = ref; }}
+          ref={this.setInputRef}
           value={value}
           onChange={this.onChange}
           onKeyDown={throttle(this.onKeyDown, 300)}

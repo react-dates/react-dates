@@ -113,6 +113,8 @@ export default class SingleDatePicker extends React.Component {
     this.clearDate = this.clearDate.bind(this);
 
     this.responsivizePickerPosition = this.responsivizePickerPosition.bind(this);
+
+    this.setDayPickerContainerRef = this.setDayPickerContainerRef.bind(this);
   }
 
   /* istanbul ignore next */
@@ -238,6 +240,10 @@ export default class SingleDatePicker extends React.Component {
     return typeof displayFormat === 'string' ? displayFormat : displayFormat();
   }
 
+  setDayPickerContainerRef(ref) {
+    this.dayPickerContainer = ref;
+  }
+
   clearDate() {
     const { onDateChange, reopenPickerOnClearDate, onFocusChange } = this.props;
     onDateChange(null);
@@ -340,7 +346,7 @@ export default class SingleDatePicker extends React.Component {
 
     return (
       <div // eslint-disable-line jsx-a11y/no-static-element-interactions
-        ref={(ref) => { this.dayPickerContainer = ref; }}
+        ref={this.setDayPickerContainerRef}
         className={this.getDayPickerContainerClasses()}
         style={dayPickerContainerStyles}
         onClick={onOutsideClick}

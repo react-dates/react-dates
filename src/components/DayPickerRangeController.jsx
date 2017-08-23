@@ -169,6 +169,7 @@ export default class DayPickerRangeController extends React.Component {
     this.onNextMonthClick = this.onNextMonthClick.bind(this);
     this.onMultiplyScrollableMonths = this.onMultiplyScrollableMonths.bind(this);
     this.getFirstFocusableDay = this.getFirstFocusableDay.bind(this);
+    this.setDayPickerRef = this.setDayPickerRef.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -622,6 +623,10 @@ export default class DayPickerRangeController extends React.Component {
     return { currentMonth, visibleDays };
   }
 
+  setDayPickerRef(ref) {
+    this.dayPicker = ref;
+  }
+
   addModifier(updatedDays, day, modifier) {
     const { numberOfMonths: numberOfVisibleMonths, enableOutsideDays, orientation } = this.props;
     const { currentMonth: firstVisibleMonth, visibleDays } = this.state;
@@ -843,7 +848,7 @@ export default class DayPickerRangeController extends React.Component {
 
     return (
       <DayPicker
-        ref={(ref) => { this.dayPicker = ref; }}
+        ref={this.setDayPickerRef}
         orientation={orientation}
         enableOutsideDays={enableOutsideDays}
         modifiers={visibleDays}
