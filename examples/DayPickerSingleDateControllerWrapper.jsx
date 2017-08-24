@@ -20,7 +20,6 @@ const propTypes = forbidExtraProps({
   showInput: PropTypes.bool,
 
   keepOpenOnDateSelect: PropTypes.bool,
-  minimumNights: PropTypes.number,
   isOutsideRange: PropTypes.func,
   isDayBlocked: PropTypes.func,
   isDayHighlighted: PropTypes.func,
@@ -55,7 +54,6 @@ const defaultProps = {
 
   // day presentation and interaction related props
   renderDay: null,
-  minimumNights: 1,
   isDayBlocked: () => false,
   isOutsideRange: day => !isInclusivelyAfterDay(day, moment()),
   isDayHighlighted: () => false,
