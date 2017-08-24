@@ -209,7 +209,7 @@ class DateInput extends React.Component {
           ref={this.setInputRef}
           value={value}
           onChange={this.onChange}
-          onKeyDown={throttle(this.onKeyDown, 300)}
+          onKeyDown={throttle(this.onKeyDown, 300, {trailing: false})}
           onFocus={onFocus}
           placeholder={placeholder}
           autoComplete="off"
