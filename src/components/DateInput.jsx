@@ -84,6 +84,7 @@ class DateInput extends React.Component {
     this.onChange = this.onChange.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
     this.setInputRef = this.setInputRef.bind(this);
+    this.throttledKeyDown = throttle(this.onFinalKeyDown, 300, { trailing: false });
   }
 
   componentDidMount() {
@@ -126,15 +127,20 @@ class DateInput extends React.Component {
 
   onKeyDown(e) {
     e.stopPropagation();
+    if (!['Shift', 'Control', 'Alt', 'Meta'].includes(e.key)) {
+      this.throttledKeyDown(e);
+    }
+  }
 
+  onFinalKeyDown(e) {
     const {
       onKeyDownShiftTab,
       onKeyDownTab,
       onKeyDownArrowDown,
       onKeyDownQuestionMark,
     } = this.props;
-
     const { key } = e;
+
     if (key === 'Tab') {
       if (e.shiftKey) {
         onKeyDownShiftTab(e);
@@ -209,7 +215,7 @@ class DateInput extends React.Component {
           ref={this.setInputRef}
           value={value}
           onChange={this.onChange}
-          onKeyDown={throttle(this.onKeyDown, 300, {trailing: false})}
+          onKeyDown={this.onKeyDown}
           onFocus={onFocus}
           placeholder={placeholder}
           autoComplete="off"
