@@ -10,11 +10,9 @@
     "no-mixed-operators": [2, { "allowSamePrecedence": true }],
     "jsx-a11y/no-static-element-interactions": 1, // TODO: enable
     "react/no-did-mount-set-state": 0, // necessary for server-rendering
-
-    "react/prop-types": 0, // uncomment when https://github.com/yannickcr/eslint-plugin-react/issues/1352 is resolved
   },
 
   "settings": {
-     "propWrapperFunctions": ["forbidExtraProps"]
+     "propWrapperFunctions": ["forbidExtraProps", "exact", "Object.freeze"]
   }
 }

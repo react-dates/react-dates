@@ -116,6 +116,9 @@ export default class DateRangePicker extends React.Component {
     this.showKeyboardShortcutsPanel = this.showKeyboardShortcutsPanel.bind(this);
 
     this.responsivizePickerPosition = this.responsivizePickerPosition.bind(this);
+
+    this.setDayPickerContainerRef = this.setDayPickerContainerRef.bind(this);
+    this.setDayPickerRef = this.setDayPickerRef.bind(this);
   }
 
   componentDidMount() {
@@ -225,6 +228,14 @@ export default class DateRangePicker extends React.Component {
     return ReactDOM.findDOMNode(this.dayPicker); // eslint-disable-line react/no-find-dom-node
   }
 
+  setDayPickerContainerRef(ref) {
+    this.dayPickerContainer = ref;
+  }
+
+  setDayPickerRef(ref) {
+    this.dayPicker = ref;
+  }
+
   isOpened() {
     const { focusedInput } = this.props;
     return focusedInput === START_DATE || focusedInput === END_DATE;
@@ -332,13 +343,13 @@ export default class DateRangePicker extends React.Component {
 
     return (
       <div // eslint-disable-line jsx-a11y/no-static-element-interactions
-        ref={(ref) => { this.dayPickerContainer = ref; }}
+        ref={this.setDayPickerContainerRef}
         className={this.getDayPickerContainerClasses()}
         style={dayPickerContainerStyles}
         onClick={onOutsideClick}
       >
         <DayPickerRangeController
-          ref={(ref) => { this.dayPicker = ref; }}
+          ref={this.setDayPickerRef}
           orientation={orientation}
           enableOutsideDays={enableOutsideDays}
           numberOfMonths={numberOfMonths}

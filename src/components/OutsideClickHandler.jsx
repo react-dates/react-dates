@@ -15,9 +15,11 @@ const defaultProps = {
 };
 
 export default class OutsideClickHandler extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor(...args) {
+    super(...args);
+
     this.onOutsideClick = this.onOutsideClick.bind(this);
+    this.setChildNodeRef = this.setChildNodeRef.bind(this);
   }
 
   componentDidMount() {
@@ -32,19 +34,25 @@ export default class OutsideClickHandler extends React.Component {
   }
 
   componentWillUnmount() {
-    if (this.clickHandle) removeEventListener(this.clickHandle);
+    if (this.clickHandle) { removeEventListener(this.clickHandle); }
   }
 
   onOutsideClick(e) {
-    const isDescendantOfRoot = this.childNode.contains(e.target);
+    const { onOutsideClick } = this.props;
+    const { childNode } = this;
+    const isDescendantOfRoot = childNode && childNode.contains(e.target);
     if (!isDescendantOfRoot) {
-      this.props.onOutsideClick(e);
+      onOutsideClick(e);
     }
+  }
+
+  setChildNodeRef(ref) {
+    this.childNode = ref;
   }
 
   render() {
     return (
-      <div ref={(ref) => { this.childNode = ref; }}>
+      <div ref={this.setChildNodeRef}>
         {this.props.children}
       </div>
     );

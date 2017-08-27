@@ -224,6 +224,9 @@ export default class DayPicker extends React.Component {
 
     this.openKeyboardShortcutsPanel = this.openKeyboardShortcutsPanel.bind(this);
     this.closeKeyboardShortcutsPanel = this.closeKeyboardShortcutsPanel.bind(this);
+
+    this.setContainerRef = this.setContainerRef.bind(this);
+    this.setTransitionContainerRef = this.setTransitionContainerRef.bind(this);
   }
 
   componentDidMount() {
@@ -459,6 +462,14 @@ export default class DayPicker extends React.Component {
 
   setCalendarMonthGridRef(ref) {
     this.calendarMonthGrid = ref;
+  }
+
+  setContainerRef(ref) {
+    this.container = ref;
+  }
+
+  setTransitionContainerRef(ref) {
+    this.transitionContainer = ref;
   }
 
   maybeTransitionNextMonth(newFocusedDate) {
@@ -829,7 +840,7 @@ export default class DayPicker extends React.Component {
 
           <div // eslint-disable-line jsx-a11y/no-noninteractive-element-interactions
             className="DayPicker__focus-region"
-            ref={(ref) => { this.container = ref; }}
+            ref={this.setContainerRef}
             onClick={(e) => { e.stopPropagation(); }}
             onKeyDown={throttle(this.onKeyDown, 300)}
             onMouseUp={() => { this.setState({ withMouseInteractions: true }); }}
@@ -840,7 +851,7 @@ export default class DayPicker extends React.Component {
 
             <div
               className={transitionContainerClasses}
-              ref={(ref) => { this.transitionContainer = ref; }}
+              ref={this.setTransitionContainerRef}
               style={transitionContainerStyle}
             >
               <CalendarMonthGrid

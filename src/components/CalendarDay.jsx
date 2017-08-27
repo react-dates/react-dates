@@ -45,6 +45,12 @@ const defaultProps = {
 };
 
 export default class CalendarDay extends React.Component {
+  constructor(...args) {
+    super(...args);
+
+    this.setButtonRef = this.setButtonRef.bind(this);
+  }
+
   shouldComponentUpdate(nextProps, nextState) {
     return shallowCompare(this, nextProps, nextState);
   }
@@ -71,6 +77,10 @@ export default class CalendarDay extends React.Component {
   onDayMouseLeave(day, e) {
     const { onDayMouseLeave } = this.props;
     onDayMouseLeave(day, e);
+  }
+
+  setButtonRef(ref) {
+    this.buttonRef = ref;
   }
 
   render() {
@@ -112,7 +122,7 @@ export default class CalendarDay extends React.Component {
       <td className={className} style={daySizeStyles}>
         <button
           type="button"
-          ref={(ref) => { this.buttonRef = ref; }}
+          ref={this.setButtonRef}
           className="CalendarDay__button"
           aria-label={ariaLabel}
           onMouseEnter={(e) => { this.onDayMouseEnter(day, e); }}

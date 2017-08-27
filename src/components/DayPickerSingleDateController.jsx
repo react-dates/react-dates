@@ -39,7 +39,6 @@ const propTypes = forbidExtraProps({
   onClose: PropTypes.func,
 
   keepOpenOnDateSelect: PropTypes.bool,
-  minimumNights: PropTypes.number,
   isOutsideRange: PropTypes.func,
   isDayBlocked: PropTypes.func,
   isDayHighlighted: PropTypes.func,
@@ -86,7 +85,6 @@ const defaultProps = {
   onClose() {},
 
   keepOpenOnDateSelect: false,
-  minimumNights: 1,
   isOutsideRange() {},
   isDayBlocked() {},
   isDayHighlighted() {},
@@ -571,7 +569,6 @@ export default class DayPickerSingleDateController extends React.Component {
       phrases,
       onOutsideClick,
       onBlur,
-      minimumNights,
       showKeyboardShortcuts,
     } = this.props;
 
@@ -606,7 +603,6 @@ export default class DayPickerSingleDateController extends React.Component {
         phrases={phrases}
         daySize={daySize}
         isRTL={isRTL}
-        minimumNights={minimumNights}
         showKeyboardShortcuts={showKeyboardShortcuts}
       />
     );
