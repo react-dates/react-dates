@@ -62,6 +62,9 @@ const propTypes = forbidExtraProps({
   onNextMonthClick: PropTypes.func,
   onMultiplyScrollableMonths: PropTypes.func, // VERTICAL_SCROLLABLE daypickers only
 
+  // week header props
+  renderWeekHeaderDay: PropTypes.func,
+
   // month props
   renderMonth: PropTypes.func,
 
@@ -104,6 +107,9 @@ export const defaultProps = {
   onPrevMonthClick() {},
   onNextMonthClick() {},
   onMultiplyScrollableMonths() {},
+
+  // week header props
+  renderWeekHeaderDay: null,
 
   // month props
   renderMonth: null,
@@ -679,7 +685,7 @@ export default class DayPicker extends React.Component {
   }
 
   renderWeekHeader(index) {
-    const { daySize, orientation } = this.props;
+    const { daySize, orientation, renderWeekHeaderDay } = this.props;
     const { calendarMonthWidth } = this.state;
     const verticalScrollable = orientation === VERTICAL_SCROLLABLE;
     const horizontalStyle = {
@@ -703,9 +709,13 @@ export default class DayPicker extends React.Component {
 
     const header = [];
     for (let i = 0; i < 7; i += 1) {
+      const day = (i + firstDayOfWeek) % 7;
+
       header.push(
         <li key={i} style={{ width: daySize }}>
-          <small>{moment().day((i + firstDayOfWeek) % 7).format('dd')}</small>
+          { renderWeekHeaderDay ? renderWeekHeaderDay(day) : (
+            <small>{moment().day(day).format('dd')}</small>
+          ) }
         </li>,
       );
     }
