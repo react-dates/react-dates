@@ -60,17 +60,17 @@ setOptions({
 });
 
 function loadStories() {
-  require('../stories/DateRangePicker');
-  require('../stories/DateRangePicker_input');
-  require('../stories/DateRangePicker_calendar');
-  require('../stories/DateRangePicker_day');
-  require('../stories/SingleDatePicker');
-  require('../stories/SingleDatePicker_input');
-  require('../stories/SingleDatePicker_calendar');
-  require('../stories/SingleDatePicker_day');
-  require('../stories/DayPickerRangeController');
-  require('../stories/DayPickerSingleDateController');
-  require('../stories/DayPicker');
+//   require('../stories/DateRangePicker');
+//   require('../stories/DateRangePicker_input');
+//   require('../stories/DateRangePicker_calendar');
+//   require('../stories/DateRangePicker_day');
+//   require('../stories/SingleDatePicker');
+//   require('../stories/SingleDatePicker_input');
+//   require('../stories/SingleDatePicker_calendar');
+//   require('../stories/SingleDatePicker_day');
+//   require('../stories/DayPickerRangeController');
+//   require('../stories/DayPickerSingleDateController');
+//   require('../stories/DayPicker');
   require('../stories/withStyles');
 }
 

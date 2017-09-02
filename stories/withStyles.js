@@ -2,6 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 
 import CalendarDay from '../src/components/CalendarDay';
+import CalendarMonth from '../src/components/CalendarMonth';
 
 storiesOf('withStyles', module)
   .addWithInfo('CalendarDay', () => (
@@ -21,4 +22,9 @@ storiesOf('withStyles', module)
         <CalendarDay modifiers={new Set(['blocked-out-of-range'])} />
       </tr>
     </table>
+  ))
+  .addWithInfo('CalendarMonth', () => (
+    <CalendarMonth
+      isVisible
+    />
   ));

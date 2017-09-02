@@ -98,16 +98,6 @@ export default {
       color_hover: core.grayLight,
     },
 
-
-//   color: $react-dates-color-gray-lighter;
-//   background: $react-dates-color-white;
-//   border: 1px solid lighten($react-dates-color-border-light, 3);
-//   cursor: default;
-
-//   &:active {
-//     background: $react-dates-color-white;
-//   }
-
     blocked_out_of_range: {
       backgroundColor: core.white,
       backgroundColor_active: core.white,

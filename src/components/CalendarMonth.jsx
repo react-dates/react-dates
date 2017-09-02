@@ -5,8 +5,8 @@ import PropTypes from 'prop-types';
 import shallowCompare from 'react-addons-shallow-compare';
 import momentPropTypes from 'react-moment-proptypes';
 import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
+import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 import moment from 'moment';
-import cx from 'classnames';
 
 import { CalendarDayPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
@@ -28,6 +28,7 @@ import {
 } from '../../constants';
 
 const propTypes = forbidExtraProps({
+  ...withStylesPropTypes,
   month: momentPropTypes.momentObj,
   isVisible: PropTypes.bool,
   enableOutsideDays: PropTypes.bool,
@@ -71,7 +72,7 @@ const defaultProps = {
   phrases: CalendarDayPhrases,
 };
 
-export default class CalendarMonth extends React.Component {
+class CalendarMonth extends React.Component {
   constructor(props) {
     super(props);
 
@@ -118,27 +119,36 @@ export default class CalendarMonth extends React.Component {
       daySize,
       focusedDate,
       isFocused,
+      styles,
       phrases,
     } = this.props;
 
     const { weeks } = this.state;
     const monthTitle = renderMonth ? renderMonth(month) : month.format(monthFormat);
 
-    const calendarMonthClasses = cx('CalendarMonth', {
-      'CalendarMonth--horizontal': orientation === HORIZONTAL_ORIENTATION,
-      'CalendarMonth--vertical': orientation === VERTICAL_ORIENTATION,
-      'CalendarMonth--vertical-scrollable': orientation === VERTICAL_SCROLLABLE,
-    });
+    const verticalScrollable = orientation === VERTICAL_SCROLLABLE;
 
     return (
-      <div className={calendarMonthClasses} data-visible={isVisible}>
-        <div
-          id="CalendarMonth__caption"
-          className="CalendarMonth__caption js-CalendarMonth__caption"
-        >
-          <strong>{monthTitle}</strong>
-        </div>
-        <table role="presentation">
+      <div
+        {...css(
+          styles.CalendarMonth,
+          orientation === HORIZONTAL_ORIENTATION && styles.CalendarMonth__horizontal,
+          orientation === VERTICAL_ORIENTATION && styles.CalendarMonth__vertical,
+          verticalScrollable && styles.CalendarMonth__vertical_scrollable,
+        )}
+        data-visible={isVisible}
+      >
+        <table {...css(styles.CalendarMonth_table)} role="presentation">
+          <div
+            id="CalendarMonth__caption"
+            className="js-CalendarMonth__caption"
+            {...css(
+              styles.CalendarMonth_caption,
+              verticalScrollable && styles.CalendarMonth_caption__vertical_scrollable,
+            )}
+          >
+            <strong>{monthTitle}</strong>
+          </div>
 
           <tbody className="js-CalendarMonth__grid">
             {weeks.map((week, i) => (
@@ -170,3 +180,56 @@ export default class CalendarMonth extends React.Component {
 
 CalendarMonth.propTypes = propTypes;
 CalendarMonth.defaultProps = defaultProps;
+
+export default withStyles(({ color }) => ({
+  CalendarMonth: {
+    background: color.core.white,
+    textAlign: 'center',
+    padding: '0 13px',
+    verticalAlign: 'top',
+    userSelect: 'none',
+  },
+
+  CalendarMonth_table: {
+    borderCollapse: 'collapse',
+    borderSpacing: 0,
+    caption: {
+      captionSide: 'initial',
+    },
+  },
+
+// .CalendarMonth--horizontal,
+// .CalendarMonth--vertical {
+//   &:first-of-type {
+//     position: absolute;
+//     z-index: $react-dates-z-index - 1;
+//     opacity: 0;
+//     pointer-events: none;
+//   }
+// }
+
+  CalendarMonth__horizontal: {
+    display: 'inline-block',
+    minHeight: '100%',
+  },
+
+  CalendarMonth__vertical: {
+    display: 'block',
+  },
+
+  CalendarMonth_caption: {
+    color: color.core.gray,
+    marginTop: 7,
+    fontSize: 18,
+    textAlign: 'center',
+    padding: '15px 0 35px',
+    // necessary to not hide borders in FF
+    marginBottom: 2,
+    captionSide: 'initial',
+  },
+
+  CalendarMonth_caption__vertical_scrollable: {
+    padding: '5px 0',
+  },
+}))(CalendarMonth);
+
