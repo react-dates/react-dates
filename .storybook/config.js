@@ -1,10 +1,19 @@
 import React from 'react';
 import moment from 'moment';
+import ThemedStyleSheet from 'react-with-styles/lib/ThemedStyleSheet';
+import aphroditeInterface from 'react-with-styles-interface-aphrodite';
+
 import { configure, addDecorator, setAddon } from '@storybook/react';
 import infoAddon from '@storybook/addon-info';
 import { setOptions } from '@storybook/addon-options';
+
+import DefaultTheme from '../src/theme/DefaultTheme';
+
 import './storybook.scss';
 import '../css/styles.scss';
+
+ThemedStyleSheet.registerTheme(DefaultTheme);
+ThemedStyleSheet.registerInterface(aphroditeInterface);
 
 addDecorator((story) => {
   moment.locale('en');
@@ -62,6 +71,7 @@ function loadStories() {
   require('../stories/DayPickerRangeController');
   require('../stories/DayPickerSingleDateController');
   require('../stories/DayPicker');
+  require('../stories/withStyles');
 }
 
 setAddon(infoAddon);
