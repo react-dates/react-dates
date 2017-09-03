@@ -20,7 +20,11 @@ const core = {
 
 export default {
   color: {
+    zIndex: 0,
     core,
+
+    background: core.white,
+    textColor: core.gray,
 
     outside: {
       backgroundColor: core.white,

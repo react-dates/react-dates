@@ -3,6 +3,7 @@ import { storiesOf } from '@storybook/react';
 
 import CalendarDay from '../src/components/CalendarDay';
 import CalendarMonth from '../src/components/CalendarMonth';
+import CalendarMonthGrid from '../src/components/CalendarMonthGrid';
 
 storiesOf('withStyles', module)
   .addWithInfo('CalendarDay', () => (
@@ -26,5 +27,10 @@ storiesOf('withStyles', module)
   .addWithInfo('CalendarMonth', () => (
     <CalendarMonth
       isVisible
+    />
+  ))
+  .addWithInfo('CalendarMonthGrid', () => (
+    <CalendarMonthGrid
+
     />
   ));
