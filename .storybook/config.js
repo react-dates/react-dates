@@ -70,7 +70,7 @@ function loadStories() {
 //   require('../stories/SingleDatePicker_day');
 //   require('../stories/DayPickerRangeController');
 //   require('../stories/DayPickerSingleDateController');
-//   require('../stories/DayPicker');
+  require('../stories/DayPicker');
   require('../stories/withStyles');
 }
 

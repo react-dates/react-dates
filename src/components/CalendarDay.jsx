@@ -176,7 +176,7 @@ export default withStyles(({ color }) => ({
     border: `1px solid ${color.core.borderLight}`,
     padding: 0,
     boxSizing: 'border-box',
-    color: color.textColor,
+    color: color.text,
     background: '#fff',
 
     ':hover': {

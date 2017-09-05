@@ -218,7 +218,7 @@ export default withStyles(({ color }) => ({
   },
 
   CalendarMonth_caption: {
-    color: color.textColor,
+    color: color.text,
     marginTop: 7,
     fontSize: 18,
     textAlign: 'center',

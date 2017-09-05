@@ -3,6 +3,8 @@ const core = {
   gray: '#565a5c',
   grayLight: '#82888a',
   grayLighter: '#cacccd',
+
+  borderMedium: '#c4c4c4',
   borderLight: '#e4e7e7',
   borderLighter: '#eceeee',
 
@@ -24,7 +26,9 @@ export default {
     core,
 
     background: core.white,
-    textColor: core.gray,
+    backgroundDark: '#f2f2f2',
+    text: core.gray,
+    placeholderText: '#757575',
 
     outside: {
       backgroundColor: core.white,
