@@ -3,6 +3,7 @@ const core = {
   gray: '#565a5c',
   grayLight: '#82888a',
   grayLighter: '#cacccd',
+  grayLightest: '#f2f2f2',
 
   borderMedium: '#c4c4c4',
   borderLight: '#e4e7e7',

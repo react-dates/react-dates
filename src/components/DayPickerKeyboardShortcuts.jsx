@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import { forbidExtraProps } from 'airbnb-prop-types';
+import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 import cx from 'classnames';
+
+import KeyboardShortcutRow from './KeyboardShortcutRow';
 
 import { DayPickerKeyboardShortcutsPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
@@ -13,14 +15,15 @@ export const TOP_LEFT = 'top-left';
 export const TOP_RIGHT = 'top-right';
 export const BOTTOM_RIGHT = 'bottom-right';
 
-const propTypes = {
+const propTypes = forbidExtraProps({
+  ...withStylesPropTypes,
   block: PropTypes.bool,
   buttonLocation: PropTypes.oneOf([TOP_LEFT, TOP_RIGHT, BOTTOM_RIGHT]),
   showKeyboardShortcutsPanel: PropTypes.bool,
   openKeyboardShortcutsPanel: PropTypes.func,
   closeKeyboardShortcutsPanel: PropTypes.func,
   phrases: PropTypes.shape(getPhrasePropTypes(DayPickerKeyboardShortcutsPhrases)),
-};
+});
 
 const defaultProps = {
   block: false,
@@ -29,34 +32,6 @@ const defaultProps = {
   openKeyboardShortcutsPanel() {},
   closeKeyboardShortcutsPanel() {},
   phrases: DayPickerKeyboardShortcutsPhrases,
-};
-
-export function KeyboardShortcutRow({ unicode, label, action }) {
-  return (
-    <li className="KeyboardShortcutRow">
-      <div
-        className="KeyboardShortcutRow__key-container"
-      >
-        <span
-          className="KeyboardShortcutRow__key"
-          role="img"
-          aria-label={label}
-        >
-          {unicode}
-        </span>
-      </div>
-
-      <div className="KeyboardShortcutRow__action">
-        {action}
-      </div>
-    </li>
-  );
-}
-
-KeyboardShortcutRow.propTypes = {
-  unicode: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
-  action: PropTypes.string.isRequired,
 };
 
 export default class DayPickerKeyboardShortcuts extends React.Component {

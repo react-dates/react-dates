@@ -5,6 +5,8 @@ import CalendarDay from '../src/components/CalendarDay';
 import CalendarMonth from '../src/components/CalendarMonth';
 import CalendarMonthGrid from '../src/components/CalendarMonthGrid';
 import DayPickerNavigation from '../src/components/DayPickerNavigation';
+import KeyboardShortcutRow from '../src/components/KeyboardShortcutRow';
+import DayPickerKeyboardShortcuts from '../src/components/DayPickerKeyboardShortcuts';
 
 import { VERTICAL_ORIENTATION, VERTICAL_SCROLLABLE } from '../constants';
 
@@ -37,19 +39,65 @@ storiesOf('withStyles', module)
   ))
   .addWithInfo('DayPickerNavigation', () => (
     <div>
-      <div style={{ border: '1px solid black', position: 'relative', height: 200, width: 300 }}>
+      <div
+        style={{
+          border: '1px solid black',
+          position: 'relative',
+          height: 200,
+          width: 300,
+          display: 'inline-block',
+        }}
+      >
         <DayPickerNavigation
           onPrevMonthClick={action('onPrevMonthClick')}
           onNextMonthClick={action('onNextMonthClick')}
         />
       </div>
 
-      <div style={{ border: '1px solid black', position: 'relative', height: 200, width: 300 }}>
+      <div
+        style={{
+          border: '1px solid black',
+          position: 'relative',
+          height: 200,
+          width: 300,
+          display: 'inline-block',
+        }}
+      >
         <DayPickerNavigation orientation={VERTICAL_ORIENTATION} />
       </div>
 
-      <div style={{ border: '1px solid black', position: 'relative', height: 200, width: 300 }}>
+      <div
+        style={{
+          border: '1px solid black',
+          position: 'relative',
+          height: 200,
+          width: 300,
+          display: 'inline-block',
+        }}
+      >
         <DayPickerNavigation orientation={VERTICAL_SCROLLABLE} />
+      </div>
+    </div>
+  ))
+  .addWithInfo('KeyboardShortcutRow', () => (
+    <KeyboardShortcutRow
+      unicode="↵"
+      label="Enter key"
+      action="Select the currently focused date"
+    />
+  ))
+  .addWithInfo('DayPickerKeyboardShortcuts', () => (
+    <div>
+      <div
+        style={{
+          border: '1px solid black',
+          position: 'relative',
+          height: 300,
+          width: 600,
+          display: 'inline-block',
+        }}
+      >
+        <DayPickerKeyboardShortcuts />
       </div>
     </div>
   ));
