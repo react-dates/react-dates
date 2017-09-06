@@ -97,7 +97,7 @@ storiesOf('withStyles', module)
           display: 'inline-block',
         }}
       >
-        <DayPickerKeyboardShortcuts />
+        <DayPickerKeyboardShortcuts showKeyboardShortcutsPanel />
       </div>
     </div>
   ));

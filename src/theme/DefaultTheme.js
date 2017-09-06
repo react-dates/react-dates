@@ -6,6 +6,7 @@ const core = {
   grayLightest: '#f2f2f2',
 
   borderMedium: '#c4c4c4',
+  border: '#dbdbdb',
   borderLight: '#e4e7e7',
   borderLighter: '#eceeee',
 
@@ -14,6 +15,7 @@ const core = {
   primaryShade_2: '#66e2da',
   primaryShade_3: '#80e8e0',
   primaryShade_4: '#b2f1ec',
+  primary_dark: '#008489',
 
   secondary: '#007a87',
 
