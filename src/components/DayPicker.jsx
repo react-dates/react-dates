@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import shallowCompare from 'react-addons-shallow-compare';
 import ReactDOM from 'react-dom';
 import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
+import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
+
 import moment from 'moment';
-import cx from 'classnames';
 import throttle from 'lodash/throttle';
 import isTouchDevice from 'is-touch-device';
 
@@ -41,6 +42,8 @@ const PREV_TRANSITION = 'prev';
 const NEXT_TRANSITION = 'next';
 
 const propTypes = forbidExtraProps({
+  ...withStylesPropTypes,
+
   // calendar presentation props
   enableOutsideDays: PropTypes.bool,
   numberOfMonths: PropTypes.number,
@@ -182,7 +185,7 @@ function getMonthHeight(el) {
   );
 }
 
-export default class DayPicker extends React.Component {
+class DayPicker extends React.Component {
   constructor(props) {
     super(props);
 
@@ -686,7 +689,7 @@ export default class DayPicker extends React.Component {
   }
 
   renderWeekHeader(index) {
-    const { daySize, orientation, weekDayFormat } = this.props;
+    const { daySize, orientation, weekDayFormat, styles } = this.props;
     const { calendarMonthWidth } = this.state;
     const verticalScrollable = orientation === VERTICAL_SCROLLABLE;
     const horizontalStyle = {
@@ -696,11 +699,11 @@ export default class DayPicker extends React.Component {
       marginLeft: -calendarMonthWidth / 2,
     };
 
-    let style = {}; // no styles applied to the vertical-scrollable orientation
+    let weekHeaderStyle = {}; // no styles applied to the vertical-scrollable orientation
     if (this.isHorizontal()) {
-      style = horizontalStyle;
+      weekHeaderStyle = horizontalStyle;
     } else if (this.isVertical() && !verticalScrollable) {
-      style = verticalStyle;
+      weekHeaderStyle = verticalStyle;
     }
 
     let { firstDayOfWeek } = this.props;
@@ -711,7 +714,7 @@ export default class DayPicker extends React.Component {
     const header = [];
     for (let i = 0; i < 7; i += 1) {
       header.push(
-        <li key={i} style={{ width: daySize }}>
+        <li key={i} {...css(styles.DayPicker_weekHeader_li, { width: daySize })}>
           <small>{moment().day((i + firstDayOfWeek) % 7).format(weekDayFormat)}</small>
         </li>,
       );
@@ -719,11 +722,15 @@ export default class DayPicker extends React.Component {
 
     return (
       <div
-        className="DayPicker__week-header"
+        {...css(
+          styles.DayPicker_weekHeader,
+          this.isVertical() && styles.DayPicker_weekHeader__vertical,
+          verticalScrollable && styles.DayPicker_weekHeader__verticalScrollable,
+          weekHeaderStyle,
+        )}
         key={`week-${index}`}
-        style={style}
       >
-        <ul>
+        <ul {...css(styles.DayPicker_weekHeader_ul)}>
           {header}
         </ul>
       </div>
@@ -760,6 +767,7 @@ export default class DayPicker extends React.Component {
       monthFormat,
       daySize,
       isFocused,
+      styles,
       phrases,
     } = this.props;
 
@@ -779,18 +787,6 @@ export default class DayPicker extends React.Component {
     const verticalScrollable = this.props.orientation === VERTICAL_SCROLLABLE;
     if (verticalScrollable) firstVisibleMonthIndex = 0;
 
-    const dayPickerClassNames = cx('DayPicker', {
-      'DayPicker--horizontal': this.isHorizontal(),
-      'DayPicker--vertical': this.isVertical(),
-      'DayPicker--vertical-scrollable': verticalScrollable,
-      'DayPicker--portal': withPortal,
-    });
-
-    const transitionContainerClasses = cx('transition-container', {
-      'transition-container--horizontal': this.isHorizontal(),
-      'transition-container--vertical': this.isVertical(),
-    });
-
     const horizontalWidth = (calendarMonthWidth * numberOfMonths) + (2 * DAY_PICKER_PADDING);
 
     // this is a kind of made-up value that generally looks good. we'll
@@ -807,7 +803,7 @@ export default class DayPicker extends React.Component {
 
     const transitionContainerStyle = {
       width: this.isHorizontal() && horizontalWidth,
-      height: this.isVertical() && !verticalScrollable && !withPortal && verticalHeight,
+      height: 300, //this.isVertical() && !verticalScrollable && !withPortal && verticalHeight,
     };
 
     const isCalendarMonthGridAnimating = monthTransition !== null;
@@ -823,14 +819,20 @@ export default class DayPicker extends React.Component {
 
     return (
       <div
-        className={dayPickerClassNames}
-        style={dayPickerStyle}
         role="application"
         aria-label={phrases.calendarLabel}
+        {...css(
+          styles.DayPicker,
+          this.isHorizontal() && styles.DayPicker__horizontal,
+          this.isVertical() && styles.DayPicker__vertical,
+          verticalScrollable && styles.DayPicker__vertical_scrollable,
+          withPortal && styles.DayPicker__portal,
+          dayPickerStyle,
+        )}
       >
         <OutsideClickHandler onOutsideClick={onOutsideClick}>
           <div
-            className="DayPicker__week-headers"
+            {...css(styles.DayPicker_weekHeaders)}
             aria-hidden="true"
             role="presentation"
           >
@@ -838,7 +840,7 @@ export default class DayPicker extends React.Component {
           </div>
 
           <div // eslint-disable-line jsx-a11y/no-noninteractive-element-interactions
-            className="DayPicker__focus-region"
+            {...css(styles.DayPicker_focusRegion)}
             ref={this.setContainerRef}
             onClick={(e) => { e.stopPropagation(); }}
             onKeyDown={throttle(this.onKeyDown, 300)}
@@ -849,9 +851,14 @@ export default class DayPicker extends React.Component {
             {!verticalScrollable && this.renderNavigation()}
 
             <div
-              className={transitionContainerClasses}
+              {...css(
+                styles.DayPicker_transitionContainer,
+                this.isHorizontal() && styles.DayPicker_transitionContainer__horizontal,
+                this.isVertical() && styles.DayPicker_transitionContainer__vertical,
+                verticalScrollable && styles.DayPicker_transitionContainer__verticalScrollable,
+                transitionContainerStyle,
+              )}
               ref={this.setTransitionContainerRef}
-              style={transitionContainerStyle}
             >
               <CalendarMonthGrid
                 ref={this.setCalendarMonthGridRef}
@@ -900,3 +907,105 @@ export default class DayPicker extends React.Component {
 
 DayPicker.propTypes = propTypes;
 DayPicker.defaultProps = defaultProps;
+
+export default withStyles(({ color, zIndex }) => ({
+  DayPicker: {
+    background: color.background,
+    position: 'relative',
+    textAlign: 'left',
+  },
+
+  DayPicker__horizontal: {
+    background: color.background,
+    boxShadow: '0 2px 6px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.07)',
+    borderRadius: 3,
+  },
+
+  DayPicker__verticalScrollable: {
+    height: '100%',
+  },
+
+  DayPicker_portal__horizontal: {
+    boxShadow: 'none',
+    position: 'absolute',
+    left: '50%',
+    top: '50%',
+  },
+
+  DayPicker_portal__vertical: {
+    position: 'initial',
+  },
+
+  DayPicker_focusRegion: {
+    outline: 'none',
+  },
+
+  DayPicker_weekHeaders: {
+    position: 'relative',
+  },
+
+  DayPicker_weekHeaders__horizontal: {
+    marginLeft: 9,
+  },
+
+  DayPicker_weekHeader: {
+    color: color.placeholderText,
+    position: 'absolute',
+    top: 62,
+    zIndex: zIndex + 2,
+    padding: '0 13px',
+    textAlign: 'left',
+  },
+
+  DayPicker_weekHeader__vertical: {
+    left: '50%',
+  },
+
+  DayPicker_weekHeader__verticalScrollable: {
+    top: 0,
+    display: 'table-row',
+    borderBottom: `1px solid ${color.border}`,
+    background: color.background,
+    marginLeft: 0,
+    left: 0,
+    width: '100%',
+    textAlign: 'center',
+  },
+
+  DayPicker_weekHeader_ul: {
+    listStyle: 'none',
+    margin: '1px 0',
+    paddingLeft: 0,
+    paddingRight: 0,
+  },
+
+  DayPicker_weekHeader_li: {
+    display: 'inline-block',
+    textAlign: 'center',
+  },
+
+  DayPicker_transitionContainer: {
+    position: 'relative',
+    overflow: 'hidden',
+    borderRadius: 3,
+  },
+
+  DayPicker_transitionContainer__horizontal: {
+    transition: 'height 0.2s ease-in-out',
+  },
+
+  DayPicker_transitionContainer__vertical: {
+    width: '100%',
+  },
+
+  DayPicker_transitionContainer__verticalScrollable: {
+    paddingTop: 20,
+    height: '100%',
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    right: 0,
+    left: 0,
+    overflowY: 'scroll',
+  },
+}))(DayPicker);

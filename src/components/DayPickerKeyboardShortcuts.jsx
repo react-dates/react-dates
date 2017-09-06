@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { forbidExtraProps } from 'airbnb-prop-types';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
-import cx from 'classnames';
 
 import KeyboardShortcutRow from './KeyboardShortcutRow';
 

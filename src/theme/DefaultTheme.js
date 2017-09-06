@@ -24,8 +24,8 @@ const core = {
 };
 
 export default {
+  zIndex: 0,
   color: {
-    zIndex: 0,
     core,
 
     background: core.white,

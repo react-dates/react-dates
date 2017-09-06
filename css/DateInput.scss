@@ -1,3 +1,5 @@
+@import 'variables';
+
 $input-height: $react-dates-input-line-height + $react-dates-input-padding * 2 + $react-dates-input-displaytext-padding-vertical * 2;
 $caret-top-down: $react-dates-spacing-vertical-picker - $react-dates-width-tooltip-arrow / 2;
 $caret-top-up: $input-height - $react-dates-spacing-vertical-picker;

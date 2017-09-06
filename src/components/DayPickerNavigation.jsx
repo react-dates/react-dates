@@ -98,7 +98,7 @@ function DayPickerNavigation({
   return (
     <div
       {...css(
-        styles.DayPickerNavigation,
+        styles.DayPickerNavigation_container,
         isHorizontal && styles.DayPickerNavigation_container__horizontal,
         isVertical && styles.DayPickerNavigation_container__vertical,
         isVerticalScrollable && styles.DayPickerNavigation_container__vertical_scrollable,
