@@ -27,7 +27,7 @@
   right: 0;
 
   &:hover {
-    border-right: 33px solid #008489;
+    border-right: 33px solid $react-dates-color-primary-dark;
   }
 
   .DayPickerKeyboardShortcuts__show_span {
@@ -43,7 +43,7 @@
   right: 0;
 
   &:hover {
-    border-right: 33px solid #008489;
+    border-right: 33px solid $react-dates-color-primary-dark;
   }
 
   .DayPickerKeyboardShortcuts__show_span {
@@ -59,7 +59,7 @@
   left: 0;
 
   &:hover {
-    border-left: 33px solid #008489;
+    border-left: 33px solid $react-dates-color-primary-dark;
   }
 
   .DayPickerKeyboardShortcuts__show_span {
