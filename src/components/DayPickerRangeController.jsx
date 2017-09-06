@@ -215,11 +215,10 @@ export default class DayPickerRangeController extends React.Component {
     const didFocusChange = focusedInput !== this.props.focusedInput;
 
     if (
+      numberOfMonths !== this.props.numberOfMonths ||
+      enableOutsideDays !== this.props.enableOutsideDays ||
       (
-        initialVisibleMonth !== this.props.initialVisibleMonth ||
-        numberOfMonths !== this.props.numberOfMonths ||
-        enableOutsideDays !== this.props.enableOutsideDays
-      ) && (
+        initialVisibleMonth !== this.props.initialVisibleMonth &&
         !this.props.focusedInput &&
         didFocusChange
       )
