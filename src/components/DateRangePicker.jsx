@@ -97,6 +97,7 @@ const defaultProps = {
   // internationalization
   displayFormat: () => moment.localeData().longDateFormat('L'),
   monthFormat: 'MMMM YYYY',
+  weekDayFormat: 'dd',
   phrases: DateRangePickerPhrases,
 };
 
@@ -336,6 +337,7 @@ export default class DateRangePicker extends React.Component {
       onClose,
       phrases,
       isRTL,
+      weekDayFormat,
     } = this.props;
     const { dayPickerContainerStyles, isDayPickerFocused, showKeyboardShortcuts } = this.state;
 
@@ -388,6 +390,7 @@ export default class DateRangePicker extends React.Component {
           phrases={phrases}
           isRTL={isRTL}
           firstDayOfWeek={firstDayOfWeek}
+          weekDayFormat={weekDayFormat}
         />
 
         {withFullScreenPortal && (

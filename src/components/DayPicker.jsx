@@ -80,6 +80,7 @@ const propTypes = forbidExtraProps({
 
   // internationalization
   monthFormat: PropTypes.string,
+  weekDayFormat: PropTypes.string,
   phrases: PropTypes.shape(getPhrasePropTypes(DayPickerPhrases)),
 });
 
@@ -123,6 +124,7 @@ export const defaultProps = {
 
   // internationalization
   monthFormat: 'MMMM YYYY',
+  weekDayFormat: 'dd',
   phrases: DayPickerPhrases,
 };
 
@@ -684,7 +686,7 @@ export default class DayPicker extends React.Component {
   }
 
   renderWeekHeader(index) {
-    const { daySize, orientation } = this.props;
+    const { daySize, orientation, weekDayFormat } = this.props;
     const { calendarMonthWidth } = this.state;
     const verticalScrollable = orientation === VERTICAL_SCROLLABLE;
     const horizontalStyle = {
@@ -710,7 +712,7 @@ export default class DayPicker extends React.Component {
     for (let i = 0; i < 7; i += 1) {
       header.push(
         <li key={i} style={{ width: daySize }}>
-          <small>{moment().day((i + firstDayOfWeek) % 7).format('dd')}</small>
+          <small>{moment().day((i + firstDayOfWeek) % 7).format(weekDayFormat)}</small>
         </li>,
       );
     }

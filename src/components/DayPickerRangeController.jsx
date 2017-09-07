@@ -77,6 +77,7 @@ const propTypes = forbidExtraProps({
 
   // i18n
   monthFormat: PropTypes.string,
+  weekDayFormat: PropTypes.string,
   phrases: PropTypes.shape(getPhrasePropTypes(DayPickerPhrases)),
 
   isRTL: PropTypes.bool,
@@ -125,6 +126,7 @@ const defaultProps = {
 
   // i18n
   monthFormat: 'MMMM YYYY',
+  weekDayFormat: 'dd',
   phrases: DayPickerPhrases,
 
   isRTL: false,
@@ -841,6 +843,7 @@ export default class DayPickerRangeController extends React.Component {
       isFocused,
       showKeyboardShortcuts,
       isRTL,
+      weekDayFormat,
     } = this.props;
 
     const { currentMonth, phrases, visibleDays } = this.state;
@@ -877,6 +880,7 @@ export default class DayPickerRangeController extends React.Component {
         showKeyboardShortcuts={showKeyboardShortcuts}
         phrases={phrases}
         isRTL={isRTL}
+        weekDayFormat={weekDayFormat}
       />
     );
   }
