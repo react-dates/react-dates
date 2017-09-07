@@ -5,6 +5,9 @@ import cx from 'classnames';
 import throttle from 'lodash/throttle';
 import isTouchDevice from 'is-touch-device';
 
+import openDirectionShape from '../shapes/OpenDirectionShape';
+import { OPEN_DOWN, OPEN_UP } from '../../constants';
+
 const propTypes = forbidExtraProps({
   id: PropTypes.string.isRequired,
   placeholder: PropTypes.string, // also used as label
@@ -15,6 +18,7 @@ const propTypes = forbidExtraProps({
   disabled: PropTypes.bool,
   required: PropTypes.bool,
   readOnly: PropTypes.bool,
+  openDirection: openDirectionShape,
   showCaret: PropTypes.bool,
 
   onChange: PropTypes.func,
@@ -38,6 +42,7 @@ const defaultProps = {
   disabled: false,
   required: false,
   readOnly: null,
+  openDirection: OPEN_DOWN,
   showCaret: false,
 
   onChange() {},
@@ -151,6 +156,7 @@ export default class DateInput extends React.Component {
       disabled,
       required,
       readOnly,
+      openDirection,
     } = this.props;
 
     const displayText = displayValue || inputValue || dateString || placeholder || '';
@@ -162,6 +168,8 @@ export default class DateInput extends React.Component {
         className={cx('DateInput', {
           'DateInput--with-caret': showCaret && focused,
           'DateInput--disabled': disabled,
+          'DateInput--open-down': openDirection === OPEN_DOWN,
+          'DateInput--open-up': openDirection === OPEN_UP,
         })}
       >
         <input

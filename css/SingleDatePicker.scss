@@ -9,7 +9,6 @@
   z-index: $react-dates-z-index + 1;
   background-color: $react-dates-color-white;
   position: absolute;
-  top: $react-dates-spacing-vertical-picker;
 }
 
 .SingleDatePicker__picker--rtl {
@@ -22,6 +21,14 @@
 
 .SingleDatePicker__picker--direction-right {
   right: 0;
+}
+
+.SingleDatePicker__picker--open-down {
+  top: $react-dates-spacing-vertical-picker;
+}
+
+.SingleDatePicker__picker--open-up {
+  bottom: $react-dates-spacing-vertical-picker;
 }
 
 .SingleDatePicker__picker--portal {

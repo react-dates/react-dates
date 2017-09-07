@@ -4,6 +4,7 @@ import moment from 'moment';
 
 import momentPropTypes from 'react-moment-proptypes';
 import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
+import openDirectionShape from '../shapes/OpenDirectionShape';
 
 import { DateRangePickerInputPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
@@ -19,7 +20,7 @@ import toISODateString from '../utils/toISODateString';
 import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
 import isBeforeDay from '../utils/isBeforeDay';
 
-import { START_DATE, END_DATE, ICON_BEFORE_POSITION } from '../../constants';
+import { START_DATE, END_DATE, ICON_BEFORE_POSITION, OPEN_DOWN } from '../../constants';
 
 const propTypes = forbidExtraProps({
   startDate: momentPropTypes.momentObj,
@@ -40,6 +41,7 @@ const propTypes = forbidExtraProps({
   disabled: PropTypes.bool,
   required: PropTypes.bool,
   readOnly: PropTypes.bool,
+  openDirection: openDirectionShape,
 
   keepOpenOnDateSelect: PropTypes.bool,
   reopenPickerOnClearDates: PropTypes.bool,
@@ -86,6 +88,7 @@ const defaultProps = {
   disabled: false,
   required: false,
   readOnly: false,
+  openDirection: OPEN_DOWN,
 
   keepOpenOnDateSelect: false,
   reopenPickerOnClearDates: false,
@@ -238,6 +241,7 @@ export default class DateRangePickerInputController extends React.Component {
       disabled,
       required,
       readOnly,
+      openDirection,
       isFocused,
       phrases,
       onArrowDown,
@@ -266,6 +270,7 @@ export default class DateRangePickerInputController extends React.Component {
         disabled={disabled}
         required={required}
         readOnly={readOnly}
+        openDirection={openDirection}
         showCaret={showCaret}
         showDefaultInputIcon={showDefaultInputIcon}
         inputIconPosition={inputIconPosition}

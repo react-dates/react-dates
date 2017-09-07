@@ -4,7 +4,7 @@ import { storiesOf } from '@storybook/react';
 
 import SingleDatePickerWrapper from '../examples/SingleDatePickerWrapper';
 
-import { VERTICAL_ORIENTATION, ANCHOR_RIGHT } from '../constants';
+import { VERTICAL_ORIENTATION, ANCHOR_RIGHT, OPEN_UP } from '../constants';
 
 const TestPrevIcon = () => (
   <span
@@ -47,6 +47,14 @@ const TestCustomInfoPanel = () => (
 storiesOf('SDP - Calendar Props', module)
   .addWithInfo('default', () => (
     <SingleDatePickerWrapper autoFocus />
+  ))
+  .addWithInfo('open up', () => (
+    <div style={{ marginTop: '450px' }}>
+      <SingleDatePickerWrapper
+        openDirection={OPEN_UP}
+        autoFocus
+      />
+    </div>
   ))
   .addWithInfo('single month', () => (
     <SingleDatePickerWrapper

@@ -5,6 +5,7 @@ import cx from 'classnames';
 
 import { DateRangePickerInputPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
+import openDirectionShape from '../shapes/OpenDirectionShape';
 
 import DateInput from './DateInput';
 import IconPositionShape from '../shapes/IconPositionShape';
@@ -14,7 +15,13 @@ import LeftArrow from '../svg/arrow-left.svg';
 import CloseButton from '../svg/close.svg';
 import CalendarIcon from '../svg/calendar.svg';
 
-import { START_DATE, END_DATE, ICON_BEFORE_POSITION, ICON_AFTER_POSITION } from '../../constants';
+import {
+  START_DATE,
+  END_DATE,
+  ICON_BEFORE_POSITION,
+  ICON_AFTER_POSITION,
+  OPEN_DOWN,
+} from '../../constants';
 
 const propTypes = forbidExtraProps({
   startDateId: PropTypes.string,
@@ -45,6 +52,7 @@ const propTypes = forbidExtraProps({
   disabled: PropTypes.bool,
   required: PropTypes.bool,
   readOnly: PropTypes.bool,
+  openDirection: openDirectionShape,
   showCaret: PropTypes.bool,
   showDefaultInputIcon: PropTypes.bool,
   inputIconPosition: IconPositionShape,
@@ -88,6 +96,7 @@ const defaultProps = {
   disabled: false,
   required: false,
   readOnly: false,
+  openDirection: OPEN_DOWN,
   showCaret: false,
   showDefaultInputIcon: false,
   inputIconPosition: ICON_BEFORE_POSITION,
@@ -154,6 +163,7 @@ export default class DateRangePickerInput extends React.Component {
       disabled,
       required,
       readOnly,
+      openDirection,
       showCaret,
       showDefaultInputIcon,
       inputIconPosition,
@@ -202,6 +212,7 @@ export default class DateRangePickerInput extends React.Component {
           disabled={disabled}
           required={required}
           readOnly={readOnly}
+          openDirection={openDirection}
           showCaret={showCaret}
 
           onChange={onStartDateChange}
@@ -230,6 +241,7 @@ export default class DateRangePickerInput extends React.Component {
           disabled={disabled}
           required={required}
           readOnly={readOnly}
+          openDirection={openDirection}
           showCaret={showCaret}
 
           onChange={onEndDateChange}

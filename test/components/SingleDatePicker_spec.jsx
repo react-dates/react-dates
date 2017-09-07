@@ -10,6 +10,8 @@ import {
   VERTICAL_ORIENTATION,
   ANCHOR_LEFT,
   ANCHOR_RIGHT,
+  OPEN_DOWN,
+  OPEN_UP,
 } from '../../constants';
 
 import DayPickerSingleDateController from '../../src/components/DayPickerSingleDateController';
@@ -147,7 +149,7 @@ describe('SingleDatePicker', () => {
         });
       });
 
-      describe('props.orientation === ANCHOR_RIGHT', () => {
+      describe('props.anchorDirection === ANCHOR_RIGHT', () => {
         it('renders .SingleDatePicker__picker--direction-right class', () => {
           const wrapper = shallow(
             <SingleDatePicker
@@ -159,6 +161,34 @@ describe('SingleDatePicker', () => {
           );
           expect(wrapper.find('.SingleDatePicker__picker--direction-right')).to.have.length(1);
         });
+      });
+    });
+
+    describe('props.openDirection === OPEN_DOWN', () => {
+      it('renders .SingleDatePicker__picker--open-down class', () => {
+        const wrapper = shallow(
+          <SingleDatePicker
+            openDirection={OPEN_DOWN}
+            onDateChange={() => {}}
+            onFocusChange={() => {}}
+            focused
+          />,
+        );
+        expect(wrapper.find('.SingleDatePicker__picker--open-down')).to.have.length(1);
+      });
+    });
+
+    describe('props.openDirection === OPEN_UP', () => {
+      it('renders .SingleDatePicker__picker--open-up class', () => {
+        const wrapper = shallow(
+          <SingleDatePicker
+            openDirection={OPEN_UP}
+            onDateChange={() => {}}
+            onFocusChange={() => {}}
+            focused
+          />,
+        );
+        expect(wrapper.find('.SingleDatePicker__picker--open-up')).to.have.length(1);
       });
     });
 
