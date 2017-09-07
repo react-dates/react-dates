@@ -85,6 +85,18 @@ class CalendarMonth extends React.Component {
     };
   }
 
+  componentDidMount() {
+    const { weeks } = this.state;
+    const { month, updateHeight, daySize, theme: { spacing, font } } = this.props;
+    const { captionPaddingTop, captionPaddingBottom } = spacing;
+    const { captionSize } = font;
+
+    const captionHeight = captionPaddingBottom + captionPaddingTop + captionSize;
+    const tableHeight = weeks.length * (daySize - 1);
+    this.monthHeight = captionHeight + tableHeight;
+    updateHeight(month, this.monthHeight);
+  }
+
   componentWillReceiveProps(nextProps) {
     const { month, enableOutsideDays, firstDayOfWeek } = nextProps;
     if (!month.isSame(this.props.month)
@@ -102,6 +114,11 @@ class CalendarMonth extends React.Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     return shallowCompare(this, nextProps, nextState);
+  }
+
+  componentWillUnmount() {
+    const { month, unmountMonthHeight } = this.props;
+    unmountMonthHeight(month);
   }
 
   render() {
@@ -181,7 +198,7 @@ class CalendarMonth extends React.Component {
 CalendarMonth.propTypes = propTypes;
 CalendarMonth.defaultProps = defaultProps;
 
-export default withStyles(({ color }) => ({
+export default withStyles(({ color, font, spacing }) => ({
   CalendarMonth: {
     background: color.background,
     textAlign: 'center',
@@ -219,12 +236,10 @@ export default withStyles(({ color }) => ({
 
   CalendarMonth_caption: {
     color: color.text,
-    marginTop: 7,
-    fontSize: 18,
+    fontSize: font.captionSize,
     textAlign: 'center',
-    padding: '15px 0 35px',
-    // necessary to not hide borders in FF
-    marginBottom: 2,
+    paddingTop: spacing.captionPaddingTop,
+    paddingBottom: spacing.captionPaddingBottom,
     captionSide: 'initial',
   },
 

@@ -100,9 +100,13 @@ class CalendarMonthGrid extends React.Component {
       months: getMonths(props.initialMonth, props.numberOfMonths, withoutTransitionMonths),
     };
 
+    this.monthHeights = {};
+
     this.isTransitionEndSupported = isTransitionEndSupported();
     this.onTransitionEnd = this.onTransitionEnd.bind(this);
     this.setContainerRef = this.setContainerRef.bind(this);
+    this.updateHeight = this.updateHeight.bind(this);
+    this.unmountMonthHeight = this.unmountMonthHeight.bind(this);
   }
 
   componentDidMount() {
@@ -165,6 +169,17 @@ class CalendarMonthGrid extends React.Component {
 
   setContainerRef(ref) {
     this.container = ref;
+  }
+
+  updateHeight(month, height) {
+    const { numberOfMonths, orientation } = this.props;
+    const isHorizontal = orientation === HORIZONTAL_ORIENTATION;
+    this.monthHeights[toISOMonthString(month)] = height;
+    console.log(this.monthHeights)
+  }
+
+  unmountMonthHeight(month) {
+    delete this.monthHeights[toISOMonthString(month)];
   }
 
   render() {
@@ -237,6 +252,8 @@ class CalendarMonthGrid extends React.Component {
               renderMonth={renderMonth}
               renderDay={renderDay}
               firstDayOfWeek={firstDayOfWeek}
+              updateHeight={this.updateHeight}
+              unmountMonthHeight={this.unmountMonthHeight}
               daySize={daySize}
               focusedDate={isVisible ? focusedDate : null}
               isFocused={isFocused}

@@ -803,7 +803,7 @@ class DayPicker extends React.Component {
 
     const transitionContainerStyle = {
       width: this.isHorizontal() && horizontalWidth,
-      height: 300, //this.isVertical() && !verticalScrollable && !withPortal && verticalHeight,
+      height: this.isVertical() && !verticalScrollable && !withPortal && verticalHeight,
     };
 
     const isCalendarMonthGridAnimating = monthTransition !== null;

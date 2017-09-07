@@ -121,4 +121,12 @@ export default {
       color_hover: core.grayLighter,
     },
   },
+  spacing: {
+    captionPaddingTop: 29,
+    captionPaddingBottom: 37,
+  },
+  font: {
+    size: 14,
+    captionSize: 18,
+  },
 };
