@@ -1,5 +1,11 @@
 # Change Log
 
+## 12.6.0
+- [new] Add `weekDayFormat` prop to SDP/DRP ([#650](https://github.com/airbnb/react-dates/pull/650))
+- [new] Add `openDirection` prop to SDP/DRP ([#653](https://github.com/airbnb/react-dates/pull/653))
+- [fix] Reset visibleDays/currentMonth state when `enableOutsideDays` or `numberOfMonths` has changed ([#702](https://github.com/airbnb/react-dates/pull/702))
+- [new] Add $react-dates-color-primary-dark CSS variable ([#704](https://github.com/airbnb/react-dates/pull/704))
+
 ## 12.5.1
 - [fix] Ensure `this.childNode` exists in the `OutsideClickHandler` ([e330839](https://github.com/airbnb/react-dates/commit/e3308395212bef07d1f3c05f413cac3dd245ac98))
 - [fix] Remove `minimumNights` prop from the `DayPickerSingleDateController` ([#686](https://github.com/airbnb/react-dates/pull/686))
