@@ -41,18 +41,18 @@ describe('CalendarMonth', () => {
 
     describe('caption', () => {
       it('.CalendarMonth__caption class is present', () => {
-        const caption = shallow(<CalendarMonth />).find('caption');
+        const caption = shallow(<CalendarMonth />).find('#CalendarMonth__caption');
         expect(caption.is('.CalendarMonth__caption')).to.equal(true);
       });
 
       it('.js-CalendarMonth__caption class is present', () => {
-        const caption = shallow(<CalendarMonth />).find('caption');
+        const caption = shallow(<CalendarMonth />).find('#CalendarMonth__caption');
         expect(caption.is('.js-CalendarMonth__caption')).to.equal(true);
       });
 
       it('text is the correctly formatted month title', () => {
         const MONTH = moment();
-        const caption = shallow(<CalendarMonth month={MONTH} />).find('caption');
+        const caption = shallow(<CalendarMonth month={MONTH} />).find('#CalendarMonth__caption');
         expect(caption.text()).to.equal(MONTH.format('MMMM YYYY'));
       });
     });
