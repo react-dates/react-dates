@@ -36,6 +36,67 @@ describe('DayPickerRangeController', () => {
     });
   });
 
+  describe('#componentDidMount', () => {
+    const props = {
+      ...DayPickerRangeController.defaultProps,
+      onDatesChange() {},
+      onFocusChange() {},
+    };
+
+    describe('phrases', () => {
+      const phrases = {
+        chooseAvailableDate: 'test1',
+        chooseAvailableStartDate: 'test2',
+        chooseAvailableEndDate: 'test3',
+      };
+
+      describe('focusedInput is START_DATE', () => {
+        it('state.phrases.chooseAvailableDate equals props.phrases.chooseAvailableStartDate', () => {
+          const wrapper = shallow(
+            <DayPickerRangeController
+              {...props}
+              focusedInput={START_DATE}
+              phrases={phrases}
+            />,
+          );
+          wrapper.instance().componentDidMount();
+          const newAvailableDatePhrase = wrapper.state().phrases.chooseAvailableDate;
+          expect(newAvailableDatePhrase).to.equal(phrases.chooseAvailableStartDate);
+        });
+      });
+
+      describe('focusedInput is END_DATE', () => {
+        it('state.phrases.chooseAvailableDate equals props.phrases.chooseAvailableEndDate', () => {
+          const wrapper = shallow(
+            <DayPickerRangeController
+              {...props}
+              focusedInput={END_DATE}
+              phrases={phrases}
+            />,
+          );
+          wrapper.instance().componentDidMount();
+          const newAvailableDatePhrase = wrapper.state().phrases.chooseAvailableDate;
+          expect(newAvailableDatePhrase).to.equal(phrases.chooseAvailableEndDate);
+        });
+      });
+
+      describe('focusedInput is null', () => {
+        it('state.phrases.chooseAvailableDate equals props.phrases.chooseAvailableDate', () => {
+          const wrapper = shallow(
+            <DayPickerRangeController
+              {...props}
+              focusedInput={null}
+              phrases={phrases}
+            />,
+          );
+          wrapper.instance().componentDidMount();
+          const newAvailableDatePhrase = wrapper.state().phrases.chooseAvailableDate;
+          expect(newAvailableDatePhrase).to.equal(phrases.chooseAvailableDate);
+        });
+      });
+    });
+  });
+
   describe('#componentWillReceiveProps', () => {
     const props = {
       ...DayPickerRangeController.defaultProps,
