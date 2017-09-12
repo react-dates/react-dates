@@ -122,7 +122,7 @@ describe('DateRangePicker', () => {
     describe('props.openDirection === OPEN_DOWN', () => {
       it('renders .DateRangePicker__picker--open-down class', () => {
         const wrapper = shallow(
-          <DateRangePicker openDirection={OPEN_DOWN} focusedInput={START_DATE} />,
+          <DateRangePicker {...requiredProps} openDirection={OPEN_DOWN} focusedInput={START_DATE} />,
         );
         expect(wrapper.find('.DateRangePicker__picker--open-down')).to.have.length(1);
       });
@@ -131,7 +131,7 @@ describe('DateRangePicker', () => {
     describe('props.openDirection === OPEN_UP', () => {
       it('renders .DateRangePicker__picker--open-up class', () => {
         const wrapper = shallow(
-          <DateRangePicker openDirection={OPEN_UP} focusedInput={START_DATE} />,
+          <DateRangePicker {...requiredProps} openDirection={OPEN_UP} focusedInput={START_DATE} />,
         );
         expect(wrapper.find('.DateRangePicker__picker--open-up')).to.have.length(1);
       });
