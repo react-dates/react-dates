@@ -825,6 +825,9 @@ export default class DayPicker extends React.Component {
       <div
         className={dayPickerClassNames}
         style={dayPickerStyle}
+        role="application"
+        aria-label="Calendar"
+        aria-describedby="CalendarMonth__caption"
       >
         <OutsideClickHandler onOutsideClick={onOutsideClick}>
           <div
