@@ -1,6 +1,6 @@
-import moment from 'moment';
 import { expect } from 'chai';
 
+import { moment } from '../../src/utils/DateObj';
 import toLocalizedDateString from '../../src/utils/toLocalizedDateString';
 import { ISO_FORMAT } from '../../constants';
 

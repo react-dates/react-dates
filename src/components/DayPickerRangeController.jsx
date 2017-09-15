@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import momentPropTypes from 'react-moment-proptypes';
 import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
-import moment from 'moment';
 import values from 'object.values';
 import isTouchDevice from 'is-touch-device';
 
@@ -20,6 +18,7 @@ import isDayVisible from '../utils/isDayVisible';
 
 import toISODateString from '../utils/toISODateString';
 import toISOMonthString from '../utils/toISOMonthString';
+import DateObj from '../utils/DateObj';
 
 import FocusedInputShape from '../shapes/FocusedInputShape';
 import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
@@ -36,8 +35,8 @@ import {
 import DayPicker from './DayPicker';
 
 const propTypes = forbidExtraProps({
-  startDate: momentPropTypes.momentObj,
-  endDate: momentPropTypes.momentObj,
+  startDate: PropTypes.object,
+  endDate: PropTypes.object,
   onDatesChange: PropTypes.func,
 
   focusedInput: FocusedInputShape,
@@ -81,6 +80,7 @@ const propTypes = forbidExtraProps({
   phrases: PropTypes.shape(getPhrasePropTypes(DayPickerPhrases)),
 
   isRTL: PropTypes.bool,
+  locale: PropTypes.object,
 });
 
 const defaultProps = {
@@ -130,6 +130,7 @@ const defaultProps = {
   phrases: DayPickerPhrases,
 
   isRTL: false,
+  locale: null,
 };
 
 export default class DayPickerRangeController extends React.Component {
@@ -137,7 +138,7 @@ export default class DayPickerRangeController extends React.Component {
     super(props);
 
     this.isTouchDevice = isTouchDevice();
-    this.today = moment();
+    this.today = new DateObj();
     this.modifiers = {
       today: day => this.isToday(day),
       blocked: day => this.isBlocked(day),
@@ -303,7 +304,7 @@ export default class DayPickerRangeController extends React.Component {
     if (didFocusChange || recomputePropModifiers) {
       values(visibleDays).forEach((days) => {
         Object.keys(days).forEach((day) => {
-          const momentObj = moment(day);
+          const momentObj = day;
 
           if (this.isBlocked(momentObj)) {
             modifiers = this.addModifier(modifiers, momentObj, 'blocked');
@@ -338,7 +339,7 @@ export default class DayPickerRangeController extends React.Component {
       });
     }
 
-    const today = moment();
+    const today = new DateObj();
     if (!isSameDay(this.today, today)) {
       modifiers = this.deleteModifier(modifiers, this.today, 'today');
       modifiers = this.addModifier(modifiers, today, 'today');
@@ -665,7 +666,6 @@ export default class DayPickerRangeController extends React.Component {
     } else {
       const monthIso = toISOMonthString(day);
       const month = updatedDays[monthIso] || visibleDays[monthIso];
-
       const modifiers = new Set(month[iso]);
       modifiers.add(modifier);
       updatedDaysAfterAddition = {
@@ -764,7 +764,7 @@ export default class DayPickerRangeController extends React.Component {
       const dayDiff = day.diff(startDate.clone().startOf('day').hour(12), 'days');
       return dayDiff < minimumNights && dayDiff >= 0;
     }
-    return isOutsideRange(moment(day).subtract(minimumNights, 'days'));
+    return isOutsideRange(day.subtract(minimumNights, 'days'));
   }
 
   isDayAfterHoveredStartDate(day) {
@@ -844,6 +844,7 @@ export default class DayPickerRangeController extends React.Component {
       showKeyboardShortcuts,
       isRTL,
       weekDayFormat,
+      locale,
     } = this.props;
 
     const { currentMonth, phrases, visibleDays } = this.state;
@@ -881,6 +882,7 @@ export default class DayPickerRangeController extends React.Component {
         phrases={phrases}
         isRTL={isRTL}
         weekDayFormat={weekDayFormat}
+        locale={locale}
       />
     );
   }

@@ -1,6 +1,6 @@
-import moment from 'moment';
 import { expect } from 'chai';
 
+import { moment } from '../../src/utils/DateObj';
 import isBeforeDay from '../../src/utils/isBeforeDay';
 
 const today = moment();

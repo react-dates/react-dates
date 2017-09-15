@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import shallowCompare from 'react-addons-shallow-compare';
-import momentPropTypes from 'react-moment-proptypes';
 import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
-import moment from 'moment';
 import cx from 'classnames';
 import { addEventListener, removeEventListener } from 'consolidated-events';
 
@@ -17,6 +15,7 @@ import getTransformStyles from '../utils/getTransformStyles';
 import getCalendarMonthWidth from '../utils/getCalendarMonthWidth';
 import toISOMonthString from '../utils/toISOMonthString';
 import isAfterDay from '../utils/isAfterDay';
+import DateObj from '../utils/DateObj';
 
 import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
 import DayOfWeekShape from '../shapes/DayOfWeekShape';
@@ -31,7 +30,7 @@ import {
 const propTypes = forbidExtraProps({
   enableOutsideDays: PropTypes.bool,
   firstVisibleMonthIndex: PropTypes.number,
-  initialMonth: momentPropTypes.momentObj,
+  initialMonth: PropTypes.object,
   isAnimating: PropTypes.bool,
   numberOfMonths: PropTypes.number,
   modifiers: PropTypes.object,
@@ -44,7 +43,7 @@ const propTypes = forbidExtraProps({
   renderDay: PropTypes.func,
   transformValue: PropTypes.string,
   daySize: nonNegativeInteger,
-  focusedDate: momentPropTypes.momentObj, // indicates focusable day
+  focusedDate: PropTypes.object, // indicates focusable day
   isFocused: PropTypes.bool, // indicates whether or not to move focus to focusable day
   firstDayOfWeek: DayOfWeekShape,
 
@@ -56,7 +55,7 @@ const propTypes = forbidExtraProps({
 const defaultProps = {
   enableOutsideDays: false,
   firstVisibleMonthIndex: 0,
-  initialMonth: moment(),
+  initialMonth: new DateObj(),
   isAnimating: false,
   numberOfMonths: 1,
   modifiers: {},

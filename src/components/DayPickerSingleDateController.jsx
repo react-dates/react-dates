@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import momentPropTypes from 'react-moment-proptypes';
 import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
-import moment from 'moment';
 import values from 'object.values';
 import isTouchDevice from 'is-touch-device';
 
@@ -14,6 +12,7 @@ import isAfterDay from '../utils/isAfterDay';
 
 import getVisibleDays from '../utils/getVisibleDays';
 import isDayVisible from '../utils/isDayVisible';
+import { moment } from '../utils/DateObj';
 
 import toISODateString from '../utils/toISODateString';
 import toISOMonthString from '../utils/toISOMonthString';
@@ -31,7 +30,7 @@ import DayPicker from './DayPicker';
 import OutsideClickHandler from './OutsideClickHandler';
 
 const propTypes = forbidExtraProps({
-  date: momentPropTypes.momentObj,
+  date: PropTypes.object,
   onDateChange: PropTypes.func,
 
   focused: PropTypes.bool,
@@ -72,8 +71,7 @@ const propTypes = forbidExtraProps({
   monthFormat: PropTypes.string,
   weekDayFormat: PropTypes.string,
   phrases: PropTypes.shape(getPhrasePropTypes(DayPickerPhrases)),
-
-  isRTL: PropTypes.bool,
+  locale: PropTypes.object,
 });
 
 const defaultProps = {
@@ -121,6 +119,7 @@ const defaultProps = {
   phrases: DayPickerPhrases,
 
   isRTL: false,
+  locale: null,
 };
 
 export default class DayPickerSingleDateController extends React.Component {
@@ -128,7 +127,7 @@ export default class DayPickerSingleDateController extends React.Component {
     super(props);
 
     this.isTouchDevice = false;
-    this.today = moment();
+    this.today = moment().setLocale(this.props.locale);
 
     this.modifiers = {
       today: day => this.isToday(day),
@@ -263,7 +262,7 @@ export default class DayPickerSingleDateController extends React.Component {
       });
     }
 
-    const today = moment();
+    const today = moment().setLocale(this.props.locale);
     if (!isSameDay(this.today, today)) {
       modifiers = this.deleteModifier(modifiers, this.today, 'today');
       modifiers = this.addModifier(modifiers, today, 'today');
@@ -281,7 +280,7 @@ export default class DayPickerSingleDateController extends React.Component {
   }
 
   componentWillUpdate() {
-    this.today = moment();
+    this.today = moment().setLocale(this.props.locale);
   }
 
   onDayClick(day, e) {
@@ -378,7 +377,6 @@ export default class DayPickerSingleDateController extends React.Component {
 
     onNextMonthClick(newCurrentMonth.clone());
   }
-
 
   getFirstFocusableDay(newMonth) {
     const { date, numberOfMonths } = this.props;
@@ -574,6 +572,7 @@ export default class DayPickerSingleDateController extends React.Component {
       onBlur,
       showKeyboardShortcuts,
       weekDayFormat,
+      locale,
     } = this.props;
 
     const { currentMonth, visibleDays } = this.state;
@@ -608,6 +607,7 @@ export default class DayPickerSingleDateController extends React.Component {
         isRTL={isRTL}
         showKeyboardShortcuts={showKeyboardShortcuts}
         weekDayFormat={weekDayFormat}
+        locale={locale}
       />
     );
 

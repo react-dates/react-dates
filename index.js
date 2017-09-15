@@ -20,7 +20,8 @@ var isSameDay = require('./lib/utils/isSameDay').default;
 
 var toISODateString = require('./lib/utils/toISODateString').default;
 var toLocalizedDateString = require('./lib/utils/toLocalizedDateString').default;
-var toMomentObject = require('./lib/utils/toMomentObject').default;
+var DateObj = require('./lib/utils/DateObj').default;
+var moment = require('./lib/utils/DateObj').moment;
 
 
 module.exports = {
@@ -47,5 +48,6 @@ module.exports = {
 
   toISODateString: toISODateString,
   toLocalizedDateString: toLocalizedDateString,
-  toMomentObject: toMomentObject,
+  DateObj: DateObj,
+  moment: moment,
 };

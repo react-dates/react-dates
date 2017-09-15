@@ -1,5 +1,5 @@
-import moment from 'moment';
 import toISOMonthString from './toISOMonthString';
+import isDate from './isDate';
 
 export default function getVisibleDays(
   month,
@@ -7,7 +7,7 @@ export default function getVisibleDays(
   enableOutsideDays,
   withoutTransitionMonths,
 ) {
-  if (!moment.isMoment(month)) return {};
+  if (!isDate(month)) return {};
 
   const visibleDaysByMonth = {};
   let currentMonth = withoutTransitionMonths ? month.clone() : month.clone().subtract(1, 'month');

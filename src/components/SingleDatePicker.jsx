@@ -1,5 +1,4 @@
 import React from 'react';
-import moment from 'moment';
 import cx from 'classnames';
 import Portal from 'react-portal';
 import { forbidExtraProps } from 'airbnb-prop-types';
@@ -10,11 +9,11 @@ import SingleDatePickerShape from '../shapes/SingleDatePickerShape';
 import { SingleDatePickerPhrases } from '../defaultPhrases';
 
 import OutsideClickHandler from './OutsideClickHandler';
-import toMomentObject from '../utils/toMomentObject';
 import toLocalizedDateString from '../utils/toLocalizedDateString';
 import getResponsiveContainerStyles from '../utils/getResponsiveContainerStyles';
 
 import toISODateString from '../utils/toISODateString';
+import DateObj from '../utils/DateObj';
 
 import SingleDatePickerInput from './SingleDatePickerInput';
 import DayPickerSingleDateController from './DayPickerSingleDateController';
@@ -86,14 +85,15 @@ const defaultProps = {
   renderDay: null,
   enableOutsideDays: false,
   isDayBlocked: () => false,
-  isOutsideRange: day => !isInclusivelyAfterDay(day, moment()),
+  isOutsideRange: day => !isInclusivelyAfterDay(day, new DateObj()),
   isDayHighlighted: () => {},
 
   // internationalization props
-  displayFormat: () => moment.localeData().longDateFormat('L'),
+  displayFormat: () => new DateObj().localeData().longDateFormat('L'),
   monthFormat: 'MMMM YYYY',
   weekDayFormat: 'dd',
   phrases: SingleDatePickerPhrases,
+  locale: null,
 };
 
 export default class SingleDatePicker extends React.Component {
@@ -159,7 +159,7 @@ export default class SingleDatePicker extends React.Component {
       onFocusChange,
       onClose,
     } = this.props;
-    const newDate = toMomentObject(dateString, this.getDisplayFormat());
+    const newDate = DateObj.toDateObject(dateString, this.getDisplayFormat());
 
     const isValid = newDate && !isOutsideRange(newDate);
     if (isValid) {
@@ -352,6 +352,7 @@ export default class SingleDatePicker extends React.Component {
       isDayBlocked,
       isDayHighlighted,
       weekDayFormat,
+      locale,
     } = this.props;
     const { dayPickerContainerStyles, isDayPickerFocused } = this.state;
 
@@ -394,6 +395,7 @@ export default class SingleDatePicker extends React.Component {
           isDayHighlighted={isDayHighlighted}
           firstDayOfWeek={firstDayOfWeek}
           weekDayFormat={weekDayFormat}
+          locale={locale}
         />
 
         {withFullScreenPortal && (

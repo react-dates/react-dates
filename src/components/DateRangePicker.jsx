@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import shallowCompare from 'react-addons-shallow-compare';
-import moment from 'moment';
 import cx from 'classnames';
 import Portal from 'react-portal';
 import { forbidExtraProps } from 'airbnb-prop-types';
@@ -14,6 +13,7 @@ import OutsideClickHandler from './OutsideClickHandler';
 import getResponsiveContainerStyles from '../utils/getResponsiveContainerStyles';
 
 import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
+import DateObj from '../utils/DateObj';
 
 import DateRangePickerInputController from './DateRangePickerInputController';
 import DayPickerRangeController from './DayPickerRangeController';
@@ -91,14 +91,15 @@ const defaultProps = {
   minimumNights: 1,
   enableOutsideDays: false,
   isDayBlocked: () => false,
-  isOutsideRange: day => !isInclusivelyAfterDay(day, moment()),
+  isOutsideRange: day => !isInclusivelyAfterDay(day, new DateObj()),
   isDayHighlighted: () => false,
 
   // internationalization
-  displayFormat: () => moment.localeData().longDateFormat('L'),
+  displayFormat: () => new DateObj().localeData().longDateFormat('L'),
   monthFormat: 'MMMM YYYY',
   weekDayFormat: 'dd',
   phrases: DateRangePickerPhrases,
+  locale: null,
 };
 
 export default class DateRangePicker extends React.Component {
@@ -338,6 +339,7 @@ export default class DateRangePicker extends React.Component {
       phrases,
       isRTL,
       weekDayFormat,
+      locale,
     } = this.props;
     const { dayPickerContainerStyles, isDayPickerFocused, showKeyboardShortcuts } = this.state;
 
@@ -345,7 +347,7 @@ export default class DateRangePicker extends React.Component {
       ? this.onOutsideClick
       : undefined;
     const initialVisibleMonthThunk =
-      initialVisibleMonth || (() => (startDate || endDate || moment()));
+      initialVisibleMonth || (() => (startDate || endDate || new DateObj()));
 
     const closeIcon = customCloseIcon || (<CloseButton />);
 
@@ -391,6 +393,7 @@ export default class DateRangePicker extends React.Component {
           isRTL={isRTL}
           firstDayOfWeek={firstDayOfWeek}
           weekDayFormat={weekDayFormat}
+          locale={locale}
         />
 
         {withFullScreenPortal && (

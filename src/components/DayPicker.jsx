@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import shallowCompare from 'react-addons-shallow-compare';
 import ReactDOM from 'react-dom';
 import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
-import moment from 'moment';
 import cx from 'classnames';
 import throttle from 'lodash/throttle';
 import isTouchDevice from 'is-touch-device';
@@ -24,6 +23,7 @@ import getTransformStyles from '../utils/getTransformStyles';
 import getCalendarMonthWidth from '../utils/getCalendarMonthWidth';
 import getActiveElement from '../utils/getActiveElement';
 import isDayVisible from '../utils/isDayVisible';
+import { moment } from '../utils/DateObj';
 
 import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
 import DayOfWeekShape from '../shapes/DayOfWeekShape';
@@ -82,6 +82,7 @@ const propTypes = forbidExtraProps({
   monthFormat: PropTypes.string,
   weekDayFormat: PropTypes.string,
   phrases: PropTypes.shape(getPhrasePropTypes(DayPickerPhrases)),
+  locale: PropTypes.object,
 });
 
 export const defaultProps = {
@@ -126,6 +127,7 @@ export const defaultProps = {
   monthFormat: 'MMMM YYYY',
   weekDayFormat: 'dd',
   phrases: DayPickerPhrases,
+  locale: null,
 };
 
 function applyTransformStyles(el, transform, opacity = '') {
@@ -186,7 +188,8 @@ export default class DayPicker extends React.Component {
   constructor(props) {
     super(props);
 
-    const currentMonth = props.hidden ? moment() : props.initialVisibleMonth();
+    const currentMonth = props.hidden ?
+      moment().setLocale(props.locale) : props.initialVisibleMonth();
 
     let focusedDate = currentMonth.clone().startOf('month');
     if (props.getFirstFocusableDay) {
@@ -686,7 +689,7 @@ export default class DayPicker extends React.Component {
   }
 
   renderWeekHeader(index) {
-    const { daySize, orientation, weekDayFormat } = this.props;
+    const { daySize, orientation, weekDayFormat, locale } = this.props;
     const { calendarMonthWidth } = this.state;
     const verticalScrollable = orientation === VERTICAL_SCROLLABLE;
     const horizontalStyle = {
@@ -705,14 +708,15 @@ export default class DayPicker extends React.Component {
 
     let { firstDayOfWeek } = this.props;
     if (firstDayOfWeek == null) {
-      firstDayOfWeek = moment.localeData().firstDayOfWeek();
+      firstDayOfWeek = moment().setLocale(locale).localeData().firstDayOfWeek();
     }
 
     const header = [];
     for (let i = 0; i < 7; i += 1) {
       header.push(
         <li key={i} style={{ width: daySize }}>
-          <small>{moment().day((i + firstDayOfWeek) % 7).format(weekDayFormat)}</small>
+          <small>{moment().setLocale(locale).day((i + firstDayOfWeek) % 7)
+            .format(weekDayFormat)}</small>
         </li>,
       );
     }

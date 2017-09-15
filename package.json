@@ -81,8 +81,6 @@
     "karma-webpack": "^2.0.3",
     "mocha": "^3.5.0",
     "mocha-wrap": "^2.1.1",
-    "moment": "^2.18.1",
-    "moment-jalaali": "^0.7.0",
     "node-sass": "^4.5.3",
     "nyc": "^11.1.0",
     "raw-loader": "^0.5.1",
@@ -104,16 +102,16 @@
     "airbnb-prop-types": "^2.8.1",
     "classnames": "^2.2.5",
     "consolidated-events": "^1.1.0",
+    "date-fns": "^2.0.0-alpha.3",
     "is-touch-device": "^1.0.1",
     "lodash": "^4.1.1",
     "object.assign": "^4.0.4",
     "object.values": "^1.0.4",
     "prop-types": "^15.5.10",
-    "react-moment-proptypes": "^1.5.0",
     "react-portal": "^3.1.0"
   },
   "peerDependencies": {
-    "moment": "^2.18.1",
+    "date-fns": "^2.0.0-alpha.3",
     "react": ">=0.14",
     "react-dom": ">=0.14",
     "react-addons-shallow-compare": ">=0.14"

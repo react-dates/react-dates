@@ -3,9 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import shallowCompare from 'react-addons-shallow-compare';
-import momentPropTypes from 'react-moment-proptypes';
 import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
-import moment from 'moment';
 import cx from 'classnames';
 
 import { CalendarDayPhrases } from '../defaultPhrases';
@@ -19,6 +17,7 @@ import toISODateString from '../utils/toISODateString';
 
 import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
 import DayOfWeekShape from '../shapes/DayOfWeekShape';
+import DateObj from '../utils/DateObj';
 
 import {
   HORIZONTAL_ORIENTATION,
@@ -28,7 +27,7 @@ import {
 } from '../../constants';
 
 const propTypes = forbidExtraProps({
-  month: momentPropTypes.momentObj,
+  month: PropTypes.object,
   isVisible: PropTypes.bool,
   enableOutsideDays: PropTypes.bool,
   modifiers: PropTypes.object,
@@ -41,7 +40,7 @@ const propTypes = forbidExtraProps({
   renderDay: PropTypes.func,
   firstDayOfWeek: DayOfWeekShape,
 
-  focusedDate: momentPropTypes.momentObj, // indicates focusable day
+  focusedDate: PropTypes.object, // indicates focusable day
   isFocused: PropTypes.bool, // indicates whether or not to move focus to focusable day
 
   // i18n
@@ -50,7 +49,7 @@ const propTypes = forbidExtraProps({
 });
 
 const defaultProps = {
-  month: moment(),
+  month: new DateObj(),
   isVisible: true,
   enableOutsideDays: false,
   modifiers: {},
@@ -79,7 +78,8 @@ export default class CalendarMonth extends React.Component {
       weeks: getCalendarMonthWeeks(
         props.month,
         props.enableOutsideDays,
-        props.firstDayOfWeek == null ? moment.localeData().firstDayOfWeek() : props.firstDayOfWeek,
+        props.firstDayOfWeek == null ?
+          props.month.localeData().firstDayOfWeek() : props.firstDayOfWeek,
       ),
     };
   }
@@ -93,7 +93,7 @@ export default class CalendarMonth extends React.Component {
         weeks: getCalendarMonthWeeks(
           month,
           enableOutsideDays,
-          firstDayOfWeek == null ? moment.localeData().firstDayOfWeek() : firstDayOfWeek,
+          firstDayOfWeek == null ? month.localeData().firstDayOfWeek() : firstDayOfWeek,
         ),
       });
     }

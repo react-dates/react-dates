@@ -1,6 +1,6 @@
-import moment from 'moment';
 import { expect } from 'chai';
 
+import { moment } from '../../src/utils/DateObj';
 import isSameDay from '../../src/utils/isSameDay';
 import getVisibleDays from '../../src/utils/getVisibleDays';
 
