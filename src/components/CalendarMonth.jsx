@@ -13,6 +13,7 @@ import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 
 import CalendarDay from './CalendarDay';
 
+import calculateDimension from '../utils/calculateDimension';
 import getCalendarMonthWeeks from '../utils/getCalendarMonthWeeks';
 import isSameDay from '../utils/isSameDay';
 import toISODateString from '../utils/toISODateString';
@@ -83,18 +84,14 @@ class CalendarMonth extends React.Component {
         props.firstDayOfWeek == null ? moment.localeData().firstDayOfWeek() : props.firstDayOfWeek,
       ),
     };
+
+    this.setCaptionRef = this.setCaptionRef.bind(this);
+    this.setGridRef = this.setGridRef.bind(this);
+    this.setMonthHeight = this.setMonthHeight.bind(this);
   }
 
   componentDidMount() {
-    const { weeks } = this.state;
-    const { month, updateHeight, daySize, theme: { spacing, font } } = this.props;
-    const { captionPaddingTop, captionPaddingBottom } = spacing;
-    const { captionSize } = font;
-
-    const captionHeight = captionPaddingBottom + captionPaddingTop + captionSize;
-    const tableHeight = weeks.length * (daySize - 1);
-    this.monthHeight = captionHeight + tableHeight;
-    updateHeight(month, this.monthHeight);
+    this.setMonthHeightTimeout = setTimeout(this.setMonthHeight, 0);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -117,8 +114,25 @@ class CalendarMonth extends React.Component {
   }
 
   componentWillUnmount() {
-    const { month, unmountMonthHeight } = this.props;
-    unmountMonthHeight(month);
+    if (this.setMonthHeightTimeout) {
+      clearTimeout(this.setMonthHeightTimeout);
+    }
+  }
+
+  setMonthHeight() {
+    const { setMonthHeights } = this.props;
+    const captionHeight = calculateDimension(this.captionRef, 'height', true, true);
+    const gridHeight = calculateDimension(this.gridRef, 'height');
+
+    setMonthHeights(captionHeight + gridHeight + 1);
+  }
+
+  setCaptionRef(ref) {
+    this.captionRef = ref;
+  }
+
+  setGridRef(ref) {
+    this.gridRef = ref;
   }
 
   render() {
@@ -158,7 +172,7 @@ class CalendarMonth extends React.Component {
         <table {...css(styles.CalendarMonth_table)} role="presentation">
           <div
             id="CalendarMonth__caption"
-            className="js-CalendarMonth__caption"
+            ref={this.setCaptionRef}
             {...css(
               styles.CalendarMonth_caption,
               verticalScrollable && styles.CalendarMonth_caption__vertical_scrollable,
@@ -167,7 +181,7 @@ class CalendarMonth extends React.Component {
             <strong>{monthTitle}</strong>
           </div>
 
-          <tbody className="js-CalendarMonth__grid">
+          <tbody ref={this.setGridRef}>
             {weeks.map((week, i) => (
               <tr key={i}>
                 {week.map((day, dayOfWeek) => (

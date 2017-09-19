@@ -100,21 +100,24 @@ class CalendarMonthGrid extends React.Component {
       months: getMonths(props.initialMonth, props.numberOfMonths, withoutTransitionMonths),
     };
 
-    this.monthHeights = {};
+    this.calendarMonthHeights = new Array(props.numberOfMonths);
 
     this.isTransitionEndSupported = isTransitionEndSupported();
     this.onTransitionEnd = this.onTransitionEnd.bind(this);
     this.setContainerRef = this.setContainerRef.bind(this);
-    this.updateHeight = this.updateHeight.bind(this);
-    this.unmountMonthHeight = this.unmountMonthHeight.bind(this);
   }
 
   componentDidMount() {
+    const { setCalendarMonthGridHeight } = this.props;
     this.eventHandle = addEventListener(
       this.container,
       'transitionend',
       this.onTransitionEnd,
     );
+
+    this.setCalendarMonthGridHeightTimeout = setTimeout(() => {
+      setCalendarMonthGridHeight(this.getHeight());
+    }, 0);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -161,25 +164,30 @@ class CalendarMonthGrid extends React.Component {
 
   componentWillUnmount() {
     removeEventListener(this.eventHandle);
+    if (this.setCalendarMonthGridHeightTimeout) {
+      clearTimeout(this.setCalendarMonthGridHeightTimeout);
+    }
   }
 
   onTransitionEnd() {
     this.props.onMonthTransitionEnd();
   }
 
+  getHeight() {
+    const { firstVisibleMonthIndex, numberOfMonths } = this.props;
+    return this.calendarMonthHeights.reduce((maxHeight, height, i) => {
+      const isVisible =
+        (i >= firstVisibleMonthIndex) && (i < firstVisibleMonthIndex + numberOfMonths);
+      return isVisible ? Math.max(maxHeight, height) : maxHeight;
+    }, 0);
+  }
+
   setContainerRef(ref) {
     this.container = ref;
   }
 
-  updateHeight(month, height) {
-    const { numberOfMonths, orientation } = this.props;
-    const isHorizontal = orientation === HORIZONTAL_ORIENTATION;
-    this.monthHeights[toISOMonthString(month)] = height;
-    console.log(this.monthHeights)
-  }
-
-  unmountMonthHeight(month) {
-    delete this.monthHeights[toISOMonthString(month)];
+  setMonthHeights(height, i) {
+    this.calendarMonthHeights[i] = height;
   }
 
   render() {
@@ -252,12 +260,11 @@ class CalendarMonthGrid extends React.Component {
               renderMonth={renderMonth}
               renderDay={renderDay}
               firstDayOfWeek={firstDayOfWeek}
-              updateHeight={this.updateHeight}
-              unmountMonthHeight={this.unmountMonthHeight}
               daySize={daySize}
               focusedDate={isVisible ? focusedDate : null}
               isFocused={isFocused}
               phrases={phrases}
+              setMonthHeights={(height) => { this.setMonthHeights(height, i); }}
             />
           );
         })}

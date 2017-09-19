@@ -21,6 +21,7 @@ import DayPickerKeyboardShortcuts, {
   BOTTOM_RIGHT,
 } from './DayPickerKeyboardShortcuts';
 
+import calculateDimension from '../utils/calculateDimension';
 import getTransformStyles from '../utils/getTransformStyles';
 import getCalendarMonthWidth from '../utils/getCalendarMonthWidth';
 import getActiveElement from '../utils/getActiveElement';
@@ -141,39 +142,6 @@ function applyTransformStyles(el, transform, opacity = '') {
   });
 }
 
-export function calculateDimension(el, axis, borderBox = false, withMargin = false) {
-  if (!el) {
-    return 0;
-  }
-
-  const axisStart = axis === 'width' ? 'Left' : 'Top';
-  const axisEnd = axis === 'width' ? 'Right' : 'Bottom';
-
-  // Only read styles if we need to
-  const style = (!borderBox || withMargin) ? window.getComputedStyle(el) : null;
-
-  // Offset includes border and padding
-  const { offsetWidth, offsetHeight } = el;
-  let size = axis === 'width' ? offsetWidth : offsetHeight;
-
-  // Get the inner size
-  if (!borderBox) {
-    size -= (
-      parseFloat(style[`padding${axisStart}`]) +
-      parseFloat(style[`padding${axisEnd}`]) +
-      parseFloat(style[`border${axisStart}Width`]) +
-      parseFloat(style[`border${axisEnd}Width`])
-    );
-  }
-
-  // Apply margin
-  if (withMargin) {
-    size += (parseFloat(style[`margin${axisStart}`]) + parseFloat(style[`margin${axisEnd}`]));
-  }
-
-  return size;
-}
-
 function getMonthHeight(el) {
   const caption = el.querySelector('.js-CalendarMonth__caption');
   const grid = el.querySelector('.js-CalendarMonth__grid');
@@ -217,7 +185,6 @@ class DayPicker extends React.Component {
     this.onKeyDown = this.onKeyDown.bind(this);
     this.onPrevMonthClick = this.onPrevMonthClick.bind(this);
     this.onNextMonthClick = this.onNextMonthClick.bind(this);
-    this.setCalendarMonthGridRef = this.setCalendarMonthGridRef.bind(this);
     this.multiplyScrollableMonths = this.multiplyScrollableMonths.bind(this);
     this.updateStateAfterMonthTransition = this.updateStateAfterMonthTransition.bind(this);
 
@@ -226,15 +193,18 @@ class DayPicker extends React.Component {
 
     this.setContainerRef = this.setContainerRef.bind(this);
     this.setTransitionContainerRef = this.setTransitionContainerRef.bind(this);
+    this.setCalendarMonthGridHeight = this.setCalendarMonthGridHeight.bind(this);
   }
 
   componentDidMount() {
     this.setState({ isTouchDevice: isTouchDevice() });
 
-    if (this.isHorizontal()) {
-      this.adjustDayPickerHeight();
-      this.initializeDayPickerWidth();
-    }
+    this.adjustDayPickerHeightTimeout = setTimeout(() => {
+      if (this.isHorizontal()) {
+        this.adjustDayPickerHeight();
+        this.initializeDayPickerWidth();
+      }
+    }, 0);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -305,6 +275,12 @@ class DayPicker extends React.Component {
       (!prevProps.showKeyboardShortcuts && this.props.showKeyboardShortcuts)
     ) {
       this.container.focus();
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.adjustDayPickerHeightTimeout) {
+      clearTimeout(this.adjustDayPickerHeightTimeout);
     }
   }
 
@@ -464,8 +440,8 @@ class DayPicker extends React.Component {
     return getMonthHeight(this.transitionContainer.querySelectorAll('.CalendarMonth')[i]);
   }
 
-  setCalendarMonthGridRef(ref) {
-    this.calendarMonthGrid = ref;
+  setCalendarMonthGridHeight(height) {
+    this.calendarMonthGridHeight = height;
   }
 
   setContainerRef(ref) {
@@ -603,18 +579,7 @@ class DayPicker extends React.Component {
   }
 
   adjustDayPickerHeight() {
-    const heights = [];
-
-    Array.prototype.forEach.call(this.transitionContainer.querySelectorAll('.CalendarMonth'),
-      (el) => {
-        if (el.getAttribute('data-visible') === 'true') {
-          heights.push(getMonthHeight(el));
-        }
-      },
-    );
-
-    const newMonthHeight = Math.max(...heights) + MONTH_PADDING;
-
+    const newMonthHeight = this.calendarMonthGridHeight + MONTH_PADDING;
     if (newMonthHeight !== calculateDimension(this.transitionContainer, 'height')) {
       this.monthHeight = newMonthHeight;
       this.transitionContainer.style.height = `${newMonthHeight}px`;
@@ -861,7 +826,7 @@ class DayPicker extends React.Component {
               ref={this.setTransitionContainerRef}
             >
               <CalendarMonthGrid
-                ref={this.setCalendarMonthGridRef}
+                setCalendarMonthGridHeight={this.setCalendarMonthGridHeight}
                 transformValue={transformValue}
                 enableOutsideDays={enableOutsideDays}
                 firstVisibleMonthIndex={firstVisibleMonthIndex}
