@@ -68,8 +68,8 @@ function loadStories() {
 //   require('../stories/SingleDatePicker_input');
 //   require('../stories/SingleDatePicker_calendar');
 //   require('../stories/SingleDatePicker_day');
-//   require('../stories/DayPickerRangeController');
-//   require('../stories/DayPickerSingleDateController');
+  require('../stories/DayPickerRangeController');
+  require('../stories/DayPickerSingleDateController');
   require('../stories/DayPicker');
   require('../stories/withStyles');
 }

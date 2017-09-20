@@ -15,9 +15,9 @@ storiesOf('withStyles', module)
     <table>
       <tr>
         <CalendarDay />
-        <CalendarDay isOutsideDay modifiers={new Set(['highlighted'])} />
-        <CalendarDay modifiers={new Set(['highlighted'])} />
-        <CalendarDay modifiers={new Set(['minimum-nights'])} />
+        <CalendarDay isOutsideDay />
+        <CalendarDay modifiers={new Set(['highlighted-calendar'])} />
+        <CalendarDay modifiers={new Set(['blocked-minimum-nights'])} />
         <CalendarDay modifiers={new Set(['selected-span'])} />
         <CalendarDay modifiers={new Set(['selected'])} />
         <CalendarDay modifiers={new Set(['selected-start'])} />

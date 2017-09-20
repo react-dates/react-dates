@@ -64,7 +64,7 @@ export default {
     hoveredSpan: {
       backgroundColor: core.primaryShade_4,
       backgroundColor_active: core.primaryShade_3,
-      backgroundColor_hover: core.primaryShade_3,
+      backgroundColor_hover: core.primaryShade_4,
       borderColor: core.primaryShade_3,
       borderColor_active: core.primaryShade_3,
       borderColor_hover: core.primaryShade_3,

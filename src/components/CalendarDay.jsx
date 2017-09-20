@@ -117,8 +117,7 @@ class CalendarDay extends React.Component {
     };
 
     const useDefaultCursor =
-      isOutsideDay ||
-      modifiers.has('minimum-nights') ||
+      modifiers.has('blocked-minimum-nights') ||
       modifiers.has('blocked-calendar') ||
       modifiers.has('blocked-out-of-range');
 
@@ -131,19 +130,21 @@ class CalendarDay extends React.Component {
       modifiers.has('hovered-span') ||
       modifiers.has('after-hovered-start');
 
+    const isOutsideRange = modifiers.has('blocked-out-of-range');
+
     return (
       <td
         {...css(
           styles.CalendarDay_container,
-          modifiers.has('highlighted') && styles.CalendarDay__highlighted_calendar,
-          modifiers.has('minimum-nights') && styles.CalendarDay__blocked_minimum_nights,
+          isOutsideDay && styles.CalendarDay__outside,
+          modifiers.has('highlighted-calendar') && styles.CalendarDay__highlighted_calendar,
+          modifiers.has('blocked-minimum-nights') && styles.CalendarDay__blocked_minimum_nights,
           modifiers.has('blocked-calendar') && styles.CalendarDay__blocked_calendar,
           hoveredSpan && styles.CalendarDay__hovered_span,
           modifiers.has('selected-span') && styles.CalendarDay__selected_span,
           modifiers.has('last-in-range') && styles.CalendarDay__last_in_range,
           selected && styles.CalendarDay__selected,
-          modifiers.has('blocked-out-of-range') && styles.CalendarDay__blocked_out_of_range,
-          isOutsideDay && styles.CalendarDay__outside,
+          isOutsideRange && styles.CalendarDay__blocked_out_of_range,
           daySizeStyles,
         )}
       >
@@ -216,18 +217,6 @@ export default withStyles(({ color }) => ({
 
     background: color.outside.backgroundColor,
     color: color.outside.color,
-
-    ':hover': {
-      background: color.outside.backgroundColor_hover,
-      border: 0,
-      color: color.outside.color_active,
-    },
-
-    ':active': {
-      background: color.outside.backgroundColor_active,
-      border: 0,
-      color: color.outside.color_active,
-    },
   },
 
   CalendarDay__blocked_minimum_nights: {
