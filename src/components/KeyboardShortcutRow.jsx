@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { forbidExtraProps } from 'airbnb-prop-types';
-import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
+import { css, withStyles } from 'react-with-styles';
+
+import withStylesPropTypes from '../shapes/withStylesPropTypes';
 
 const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
