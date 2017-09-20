@@ -101,7 +101,7 @@ function DayPickerNavigation({
         styles.DayPickerNavigation_container,
         isHorizontal && styles.DayPickerNavigation_container__horizontal,
         isVertical && styles.DayPickerNavigation_container__vertical,
-        isVerticalScrollable && styles.DayPickerNavigation_container__vertical_scrollable,
+        isVerticalScrollable && styles.DayPickerNavigation_container__verticalScrollable,
       )}
     >
       {!isVerticalScrollable && (
@@ -146,7 +146,7 @@ function DayPickerNavigation({
             isDefaultNavNext && styles.DayPickerNavigation_button__vertical__default,
             isDefaultNavNext && styles.DayPickerNavigation_nextButton__vertical__default,
           ]),
-          isVerticalScrollable && styles.DayPickerNavigation_nextButton__vertical_scrollable,
+          isVerticalScrollable && styles.DayPickerNavigation_nextButton__verticalScrollable,
         )}
         type="button"
         aria-label={phrases.jumpToNextMonth}
@@ -183,7 +183,8 @@ export default withStyles(({ color, zIndex }) => ({
     width: '100%',
   },
 
-  DayPickerNavigation__vertical_scrollable: {
+  DayPickerNavigation_container__verticalScrollable: {
+    position: 'relative',
   },
 
   DayPickerNavigation_button: {
@@ -240,7 +241,7 @@ export default withStyles(({ color, zIndex }) => ({
     borderLeft: 0,
   },
 
-  DayPickerNavigation_nextButton__vertical_scrollable: {
+  DayPickerNavigation_nextButton__verticalScrollable: {
     width: '100%',
   },
 

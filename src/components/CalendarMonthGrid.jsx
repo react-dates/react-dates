@@ -252,9 +252,13 @@ class CalendarMonthGrid extends React.Component {
               {...css(
                 isHorizontal && styles.CalendarMonthGrid_month__horizontal,
                 hideForAnimation && styles.CalendarMonthGrid_month__hideForAnimation,
-                showForAnimation && {
+                showForAnimation && !isVertical && {
                   position: 'absolute',
                   left: -calendarMonthWidth,
+                },
+                showForAnimation && isVertical && {
+                  position: 'absolute',
+                  top: -this.calendarMonthHeights[0],
                 },
               )}
             >

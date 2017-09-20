@@ -165,7 +165,7 @@ class CalendarMonth extends React.Component {
           styles.CalendarMonth,
           orientation === HORIZONTAL_ORIENTATION && styles.CalendarMonth__horizontal,
           orientation === VERTICAL_ORIENTATION && styles.CalendarMonth__vertical,
-          verticalScrollable && styles.CalendarMonth__vertical_scrollable,
+          verticalScrollable && styles.CalendarMonth__verticalScrollable,
 
         )}
         data-visible={isVisible}
@@ -176,7 +176,7 @@ class CalendarMonth extends React.Component {
             ref={this.setCaptionRef}
             {...css(
               styles.CalendarMonth_caption,
-              verticalScrollable && styles.CalendarMonth_caption__vertical_scrollable,
+              verticalScrollable && styles.CalendarMonth_caption__verticalScrollable,
             )}
           >
             <strong>{monthTitle}</strong>
@@ -239,8 +239,9 @@ export default withStyles(({ color, font, spacing }) => ({
     captionSide: 'initial',
   },
 
-  CalendarMonth_caption__vertical_scrollable: {
-    padding: '5px 0',
+  CalendarMonth_caption__verticalScrollable: {
+    paddingTop: 12,
+    paddingBottom: 7,
   },
 }))(CalendarMonth);
 

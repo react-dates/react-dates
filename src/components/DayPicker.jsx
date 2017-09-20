@@ -343,13 +343,15 @@ class DayPicker extends React.Component {
     let translationValue =
       this.isVertical() ? this.calendarMonthHeights[0] : calendarMonthWidth;
 
-    if (isRTL && this.isHorizontal()) {
-      translationValue = -2 * calendarMonthWidth;
-    }
+    if (this.isHorizontal()) {
+      if (isRTL) {
+        translationValue = -2 * calendarMonthWidth;
+      }
 
-    const newMonthHeight = this.calendarMonthHeights.slice(0, numberOfMonths)
-      .reduce((maxHeight, height) => Math.max(maxHeight, height), 0);
-    this.adjustDayPickerHeight(newMonthHeight);
+      const newMonthHeight = this.calendarMonthHeights.slice(0, numberOfMonths)
+        .reduce((maxHeight, height) => Math.max(maxHeight, height), 0);
+      this.adjustDayPickerHeight(newMonthHeight);
+    }
 
     this.setState({
       monthTransition: PREV_TRANSITION,
@@ -368,13 +370,15 @@ class DayPicker extends React.Component {
     let translationValue =
       this.isVertical() ? -this.calendarMonthHeights[1] : -calendarMonthWidth;
 
-    if (isRTL && this.isHorizontal()) {
-      translationValue = 0;
-    }
+    if (this.isHorizontal()) {
+      if (isRTL) {
+        translationValue = 0;
+      }
 
-    const newMonthHeight = this.calendarMonthHeights.slice(2)
-      .reduce((maxHeight, height) => Math.max(maxHeight, height), 0);
-    this.adjustDayPickerHeight(newMonthHeight);
+      const newMonthHeight = this.calendarMonthHeights.slice(2)
+        .reduce((maxHeight, height) => Math.max(maxHeight, height), 0);
+      this.adjustDayPickerHeight(newMonthHeight);
+    }
 
     this.setState({
       monthTransition: NEXT_TRANSITION,
@@ -723,8 +727,9 @@ class DayPicker extends React.Component {
           styles.DayPicker,
           this.isHorizontal() && styles.DayPicker__horizontal,
           this.isVertical() && styles.DayPicker__vertical,
-          verticalScrollable && styles.DayPicker__vertical_scrollable,
-          withPortal && styles.DayPicker__portal,
+          verticalScrollable && styles.DayPicker__verticalScrollable,
+          this.isHorizontal() && withPortal && styles.DayPicker_portal__horizontal,
+          this.isVertical() && withPortal && styles.DayPicker_portal__vertical,
           dayPickerStyle,
         )}
       >
@@ -865,7 +870,7 @@ export default withStyles(({ color, zIndex }) => ({
   DayPicker_weekHeader__verticalScrollable: {
     top: 0,
     display: 'table-row',
-    borderBottom: `1px solid ${color.border}`,
+    borderBottom: `1px solid ${color.core.border}`,
     background: color.background,
     marginLeft: 0,
     left: 0,
