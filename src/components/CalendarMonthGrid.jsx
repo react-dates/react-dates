@@ -244,28 +244,36 @@ class CalendarMonthGrid extends React.Component {
         {months.map((month, i) => {
           const isVisible =
             (i >= firstVisibleMonthIndex) && (i < firstVisibleMonthIndex + numberOfMonths);
+          const hideForAnimation = i < firstVisibleMonthIndex && !isAnimating;
           const monthString = toISOMonthString(month);
           return (
-            <CalendarMonth
-              key={monthString}
-              month={month}
-              isVisible={isVisible}
-              enableOutsideDays={enableOutsideDays}
-              modifiers={modifiers[monthString]}
-              monthFormat={monthFormat}
-              orientation={orientation}
-              onDayMouseEnter={onDayMouseEnter}
-              onDayMouseLeave={onDayMouseLeave}
-              onDayClick={onDayClick}
-              renderMonth={renderMonth}
-              renderDay={renderDay}
-              firstDayOfWeek={firstDayOfWeek}
-              daySize={daySize}
-              focusedDate={isVisible ? focusedDate : null}
-              isFocused={isFocused}
-              phrases={phrases}
-              setMonthHeights={(height) => { this.setMonthHeights(height, i); }}
-            />
+            <div
+              {...css(
+                isHorizontal && styles.CalendarMonthGrid_month__horizontal,
+                hideForAnimation && styles.CalendarMonthGrid_month__hideForAnimation,
+              )}
+            >
+              <CalendarMonth
+                key={monthString}
+                month={month}
+                isVisible={isVisible}
+                enableOutsideDays={enableOutsideDays}
+                modifiers={modifiers[monthString]}
+                monthFormat={monthFormat}
+                orientation={orientation}
+                onDayMouseEnter={onDayMouseEnter}
+                onDayMouseLeave={onDayMouseLeave}
+                onDayClick={onDayClick}
+                renderMonth={renderMonth}
+                renderDay={renderDay}
+                firstDayOfWeek={firstDayOfWeek}
+                daySize={daySize}
+                focusedDate={isVisible ? focusedDate : null}
+                isFocused={isFocused}
+                phrases={phrases}
+                setMonthHeights={(height) => { this.setMonthHeights(height, i); }}
+              />
+            </div>
           );
         })}
       </div>
@@ -300,5 +308,17 @@ export default withStyles(({ color, zIndex }) => ({
   CalendarMonthGrid__vertical_scrollable: {
     margin: '0 auto',
     overflowY: 'scroll',
+  },
+
+  CalendarMonthGrid_month__horizontal: {
+    display: 'inline-block',
+    minHeight: '100%',
+  },
+
+  CalendarMonthGrid_month__hideForAnimation: {
+    position: 'absolute',
+    zIndex: zIndex - 1,
+    opacity: 0,
+    pointerEvents: 'none',
   },
 }))(CalendarMonthGrid);

@@ -141,6 +141,7 @@ class CalendarMonth extends React.Component {
       monthFormat,
       orientation,
       isVisible,
+      hideForAnimation,
       modifiers,
       onDayClick,
       onDayMouseEnter,
@@ -166,6 +167,7 @@ class CalendarMonth extends React.Component {
           orientation === HORIZONTAL_ORIENTATION && styles.CalendarMonth__horizontal,
           orientation === VERTICAL_ORIENTATION && styles.CalendarMonth__vertical,
           verticalScrollable && styles.CalendarMonth__vertical_scrollable,
+
         )}
         data-visible={isVisible}
       >
@@ -227,25 +229,6 @@ export default withStyles(({ color, font, spacing }) => ({
     caption: {
       captionSide: 'initial',
     },
-  },
-
-// .CalendarMonth--horizontal,
-// .CalendarMonth--vertical {
-//   &:first-of-type {
-//     position: absolute;
-//     z-index: $react-dates-z-index - 1;
-//     opacity: 0;
-//     pointer-events: none;
-//   }
-// }
-
-  CalendarMonth__horizontal: {
-    display: 'inline-block',
-    minHeight: '100%',
-  },
-
-  CalendarMonth__vertical: {
-    display: 'block',
   },
 
   CalendarMonth_caption: {
