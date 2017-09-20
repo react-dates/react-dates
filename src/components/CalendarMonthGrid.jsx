@@ -100,7 +100,7 @@ class CalendarMonthGrid extends React.Component {
       months: getMonths(props.initialMonth, props.numberOfMonths, withoutTransitionMonths),
     };
 
-    this.calendarMonthGridHeight = new Array(props.numberOfMonths);
+    this.calendarMonthHeights = new Array(props.numberOfMonths);
 
     this.isTransitionEndSupported = isTransitionEndSupported();
     this.onTransitionEnd = this.onTransitionEnd.bind(this);
@@ -108,15 +108,15 @@ class CalendarMonthGrid extends React.Component {
   }
 
   componentDidMount() {
-    const { setCalendarMonthGridHeight } = this.props;
+    const { setCalendarMonthHeights } = this.props;
     this.eventHandle = addEventListener(
       this.container,
       'transitionend',
       this.onTransitionEnd,
     );
 
-    this.setCalendarMonthGridHeightTimeout = setTimeout(() => {
-      setCalendarMonthGridHeight(this.getHeight());
+    this.setCalendarMonthHeightsTimeout = setTimeout(() => {
+      setCalendarMonthHeights(this.calendarMonthHeights);
     }, 0);
   }
 
@@ -152,20 +152,26 @@ class CalendarMonthGrid extends React.Component {
     return shallowCompare(this, nextProps, nextState);
   }
 
-  componentDidUpdate() {
-    const { isAnimating, onMonthTransitionEnd } = this.props;
+  componentDidUpdate(prevProps) {
+    const { isAnimating, onMonthTransitionEnd, setCalendarMonthHeights } = this.props;
 
     // For IE9, immediately call onMonthTransitionEnd instead of
     // waiting for the animation to complete
     if (!this.isTransitionEndSupported && isAnimating) {
       onMonthTransitionEnd();
     }
+
+    if (!isAnimating && prevProps.isAnimating) {
+      this.setCalendarMonthHeightsTimeout = setTimeout(() => {
+        setCalendarMonthHeights(this.calendarMonthHeights);
+      }, 0);
+    }
   }
 
   componentWillUnmount() {
     removeEventListener(this.eventHandle);
-    if (this.setCalendarMonthGridHeightTimeout) {
-      clearTimeout(this.setCalendarMonthGridHeightTimeout);
+    if (this.setCalendarMonthHeightsTimeout) {
+      clearTimeout(this.setCalendarMonthHeightsTimeout);
     }
   }
 
@@ -173,21 +179,12 @@ class CalendarMonthGrid extends React.Component {
     this.props.onMonthTransitionEnd();
   }
 
-  getHeight() {
-    const { firstVisibleMonthIndex, numberOfMonths } = this.props;
-    return this.calendarMonthGridHeight.reduce((maxHeight, height, i) => {
-      const isVisible =
-        (i >= firstVisibleMonthIndex) && (i < firstVisibleMonthIndex + numberOfMonths);
-      return isVisible ? Math.max(maxHeight, height) : maxHeight;
-    }, 0);
-  }
-
   setContainerRef(ref) {
     this.container = ref;
   }
 
   setMonthHeight(height, i) {
-    this.calendarMonthGridHeight[i] = height;
+    this.calendarMonthHeights[i] = height;
   }
 
   render() {
