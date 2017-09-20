@@ -120,11 +120,11 @@ class CalendarMonth extends React.Component {
   }
 
   setMonthHeight() {
-    const { setMonthHeights } = this.props;
+    const { setMonthHeight } = this.props;
     const captionHeight = calculateDimension(this.captionRef, 'height', true, true);
     const gridHeight = calculateDimension(this.gridRef, 'height');
 
-    setMonthHeights(captionHeight + gridHeight + 1);
+    setMonthHeight(captionHeight + gridHeight + 1);
   }
 
   setCaptionRef(ref) {
@@ -141,7 +141,6 @@ class CalendarMonth extends React.Component {
       monthFormat,
       orientation,
       isVisible,
-      hideForAnimation,
       modifiers,
       onDayClick,
       onDayMouseEnter,

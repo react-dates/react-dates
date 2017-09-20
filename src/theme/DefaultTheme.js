@@ -122,7 +122,7 @@ export default {
     },
   },
   spacing: {
-    captionPaddingTop: 29,
+    captionPaddingTop: 22,
     captionPaddingBottom: 37,
   },
   font: {

@@ -100,7 +100,7 @@ class CalendarMonthGrid extends React.Component {
       months: getMonths(props.initialMonth, props.numberOfMonths, withoutTransitionMonths),
     };
 
-    this.calendarMonthHeights = new Array(props.numberOfMonths);
+    this.calendarMonthGridHeight = new Array(props.numberOfMonths);
 
     this.isTransitionEndSupported = isTransitionEndSupported();
     this.onTransitionEnd = this.onTransitionEnd.bind(this);
@@ -175,7 +175,7 @@ class CalendarMonthGrid extends React.Component {
 
   getHeight() {
     const { firstVisibleMonthIndex, numberOfMonths } = this.props;
-    return this.calendarMonthHeights.reduce((maxHeight, height, i) => {
+    return this.calendarMonthGridHeight.reduce((maxHeight, height, i) => {
       const isVisible =
         (i >= firstVisibleMonthIndex) && (i < firstVisibleMonthIndex + numberOfMonths);
       return isVisible ? Math.max(maxHeight, height) : maxHeight;
@@ -186,8 +186,8 @@ class CalendarMonthGrid extends React.Component {
     this.container = ref;
   }
 
-  setMonthHeights(height, i) {
-    this.calendarMonthHeights[i] = height;
+  setMonthHeight(height, i) {
+    this.calendarMonthGridHeight[i] = height;
   }
 
   render() {
@@ -233,6 +233,9 @@ class CalendarMonthGrid extends React.Component {
           isVertical && styles.CalendarMonthGrid__vertical,
           isVerticalScrollable && styles.CalendarMonthGrid__vertical_scrollable,
           isAnimating && styles.CalendarMonthGrid__animating,
+          isAnimating && {
+            transition: 'transform 0.2s ease-in-out',
+          },
           {
             ...getTransformStyles(transformValue),
             width,
@@ -244,13 +247,18 @@ class CalendarMonthGrid extends React.Component {
         {months.map((month, i) => {
           const isVisible =
             (i >= firstVisibleMonthIndex) && (i < firstVisibleMonthIndex + numberOfMonths);
-          const hideForAnimation = i < firstVisibleMonthIndex && !isAnimating;
+          const hideForAnimation = i === 0 && !isVisible;
+          const showForAnimation = i === 0 && isAnimating && isVisible;
           const monthString = toISOMonthString(month);
           return (
             <div
               {...css(
                 isHorizontal && styles.CalendarMonthGrid_month__horizontal,
                 hideForAnimation && styles.CalendarMonthGrid_month__hideForAnimation,
+                showForAnimation && {
+                  position: 'absolute',
+                  left: -calendarMonthWidth,
+                },
               )}
             >
               <CalendarMonth
@@ -271,7 +279,7 @@ class CalendarMonthGrid extends React.Component {
                 focusedDate={isVisible ? focusedDate : null}
                 isFocused={isFocused}
                 phrases={phrases}
-                setMonthHeights={(height) => { this.setMonthHeights(height, i); }}
+                setMonthHeight={(height) => { this.setMonthHeight(height, i); }}
               />
             </div>
           );
@@ -292,7 +300,6 @@ export default withStyles(({ color, zIndex }) => ({
   },
 
   CalendarMonthGrid__animating: {
-    transition: 'transform 0.2s ease-in-out',
     zIndex: zIndex + 1,
   },
 
@@ -312,6 +319,7 @@ export default withStyles(({ color, zIndex }) => ({
 
   CalendarMonthGrid_month__horizontal: {
     display: 'inline-block',
+    verticalAlign: 'top',
     minHeight: '100%',
   },
 
