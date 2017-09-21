@@ -10,7 +10,6 @@ import { setOptions } from '@storybook/addon-options';
 import DefaultTheme from '../src/theme/DefaultTheme';
 
 import './storybook.scss';
-import '../css/styles.scss';
 
 ThemedStyleSheet.registerTheme(DefaultTheme);
 ThemedStyleSheet.registerInterface(aphroditeInterface);

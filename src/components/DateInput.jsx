@@ -201,7 +201,7 @@ class DateInput extends React.Component {
         />
 
         {screenReaderMessage && (
-          <p id={screenReaderMessageId} className="screen-reader-only">
+          <p {...css(styles.DateInput_screenReaderMessage)} id={screenReaderMessageId}>
             {screenReaderMessage}
           </p>
         )}
@@ -313,6 +313,17 @@ export default withStyles(({ color, sizing, spacing, font, zIndex }) => {
 
     DateInput_input__readOnly: {
       userSelect: 'none',
+    },
+
+    DateInput_screenReaderMessage: {
+      border: 0,
+      clip: 'rect(0, 0, 0, 0)',
+      height: 1,
+      margin: -1,
+      overflow: 'hidden',
+      padding: 0,
+      position: 'absolute',
+      width: 1,
     },
 
     DateInput_displayText: {
