@@ -5,7 +5,6 @@ import { nonNegativeInteger } from 'airbnb-prop-types';
 import { SingleDatePickerPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 
-import withStylesPropTypes from '../shapes/withStylesPropTypes';
 import IconPositionShape from '../shapes/IconPositionShape';
 import OrientationShape from '../shapes/OrientationShape';
 import anchorDirectionShape from '../shapes/AnchorDirectionShape';
@@ -13,8 +12,6 @@ import openDirectionShape from '../shapes/OpenDirectionShape';
 import DayOfWeekShape from '../shapes/DayOfWeekShape';
 
 export default {
-  ...withStylesPropTypes,
-
   // required props for a functional interactive SingleDatePicker
   date: momentPropTypes.momentObj,
   onDateChange: PropTypes.func.isRequired,

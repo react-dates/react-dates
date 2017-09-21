@@ -1,12 +1,12 @@
 import React from 'react';
 import moment from 'moment';
-import cx from 'classnames';
 import { css, withStyles } from 'react-with-styles';
 import Portal from 'react-portal';
 import { forbidExtraProps } from 'airbnb-prop-types';
 import { addEventListener, removeEventListener } from 'consolidated-events';
 import isTouchDevice from 'is-touch-device';
 
+import withStylesPropTypes from '../shapes/withStylesPropTypes';
 import SingleDatePickerShape from '../shapes/SingleDatePickerShape';
 import { SingleDatePickerPhrases } from '../defaultPhrases';
 
@@ -35,7 +35,10 @@ import {
   ICON_BEFORE_POSITION,
 } from '../../constants';
 
-const propTypes = forbidExtraProps(SingleDatePickerShape);
+const propTypes = forbidExtraProps({
+  ...withStylesPropTypes,
+  ...SingleDatePickerShape,
+});
 
 const defaultProps = {
   // required props for a functional interactive SingleDatePicker

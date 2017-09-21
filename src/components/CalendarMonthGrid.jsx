@@ -50,6 +50,7 @@ const propTypes = forbidExtraProps({
   focusedDate: momentPropTypes.momentObj, // indicates focusable day
   isFocused: PropTypes.bool, // indicates whether or not to move focus to focusable day
   firstDayOfWeek: DayOfWeekShape,
+  setCalendarMonthHeights: PropTypes.func,
 
   // i18n
   monthFormat: PropTypes.string,
@@ -75,6 +76,7 @@ const defaultProps = {
   focusedDate: null,
   isFocused: false,
   firstDayOfWeek: null,
+  setCalendarMonthHeights() {},
 
   // i18n
   monthFormat: 'MMMM YYYY', // english locale
@@ -251,6 +253,7 @@ class CalendarMonthGrid extends React.Component {
           const monthString = toISOMonthString(month);
           return (
             <div
+              key={monthString}
               {...css(
                 isHorizontal && styles.CalendarMonthGrid_month__horizontal,
                 hideForAnimation && styles.CalendarMonthGrid_month__hideForAnimation,
@@ -265,7 +268,6 @@ class CalendarMonthGrid extends React.Component {
               )}
             >
               <CalendarMonth
-                key={monthString}
                 month={month}
                 isVisible={isVisible}
                 enableOutsideDays={enableOutsideDays}

@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import shallowCompare from 'react-addons-shallow-compare';
 import moment from 'moment';
 import { css, withStyles } from 'react-with-styles';
@@ -20,6 +19,7 @@ import DayPickerRangeController from './DayPickerRangeController';
 
 import CloseButton from '../svg/close.svg';
 
+import withStylesPropTypes from '../shapes/withStylesPropTypes';
 import DateRangePickerShape from '../shapes/DateRangePickerShape';
 
 import {
@@ -35,7 +35,10 @@ import {
   ICON_BEFORE_POSITION,
 } from '../../constants';
 
-const propTypes = forbidExtraProps(DateRangePickerShape);
+const propTypes = forbidExtraProps({
+  ...withStylesPropTypes,
+  ...DateRangePickerShape,
+});
 
 const defaultProps = {
   // required props for a functional interactive DateRangePicker
@@ -122,7 +125,6 @@ class DateRangePicker extends React.Component {
     this.responsivizePickerPosition = this.responsivizePickerPosition.bind(this);
 
     this.setDayPickerContainerRef = this.setDayPickerContainerRef.bind(this);
-    this.setDayPickerRef = this.setDayPickerRef.bind(this);
   }
 
   componentDidMount() {
@@ -206,16 +208,8 @@ class DateRangePicker extends React.Component {
     });
   }
 
-  getDayPickerDOMNode() {
-    return ReactDOM.findDOMNode(this.dayPicker); // eslint-disable-line react/no-find-dom-node
-  }
-
   setDayPickerContainerRef(ref) {
     this.dayPickerContainer = ref;
-  }
-
-  setDayPickerRef(ref) {
-    this.dayPicker = ref;
   }
 
   isOpened() {
@@ -347,7 +341,6 @@ class DateRangePicker extends React.Component {
         onClick={onOutsideClick}
       >
         <DayPickerRangeController
-          ref={this.setDayPickerRef}
           orientation={orientation}
           enableOutsideDays={enableOutsideDays}
           numberOfMonths={numberOfMonths}

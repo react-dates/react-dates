@@ -5,7 +5,6 @@ import { nonNegativeInteger } from 'airbnb-prop-types';
 import { DateRangePickerPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 
-import withStylesPropTypes from '../shapes/withStylesPropTypes';
 import FocusedInputShape from '../shapes/FocusedInputShape';
 import IconPositionShape from '../shapes/IconPositionShape';
 import OrientationShape from '../shapes/OrientationShape';
@@ -14,8 +13,6 @@ import openDirectionShape from '../shapes/OpenDirectionShape';
 import DayOfWeekShape from '../shapes/DayOfWeekShape';
 
 export default {
-  ...withStylesPropTypes,
-
   // required props for a functional interactive DateRangePicker
   startDate: momentPropTypes.momentObj,
   endDate: momentPropTypes.momentObj,
