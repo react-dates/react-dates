@@ -28,9 +28,13 @@ export default {
   color: {
     core,
 
+    disabled: core.grayLighter,
+
     background: core.white,
     backgroundDark: '#f2f2f2',
+    backgroundFocused: '#99ede6',
     text: core.gray,
+    textFocused: '#007a87',
     placeholderText: '#757575',
 
     outside: {
@@ -124,9 +128,22 @@ export default {
   spacing: {
     captionPaddingTop: 22,
     captionPaddingBottom: 37,
+    inputPadding: 8,
+    inputMarginBottom: 72, // spacing in between the input and the picker
+    displayTextPaddingVertical: 4,
+    displayTextPaddingHorizontal: 8,
+  },
+  sizing: {
+    inputWidth: 130,
+    tooltipArrowWidth: 20,
+    arrowWidth: 24,
   },
   font: {
     size: 14,
     captionSize: 18,
+    input: {
+      size: 18,
+      lineHeight: '24px',
+    },
   },
 };

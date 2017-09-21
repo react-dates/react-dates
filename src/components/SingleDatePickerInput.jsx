@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { forbidExtraProps } from 'airbnb-prop-types';
-import cx from 'classnames';
+import { css, withStyles } from 'react-with-styles';
+
+import withStylesPropTypes from '../shapes/withStylesPropTypes';
 
 import { SingleDatePickerInputPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
@@ -16,6 +18,7 @@ import openDirectionShape from '../shapes/OpenDirectionShape';
 import { ICON_BEFORE_POSITION, ICON_AFTER_POSITION, OPEN_DOWN } from '../../constants';
 
 const propTypes = forbidExtraProps({
+  ...withStylesPropTypes,
   id: PropTypes.string.isRequired,
   placeholder: PropTypes.string, // also used as label
   displayValue: PropTypes.string,
@@ -75,129 +78,177 @@ const defaultProps = {
   phrases: SingleDatePickerInputPhrases,
 };
 
-export default class SingleDatePickerInput extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isClearDateHovered: false,
-    };
+function SingleDatePickerInput({
+  id,
+  placeholder,
+  displayValue,
+  inputValue,
+  focused,
+  isFocused,
+  disabled,
+  required,
+  readOnly,
+  showCaret,
+  showClearDate,
+  showDefaultInputIcon,
+  inputIconPosition,
+  phrases,
+  onClearDate,
+  onChange,
+  onFocus,
+  onKeyDownShiftTab,
+  onKeyDownTab,
+  onKeyDownArrowDown,
+  screenReaderMessage,
+  customCloseIcon,
+  customInputIcon,
+  openDirection,
+  isRTL,
+  styles,
+}) {
+  const calendarIcon =
+    customInputIcon || (<CalendarIcon {...css(styles.SingleDatePickerInput_calendarIcon_svg)} />);
+  const closeIcon =
+    customCloseIcon || (<CloseButton {...css(styles.SingleDatePickerInput_clearDate_svg)} />);
 
-    this.onClearDateMouseEnter = this.onClearDateMouseEnter.bind(this);
-    this.onClearDateMouseLeave = this.onClearDateMouseLeave.bind(this);
-  }
+  const screenReaderText = screenReaderMessage || phrases.keyboardNavigationInstructions;
+  const inputIcon = (showDefaultInputIcon || customInputIcon !== null) && (
+    <button
+      {...css(styles.SingleDatePickerInput_calendarIcon)}
+      type="button"
+      disabled={disabled}
+      aria-label={phrases.focusStartDate}
+      onClick={onFocus}
+    >
+      {calendarIcon}
+    </button>
+  );
 
-  onClearDateMouseEnter() {
-    this.setState({
-      isClearDateHovered: true,
-    });
-  }
+  return (
+    <div
+      {...css(
+        styles.SingleDatePickerInput,
+        disabled && styles.SingleDatePickerInput__disabled,
+        isRTL && styles.SingleDatePickerInput__rtl,
+      )}
+    >
+      {inputIconPosition === ICON_BEFORE_POSITION && inputIcon}
 
-  onClearDateMouseLeave() {
-    this.setState({
-      isClearDateHovered: false,
-    });
-  }
-
-  render() {
-    const { isClearDateHovered } = this.state;
-    const {
-      id,
-      placeholder,
-      displayValue,
-      inputValue,
-      focused,
-      isFocused,
-      disabled,
-      required,
-      readOnly,
-      openDirection,
-      showCaret,
-      showClearDate,
-      showDefaultInputIcon,
-      inputIconPosition,
-      phrases,
-      onClearDate,
-      onChange,
-      onFocus,
-      onKeyDownShiftTab,
-      onKeyDownTab,
-      onKeyDownArrowDown,
-      screenReaderMessage,
-      customCloseIcon,
-      customInputIcon,
-      isRTL,
-    } = this.props;
-
-    const calendarIcon = customInputIcon || (<CalendarIcon />);
-    const closeIcon = customCloseIcon || (<CloseButton />);
-    const screenReaderText = screenReaderMessage || phrases.keyboardNavigationInstructions;
-    const inputIcon = (showDefaultInputIcon || customInputIcon !== null) && (
-      <button
-        type="button"
-        className="SingleDatePickerInput__calendar-icon"
+      <DateInput
+        id={id}
+        placeholder={placeholder} // also used as label
+        displayValue={displayValue}
+        inputValue={inputValue}
+        screenReaderMessage={screenReaderText}
+        focused={focused}
+        isFocused={isFocused}
         disabled={disabled}
-        aria-label={phrases.focusStartDate}
-        onClick={onFocus}
-      >
-        {calendarIcon}
-      </button>
-    );
+        required={required}
+        readOnly={readOnly}
+        showCaret={showCaret}
+        onChange={onChange}
+        onFocus={onFocus}
+        onKeyDownShiftTab={onKeyDownShiftTab}
+        onKeyDownTab={onKeyDownTab}
+        onKeyDownArrowDown={onKeyDownArrowDown}
+        openDirection={openDirection}
+      />
 
-    return (
-      <div
-        className={cx('SingleDatePickerInput', {
-          'SingleDatePickerInput--disabled': disabled,
-          'SingleDatePickerInput--rtl': isRTL,
-        })}
-      >
-
-        {inputIconPosition === ICON_BEFORE_POSITION && inputIcon}
-
-        <DateInput
-          id={id}
-          placeholder={placeholder} // also used as label
-          displayValue={displayValue}
-          inputValue={inputValue}
-          screenReaderMessage={screenReaderText}
-          focused={focused}
-          isFocused={isFocused}
+      {showClearDate && (
+        <button
+          {...css(
+            styles.SingleDatePickerInput_clearDate,
+            !displayValue && styles.SingleDatePickerInput_clearDate__hide,
+          )}
+          type="button"
+          aria-label={phrases.clearDate}
           disabled={disabled}
-          required={required}
-          readOnly={readOnly}
-          openDirection={openDirection}
-          showCaret={showCaret}
-          onChange={onChange}
-          onFocus={onFocus}
-          onKeyDownShiftTab={onKeyDownShiftTab}
-          onKeyDownTab={onKeyDownTab}
-          onKeyDownArrowDown={onKeyDownArrowDown}
-        />
+          onMouseEnter={this.onClearDateMouseEnter}
+          onMouseLeave={this.onClearDateMouseLeave}
+          onClick={onClearDate}
+        >
+          {closeIcon}
+        </button>
+      )}
 
-        {showClearDate && (
-          <button
-            type="button"
-            className={cx('SingleDatePickerInput__clear-date', {
-              'SingleDatePickerInput__clear-date--hide': !displayValue,
-              'SingleDatePickerInput__clear-date--hover': isClearDateHovered,
-            })}
-            disabled={disabled}
-            aria-label={phrases.clearDate}
-            onMouseEnter={this.onClearDateMouseEnter}
-            onMouseLeave={this.onClearDateMouseLeave}
-            onClick={onClearDate}
-          >
-            <div className="DateRangePickerInput__close">
-              {closeIcon}
-            </div>
-          </button>
-        )}
+      {inputIconPosition === ICON_AFTER_POSITION && inputIcon}
 
-        {inputIconPosition === ICON_AFTER_POSITION && inputIcon}
-
-      </div>
-    );
-  }
+    </div>
+  );
 }
 
 SingleDatePickerInput.propTypes = propTypes;
 SingleDatePickerInput.defaultProps = defaultProps;
+
+export default withStyles(({ color }) => ({
+  SingleDatePickerInput: {
+    backgroundColor: color.background,
+    border: `1px solid ${color.core.border}`,
+  },
+
+  SingleDatePickerInput__rtl: {
+    direction: 'rtl',
+  },
+
+  SingleDatePickerInput__disabled: {
+    backgroundColor: color.disabled,
+  },
+
+  SingleDatePickerInput_clearDate: {
+    background: 'none',
+    border: 0,
+    color: 'inherit',
+    font: 'inherit',
+    lineHeight: 'normal',
+    overflow: 'visible',
+
+    cursor: 'pointer',
+    display: 'inline-block',
+    verticalAlign: 'middle',
+    padding: 10,
+    margin: '0 10px 0 5px',
+
+    ':focus': {
+      background: color.core.border,
+      borderRadius: '50%',
+    },
+
+    ':hover': {
+      background: color.core.border,
+      borderRadius: '50%',
+    },
+  },
+
+  SingleDatePickerInput_clearDate__hide: {
+    visibility: 'hidden',
+  },
+
+  SingleDatePickerInput_clearDate_svg: {
+    fill: color.core.grayLight,
+    height: 12,
+    width: 15,
+    verticalAlign: 'middle',
+  },
+
+  SingleDatePickerInput_calendarIcon: {
+    background: 'none',
+    border: 0,
+    color: 'inherit',
+    font: 'inherit',
+    lineHeight: 'normal',
+    overflow: 'visible',
+
+    cursor: 'pointer',
+    display: 'inline-block',
+    verticalAlign: 'middle',
+    padding: 10,
+    margin: '0 5px 0 10px',
+  },
+
+  SingleDatePickerInput_calendarIcon_svg: {
+    fill: color.core.grayLight,
+    height: 15,
+    width: 14,
+    verticalAlign: 'middle',
+  },
+}))(SingleDatePickerInput);

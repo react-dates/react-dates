@@ -7,6 +7,9 @@ import CalendarMonthGrid from '../src/components/CalendarMonthGrid';
 import DayPickerNavigation from '../src/components/DayPickerNavigation';
 import KeyboardShortcutRow from '../src/components/KeyboardShortcutRow';
 import DayPickerKeyboardShortcuts from '../src/components/DayPickerKeyboardShortcuts';
+import DateInput from '../src/components/DateInput';
+import SingleDatePickerInput from '../src/components/SingleDatePickerInput';
+import DateRangePickerInput from '../src/components/DateRangePickerInput';
 
 import { VERTICAL_ORIENTATION, VERTICAL_SCROLLABLE } from '../constants';
 
@@ -98,6 +101,72 @@ storiesOf('withStyles', module)
         }}
       >
         <DayPickerKeyboardShortcuts showKeyboardShortcutsPanel />
+      </div>
+    </div>
+  ))
+  .addWithInfo('DateInput', () => (
+    <div>
+      <div>
+        <DateInput />
+      </div>
+
+      <div style={{ marginTop: 8 }}>
+        <DateInput disabled />
+      </div>
+
+      <div style={{ marginTop: 8 }}>
+        <DateInput focused />
+      </div>
+
+      <div style={{ marginTop: 8 }}>
+        <DateInput focused showCaret />
+      </div>
+    </div>
+  ))
+  .addWithInfo('SingleDatePickerInput', () => (
+    <div>
+      <div>
+        <SingleDatePickerInput />
+      </div>
+
+      <div style={{ marginTop: 8 }}>
+        <SingleDatePickerInput focused />
+      </div>
+
+      <div style={{ marginTop: 8 }}>
+        <SingleDatePickerInput showClearDate displayValue="Test" />
+      </div>
+
+      <div style={{ marginTop: 8 }}>
+        <SingleDatePickerInput showDefaultInputIcon />
+      </div>
+    </div>
+  ))
+
+  .addWithInfo('DateRangePickerInput', () => (
+    <div>
+      <div>
+        <DateRangePickerInput />
+      </div>
+
+      <div style={{ marginTop: 8 }}>
+        <DateRangePickerInput isStartDateFocused />
+      </div>
+
+      <div style={{ marginTop: 8 }}>
+        <DateRangePickerInput isEndDateFocused />
+      </div>
+
+      <div style={{ marginTop: 8 }}>
+        <DateRangePickerInput disabled />
+      </div>
+
+      <div style={{ marginTop: 8 }}>
+        <DateRangePickerInput showClearDates startDate="Test" />
+      </div>
+
+      <div style={{ marginTop: 8 }}>
+        <DateRangePickerInput showDefaultInputIcon />
       </div>
     </div>
   ));
