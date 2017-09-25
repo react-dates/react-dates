@@ -146,6 +146,7 @@ export default class SingleDatePickerInput extends React.Component {
     return (
       <div
         className={cx('SingleDatePickerInput', {
+          'SingleDatePickerInput--disabled': disabled,
           'SingleDatePickerInput--rtl': isRTL,
         })}
       >
@@ -179,6 +180,7 @@ export default class SingleDatePickerInput extends React.Component {
               'SingleDatePickerInput__clear-date--hide': !displayValue,
               'SingleDatePickerInput__clear-date--hover': isClearDateHovered,
             })}
+            disabled={disabled}
             aria-label={phrases.clearDate}
             onMouseEnter={this.onClearDateMouseEnter}
             onMouseLeave={this.onClearDateMouseLeave}

@@ -5,6 +5,10 @@
   border: 1px solid $react-dates-color-border;
 }
 
+.SingleDatePickerInput--disabled {
+  background: $react-dates-color-gray-lighter;
+}
+
 .SingleDatePickerInput--rtl {
   direction: rtl;
 }

@@ -259,6 +259,7 @@ export default class DateRangePickerInput extends React.Component {
               'DateRangePickerInput__clear-dates--hide': !(startDate || endDate),
               'DateRangePickerInput__clear-dates--hover': isClearDatesHovered,
             })}
+            disabled={disabled}
             onMouseEnter={this.onClearDatesMouseEnter}
             onMouseLeave={this.onClearDatesMouseLeave}
             onClick={onClearDates}
