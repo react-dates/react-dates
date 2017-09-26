@@ -323,7 +323,7 @@ describe('DateInput', () => {
       it('focuses and selects inputRef when becoming focused', () => {
         const wrapper = shallow(
           <DateInput id="date" focused={false} isFocused={false} />,
-          { lifecycleExperimental: true },
+          { disableLifecycleMethods: false },
         );
 
         wrapper.instance().inputRef = el;
@@ -338,7 +338,7 @@ describe('DateInput', () => {
       it('blurs when becoming unfocused', () => {
         const wrapper = shallow(
           <DateInput id="date" focused isFocused />,
-          { lifecycleExperimental: true },
+          { disableLifecycleMethods: false },
         );
 
         wrapper.instance().inputRef = el;
