@@ -6,62 +6,19 @@ import sinon from 'sinon-sandbox';
 import SingleDatePickerInput from '../../src/components/SingleDatePickerInput';
 
 describe('SingleDatePickerInput', () => {
-  describe('#render', () => {
-    it('is .SingleDatePickerInput class', () => {
-      const wrapper = shallow(<SingleDatePickerInput id="date" />);
-      expect(wrapper.is('.SingleDatePickerInput')).to.equal(true);
-    });
-
-    it('is .SingleDatePickerInput--rtl class', () => {
-      const wrapper = shallow(<SingleDatePickerInput id="date" isRTL />);
-      expect(wrapper.is('.SingleDatePickerInput--rtl')).to.equal(true);
-    });
-  });
-
   describe('clear date', () => {
     describe('props.showClearDate is falsey', () => {
-      it('does not have .SingleDatePickerInput__clear-date class', () => {
-        const wrapper = shallow(<SingleDatePickerInput id="date" showClearDate={false} />);
-        expect(wrapper.find('.SingleDatePickerInput__clear-date')).to.have.lengthOf(0);
+      it('does not render a clear date button', () => {
+        const wrapper = shallow(<SingleDatePickerInput id="date" showClearDate={false} />).dive();
+        expect(wrapper.find('button')).to.have.lengthOf(0);
       });
     });
 
     describe('props.showClearDate is truthy', () => {
-      it('has .SingleDatePickerInput__clear-date class', () => {
-        const wrapper = shallow(<SingleDatePickerInput id="date" showClearDate />);
-        expect(wrapper.find('.SingleDatePickerInput__clear-date')).to.have.lengthOf(1);
+      it('has a clear date button', () => {
+        const wrapper = shallow(<SingleDatePickerInput id="date" showClearDate />).dive();
+        expect(wrapper.find('button')).to.have.lengthOf(1);
       });
-
-      it('has .SingleDatePickerInput__clear-date--hover class if state.isClearDateHovered',
-        () => {
-          const wrapper = shallow(<SingleDatePickerInput id="date" showClearDate />);
-          wrapper.setState({ isClearDateHovered: true });
-          expect(wrapper.find('.SingleDatePickerInput__clear-date--hover')).to.have.lengthOf(1);
-        });
-
-      it('no .SingleDatePickerInput__clear-date--hover class if !state.isClearDateHovered',
-        () => {
-          const wrapper = shallow(<SingleDatePickerInput id="date" showClearDate />);
-          wrapper.setState({ isClearDateHovered: false });
-          expect(wrapper.find('.SingleDatePickerInput__clear-date--hover')).to.have.lengthOf(0);
-        });
-
-      it('has .SingleDatePickerInput__clear-date--hide class if there is no date',
-        () => {
-          const wrapper = shallow(<SingleDatePickerInput
-            id="date"
-            showClearDate
-            displayValue={null}
-          />);
-          expect(wrapper.find('.SingleDatePickerInput__clear-date--hide')).to.have.lengthOf(1);
-        });
-
-      it('does not have .SingleDatePickerInput__clear-date--hide class if there is a date',
-        () => {
-          const wrapper =
-            shallow(<SingleDatePickerInput id="date" showClearDate displayValue="2016-07-13" />);
-          expect(wrapper.find('.SingleDatePickerInput__clear-date--hide')).to.have.lengthOf(0);
-        });
     });
 
     describe('props.customCloseIcon is a React Element', () => {
@@ -71,24 +28,25 @@ describe('SingleDatePickerInput', () => {
             id="date"
             showClearDate
             customCloseIcon={<span className="custom-close-icon" />}
-          />);
-        expect(wrapper.find('.SingleDatePickerInput .custom-close-icon')).to.have.lengthOf(1);
+          />).dive();
+        expect(wrapper.find('.custom-close-icon')).to.have.lengthOf(1);
       });
     });
   });
 
   describe('show calendar icon', () => {
     describe('props.showInputIcon is falsey', () => {
-      it('does not have .SingleDatePickerInput__calendar-icon class', () => {
-        const wrapper = shallow(<SingleDatePickerInput id="date" showDefaultInputIcon={false} />);
-        expect(wrapper.find('.SingleDatePickerInput__calendar-icon')).to.have.lengthOf(0);
+      it('does not have a calendar button', () => {
+        const wrapper =
+          shallow(<SingleDatePickerInput id="date" showDefaultInputIcon={false} />).dive();
+        expect(wrapper.find('button')).to.have.lengthOf(0);
       });
     });
 
     describe('props.showInputIcon is truthy', () => {
-      it('has .SingleDatePickerInput__calendar-icon class', () => {
-        const wrapper = shallow(<SingleDatePickerInput id="date" showDefaultInputIcon />);
-        expect(wrapper.find('.SingleDatePickerInput__calendar-icon')).to.have.lengthOf(1);
+      it('has button', () => {
+        const wrapper = shallow(<SingleDatePickerInput id="date" showDefaultInputIcon />).dive();
+        expect(wrapper.find('button')).to.have.lengthOf(1);
       });
     });
 
@@ -98,12 +56,13 @@ describe('SingleDatePickerInput', () => {
           <SingleDatePickerInput
             id="date"
             customInputIcon={<span className="custom-icon" />}
-          />);
-        expect(wrapper.find('.SingleDatePickerInput__calendar-icon .custom-icon')).to.have.lengthOf(1);
+          />).dive();
+        expect(wrapper.find('.custom-icon')).to.have.lengthOf(1);
       });
     });
   });
 
+<<<<<<< HEAD
   describe('#onClearDateMouseEnter', () => {
     it('sets state.isClearDateHovered to true', () => {
       const wrapper = shallow(<SingleDatePickerInput id="date" />);
@@ -132,40 +91,10 @@ describe('SingleDatePickerInput', () => {
             onClearDate={onClearDateSpy}
             showClearDate
           />,
-        );
-        const clearDateWrapper = wrapper.find('.SingleDatePickerInput__clear-date');
+        ).dive();
+        const clearDateWrapper = wrapper.find('button');
         clearDateWrapper.simulate('click');
         expect(onClearDateSpy.called).to.equal(true);
-      });
-    });
-
-    describe('onMouseEnter', () => {
-      it('onClearDateMouseEnter gets triggered', () => {
-        const onClearDateMouseEnterSpy = sinon.spy(
-          SingleDatePickerInput.prototype,
-          'onClearDateMouseEnter',
-        );
-        const wrapper = shallow(<SingleDatePickerInput id="date" showClearDate />);
-        const clearDateWrapper = wrapper.find('.SingleDatePickerInput__clear-date');
-
-        clearDateWrapper.simulate('mouseEnter');
-
-        expect(onClearDateMouseEnterSpy.called).to.equal(true);
-      });
-    });
-
-    describe('onMouseLeave', () => {
-      it('onClearDateMouseLeave gets triggered', () => {
-        const onClearDateMouseLeaveSpy = sinon.spy(
-          SingleDatePickerInput.prototype,
-          'onClearDateMouseLeave',
-        );
-        const wrapper = shallow(<SingleDatePickerInput id="date" showClearDate />);
-        const clearDateWrapper = wrapper.find('.SingleDatePickerInput__clear-date');
-
-        clearDateWrapper.simulate('mouseLeave');
-
-        expect(onClearDateMouseLeaveSpy.called).to.equal(true);
       });
     });
   });

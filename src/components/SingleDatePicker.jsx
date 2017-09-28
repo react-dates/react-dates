@@ -474,6 +474,7 @@ class SingleDatePicker extends React.Component {
 SingleDatePicker.propTypes = propTypes;
 SingleDatePicker.defaultProps = defaultProps;
 
+export { SingleDatePicker as PureSingleDatePicker };
 export default withStyles(({ color, spacing, zIndex }) => ({
   SingleDatePicker: {
     position: 'relative',

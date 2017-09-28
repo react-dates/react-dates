@@ -242,8 +242,6 @@ function DateRangePickerInput({
             styles.DateRangePickerInput_clearDates,
             !(startDate || endDate) && styles.DateRangePickerInput_clearDates__hide,
           )}
-          onMouseEnter={this.onClearDatesMouseEnter}
-          onMouseLeave={this.onClearDatesMouseLeave}
           onClick={onClearDates}
           disabled={disabled}
         >

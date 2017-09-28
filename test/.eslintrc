@@ -10,8 +10,11 @@
   },
   "extends": "airbnb",
   "rules": {
+    "import/no-extraneous-dependencies": [2, {
+      "devDependencies": true
+    }],
     "indent": [2, 2, {
-		"MemberExpression": "off"
-	}],
+  		"MemberExpression": "off"
+  	}],
   }
 }

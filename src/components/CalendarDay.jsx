@@ -174,6 +174,7 @@ class CalendarDay extends React.Component {
 CalendarDay.propTypes = propTypes;
 CalendarDay.defaultProps = defaultProps;
 
+export { CalendarDay as PureCalendarDay };
 export default withStyles(({ color }) => ({
   CalendarDay_container: {
     border: `1px solid ${color.core.borderLight}`,

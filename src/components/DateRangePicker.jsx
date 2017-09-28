@@ -478,6 +478,7 @@ class DateRangePicker extends React.Component {
 DateRangePicker.propTypes = propTypes;
 DateRangePicker.defaultProps = defaultProps;
 
+export { DateRangePicker as PureDateRangePicker };
 export default withStyles(({ color, zIndex, spacing }) => ({
   DateRangePicker: {
     position: 'relative',

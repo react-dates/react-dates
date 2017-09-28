@@ -8,146 +8,80 @@ import DateRangePickerInput from '../../src/components/DateRangePickerInput';
 
 describe('DateRangePickerInput', () => {
   describe('#render', () => {
-    it('is .DateRangePickerInput class', () => {
-      const wrapper = shallow(<DateRangePickerInput />);
-      expect(wrapper.is('.DateRangePickerInput')).to.equal(true);
-    });
-
-    it('is .DateRangePickerInput--rtl class', () => {
-      const wrapper = shallow(<DateRangePickerInput isRTL />);
-      expect(wrapper.is('.DateRangePickerInput--rtl')).to.equal(true);
-    });
-
     it('renders 2 <DateInput /> components', () => {
-      const wrapper = shallow(<DateRangePickerInput />);
+      const wrapper = shallow(<DateRangePickerInput />).dive();
       expect(wrapper.find(DateInput)).to.have.lengthOf(2);
     });
 
-    describe('props.disabled is falsey', () => {
-      it('does not have .DateRangePickerInput--disabled class ', () => {
-        const wrapper = shallow(<DateRangePickerInput disabled={false} />);
-        expect(wrapper.find('.DateRangePickerInput--disabled')).to.have.lengthOf(0);
-      });
-    });
-
-    describe('props.disabled is truthy', () => {
-      it('has .DateRangePickerInput--disabled class', () => {
-        const wrapper = shallow(<DateRangePickerInput disabled />);
-        expect(wrapper.find('.DateRangePickerInput--disabled')).to.have.lengthOf(1);
-      });
-    });
-
-    it('has .DateRangePickerInput__arrow class', () => {
-      const wrapper = shallow(<DateRangePickerInput />);
-      expect(wrapper.find('.DateRangePickerInput__arrow')).to.have.lengthOf(1);
-    });
-
-    describe('clear dates', () => {
-      describe('props.showClearDates is falsey', () => {
-        it('does not have .DateRangePickerInput__clear-dates class', () => {
-          const wrapper = shallow(<DateRangePickerInput showClearDates={false} />);
-          expect(wrapper.find('.DateRangePickerInput__clear-dates')).to.have.lengthOf(0);
-        });
+    describe('props.showClearDates', () => {
+      it('if true renders clear dates button', () => {
+        const wrapper = shallow(
+          <DateRangePickerInput
+            showClearDates
+          />,
+        ).dive();
+        expect(wrapper.find('button')).to.have.lengthOf(1);
       });
 
-      describe('props.showClearDates is truthy', () => {
-        it('has .DateRangePickerInput__clear-dates class', () => {
-          const wrapper = shallow(<DateRangePickerInput showClearDates />);
-          expect(wrapper.find('.DateRangePickerInput__clear-dates')).to.have.lengthOf(1);
-        });
-
-        it('has .DateRangePickerInput__clear-dates--hover class if state.isClearDatesHovered',
-          () => {
-            const wrapper = shallow(<DateRangePickerInput showClearDates />);
-            wrapper.setState({ isClearDatesHovered: true });
-            expect(wrapper.find('.DateRangePickerInput__clear-dates--hover')).to.have.lengthOf(1);
-          });
-
-        it('no .DateRangePickerInput__clear-dates--hover class if !state.isClearDatesHovered',
-          () => {
-            const wrapper = shallow(<DateRangePickerInput showClearDates />);
-            wrapper.setState({ isClearDatesHovered: false });
-            expect(wrapper.find('.DateRangePickerInput__clear-dates--hover')).to.have.lengthOf(0);
-          });
-
-        it('has .DateRangePickerInput__clear-dates--hide class if there are no dates',
-          () => {
-            const wrapper = shallow(
-              <DateRangePickerInput showClearDates startDate={null} endDate={null} />,
-            );
-            expect(wrapper.find('.DateRangePickerInput__clear-dates--hide')).to.have.lengthOf(1);
-          });
-
-        it('does not have .DateRangePickerInput__clear-dates--hide class if there are dates',
-          () => {
-            const wrapper = shallow(<DateRangePickerInput showClearDates startDate="2016-07-13" />);
-            expect(wrapper.find('.DateRangePickerInput__clear-dates--hide')).to.have.lengthOf(0);
-          });
+      it('if false does not render clear dates', () => {
+        const wrapper = shallow(
+          <DateRangePickerInput
+            showClearDates={false}
+          />,
+        ).dive();
+        expect(wrapper.find('button')).to.have.lengthOf(0);
       });
     });
 
     describe('show calendar icon', () => {
-      describe('props.showInputIcon is falsey', () => {
-        it('does not have .DateRangePickerInput__calendar-icon class', () => {
-          const wrapper = shallow(<DateRangePickerInput showDefaultInputIcon={false} />);
-          expect(wrapper.find('.DateRangePickerInput__calendar-icon')).to.have.lengthOf(0);
-        });
+      it('if true renders calendar button', () => {
+        const wrapper = shallow(
+          <DateRangePickerInput
+            showDefaultInputIcon
+          />,
+        ).dive();
+        expect(wrapper.find('button')).to.have.lengthOf(1);
       });
 
-      describe('props.showInputIcon is truthy', () => {
-        it('has .DateRangePickerInput__calendar-icon class', () => {
-          const wrapper = shallow(<DateRangePickerInput showDefaultInputIcon />);
-          expect(wrapper.find('.DateRangePickerInput__calendar-icon')).to.have.lengthOf(1);
-        });
+      it('if false does not render calendar button', () => {
+        const wrapper = shallow(
+          <DateRangePickerInput
+            showDefaultInputIcon={false}
+          />,
+        ).dive();
+        expect(wrapper.find('button')).to.have.lengthOf(0);
       });
+
       describe('props.customInputIcon is a React Element', () => {
-        it('has custom icon', () => {
+        it('custom icon is rendered', () => {
           const wrapper = shallow(
             <DateRangePickerInput
               customInputIcon={<span className="custom-icon" />}
-            />);
-          expect(wrapper.find('.DateRangePickerInput__calendar-icon .custom-icon')).to.have.lengthOf(1);
+            />).dive();
+          expect(wrapper.find('.custom-icon')).to.have.lengthOf(1);
         });
       });
     });
   });
 
-  describe('props.customArrowIcon is a React Element', () => {
-    it('has custom icon', () => {
+  describe('props.customArrowIcon', () => {
+    it('custom icon is rendered', () => {
       const wrapper = shallow(
         <DateRangePickerInput
           customArrowIcon={<span className="custom-arrow-icon" />}
-        />);
-      expect(wrapper.find('.DateRangePickerInput .custom-arrow-icon')).to.have.lengthOf(1);
+        />).dive();
+      expect(wrapper.find('.custom-arrow-icon')).to.have.lengthOf(1);
     });
   });
 
-  describe('props.customCloseIcon is a React Element', () => {
-    it('has custom icon', () => {
+  describe('props.customCloseIcon', () => {
+    it('custom icon is rendered', () => {
       const wrapper = shallow(
         <DateRangePickerInput
           showClearDates
           customCloseIcon={<span className="custom-close-icon" />}
-        />);
-      expect(wrapper.find('.DateRangePickerInput .custom-close-icon')).to.have.lengthOf(1);
-    });
-  });
-
-  describe('#onClearDatesMouseEnter', () => {
-    it('sets state.isClearDatesHovered to true', () => {
-      const wrapper = shallow(<DateRangePickerInput />);
-      wrapper.setState({ isClearDatesHovered: false });
-      wrapper.instance().onClearDatesMouseEnter();
-      expect(wrapper.state().isClearDatesHovered).to.equal(true);
-    });
-  });
-
-  describe('#onClearDatesMouseLeave', () => {
-    it('sets state.isClearDatesHovered to false', () => {
-      const wrapper = shallow(<DateRangePickerInput />);
-      wrapper.setState({ isClearDatesHovered: true });
-      wrapper.instance().onClearDatesMouseLeave();
-      expect(wrapper.state().isClearDatesHovered).to.equal(false);
+        />).dive();
+      expect(wrapper.find('.custom-close-icon')).to.have.lengthOf(1);
     });
   });
 
@@ -160,40 +94,10 @@ describe('DateRangePickerInput', () => {
             onClearDates={onClearDatesSpy}
             showClearDates
           />,
-        );
-        const clearDatesWrapper = wrapper.find('.DateRangePickerInput__clear-dates');
+        ).dive();
+        const clearDatesWrapper = wrapper.find('button');
         clearDatesWrapper.simulate('click');
         expect(onClearDatesSpy.called).to.equal(true);
-      });
-    });
-
-    describe('onMouseEnter', () => {
-      it('onClearDatesMouseEnter gets triggered', () => {
-        const onClearDatesMouseEnterSpy = sinon.spy(
-          DateRangePickerInput.prototype,
-          'onClearDatesMouseEnter',
-        );
-        const wrapper = shallow(<DateRangePickerInput showClearDates />);
-        const clearDatesWrapper = wrapper.find('.DateRangePickerInput__clear-dates');
-
-        clearDatesWrapper.simulate('mouseEnter');
-
-        expect(onClearDatesMouseEnterSpy.called).to.equal(true);
-      });
-    });
-
-    describe('onMouseLeave', () => {
-      it('onClearDatesMouseLeave gets triggered', () => {
-        const onClearDatesMouseLeaveSpy = sinon.spy(
-          DateRangePickerInput.prototype,
-          'onClearDatesMouseLeave',
-        );
-        const wrapper = shallow(<DateRangePickerInput showClearDates />);
-        const clearDatesWrapper = wrapper.find('.DateRangePickerInput__clear-dates');
-
-        clearDatesWrapper.simulate('mouseLeave');
-
-        expect(onClearDatesMouseLeaveSpy.called).to.equal(true);
       });
     });
   });
@@ -206,8 +110,8 @@ describe('DateRangePickerInput', () => {
           <DateRangePickerInput
             onArrowDown={onArrowDownSpy}
             showDefaultInputIcon
-          />);
-        const calendarIconWrapper = wrapper.find('.DateRangePickerInput__calendar-icon');
+          />).dive();
+        const calendarIconWrapper = wrapper.find('button').at(0);
         calendarIconWrapper.simulate('click');
         expect(onArrowDownSpy.callCount).to.equal(1);
       });

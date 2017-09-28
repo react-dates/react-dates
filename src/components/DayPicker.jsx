@@ -160,6 +160,9 @@ class DayPicker extends React.Component {
       withMouseInteractions: true,
     };
 
+    this.calendarMonthHeights = [];
+    this.calendarMonthGridHeight = 0;
+
     this.onKeyDown = this.onKeyDown.bind(this);
     this.onPrevMonthClick = this.onPrevMonthClick.bind(this);
     this.onNextMonthClick = this.onNextMonthClick.bind(this);
@@ -816,6 +819,7 @@ class DayPicker extends React.Component {
 DayPicker.propTypes = propTypes;
 DayPicker.defaultProps = defaultProps;
 
+export { DayPicker as PureDayPicker };
 export default withStyles(({ color, zIndex }) => ({
   DayPicker: {
     background: color.background,
