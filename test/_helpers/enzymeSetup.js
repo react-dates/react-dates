@@ -3,6 +3,7 @@ let Adapter;
 try {
   Adapter = require('enzyme-adapter-react-15');
 } catch (e) {
+  throw e;
   Adapter = require('enzyme-adapter-react-14');
 }
 
