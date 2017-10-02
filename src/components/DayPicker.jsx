@@ -62,7 +62,7 @@ const propTypes = forbidExtraProps({
   onNextMonthClick: PropTypes.func,
   onMultiplyScrollableMonths: PropTypes.func, // VERTICAL_SCROLLABLE daypickers only
   onMonthChange: PropTypes.func,
-  
+
   // month props
   renderMonth: PropTypes.func,
 
@@ -583,9 +583,9 @@ export default class DayPicker extends React.Component {
         );
       }
     }
-    
+
     onMonthChange(newMonth);
-    
+
     this.setState({
       currentMonth: newMonth,
       monthTransition: null,
