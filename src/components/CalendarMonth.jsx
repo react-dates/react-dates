@@ -170,7 +170,6 @@ class CalendarMonth extends React.Component {
           orientation === HORIZONTAL_ORIENTATION && styles.CalendarMonth__horizontal,
           orientation === VERTICAL_ORIENTATION && styles.CalendarMonth__vertical,
           verticalScrollable && styles.CalendarMonth__verticalScrollable,
-
         )}
         data-visible={isVisible}
       >
