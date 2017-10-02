@@ -543,6 +543,7 @@ export default class DayPicker extends React.Component {
     const {
       onPrevMonthClick,
       onNextMonthClick,
+      onMonthChange,
     } = this.props;
 
     const {
