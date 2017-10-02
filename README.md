@@ -40,12 +40,18 @@ Ensure packages are installed with correct version numbers by running:
   npm install --save react-dates moment@>=#.## react@>=#.## react-dom@>=#.## react-addons-shallow-compare@>=#.##
   ```
 
+### Initialize
+```js
+import 'react-dates/initialize';
+```
+
+As of v13.0.0 of `react-dates`, this project relies on `react-with-styles`. If you want to continue using CSS stylesheets and classes, there is a little bit of extra set-up required to get things going. As such, you need to import `react-dates/initialize` to set up class names on our components.
+
 ### Include component
 ```js
 import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
 ```
 
-### Include CSS
 #### Webpack
 Using Webpack with CSS loader, add the following import to your app:
 ```js
@@ -258,16 +264,44 @@ The following is a list of other *OPTIONAL* props you may provide to the `DayPic
 moment.locale('pl'); // Polish
 ```
 
-## Theming
+## Advanced
 
-react-dates comes with a set of SCSS variables that can be overridden to add your own project-specific theming. Override any variables found in `css/variables.scss` with your own and then import `~react-dates/css/styles.scss` (and `~react-dates/css/variables.scss` if you're only overriding a few). If you were using [sass-loader](https://github.com/jtangelder/sass-loader) with webpack, the code below would properly override the selected variables:
-```scss
-//overriding default sass variables with my project's colors
-$react-dates-color-primary: $some-color-specific-to-my-project;
-$react-dates-color-secondary: $some-other-color-specific-to-my-project;
-@import '~react-dates/css/variables.scss';
-@import '~react-dates/css/styles.scss';
+`react-dates` no longer relies strictly on CSS, but rather relies on `react-with-styles` as an abstraction layer between how styles are applied and how they are written. The instructions above will get the project working out of the box, but there's a lot more customization that can be done.
+
+### Interfaces
+
+The `react-dates/initialize` script actually relies on [react-with-styles-interface-css](https://github.com/airbnb/react-with-styles-interface-css) under the hood. If you are interested in a different solution for styling in your project, you can do your own initialization of a another [interface](https://github.com/airbnb/react-with-styles/blob/master/README.md#interfaces). At Airbnb, for instance, we rely on [Aphrodite](https://github.com/Khan/aphrodite) under the hood and therefore use the Aphrodite interface for `react-with-styles`. If you want to do the same, you would use the following pattern:
+```js
+import ThemedStyleSheet from 'react-with-styles/lib/ThemedStyleSheet';
+import aphroditeInterface from 'react-with-styles-interface-aphrodite';
+
+ThemedStyleSheet.registerInterface(aphroditeInterface);
 ```
+
+### Theming
+`react-dates` also now supports a different way to theme. You can see the default theme values in [this file](https://github.com/airbnb/react-dates/blob/master/src/theme/DefaultTheme.js) and you would override them in the following manner:
+```js
+import ThemedStyleSheet from 'react-with-styles/lib/ThemedStyleSheet';
+import DefaultTheme from 'react-dates/lib/theme/DefaultTheme';
+
+ThemedStyleSheet.registerTheme({
+  ...DefaultTheme,
+  color: {
+    ...DefaultTheme.color,
+    highlighted: {
+      backgroundColor: '#82E0AA',
+      backgroundColor_active: '#58D68D',
+      backgroundColor_hover: '#58D68D',
+      color: '#186A3B',
+      color_active: '#186A3B',
+      color_hover: '#186A3B',
+    },
+  }
+});
+```
+
+The above code would use shades of green instead of shades of yellow for the highlight color on `CalendarDay` components.
+
 
 [package-url]: https://npmjs.org/package/react-dates
 [npm-version-svg]: http://versionbadg.es/airbnb/react-dates.svg

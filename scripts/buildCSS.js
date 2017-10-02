@@ -9,6 +9,9 @@ const compileCSS = require('react-with-styles-interface-css/compile').default;
 
 const registerInterfaceWithDefaultTheme = require('../src/utils/registerInterfaceWithDefaultTheme').default;
 
+const args = process.argv.slice(2);
+const optimizeForProduction = args.includes('-o') || args.includes('--optimize');
+
 require('../test/_helpers/ignoreSVGStrings');
 
 registerMaxSpecificity(11);
@@ -22,10 +25,11 @@ const singleDatePickerCSS = compileCSS(SingleDatePickerPath);
 const CSS = dateRangePickerCSS + singleDatePickerCSS;
 
 const format = new CleanCSS({
-  level: 0,
+  level: optimizeForProduction ? 2 : 0,
   format: 'beautify',
   inline: ['none'],
 });
 const { styles: formattedCSS } = format.minify(CSS);
 
-fs.writeFileSync('./css/styles.css', formattedCSS, 'utf8');
+const outputFilePath = optimizeForProduction ? './lib/css/_datepicker.css' : './css/styles.css';
+fs.writeFileSync(outputFilePath, formattedCSS, 'utf8');
