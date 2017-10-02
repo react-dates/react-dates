@@ -51,6 +51,7 @@ const propTypes = forbidExtraProps({
   isFocused: PropTypes.bool, // indicates whether or not to move focus to focusable day
   firstDayOfWeek: DayOfWeekShape,
   setCalendarMonthHeights: PropTypes.func,
+  isRTL: PropTypes.bool,
 
   // i18n
   monthFormat: PropTypes.string,
@@ -77,6 +78,7 @@ const defaultProps = {
   isFocused: false,
   firstDayOfWeek: null,
   setCalendarMonthHeights() {},
+  isRTL: false,
 
   // i18n
   monthFormat: 'MMMM YYYY', // english locale
@@ -188,7 +190,17 @@ class CalendarMonthGrid extends React.Component {
   }
 
   setMonthHeight(height, i) {
-    this.calendarMonthHeights[i] = height;
+    if (this.calendarMonthHeights[i]) {
+      if (i === 0) {
+        this.calendarMonthHeights.pop();
+        this.calendarMonthHeights.unshift(height);
+      } else if (i === this.calendarMonthHeights.length - 1) {
+        this.calendarMonthHeights.shift();
+        this.calendarMonthHeights.push(height);
+      }
+    } else {
+      this.calendarMonthHeights[i] = height;
+    }
   }
 
   render() {
@@ -211,6 +223,7 @@ class CalendarMonthGrid extends React.Component {
       firstDayOfWeek,
       focusedDate,
       isFocused,
+      isRTL,
       styles,
       phrases,
     } = this.props;
@@ -257,9 +270,13 @@ class CalendarMonthGrid extends React.Component {
               {...css(
                 isHorizontal && styles.CalendarMonthGrid_month__horizontal,
                 hideForAnimation && styles.CalendarMonthGrid_month__hideForAnimation,
-                showForAnimation && !isVertical && {
+                showForAnimation && !isVertical && !isRTL && {
                   position: 'absolute',
                   left: -calendarMonthWidth,
+                },
+                showForAnimation && !isVertical && isRTL && {
+                  position: 'absolute',
+                  right: 0,
                 },
                 showForAnimation && isVertical && {
                   position: 'absolute',

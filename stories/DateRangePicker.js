@@ -83,7 +83,6 @@ storiesOf('DateRangePicker (DRP)', module)
     moment.locale('fa');
     return (
       <DateRangePickerWrapper
-        placeholder="تقویم فارسی"
         renderMonth={month => momentJalaali(month).format('jMMMM jYYYY')}
         renderDay={day => momentJalaali(day).format('jD')}
       />
