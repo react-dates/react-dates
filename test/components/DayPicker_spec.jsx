@@ -797,11 +797,11 @@ describe('DayPicker', () => {
       describe('props.onMonthChange function', () => {
         it('calls onMonthChange if state.monthTransition is truthy', () => {
           const wrapper = mount(<DayPicker />);
-          const onMonthChange = sinon.stub();
+          const onMonthChangeSpy = sinon.stub();
           wrapper.setState({
             monthTransition: 'foo',
           });
-          expect(onMonthChange).to.have.property('callCount', 1);
+          expect(onMonthChangeSpy).to.have.property('callCount', 1);
         });
       });
 
