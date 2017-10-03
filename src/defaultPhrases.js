@@ -1,3 +1,4 @@
+const calendarLabel = 'Calendar';
 const closeDatePicker = 'Close';
 const focusStartDate = 'Interact with the calendar and add the check-in date for your trip.';
 const clearDate = 'Clear Date';
@@ -33,6 +34,7 @@ const chooseAvailableDate = ({ date }) => date;
 const dateIsUnavailable = ({ date }) => `Not available. ${date}`;
 
 export default {
+  calendarLabel,
   closeDatePicker,
   focusStartDate,
   clearDate,
@@ -64,6 +66,7 @@ export default {
 };
 
 export const DateRangePickerPhrases = {
+  calendarLabel,
   closeDatePicker,
   clearDates,
   focusStartDate,
@@ -99,6 +102,7 @@ export const DateRangePickerInputPhrases = {
 };
 
 export const SingleDatePickerPhrases = {
+  calendarLabel,
   closeDatePicker,
   clearDate,
   jumpToPrevMonth,
@@ -131,6 +135,7 @@ export const SingleDatePickerInputPhrases = {
 };
 
 export const DayPickerPhrases = {
+  calendarLabel,
   jumpToPrevMonth,
   jumpToNextMonth,
   keyboardShortcuts,
