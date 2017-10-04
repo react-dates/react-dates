@@ -296,7 +296,7 @@ ThemedStyleSheet.registerTheme({
       color_active: '#186A3B',
       color_hover: '#186A3B',
     },
-  }
+  },
 });
 ```
 

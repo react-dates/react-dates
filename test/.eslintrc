@@ -14,7 +14,7 @@
       "devDependencies": true
     }],
     "indent": [2, 2, {
-  		"MemberExpression": "off"
-  	}],
+      "MemberExpression": "off"
+    }],
   }
 }

@@ -552,7 +552,7 @@ describe('DateRangePicker', () => {
             focusedInput={START_DATE}
             endDate={endDate}
           />,
-        );
+        ).dive();
         const dayPicker = wrapper.find(DayPickerRangeController);
         expect(dayPicker.props().initialVisibleMonth()).to.equal(endDate);
       });

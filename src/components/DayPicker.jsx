@@ -2,13 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import shallowCompare from 'react-addons-shallow-compare';
 import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
-import { css, withStyles } from 'react-with-styles';
+import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 
 import moment from 'moment';
 import throttle from 'lodash/throttle';
 import isTouchDevice from 'is-touch-device';
-
-import withStylesPropTypes from '../shapes/withStylesPropTypes';
 
 import { DayPickerPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
@@ -342,8 +340,7 @@ class DayPicker extends React.Component {
         translationValue = -2 * calendarMonthWidth;
       }
 
-      const newMonthHeight = this.calendarMonthHeights.slice(0, numberOfMonths)
-        .reduce((maxHeight, height) => Math.max(maxHeight, height), 0);
+      const newMonthHeight = Math.max(0, ...this.calendarMonthHeights.slice(0, numberOfMonths));
       this.adjustDayPickerHeight(newMonthHeight);
     }
 
@@ -368,8 +365,7 @@ class DayPicker extends React.Component {
       if (isRTL) {
         translationValue = 0;
       }
-      const newMonthHeight = this.calendarMonthHeights.slice(2)
-        .reduce((maxHeight, height) => Math.max(maxHeight, height), 0);
+      const newMonthHeight = Math.max(0, ...this.calendarMonthHeights.slice(2));
       this.adjustDayPickerHeight(newMonthHeight);
     }
 
@@ -385,15 +381,14 @@ class DayPicker extends React.Component {
     const { orientation } = this.props;
     const { monthTransition } = this.state;
 
+    if (orientation === VERTICAL_SCROLLABLE) return 0;
+
     let firstVisibleMonthIndex = 1;
     if (monthTransition === PREV_TRANSITION) {
       firstVisibleMonthIndex -= 1;
     } else if (monthTransition === NEXT_TRANSITION) {
       firstVisibleMonthIndex += 1;
     }
-
-    const verticalScrollable = orientation === VERTICAL_SCROLLABLE;
-    if (verticalScrollable) firstVisibleMonthIndex = 0;
 
     return firstVisibleMonthIndex;
   }
@@ -416,13 +411,12 @@ class DayPicker extends React.Component {
   setCalendarMonthHeights(calendarMonthHeights) {
     const { numberOfMonths } = this.props;
     const firstVisibleMonthIndex = this.getFirstVisibleIndex();
+    const lastVisibleMonthIndex = firstVisibleMonthIndex + numberOfMonths;
 
     this.calendarMonthHeights = calendarMonthHeights;
-    this.calendarMonthGridHeight = calendarMonthHeights.reduce((maxHeight, height, i) => {
-      const isVisible =
-        (i >= firstVisibleMonthIndex) && (i < firstVisibleMonthIndex + numberOfMonths);
-      return isVisible ? Math.max(maxHeight, height) : maxHeight;
-    }, 0) + MONTH_PADDING;
+    const visibleCalendarMonthHeights = calendarMonthHeights
+      .filter((_, i) => ((i >= firstVisibleMonthIndex) && (i < lastVisibleMonthIndex)));
+    this.calendarMonthGridHeight = Math.max(0, ...visibleCalendarMonthHeights) + MONTH_PADDING;
     this.setState({ hasSetHeight: true });
   }
 
@@ -823,7 +817,7 @@ DayPicker.propTypes = propTypes;
 DayPicker.defaultProps = defaultProps;
 
 export { DayPicker as PureDayPicker };
-export default withStyles(({ color, zIndex }) => ({
+export default withStyles(({ reactDates: { color, zIndex } }) => ({
   DayPicker: {
     background: color.background,
     position: 'relative',

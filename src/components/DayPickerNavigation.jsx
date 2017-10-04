@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { forbidExtraProps } from 'airbnb-prop-types';
-import { css, withStyles } from 'react-with-styles';
-
-import withStylesPropTypes from '../shapes/withStylesPropTypes';
+import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 
 import { DayPickerNavigationPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
@@ -166,7 +164,7 @@ function DayPickerNavigation({
 DayPickerNavigation.propTypes = propTypes;
 DayPickerNavigation.defaultProps = defaultProps;
 
-export default withStyles(({ color, zIndex }) => ({
+export default withStyles(({ reactDates: { color, zIndex } }) => ({
   DayPickerNavigation_container: {
     position: 'relative',
     zIndex: zIndex + 2,

@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { forbidExtraProps } from 'airbnb-prop-types';
-import { css, withStyles } from 'react-with-styles';
-
-import withStylesPropTypes from '../shapes/withStylesPropTypes';
+import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 
 import KeyboardShortcutRow from './KeyboardShortcutRow';
 
@@ -105,9 +103,9 @@ class DayPickerKeyboardShortcuts extends React.Component {
       ? phrases.hideKeyboardShortcutsPanel
       : phrases.showKeyboardShortcutsPanel;
 
-    const bottomRight = (buttonLocation === BOTTOM_RIGHT);
-    const topRight = (buttonLocation === TOP_RIGHT);
-    const topLeft = (buttonLocation === TOP_LEFT);
+    const bottomRight = buttonLocation === BOTTOM_RIGHT;
+    const topRight = buttonLocation === TOP_RIGHT;
+    const topLeft = buttonLocation === TOP_LEFT;
 
     return (
       <div>
@@ -196,7 +194,7 @@ class DayPickerKeyboardShortcuts extends React.Component {
 DayPickerKeyboardShortcuts.propTypes = propTypes;
 DayPickerKeyboardShortcuts.defaultProps = defaultProps;
 
-export default withStyles(({ color, zIndex }) => ({
+export default withStyles(({ reactDates: { color, zIndex } }) => ({
   DayPickerKeyboardShortcuts_buttonReset: {
     background: 'none',
     border: 0,

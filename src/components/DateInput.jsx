@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { forbidExtraProps } from 'airbnb-prop-types';
-import { css, withStyles } from 'react-with-styles';
+import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 import throttle from 'lodash/throttle';
 import isTouchDevice from 'is-touch-device';
 
 import openDirectionShape from '../shapes/OpenDirectionShape';
 import { OPEN_DOWN, OPEN_UP } from '../../constants';
-import withStylesPropTypes from '../shapes/withStylesPropTypes';
 
 const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
@@ -224,7 +223,7 @@ class DateInput extends React.Component {
 DateInput.propTypes = propTypes;
 DateInput.defaultProps = defaultProps;
 
-export default withStyles(({ color, sizing, spacing, font, zIndex }) => {
+export default withStyles(({ reactDates: { color, sizing, spacing, font, zIndex } }) => {
   const inputHeight =
     parseInt(font.input.lineHeight, 10) +
     (2 * spacing.inputPadding) +

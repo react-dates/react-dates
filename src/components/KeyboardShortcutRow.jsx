@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { forbidExtraProps } from 'airbnb-prop-types';
-import { css, withStyles } from 'react-with-styles';
-
-import withStylesPropTypes from '../shapes/withStylesPropTypes';
+import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 
 const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
@@ -50,7 +48,7 @@ function KeyboardShortcutRow({ unicode, label, action, block, styles }) {
 KeyboardShortcutRow.propTypes = propTypes;
 KeyboardShortcutRow.defaultProps = defaultProps;
 
-export default withStyles(({ color }) => ({
+export default withStyles(({ reactDates: { color } }) => ({
   KeyboardShortcutRow: {
     listStyle: 'none',
     margin: '6px 0',

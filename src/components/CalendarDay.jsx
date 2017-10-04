@@ -3,10 +3,8 @@ import PropTypes from 'prop-types';
 import shallowCompare from 'react-addons-shallow-compare';
 import momentPropTypes from 'react-moment-proptypes';
 import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
-import { css, withStyles } from 'react-with-styles';
+import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 import moment from 'moment';
-
-import withStylesPropTypes from '../shapes/withStylesPropTypes';
 
 import { CalendarDayPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
@@ -175,7 +173,7 @@ CalendarDay.propTypes = propTypes;
 CalendarDay.defaultProps = defaultProps;
 
 export { CalendarDay as PureCalendarDay };
-export default withStyles(({ color }) => ({
+export default withStyles(({ reactDates: { color } }) => ({
   CalendarDay_container: {
     border: `1px solid ${color.core.borderLight}`,
     padding: 0,

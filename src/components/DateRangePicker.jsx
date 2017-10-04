@@ -1,7 +1,7 @@
 import React from 'react';
 import shallowCompare from 'react-addons-shallow-compare';
 import moment from 'moment';
-import { css, withStyles } from 'react-with-styles';
+import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 import Portal from 'react-portal';
 import { forbidExtraProps } from 'airbnb-prop-types';
 import { addEventListener, removeEventListener } from 'consolidated-events';
@@ -19,7 +19,6 @@ import DayPickerRangeController from './DayPickerRangeController';
 
 import CloseButton from '../svg/close.svg';
 
-import withStylesPropTypes from '../shapes/withStylesPropTypes';
 import DateRangePickerShape from '../shapes/DateRangePickerShape';
 
 import {
@@ -479,7 +478,7 @@ DateRangePicker.propTypes = propTypes;
 DateRangePicker.defaultProps = defaultProps;
 
 export { DateRangePicker as PureDateRangePicker };
-export default withStyles(({ color, zIndex, spacing }) => ({
+export default withStyles(({ reactDates: { color, zIndex, spacing } }) => ({
   DateRangePicker: {
     position: 'relative',
     display: 'inline-block',

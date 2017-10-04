@@ -1,12 +1,11 @@
 import React from 'react';
 import moment from 'moment';
-import { css, withStyles } from 'react-with-styles';
+import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 import Portal from 'react-portal';
 import { forbidExtraProps } from 'airbnb-prop-types';
 import { addEventListener, removeEventListener } from 'consolidated-events';
 import isTouchDevice from 'is-touch-device';
 
-import withStylesPropTypes from '../shapes/withStylesPropTypes';
 import SingleDatePickerShape from '../shapes/SingleDatePickerShape';
 import { SingleDatePickerPhrases } from '../defaultPhrases';
 
@@ -475,7 +474,7 @@ SingleDatePicker.propTypes = propTypes;
 SingleDatePicker.defaultProps = defaultProps;
 
 export { SingleDatePicker as PureSingleDatePicker };
-export default withStyles(({ color, spacing, zIndex }) => ({
+export default withStyles(({ reactDates: { color, spacing, zIndex } }) => ({
   SingleDatePicker: {
     position: 'relative',
     display: 'inline-block',

@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { forbidExtraProps } from 'airbnb-prop-types';
-import { css, withStyles } from 'react-with-styles';
-
-import withStylesPropTypes from '../shapes/withStylesPropTypes';
+import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 
 import { SingleDatePickerInputPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
@@ -180,7 +178,7 @@ function SingleDatePickerInput({
 SingleDatePickerInput.propTypes = propTypes;
 SingleDatePickerInput.defaultProps = defaultProps;
 
-export default withStyles(({ color }) => ({
+export default withStyles(({ reactDates: { color } }) => ({
   SingleDatePickerInput: {
     backgroundColor: color.background,
     border: `1px solid ${color.core.border}`,

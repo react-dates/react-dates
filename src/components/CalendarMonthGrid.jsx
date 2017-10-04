@@ -3,11 +3,9 @@ import PropTypes from 'prop-types';
 import shallowCompare from 'react-addons-shallow-compare';
 import momentPropTypes from 'react-moment-proptypes';
 import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
-import { css, withStyles } from 'react-with-styles';
+import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 import moment from 'moment';
 import { addEventListener, removeEventListener } from 'consolidated-events';
-
-import withStylesPropTypes from '../shapes/withStylesPropTypes';
 
 import { CalendarDayPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
@@ -106,7 +104,7 @@ class CalendarMonthGrid extends React.Component {
       months: getMonths(props.initialMonth, props.numberOfMonths, withoutTransitionMonths),
     };
 
-    this.calendarMonthHeights = new Array(props.numberOfMonths);
+    this.calendarMonthHeights = [];
 
     this.isTransitionEndSupported = isTransitionEndSupported();
     this.onTransitionEnd = this.onTransitionEnd.bind(this);
@@ -192,11 +190,9 @@ class CalendarMonthGrid extends React.Component {
   setMonthHeight(height, i) {
     if (this.calendarMonthHeights[i]) {
       if (i === 0) {
-        this.calendarMonthHeights.pop();
-        this.calendarMonthHeights.unshift(height);
+        this.calendarMonthHeights = [height].concat(this.calendarMonthHeights.slice(0, -1));
       } else if (i === this.calendarMonthHeights.length - 1) {
-        this.calendarMonthHeights.shift();
-        this.calendarMonthHeights.push(height);
+        this.calendarMonthHeights = this.calendarMonthHeights.slice(1).concat(height);
       }
     } else {
       this.calendarMonthHeights[i] = height;
@@ -314,7 +310,7 @@ class CalendarMonthGrid extends React.Component {
 CalendarMonthGrid.propTypes = propTypes;
 CalendarMonthGrid.defaultProps = defaultProps;
 
-export default withStyles(({ color, zIndex }) => ({
+export default withStyles(({ reactDates: { color, zIndex } }) => ({
   CalendarMonthGrid: {
     background: color.background,
     textAlign: 'left',

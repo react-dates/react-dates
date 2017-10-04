@@ -62,25 +62,6 @@ describe('SingleDatePickerInput', () => {
     });
   });
 
-<<<<<<< HEAD
-  describe('#onClearDateMouseEnter', () => {
-    it('sets state.isClearDateHovered to true', () => {
-      const wrapper = shallow(<SingleDatePickerInput id="date" />);
-      wrapper.setState({ isClearDateHovered: false });
-      wrapper.instance().onClearDateMouseEnter();
-      expect(wrapper.state().isClearDateHovered).to.equal(true);
-    });
-  });
-
-  describe('#onClearDateMouseLeave', () => {
-    it('sets state.isClearDateHovered to false', () => {
-      const wrapper = shallow(<SingleDatePickerInput id="date" />);
-      wrapper.setState({ isClearDateHovered: true });
-      wrapper.instance().onClearDateMouseLeave();
-      expect(wrapper.state().isClearDateHovered).to.equal(false);
-    });
-  });
-
   describe('clear date interactions', () => {
     describe('onClick', () => {
       it('props.onClearDate gets triggered', () => {
