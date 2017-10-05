@@ -794,6 +794,17 @@ describe('DayPicker', () => {
         );
       });
 
+      describe('props.onMonthChange function', () => {
+        it('calls onMonthChange if state.monthTransition is truthy', () => {
+          const wrapper = mount(<DayPicker />);
+          const onMonthChangeSpy = sinon.stub();
+          wrapper.setState({
+            monthTransition: 'foo',
+          });
+          expect(onMonthChangeSpy).to.have.property('callCount', 1);
+        });
+      });
+
       describe('props.orientation === HORIZONTAL_ORIENTATION', () => {
         it('calls adjustDayPickerHeight if state.monthTransition is truthy', () => {
           const wrapper = mount(<DayPicker orientation={HORIZONTAL_ORIENTATION} />);
