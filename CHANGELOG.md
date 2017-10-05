@@ -1,5 +1,8 @@
 # Change Log
 
+## 13.0.0
+- [breaking] Convert react-dates to rely on `react-with-styles` in place of CSS stylesheets ([#722](https://github.com/airbnb/react-dates/pull/722))
+
 ## 12.7.0
 - [new] Some accessibility improvements and patches ([#715](https://github.com/airbnb/react-dates/pull/715))
 
