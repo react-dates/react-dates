@@ -1,6 +1,6 @@
 {
   "name": "react-dates",
-  "version": "12.6.0",
+  "version": "12.7.0",
   "description": "A responsive and accessible date range picker component built with React",
   "main": "index.js",
   "scripts": {
@@ -20,7 +20,7 @@
     "pretest": "npm run --silent lint",
     "tests-only": "npm run mocha --silent test",
     "tests-karma": "karma start",
-    "test": "npm run tests-only && npm run tests-karma",
+    "test": "npm run tests-only",
     "storybook": "start-storybook -p 6006",
     "tag": "git tag v$npm_package_version",
     "gh-pages:clean": "rimraf _gh-pages",

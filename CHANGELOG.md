@@ -1,5 +1,8 @@
 # Change Log
 
+## 12.7.0
+- [new] Some accessibility improvements and patches ([#715](https://github.com/airbnb/react-dates/pull/715))
+
 ## 12.6.0
 - [new] Add `weekDayFormat` prop to SDP/DRP ([#650](https://github.com/airbnb/react-dates/pull/650))
 - [new] Add `openDirection` prop to SDP/DRP ([#653](https://github.com/airbnb/react-dates/pull/653))
