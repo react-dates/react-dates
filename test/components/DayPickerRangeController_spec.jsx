@@ -59,7 +59,6 @@ describe('DayPickerRangeController', () => {
               phrases={phrases}
             />,
           );
-          wrapper.instance().componentDidMount();
           const newAvailableDatePhrase = wrapper.state().phrases.chooseAvailableDate;
           expect(newAvailableDatePhrase).to.equal(phrases.chooseAvailableStartDate);
         });
@@ -74,7 +73,6 @@ describe('DayPickerRangeController', () => {
               phrases={phrases}
             />,
           );
-          wrapper.instance().componentDidMount();
           const newAvailableDatePhrase = wrapper.state().phrases.chooseAvailableDate;
           expect(newAvailableDatePhrase).to.equal(phrases.chooseAvailableEndDate);
         });
@@ -89,7 +87,6 @@ describe('DayPickerRangeController', () => {
               phrases={phrases}
             />,
           );
-          wrapper.instance().componentDidMount();
           const newAvailableDatePhrase = wrapper.state().phrases.chooseAvailableDate;
           expect(newAvailableDatePhrase).to.equal(phrases.chooseAvailableDate);
         });
