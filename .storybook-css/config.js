@@ -1,16 +1,16 @@
 import React from 'react';
 import moment from 'moment';
-import aphroditeInterface from 'react-with-styles-interface-aphrodite';
 
 import { configure, addDecorator, setAddon } from '@storybook/react';
 import infoAddon from '@storybook/addon-info';
 import { setOptions } from '@storybook/addon-options';
 
-import registerInterfaceWithDefaultTheme from '../src/utils/registerInterfaceWithDefaultTheme';
+import registerCSSInterfaceWithDefaultTheme from '../src/utils/registerCSSInterfaceWithDefaultTheme';
 
 import '../css/storybook.scss';
+import '../css/styles.css';
 
-registerInterfaceWithDefaultTheme(aphroditeInterface);
+registerCSSInterfaceWithDefaultTheme();
 
 addDecorator((story) => {
   moment.locale('en');
