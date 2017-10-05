@@ -166,10 +166,17 @@ export default class DayPickerRangeController extends React.Component {
 
     const { currentMonth, visibleDays } = this.getStateForNewMonth(props);
 
+    // initialize phrases
+    // set the appropriate CalendarDay phrase based on focusedInput
+    const chooseAvailableDate = getChooseAvailableDatePhrase(props.phrases, props.focusedInput);
+
     this.state = {
       hoverDate: null,
       currentMonth,
-      phrases: props.phrases,
+      phrases: {
+        ...props.phrases,
+        chooseAvailableDate,
+      },
       visibleDays,
     };
 
@@ -181,22 +188,6 @@ export default class DayPickerRangeController extends React.Component {
     this.onMultiplyScrollableMonths = this.onMultiplyScrollableMonths.bind(this);
     this.getFirstFocusableDay = this.getFirstFocusableDay.bind(this);
     this.setDayPickerRef = this.setDayPickerRef.bind(this);
-  }
-
-  componentDidMount() {
-    const { focusedInput } = this.props;
-    const { phrases } = this.state;
-
-    // initialize phrases
-    // set the appropriate CalendarDay phrase based on focusedInput
-    const chooseAvailableDate = getChooseAvailableDatePhrase(phrases, focusedInput);
-
-    this.setState({
-      phrases: {
-        ...phrases,
-        chooseAvailableDate,
-      },
-    });
   }
 
   componentWillReceiveProps(nextProps) {
