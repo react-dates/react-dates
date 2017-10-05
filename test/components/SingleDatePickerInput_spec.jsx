@@ -21,41 +21,45 @@ describe('SingleDatePickerInput', () => {
   describe('clear date', () => {
     describe('props.showClearDate is falsey', () => {
       it('does not have .SingleDatePickerInput__clear-date class', () => {
-        const wrapper = shallow(<SingleDatePickerInput showClearDate={false} />);
+        const wrapper = shallow(<SingleDatePickerInput id="date" showClearDate={false} />);
         expect(wrapper.find('.SingleDatePickerInput__clear-date')).to.have.lengthOf(0);
       });
     });
 
     describe('props.showClearDate is truthy', () => {
       it('has .SingleDatePickerInput__clear-date class', () => {
-        const wrapper = shallow(<SingleDatePickerInput showClearDate />);
+        const wrapper = shallow(<SingleDatePickerInput id="date" showClearDate />);
         expect(wrapper.find('.SingleDatePickerInput__clear-date')).to.have.lengthOf(1);
       });
 
       it('has .SingleDatePickerInput__clear-date--hover class if state.isClearDateHovered',
         () => {
-          const wrapper = shallow(<SingleDatePickerInput showClearDate />);
+          const wrapper = shallow(<SingleDatePickerInput id="date" showClearDate />);
           wrapper.setState({ isClearDateHovered: true });
           expect(wrapper.find('.SingleDatePickerInput__clear-date--hover')).to.have.lengthOf(1);
         });
 
       it('no .SingleDatePickerInput__clear-date--hover class if !state.isClearDateHovered',
         () => {
-          const wrapper = shallow(<SingleDatePickerInput showClearDate />);
+          const wrapper = shallow(<SingleDatePickerInput id="date" showClearDate />);
           wrapper.setState({ isClearDateHovered: false });
           expect(wrapper.find('.SingleDatePickerInput__clear-date--hover')).to.have.lengthOf(0);
         });
 
       it('has .SingleDatePickerInput__clear-date--hide class if there is no date',
         () => {
-          const wrapper = shallow(<SingleDatePickerInput showClearDate displayValue={null} />);
+          const wrapper = shallow(<SingleDatePickerInput
+            id="date"
+            showClearDate
+            displayValue={null}
+          />);
           expect(wrapper.find('.SingleDatePickerInput__clear-date--hide')).to.have.lengthOf(1);
         });
 
       it('does not have .SingleDatePickerInput__clear-date--hide class if there is a date',
         () => {
           const wrapper =
-            shallow(<SingleDatePickerInput showClearDate displayValue="2016-07-13" />);
+            shallow(<SingleDatePickerInput id="date" showClearDate displayValue="2016-07-13" />);
           expect(wrapper.find('.SingleDatePickerInput__clear-date--hide')).to.have.lengthOf(0);
         });
     });
@@ -64,6 +68,7 @@ describe('SingleDatePickerInput', () => {
       it('has custom icon', () => {
         const wrapper = shallow(
           <SingleDatePickerInput
+            id="date"
             showClearDate
             customCloseIcon={<span className="custom-close-icon" />}
           />);
@@ -75,14 +80,14 @@ describe('SingleDatePickerInput', () => {
   describe('show calendar icon', () => {
     describe('props.showInputIcon is falsey', () => {
       it('does not have .SingleDatePickerInput__calendar-icon class', () => {
-        const wrapper = shallow(<SingleDatePickerInput showDefaultInputIcon={false} />);
+        const wrapper = shallow(<SingleDatePickerInput id="date" showDefaultInputIcon={false} />);
         expect(wrapper.find('.SingleDatePickerInput__calendar-icon')).to.have.lengthOf(0);
       });
     });
 
     describe('props.showInputIcon is truthy', () => {
       it('has .SingleDatePickerInput__calendar-icon class', () => {
-        const wrapper = shallow(<SingleDatePickerInput showDefaultInputIcon />);
+        const wrapper = shallow(<SingleDatePickerInput id="date" showDefaultInputIcon />);
         expect(wrapper.find('.SingleDatePickerInput__calendar-icon')).to.have.lengthOf(1);
       });
     });
@@ -91,6 +96,7 @@ describe('SingleDatePickerInput', () => {
       it('has custom icon', () => {
         const wrapper = shallow(
           <SingleDatePickerInput
+            id="date"
             customInputIcon={<span className="custom-icon" />}
           />);
         expect(wrapper.find('.SingleDatePickerInput__calendar-icon .custom-icon')).to.have.lengthOf(1);
@@ -100,7 +106,7 @@ describe('SingleDatePickerInput', () => {
 
   describe('#onClearDateMouseEnter', () => {
     it('sets state.isClearDateHovered to true', () => {
-      const wrapper = shallow(<SingleDatePickerInput />);
+      const wrapper = shallow(<SingleDatePickerInput id="date" />);
       wrapper.setState({ isClearDateHovered: false });
       wrapper.instance().onClearDateMouseEnter();
       expect(wrapper.state().isClearDateHovered).to.equal(true);
@@ -109,7 +115,7 @@ describe('SingleDatePickerInput', () => {
 
   describe('#onClearDateMouseLeave', () => {
     it('sets state.isClearDateHovered to false', () => {
-      const wrapper = shallow(<SingleDatePickerInput />);
+      const wrapper = shallow(<SingleDatePickerInput id="date" />);
       wrapper.setState({ isClearDateHovered: true });
       wrapper.instance().onClearDateMouseLeave();
       expect(wrapper.state().isClearDateHovered).to.equal(false);
@@ -122,6 +128,7 @@ describe('SingleDatePickerInput', () => {
         const onClearDateSpy = sinon.spy();
         const wrapper = shallow(
           <SingleDatePickerInput
+            id="date"
             onClearDate={onClearDateSpy}
             showClearDate
           />,
@@ -138,7 +145,7 @@ describe('SingleDatePickerInput', () => {
           SingleDatePickerInput.prototype,
           'onClearDateMouseEnter',
         );
-        const wrapper = shallow(<SingleDatePickerInput showClearDate />);
+        const wrapper = shallow(<SingleDatePickerInput id="date" showClearDate />);
         const clearDateWrapper = wrapper.find('.SingleDatePickerInput__clear-date');
 
         clearDateWrapper.simulate('mouseEnter');
@@ -153,7 +160,7 @@ describe('SingleDatePickerInput', () => {
           SingleDatePickerInput.prototype,
           'onClearDateMouseLeave',
         );
-        const wrapper = shallow(<SingleDatePickerInput showClearDate />);
+        const wrapper = shallow(<SingleDatePickerInput id="date" showClearDate />);
         const clearDateWrapper = wrapper.find('.SingleDatePickerInput__clear-date');
 
         clearDateWrapper.simulate('mouseLeave');
