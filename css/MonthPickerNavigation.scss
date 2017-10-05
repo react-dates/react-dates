@@ -1,0 +1,93 @@
+@import 'variables';
+
+.MonthPickerNavigation__prev,
+.MonthPickerNavigation__next {
+  cursor: pointer;
+  line-height: 0.78;
+  -webkit-user-select: none; /* Chrome/Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+ */
+  user-select: none;
+}
+
+.MonthPickerNavigation__prev--default,
+.MonthPickerNavigation__next--default {
+  border: 1px solid $react-dates-color-border-light;
+  background-color: $react-dates-color-white;
+  color: $react-dates-color-placeholder-text;
+
+  &:focus,
+  &:hover {
+    border: 1px solid $react-dates-color-border-medium;
+  }
+
+  &:active {
+    background: darken($react-dates-color-white, 5%);
+  }
+}
+
+.MonthPickerNavigation--horizontal {
+  position: relative;
+
+  .MonthPickerNavigation__prev,
+  .MonthPickerNavigation__next {
+    border-radius: 3px;
+    padding: 6px 9px;
+    top: 18px;
+    z-index: 2;
+    position: absolute;
+  }
+
+  .MonthPickerNavigation__prev {
+    left: 22px;
+  }
+
+  .MonthPickerNavigation__next {
+    right: 22px;
+  }
+
+  .MonthPickerNavigation__prev--default,
+  .MonthPickerNavigation__next--default {
+    svg {
+      height: 19px;
+      width: 19px;
+      fill: $react-dates-color-gray-light;
+    }
+  }
+}
+
+.MonthPickerNavigation--vertical {
+  background: $react-dates-color-white;
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 52px;
+  width: 100%;
+  z-index: 2;
+
+  .MonthPickerNavigation__prev,
+  .MonthPickerNavigation__next {
+    display: inline-block;
+    position: relative;
+    height: 100%;
+    width: 50%;
+  }
+
+  .MonthPickerNavigation__next--default {
+    border-left: 0;
+  }
+
+  .MonthPickerNavigation__prev--default,
+  .MonthPickerNavigation__next--default {
+    text-align: center;
+    font-size: 2.5em;
+    padding: 5px;
+
+    svg {
+      height: 42px;
+      width: 42px;
+      fill: $react-dates-color-text;
+    }
+  }
+}

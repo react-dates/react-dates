@@ -5,6 +5,8 @@ const clearDate = 'Clear Date';
 const clearDates = 'Clear Dates';
 const jumpToPrevMonth = 'Move backward to switch to the previous month';
 const jumpToNextMonth = 'Move forward to switch to the next month';
+const jumpToPrevYear = 'Move backward to switch to the previous year';
+const jumpToNextYear = 'Move forward to switch to the next year';
 const keyboardShortcuts = 'Keyboard Shortcuts';
 const showKeyboardShortcutsPanel = 'Open the keyboard shortcuts panel';
 const hideKeyboardShortcutsPanel = 'Close the shortcuts panel';
@@ -20,6 +22,9 @@ const selectFocusedDate = 'Select the date in focus';
 const moveFocusByOneDay = 'Move backward (left) and forward (right) by one day';
 const moveFocusByOneWeek = 'Move backward (up) and forward (down) by one week';
 const moveFocusByOneMonth = 'Switch months';
+const moveFocusByOneYear = 'Switch years';
+const moveFocustoStartOfMonthsRow = 'Move to the first month of the row';
+const moveFocusByThreeMonths = 'Move backward (up) and forward (down) by three months';
 const moveFocustoStartAndEndOfWeek = 'Go to the first or last day of a week';
 const returnFocusToInput = 'Return to the date input field';
 const keyboardNavigationInstructions = `Press the down arrow key to interact with the calendar and
@@ -161,7 +166,53 @@ export const DayPickerPhrases = {
   dateIsUnavailable,
 };
 
+export const MonthPickerPhrases = {
+  jumpToPrevYear,
+  jumpToNextYear,
+  keyboardShortcuts,
+  showKeyboardShortcutsPanel,
+  hideKeyboardShortcutsPanel,
+  openThisPanel,
+  enterKey,
+  leftArrowRightArrow,
+  upArrowDownArrow,
+  pageUpPageDown,
+  homeEnd,
+  escape,
+  questionMark,
+  selectFocusedDate,
+  moveFocusByOneMonth,
+  moveFocusByOneYear,
+  moveFocustoStartOfMonthsRow,
+  moveFocusByThreeMonths,
+  returnFocusToInput,
+  chooseAvailableStartDate,
+  chooseAvailableEndDate,
+  chooseAvailableDate,
+  dateIsUnavailable,
+};
+
 export const DayPickerKeyboardShortcutsPhrases = {
+  keyboardShortcuts,
+  showKeyboardShortcutsPanel,
+  hideKeyboardShortcutsPanel,
+  openThisPanel,
+  enterKey,
+  leftArrowRightArrow,
+  upArrowDownArrow,
+  pageUpPageDown,
+  homeEnd,
+  escape,
+  questionMark,
+  selectFocusedDate,
+  moveFocusByOneDay,
+  moveFocusByOneWeek,
+  moveFocusByOneMonth,
+  moveFocustoStartAndEndOfWeek,
+  returnFocusToInput,
+};
+
+export const MonthPickerKeyboardShortcutsPhrases = {
   keyboardShortcuts,
   showKeyboardShortcutsPanel,
   hideKeyboardShortcutsPanel,
@@ -186,7 +237,17 @@ export const DayPickerNavigationPhrases = {
   jumpToNextMonth,
 };
 
+export const MonthPickerNavigationPhrases = {
+  jumpToPrevYear,
+  jumpToNextYear,
+};
+
 export const CalendarDayPhrases = {
+  chooseAvailableDate,
+  dateIsUnavailable,
+};
+
+export const CalendarMonthPhrases = {
   chooseAvailableDate,
   dateIsUnavailable,
 };
