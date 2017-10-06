@@ -1,5 +1,8 @@
 # Change Log
 
+## 13.0.1
+- [patch] Move caption div back outside of `CalendarMonth` table ([#748](https://github.com/airbnb/react-dates/pull/748))
+
 ## 13.0.0
 - [breaking] Convert react-dates to rely on `react-with-styles` in place of CSS stylesheets ([#722](https://github.com/airbnb/react-dates/pull/722))
 
