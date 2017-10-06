@@ -1,6 +1,6 @@
 {
   "name": "react-dates",
-  "version": "13.0.1",
+  "version": "13.0.2",
   "description": "A responsive and accessible date range picker component built with React",
   "main": "index.js",
   "scripts": {
