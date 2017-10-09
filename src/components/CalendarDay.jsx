@@ -126,9 +126,9 @@ class CalendarDay extends React.Component {
       modifiers.has('selected-start') ||
       modifiers.has('selected-end');
 
-    const hoveredSpan =
+    const hoveredSpan = !selected && (
       modifiers.has('hovered-span') ||
-      modifiers.has('after-hovered-start');
+      modifiers.has('after-hovered-start'));
 
     const isOutsideRange = modifiers.has('blocked-out-of-range');
 
