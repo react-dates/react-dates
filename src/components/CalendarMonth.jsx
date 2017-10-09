@@ -226,9 +226,6 @@ export default withStyles(({ reactDates: { color, font, spacing } }) => ({
   CalendarMonth_table: {
     borderCollapse: 'collapse',
     borderSpacing: 0,
-    caption: {
-      captionSide: 'initial',
-    },
   },
 
   CalendarMonth_caption: {
