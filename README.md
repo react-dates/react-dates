@@ -61,6 +61,8 @@ import 'react-dates/lib/css/_datepicker.css';
 #### Without Webpack:
 Create a CSS file with the contents of `require.resolve('react-dates/lib/css/_datepicker.css')` and include it in your html `<head>` section.
 
+To see this in action, you can check out https://github.com/majapw/react-dates-demo which adds `react-dates` on top of a simple `create-react-app` setup.
+
 ### Make some awesome datepickers
 
 We provide a handful of components for your use. If you supply essential props to each component, you'll get a full featured interactive date picker. With additional optional props, you can customize the look and feel of the inputs, calendar, etc. You can see what each of the props do in the [live demo](http://airbnb.io/react-dates/) or explore
