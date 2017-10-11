@@ -1,5 +1,9 @@
 # Change Log
 
+## 13.0.3
+- [fix] Change CSS style specificity to 0 for the default stylesheet ([#753](https://github.com/airbnb/react-dates/pull/753))
+- [fix] Remove unnecessary caption object from `CalendarMonth` styles ([#757](https://github.com/airbnb/react-dates/pull/757))
+
 ## 13.0.2
 - [fix] Use default export of `registerCSSInterfaceWithDefaultTheme` in `initialize`
 
