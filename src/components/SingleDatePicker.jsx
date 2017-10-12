@@ -416,6 +416,7 @@ class SingleDatePicker extends React.Component {
       showClearDate,
       showDefaultInputIcon,
       inputIconPosition,
+      customCloseIcon,
       customInputIcon,
       date,
       phrases,
@@ -450,6 +451,7 @@ class SingleDatePicker extends React.Component {
             showClearDate={showClearDate}
             showDefaultInputIcon={showDefaultInputIcon}
             inputIconPosition={inputIconPosition}
+            customCloseIcon={customCloseIcon}
             customInputIcon={customInputIcon}
             displayValue={displayValue}
             inputValue={inputValue}
