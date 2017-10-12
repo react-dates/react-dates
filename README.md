@@ -8,7 +8,7 @@
 
 [![npm badge][npm-badge-png]][package-url]
 
-> An easily internationalizable, mobile-friendly datepicker library for the web.
+> An easily internationalizable, accessible, mobile-friendly datepicker library for the web.
 
 ![react-dates in action](https://raw.githubusercontent.com/airbnb/react-dates/master/react-dates-demo.gif)
 
@@ -45,7 +45,7 @@ Ensure packages are installed with correct version numbers by running:
 import 'react-dates/initialize';
 ```
 
-As of v13.0.0 of `react-dates`, this project relies on `react-with-styles`. If you want to continue using CSS stylesheets and classes, there is a little bit of extra set-up required to get things going. As such, you need to import `react-dates/initialize` to set up class names on our components.
+As of v13.0.0 of `react-dates`, this project relies on `react-with-styles`. If you want to continue using CSS stylesheets and classes, there is a little bit of extra set-up required to get things going. As such, you need to import `react-dates/initialize` to set up class names on our components. This import should go at the top of your application as you won't be able to import any `react-dates` components without it.
 
 ### Include component
 ```js
@@ -62,6 +62,28 @@ import 'react-dates/lib/css/_datepicker.css';
 Create a CSS file with the contents of `require.resolve('react-dates/lib/css/_datepicker.css')` and include it in your html `<head>` section.
 
 To see this in action, you can check out https://github.com/majapw/react-dates-demo which adds `react-dates` on top of a simple `create-react-app` setup.
+
+#### Overriding styles
+Right now, the easiest way to tweak `react-dates` to your heart's contents is to create another stylesheet to override the default react-dates styles. For example, you could create a file named `react_dates_overrides.css` with the following contents:
+
+```css
+.CalendarDay__highlighted_calendar {
+  background: #82E0AA;
+  color: #186A3B;
+} 
+
+.CalendarDay__highlighted_calendar:hover {
+  background: #58D68D;
+  color: #186A3B;
+}
+
+.CalendarDay__highlighted_calendar:active {
+  background: #58D68D;
+  color: #186A3B;
+}
+```
+
+This would override the background and text colors applied to highlighted calendar days. You can use this method with the default set-up to override any aspect of the calendar to have it better fit to your particular needs. 
 
 ### Make some awesome datepickers
 
@@ -268,7 +290,7 @@ moment.locale('pl'); // Polish
 
 ## Advanced
 
-`react-dates` no longer relies strictly on CSS, but rather relies on `react-with-styles` as an abstraction layer between how styles are applied and how they are written. The instructions above will get the project working out of the box, but there's a lot more customization that can be done.
+`react-dates` no longer relies strictly on CSS, but rather relies on `react-with-styles` as an abstraction layer between how styles are applied and how they are written. The instructions above will get the project working out of the box, but there's a lot more customization that can be done. 
 
 ### Interfaces
 
@@ -276,16 +298,22 @@ The `react-dates/initialize` script actually relies on [react-with-styles-interf
 ```js
 import ThemedStyleSheet from 'react-with-styles/lib/ThemedStyleSheet';
 import aphroditeInterface from 'react-with-styles-interface-aphrodite';
+import DefaultTheme from 'react-dates/lib/theme/DefaultTheme';
 
 ThemedStyleSheet.registerInterface(aphroditeInterface);
+ThemedStyleSheet.registerTheme(DefaultTheme);
 ```
+
+The above code has to be run before any `react-dates` component is imported. Otherwise, you will get an error. Also note that if you register any custom interface manually, you *must* also manually register a theme. 
 
 ### Theming
 `react-dates` also now supports a different way to theme. You can see the default theme values in [this file](https://github.com/airbnb/react-dates/blob/master/src/theme/DefaultTheme.js) and you would override them in the following manner:
 ```js
 import ThemedStyleSheet from 'react-with-styles/lib/ThemedStyleSheet';
+import aphroditeInterface from 'react-with-styles-interface-aphrodite';
 import DefaultTheme from 'react-dates/lib/theme/DefaultTheme';
 
+ThemedStyleSheet.registerInterface(aphroditeInterface);
 ThemedStyleSheet.registerTheme({
   ...DefaultTheme,
   color: {
@@ -302,8 +330,10 @@ ThemedStyleSheet.registerTheme({
 });
 ```
 
-The above code would use shades of green instead of shades of yellow for the highlight color on `CalendarDay` components.
+The above code would use shades of green instead of shades of yellow for the highlight color on `CalendarDay` components. Note that you *must* register an interface if you manually register a theme. One will not work without the other. 
 
+#### A note on using `react-with-styles-interface-css`
+The default interface that `react-dates` ships with is the [CSS interface](https://github.com/airbnb/react-with-styles-interface-css). If you want to use this interface along with the theme registration method, you will need to rebuild the core `_datepicker.css` file. We do not currently expose a utility method to build this file, but you can follow along with the code in https://github.com/airbnb/react-dates/blob/master/scripts/buildCSS.js to build your own custom themed CSS file. 
 
 [package-url]: https://npmjs.org/package/react-dates
 [npm-version-svg]: http://versionbadg.es/airbnb/react-dates.svg
