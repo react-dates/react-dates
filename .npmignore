@@ -33,10 +33,12 @@ node_modules
 .node_repl_history
 
 .storybook
+.storybook-css
 examples
 public
 react-dates-demo.gif
 stories
 test
 css
+!lib/css
 
