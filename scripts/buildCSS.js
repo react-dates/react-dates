@@ -3,7 +3,7 @@
 const fs = require('fs');
 const CleanCSS = require('clean-css');
 
-const compileCSS = require('react-with-styles-interface-css/compile');
+const compileCSS = require('react-with-styles-interface-css-compiler');
 
 const registerMaxSpecificity = require('react-with-styles-interface-css/dist/utils/registerMaxSpecificity').default;
 const registerCSSInterfaceWithDefaultTheme = require('../src/utils/registerCSSInterfaceWithDefaultTheme').default;
