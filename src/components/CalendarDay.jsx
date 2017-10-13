@@ -101,15 +101,11 @@ class CalendarDay extends React.Component {
 
     if (!day) return <td />;
 
-    const formattedDate = `${day.format('dddd')}, ${day.format('LL')}`;
+    const formattedDate = { date: `${day.format('dddd')}, ${day.format('LL')}` };
 
-    let ariaLabel = getPhrase(chooseAvailableDate, {
-      date: formattedDate,
-    });
-
-    if (BLOCKED_MODIFIER in modifiers && modifiers[BLOCKED_MODIFIER](day)) {
-      ariaLabel = getPhrase(dateIsUnavailable, { date: formattedDate });
-    }
+    const ariaLabel = modifiers.has(BLOCKED_MODIFIER)
+      ? getPhrase(dateIsUnavailable, formattedDate)
+      : getPhrase(chooseAvailableDate, formattedDate);
 
     const daySizeStyles = {
       width: daySize,

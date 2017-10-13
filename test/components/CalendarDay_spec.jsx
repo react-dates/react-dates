@@ -4,6 +4,7 @@ import sinon from 'sinon-sandbox';
 import { shallow } from 'enzyme';
 import moment from 'moment';
 
+import { BLOCKED_MODIFIER } from '../../constants';
 import CalendarDay, { PureCalendarDay } from '../../src/components/CalendarDay';
 
 describe('CalendarDay', () => {
@@ -37,6 +38,47 @@ describe('CalendarDay', () => {
         const tabIndex = -1;
         const wrapper = shallow(<CalendarDay tabIndex={tabIndex} />).dive();
         expect(wrapper.find('button').props().tabIndex).to.equal(tabIndex);
+      });
+
+      describe('aria-label', () => {
+        const phrases = {};
+        const day = moment('10/10/2017');
+        const expectedFormattedDay = { date: 'Tuesday, October 10, 2017' };
+
+        beforeEach(() => {
+          phrases.chooseAvailableDate = sinon.stub().returns('chooseAvailableDate text');
+          phrases.dateIsUnavailable = sinon.stub().returns('dateIsUnavailable text');
+        });
+
+        afterEach(() => {
+          sinon.restore();
+        });
+
+        it('is formatted with the chooseAvailableDate phrase function when day is available', () => {
+          const modifiers = new Set();
+
+          const wrapper = shallow(<CalendarDay
+            modifiers={modifiers}
+            phrases={phrases}
+            day={day}
+          />).dive();
+
+          expect(phrases.chooseAvailableDate.calledWith(expectedFormattedDay)).to.equal(true);
+          expect(wrapper.find('button').prop('aria-label')).to.equal('chooseAvailableDate text');
+        });
+
+        it('is formatted with the dateIsUnavailable phrase function when day is not available', () => {
+          const modifiers = new Set().add(BLOCKED_MODIFIER);
+
+          const wrapper = shallow(<CalendarDay
+            modifiers={modifiers}
+            phrases={phrases}
+            day={day}
+          />).dive();
+
+          expect(phrases.dateIsUnavailable.calledWith(expectedFormattedDay)).to.equal(true);
+          expect(wrapper.find('button').prop('aria-label')).to.equal('dateIsUnavailable text');
+        });
       });
     });
   });
