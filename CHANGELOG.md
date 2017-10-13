@@ -1,5 +1,8 @@
 # Change Log
 
+## 13.0.5
+- [fix] Add back missing built CSS file
+
 ## 13.0.4
 - [fix] Pass through `customCloseIcon` prop from the SDP to the SDPInput ([#767](https://github.com/airbnb/react-dates/pull/767))
 - [fix] Fix incorrect available/unavailable phrase being read on `CalendarDay` components ([#771](https://github.com/airbnb/react-dates/pull/771))
