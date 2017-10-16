@@ -248,7 +248,7 @@ class DayPicker extends React.Component {
 
     this.setState({ withMouseInteractions: false });
 
-    const { onBlur } = this.props;
+    const { onBlur, isRTL } = this.props;
     const { focusedDate, showKeyboardShortcuts } = this.state;
     if (!focusedDate) return;
 
@@ -271,7 +271,11 @@ class DayPicker extends React.Component {
         break;
       case 'ArrowLeft':
         e.preventDefault();
-        newFocusedDate.subtract(1, 'day');
+        if (isRTL) {
+          newFocusedDate.add(1, 'day');
+        } else {
+          newFocusedDate.subtract(1, 'day');
+        }
         didTransitionMonth = this.maybeTransitionPrevMonth(newFocusedDate);
         break;
       case 'Home':
@@ -292,7 +296,11 @@ class DayPicker extends React.Component {
         break;
       case 'ArrowRight':
         e.preventDefault();
-        newFocusedDate.add(1, 'day');
+        if (isRTL) {
+          newFocusedDate.subtract(1, 'day');
+        } else {
+          newFocusedDate.add(1, 'day');
+        }
         didTransitionMonth = this.maybeTransitionNextMonth(newFocusedDate);
         break;
       case 'End':
