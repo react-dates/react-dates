@@ -1,5 +1,8 @@
 # Change Log
 
+## 13.0.6
+- [fix] Update `react-with-styles-interface-css` dependency ([#777](https://github.com/airbnb/react-dates/pull/777))
+
 ## 13.0.5
 - [fix] Add back missing built CSS file
 
