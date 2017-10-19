@@ -172,7 +172,6 @@ class CalendarMonth extends React.Component {
         data-visible={isVisible}
       >
         <div
-          id="CalendarMonth__caption"
           ref={this.setCaptionRef}
           {...css(
             styles.CalendarMonth_caption,
@@ -182,7 +181,10 @@ class CalendarMonth extends React.Component {
           <strong>{monthTitle}</strong>
         </div>
 
-        <table {...css(styles.CalendarMonth_table)} role="presentation">
+        <table
+          {...css(styles.CalendarMonth_table)}
+          role="presentation"
+        >
           <tbody ref={this.setGridRef}>
             {weeks.map((week, i) => (
               <tr key={i}>

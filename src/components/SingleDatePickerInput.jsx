@@ -20,7 +20,6 @@ const propTypes = forbidExtraProps({
   id: PropTypes.string.isRequired,
   placeholder: PropTypes.string, // also used as label
   displayValue: PropTypes.string,
-  inputValue: PropTypes.string,
   screenReaderMessage: PropTypes.string,
   focused: PropTypes.bool,
   isFocused: PropTypes.bool, // describes actual DOM focus
@@ -49,7 +48,6 @@ const propTypes = forbidExtraProps({
 const defaultProps = {
   placeholder: 'Select Date',
   displayValue: '',
-  inputValue: '',
   screenReaderMessage: '',
   focused: false,
   isFocused: false,
@@ -80,7 +78,6 @@ function SingleDatePickerInput({
   id,
   placeholder,
   displayValue,
-  inputValue,
   focused,
   isFocused,
   disabled,
@@ -138,7 +135,6 @@ function SingleDatePickerInput({
         id={id}
         placeholder={placeholder} // also used as label
         displayValue={displayValue}
-        inputValue={inputValue}
         screenReaderMessage={screenReaderText}
         focused={focused}
         isFocused={isFocused}
