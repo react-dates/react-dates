@@ -53,6 +53,7 @@ const propTypes = forbidExtraProps({
   firstDayOfWeek: DayOfWeekShape,
   hideKeyboardShortcutsPanel: PropTypes.bool,
   daySize: nonNegativeInteger,
+  verticalHeight: nonNegativeInteger,
 
   navPrev: PropTypes.node,
   navNext: PropTypes.node,
@@ -99,6 +100,7 @@ const defaultProps = {
   initialVisibleMonth: null,
   firstDayOfWeek: null,
   daySize: DAY_SIZE,
+  verticalHeight: null,
 
   navPrev: null,
   navNext: null,
@@ -585,6 +587,7 @@ export default class DayPickerSingleDateController extends React.Component {
       onBlur,
       showKeyboardShortcuts,
       weekDayFormat,
+      verticalHeight,
     } = this.props;
 
     const { currentMonth, visibleDays } = this.state;
@@ -619,6 +622,7 @@ export default class DayPickerSingleDateController extends React.Component {
         isRTL={isRTL}
         showKeyboardShortcuts={showKeyboardShortcuts}
         weekDayFormat={weekDayFormat}
+        verticalHeight={verticalHeight}
       />
     );
 
