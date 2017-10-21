@@ -318,7 +318,7 @@ ThemedStyleSheet.registerTheme({
   reactDates: {
     ...DefaultTheme.reactDates,
     color: {
-      ...DefaultTheme.color,
+      ...DefaultTheme.reactDates.color,
       highlighted: {
         backgroundColor: '#82E0AA',
         backgroundColor_active: '#58D68D',
