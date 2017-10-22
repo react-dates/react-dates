@@ -255,8 +255,8 @@ class CalendarMonthGrid extends React.Component {
         onTransitionEnd={onMonthTransitionEnd}
       >
         {months.map((month, i) => {
-          const isVisible =
-            (i >= firstVisibleMonthIndex) && (i < firstVisibleMonthIndex + numberOfMonths);
+          const isVisible = (i >= firstVisibleMonthIndex)
+            && (i < firstVisibleMonthIndex + numberOfMonths);
           const hideForAnimation = i === 0 && !isVisible;
           const showForAnimation = i === 0 && isAnimating && isVisible;
           const monthString = toISOMonthString(month);

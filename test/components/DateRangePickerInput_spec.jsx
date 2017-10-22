@@ -15,49 +15,34 @@ describe('DateRangePickerInput', () => {
 
     describe('props.showClearDates', () => {
       it('if true renders clear dates button', () => {
-        const wrapper = shallow(
-          <DateRangePickerInput
-            showClearDates
-          />,
-        ).dive();
+        const wrapper = shallow(<DateRangePickerInput showClearDates />).dive();
         expect(wrapper.find('button')).to.have.lengthOf(1);
       });
 
       it('if false does not render clear dates', () => {
-        const wrapper = shallow(
-          <DateRangePickerInput
-            showClearDates={false}
-          />,
-        ).dive();
+        const wrapper = shallow(<DateRangePickerInput showClearDates={false} />).dive();
         expect(wrapper.find('button')).to.have.lengthOf(0);
       });
     });
 
     describe('show calendar icon', () => {
       it('if true renders calendar button', () => {
-        const wrapper = shallow(
-          <DateRangePickerInput
-            showDefaultInputIcon
-          />,
-        ).dive();
+        const wrapper = shallow(<DateRangePickerInput showDefaultInputIcon />).dive();
         expect(wrapper.find('button')).to.have.lengthOf(1);
       });
 
       it('if false does not render calendar button', () => {
-        const wrapper = shallow(
-          <DateRangePickerInput
-            showDefaultInputIcon={false}
-          />,
-        ).dive();
+        const wrapper = shallow(<DateRangePickerInput showDefaultInputIcon={false} />).dive();
         expect(wrapper.find('button')).to.have.lengthOf(0);
       });
 
       describe('props.customInputIcon is a React Element', () => {
         it('custom icon is rendered', () => {
-          const wrapper = shallow(
+          const wrapper = shallow((
             <DateRangePickerInput
               customInputIcon={<span className="custom-icon" />}
-            />).dive();
+            />
+          )).dive();
           expect(wrapper.find('.custom-icon')).to.have.lengthOf(1);
         });
       });
@@ -66,21 +51,23 @@ describe('DateRangePickerInput', () => {
 
   describe('props.customArrowIcon', () => {
     it('custom icon is rendered', () => {
-      const wrapper = shallow(
+      const wrapper = shallow((
         <DateRangePickerInput
           customArrowIcon={<span className="custom-arrow-icon" />}
-        />).dive();
+        />
+      )).dive();
       expect(wrapper.find('.custom-arrow-icon')).to.have.lengthOf(1);
     });
   });
 
   describe('props.customCloseIcon', () => {
     it('custom icon is rendered', () => {
-      const wrapper = shallow(
+      const wrapper = shallow((
         <DateRangePickerInput
           showClearDates
           customCloseIcon={<span className="custom-close-icon" />}
-        />).dive();
+        />
+      )).dive();
       expect(wrapper.find('.custom-close-icon')).to.have.lengthOf(1);
     });
   });
@@ -89,12 +76,12 @@ describe('DateRangePickerInput', () => {
     describe('onClick', () => {
       it('props.onClearDates gets triggered', () => {
         const onClearDatesSpy = sinon.spy();
-        const wrapper = shallow(
+        const wrapper = shallow((
           <DateRangePickerInput
             onClearDates={onClearDatesSpy}
             showClearDates
-          />,
-        ).dive();
+          />
+        )).dive();
         const clearDatesWrapper = wrapper.find('button');
         clearDatesWrapper.simulate('click');
         expect(onClearDatesSpy.called).to.equal(true);
@@ -106,11 +93,12 @@ describe('DateRangePickerInput', () => {
     describe('onClick', () => {
       it('props.onArrowDown gets triggered', () => {
         const onArrowDownSpy = sinon.spy();
-        const wrapper = shallow(
+        const wrapper = shallow((
           <DateRangePickerInput
             onArrowDown={onArrowDownSpy}
             showDefaultInputIcon
-          />).dive();
+          />
+        )).dive();
         const calendarIconWrapper = wrapper.find('button').at(0);
         calendarIconWrapper.simulate('click');
         expect(onArrowDownSpy.callCount).to.equal(1);

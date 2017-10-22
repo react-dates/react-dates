@@ -24,22 +24,18 @@ describe('DayPickerNavigation', () => {
   describe('interactions', () => {
     it('props.onPrevMonthClick is triggered by prev month button click', () => {
       const onPrevMonthStub = sinon.stub();
-      const prevMonthButton = shallow(
-        <DayPickerNavigation
-          onPrevMonthClick={onPrevMonthStub}
-        />,
-      ).dive().find('button').at(0);
+      const prevMonthButton = shallow(<DayPickerNavigation
+        onPrevMonthClick={onPrevMonthStub}
+      />).dive().find('button').at(0);
       prevMonthButton.simulate('click');
       expect(onPrevMonthStub).to.have.property('callCount', 1);
     });
 
     it('props.onNextMonthClick is triggered by next month button click', () => {
       const onNextMonthStub = sinon.stub();
-      const nextMonthButton = shallow(
-        <DayPickerNavigation
-          onNextMonthClick={onNextMonthStub}
-        />,
-      ).dive().find('button').at(1);
+      const nextMonthButton = shallow(<DayPickerNavigation
+        onNextMonthClick={onNextMonthStub}
+      />).dive().find('button').at(1);
       nextMonthButton.simulate('click');
       expect(onNextMonthStub).to.have.property('callCount', 1);
     });

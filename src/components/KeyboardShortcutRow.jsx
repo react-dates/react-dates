@@ -15,7 +15,13 @@ const defaultProps = {
   block: false,
 };
 
-function KeyboardShortcutRow({ unicode, label, action, block, styles }) {
+function KeyboardShortcutRow({
+  unicode,
+  label,
+  action,
+  block,
+  styles,
+}) {
   return (
     <li
       {...css(

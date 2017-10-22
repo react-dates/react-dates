@@ -160,7 +160,12 @@ class DateRangePicker extends React.Component {
   }
 
   onOutsideClick() {
-    const { onFocusChange, onClose, startDate, endDate } = this.props;
+    const {
+      onFocusChange,
+      onClose,
+      startDate,
+      endDate,
+    } = this.props;
     if (!this.isOpened()) return;
 
     this.setState({
@@ -225,15 +230,21 @@ class DateRangePicker extends React.Component {
       return;
     }
 
-    const { anchorDirection, horizontalMargin, withPortal, withFullScreenPortal } = this.props;
+    const {
+      anchorDirection,
+      horizontalMargin,
+      withPortal,
+      withFullScreenPortal,
+    } = this.props;
     const { dayPickerContainerStyles } = this.state;
 
     const isAnchoredLeft = anchorDirection === ANCHOR_LEFT;
     if (!withPortal && !withFullScreenPortal) {
       const containerRect = this.dayPickerContainer.getBoundingClientRect();
       const currentOffset = dayPickerContainerStyles[anchorDirection] || 0;
-      const containerEdge =
-        isAnchoredLeft ? containerRect[ANCHOR_RIGHT] : containerRect[ANCHOR_LEFT];
+      const containerEdge = isAnchoredLeft
+        ? containerRect[ANCHOR_RIGHT]
+        : containerRect[ANCHOR_LEFT];
 
       this.setState({
         dayPickerContainerStyles: getResponsiveContainerStyles(
@@ -315,11 +326,13 @@ class DateRangePicker extends React.Component {
     const onOutsideClick = (!withFullScreenPortal && withPortal)
       ? this.onOutsideClick
       : undefined;
-    const initialVisibleMonthThunk =
-      initialVisibleMonth || (() => (startDate || endDate || moment()));
+    const initialVisibleMonthThunk = initialVisibleMonth || (
+      () => (startDate || endDate || moment())
+    );
 
-    const closeIcon =
-      customCloseIcon || (<CloseButton {...css(styles.DateRangePicker_closeButton_svg)} />);
+    const closeIcon = customCloseIcon || (
+      <CloseButton {...css(styles.DateRangePicker_closeButton_svg)} />
+    );
 
     return (
       <div // eslint-disable-line jsx-a11y/no-static-element-interactions

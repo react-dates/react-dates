@@ -129,7 +129,12 @@ export default class DateRangePickerInputController extends React.Component {
   }
 
   onClearFocus() {
-    const { onFocusChange, onClose, startDate, endDate } = this.props;
+    const {
+      onFocusChange,
+      onClose,
+      startDate,
+      endDate,
+    } = this.props;
 
     onFocusChange(null);
     onClose({ startDate, endDate });
@@ -160,7 +165,12 @@ export default class DateRangePickerInputController extends React.Component {
   }
 
   onEndDateFocus() {
-    const { startDate, onFocusChange, withFullScreenPortal, disabled } = this.props;
+    const {
+      startDate,
+      onFocusChange,
+      withFullScreenPortal,
+      disabled,
+    } = this.props;
 
     if (!startDate && withFullScreenPortal && !disabled) {
       // When the datepicker is full screen, we never want to focus the end date first
@@ -176,7 +186,12 @@ export default class DateRangePickerInputController extends React.Component {
     const startDate = toMomentObject(startDateString, this.getDisplayFormat());
 
     let { endDate } = this.props;
-    const { isOutsideRange, minimumNights, onDatesChange, onFocusChange } = this.props;
+    const {
+      isOutsideRange,
+      minimumNights,
+      onDatesChange,
+      onFocusChange,
+    } = this.props;
     const isStartDateValid = startDate && !isOutsideRange(startDate);
     if (isStartDateValid) {
       if (startDate && isBeforeDay(endDate, startDate.clone().add(minimumNights, 'days'))) {

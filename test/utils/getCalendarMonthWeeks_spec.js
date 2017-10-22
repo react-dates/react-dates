@@ -141,8 +141,8 @@ describe('getCalendarMonthWeeks', () => {
   describe('enableOutsideDays arg is true', () => {
     it('contains first of the month', () => {
       const firstOfMonth = today.clone().startOf('month');
-      const containsFirstOfMonth =
-        weeksWithOutsideDays[0].filter(day => firstOfMonth.isSame(day, 'day')).length > 0;
+      const containsFirstOfMonth = weeksWithOutsideDays[0]
+        .filter(day => firstOfMonth.isSame(day, 'day')).length > 0;
       expect(containsFirstOfMonth).to.equal(true);
     });
 

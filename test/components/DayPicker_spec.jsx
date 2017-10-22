@@ -42,9 +42,9 @@ describe('DayPicker', () => {
       describe('props.orientation === HORIZONTAL_ORIENTATION', () => {
         it('props.numberOfMonths ul (week header) elements exists', () => {
           const NUM_OF_MONTHS = 3;
-          const wrapper = shallow(
-            <DayPicker orientation={HORIZONTAL_ORIENTATION} numberOfMonths={NUM_OF_MONTHS} />,
-          ).dive();
+          const wrapper = shallow((
+            <DayPicker orientation={HORIZONTAL_ORIENTATION} numberOfMonths={NUM_OF_MONTHS} />
+          )).dive();
           expect(wrapper.find('ul')).to.have.lengthOf(NUM_OF_MONTHS);
         });
       });
@@ -457,8 +457,9 @@ describe('DayPicker', () => {
     describe('props.getFirstFocusableDay is truthy', () => {
       it('calls getFirstFocusableDay with arg if exists', () => {
         const getFirstFocusableDayStub = sinon.stub();
-        const wrapper =
-          shallow(<DayPicker getFirstFocusableDay={getFirstFocusableDayStub} />).dive();
+        const wrapper = shallow((
+          <DayPicker getFirstFocusableDay={getFirstFocusableDayStub} />
+        )).dive();
         getFirstFocusableDayStub.reset(); // getFirstFocusableDay gets called in the constructor
 
         wrapper.instance().getFocusedDay();
@@ -467,8 +468,9 @@ describe('DayPicker', () => {
 
       it('calls getFirstFocusableDay with arg if exists', () => {
         const getFirstFocusableDayStub = sinon.stub();
-        const wrapper =
-        shallow(<DayPicker getFirstFocusableDay={getFirstFocusableDayStub} />).dive();
+        const wrapper = shallow((
+          <DayPicker getFirstFocusableDay={getFirstFocusableDayStub} />
+        )).dive();
         getFirstFocusableDayStub.reset(); // getFirstFocusableDay gets called in the constructor
 
         wrapper.instance().getFocusedDay(today);
@@ -477,8 +479,9 @@ describe('DayPicker', () => {
 
       it('returns getFirstFocusableDay() value', () => {
         const getFirstFocusableDayStub = sinon.stub().returns(today);
-        const wrapper =
-          shallow(<DayPicker getFirstFocusableDay={getFirstFocusableDayStub} />).dive();
+        const wrapper = shallow((
+          <DayPicker getFirstFocusableDay={getFirstFocusableDayStub} />
+        )).dive();
         expect(wrapper.instance().getFocusedDay().isSame(today, 'day')).to.equal(true);
       });
 
@@ -486,8 +489,9 @@ describe('DayPicker', () => {
         const test = moment().add(3, 'months');
         const getFirstFocusableDayStub = sinon.stub().returns(today);
         sinon.stub(isDayVisible, 'default').returns(false);
-        const wrapper =
-          shallow(<DayPicker getFirstFocusableDay={getFirstFocusableDayStub} />).dive();
+        const wrapper = shallow((
+          <DayPicker getFirstFocusableDay={getFirstFocusableDayStub} />
+        )).dive();
         expect(wrapper.instance().getFocusedDay(test).isSame(test.startOf('month'), 'day')).to.equal(true);
       });
     });

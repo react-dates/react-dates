@@ -104,10 +104,12 @@ function SingleDatePickerInput({
   isRTL,
   styles,
 }) {
-  const calendarIcon =
-    customInputIcon || (<CalendarIcon {...css(styles.SingleDatePickerInput_calendarIcon_svg)} />);
-  const closeIcon =
-    customCloseIcon || (<CloseButton {...css(styles.SingleDatePickerInput_clearDate_svg)} />);
+  const calendarIcon = customInputIcon || (
+    <CalendarIcon {...css(styles.SingleDatePickerInput_calendarIcon_svg)} />
+  );
+  const closeIcon = customCloseIcon || (
+    <CloseButton {...css(styles.SingleDatePickerInput_clearDate_svg)} />
+  );
 
   const screenReaderText = screenReaderMessage || phrases.keyboardNavigationInstructions;
   const inputIcon = (showDefaultInputIcon || customInputIcon !== null) && (

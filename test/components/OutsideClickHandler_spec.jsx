@@ -17,12 +17,12 @@ describe('OutsideClickHandler', () => {
     });
 
     it('renders the children it‘s given', () => {
-      const wrapper = shallow(
+      const wrapper = shallow((
         <OutsideClickHandler>
           <section id="a" />
           <nav id="b" />
-        </OutsideClickHandler>,
-      );
+        </OutsideClickHandler>
+      ));
       expect(wrapper.children().map(x => ({ type: x.type(), id: x.prop('id') }))).to.eql([
         { type: 'section', id: 'a' },
         { type: 'nav', id: 'b' },
@@ -92,7 +92,7 @@ describe('OutsideClickHandler', () => {
 
       it('document.addEventListener is called with `click` & onOutsideClick', () => {
         const wrapper = mount(<OutsideClickHandler />);
-        const onOutsideClick = wrapper.instance().onOutsideClick;
+        const { onOutsideClick } = wrapper.instance();
         expect(addEventListenerStub.calledWith('click', onOutsideClick, true)).to.equal(true);
       });
 
@@ -100,7 +100,7 @@ describe('OutsideClickHandler', () => {
         document.addEventListener = undefined;
 
         const wrapper = mount(<OutsideClickHandler />);
-        const onOutsideClick = wrapper.instance().onOutsideClick;
+        const { onOutsideClick } = wrapper.instance();
         expect(document.attachEvent.calledWith('onclick', onOutsideClick)).to.equal(true);
       });
     });
@@ -115,7 +115,7 @@ describe('OutsideClickHandler', () => {
 
       it('document.removeEventListener is called with `click` and props.onOutsideClick', () => {
         const wrapper = mount(<OutsideClickHandler />);
-        const onOutsideClick = wrapper.instance().onOutsideClick;
+        const { onOutsideClick } = wrapper.instance();
 
         wrapper.instance().componentWillUnmount();
         expect(removeEventListenerSpy.calledWith('click', onOutsideClick, true)).to.equal(true);
@@ -125,7 +125,7 @@ describe('OutsideClickHandler', () => {
         document.removeEventListener = undefined;
 
         const wrapper = mount(<OutsideClickHandler />);
-        const onOutsideClick = wrapper.instance().onOutsideClick;
+        const { onOutsideClick } = wrapper.instance();
 
         wrapper.instance().componentWillUnmount();
         expect(document.detachEvent.calledWith('onclick', onOutsideClick)).to.equal(true);

@@ -112,19 +112,22 @@ class CalendarDay extends React.Component {
       height: daySize - 1,
     };
 
-    const useDefaultCursor =
-      modifiers.has('blocked-minimum-nights') ||
-      modifiers.has('blocked-calendar') ||
-      modifiers.has('blocked-out-of-range');
+    const useDefaultCursor = (
+      modifiers.has('blocked-minimum-nights')
+      || modifiers.has('blocked-calendar')
+      || modifiers.has('blocked-out-of-range')
+    );
 
-    const selected =
-      modifiers.has('selected') ||
-      modifiers.has('selected-start') ||
-      modifiers.has('selected-end');
+    const selected = (
+      modifiers.has('selected')
+      || modifiers.has('selected-start')
+      || modifiers.has('selected-end')
+    );
 
     const hoveredSpan = !selected && (
-      modifiers.has('hovered-span') ||
-      modifiers.has('after-hovered-start'));
+      modifiers.has('hovered-span')
+      || modifiers.has('after-hovered-start')
+    );
 
     const isOutsideRange = modifiers.has('blocked-out-of-range');
 

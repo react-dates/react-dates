@@ -151,16 +151,16 @@ function DateRangePickerInput({
   isRTL,
   styles,
 }) {
-  const calendarIcon =
-    customInputIcon || (<CalendarIcon {...css(styles.DateRangePickerInput_calendarIcon_svg)} />);
-  const arrowIcon =
-    customArrowIcon ||
-    (isRTL ?
-      <LeftArrow {...css(styles.DateRangePickerInput_arrow_svg)} /> :
-      <RightArrow {...css(styles.DateRangePickerInput_arrow_svg)} />
-    );
-  const closeIcon =
-    customCloseIcon || (<CloseButton {...css(styles.DateRangePickerInput_clearDates_svg)} />);
+  const calendarIcon = customInputIcon || (
+    <CalendarIcon {...css(styles.DateRangePickerInput_calendarIcon_svg)} />
+  );
+  const arrowIcon = customArrowIcon || (isRTL
+    ? <LeftArrow {...css(styles.DateRangePickerInput_arrow_svg)} />
+    : <RightArrow {...css(styles.DateRangePickerInput_arrow_svg)} />
+  );
+  const closeIcon = customCloseIcon || (
+    <CloseButton {...css(styles.DateRangePickerInput_clearDates_svg)} />
+  );
   const screenReaderText = screenReaderMessage || phrases.keyboardNavigationInstructions;
   const inputIcon = (showDefaultInputIcon || customInputIcon !== null) && (
     <button

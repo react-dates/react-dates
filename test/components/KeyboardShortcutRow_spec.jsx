@@ -6,13 +6,13 @@ import KeyboardShortcutRow from '../../src/components/KeyboardShortcutRow';
 
 describe('KeyboardShortcutRow', () => {
   it('is an li', () => {
-    const wrapper = shallow(
+    const wrapper = shallow((
       <KeyboardShortcutRow
         unicode="foo"
         label="bar"
         action="baz"
-      />,
-    ).dive();
+      />
+    )).dive();
     expect(wrapper.is('li')).to.equal(true);
   });
 });

@@ -140,8 +140,9 @@ class DayPicker extends React.Component {
       focusedDate = props.getFirstFocusableDay(currentMonth);
     }
 
-    const translationValue =
-      props.isRTL && this.isHorizontal() ? -getCalendarMonthWidth(props.daySize) : 0;
+    const translationValue = props.isRTL && this.isHorizontal()
+      ? -getCalendarMonthWidth(props.daySize)
+      : 0;
 
     this.hasSetInitialVisibleMonth = !props.hidden;
     this.state = {
@@ -181,7 +182,12 @@ class DayPicker extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { hidden, isFocused, showKeyboardShortcuts, onBlur } = nextProps;
+    const {
+      hidden,
+      isFocused,
+      showKeyboardShortcuts,
+      onBlur,
+    } = nextProps;
     const { currentMonth } = this.state;
 
     if (!hidden) {
@@ -203,7 +209,7 @@ class DayPicker extends React.Component {
       if (isFocused) {
         const focusedDate = this.getFocusedDay(currentMonth);
 
-        let onKeyboardShortcutsPanelClose = this.state.onKeyboardShortcutsPanelClose;
+        let { onKeyboardShortcutsPanelClose } = this.state;
         if (nextProps.showKeyboardShortcuts) {
           // the ? shortcut came from the input and we should return input there once it is close
           onKeyboardShortcutsPanelClose = onBlur;
@@ -332,8 +338,7 @@ class DayPicker extends React.Component {
 
     if (e) e.preventDefault();
 
-    let translationValue =
-      this.isVertical() ? this.calendarMonthHeights[0] : calendarMonthWidth;
+    let translationValue = this.isVertical() ? this.calendarMonthHeights[0] : calendarMonthWidth;
 
     if (this.isHorizontal()) {
       if (isRTL) {
@@ -358,8 +363,7 @@ class DayPicker extends React.Component {
 
     if (e) e.preventDefault();
 
-    let translationValue =
-      this.isVertical() ? -this.calendarMonthHeights[1] : -calendarMonthWidth;
+    let translationValue = this.isVertical() ? -this.calendarMonthHeights[1] : -calendarMonthWidth;
 
     if (this.isHorizontal()) {
       if (isRTL) {
@@ -587,7 +591,12 @@ class DayPicker extends React.Component {
   }
 
   renderWeekHeader(index) {
-    const { daySize, orientation, weekDayFormat, styles } = this.props;
+    const {
+      daySize,
+      orientation,
+      weekDayFormat,
+      styles,
+    } = this.props;
     const { calendarMonthWidth } = this.state;
     const verticalScrollable = orientation === VERTICAL_SCROLLABLE;
     const horizontalStyle = {
@@ -611,11 +620,11 @@ class DayPicker extends React.Component {
 
     const header = [];
     for (let i = 0; i < 7; i += 1) {
-      header.push(
+      header.push((
         <li key={i} {...css(styles.DayPicker_weekHeader_li, { width: daySize })}>
           <small>{moment().day((i + firstDayOfWeek) % 7).format(weekDayFormat)}</small>
-        </li>,
-      );
+        </li>
+      ));
     }
 
     return (
