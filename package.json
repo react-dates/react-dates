@@ -115,6 +115,7 @@
     "classnames": "^2.2.5",
     "consolidated-events": "^1.1.0",
     "is-touch-device": "^1.0.1",
+    "just-extend": "^1.1.22",
     "lodash": "^4.1.1",
     "object.assign": "^4.0.4",
     "object.values": "^1.0.4",
