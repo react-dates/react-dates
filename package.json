@@ -82,7 +82,7 @@
     "in-publish": "^2.0.0",
     "istanbul-lib-instrument": "=1.8.0",
     "json-loader": "^0.5.7",
-    "just-extend": "=1.1.22",
+    "just-extend": "1.1.25",
     "karma": "^1.7.1",
     "karma-chai": "^0.1.0",
     "karma-firefox-launcher": "^1.0.1",
