@@ -16,7 +16,7 @@
   "all": true,
   "check-coverage": true,
   "statements": 83,
-  "branches": 85,
+  "branches": 79,
   "lines": 83,
   "functions": 70,
   "sourceMap": false,
