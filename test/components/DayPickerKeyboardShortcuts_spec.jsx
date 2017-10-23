@@ -4,7 +4,7 @@ import sinon from 'sinon-sandbox';
 import { shallow } from 'enzyme';
 
 import { DayPickerKeyboardShortcutsPhrases } from '../../src/defaultPhrases';
-import CloseButton from '../../src/svg/close.svg';
+import CloseButton from '../../src/components/CloseButton';
 
 import KeyboardShortcutRow from '../../src/components/KeyboardShortcutRow';
 import DayPickerKeyboardShortcuts from '../../src/components/DayPickerKeyboardShortcuts';

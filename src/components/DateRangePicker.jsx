@@ -17,7 +17,7 @@ import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
 import DateRangePickerInputController from './DateRangePickerInputController';
 import DayPickerRangeController from './DayPickerRangeController';
 
-import CloseButton from '../svg/close.svg';
+import CloseButton from './CloseButton';
 
 import DateRangePickerShape from '../shapes/DateRangePickerShape';
 

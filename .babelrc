@@ -1,6 +1,7 @@
 {
   "presets": ["airbnb"],
   "plugins": [
+    "inline-react-svg",
     ["transform-replace-object-assign", "object.assign"],
   ],
   "env": {

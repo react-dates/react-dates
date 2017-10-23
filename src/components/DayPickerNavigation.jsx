@@ -6,10 +6,10 @@ import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 import { DayPickerNavigationPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 
-import LeftArrow from '../svg/arrow-left.svg';
-import RightArrow from '../svg/arrow-right.svg';
-import ChevronUp from '../svg/chevron-up.svg';
-import ChevronDown from '../svg/chevron-down.svg';
+import LeftArrow from './LeftArrow';
+import RightArrow from './RightArrow';
+import ChevronUp from './ChevronUp';
+import ChevronDown from './ChevronDown';
 import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
 
 import {

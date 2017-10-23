@@ -5,7 +5,7 @@ import sinon from 'sinon-sandbox';
 import moment from 'moment';
 import Portal from 'react-portal';
 
-import CloseButton from '../../src/svg/close.svg';
+import CloseButton from '../../src/components/CloseButton';
 import DayPickerSingleDateController from '../../src/components/DayPickerSingleDateController';
 import SingleDatePickerInput from '../../src/components/SingleDatePickerInput';
 import SingleDatePicker, { PureSingleDatePicker } from '../../src/components/SingleDatePicker';

@@ -10,10 +10,10 @@ import openDirectionShape from '../shapes/OpenDirectionShape';
 import DateInput from './DateInput';
 import IconPositionShape from '../shapes/IconPositionShape';
 
-import RightArrow from '../svg/arrow-right.svg';
-import LeftArrow from '../svg/arrow-left.svg';
-import CloseButton from '../svg/close.svg';
-import CalendarIcon from '../svg/calendar.svg';
+import RightArrow from './RightArrow';
+import LeftArrow from './LeftArrow';
+import CloseButton from './CloseButton';
+import CalendarIcon from './CalendarIcon';
 
 import {
   START_DATE,
