@@ -1,5 +1,10 @@
 # Change Log
 
+## 14.0.0
+- [fix] Flip arrow navigation in RTL context ([#775](https://github.com/airbnb/react-dates/pull/775))
+- [new] Add `verticalHeight` prop to SDP, DRP and DayPicker ([#773](https://github.com/airbnb/react-dates/pull/773))
+- [breaking] Modify default `DateInput` styling, convert inputs to actual inputs, and remove caption ids ([#780](https://github.com/airbnb/react-dates/pull/780))
+
 ## 13.0.6
 - [fix] Update `react-with-styles-interface-css` dependency ([#777](https://github.com/airbnb/react-dates/pull/777))
 
