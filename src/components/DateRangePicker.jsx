@@ -4,7 +4,7 @@ import moment from 'moment';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 import Portal from 'react-portal';
 import { forbidExtraProps } from 'airbnb-prop-types';
-import { addEventListener, removeEventListener } from 'consolidated-events';
+import { addEventListener } from 'consolidated-events';
 import isTouchDevice from 'is-touch-device';
 
 import { DateRangePickerPhrases } from '../defaultPhrases';
@@ -128,7 +128,7 @@ class DateRangePicker extends React.Component {
   }
 
   componentDidMount() {
-    this.resizeHandle = addEventListener(
+    this.removeEventListener = addEventListener(
       window,
       'resize',
       this.responsivizePickerPosition,
@@ -157,7 +157,7 @@ class DateRangePicker extends React.Component {
   }
 
   componentWillUnmount() {
-    if (this.resizeHandle) removeEventListener(this.resizeHandle);
+    if (this.removeEventListener) this.removeEventListener();
   }
 
   onOutsideClick() {

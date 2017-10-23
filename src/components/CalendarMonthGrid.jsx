@@ -5,7 +5,7 @@ import momentPropTypes from 'react-moment-proptypes';
 import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 import moment from 'moment';
-import { addEventListener, removeEventListener } from 'consolidated-events';
+import { addEventListener } from 'consolidated-events';
 
 import { CalendarDayPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
@@ -113,7 +113,7 @@ class CalendarMonthGrid extends React.Component {
 
   componentDidMount() {
     const { setCalendarMonthHeights } = this.props;
-    this.eventHandle = addEventListener(
+    this.removeEventListener = addEventListener(
       this.container,
       'transitionend',
       this.onTransitionEnd,
@@ -173,7 +173,7 @@ class CalendarMonthGrid extends React.Component {
   }
 
   componentWillUnmount() {
-    removeEventListener(this.eventHandle);
+    if (this.removeEventListener) this.removeEventListener();
     if (this.setCalendarMonthHeightsTimeout) {
       clearTimeout(this.setCalendarMonthHeightsTimeout);
     }

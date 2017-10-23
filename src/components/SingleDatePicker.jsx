@@ -3,7 +3,7 @@ import moment from 'moment';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 import Portal from 'react-portal';
 import { forbidExtraProps } from 'airbnb-prop-types';
-import { addEventListener, removeEventListener } from 'consolidated-events';
+import { addEventListener } from 'consolidated-events';
 import isTouchDevice from 'is-touch-device';
 
 import SingleDatePickerShape from '../shapes/SingleDatePickerShape';
@@ -125,7 +125,7 @@ class SingleDatePicker extends React.Component {
 
   /* istanbul ignore next */
   componentDidMount() {
-    this.resizeHandle = addEventListener(
+    this.removeEventListener = addEventListener(
       window,
       'resize',
       this.responsivizePickerPosition,
@@ -150,7 +150,7 @@ class SingleDatePicker extends React.Component {
 
   /* istanbul ignore next */
   componentWillUnmount() {
-    removeEventListener(this.resizeHandle);
+    if (this.removeEventListener) this.removeEventListener();
   }
 
   onChange(dateString) {
