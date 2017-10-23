@@ -9,8 +9,8 @@ import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 import DateInput from './DateInput';
 import IconPositionShape from '../shapes/IconPositionShape';
 
-import CloseButton from '../svg/close.svg';
-import CalendarIcon from '../svg/calendar.svg';
+import CloseButton from './CloseButton';
+import CalendarIcon from './CalendarIcon';
 
 import openDirectionShape from '../shapes/OpenDirectionShape';
 import { ICON_BEFORE_POSITION, ICON_AFTER_POSITION, OPEN_DOWN } from '../../constants';

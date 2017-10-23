@@ -41,26 +41,6 @@ module.exports = (config) => {
               presets: ['airbnb'],
             },
           },
-          {
-            test: /\.svg$/,
-            use: [
-              {
-                loader: 'babel-loader',
-                query: {
-                  presets: ['airbnb'],
-                },
-              },
-              {
-                loader: 'react-svg-loader',
-                query: {
-                  jsx: true,
-                },
-              },
-            ],
-            include: [
-              path.join(__dirname, 'src'),
-            ],
-          },
           { test: /\.json$/, loader: 'json-loader' },
 
           // Inject the Airbnb shims into the bundle

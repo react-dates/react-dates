@@ -8,7 +8,7 @@ import KeyboardShortcutRow from './KeyboardShortcutRow';
 import { DayPickerKeyboardShortcutsPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 
-import CloseButton from '../svg/close.svg';
+import CloseButton from './CloseButton';
 
 export const TOP_LEFT = 'top-left';
 export const TOP_RIGHT = 'top-right';

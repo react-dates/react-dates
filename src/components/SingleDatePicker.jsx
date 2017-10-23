@@ -17,7 +17,7 @@ import getResponsiveContainerStyles from '../utils/getResponsiveContainerStyles'
 import SingleDatePickerInput from './SingleDatePickerInput';
 import DayPickerSingleDateController from './DayPickerSingleDateController';
 
-import CloseButton from '../svg/close.svg';
+import CloseButton from './CloseButton';
 
 import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
 
