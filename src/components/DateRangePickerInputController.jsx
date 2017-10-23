@@ -15,7 +15,6 @@ import IconPositionShape from '../shapes/IconPositionShape';
 
 import toMomentObject from '../utils/toMomentObject';
 import toLocalizedDateString from '../utils/toLocalizedDateString';
-import toISODateString from '../utils/toISODateString';
 
 import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
 import isBeforeDay from '../utils/isBeforeDay';
@@ -265,19 +264,15 @@ export default class DateRangePickerInputController extends React.Component {
     } = this.props;
 
     const startDateString = this.getDateString(startDate);
-    const startDateValue = toISODateString(startDate);
     const endDateString = this.getDateString(endDate);
-    const endDateValue = toISODateString(endDate);
 
     return (
       <DateRangePickerInput
         startDate={startDateString}
-        startDateValue={startDateValue}
         startDateId={startDateId}
         startDatePlaceholderText={startDatePlaceholderText}
         isStartDateFocused={isStartDateFocused}
         endDate={endDateString}
-        endDateValue={endDateValue}
         endDateId={endDateId}
         endDatePlaceholderText={endDatePlaceholderText}
         isEndDateFocused={isEndDateFocused}

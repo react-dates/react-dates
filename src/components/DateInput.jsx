@@ -13,7 +13,6 @@ const propTypes = forbidExtraProps({
   id: PropTypes.string.isRequired,
   placeholder: PropTypes.string, // also used as label
   displayValue: PropTypes.string,
-  inputValue: PropTypes.string,
   screenReaderMessage: PropTypes.string,
   focused: PropTypes.bool,
   disabled: PropTypes.bool,
@@ -37,7 +36,6 @@ const propTypes = forbidExtraProps({
 const defaultProps = {
   placeholder: 'Select Date',
   displayValue: '',
-  inputValue: '',
   screenReaderMessage: '',
   focused: false,
   disabled: false,
@@ -90,7 +88,6 @@ class DateInput extends React.Component {
 
     if (focused && isFocused) {
       this.inputRef.focus();
-      this.inputRef.select();
     } else {
       this.inputRef.blur();
     }
@@ -149,7 +146,6 @@ class DateInput extends React.Component {
       id,
       placeholder,
       displayValue,
-      inputValue,
       screenReaderMessage,
       focused,
       showCaret,
@@ -161,8 +157,7 @@ class DateInput extends React.Component {
       styles,
     } = this.props;
 
-    const displayText = displayValue || inputValue || dateString || placeholder || '';
-    const value = inputValue || displayValue || dateString || '';
+    const value = displayValue || dateString || '';
     const screenReaderMessageId = `DateInput__screen-reader-message-${id}`;
 
     const withCaret = showCaret && focused;
@@ -181,6 +176,8 @@ class DateInput extends React.Component {
           {...css(
             styles.DateInput_input,
             readOnly && styles.DateInput_input__readOnly,
+            focused && styles.DateInput_input__focused,
+            disabled && styles.DateInput_input__disabled,
           )}
           aria-label={placeholder}
           type="text"
@@ -204,17 +201,6 @@ class DateInput extends React.Component {
             {screenReaderMessage}
           </p>
         )}
-
-        <div
-          {...css(
-            styles.DateInput_displayText,
-            !!value && styles.DateInput_displayText__hasInput,
-            focused && styles.DateInput_displayText__focused,
-            disabled && styles.DateInput_displayText__disabled,
-          )}
-        >
-          {displayText}
-        </div>
       </div>
     );
   }
@@ -225,7 +211,7 @@ DateInput.defaultProps = defaultProps;
 
 export default withStyles(({
   reactDates: {
-    color, sizing, spacing, font, zIndex,
+    border, color, sizing, spacing, font, zIndex,
   },
 }) => {
   const inputHeight = parseInt(font.input.lineHeight, 10)
@@ -267,7 +253,6 @@ export default withStyles(({
         border: `${sizing.tooltipArrowWidth / 2}px solid transparent`,
         left: 22,
         zIndex: zIndex + 2,
-
       },
     },
 
@@ -301,20 +286,39 @@ export default withStyles(({
 
     DateInput__disabled: {
       background: color.disabled,
+      color: color.textDisabled,
     },
 
     DateInput_input: {
-      opacity: 0,
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      border: 0,
-      height: '100%',
+      fontWeight: 200,
+      fontSize: font.input.size,
+      color: color.text,
       width: '100%',
+      padding: `${spacing.displayTextPaddingVertical}px ${spacing.displayTextPaddingHorizontal}px`,
+      border: border.input.border,
+      borderTop: border.input.borderTop,
+      borderRight: border.input.borderRight,
+      borderBottom: border.input.borderBottom,
+      borderLeft: border.input.borderLeft,
     },
 
     DateInput_input__readOnly: {
       userSelect: 'none',
+    },
+
+    DateInput_input__focused: {
+      outline: border.input.outlineFocused,
+      background: color.backgroundFocused,
+      border: border.input.borderFocused,
+      borderTop: border.input.borderTopFocused,
+      borderRight: border.input.borderRightFocused,
+      borderBottom: border.input.borderBottomFocused,
+      borderLeft: border.input.borderLeftFocused,
+    },
+
+    DateInput_input__disabled: {
+      background: color.disabled,
+      fontStyle: font.input.styleDisabled,
     },
 
     DateInput_screenReaderMessage: {
@@ -326,27 +330,6 @@ export default withStyles(({
       padding: 0,
       position: 'absolute',
       width: 1,
-    },
-
-    DateInput_displayText: {
-      padding: `${spacing.displayTextPaddingVertical}px ${spacing.displayTextPaddingHorizontal}px`,
-      whiteSpace: 'nowrap',
-      overflow: 'hidden',
-    },
-
-    DateInput_displayText__hasInput: {
-      color: color.text,
-    },
-
-    DateInput_displayText__focused: {
-      background: color.backgroundFocused,
-      borderColor: color.backgroundFocused,
-      borderRadius: 3,
-      color: color.textFocused,
-    },
-
-    DateInput_displayText__disabled: {
-      fontStyle: 'italic',
     },
   };
 })(DateInput);
