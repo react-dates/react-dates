@@ -84,6 +84,13 @@ storiesOf('DayPicker', module)
       daySize={50}
     />
   ))
+  .addWithInfo('vertical with custom height', () => (
+    <DayPicker
+      numberOfMonths={2}
+      orientation={VERTICAL_ORIENTATION}
+      verticalHeight={568}
+    />
+  ))
   .addWithInfo('with custom arrows', () => (
     <DayPicker
       navPrev={<TestPrevIcon />}

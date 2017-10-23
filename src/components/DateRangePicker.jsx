@@ -78,6 +78,7 @@ const defaultProps = {
   daySize: DAY_SIZE,
   isRTL: false,
   firstDayOfWeek: null,
+  verticalHeight: null,
 
   // navigation related props
   navPrev: null,
@@ -320,6 +321,7 @@ class DateRangePicker extends React.Component {
       isRTL,
       weekDayFormat,
       styles,
+      verticalHeight,
     } = this.props;
     const { dayPickerContainerStyles, isDayPickerFocused, showKeyboardShortcuts } = this.state;
 
@@ -386,6 +388,7 @@ class DateRangePicker extends React.Component {
           isRTL={isRTL}
           firstDayOfWeek={firstDayOfWeek}
           weekDayFormat={weekDayFormat}
+          verticalHeight={verticalHeight}
         />
 
         {withFullScreenPortal && (

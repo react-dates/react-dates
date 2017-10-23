@@ -69,6 +69,7 @@ const propTypes = forbidExtraProps({
   renderDay: PropTypes.func,
   renderCalendarInfo: PropTypes.func,
   firstDayOfWeek: DayOfWeekShape,
+  verticalHeight: nonNegativeInteger,
 
   // accessibility
   onBlur: PropTypes.func,
@@ -118,6 +119,7 @@ const defaultProps = {
   renderDay: null,
   renderCalendarInfo: null,
   firstDayOfWeek: null,
+  verticalHeight: null,
 
   // accessibility
   onBlur() {},
@@ -882,6 +884,7 @@ export default class DayPickerRangeController extends React.Component {
       showKeyboardShortcuts,
       isRTL,
       weekDayFormat,
+      verticalHeight,
     } = this.props;
 
     const { currentMonth, phrases, visibleDays } = this.state;
@@ -919,6 +922,7 @@ export default class DayPickerRangeController extends React.Component {
         phrases={phrases}
         isRTL={isRTL}
         weekDayFormat={weekDayFormat}
+        verticalHeight={verticalHeight}
       />
     );
   }

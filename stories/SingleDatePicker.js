@@ -2,6 +2,9 @@ import React from 'react';
 import moment from 'moment';
 import momentJalaali from 'moment-jalaali';
 import { storiesOf } from '@storybook/react';
+import {
+  VERTICAL_ORIENTATION,
+} from '../constants';
 
 import SingleDatePickerWrapper from '../examples/SingleDatePickerWrapper';
 
@@ -55,4 +58,10 @@ storiesOf('SingleDatePicker (SDP)', module)
         renderDay={day => momentJalaali(day).format('jD')}
       />
     );
-  });
+  })
+  .addWithInfo('vertical with custom height', () => (
+    <SingleDatePickerWrapper
+      orientation={VERTICAL_ORIENTATION}
+      verticalHeight={568}
+    />
+  ));
