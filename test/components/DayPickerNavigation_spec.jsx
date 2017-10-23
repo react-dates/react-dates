@@ -6,7 +6,7 @@ import { shallow } from 'enzyme';
 import DayPickerNavigation from '../../src/components/DayPickerNavigation';
 import {
   VERTICAL_SCROLLABLE,
-} from '../../constants';
+} from '../../src/constants';
 
 describe('DayPickerNavigation', () => {
   describe('#render', () => {

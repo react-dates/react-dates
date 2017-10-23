@@ -6,7 +6,7 @@ import throttle from 'lodash/throttle';
 import isTouchDevice from 'is-touch-device';
 
 import openDirectionShape from '../shapes/OpenDirectionShape';
-import { OPEN_DOWN, OPEN_UP } from '../../constants';
+import { OPEN_DOWN, OPEN_UP } from '../constants';
 
 const propTypes = forbidExtraProps({
   ...withStylesPropTypes,

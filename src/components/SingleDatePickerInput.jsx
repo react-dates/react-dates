@@ -13,7 +13,7 @@ import CloseButton from './CloseButton';
 import CalendarIcon from './CalendarIcon';
 
 import openDirectionShape from '../shapes/OpenDirectionShape';
-import { ICON_BEFORE_POSITION, ICON_AFTER_POSITION, OPEN_DOWN } from '../../constants';
+import { ICON_BEFORE_POSITION, ICON_AFTER_POSITION, OPEN_DOWN } from '../constants';
 
 const propTypes = forbidExtraProps({
   ...withStylesPropTypes,

@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-import { WEEKDAYS } from '../../constants';
+import { WEEKDAYS } from '../constants';
 
 export default function getCalendarMonthWeeks(
   month,
