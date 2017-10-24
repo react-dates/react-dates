@@ -3,7 +3,7 @@ import wrap from 'mocha-wrap';
 
 import getResponsiveContainerStyles from '../../src/utils/getResponsiveContainerStyles';
 
-import { ANCHOR_LEFT, ANCHOR_RIGHT } from '../../constants';
+import { ANCHOR_LEFT, ANCHOR_RIGHT } from '../../src/constants';
 
 const describeUnlessWindow = typeof window === 'undefined' ? describe : describe.skip;
 

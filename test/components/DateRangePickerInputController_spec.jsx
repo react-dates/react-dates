@@ -14,7 +14,7 @@ import isSameDay from '../../src/utils/isSameDay';
 import {
   START_DATE,
   END_DATE,
-} from '../../constants';
+} from '../../src/constants';
 
 // Set to noon to mimic how days in the picker are configured internally
 const today = moment().startOf('day').hours(12);

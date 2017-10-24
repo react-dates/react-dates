@@ -19,7 +19,7 @@ import toLocalizedDateString from '../utils/toLocalizedDateString';
 import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
 import isBeforeDay from '../utils/isBeforeDay';
 
-import { START_DATE, END_DATE, ICON_BEFORE_POSITION, OPEN_DOWN } from '../../constants';
+import { START_DATE, END_DATE, ICON_BEFORE_POSITION, OPEN_DOWN } from '../constants';
 
 const propTypes = forbidExtraProps({
   startDate: momentPropTypes.momentObj,

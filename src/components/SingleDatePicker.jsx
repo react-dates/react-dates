@@ -30,7 +30,7 @@ import {
   OPEN_UP,
   DAY_SIZE,
   ICON_BEFORE_POSITION,
-} from '../../constants';
+} from '../constants';
 
 const propTypes = forbidExtraProps({
   ...withStylesPropTypes,

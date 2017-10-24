@@ -15,7 +15,7 @@ import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
 import {
   HORIZONTAL_ORIENTATION,
   VERTICAL_SCROLLABLE,
-} from '../../constants';
+} from '../constants';
 
 const propTypes = forbidExtraProps({
   ...withStylesPropTypes,

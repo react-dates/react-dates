@@ -21,7 +21,7 @@ import {
   ICON_BEFORE_POSITION,
   ICON_AFTER_POSITION,
   OPEN_DOWN,
-} from '../../constants';
+} from '../constants';
 
 const propTypes = forbidExtraProps({
   ...withStylesPropTypes,

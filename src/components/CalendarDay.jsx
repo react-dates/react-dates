@@ -10,7 +10,7 @@ import { CalendarDayPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 import getPhrase from '../utils/getPhrase';
 
-import { BLOCKED_MODIFIER, DAY_SIZE } from '../../constants';
+import { BLOCKED_MODIFIER, DAY_SIZE } from '../constants';
 
 const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
