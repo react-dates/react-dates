@@ -39,8 +39,8 @@ const propTypes = forbidExtraProps({
   onStartDateShiftTab: PropTypes.func,
   onEndDateTab: PropTypes.func,
   onClearDates: PropTypes.func,
-  onArrowDown: PropTypes.func,
-  onQuestionMark: PropTypes.func,
+  onKeyDownArrowDown: PropTypes.func,
+  onKeyDownQuestionMark: PropTypes.func,
 
   startDate: PropTypes.string,
   endDate: PropTypes.string,
@@ -81,8 +81,8 @@ const defaultProps = {
   onStartDateShiftTab() {},
   onEndDateTab() {},
   onClearDates() {},
-  onArrowDown() {},
-  onQuestionMark() {},
+  onKeyDownArrowDown() {},
+  onKeyDownQuestionMark() {},
 
   startDate: '',
   endDate: '',
@@ -126,8 +126,8 @@ function DateRangePickerInput({
   onEndDateChange,
   onEndDateFocus,
   onEndDateTab,
-  onArrowDown,
-  onQuestionMark,
+  onKeyDownArrowDown,
+  onKeyDownQuestionMark,
   onClearDates,
   showClearDates,
   disabled,
@@ -162,7 +162,7 @@ function DateRangePickerInput({
       type="button"
       disabled={disabled}
       aria-label={phrases.focusStartDate}
-      onClick={onArrowDown}
+      onClick={onKeyDownArrowDown}
     >
       {calendarIcon}
     </button>
@@ -193,8 +193,8 @@ function DateRangePickerInput({
         onChange={onStartDateChange}
         onFocus={onStartDateFocus}
         onKeyDownShiftTab={onStartDateShiftTab}
-        onKeyDownArrowDown={onArrowDown}
-        onKeyDownQuestionMark={onQuestionMark}
+        onKeyDownArrowDown={onKeyDownArrowDown}
+        onKeyDownQuestionMark={onKeyDownQuestionMark}
       />
 
       <div
@@ -220,8 +220,8 @@ function DateRangePickerInput({
         onChange={onEndDateChange}
         onFocus={onEndDateFocus}
         onKeyDownTab={onEndDateTab}
-        onKeyDownArrowDown={onArrowDown}
-        onKeyDownQuestionMark={onQuestionMark}
+        onKeyDownArrowDown={onKeyDownArrowDown}
+        onKeyDownQuestionMark={onKeyDownQuestionMark}
       />
 
       {showClearDates && (
