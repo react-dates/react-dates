@@ -10,7 +10,7 @@ import { CalendarDayPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 import getPhrase from '../utils/getPhrase';
 
-import { BLOCKED_MODIFIER, DAY_SIZE } from '../../constants';
+import { BLOCKED_MODIFIER, DAY_SIZE } from '../constants';
 
 const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
@@ -142,6 +142,8 @@ class CalendarDay extends React.Component {
           hoveredSpan && styles.CalendarDay__hovered_span,
           modifiers.has('selected-span') && styles.CalendarDay__selected_span,
           modifiers.has('last-in-range') && styles.CalendarDay__last_in_range,
+          modifiers.has('selected-start') && styles.CalendarDay__selected_start,
+          modifiers.has('selected-end') && styles.CalendarDay__selected_end,
           selected && styles.CalendarDay__selected,
           isOutsideRange && styles.CalendarDay__blocked_out_of_range,
           daySizeStyles,
@@ -343,5 +345,8 @@ export default withStyles(({ reactDates: { color } }) => ({
       color: color.blocked_out_of_range.color_active,
     },
   },
+
+  CalendarDay__selected_start: {},
+  CalendarDay__selected_end: {},
 
 }))(CalendarDay);

@@ -25,7 +25,7 @@ import {
   HORIZONTAL_ORIENTATION,
   VERTICAL_SCROLLABLE,
   DAY_SIZE,
-} from '../../constants';
+} from '../constants';
 
 import DayPicker from './DayPicker';
 import OutsideClickHandler from './OutsideClickHandler';

@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { expect } from 'chai';
 
-import { ISO_FORMAT, ISO_MONTH_FORMAT } from '../../constants';
+import { ISO_FORMAT, ISO_MONTH_FORMAT } from '../../src/constants';
 import toISOMonthString from '../../src/utils/toISOMonthString';
 
 describe('#toISOMonthString', () => {

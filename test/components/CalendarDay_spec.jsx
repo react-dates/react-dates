@@ -4,7 +4,7 @@ import sinon from 'sinon-sandbox';
 import { shallow } from 'enzyme';
 import moment from 'moment';
 
-import { BLOCKED_MODIFIER } from '../../constants';
+import { BLOCKED_MODIFIER } from '../../src/constants';
 import CalendarDay, { PureCalendarDay } from '../../src/components/CalendarDay';
 
 describe('CalendarDay', () => {

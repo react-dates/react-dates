@@ -32,7 +32,7 @@ import {
   VERTICAL_ORIENTATION,
   VERTICAL_SCROLLABLE,
   DAY_SIZE,
-} from '../../constants';
+} from '../constants';
 
 const MONTH_PADDING = 23;
 const DAY_PICKER_PADDING = 9;

@@ -15,7 +15,7 @@ import isSameDay from '../../src/utils/isSameDay';
 import * as isDayVisible from '../../src/utils/isDayVisible';
 import getVisibleDays from '../../src/utils/getVisibleDays';
 
-import { START_DATE, END_DATE } from '../../constants';
+import { START_DATE, END_DATE } from '../../src/constants';
 
 // Set to noon to mimic how days in the picker are configured internally
 const today = moment().startOf('day').hours(12);

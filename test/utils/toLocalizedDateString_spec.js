@@ -2,7 +2,7 @@ import moment from 'moment';
 import { expect } from 'chai';
 
 import toLocalizedDateString from '../../src/utils/toLocalizedDateString';
-import { ISO_FORMAT } from '../../constants';
+import { ISO_FORMAT } from '../../src/constants';
 
 describe('toLocalizedDateString', () => {
   it('returns null for falsy argument', () => {
