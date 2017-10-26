@@ -1,5 +1,8 @@
 # Change Log
 
+## v10.1.3
+- [Fix] OutsideClickHandler: ensure this.childNode exists (#437)
+
 ## v10.1.2
 - [fix] Remove unused scss variables ([#475](https://github.com/airbnb/react-dates/pull/475))
 - [fix] Address some issues introduced by the accessibility PR in v10.0.0 ([#477](https://github.com/airbnb/react-dates/pull/477))
