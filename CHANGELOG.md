@@ -1,5 +1,9 @@
 # Change Log
 
+## 14.1.0
+- [new] Add esm build ([#791](https://github.com/airbnb/react-dates/pull/791))
+- [new] Add back `selected-start`/`selected-end` modifiers to `CalendarDay` ([#796](https://github.com/airbnb/react-dates/pull/796))
+
 ## 14.0.0
 - [fix] Flip arrow navigation in RTL context ([#775](https://github.com/airbnb/react-dates/pull/775))
 - [new] Add `verticalHeight` prop to SDP, DRP and DayPicker ([#773](https://github.com/airbnb/react-dates/pull/773))
