@@ -15,6 +15,13 @@
         ["transform-replace-object-assign", "object.assign"],
       ],
     },
+    "production": {
+      "presets": ["airbnb"],
+      "plugins": [
+        "inline-react-svg",
+        ["transform-replace-object-assign", "object.assign"],
+      ],
+    },
     "cjs": {
       "presets": ["airbnb"],
       "plugins": [
