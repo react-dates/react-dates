@@ -1,5 +1,9 @@
 # Change Log
 
+## 15.0.0
+- [breaking] Rename SDP keydown callback props so that they match the DRP ([#800](https://github.com/airbnb/react-dates/pull/800))
+- [fix] Explicitly set the border-radius on the keyboard shortcuts button ([#792](https://github.com/airbnb/react-dates/pull/792))
+
 ## 14.1.0
 - [new] Add esm build ([#791](https://github.com/airbnb/react-dates/pull/791))
 - [new] Add back `selected-start`/`selected-end` modifiers to `CalendarDay` ([#796](https://github.com/airbnb/react-dates/pull/796))
