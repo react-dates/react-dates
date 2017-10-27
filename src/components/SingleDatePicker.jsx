@@ -199,8 +199,7 @@ class SingleDatePicker extends React.Component {
 
   onClearFocus() {
     const {
-      startDate,
-      endDate,
+      date,
       focused,
       onFocusChange,
       onClose,
@@ -213,7 +212,7 @@ class SingleDatePicker extends React.Component {
     });
 
     onFocusChange({ focused: false });
-    onClose({ startDate, endDate });
+    onClose({ date });
   }
 
   onDayPickerFocus() {
