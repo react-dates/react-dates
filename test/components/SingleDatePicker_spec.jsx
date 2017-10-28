@@ -545,6 +545,20 @@ describe('SingleDatePicker', () => {
       wrapper.instance().onDayPickerFocus();
       expect(wrapper.state().isInputFocused).to.equal(false);
     });
+
+    it('sets state.showKeyboardShortcuts to false', () => {
+      const wrapper = shallow((
+        <SingleDatePicker
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />
+      )).dive();
+      wrapper.setState({
+        showKeyboardShortcuts: true,
+      });
+      wrapper.instance().onDayPickerFocus();
+      expect(wrapper.state().showKeyboardShortcuts).to.equal(false);
+    });
   });
 
   describe('#onDayPickerBlur', () => {
@@ -574,6 +588,64 @@ describe('SingleDatePicker', () => {
       });
       wrapper.instance().onDayPickerBlur();
       expect(wrapper.state().isInputFocused).to.equal(true);
+    });
+
+    it('sets state.showKeyboardShortcuts to false', () => {
+      const wrapper = shallow((
+        <SingleDatePicker
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />
+      )).dive();
+      wrapper.setState({
+        showKeyboardShortcuts: true,
+      });
+      wrapper.instance().onDayPickerBlur();
+      expect(wrapper.state().showKeyboardShortcuts).to.equal(false);
+    });
+  });
+
+  describe('#showKeyboardShortcutsPanel', () => {
+    it('sets state.isInputFocused to false', () => {
+      const wrapper = shallow((
+        <SingleDatePicker
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />
+      )).dive();
+      wrapper.setState({
+        isInputFocused: true,
+      });
+      wrapper.instance().showKeyboardShortcutsPanel();
+      expect(wrapper.state().isInputFocused).to.equal(false);
+    });
+
+    it('sets state.isDayPickerFocused to true', () => {
+      const wrapper = shallow((
+        <SingleDatePicker
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />
+      )).dive();
+      wrapper.setState({
+        isDayPickerFocused: false,
+      });
+      wrapper.instance().showKeyboardShortcutsPanel();
+      expect(wrapper.state().isDayPickerFocused).to.equal(true);
+    });
+
+    it('sets state.showKeyboardShortcuts to true', () => {
+      const wrapper = shallow((
+        <SingleDatePicker
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />
+      )).dive();
+      wrapper.setState({
+        showKeyboardShortcuts: false,
+      });
+      wrapper.instance().showKeyboardShortcutsPanel();
+      expect(wrapper.state().showKeyboardShortcuts).to.equal(true);
     });
   });
 
