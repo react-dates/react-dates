@@ -17,7 +17,9 @@ describe('#toISOMonthString', () => {
       it('returns month in ISO_MONTH_FORMAT format', () => {
         const today = moment();
         const todayISO = today.format(ISO_FORMAT);
-        expect(toISOMonthString(todayISO)).to.equal(today.format(ISO_MONTH_FORMAT));
+        expect(toISOMonthString(todayISO)).to.equal(
+          today.format(ISO_MONTH_FORMAT),
+        );
       });
     });
 

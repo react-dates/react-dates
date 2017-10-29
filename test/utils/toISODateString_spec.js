@@ -29,7 +29,10 @@ describe('toISODateString', () => {
 
   it('converts custom format date strings with format passed in', () => {
     const testDate = moment('1991-07-13');
-    const dateString = toISODateString(testDate.format('YYYY---DD/MM'), 'YYYY---DD/MM');
+    const dateString = toISODateString(
+      testDate.format('YYYY---DD/MM'),
+      'YYYY---DD/MM',
+    );
     expect(dateString).to.equal('1991-07-13');
   });
 });

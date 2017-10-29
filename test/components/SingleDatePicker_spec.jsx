@@ -8,12 +8,16 @@ import Portal from 'react-portal';
 import CloseButton from '../../src/components/CloseButton';
 import DayPickerSingleDateController from '../../src/components/DayPickerSingleDateController';
 import SingleDatePickerInput from '../../src/components/SingleDatePickerInput';
-import SingleDatePicker, { PureSingleDatePicker } from '../../src/components/SingleDatePicker';
+import SingleDatePicker, {
+  PureSingleDatePicker,
+} from '../../src/components/SingleDatePicker';
 
 import isSameDay from '../../src/utils/isSameDay';
 
 // Set to noon to mimic how days in the picker are configured internally
-const today = moment().startOf('day').hours(12);
+const today = moment()
+  .startOf('day')
+  .hours(12);
 
 describe('SingleDatePicker', () => {
   afterEach(() => {
@@ -22,42 +26,46 @@ describe('SingleDatePicker', () => {
 
   describe('#render', () => {
     it('renders a SingleDatePickerInput', () => {
-      const wrapper = shallow((
+      const wrapper = shallow(
         <SingleDatePicker
           id="date"
           onDateChange={() => {}}
           onFocusChange={() => {}}
-        />
-      )).dive();
+        />,
+      ).dive();
       expect(wrapper.find(SingleDatePickerInput)).to.have.lengthOf(1);
     });
 
     describe('DayPickerSingleDateController', () => {
       describe('props.focused === true', () => {
         it('renders a <DayPickerSingleDateController>', () => {
-          const wrapper = shallow((
+          const wrapper = shallow(
             <SingleDatePicker
               id="date"
               onDateChange={() => {}}
               onFocusChange={() => {}}
               focused
-            />
-          )).dive();
-          expect(wrapper.find(DayPickerSingleDateController)).to.have.lengthOf(1);
+            />,
+          ).dive();
+          expect(wrapper.find(DayPickerSingleDateController)).to.have.lengthOf(
+            1,
+          );
         });
       });
 
       describe('props.focused === false', () => {
         it('does not render a <DayPickerSingleDateController>', () => {
-          const wrapper = shallow((
+          const wrapper = shallow(
             <SingleDatePicker
               id="date"
               onDateChange={() => {}}
               onFocusChange={() => {}}
               focused={false}
-            />
-          )).dive();
-          expect(wrapper.find(DayPickerSingleDateController)).to.have.lengthOf(0);
+            />,
+          ).dive();
+          expect(wrapper.find(DayPickerSingleDateController)).to.have.lengthOf(
+            0,
+          );
         });
       });
     });
@@ -65,37 +73,37 @@ describe('SingleDatePicker', () => {
     describe('props.withPortal is truthy', () => {
       describe('<Portal />', () => {
         it('is rendered', () => {
-          const wrapper = shallow((
+          const wrapper = shallow(
             <SingleDatePicker
               onDateChange={() => {}}
               onFocusChange={() => {}}
               withPortal
               focused
-            />
-          )).dive();
+            />,
+          ).dive();
           expect(wrapper.find(Portal)).to.have.length(1);
         });
 
         it('is not rendered if props.focused is falsey', () => {
-          const wrapper = shallow((
+          const wrapper = shallow(
             <SingleDatePicker
               onDateChange={() => {}}
               onFocusChange={() => {}}
               withPortal
-            />
-          )).dive();
+            />,
+          ).dive();
           expect(wrapper.find(Portal)).to.have.length(0);
         });
 
         it('isOpened prop is true if props.focused is true', () => {
-          const wrapper = shallow((
+          const wrapper = shallow(
             <SingleDatePicker
               onDateChange={() => {}}
               onFocusChange={() => {}}
               withPortal
               focused
-            />
-          )).dive();
+            />,
+          ).dive();
           expect(wrapper.find(Portal).props().isOpened).to.equal(true);
         });
       });
@@ -103,50 +111,50 @@ describe('SingleDatePicker', () => {
 
     describe('props.withFullScreenPortal is truthy', () => {
       it('renders CloseButton', () => {
-        const wrapper = shallow((
+        const wrapper = shallow(
           <SingleDatePicker
             onDateChange={() => {}}
             onFocusChange={() => {}}
             withFullScreenPortal
             focused
-          />
-        )).dive();
+          />,
+        ).dive();
         expect(wrapper.find(CloseButton)).to.have.length(1);
       });
 
       describe('<Portal />', () => {
         it('is rendered', () => {
-          const wrapper = shallow((
+          const wrapper = shallow(
             <SingleDatePicker
               onDateChange={() => {}}
               onFocusChange={() => {}}
               withFullScreenPortal
               focused
-            />
-          )).dive();
+            />,
+          ).dive();
           expect(wrapper.find(Portal)).to.have.length(1);
         });
 
         it('is not rendered when props.focused is falsey', () => {
-          const wrapper = shallow((
+          const wrapper = shallow(
             <SingleDatePicker
               onDateChange={() => {}}
               onFocusChange={() => {}}
               withFullScreenPortal
-            />
-          )).dive();
+            />,
+          ).dive();
           expect(wrapper.find(Portal)).to.have.length(0);
         });
 
         it('isOpened prop is true if props.focused is truthy', () => {
-          const wrapper = shallow((
+          const wrapper = shallow(
             <SingleDatePicker
               onDateChange={() => {}}
               onFocusChange={() => {}}
               withFullScreenPortal
               focused
-            />
-          )).dive();
+            />,
+          ).dive();
           expect(wrapper.find(Portal).props().isOpened).to.equal(true);
         });
       });
@@ -155,21 +163,31 @@ describe('SingleDatePicker', () => {
 
   describe('#onChange', () => {
     describe('valid future date string', () => {
-      const futureDateString = moment().add(10, 'days').format('YYYY-MM-DD');
+      const futureDateString = moment()
+        .add(10, 'days')
+        .format('YYYY-MM-DD');
       it('calls props.onDateChange once', () => {
         const onDateChangeStub = sinon.stub();
-        const wrapper = shallow((
-          <SingleDatePicker id="date" onDateChange={onDateChangeStub} onFocusChange={() => {}} />
-        )).dive();
+        const wrapper = shallow(
+          <SingleDatePicker
+            id="date"
+            onDateChange={onDateChangeStub}
+            onFocusChange={() => {}}
+          />,
+        ).dive();
         wrapper.instance().onChange(futureDateString);
         expect(onDateChangeStub.callCount).to.equal(1);
       });
 
       it('calls props.onDateChange with date as arg', () => {
         const onDateChangeStub = sinon.stub();
-        const wrapper = shallow((
-          <SingleDatePicker id="date" onDateChange={onDateChangeStub} onFocusChange={() => {}} />
-        )).dive();
+        const wrapper = shallow(
+          <SingleDatePicker
+            id="date"
+            onDateChange={onDateChangeStub}
+            onFocusChange={() => {}}
+          />,
+        ).dive();
         wrapper.instance().onChange(futureDateString);
         const newDate = onDateChangeStub.getCall(0).args[0];
         expect(isSameDay(newDate, moment(futureDateString))).to.equal(true);
@@ -177,46 +195,54 @@ describe('SingleDatePicker', () => {
 
       it('calls props.onFocusChange once', () => {
         const onFocusChangeStub = sinon.stub();
-        const wrapper = shallow((
-          <SingleDatePicker id="date" onDateChange={() => {}} onFocusChange={onFocusChangeStub} />
-        )).dive();
+        const wrapper = shallow(
+          <SingleDatePicker
+            id="date"
+            onDateChange={() => {}}
+            onFocusChange={onFocusChangeStub}
+          />,
+        ).dive();
         wrapper.instance().onChange(futureDateString);
         expect(onFocusChangeStub.callCount).to.equal(1);
       });
 
       it('calls props.onFocusChange with { focused: false } as arg', () => {
         const onFocusChangeStub = sinon.stub();
-        const wrapper = shallow((
-          <SingleDatePicker id="date" onDateChange={() => {}} onFocusChange={onFocusChangeStub} />
-        )).dive();
+        const wrapper = shallow(
+          <SingleDatePicker
+            id="date"
+            onDateChange={() => {}}
+            onFocusChange={onFocusChangeStub}
+          />,
+        ).dive();
         wrapper.instance().onChange(futureDateString);
         expect(onFocusChangeStub.getCall(0).args[0].focused).to.equal(false);
       });
 
       it('calls props.onClose once', () => {
         const onCloseStub = sinon.stub();
-        const wrapper = shallow((
+        const wrapper = shallow(
           <SingleDatePicker
             id="date"
             onDateChange={() => {}}
             onFocusChange={() => {}}
             onClose={onCloseStub}
-          />
-        )).dive();
+          />,
+        ).dive();
         wrapper.instance().onChange(futureDateString);
         expect(onCloseStub.callCount).to.equal(1);
       });
 
       it('calls props.onClose with { date } as arg', () => {
         const onCloseStub = sinon.stub();
-        const wrapper = shallow((
+        const wrapper = shallow(
           <SingleDatePicker
             id="date"
             onDateChange={() => {}}
             onFocusChange={() => {}}
             onClose={onCloseStub}
-          />
-        )).dive();
+          />,
+        ).dive();
         wrapper.instance().onChange(futureDateString);
         const newDate = onCloseStub.getCall(0).args[0].date;
         expect(isSameDay(newDate, moment(futureDateString))).to.equal(true);
@@ -225,60 +251,64 @@ describe('SingleDatePicker', () => {
 
     describe('matches custom display format', () => {
       const customFormat = 'MM[foobar]DD';
-      const customFormatDateString = moment().add(5, 'days').format(customFormat);
+      const customFormatDateString = moment()
+        .add(5, 'days')
+        .format(customFormat);
       it('calls props.onDateChange once', () => {
         const onDateChangeStub = sinon.stub();
-        const wrapper = shallow((
+        const wrapper = shallow(
           <SingleDatePicker
             id="date"
             displayFormat={customFormat}
             onDateChange={onDateChangeStub}
             onFocusChange={() => {}}
-          />
-        )).dive();
+          />,
+        ).dive();
         wrapper.instance().onChange(customFormatDateString);
         expect(onDateChangeStub.callCount).to.equal(1);
       });
 
       it('calls props.onDateChange with date as arg', () => {
         const onDateChangeStub = sinon.stub();
-        const wrapper = shallow((
+        const wrapper = shallow(
           <SingleDatePicker
             id="date"
             displayFormat={customFormat}
             onDateChange={onDateChangeStub}
             onFocusChange={() => {}}
-          />
-        )).dive();
+          />,
+        ).dive();
         wrapper.instance().onChange(customFormatDateString);
-        const formattedFirstArg = onDateChangeStub.getCall(0).args[0].format(customFormat);
+        const formattedFirstArg = onDateChangeStub
+          .getCall(0)
+          .args[0].format(customFormat);
         expect(formattedFirstArg).to.equal(customFormatDateString);
       });
 
       it('calls props.onFocusChange once', () => {
         const onFocusChangeStub = sinon.stub();
-        const wrapper = shallow((
+        const wrapper = shallow(
           <SingleDatePicker
             id="date"
             displayFormat={customFormat}
             onDateChange={() => {}}
             onFocusChange={onFocusChangeStub}
-          />
-        )).dive();
+          />,
+        ).dive();
         wrapper.instance().onChange(customFormatDateString);
         expect(onFocusChangeStub.callCount).to.equal(1);
       });
 
       it('calls props.onFocusChange with { focused: false } as arg', () => {
         const onFocusChangeStub = sinon.stub();
-        const wrapper = shallow((
+        const wrapper = shallow(
           <SingleDatePicker
             id="date"
             displayFormat={customFormat}
             onDateChange={() => {}}
             onFocusChange={onFocusChangeStub}
-          />
-        )).dive();
+          />,
+        ).dive();
         wrapper.instance().onChange(customFormatDateString);
         expect(onFocusChangeStub.getCall(0).args[0].focused).to.equal(false);
       });
@@ -288,27 +318,39 @@ describe('SingleDatePicker', () => {
       const invalidDateString = 'foobar';
       it('calls props.onDateChange once', () => {
         const onDateChangeStub = sinon.stub();
-        const wrapper = shallow((
-          <SingleDatePicker id="date" onDateChange={onDateChangeStub} onFocusChange={() => {}} />
-        )).dive();
+        const wrapper = shallow(
+          <SingleDatePicker
+            id="date"
+            onDateChange={onDateChangeStub}
+            onFocusChange={() => {}}
+          />,
+        ).dive();
         wrapper.instance().onChange(invalidDateString);
         expect(onDateChangeStub.callCount).to.equal(1);
       });
 
       it('calls props.onDateChange with null as arg', () => {
         const onDateChangeStub = sinon.stub();
-        const wrapper = shallow((
-          <SingleDatePicker id="date" onDateChange={onDateChangeStub} onFocusChange={() => {}} />
-        )).dive();
+        const wrapper = shallow(
+          <SingleDatePicker
+            id="date"
+            onDateChange={onDateChangeStub}
+            onFocusChange={() => {}}
+          />,
+        ).dive();
         wrapper.instance().onChange(invalidDateString);
         expect(onDateChangeStub.getCall(0).args[0]).to.equal(null);
       });
 
       it('does not call props.onFocusChange', () => {
         const onFocusChangeStub = sinon.stub();
-        const wrapper = shallow((
-          <SingleDatePicker id="date" onDateChange={() => {}} onFocusChange={onFocusChangeStub} />
-        )).dive();
+        const wrapper = shallow(
+          <SingleDatePicker
+            id="date"
+            onDateChange={() => {}}
+            onFocusChange={onFocusChangeStub}
+          />,
+        ).dive();
         wrapper.instance().onChange(invalidDateString);
         expect(onFocusChangeStub.callCount).to.equal(0);
       });
@@ -320,42 +362,42 @@ describe('SingleDatePicker', () => {
 
       it('calls props.onDateChange once', () => {
         const onDateChangeStub = sinon.stub();
-        const wrapper = shallow((
+        const wrapper = shallow(
           <SingleDatePicker
             id="date"
             onDateChange={onDateChangeStub}
             onFocusChange={() => {}}
             isOutsideRange={isOutsideRangeStub}
-          />
-        )).dive();
+          />,
+        ).dive();
         wrapper.instance().onChange(todayDateString);
         expect(onDateChangeStub.callCount).to.equal(1);
       });
 
       it('calls props.onDateChange with null as arg', () => {
         const onDateChangeStub = sinon.stub();
-        const wrapper = shallow((
+        const wrapper = shallow(
           <SingleDatePicker
             id="date"
             onDateChange={onDateChangeStub}
             onFocusChange={() => {}}
             isOutsideRange={isOutsideRangeStub}
-          />
-        )).dive();
+          />,
+        ).dive();
         wrapper.instance().onChange(todayDateString);
         expect(onDateChangeStub.getCall(0).args[0]).to.equal(null);
       });
 
       it('does not call props.onFocusChange', () => {
         const onFocusChangeStub = sinon.stub();
-        const wrapper = shallow((
+        const wrapper = shallow(
           <SingleDatePicker
             id="date"
             onDateChange={() => {}}
             onFocusChange={onFocusChangeStub}
             isOutsideRange={isOutsideRangeStub}
-          />
-        )).dive();
+          />,
+        ).dive();
         wrapper.instance().onChange(todayDateString);
         expect(onFocusChangeStub.callCount).to.equal(0);
       });
@@ -365,59 +407,73 @@ describe('SingleDatePicker', () => {
   describe('#onFocus', () => {
     let onDayPickerFocusSpy;
     beforeEach(() => {
-      onDayPickerFocusSpy = sinon.spy(PureSingleDatePicker.prototype, 'onDayPickerFocus');
+      onDayPickerFocusSpy = sinon.spy(
+        PureSingleDatePicker.prototype,
+        'onDayPickerFocus',
+      );
     });
 
     it('calls props.onFocusChange once', () => {
       const onFocusChangeStub = sinon.stub();
-      const wrapper = shallow((
-        <SingleDatePicker id="date" onDateChange={() => {}} onFocusChange={onFocusChangeStub} />
-      )).dive();
+      const wrapper = shallow(
+        <SingleDatePicker
+          id="date"
+          onDateChange={() => {}}
+          onFocusChange={onFocusChangeStub}
+        />,
+      ).dive();
       wrapper.instance().onFocus();
       expect(onFocusChangeStub.callCount).to.equal(1);
     });
 
     it('calls props.onFocusChange with { focused: true } as arg', () => {
       const onFocusChangeStub = sinon.stub();
-      const wrapper = shallow((
-        <SingleDatePicker id="date" onDateChange={() => {}} onFocusChange={onFocusChangeStub} />
-      )).dive();
+      const wrapper = shallow(
+        <SingleDatePicker
+          id="date"
+          onDateChange={() => {}}
+          onFocusChange={onFocusChangeStub}
+        />,
+      ).dive();
       wrapper.instance().onFocus();
       expect(onFocusChangeStub.getCall(0).args[0].focused).to.equal(true);
     });
 
     it('calls onDayPickerFocus if withPortal', () => {
-      const wrapper = shallow((
+      const wrapper = shallow(
         <SingleDatePicker
           onDateChange={sinon.stub()}
           onFocusChange={sinon.stub()}
           withPortal
-        />
-      )).dive();
+        />,
+      ).dive();
       wrapper.instance().onFocus();
       expect(onDayPickerFocusSpy.callCount).to.equal(1);
     });
 
     it('calls onDayPickerFocus if withFullScreenPortal', () => {
-      const wrapper = shallow((
+      const wrapper = shallow(
         <SingleDatePicker
           onDateChange={sinon.stub()}
           onFocusChange={sinon.stub()}
           withFullScreenPortal
-        />
-      )).dive();
+        />,
+      ).dive();
       wrapper.instance().onFocus();
       expect(onDayPickerFocusSpy.callCount).to.equal(1);
     });
 
     it('calls onDayPickerBlur if !withPortal/!withFullScreenPortal', () => {
-      const onDayPickerBlurSpy = sinon.spy(PureSingleDatePicker.prototype, 'onDayPickerBlur');
-      const wrapper = shallow((
+      const onDayPickerBlurSpy = sinon.spy(
+        PureSingleDatePicker.prototype,
+        'onDayPickerBlur',
+      );
+      const wrapper = shallow(
         <SingleDatePicker
           onDateChange={sinon.stub()}
           onFocusChange={sinon.stub()}
-        />
-      )).dive();
+        />,
+      ).dive();
       wrapper.instance().onFocus();
       expect(onDayPickerBlurSpy.callCount).to.equal(1);
     });
@@ -425,14 +481,14 @@ describe('SingleDatePicker', () => {
     describe('props.disabled = true', () => {
       it('does not call props.onFocusChange', () => {
         const onFocusChangeStub = sinon.stub();
-        const wrapper = shallow((
+        const wrapper = shallow(
           <SingleDatePicker
             id="date"
             disabled
             onDateChange={() => {}}
             onFocusChange={onFocusChangeStub}
-          />
-        )).dive();
+          />,
+        ).dive();
         wrapper.instance().onFocus();
         expect(onFocusChangeStub).to.have.property('callCount', 0);
       });
@@ -443,14 +499,14 @@ describe('SingleDatePicker', () => {
     describe('props.focused = false', () => {
       it('does not call props.onFocusChange', () => {
         const onFocusChangeStub = sinon.stub();
-        const wrapper = shallow((
+        const wrapper = shallow(
           <SingleDatePicker
             id="date"
             onDateChange={() => {}}
             onFocusChange={onFocusChangeStub}
             focused={false}
-          />
-        )).dive();
+          />,
+        ).dive();
         wrapper.instance().onClearFocus();
         expect(onFocusChangeStub.callCount).to.equal(0);
       });
@@ -458,13 +514,13 @@ describe('SingleDatePicker', () => {
 
     describe('props.focused = true', () => {
       it('sets state.isDayPickerFocused to false', () => {
-        const wrapper = shallow((
+        const wrapper = shallow(
           <SingleDatePicker
             onDateChange={sinon.stub()}
             onFocusChange={sinon.stub()}
             focused
-          />
-        )).dive();
+          />,
+        ).dive();
         wrapper.setState({
           isDayPickerFocused: true,
         });
@@ -473,13 +529,13 @@ describe('SingleDatePicker', () => {
       });
 
       it('sets state.isInputFocused to false', () => {
-        const wrapper = shallow((
+        const wrapper = shallow(
           <SingleDatePicker
             onDateChange={sinon.stub()}
             onFocusChange={sinon.stub()}
             focused
-          />
-        )).dive();
+          />,
+        ).dive();
         wrapper.setState({
           isInputFocused: true,
         });
@@ -489,28 +545,28 @@ describe('SingleDatePicker', () => {
 
       it('calls props.onFocusChange once', () => {
         const onFocusChangeStub = sinon.stub();
-        const wrapper = shallow((
+        const wrapper = shallow(
           <SingleDatePicker
             id="date"
             onDateChange={() => {}}
             onFocusChange={onFocusChangeStub}
             focused
-          />
-        )).dive();
+          />,
+        ).dive();
         wrapper.instance().onClearFocus();
         expect(onFocusChangeStub.callCount).to.equal(1);
       });
 
       it('calls props.onFocusChange with { focused: false } as arg', () => {
         const onFocusChangeStub = sinon.stub();
-        const wrapper = shallow((
+        const wrapper = shallow(
           <SingleDatePicker
             id="date"
             onDateChange={() => {}}
             onFocusChange={onFocusChangeStub}
             focused
-          />
-        )).dive();
+          />,
+        ).dive();
         wrapper.instance().onClearFocus();
         expect(onFocusChangeStub.getCall(0).args[0].focused).to.equal(false);
       });
@@ -519,12 +575,12 @@ describe('SingleDatePicker', () => {
 
   describe('#onDayPickerFocus', () => {
     it('sets state.isDayPickerFocused to true', () => {
-      const wrapper = shallow((
+      const wrapper = shallow(
         <SingleDatePicker
           onDateChange={sinon.stub()}
           onFocusChange={sinon.stub()}
-        />
-      )).dive();
+        />,
+      ).dive();
       wrapper.setState({
         isDayPickerFocused: false,
       });
@@ -533,12 +589,12 @@ describe('SingleDatePicker', () => {
     });
 
     it('sets state.isInputFocused to false', () => {
-      const wrapper = shallow((
+      const wrapper = shallow(
         <SingleDatePicker
           onDateChange={sinon.stub()}
           onFocusChange={sinon.stub()}
-        />
-      )).dive();
+        />,
+      ).dive();
       wrapper.setState({
         isInputFocused: true,
       });
@@ -547,12 +603,12 @@ describe('SingleDatePicker', () => {
     });
 
     it('sets state.showKeyboardShortcuts to false', () => {
-      const wrapper = shallow((
+      const wrapper = shallow(
         <SingleDatePicker
           onDateChange={sinon.stub()}
           onFocusChange={sinon.stub()}
-        />
-      )).dive();
+        />,
+      ).dive();
       wrapper.setState({
         showKeyboardShortcuts: true,
       });
@@ -563,12 +619,12 @@ describe('SingleDatePicker', () => {
 
   describe('#onDayPickerBlur', () => {
     it('sets state.isDayPickerFocused to false', () => {
-      const wrapper = shallow((
+      const wrapper = shallow(
         <SingleDatePicker
           onDateChange={sinon.stub()}
           onFocusChange={sinon.stub()}
-        />
-      )).dive();
+        />,
+      ).dive();
       wrapper.setState({
         isDayPickerFocused: true,
       });
@@ -577,12 +633,12 @@ describe('SingleDatePicker', () => {
     });
 
     it('sets state.isInputFocused to true', () => {
-      const wrapper = shallow((
+      const wrapper = shallow(
         <SingleDatePicker
           onDateChange={sinon.stub()}
           onFocusChange={sinon.stub()}
-        />
-      )).dive();
+        />,
+      ).dive();
       wrapper.setState({
         isInputFocused: false,
       });
@@ -591,12 +647,12 @@ describe('SingleDatePicker', () => {
     });
 
     it('sets state.showKeyboardShortcuts to false', () => {
-      const wrapper = shallow((
+      const wrapper = shallow(
         <SingleDatePicker
           onDateChange={sinon.stub()}
           onFocusChange={sinon.stub()}
-        />
-      )).dive();
+        />,
+      ).dive();
       wrapper.setState({
         showKeyboardShortcuts: true,
       });
@@ -607,12 +663,12 @@ describe('SingleDatePicker', () => {
 
   describe('#showKeyboardShortcutsPanel', () => {
     it('sets state.isInputFocused to false', () => {
-      const wrapper = shallow((
+      const wrapper = shallow(
         <SingleDatePicker
           onDateChange={sinon.stub()}
           onFocusChange={sinon.stub()}
-        />
-      )).dive();
+        />,
+      ).dive();
       wrapper.setState({
         isInputFocused: true,
       });
@@ -621,12 +677,12 @@ describe('SingleDatePicker', () => {
     });
 
     it('sets state.isDayPickerFocused to true', () => {
-      const wrapper = shallow((
+      const wrapper = shallow(
         <SingleDatePicker
           onDateChange={sinon.stub()}
           onFocusChange={sinon.stub()}
-        />
-      )).dive();
+        />,
+      ).dive();
       wrapper.setState({
         isDayPickerFocused: false,
       });
@@ -635,12 +691,12 @@ describe('SingleDatePicker', () => {
     });
 
     it('sets state.showKeyboardShortcuts to true', () => {
-      const wrapper = shallow((
+      const wrapper = shallow(
         <SingleDatePicker
           onDateChange={sinon.stub()}
           onFocusChange={sinon.stub()}
-        />
-      )).dive();
+        />,
+      ).dive();
       wrapper.setState({
         showKeyboardShortcuts: false,
       });
@@ -654,13 +710,13 @@ describe('SingleDatePicker', () => {
       describe('props.onFocusChange', () => {
         it('is called once', () => {
           const onFocusChangeStub = sinon.stub();
-          const wrapper = shallow((
+          const wrapper = shallow(
             <SingleDatePicker
               onDateChange={() => {}}
               onFocusChange={onFocusChangeStub}
               reopenPickerOnClearDate
-            />
-          )).dive();
+            />,
+          ).dive();
           wrapper.instance().clearDate();
           expect(onFocusChangeStub.callCount).to.equal(1);
         });
@@ -671,13 +727,13 @@ describe('SingleDatePicker', () => {
       describe('props.onFocusChange', () => {
         it('is not called', () => {
           const onFocusChangeStub = sinon.stub();
-          const wrapper = shallow((
+          const wrapper = shallow(
             <SingleDatePicker
               id="date"
               onDateChange={() => {}}
               onFocusChange={onFocusChangeStub}
-            />
-          )).dive();
+            />,
+          ).dive();
           wrapper.instance().clearDate();
           expect(onFocusChangeStub.callCount).to.equal(0);
         });
@@ -686,9 +742,13 @@ describe('SingleDatePicker', () => {
 
     it('calls props.onDateChange with null date', () => {
       const onDateChangeStub = sinon.stub();
-      const wrapper = shallow((
-        <SingleDatePicker id="date" onDateChange={onDateChangeStub} onFocusChange={() => {}} />
-      )).dive();
+      const wrapper = shallow(
+        <SingleDatePicker
+          id="date"
+          onDateChange={onDateChangeStub}
+          onFocusChange={() => {}}
+        />,
+      ).dive();
       wrapper.instance().clearDate();
       expect(onDateChangeStub.callCount).to.equal(1);
     });

@@ -45,11 +45,15 @@ describe('toMomentObject', () => {
 
   describe('Daylight Savings Time issues', () => {
     it('last of February does not equal first of March', () => {
-      expect(isSameDay(toMomentObject('2017-02-28'), toMomentObject('2017-03-01'))).to.equal(false);
+      expect(
+        isSameDay(toMomentObject('2017-02-28'), toMomentObject('2017-03-01')),
+      ).to.equal(false);
     });
 
     it('last of March does not equal first of April', () => {
-      expect(isSameDay(toMomentObject('2017-03-31'), toMomentObject('2017-04-01'))).to.equal(false);
+      expect(
+        isSameDay(toMomentObject('2017-03-31'), toMomentObject('2017-04-01')),
+      ).to.equal(false);
     });
   });
 });

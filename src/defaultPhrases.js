@@ -1,6 +1,7 @@
 const calendarLabel = 'Calendar';
 const closeDatePicker = 'Close';
-const focusStartDate = 'Interact with the calendar and add the check-in date for your trip.';
+const focusStartDate =
+  'Interact with the calendar and add the check-in date for your trip.';
 const clearDate = 'Clear Date';
 const clearDates = 'Clear Dates';
 const jumpToPrevMonth = 'Move backward to switch to the previous month';
@@ -26,10 +27,12 @@ const keyboardNavigationInstructions = `Press the down arrow key to interact wit
   select a date. Press the question mark key to get the keyboard shortcuts for changing dates.`;
 
 // eslint-disable-next-line camelcase
-const chooseAvailableStartDate = ({ date }) => `Choose ${date} as your check-in date. It's available.`;
+const chooseAvailableStartDate = ({ date }) =>
+  `Choose ${date} as your check-in date. It's available.`;
 
 // eslint-disable-next-line camelcase
-const chooseAvailableEndDate = ({ date }) => `Choose ${date} as your check-out date. It's available.`;
+const chooseAvailableEndDate = ({ date }) =>
+  `Choose ${date} as your check-out date. It's available.`;
 const chooseAvailableDate = ({ date }) => date;
 const dateIsUnavailable = ({ date }) => `Not available. ${date}`;
 

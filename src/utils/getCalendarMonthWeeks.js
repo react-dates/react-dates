@@ -15,13 +15,19 @@ export default function getCalendarMonthWeeks(
   }
 
   // set utc offset to get correct dates in future (when timezone changes)
-  const firstOfMonth = month.clone().startOf('month').hour(12);
-  const lastOfMonth = month.clone().endOf('month').hour(12);
+  const firstOfMonth = month
+    .clone()
+    .startOf('month')
+    .hour(12);
+  const lastOfMonth = month
+    .clone()
+    .endOf('month')
+    .hour(12);
 
   // calculate the exact first and last days to fill the entire matrix
   // (considering days outside month)
-  const prevDays = ((firstOfMonth.day() + 7 - firstDayOfWeek) % 7);
-  const nextDays = ((firstDayOfWeek + 6 - lastOfMonth.day()) % 7);
+  const prevDays = (firstOfMonth.day() + 7 - firstDayOfWeek) % 7;
+  const nextDays = (firstDayOfWeek + 6 - lastOfMonth.day()) % 7;
   const firstDay = firstOfMonth.clone().subtract(prevDays, 'day');
   const lastDay = lastOfMonth.clone().add(nextDays, 'day');
 
@@ -36,7 +42,7 @@ export default function getCalendarMonthWeeks(
     }
 
     let day = null;
-    if ((i >= prevDays && i < (totalDays - nextDays)) || enableOutsideDays) {
+    if ((i >= prevDays && i < totalDays - nextDays) || enableOutsideDays) {
       day = currentDay.clone();
     }
 

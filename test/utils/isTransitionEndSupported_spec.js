@@ -3,7 +3,8 @@ import wrap from 'mocha-wrap';
 
 import isTransitionEndSupported from '../../src/utils/isTransitionEndSupported';
 
-const describeIfNoWindow = typeof window === 'undefined' ? describe : describe.skip;
+const describeIfNoWindow =
+  typeof window === 'undefined' ? describe : describe.skip;
 
 describeIfNoWindow('isTransitionEndSupported', () => {
   describe('without `window`', () => {
@@ -14,16 +15,16 @@ describeIfNoWindow('isTransitionEndSupported', () => {
   });
 
   wrap()
-  .withGlobal('window', () => ({}))
-  .describe('with `window`', () => {
-    it('returns false without `window.TransitionEvent`', () => {
-      expect(isTransitionEndSupported()).to.equal(false);
-    });
+    .withGlobal('window', () => ({}))
+    .describe('with `window`', () => {
+      it('returns false without `window.TransitionEvent`', () => {
+        expect(isTransitionEndSupported()).to.equal(false);
+      });
 
-    wrap()
-    .withOverride(() => window, 'TransitionEvent', () => () => {})
-    .it('returns true with `window.ontouchstart', () => {
-      expect(isTransitionEndSupported()).to.equal(true);
+      wrap()
+        .withOverride(() => window, 'TransitionEvent', () => () => {})
+        .it('returns true with `window.ontouchstart', () => {
+          expect(isTransitionEndSupported()).to.equal(true);
+        });
     });
-  });
 });

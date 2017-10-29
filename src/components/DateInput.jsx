@@ -84,7 +84,8 @@ class DateInput extends React.Component {
 
   componentDidUpdate(prevProps) {
     const { focused, isFocused } = this.props;
-    if (prevProps.focused === focused && prevProps.isFocused === isFocused) return;
+    if (prevProps.focused === focused && prevProps.isFocused === isFocused)
+      return;
 
     if (focused && isFocused) {
       this.inputRef.focus();
@@ -138,10 +139,7 @@ class DateInput extends React.Component {
   }
 
   render() {
-    const {
-      dateString,
-      isTouchDevice: isTouch,
-    } = this.state;
+    const { dateString, isTouchDevice: isTouch } = this.state;
     const {
       id,
       placeholder,
@@ -168,7 +166,9 @@ class DateInput extends React.Component {
           styles.DateInput,
           withCaret && styles.DateInput__withCaret,
           disabled && styles.DateInput__disabled,
-          withCaret && openDirection === OPEN_DOWN && styles.DateInput__openDown,
+          withCaret &&
+            openDirection === OPEN_DOWN &&
+            styles.DateInput__openDown,
           withCaret && openDirection === OPEN_UP && styles.DateInput__openUp,
         )}
       >
@@ -197,7 +197,10 @@ class DateInput extends React.Component {
         />
 
         {screenReaderMessage && (
-          <p {...css(styles.DateInput_screenReaderMessage)} id={screenReaderMessageId}>
+          <p
+            {...css(styles.DateInput_screenReaderMessage)}
+            id={screenReaderMessageId}
+          >
             {screenReaderMessage}
           </p>
         )}
@@ -209,127 +212,126 @@ class DateInput extends React.Component {
 DateInput.propTypes = propTypes;
 DateInput.defaultProps = defaultProps;
 
-export default withStyles(({
-  reactDates: {
-    border, color, sizing, spacing, font, zIndex,
+export default withStyles(
+  ({ reactDates: { border, color, sizing, spacing, font, zIndex } }) => {
+    const inputHeight =
+      parseInt(font.input.lineHeight, 10) +
+      2 * spacing.inputPadding +
+      2 * spacing.displayTextPaddingVertical;
+
+    return {
+      DateInput: {
+        fontWeight: 200,
+        fontSize: font.input.size,
+        lineHeight: font.input.lineHeight,
+        color: color.placeholderText,
+        margin: 0,
+        padding: spacing.inputPadding,
+
+        background: color.background,
+        position: 'relative',
+        display: 'inline-block',
+        width: sizing.inputWidth,
+        verticalAlign: 'middle',
+      },
+
+      DateInput__withCaret: {
+        ':before': {
+          content: '""',
+          display: 'inline-block',
+          position: 'absolute',
+          bottom: 'auto',
+          border: `${sizing.tooltipArrowWidth / 2}px solid transparent`,
+          left: 22,
+          zIndex: zIndex + 2,
+        },
+
+        ':after': {
+          content: '""',
+          display: 'inline-block',
+          position: 'absolute',
+          bottom: 'auto',
+          border: `${sizing.tooltipArrowWidth / 2}px solid transparent`,
+          left: 22,
+          zIndex: zIndex + 2,
+        },
+      },
+
+      DateInput__openUp: {
+        ':before': {
+          borderBottom: 0,
+          top: inputHeight - spacing.inputMarginBottom,
+          borderTopColor: 'rgba(0, 0, 0, 0.1)',
+        },
+
+        ':after': {
+          borderBottom: 0,
+          top: inputHeight - spacing.inputMarginBottom - 1,
+          borderTopColor: color.background,
+        },
+      },
+
+      DateInput__openDown: {
+        ':before': {
+          borderTop: 0,
+          top: spacing.inputMarginBottom - sizing.tooltipArrowWidth / 2,
+          borderBottomColor: 'rgba(0, 0, 0, 0.1)',
+        },
+
+        ':after': {
+          borderTop: 0,
+          top: spacing.inputMarginBottom - sizing.tooltipArrowWidth / 2 + 1,
+          borderBottomColor: color.background,
+        },
+      },
+
+      DateInput__disabled: {
+        background: color.disabled,
+        color: color.textDisabled,
+      },
+
+      DateInput_input: {
+        fontWeight: 200,
+        fontSize: font.input.size,
+        color: color.text,
+        width: '100%',
+        padding: `${spacing.displayTextPaddingVertical}px ${spacing.displayTextPaddingHorizontal}px`,
+        border: border.input.border,
+        borderTop: border.input.borderTop,
+        borderRight: border.input.borderRight,
+        borderBottom: border.input.borderBottom,
+        borderLeft: border.input.borderLeft,
+      },
+
+      DateInput_input__readOnly: {
+        userSelect: 'none',
+      },
+
+      DateInput_input__focused: {
+        outline: border.input.outlineFocused,
+        background: color.backgroundFocused,
+        border: border.input.borderFocused,
+        borderTop: border.input.borderTopFocused,
+        borderRight: border.input.borderRightFocused,
+        borderBottom: border.input.borderBottomFocused,
+        borderLeft: border.input.borderLeftFocused,
+      },
+
+      DateInput_input__disabled: {
+        background: color.disabled,
+        fontStyle: font.input.styleDisabled,
+      },
+
+      DateInput_screenReaderMessage: {
+        border: 0,
+        clip: 'rect(0, 0, 0, 0)',
+        height: 1,
+        margin: -1,
+        overflow: 'hidden',
+        padding: 0,
+        position: 'absolute',
+        width: 1,
+      },
+    };
   },
-}) => {
-  const inputHeight = parseInt(font.input.lineHeight, 10)
-    + (2 * spacing.inputPadding)
-    + (2 * spacing.displayTextPaddingVertical);
-
-  return {
-    DateInput: {
-      fontWeight: 200,
-      fontSize: font.input.size,
-      lineHeight: font.input.lineHeight,
-      color: color.placeholderText,
-      margin: 0,
-      padding: spacing.inputPadding,
-
-      background: color.background,
-      position: 'relative',
-      display: 'inline-block',
-      width: sizing.inputWidth,
-      verticalAlign: 'middle',
-    },
-
-    DateInput__withCaret: {
-      ':before': {
-        content: '""',
-        display: 'inline-block',
-        position: 'absolute',
-        bottom: 'auto',
-        border: `${sizing.tooltipArrowWidth / 2}px solid transparent`,
-        left: 22,
-        zIndex: zIndex + 2,
-      },
-
-      ':after': {
-        content: '""',
-        display: 'inline-block',
-        position: 'absolute',
-        bottom: 'auto',
-        border: `${sizing.tooltipArrowWidth / 2}px solid transparent`,
-        left: 22,
-        zIndex: zIndex + 2,
-      },
-    },
-
-    DateInput__openUp: {
-      ':before': {
-        borderBottom: 0,
-        top: inputHeight - spacing.inputMarginBottom,
-        borderTopColor: 'rgba(0, 0, 0, 0.1)',
-      },
-
-      ':after': {
-        borderBottom: 0,
-        top: inputHeight - spacing.inputMarginBottom - 1,
-        borderTopColor: color.background,
-      },
-    },
-
-    DateInput__openDown: {
-      ':before': {
-        borderTop: 0,
-        top: spacing.inputMarginBottom - (sizing.tooltipArrowWidth / 2),
-        borderBottomColor: 'rgba(0, 0, 0, 0.1)',
-      },
-
-      ':after': {
-        borderTop: 0,
-        top: spacing.inputMarginBottom - (sizing.tooltipArrowWidth / 2) + 1,
-        borderBottomColor: color.background,
-      },
-    },
-
-    DateInput__disabled: {
-      background: color.disabled,
-      color: color.textDisabled,
-    },
-
-    DateInput_input: {
-      fontWeight: 200,
-      fontSize: font.input.size,
-      color: color.text,
-      width: '100%',
-      padding: `${spacing.displayTextPaddingVertical}px ${spacing.displayTextPaddingHorizontal}px`,
-      border: border.input.border,
-      borderTop: border.input.borderTop,
-      borderRight: border.input.borderRight,
-      borderBottom: border.input.borderBottom,
-      borderLeft: border.input.borderLeft,
-    },
-
-    DateInput_input__readOnly: {
-      userSelect: 'none',
-    },
-
-    DateInput_input__focused: {
-      outline: border.input.outlineFocused,
-      background: color.backgroundFocused,
-      border: border.input.borderFocused,
-      borderTop: border.input.borderTopFocused,
-      borderRight: border.input.borderRightFocused,
-      borderBottom: border.input.borderBottomFocused,
-      borderLeft: border.input.borderLeftFocused,
-    },
-
-    DateInput_input__disabled: {
-      background: color.disabled,
-      fontStyle: font.input.styleDisabled,
-    },
-
-    DateInput_screenReaderMessage: {
-      border: 0,
-      clip: 'rect(0, 0, 0, 0)',
-      height: 1,
-      margin: -1,
-      overflow: 'hidden',
-      padding: 0,
-      position: 'absolute',
-      width: 1,
-    },
-  };
-})(DateInput);
+)(DateInput);

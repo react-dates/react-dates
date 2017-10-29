@@ -11,24 +11,28 @@ import getTransformStyles from '../../src/utils/getTransformStyles';
 describe('CalendarMonthGrid', () => {
   it('the number of CalendarMonths rendered matches props.numberOfMonths + 2', () => {
     const NUM_OF_MONTHS = 5;
-    const wrapper = shallow(<CalendarMonthGrid numberOfMonths={NUM_OF_MONTHS} />).dive();
+    const wrapper = shallow(
+      <CalendarMonthGrid numberOfMonths={NUM_OF_MONTHS} />,
+    ).dive();
     expect(wrapper.find(CalendarMonth)).to.have.lengthOf(NUM_OF_MONTHS + 2);
   });
 
   it('has style equal to getTransformStyles(foo)', () => {
     const transformValue = 'foo';
     const transformStyles = getTransformStyles(transformValue);
-    const wrapper = shallow(<CalendarMonthGrid transformValue={transformValue} />).dive();
-    Object.keys(transformStyles).forEach((key) => {
+    const wrapper = shallow(
+      <CalendarMonthGrid transformValue={transformValue} />,
+    ).dive();
+    Object.keys(transformStyles).forEach(key => {
       expect(wrapper.prop('style')[key]).to.equal(transformStyles[key]);
     });
   });
 
   it('does not generate duplicate months', () => {
     const initialMonth = moment();
-    const wrapper = shallow((
-      <CalendarMonthGrid numberOfMonths={12} initialMonth={initialMonth} />
-    )).dive();
+    const wrapper = shallow(
+      <CalendarMonthGrid numberOfMonths={12} initialMonth={initialMonth} />,
+    ).dive();
 
     wrapper.instance().componentWillReceiveProps({
       initialMonth,
@@ -46,9 +50,9 @@ describe('CalendarMonthGrid', () => {
 
   it('works with the same number of months', () => {
     const initialMonth = moment();
-    const wrapper = shallow((
-      <CalendarMonthGrid numberOfMonths={12} initialMonth={initialMonth} />
-    )).dive();
+    const wrapper = shallow(
+      <CalendarMonthGrid numberOfMonths={12} initialMonth={initialMonth} />,
+    ).dive();
 
     wrapper.instance().componentWillReceiveProps({
       initialMonth,

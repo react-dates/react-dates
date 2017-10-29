@@ -12,10 +12,7 @@ import ChevronUp from './ChevronUp';
 import ChevronDown from './ChevronDown';
 import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
 
-import {
-  HORIZONTAL_ORIENTATION,
-  VERTICAL_SCROLLABLE,
-} from '../constants';
+import { HORIZONTAL_ORIENTATION, VERTICAL_SCROLLABLE } from '../constants';
 
 const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
@@ -101,7 +98,8 @@ function DayPickerNavigation({
         styles.DayPickerNavigation_container,
         isHorizontal && styles.DayPickerNavigation_container__horizontal,
         isVertical && styles.DayPickerNavigation_container__vertical,
-        isVerticalScrollable && styles.DayPickerNavigation_container__verticalScrollable,
+        isVerticalScrollable &&
+          styles.DayPickerNavigation_container__verticalScrollable,
       )}
     >
       {!isVerticalScrollable && (
@@ -117,13 +115,14 @@ function DayPickerNavigation({
             ...(isVertical && [
               styles.DayPickerNavigation_button__vertical,
               styles.DayPickerNavigation_prevButton__vertical,
-              isDefaultNavPrev && styles.DayPickerNavigation_button__vertical__default,
+              isDefaultNavPrev &&
+                styles.DayPickerNavigation_button__vertical__default,
             ]),
           )}
           type="button"
           aria-label={phrases.jumpToPrevMonth}
           onClick={onPrevMonthClick}
-          onMouseUp={(e) => {
+          onMouseUp={e => {
             e.currentTarget.blur();
           }}
         >
@@ -143,15 +142,18 @@ function DayPickerNavigation({
           ...(isVertical && [
             styles.DayPickerNavigation_button__vertical,
             styles.DayPickerNavigation_nextButton__vertical,
-            isDefaultNavNext && styles.DayPickerNavigation_button__vertical__default,
-            isDefaultNavNext && styles.DayPickerNavigation_nextButton__vertical__default,
+            isDefaultNavNext &&
+              styles.DayPickerNavigation_button__vertical__default,
+            isDefaultNavNext &&
+              styles.DayPickerNavigation_nextButton__vertical__default,
           ]),
-          isVerticalScrollable && styles.DayPickerNavigation_nextButton__verticalScrollable,
+          isVerticalScrollable &&
+            styles.DayPickerNavigation_nextButton__verticalScrollable,
         )}
         type="button"
         aria-label={phrases.jumpToNextMonth}
         onClick={onNextMonthClick}
-        onMouseUp={(e) => {
+        onMouseUp={e => {
           e.currentTarget.blur();
         }}
       >
@@ -170,8 +172,7 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
     zIndex: zIndex + 2,
   },
 
-  DayPickerNavigation_container__horizontal: {
-  },
+  DayPickerNavigation_container__horizontal: {},
 
   DayPickerNavigation_container__vertical: {
     background: color.background,
