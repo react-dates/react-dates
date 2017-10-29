@@ -13,7 +13,11 @@ import CloseButton from './CloseButton';
 import CalendarIcon from './CalendarIcon';
 
 import openDirectionShape from '../shapes/OpenDirectionShape';
-import { ICON_BEFORE_POSITION, ICON_AFTER_POSITION, OPEN_DOWN } from '../constants';
+import {
+  ICON_BEFORE_POSITION,
+  ICON_AFTER_POSITION,
+  OPEN_DOWN,
+} from '../constants';
 
 const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
@@ -111,7 +115,8 @@ function SingleDatePickerInput({
     <CloseButton {...css(styles.SingleDatePickerInput_clearDate_svg)} />
   );
 
-  const screenReaderText = screenReaderMessage || phrases.keyboardNavigationInstructions;
+  const screenReaderText =
+    screenReaderMessage || phrases.keyboardNavigationInstructions;
   const inputIcon = (showDefaultInputIcon || customInputIcon !== null) && (
     <button
       {...css(styles.SingleDatePickerInput_calendarIcon)}
@@ -172,7 +177,6 @@ function SingleDatePickerInput({
       )}
 
       {inputIconPosition === ICON_AFTER_POSITION && inputIcon}
-
     </div>
   );
 }

@@ -15,9 +15,9 @@ describe('getVisibleDays', () => {
 
   it('values are all arrays of moment objects', () => {
     const visibleDays = getVisibleDays(today, 3, false);
-    Object.values(visibleDays).forEach((days) => {
+    Object.values(visibleDays).forEach(days => {
       expect(Array.isArray(days)).to.equal(true);
-      days.forEach((day) => {
+      days.forEach(day => {
         expect(moment.isMoment(day)).to.equal(true);
       });
     });
@@ -25,9 +25,9 @@ describe('getVisibleDays', () => {
 
   it('contains first arg day', () => {
     const visibleDays = getVisibleDays(today, 3, false);
-    const containsToday = Object.values(visibleDays)
-      .filter(days => days.filter(day => isSameDay(day, today)).length > 0);
+    const containsToday = Object.values(visibleDays).filter(
+      days => days.filter(day => isSameDay(day, today)).length > 0,
+    );
     expect(containsToday.length > 0).to.equal(true);
   });
 });
-

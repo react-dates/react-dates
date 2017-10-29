@@ -83,7 +83,9 @@ class CalendarMonth extends React.Component {
       weeks: getCalendarMonthWeeks(
         props.month,
         props.enableOutsideDays,
-        props.firstDayOfWeek == null ? moment.localeData().firstDayOfWeek() : props.firstDayOfWeek,
+        props.firstDayOfWeek == null
+          ? moment.localeData().firstDayOfWeek()
+          : props.firstDayOfWeek,
       ),
     };
 
@@ -98,14 +100,18 @@ class CalendarMonth extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     const { month, enableOutsideDays, firstDayOfWeek } = nextProps;
-    if (!month.isSame(this.props.month)
-        || enableOutsideDays !== this.props.enableOutsideDays
-        || firstDayOfWeek !== this.props.firstDayOfWeek) {
+    if (
+      !month.isSame(this.props.month) ||
+      enableOutsideDays !== this.props.enableOutsideDays ||
+      firstDayOfWeek !== this.props.firstDayOfWeek
+    ) {
       this.setState({
         weeks: getCalendarMonthWeeks(
           month,
           enableOutsideDays,
-          firstDayOfWeek == null ? moment.localeData().firstDayOfWeek() : firstDayOfWeek,
+          firstDayOfWeek == null
+            ? moment.localeData().firstDayOfWeek()
+            : firstDayOfWeek,
         ),
       });
     }
@@ -123,7 +129,12 @@ class CalendarMonth extends React.Component {
 
   setMonthHeight() {
     const { setMonthHeight } = this.props;
-    const captionHeight = calculateDimension(this.captionRef, 'height', true, true);
+    const captionHeight = calculateDimension(
+      this.captionRef,
+      'height',
+      true,
+      true,
+    );
     const gridHeight = calculateDimension(this.gridRef, 'height');
 
     setMonthHeight(captionHeight + gridHeight + 1);
@@ -157,7 +168,9 @@ class CalendarMonth extends React.Component {
     } = this.props;
 
     const { weeks } = this.state;
-    const monthTitle = renderMonth ? renderMonth(month) : month.format(monthFormat);
+    const monthTitle = renderMonth
+      ? renderMonth(month)
+      : month.format(monthFormat);
 
     const verticalScrollable = orientation === VERTICAL_SCROLLABLE;
 
@@ -165,8 +178,10 @@ class CalendarMonth extends React.Component {
       <div
         {...css(
           styles.CalendarMonth,
-          orientation === HORIZONTAL_ORIENTATION && styles.CalendarMonth__horizontal,
-          orientation === VERTICAL_ORIENTATION && styles.CalendarMonth__vertical,
+          orientation === HORIZONTAL_ORIENTATION &&
+            styles.CalendarMonth__horizontal,
+          orientation === VERTICAL_ORIENTATION &&
+            styles.CalendarMonth__vertical,
           verticalScrollable && styles.CalendarMonth__verticalScrollable,
         )}
         data-visible={isVisible}
@@ -175,16 +190,14 @@ class CalendarMonth extends React.Component {
           ref={this.setCaptionRef}
           {...css(
             styles.CalendarMonth_caption,
-            verticalScrollable && styles.CalendarMonth_caption__verticalScrollable,
+            verticalScrollable &&
+              styles.CalendarMonth_caption__verticalScrollable,
           )}
         >
           <strong>{monthTitle}</strong>
         </div>
 
-        <table
-          {...css(styles.CalendarMonth_table)}
-          role="presentation"
-        >
+        <table {...css(styles.CalendarMonth_table)} role="presentation">
           <tbody ref={this.setGridRef}>
             {weeks.map((week, i) => (
               <tr key={i}>
@@ -244,4 +257,3 @@ export default withStyles(({ reactDates: { color, font, spacing } }) => ({
     paddingBottom: 7,
   },
 }))(CalendarMonth);
-

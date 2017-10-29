@@ -21,7 +21,9 @@ const propTypes = forbidExtraProps({
   showKeyboardShortcutsPanel: PropTypes.bool,
   openKeyboardShortcutsPanel: PropTypes.func,
   closeKeyboardShortcutsPanel: PropTypes.func,
-  phrases: PropTypes.shape(getPhrasePropTypes(DayPickerKeyboardShortcutsPhrases)),
+  phrases: PropTypes.shape(
+    getPhrasePropTypes(DayPickerKeyboardShortcutsPhrases),
+  ),
 });
 
 const defaultProps = {
@@ -38,14 +40,18 @@ class DayPickerKeyboardShortcuts extends React.Component {
     super(...args);
 
     this.onClick = this.onClick.bind(this);
-    this.setShowKeyboardShortcutsButtonRef = this.setShowKeyboardShortcutsButtonRef.bind(this);
+    this.setShowKeyboardShortcutsButtonRef = this.setShowKeyboardShortcutsButtonRef.bind(
+      this,
+    );
   }
 
   onClick() {
     const { openKeyboardShortcutsPanel } = this.props;
 
     // we want to return focus to this button after closing the keyboard shortcuts panel
-    openKeyboardShortcutsPanel(() => { this.showKeyboardShortcutsButton.focus(); });
+    openKeyboardShortcutsPanel(() => {
+      this.showKeyboardShortcutsButton.focus();
+    });
   }
 
   setShowKeyboardShortcutsButtonRef(ref) {
@@ -62,41 +68,42 @@ class DayPickerKeyboardShortcuts extends React.Component {
       phrases,
     } = this.props;
 
-    const keyboardShortcuts = [{
-      unicode: '↵',
-      label: phrases.enterKey,
-      action: phrases.selectFocusedDate,
-    },
-    {
-      unicode: '←/→',
-      label: phrases.leftArrowRightArrow,
-      action: phrases.moveFocusByOneDay,
-    },
-    {
-      unicode: '↑/↓',
-      label: phrases.upArrowDownArrow,
-      action: phrases.moveFocusByOneWeek,
-    },
-    {
-      unicode: 'PgUp/PgDn',
-      label: phrases.pageUpPageDown,
-      action: phrases.moveFocusByOneMonth,
-    },
-    {
-      unicode: 'Home/End',
-      label: phrases.homeEnd,
-      action: phrases.moveFocustoStartAndEndOfWeek,
-    },
-    {
-      unicode: 'Esc',
-      label: phrases.escape,
-      action: phrases.returnFocusToInput,
-    },
-    {
-      unicode: '?',
-      label: phrases.questionMark,
-      action: phrases.openThisPanel,
-    },
+    const keyboardShortcuts = [
+      {
+        unicode: '↵',
+        label: phrases.enterKey,
+        action: phrases.selectFocusedDate,
+      },
+      {
+        unicode: '←/→',
+        label: phrases.leftArrowRightArrow,
+        action: phrases.moveFocusByOneDay,
+      },
+      {
+        unicode: '↑/↓',
+        label: phrases.upArrowDownArrow,
+        action: phrases.moveFocusByOneWeek,
+      },
+      {
+        unicode: 'PgUp/PgDn',
+        label: phrases.pageUpPageDown,
+        action: phrases.moveFocusByOneMonth,
+      },
+      {
+        unicode: 'Home/End',
+        label: phrases.homeEnd,
+        action: phrases.moveFocustoStartAndEndOfWeek,
+      },
+      {
+        unicode: 'Esc',
+        label: phrases.escape,
+        action: phrases.returnFocusToInput,
+      },
+      {
+        unicode: '?',
+        label: phrases.questionMark,
+        action: phrases.openThisPanel,
+      },
     ];
 
     const toggleButtonText = showKeyboardShortcutsPanel
@@ -121,14 +128,15 @@ class DayPickerKeyboardShortcuts extends React.Component {
           type="button"
           aria-label={toggleButtonText}
           onClick={this.onClick}
-          onMouseUp={(e) => {
+          onMouseUp={e => {
             e.currentTarget.blur();
           }}
         >
           <span
             {...css(
               styles.DayPickerKeyboardShortcuts_showSpan,
-              bottomRight && styles.DayPickerKeyboardShortcuts_showSpan__bottomRight,
+              bottomRight &&
+                styles.DayPickerKeyboardShortcuts_showSpan__bottomRight,
               topRight && styles.DayPickerKeyboardShortcuts_showSpan__topRight,
               topLeft && styles.DayPickerKeyboardShortcuts_showSpan__topLeft,
             )}
@@ -137,7 +145,7 @@ class DayPickerKeyboardShortcuts extends React.Component {
           </span>
         </button>
 
-        {showKeyboardShortcutsPanel &&
+        {showKeyboardShortcutsPanel && (
           <div
             {...css(
               styles.DayPickerKeyboardShortcuts_panel,
@@ -161,7 +169,7 @@ class DayPickerKeyboardShortcuts extends React.Component {
               type="button"
               aria-label={phrases.hideKeyboardShortcutsPanel}
               onClick={closeKeyboardShortcutsPanel}
-              onKeyDown={(e) => {
+              onKeyDown={e => {
                 // Because the close button is the only focusable element inside of the panel, this
                 // amount to a very basic focus trap. The user can exit the panel by "pressing" the
                 // close button or hitting escape
@@ -170,7 +178,9 @@ class DayPickerKeyboardShortcuts extends React.Component {
                 }
               }}
             >
-              <CloseButton {...css(styles.DayPickerKeyboardShortcuts_closeSvg)} />
+              <CloseButton
+                {...css(styles.DayPickerKeyboardShortcuts_closeSvg)}
+              />
             </button>
 
             <ul {...css(styles.DayPickerKeyboardShortcuts__list)}>
@@ -185,7 +195,7 @@ class DayPickerKeyboardShortcuts extends React.Component {
               ))}
             </ul>
           </div>
-        }
+        )}
       </div>
     );
   }

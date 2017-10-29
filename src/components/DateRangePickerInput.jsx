@@ -148,14 +148,18 @@ function DateRangePickerInput({
   const calendarIcon = customInputIcon || (
     <CalendarIcon {...css(styles.DateRangePickerInput_calendarIcon_svg)} />
   );
-  const arrowIcon = customArrowIcon || (isRTL
-    ? <LeftArrow {...css(styles.DateRangePickerInput_arrow_svg)} />
-    : <RightArrow {...css(styles.DateRangePickerInput_arrow_svg)} />
-  );
+  const arrowIcon =
+    customArrowIcon ||
+    (isRTL ? (
+      <LeftArrow {...css(styles.DateRangePickerInput_arrow_svg)} />
+    ) : (
+      <RightArrow {...css(styles.DateRangePickerInput_arrow_svg)} />
+    ));
   const closeIcon = customCloseIcon || (
     <CloseButton {...css(styles.DateRangePickerInput_clearDates_svg)} />
   );
-  const screenReaderText = screenReaderMessage || phrases.keyboardNavigationInstructions;
+  const screenReaderText =
+    screenReaderMessage || phrases.keyboardNavigationInstructions;
   const inputIcon = (showDefaultInputIcon || customInputIcon !== null) && (
     <button
       {...css(styles.DateRangePickerInput_calendarIcon)}
@@ -230,7 +234,8 @@ function DateRangePickerInput({
           aria-label={phrases.clearDates}
           {...css(
             styles.DateRangePickerInput_clearDates,
-            !(startDate || endDate) && styles.DateRangePickerInput_clearDates__hide,
+            !(startDate || endDate) &&
+              styles.DateRangePickerInput_clearDates__hide,
           )}
           onClick={onClearDates}
           disabled={disabled}
@@ -240,7 +245,6 @@ function DateRangePickerInput({
       )}
 
       {inputIconPosition === ICON_AFTER_POSITION && inputIcon}
-
     </div>
   );
 }

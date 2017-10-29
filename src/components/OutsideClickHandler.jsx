@@ -34,7 +34,9 @@ export default class OutsideClickHandler extends React.Component {
   }
 
   componentWillUnmount() {
-    if (this.removeEventListener) { this.removeEventListener(); }
+    if (this.removeEventListener) {
+      this.removeEventListener();
+    }
   }
 
   onOutsideClick(e) {
@@ -51,11 +53,7 @@ export default class OutsideClickHandler extends React.Component {
   }
 
   render() {
-    return (
-      <div ref={this.setChildNodeRef}>
-        {this.props.children}
-      </div>
-    );
+    return <div ref={this.setChildNodeRef}>{this.props.children}</div>;
   }
 }
 

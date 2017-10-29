@@ -12,11 +12,25 @@ describe('isAfterDay', () => {
   });
 
   it('returns true if first arg is after the second but have same day and year', () => {
-    expect(isAfterDay(moment().clone().add(1, 'month'), today)).to.equal(true);
+    expect(
+      isAfterDay(
+        moment()
+          .clone()
+          .add(1, 'month'),
+        today,
+      ),
+    ).to.equal(true);
   });
 
   it('returns true if first arg is after the second but have same day and month', () => {
-    expect(isAfterDay(moment().clone().add(1, 'year'), today)).to.equal(true);
+    expect(
+      isAfterDay(
+        moment()
+          .clone()
+          .add(1, 'year'),
+        today,
+      ),
+    ).to.equal(true);
   });
 
   it('returns false if args are the same day', () => {

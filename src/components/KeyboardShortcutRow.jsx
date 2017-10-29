@@ -15,13 +15,7 @@ const defaultProps = {
   block: false,
 };
 
-function KeyboardShortcutRow({
-  unicode,
-  label,
-  action,
-  block,
-  styles,
-}) {
+function KeyboardShortcutRow({ unicode, label, action, block, styles }) {
   return (
     <li
       {...css(
@@ -44,9 +38,7 @@ function KeyboardShortcutRow({
         </span>
       </div>
 
-      <div {...css(styles.KeyboardShortcutRow_action)}>
-        {action}
-      </div>
+      <div {...css(styles.KeyboardShortcutRow_action)}>{action}</div>
     </li>
   );
 }
@@ -91,4 +83,3 @@ export default withStyles(({ reactDates: { color } }) => ({
     marginLeft: 8,
   },
 }))(KeyboardShortcutRow);
-

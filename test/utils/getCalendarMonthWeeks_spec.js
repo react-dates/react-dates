@@ -17,24 +17,21 @@ describe('getCalendarMonthWeeks', () => {
         new Date(),
         moment.invalid(),
       ];
-      invalidValues.forEach((value) => {
-        expect(() => getCalendarMonthWeeks(value))
-          .to.throw(TypeError, '`month` must be a valid moment object');
+      invalidValues.forEach(value => {
+        expect(() => getCalendarMonthWeeks(value)).to.throw(
+          TypeError,
+          '`month` must be a valid moment object',
+        );
       });
     });
 
     it('throws a TypeError if third arg is not an integer between 0 and 6', () => {
-      const invalidValues = [
-        null,
-        -1,
-        7,
-        '0',
-        '1',
-        1.5,
-      ];
-      invalidValues.forEach((value) => {
-        expect(() => getCalendarMonthWeeks(today, true, value))
-          .to.throw(TypeError, '`firstDayOfWeek` must be an integer between 0 and 6');
+      const invalidValues = [null, -1, 7, '0', '1', 1.5];
+      invalidValues.forEach(value => {
+        expect(() => getCalendarMonthWeeks(today, true, value)).to.throw(
+          TypeError,
+          '`firstDayOfWeek` must be an integer between 0 and 6',
+        );
       });
     });
   });
@@ -42,15 +39,15 @@ describe('getCalendarMonthWeeks', () => {
   it('returns an array of arrays', () => {
     expect(weeks).to.be.instanceof(Array);
 
-    weeks.forEach((week) => {
+    weeks.forEach(week => {
       expect(week).to.be.instanceof(Array);
     });
   });
 
   it('today is included', () => {
     let isIncluded = false;
-    weeks.forEach((week) => {
-      week.forEach((day) => {
+    weeks.forEach(week => {
+      week.forEach(day => {
         if (day && day.isSame(today, 'day')) isIncluded = true;
       });
     });
@@ -59,8 +56,8 @@ describe('getCalendarMonthWeeks', () => {
   });
 
   it('all days have a time of 12PM', () => {
-    weeks.forEach((week) => {
-      week.forEach((day) => {
+    weeks.forEach(week => {
+      week.forEach(day => {
         if (day) {
           expect(day.hours()).to.equal(12);
         }
@@ -133,7 +130,10 @@ describe('getCalendarMonthWeeks', () => {
     });
 
     it('number of non-null elements is equal to number of days in month', () => {
-      const daysInCalendarMonthWeeks = weeks.reduce((a, b) => a + b.filter(day => day).length, 0);
+      const daysInCalendarMonthWeeks = weeks.reduce(
+        (a, b) => a + b.filter(day => day).length,
+        0,
+      );
       expect(daysInCalendarMonthWeeks).to.equal(today.daysInMonth());
     });
   });
@@ -141,15 +141,18 @@ describe('getCalendarMonthWeeks', () => {
   describe('enableOutsideDays arg is true', () => {
     it('contains first of the month', () => {
       const firstOfMonth = today.clone().startOf('month');
-      const containsFirstOfMonth = weeksWithOutsideDays[0]
-        .filter(day => firstOfMonth.isSame(day, 'day')).length > 0;
+      const containsFirstOfMonth =
+        weeksWithOutsideDays[0].filter(day => firstOfMonth.isSame(day, 'day'))
+          .length > 0;
       expect(containsFirstOfMonth).to.equal(true);
     });
 
     it('last week contains last of the month', () => {
       const lastOfMonth = today.clone().endOf('month');
-      const containsLastOfMonth = weeks[weeksWithOutsideDays.length - 1]
-        .filter(day => lastOfMonth.isSame(day, 'day')).length > 0;
+      const containsLastOfMonth =
+        weeks[weeksWithOutsideDays.length - 1].filter(day =>
+          lastOfMonth.isSame(day, 'day'),
+        ).length > 0;
       expect(containsLastOfMonth).to.equal(true);
     });
 
@@ -157,8 +160,10 @@ describe('getCalendarMonthWeeks', () => {
       const december2016 = moment('2016-12-01');
       const lastOfMonth = december2016.clone().endOf('month');
       const weeksInDecember = getCalendarMonthWeeks(december2016);
-      const containsLastOfMonth = weeksInDecember[weeksInDecember.length - 1]
-        .filter(day => lastOfMonth.isSame(day, 'day')).length > 0;
+      const containsLastOfMonth =
+        weeksInDecember[weeksInDecember.length - 1].filter(day =>
+          lastOfMonth.isSame(day, 'day'),
+        ).length > 0;
       expect(containsLastOfMonth).to.equal(true);
     });
 
@@ -167,8 +172,10 @@ describe('getCalendarMonthWeeks', () => {
       const april2017 = moment('2017-04-01');
       const lastOfMonth = april2017.clone().endOf('month');
       const weeksInApril = getCalendarMonthWeeks(april2017);
-      const containsLastOfMonth = weeksInApril[weeksInApril.length - 1]
-        .filter(day => lastOfMonth.isSame(day, 'day')).length > 0;
+      const containsLastOfMonth =
+        weeksInApril[weeksInApril.length - 1].filter(day =>
+          lastOfMonth.isSame(day, 'day'),
+        ).length > 0;
       expect(containsLastOfMonth).to.equal(true);
     });
 
@@ -176,14 +183,18 @@ describe('getCalendarMonthWeeks', () => {
       const september2016 = moment('2016-09-01');
       const lastOfMonth = september2016.clone().endOf('month');
       const weeksInSeptember = getCalendarMonthWeeks(september2016);
-      const containsLastOfMonth = weeksInSeptember[weeksInSeptember.length - 1]
-        .filter(day => lastOfMonth.isSame(day, 'day')).length > 0;
+      const containsLastOfMonth =
+        weeksInSeptember[weeksInSeptember.length - 1].filter(day =>
+          lastOfMonth.isSame(day, 'day'),
+        ).length > 0;
       expect(containsLastOfMonth).to.equal(true);
     });
 
     it('each week has 7 non-null elements', () => {
-      const hasNoNullElements = weeksWithOutsideDays
-        .reduce((w1, w2) => w1 && w2.reduce((d1, d2) => d1 && !!d2, true), true);
+      const hasNoNullElements = weeksWithOutsideDays.reduce(
+        (w1, w2) => w1 && w2.reduce((d1, d2) => d1 && !!d2, true),
+        true,
+      );
       expect(hasNoNullElements).to.equal(true);
     });
   });
@@ -195,29 +206,47 @@ describe('getCalendarMonthWeeks', () => {
     const january2017End = january2017Start.clone().endOf('month'); // Tuesday
 
     it('month starts at [0][0] when first day is Sunday and first day of week is Sunday', () => {
-      const weeksInJanuary2017 = getCalendarMonthWeeks(january2017Start, false, 0); // 0: Sun
+      const weeksInJanuary2017 = getCalendarMonthWeeks(
+        january2017Start,
+        false,
+        0,
+      ); // 0: Sun
       const firstDayOfMonth = weeksInJanuary2017[0][0];
       const rightPosition = january2017Start.isSame(firstDayOfMonth, 'day');
       expect(rightPosition).to.equal(true);
     });
 
     it('month ends at [n][2] when last day is Tuesday and first day of week is Sunday', () => {
-      const weeksInJanuary2017 = getCalendarMonthWeeks(january2017Start, false, 0); // 0: Sun
-      const lastDayOfMonth = weeksInJanuary2017[weeksInJanuary2017.length - 1][2];
+      const weeksInJanuary2017 = getCalendarMonthWeeks(
+        january2017Start,
+        false,
+        0,
+      ); // 0: Sun
+      const lastDayOfMonth =
+        weeksInJanuary2017[weeksInJanuary2017.length - 1][2];
       const rightPosition = january2017End.isSame(lastDayOfMonth, 'day');
       expect(rightPosition).to.equal(true);
     });
 
     it('month starts at [0][4] when first day is Sunday and first day of week is Wednesday', () => {
-      const weeksInJanuary2017 = getCalendarMonthWeeks(january2017Start, false, 3); // 3: Wed
+      const weeksInJanuary2017 = getCalendarMonthWeeks(
+        january2017Start,
+        false,
+        3,
+      ); // 3: Wed
       const firstDayOfMonth = weeksInJanuary2017[0][4];
       const rightPosition = january2017Start.isSame(firstDayOfMonth, 'day');
       expect(rightPosition).to.equal(true);
     });
 
     it('month ends at [n][6] when last day is Tuesday and first day of week is Wednesday', () => {
-      const weeksInJanuary2017 = getCalendarMonthWeeks(january2017Start, false, 3);// 3: Wed
-      const lastDayOfMonth = weeksInJanuary2017[weeksInJanuary2017.length - 1][6];
+      const weeksInJanuary2017 = getCalendarMonthWeeks(
+        january2017Start,
+        false,
+        3,
+      ); // 3: Wed
+      const lastDayOfMonth =
+        weeksInJanuary2017[weeksInJanuary2017.length - 1][6];
       const rightPosition = january2017End.isSame(lastDayOfMonth, 'day');
       expect(rightPosition).to.equal(true);
     });
@@ -243,7 +272,8 @@ describe('getCalendarMonthWeeks', () => {
 
       it('month ends at [n][2] if last day is Tuesday', () => {
         const weeksInJanuary2017 = getCalendarMonthWeeks(january2017Start);
-        const lastDayOfMonth = weeksInJanuary2017[weeksInJanuary2017.length - 1][2];
+        const lastDayOfMonth =
+          weeksInJanuary2017[weeksInJanuary2017.length - 1][2];
         const rightPosition = january2017End.isSame(lastDayOfMonth, 'day');
         expect(rightPosition).to.equal(true);
       });
@@ -263,7 +293,8 @@ describe('getCalendarMonthWeeks', () => {
 
       it('month ends at [n][1] if last day is Tuesday', () => {
         const weeksInJanuary2017 = getCalendarMonthWeeks(january2017Start);
-        const lastDayOfMonth = weeksInJanuary2017[weeksInJanuary2017.length - 1][1];
+        const lastDayOfMonth =
+          weeksInJanuary2017[weeksInJanuary2017.length - 1][1];
         const rightPosition = january2017End.isSame(lastDayOfMonth, 'day');
         expect(rightPosition).to.equal(true);
       });

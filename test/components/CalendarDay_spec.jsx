@@ -46,8 +46,12 @@ describe('CalendarDay', () => {
         const expectedFormattedDay = { date: 'Tuesday, October 10, 2017' };
 
         beforeEach(() => {
-          phrases.chooseAvailableDate = sinon.stub().returns('chooseAvailableDate text');
-          phrases.dateIsUnavailable = sinon.stub().returns('dateIsUnavailable text');
+          phrases.chooseAvailableDate = sinon
+            .stub()
+            .returns('chooseAvailableDate text');
+          phrases.dateIsUnavailable = sinon
+            .stub()
+            .returns('dateIsUnavailable text');
         });
 
         afterEach(() => {
@@ -57,27 +61,31 @@ describe('CalendarDay', () => {
         it('is formatted with the chooseAvailableDate phrase function when day is available', () => {
           const modifiers = new Set();
 
-          const wrapper = shallow(<CalendarDay
-            modifiers={modifiers}
-            phrases={phrases}
-            day={day}
-          />).dive();
+          const wrapper = shallow(
+            <CalendarDay modifiers={modifiers} phrases={phrases} day={day} />,
+          ).dive();
 
-          expect(phrases.chooseAvailableDate.calledWith(expectedFormattedDay)).to.equal(true);
-          expect(wrapper.find('button').prop('aria-label')).to.equal('chooseAvailableDate text');
+          expect(
+            phrases.chooseAvailableDate.calledWith(expectedFormattedDay),
+          ).to.equal(true);
+          expect(wrapper.find('button').prop('aria-label')).to.equal(
+            'chooseAvailableDate text',
+          );
         });
 
         it('is formatted with the dateIsUnavailable phrase function when day is not available', () => {
           const modifiers = new Set().add(BLOCKED_MODIFIER);
 
-          const wrapper = shallow(<CalendarDay
-            modifiers={modifiers}
-            phrases={phrases}
-            day={day}
-          />).dive();
+          const wrapper = shallow(
+            <CalendarDay modifiers={modifiers} phrases={phrases} day={day} />,
+          ).dive();
 
-          expect(phrases.dateIsUnavailable.calledWith(expectedFormattedDay)).to.equal(true);
-          expect(wrapper.find('button').prop('aria-label')).to.equal('dateIsUnavailable text');
+          expect(
+            phrases.dateIsUnavailable.calledWith(expectedFormattedDay),
+          ).to.equal(true);
+          expect(wrapper.find('button').prop('aria-label')).to.equal(
+            'dateIsUnavailable text',
+          );
         });
       });
     });
@@ -94,14 +102,18 @@ describe('CalendarDay', () => {
     });
 
     it('gets triggered by click', () => {
-      const wrapper = shallow(<CalendarDay />).dive().find('button');
+      const wrapper = shallow(<CalendarDay />)
+        .dive()
+        .find('button');
       wrapper.simulate('click');
       expect(onDayClickSpy).to.have.property('callCount', 1);
     });
 
     it('calls props.onDayClick', () => {
       const onDayClickStub = sinon.stub();
-      const wrapper = shallow(<CalendarDay onDayClick={onDayClickStub} />).dive();
+      const wrapper = shallow(
+        <CalendarDay onDayClick={onDayClickStub} />,
+      ).dive();
       wrapper.instance().onDayClick();
       expect(onDayClickStub).to.have.property('callCount', 1);
     });
@@ -110,7 +122,10 @@ describe('CalendarDay', () => {
   describe('#onDayMouseEnter', () => {
     let onDayMouseEnterSpy;
     beforeEach(() => {
-      onDayMouseEnterSpy = sinon.spy(PureCalendarDay.prototype, 'onDayMouseEnter');
+      onDayMouseEnterSpy = sinon.spy(
+        PureCalendarDay.prototype,
+        'onDayMouseEnter',
+      );
     });
 
     afterEach(() => {
@@ -118,14 +133,18 @@ describe('CalendarDay', () => {
     });
 
     it('gets triggered by mouseenter', () => {
-      const wrapper = shallow(<CalendarDay />).dive().find('button');
+      const wrapper = shallow(<CalendarDay />)
+        .dive()
+        .find('button');
       wrapper.simulate('mouseenter');
       expect(onDayMouseEnterSpy).to.have.property('callCount', 1);
     });
 
     it('calls props.onDayMouseEnter', () => {
       const onMouseEnterStub = sinon.stub();
-      const wrapper = shallow(<CalendarDay onDayMouseEnter={onMouseEnterStub} />).dive();
+      const wrapper = shallow(
+        <CalendarDay onDayMouseEnter={onMouseEnterStub} />,
+      ).dive();
       wrapper.instance().onDayMouseEnter();
       expect(onMouseEnterStub).to.have.property('callCount', 1);
     });
@@ -134,7 +153,10 @@ describe('CalendarDay', () => {
   describe('#onDayMouseLeave', () => {
     let onDayMouseLeaveSpy;
     beforeEach(() => {
-      onDayMouseLeaveSpy = sinon.spy(PureCalendarDay.prototype, 'onDayMouseLeave');
+      onDayMouseLeaveSpy = sinon.spy(
+        PureCalendarDay.prototype,
+        'onDayMouseLeave',
+      );
     });
 
     afterEach(() => {
@@ -142,14 +164,18 @@ describe('CalendarDay', () => {
     });
 
     it('gets triggered by mouseleave', () => {
-      const wrapper = shallow(<CalendarDay />).dive().find('button');
+      const wrapper = shallow(<CalendarDay />)
+        .dive()
+        .find('button');
       wrapper.simulate('mouseleave');
       expect(onDayMouseLeaveSpy).to.have.property('callCount', 1);
     });
 
     it('calls props.onDayMouseLeave', () => {
       const onMouseLeaveStub = sinon.stub();
-      const wrapper = shallow(<CalendarDay onDayMouseLeave={onMouseLeaveStub} />).dive();
+      const wrapper = shallow(
+        <CalendarDay onDayMouseLeave={onMouseLeaveStub} />,
+      ).dive();
       wrapper.instance().onDayMouseLeave();
       expect(onMouseLeaveStub).to.have.property('callCount', 1);
     });

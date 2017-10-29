@@ -93,15 +93,14 @@ class CalendarDay extends React.Component {
       renderDay,
       tabIndex,
       styles,
-      phrases: {
-        chooseAvailableDate,
-        dateIsUnavailable,
-      },
+      phrases: { chooseAvailableDate, dateIsUnavailable },
     } = this.props;
 
     if (!day) return <td />;
 
-    const formattedDate = { date: `${day.format('dddd')}, ${day.format('LL')}` };
+    const formattedDate = {
+      date: `${day.format('dddd')}, ${day.format('LL')}`,
+    };
 
     const ariaLabel = modifiers.has(BLOCKED_MODIFIER)
       ? getPhrase(dateIsUnavailable, formattedDate)
@@ -112,22 +111,19 @@ class CalendarDay extends React.Component {
       height: daySize - 1,
     };
 
-    const useDefaultCursor = (
-      modifiers.has('blocked-minimum-nights')
-      || modifiers.has('blocked-calendar')
-      || modifiers.has('blocked-out-of-range')
-    );
+    const useDefaultCursor =
+      modifiers.has('blocked-minimum-nights') ||
+      modifiers.has('blocked-calendar') ||
+      modifiers.has('blocked-out-of-range');
 
-    const selected = (
-      modifiers.has('selected')
-      || modifiers.has('selected-start')
-      || modifiers.has('selected-end')
-    );
+    const selected =
+      modifiers.has('selected') ||
+      modifiers.has('selected-start') ||
+      modifiers.has('selected-end');
 
-    const hoveredSpan = !selected && (
-      modifiers.has('hovered-span')
-      || modifiers.has('after-hovered-start')
-    );
+    const hoveredSpan =
+      !selected &&
+      (modifiers.has('hovered-span') || modifiers.has('after-hovered-start'));
 
     const isOutsideRange = modifiers.has('blocked-out-of-range');
 
@@ -136,9 +132,12 @@ class CalendarDay extends React.Component {
         {...css(
           styles.CalendarDay_container,
           isOutsideDay && styles.CalendarDay__outside,
-          modifiers.has('highlighted-calendar') && styles.CalendarDay__highlighted_calendar,
-          modifiers.has('blocked-minimum-nights') && styles.CalendarDay__blocked_minimum_nights,
-          modifiers.has('blocked-calendar') && styles.CalendarDay__blocked_calendar,
+          modifiers.has('highlighted-calendar') &&
+            styles.CalendarDay__highlighted_calendar,
+          modifiers.has('blocked-minimum-nights') &&
+            styles.CalendarDay__blocked_minimum_nights,
+          modifiers.has('blocked-calendar') &&
+            styles.CalendarDay__blocked_calendar,
           hoveredSpan && styles.CalendarDay__hovered_span,
           modifiers.has('selected-span') && styles.CalendarDay__selected_span,
           modifiers.has('last-in-range') && styles.CalendarDay__last_in_range,
@@ -157,10 +156,18 @@ class CalendarDay extends React.Component {
           type="button"
           ref={this.setButtonRef}
           aria-label={ariaLabel}
-          onMouseEnter={(e) => { this.onDayMouseEnter(day, e); }}
-          onMouseLeave={(e) => { this.onDayMouseLeave(day, e); }}
-          onMouseUp={(e) => { e.currentTarget.blur(); }}
-          onClick={(e) => { this.onDayClick(day, e); }}
+          onMouseEnter={e => {
+            this.onDayMouseEnter(day, e);
+          }}
+          onMouseLeave={e => {
+            this.onDayMouseLeave(day, e);
+          }}
+          onMouseUp={e => {
+            e.currentTarget.blur();
+          }}
+          onClick={e => {
+            this.onDayClick(day, e);
+          }}
           tabIndex={tabIndex}
         >
           {renderDay ? renderDay(day) : day.format('D')}
@@ -348,5 +355,4 @@ export default withStyles(({ reactDates: { color } }) => ({
 
   CalendarDay__selected_start: {},
   CalendarDay__selected_end: {},
-
 }))(CalendarDay);

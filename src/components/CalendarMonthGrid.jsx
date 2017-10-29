@@ -88,7 +88,11 @@ function getMonths(initialMonth, numberOfMonths, withoutTransitionMonths) {
   if (!withoutTransitionMonths) month = month.subtract(1, 'month');
 
   const months = [];
-  for (let i = 0; i < (withoutTransitionMonths ? numberOfMonths : numberOfMonths + 2); i += 1) {
+  for (
+    let i = 0;
+    i < (withoutTransitionMonths ? numberOfMonths : numberOfMonths + 2);
+    i += 1
+  ) {
     months.push(month);
     month = month.clone().add(1, 'month');
   }
@@ -101,7 +105,11 @@ class CalendarMonthGrid extends React.Component {
     super(props);
     const withoutTransitionMonths = props.orientation === VERTICAL_SCROLLABLE;
     this.state = {
-      months: getMonths(props.initialMonth, props.numberOfMonths, withoutTransitionMonths),
+      months: getMonths(
+        props.initialMonth,
+        props.numberOfMonths,
+        withoutTransitionMonths,
+      ),
     };
 
     this.calendarMonthHeights = [];
@@ -128,8 +136,12 @@ class CalendarMonthGrid extends React.Component {
     const { initialMonth, numberOfMonths, orientation } = nextProps;
     const { months } = this.state;
 
-    const hasMonthChanged = !this.props.initialMonth.isSame(initialMonth, 'month');
-    const hasNumberOfMonthsChanged = this.props.numberOfMonths !== numberOfMonths;
+    const hasMonthChanged = !this.props.initialMonth.isSame(
+      initialMonth,
+      'month',
+    );
+    const hasNumberOfMonthsChanged =
+      this.props.numberOfMonths !== numberOfMonths;
     let newMonths = months;
 
     if (hasMonthChanged && !hasNumberOfMonthsChanged) {
@@ -144,7 +156,11 @@ class CalendarMonthGrid extends React.Component {
 
     if (hasNumberOfMonthsChanged) {
       const withoutTransitionMonths = orientation === VERTICAL_SCROLLABLE;
-      newMonths = getMonths(initialMonth, numberOfMonths, withoutTransitionMonths);
+      newMonths = getMonths(
+        initialMonth,
+        numberOfMonths,
+        withoutTransitionMonths,
+      );
     }
 
     this.setState({
@@ -157,7 +173,11 @@ class CalendarMonthGrid extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { isAnimating, onMonthTransitionEnd, setCalendarMonthHeights } = this.props;
+    const {
+      isAnimating,
+      onMonthTransitionEnd,
+      setCalendarMonthHeights,
+    } = this.props;
 
     // For IE9, immediately call onMonthTransitionEnd instead of
     // waiting for the animation to complete
@@ -190,9 +210,13 @@ class CalendarMonthGrid extends React.Component {
   setMonthHeight(height, i) {
     if (this.calendarMonthHeights[i]) {
       if (i === 0) {
-        this.calendarMonthHeights = [height].concat(this.calendarMonthHeights.slice(0, -1));
+        this.calendarMonthHeights = [height].concat(
+          this.calendarMonthHeights.slice(0, -1),
+        );
       } else if (i === this.calendarMonthHeights.length - 1) {
-        this.calendarMonthHeights = this.calendarMonthHeights.slice(1).concat(height);
+        this.calendarMonthHeights = this.calendarMonthHeights
+          .slice(1)
+          .concat(height);
       }
     } else {
       this.calendarMonthHeights[i] = height;
@@ -231,9 +255,10 @@ class CalendarMonthGrid extends React.Component {
 
     const calendarMonthWidth = getCalendarMonthWidth(daySize);
 
-    const width = isVertical || isVerticalScrollable ?
-      calendarMonthWidth :
-      (numberOfMonths + 2) * calendarMonthWidth;
+    const width =
+      isVertical || isVerticalScrollable
+        ? calendarMonthWidth
+        : (numberOfMonths + 2) * calendarMonthWidth;
 
     return (
       <div
@@ -255,8 +280,9 @@ class CalendarMonthGrid extends React.Component {
         onTransitionEnd={onMonthTransitionEnd}
       >
         {months.map((month, i) => {
-          const isVisible = (i >= firstVisibleMonthIndex)
-            && (i < firstVisibleMonthIndex + numberOfMonths);
+          const isVisible =
+            i >= firstVisibleMonthIndex &&
+            i < firstVisibleMonthIndex + numberOfMonths;
           const hideForAnimation = i === 0 && !isVisible;
           const showForAnimation = i === 0 && isAnimating && isVisible;
           const monthString = toISOMonthString(month);
@@ -265,19 +291,25 @@ class CalendarMonthGrid extends React.Component {
               key={monthString}
               {...css(
                 isHorizontal && styles.CalendarMonthGrid_month__horizontal,
-                hideForAnimation && styles.CalendarMonthGrid_month__hideForAnimation,
-                showForAnimation && !isVertical && !isRTL && {
-                  position: 'absolute',
-                  left: -calendarMonthWidth,
-                },
-                showForAnimation && !isVertical && isRTL && {
-                  position: 'absolute',
-                  right: 0,
-                },
-                showForAnimation && isVertical && {
-                  position: 'absolute',
-                  top: -this.calendarMonthHeights[0],
-                },
+                hideForAnimation &&
+                  styles.CalendarMonthGrid_month__hideForAnimation,
+                showForAnimation &&
+                  !isVertical &&
+                  !isRTL && {
+                    position: 'absolute',
+                    left: -calendarMonthWidth,
+                  },
+                showForAnimation &&
+                  !isVertical &&
+                  isRTL && {
+                    position: 'absolute',
+                    right: 0,
+                  },
+                showForAnimation &&
+                  isVertical && {
+                    position: 'absolute',
+                    top: -this.calendarMonthHeights[0],
+                  },
               )}
             >
               <CalendarMonth
@@ -297,7 +329,9 @@ class CalendarMonthGrid extends React.Component {
                 focusedDate={isVisible ? focusedDate : null}
                 isFocused={isFocused}
                 phrases={phrases}
-                setMonthHeight={(height) => { this.setMonthHeight(height, i); }}
+                setMonthHeight={height => {
+                  this.setMonthHeight(height, i);
+                }}
               />
             </div>
           );

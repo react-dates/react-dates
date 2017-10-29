@@ -19,7 +19,12 @@ import toLocalizedDateString from '../utils/toLocalizedDateString';
 import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
 import isBeforeDay from '../utils/isBeforeDay';
 
-import { START_DATE, END_DATE, ICON_BEFORE_POSITION, OPEN_DOWN } from '../constants';
+import {
+  START_DATE,
+  END_DATE,
+  ICON_BEFORE_POSITION,
+  OPEN_DOWN,
+} from '../constants';
 
 const propTypes = forbidExtraProps({
   startDate: momentPropTypes.momentObj,
@@ -128,12 +133,7 @@ export default class DateRangePickerInputController extends React.Component {
   }
 
   onClearFocus() {
-    const {
-      onFocusChange,
-      onClose,
-      startDate,
-      endDate,
-    } = this.props;
+    const { onFocusChange, onClose, startDate, endDate } = this.props;
 
     onFocusChange(null);
     onClose({ startDate, endDate });
@@ -150,8 +150,13 @@ export default class DateRangePickerInputController extends React.Component {
 
     const endDate = toMomentObject(endDateString, this.getDisplayFormat());
 
-    const isEndDateValid = endDate && !isOutsideRange(endDate) &&
-      !(startDate && isBeforeDay(endDate, startDate.clone().add(minimumNights, 'days')));
+    const isEndDateValid =
+      endDate &&
+      !isOutsideRange(endDate) &&
+      !(
+        startDate &&
+        isBeforeDay(endDate, startDate.clone().add(minimumNights, 'days'))
+      );
     if (isEndDateValid) {
       onDatesChange({ startDate, endDate });
       if (!keepOpenOnDateSelect) this.onClearFocus();
@@ -193,7 +198,10 @@ export default class DateRangePickerInputController extends React.Component {
     } = this.props;
     const isStartDateValid = startDate && !isOutsideRange(startDate);
     if (isStartDateValid) {
-      if (startDate && isBeforeDay(endDate, startDate.clone().add(minimumNights, 'days'))) {
+      if (
+        startDate &&
+        isBeforeDay(endDate, startDate.clone().add(minimumNights, 'days'))
+      ) {
         endDate = null;
       }
 
@@ -227,7 +235,11 @@ export default class DateRangePickerInputController extends React.Component {
   }
 
   clearDates() {
-    const { onDatesChange, reopenPickerOnClearDates, onFocusChange } = this.props;
+    const {
+      onDatesChange,
+      reopenPickerOnClearDates,
+      onFocusChange,
+    } = this.props;
     onDatesChange({ startDate: null, endDate: null });
     if (reopenPickerOnClearDates) {
       onFocusChange(START_DATE);

@@ -44,7 +44,9 @@ describe('#calculateDimension', () => {
     });
 
     it('calculates border-box height with margin', () => {
-      expect(calculateDimension(testElement, 'height', true, true)).to.equal(290);
+      expect(calculateDimension(testElement, 'height', true, true)).to.equal(
+        290,
+      );
     });
 
     it('calculates border-box width', () => {
@@ -52,7 +54,9 @@ describe('#calculateDimension', () => {
     });
 
     it('calculates border-box width with margin', () => {
-      expect(calculateDimension(testElement, 'width', true, true)).to.equal(130);
+      expect(calculateDimension(testElement, 'width', true, true)).to.equal(
+        130,
+      );
     });
 
     it('calculates content-box height', () => {
@@ -60,7 +64,9 @@ describe('#calculateDimension', () => {
     });
 
     it('calculates content-box height with margin', () => {
-      expect(calculateDimension(testElement, 'height', false, true)).to.equal(258);
+      expect(calculateDimension(testElement, 'height', false, true)).to.equal(
+        258,
+      );
     });
 
     it('calculates content-box width', () => {
@@ -68,7 +74,9 @@ describe('#calculateDimension', () => {
     });
 
     it('calculates content-box width with margin', () => {
-      expect(calculateDimension(testElement, 'width', false, true)).to.equal(108);
+      expect(calculateDimension(testElement, 'width', false, true)).to.equal(
+        108,
+      );
     });
   });
 });

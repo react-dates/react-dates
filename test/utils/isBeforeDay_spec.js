@@ -12,11 +12,25 @@ describe('isBeforeDay', () => {
   });
 
   it('returns true if first arg is before the second but have same day and year', () => {
-    expect(isBeforeDay(today, moment().clone().add(1, 'month'))).to.equal(true);
+    expect(
+      isBeforeDay(
+        today,
+        moment()
+          .clone()
+          .add(1, 'month'),
+      ),
+    ).to.equal(true);
   });
 
   it('returns true if first arg is before the second but have same day and month', () => {
-    expect(isBeforeDay(today, moment().clone().add(1, 'year'))).to.equal(true);
+    expect(
+      isBeforeDay(
+        today,
+        moment()
+          .clone()
+          .add(1, 'year'),
+      ),
+    ).to.equal(true);
   });
 
   it('returns false if args are the same day', () => {

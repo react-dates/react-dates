@@ -8,7 +8,7 @@
     "beforeEach": true,
     "afterEach": true
   },
-  "extends": "airbnb",
+  "extends": ["airbnb", "prettier"],
   "rules": {
     "import/no-extraneous-dependencies": [2, {
       "devDependencies": true

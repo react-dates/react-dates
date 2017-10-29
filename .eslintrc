@@ -3,10 +3,12 @@
 
   "extends": [
     "airbnb",
-    "plugin:react-with-styles/recommended"
+    "plugin:react-with-styles/recommended",
+    "prettier"
   ],
 
   "plugins": [
+    "prettier",
     "react-with-styles"
   ],
 
@@ -16,16 +18,18 @@
   },
 
   "rules": {
-    "no-mixed-operators": [2, { "allowSamePrecedence": true }],
+    "no-mixed-operators": [0, { "allowSamePrecedence": true }],
 
     "jsx-a11y/click-events-have-key-events": 1, // TODO: enable
 
     "react/no-did-mount-set-state": 0, // necessary for server-rendering
 
-    "react-with-styles/no-unused-styles": 2
+    "react-with-styles/no-unused-styles": 2,
+
+    "prettier/prettier": [2, {"trailingComma": "all", "singleQuote": true}]
   },
 
   "settings": {
-     "propWrapperFunctions": ["forbidExtraProps", "exact", "Object.freeze"]
+    "propWrapperFunctions": ["forbidExtraProps", "exact", "Object.freeze"]
   }
 }

@@ -22,7 +22,9 @@ describe('CalendarMonth', () => {
     describe('caption', () => {
       it('text is the correctly formatted month title', () => {
         const MONTH = moment();
-        const captionWrapper = shallow(<CalendarMonth month={MONTH} />).dive().find('strong');
+        const captionWrapper = shallow(<CalendarMonth month={MONTH} />)
+          .dive()
+          .find('strong');
         expect(captionWrapper.text()).to.equal(MONTH.format('MMMM YYYY'));
       });
     });
