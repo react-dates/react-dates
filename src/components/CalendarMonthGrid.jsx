@@ -109,6 +109,8 @@ class CalendarMonthGrid extends React.Component {
     this.isTransitionEndSupported = isTransitionEndSupported();
     this.onTransitionEnd = this.onTransitionEnd.bind(this);
     this.setContainerRef = this.setContainerRef.bind(this);
+
+    this.locale = moment.locale();
   }
 
   componentDidMount() {
@@ -146,9 +148,11 @@ class CalendarMonthGrid extends React.Component {
       const withoutTransitionMonths = orientation === VERTICAL_SCROLLABLE;
       newMonths = getMonths(initialMonth, numberOfMonths, withoutTransitionMonths);
     }
-    
-    var momentLocale = moment.locale();
-    newMonths = newMonths.map(m => m.locale(momentLocale));
+
+    if (this.locale !== moment.locale()) {
+      this.locale = moment.locale();
+      newMonths = newMonths.map(m => m.locale(this.locale));
+    }
 
     this.setState({
       months: newMonths,
