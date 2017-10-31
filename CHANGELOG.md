@@ -1,5 +1,8 @@
 # Change Log
 
+## 12.7.1
+- [fix] set explicit border radius on shortcuts button ([#792](https://github.com/airbnb/react-dates/pull/792))
+
 ## 12.7.0
 - [new] Some accessibility improvements and patches ([#715](https://github.com/airbnb/react-dates/pull/715))
 
