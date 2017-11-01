@@ -60,6 +60,22 @@ describe('SingleDatePicker', () => {
           expect(wrapper.find(DayPickerSingleDateController)).to.have.lengthOf(0);
         });
       });
+
+      describe('props.onClose is defined', () => {
+        it('should pass props.onClose in to <DayPickerSingleDateController>', () => {
+          const onCloseStub = sinon.stub();
+          const wrapper = shallow((
+            <SingleDatePicker
+              id="date"
+              onDateChange={() => {}}
+              onFocusChange={() => {}}
+              focused
+              onClose={onCloseStub}
+            />
+          )).dive();
+          expect(wrapper.find(DayPickerSingleDateController).prop('onClose')).to.equal(onCloseStub);
+        });
+      });
     });
 
     describe('props.withPortal is truthy', () => {

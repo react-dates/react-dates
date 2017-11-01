@@ -165,4 +165,10 @@ storiesOf('DRP - Calendar Props', module)
       firstDayOfWeek={3}
       autoFocus
     />
+  ))
+  .addWithInfo('with onClose handler', () => (
+    <DateRangePickerWrapper
+      onClose={({ startDate, endDate }) => alert(`onClose: startDate = ${startDate}, endDate = ${endDate}`)}
+      autoFocus
+    />
   ));
