@@ -66,6 +66,7 @@ const defaultProps = {
   navNext: null,
   onPrevMonthClick() {},
   onNextMonthClick() {},
+  onClose() {},
 
   // day presentation and interaction related props
   renderDay: null,

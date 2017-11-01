@@ -146,5 +146,11 @@ storiesOf('SDP - Calendar Props', module)
       firstDayOfWeek={3}
       autoFocus
     />
+  ))
+  .addWithInfo('with onClose handler', () => (
+    <SingleDatePickerWrapper
+      onClose={({ date }) => alert(`onClose: date = ${date}`)}
+      autoFocus
+    />
   ));
 
