@@ -10,7 +10,7 @@ import DayPickerRangeController from '../src/components/DayPickerRangeController
 
 import ScrollableOrientationShape from '../src/shapes/ScrollableOrientationShape';
 
-import { START_DATE, END_DATE, HORIZONTAL_ORIENTATION } from '../constants';
+import { START_DATE, END_DATE, HORIZONTAL_ORIENTATION } from '../src/constants';
 import isInclusivelyAfterDay from '../src/utils/isInclusivelyAfterDay';
 
 const propTypes = forbidExtraProps({
