@@ -799,6 +799,46 @@ describe('DayPicker', () => {
           expect(updateStateAfterMonthTransitionSpy.calledOnce).to.equal(false);
         });
       });
+
+      describe('when isFocused is updated to true', () => {
+        const prevProps = { isFocused: false };
+        const newProps = { isFocused: true };
+
+        let containerFocusStub;
+        let wrapper;
+
+        beforeEach(() => {
+          containerFocusStub = sinon.stub();
+          wrapper = shallow(<DayPicker {...newProps} />).dive();
+          wrapper.instance().container = { focus: containerFocusStub };
+        });
+
+        afterEach(() => {
+          containerFocusStub.reset();
+        });
+
+        describe('when focusedDate is not defined', () => {
+          before(() => {
+            wrapper.state().focusedDate = undefined;
+            wrapper.instance().componentDidUpdate(prevProps);
+          });
+
+          it('sets focus on the container', () => {
+            expect(containerFocusStub.callCount).to.equal(1);
+          });
+        });
+
+        describe('when focusedDate is defined', () => {
+          before(() => {
+            wrapper.state().focusedDate = moment();
+            wrapper.instance().componentDidUpdate(prevProps);
+          });
+
+          it('should not set focus on the container', () => {
+            expect(containerFocusStub.notCalled).to.equal(true);
+          });
+        });
+      });
     });
   });
 });

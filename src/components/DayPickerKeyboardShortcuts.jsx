@@ -37,11 +37,46 @@ class DayPickerKeyboardShortcuts extends React.Component {
   constructor(...args) {
     super(...args);
 
-    this.onClick = this.onClick.bind(this);
+    this.onShowKeyboardShortcutsButtonClick = this.onShowKeyboardShortcutsButtonClick.bind(this);
     this.setShowKeyboardShortcutsButtonRef = this.setShowKeyboardShortcutsButtonRef.bind(this);
+    this.setHideKeyboardShortcutsButtonRef = this.setHideKeyboardShortcutsButtonRef.bind(this);
+    this.handleFocus = this.handleFocus.bind(this);
+    this.onKeyDown = this.onKeyDown.bind(this);
   }
 
-  onClick() {
+  componentDidUpdate() {
+    this.handleFocus();
+  }
+
+  onKeyDown(e) {
+    const { closeKeyboardShortcutsPanel } = this.props;
+
+    e.stopPropagation();
+
+    // Because the close button is the only focusable element inside of the panel, this
+    // amount to a very basic focus trap. The user can exit the panel by "pressing" the
+    // close button or hitting escape
+    switch (e.key) {
+      case 'Space':
+      case 'Escape':
+        closeKeyboardShortcutsPanel();
+        break;
+
+      case 'Tab':
+      case 'Enter':
+      case 'Home':
+      case 'End':
+      case 'PageUp':
+      case 'PageDown':
+        e.preventDefault();
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  onShowKeyboardShortcutsButtonClick() {
     const { openKeyboardShortcutsPanel } = this.props;
 
     // we want to return focus to this button after closing the keyboard shortcuts panel
@@ -50,6 +85,18 @@ class DayPickerKeyboardShortcuts extends React.Component {
 
   setShowKeyboardShortcutsButtonRef(ref) {
     this.showKeyboardShortcutsButton = ref;
+  }
+
+  setHideKeyboardShortcutsButtonRef(ref) {
+    this.hideKeyboardShortcutsButton = ref;
+  }
+
+  handleFocus() {
+    if (this.hideKeyboardShortcutsButton) {
+      // automatically move focus into the dialog by moving
+      // to the only interactive element, the hide button
+      this.hideKeyboardShortcutsButton.focus();
+    }
   }
 
   render() {
@@ -110,6 +157,7 @@ class DayPickerKeyboardShortcuts extends React.Component {
     return (
       <div>
         <button
+          id="showKeyboardShortcutsButton"
           ref={this.setShowKeyboardShortcutsButtonRef}
           {...css(
             styles.DayPickerKeyboardShortcuts_buttonReset,
@@ -120,7 +168,14 @@ class DayPickerKeyboardShortcuts extends React.Component {
           )}
           type="button"
           aria-label={toggleButtonText}
-          onClick={this.onClick}
+          onClick={this.onShowKeyboardShortcutsButtonClick}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault();
+            } else if (e.key === 'Space') {
+              this.onShowKeyboardShortcutsButtonClick();
+            }
+          }}
           onMouseUp={(e) => {
             e.currentTarget.blur();
           }}
@@ -145,6 +200,7 @@ class DayPickerKeyboardShortcuts extends React.Component {
             )}
             role="dialog"
             aria-labelledby="DayPickerKeyboardShortcuts__title"
+            aria-describedby="DayPickerKeyboardShortcuts__description"
           >
             <div
               {...css(styles.DayPickerKeyboardShortcuts_title)}
@@ -154,26 +210,25 @@ class DayPickerKeyboardShortcuts extends React.Component {
             </div>
 
             <button
+              id="hideKeyboardShortcutsButton"
+              ref={this.setHideKeyboardShortcutsButtonRef}
               {...css(
                 styles.DayPickerKeyboardShortcuts_buttonReset,
                 styles.DayPickerKeyboardShortcuts_close,
               )}
               type="button"
+              tabIndex="0"
               aria-label={phrases.hideKeyboardShortcutsPanel}
               onClick={closeKeyboardShortcutsPanel}
-              onKeyDown={(e) => {
-                // Because the close button is the only focusable element inside of the panel, this
-                // amount to a very basic focus trap. The user can exit the panel by "pressing" the
-                // close button or hitting escape
-                if (e.key === 'Tab') {
-                  e.preventDefault();
-                }
-              }}
+              onKeyDown={this.onKeyDown}
             >
               <CloseButton {...css(styles.DayPickerKeyboardShortcuts_closeSvg)} />
             </button>
 
-            <ul {...css(styles.DayPickerKeyboardShortcuts__list)}>
+            <ul
+              {...css(styles.DayPickerKeyboardShortcuts__list)}
+              id="DayPickerKeyboardShortcuts__description"
+            >
               {keyboardShortcuts.map(({ unicode, label, action }) => (
                 <KeyboardShortcutRow
                   key={label}
