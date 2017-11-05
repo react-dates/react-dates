@@ -183,7 +183,7 @@ class DayPickerKeyboardShortcuts extends React.Component {
             if (e.key === 'Enter') {
               e.preventDefault();
             } else if (e.key === 'Space') {
-              this.onShowKeyboardShortcutsButtonClick();
+              this.onShowKeyboardShortcutsButtonClick(e);
             }
           }}
           onMouseUp={(e) => {

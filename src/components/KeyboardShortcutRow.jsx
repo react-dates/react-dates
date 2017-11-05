@@ -38,7 +38,7 @@ function KeyboardShortcutRow({
         <span
           {...css(styles.KeyboardShortcutRow_key)}
           role="img"
-          aria-label={`${label} `}
+          aria-label={`${label},`}
         >
           {unicode}
         </span>
