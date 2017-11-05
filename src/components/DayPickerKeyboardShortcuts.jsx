@@ -33,15 +33,63 @@ const defaultProps = {
   phrases: DayPickerKeyboardShortcutsPhrases,
 };
 
+function getKeyboardShortcuts(phrases) {
+  return [
+    {
+      unicode: '↵',
+      label: phrases.enterKey,
+      action: phrases.selectFocusedDate,
+    },
+    {
+      unicode: '←/→',
+      label: phrases.leftArrowRightArrow,
+      action: phrases.moveFocusByOneDay,
+    },
+    {
+      unicode: '↑/↓',
+      label: phrases.upArrowDownArrow,
+      action: phrases.moveFocusByOneWeek,
+    },
+    {
+      unicode: 'PgUp/PgDn',
+      label: phrases.pageUpPageDown,
+      action: phrases.moveFocusByOneMonth,
+    },
+    {
+      unicode: 'Home/End',
+      label: phrases.homeEnd,
+      action: phrases.moveFocustoStartAndEndOfWeek,
+    },
+    {
+      unicode: 'Esc',
+      label: phrases.escape,
+      action: phrases.returnFocusToInput,
+    },
+    {
+      unicode: '?',
+      label: phrases.questionMark,
+      action: phrases.openThisPanel,
+    },
+  ];
+}
+
 class DayPickerKeyboardShortcuts extends React.Component {
   constructor(...args) {
     super(...args);
+
+    this.keyboardShortcuts = getKeyboardShortcuts(this.props.phrases);
 
     this.onShowKeyboardShortcutsButtonClick = this.onShowKeyboardShortcutsButtonClick.bind(this);
     this.setShowKeyboardShortcutsButtonRef = this.setShowKeyboardShortcutsButtonRef.bind(this);
     this.setHideKeyboardShortcutsButtonRef = this.setHideKeyboardShortcutsButtonRef.bind(this);
     this.handleFocus = this.handleFocus.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.phrases !== this.props.phrases) {
+      this.keyboardShortcuts = getKeyboardShortcuts(nextProps.phrases);
+    }
   }
 
   componentDidUpdate() {
@@ -108,43 +156,6 @@ class DayPickerKeyboardShortcuts extends React.Component {
       styles,
       phrases,
     } = this.props;
-
-    const keyboardShortcuts = [{
-      unicode: '↵',
-      label: phrases.enterKey,
-      action: phrases.selectFocusedDate,
-    },
-    {
-      unicode: '←/→',
-      label: phrases.leftArrowRightArrow,
-      action: phrases.moveFocusByOneDay,
-    },
-    {
-      unicode: '↑/↓',
-      label: phrases.upArrowDownArrow,
-      action: phrases.moveFocusByOneWeek,
-    },
-    {
-      unicode: 'PgUp/PgDn',
-      label: phrases.pageUpPageDown,
-      action: phrases.moveFocusByOneMonth,
-    },
-    {
-      unicode: 'Home/End',
-      label: phrases.homeEnd,
-      action: phrases.moveFocustoStartAndEndOfWeek,
-    },
-    {
-      unicode: 'Esc',
-      label: phrases.escape,
-      action: phrases.returnFocusToInput,
-    },
-    {
-      unicode: '?',
-      label: phrases.questionMark,
-      action: phrases.openThisPanel,
-    },
-    ];
 
     const toggleButtonText = showKeyboardShortcutsPanel
       ? phrases.hideKeyboardShortcutsPanel
@@ -229,7 +240,7 @@ class DayPickerKeyboardShortcuts extends React.Component {
               {...css(styles.DayPickerKeyboardShortcuts__list)}
               id="DayPickerKeyboardShortcuts__description"
             >
-              {keyboardShortcuts.map(({ unicode, label, action }) => (
+              {this.keyboardShortcuts.map(({ unicode, label, action }) => (
                 <KeyboardShortcutRow
                   key={label}
                   unicode={unicode}

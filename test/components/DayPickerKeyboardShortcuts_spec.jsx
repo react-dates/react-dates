@@ -12,6 +12,34 @@ import DayPickerKeyboardShortcuts from '../../src/components/DayPickerKeyboardSh
 const event = { preventDefault: sinon.stub(), stopPropagation: sinon.stub() };
 
 describe('DayPickerKeyboardShortcuts', () => {
+  describe('#componentWillReceiveProps', () => {
+    describe('when the phrases have been updated', () => {
+      const prevProps = { phrases: { enterKey: 'foo', escape: 'bar', questionMark: 'baz' } };
+      const newProps = { phrases: { enterKey: 'bleep', escape: 'blah', questionMark: 'boop' } };
+
+      it('updates the keyboardShortcuts', () => {
+        const wrapper = shallow(<DayPickerKeyboardShortcuts {...prevProps} />).dive();
+        const prevKeyboardShortcuts = wrapper.instance().keyboardShortcuts;
+        wrapper.instance().componentWillReceiveProps(newProps);
+        const updatedKeyboardShortcuts = wrapper.instance().keyboardShortcuts;
+        expect(prevKeyboardShortcuts).to.not.equal(updatedKeyboardShortcuts);
+      });
+    });
+
+    describe('when the phrases have NOT been updated', () => {
+      const prevProps = { phrases: { enterKey: 'foo', escape: 'bar', questionMark: 'baz' } };
+      const newProps = { phrases: { enterKey: 'foo', escape: 'bar', questionMark: 'baz' } };
+
+      it('does NOT update the keyboardShortcuts', () => {
+        const wrapper = shallow(<DayPickerKeyboardShortcuts {...prevProps} />).dive();
+        const prevKeyboardShortcuts = wrapper.instance().keyboardShortcuts;
+        wrapper.instance().componentWillReceiveProps(newProps);
+        const updatedKeyboardShortcuts = wrapper.instance().keyboardShortcuts;
+        expect(prevKeyboardShortcuts).to.deep.equal(updatedKeyboardShortcuts);
+      });
+    });
+  });
+
   describe('#componentDidUpdate', () => {
     it('focuses the hideKeyboardShortcutsButton', () => {
       const hideButtonFocusStub = sinon.stub();
