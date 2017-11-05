@@ -168,7 +168,6 @@ class DayPickerKeyboardShortcuts extends React.Component {
     return (
       <div>
         <button
-          id="showKeyboardShortcutsButton"
           ref={this.setShowKeyboardShortcutsButtonRef}
           {...css(
             styles.DayPickerKeyboardShortcuts_buttonReset,
@@ -221,7 +220,6 @@ class DayPickerKeyboardShortcuts extends React.Component {
             </div>
 
             <button
-              id="hideKeyboardShortcutsButton"
               ref={this.setHideKeyboardShortcutsButtonRef}
               {...css(
                 styles.DayPickerKeyboardShortcuts_buttonReset,

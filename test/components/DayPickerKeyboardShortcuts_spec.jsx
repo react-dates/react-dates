@@ -77,7 +77,7 @@ describe('DayPickerKeyboardShortcuts', () => {
     describe('#showKeyboardShortcutsButton', () => {
       it('renders a button', () => {
         const wrapper = shallow(<DayPickerKeyboardShortcuts />).dive();
-        expect(wrapper.find('button#showKeyboardShortcutsButton')).to.have.lengthOf(1);
+        expect(wrapper.children('button')).to.have.lengthOf(1);
       });
 
       describe('when showKeyboardShortcutsPanel is true', () => {
@@ -88,8 +88,7 @@ describe('DayPickerKeyboardShortcuts', () => {
             showKeyboardShortcutsPanel
             phrases={phrases}
           />).dive();
-          expect(wrapper.find('button#showKeyboardShortcutsButton')
-            .prop('aria-label')).to.equal(hideKeyboardShortcutsPanel);
+          expect(wrapper.children('button').prop('aria-label')).to.equal(hideKeyboardShortcutsPanel);
         });
       });
 
@@ -101,8 +100,7 @@ describe('DayPickerKeyboardShortcuts', () => {
             showKeyboardShortcutsPanel={false}
             phrases={phrases}
           />).dive();
-          expect(wrapper.find('button#showKeyboardShortcutsButton')
-            .prop('aria-label')).to.equal(showKeyboardShortcutsPanel);
+          expect(wrapper.children('button').prop('aria-label')).to.equal(showKeyboardShortcutsPanel);
         });
       });
 
@@ -115,7 +113,7 @@ describe('DayPickerKeyboardShortcuts', () => {
           const wrapper = shallow(<DayPickerKeyboardShortcuts
             openKeyboardShortcutsPanel={openKeyboardShortcutsPanelStub}
           />).dive();
-          buttonWrapper = wrapper.find('button#showKeyboardShortcutsButton');
+          buttonWrapper = wrapper.children('button');
         });
 
         afterEach(() => {
@@ -143,7 +141,7 @@ describe('DayPickerKeyboardShortcuts', () => {
         it('blurs the current target', () => {
           const mockEvent = { currentTarget: { blur: sinon.stub() } };
           const wrapper = shallow(<DayPickerKeyboardShortcuts />).dive();
-          const buttonWrapper = wrapper.find('button#showKeyboardShortcutsButton');
+          const buttonWrapper = wrapper.children().find('button');
           buttonWrapper.prop('onMouseUp')(mockEvent);
           expect(mockEvent.currentTarget.blur.callCount).to.equal(1);
         });
@@ -183,7 +181,7 @@ describe('DayPickerKeyboardShortcuts', () => {
         const wrapper = shallow(<DayPickerKeyboardShortcuts
           showKeyboardShortcutsPanel
         />).dive();
-        expect(wrapper.find('button#hideKeyboardShortcutsButton')).to.have.lengthOf(1);
+        expect(wrapper.find('div[role="dialog"]').children('button')).to.have.lengthOf(1);
       });
 
       it('renders a CloseButton', () => {
@@ -203,7 +201,7 @@ describe('DayPickerKeyboardShortcuts', () => {
             showKeyboardShortcutsPanel
             closeKeyboardShortcutsPanel={closeKeyboardShortcutsPanelStub}
           />).dive();
-          closeButton = wrapper.find('button#hideKeyboardShortcutsButton');
+          closeButton = wrapper.find('div[role="dialog"]').children('button');
         });
 
         afterEach(() => {
@@ -270,7 +268,7 @@ describe('DayPickerKeyboardShortcuts', () => {
           showKeyboardShortcutsPanel
           phrases={phrases}
         />).dive();
-        expect(wrapper.find('button#hideKeyboardShortcutsButton')
+        expect(wrapper.find('div[role="dialog"]').children('button')
           .prop('aria-label')).to.equal(hideKeyboardShortcutsPanel);
       });
     });
