@@ -206,6 +206,7 @@ describe('DayPickerKeyboardShortcuts', () => {
 
         afterEach(() => {
           closeKeyboardShortcutsPanelStub.reset();
+          event.stopPropagation.reset();
           event.preventDefault.reset();
         });
 
@@ -214,49 +215,83 @@ describe('DayPickerKeyboardShortcuts', () => {
           expect(closeKeyboardShortcutsPanelStub.callCount).to.equal(1);
         });
 
-        it('onKeyDown Space calls onShowKeyboardShortcutsButtonClick', () => {
+        it('onKeyDown Space calls e.stopPropagation and onShowKeyboardShortcutsButtonClick', () => {
           closeButton.prop('onKeyDown')({ ...event, key: 'Space' });
+          expect(event.stopPropagation.callCount).to.equal(1);
           expect(closeKeyboardShortcutsPanelStub.callCount).to.equal(1);
         });
 
-        it('onKeyDown Escape calls onShowKeyboardShortcutsButtonClick', () => {
+        it('onKeyDown Escape calls e.stopPropagation and onShowKeyboardShortcutsButtonClick', () => {
           closeButton.prop('onKeyDown')({ ...event, key: 'Escape' });
+          expect(event.stopPropagation.callCount).to.equal(1);
           expect(closeKeyboardShortcutsPanelStub.callCount).to.equal(1);
         });
 
-        it('onKeyDown Enter calls e.preventDefault and NOT onShowKeyboardShortcutsButtonClick', () => {
+        it('onKeyDown Enter calls e.stopPropagation and e.preventDefault and NOT onShowKeyboardShortcutsButtonClick', () => {
           closeButton.prop('onKeyDown')({ ...event, key: 'Enter' });
+          expect(event.stopPropagation.callCount).to.equal(1);
           expect(event.preventDefault.callCount).to.equal(1);
           expect(closeKeyboardShortcutsPanelStub.notCalled).to.equal(true);
         });
 
-        it('onKeyDown Tab calls e.preventDefault and NOT onShowKeyboardShortcutsButtonClick', () => {
+        it('onKeyDown Tab calls e.stopPropagation and e.preventDefault and NOT onShowKeyboardShortcutsButtonClick', () => {
           closeButton.prop('onKeyDown')({ ...event, key: 'Tab' });
+          expect(event.stopPropagation.callCount).to.equal(1);
           expect(event.preventDefault.callCount).to.equal(1);
           expect(closeKeyboardShortcutsPanelStub.notCalled).to.equal(true);
         });
 
-        it('onKeyDown Home calls e.preventDefault and NOT onShowKeyboardShortcutsButtonClick', () => {
+        it('onKeyDown Home calls e.stopPropagation and e.preventDefault and NOT onShowKeyboardShortcutsButtonClick', () => {
           closeButton.prop('onKeyDown')({ ...event, key: 'Home' });
+          expect(event.stopPropagation.callCount).to.equal(1);
           expect(event.preventDefault.callCount).to.equal(1);
           expect(closeKeyboardShortcutsPanelStub.notCalled).to.equal(true);
         });
 
-        it('onKeyDown End calls e.preventDefault and NOT onShowKeyboardShortcutsButtonClick', () => {
+        it('onKeyDown End calls e.stopPropagation and e.preventDefault and NOT onShowKeyboardShortcutsButtonClick', () => {
           closeButton.prop('onKeyDown')({ ...event, key: 'End' });
+          expect(event.stopPropagation.callCount).to.equal(1);
           expect(event.preventDefault.callCount).to.equal(1);
           expect(closeKeyboardShortcutsPanelStub.notCalled).to.equal(true);
         });
 
-        it('onKeyDown PageUp calls e.preventDefault and NOT onShowKeyboardShortcutsButtonClick', () => {
+        it('onKeyDown PageUp calls e.stopPropagation and e.preventDefault and NOT onShowKeyboardShortcutsButtonClick', () => {
           closeButton.prop('onKeyDown')({ ...event, key: 'PageUp' });
+          expect(event.stopPropagation.callCount).to.equal(1);
           expect(event.preventDefault.callCount).to.equal(1);
           expect(closeKeyboardShortcutsPanelStub.notCalled).to.equal(true);
         });
 
-        it('onKeyDown PageDown calls e.preventDefault and NOT onShowKeyboardShortcutsButtonClick', () => {
+        it('onKeyDown PageDown calls e.stopPropagation and e.preventDefault and NOT onShowKeyboardShortcutsButtonClick', () => {
           closeButton.prop('onKeyDown')({ ...event, key: 'PageDown' });
+          expect(event.stopPropagation.callCount).to.equal(1);
           expect(event.preventDefault.callCount).to.equal(1);
+          expect(closeKeyboardShortcutsPanelStub.notCalled).to.equal(true);
+        });
+
+        it('onKeyDown ArrowLeft calls e.stopPropagation and e.preventDefault and NOT onShowKeyboardShortcutsButtonClick', () => {
+          closeButton.prop('onKeyDown')({ ...event, key: 'ArrowLeft' });
+          expect(event.stopPropagation.callCount).to.equal(1);
+          expect(event.preventDefault.callCount).to.equal(1);
+          expect(closeKeyboardShortcutsPanelStub.notCalled).to.equal(true);
+        });
+
+        it('onKeyDown ArrowRight calls e.stopPropagation and e.preventDefault and NOT onShowKeyboardShortcutsButtonClick', () => {
+          closeButton.prop('onKeyDown')({ ...event, key: 'ArrowRight' });
+          expect(event.stopPropagation.callCount).to.equal(1);
+          expect(event.preventDefault.callCount).to.equal(1);
+          expect(closeKeyboardShortcutsPanelStub.notCalled).to.equal(true);
+        });
+
+        it('onKeyDown ArrowUp calls e.stopPropagation and NOT onShowKeyboardShortcutsButtonClick', () => {
+          closeButton.prop('onKeyDown')({ ...event, key: 'ArrowUp' });
+          expect(event.stopPropagation.callCount).to.equal(1);
+          expect(closeKeyboardShortcutsPanelStub.notCalled).to.equal(true);
+        });
+
+        it('onKeyDown ArrowDown calls e.stopPropagation and NOT onShowKeyboardShortcutsButtonClick', () => {
+          closeButton.prop('onKeyDown')({ ...event, key: 'ArrowDown' });
+          expect(event.stopPropagation.callCount).to.equal(1);
           expect(closeKeyboardShortcutsPanelStub.notCalled).to.equal(true);
         });
       });

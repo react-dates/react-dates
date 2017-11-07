@@ -98,15 +98,13 @@ class DayPickerKeyboardShortcuts extends React.Component {
 
   onKeyDown(e) {
     const { closeKeyboardShortcutsPanel } = this.props;
-
-    e.stopPropagation();
-
     // Because the close button is the only focusable element inside of the panel, this
     // amount to a very basic focus trap. The user can exit the panel by "pressing" the
     // close button or hitting escape
     switch (e.key) {
       case 'Space':
       case 'Escape':
+        e.stopPropagation();
         closeKeyboardShortcutsPanel();
         break;
 
@@ -116,7 +114,15 @@ class DayPickerKeyboardShortcuts extends React.Component {
       case 'End':
       case 'PageUp':
       case 'PageDown':
+      case 'ArrowLeft':
+      case 'ArrowRight':
+        e.stopPropagation();
         e.preventDefault();
+        break;
+
+      case 'ArrowUp':
+      case 'ArrowDown':
+        e.stopPropagation();
         break;
 
       default:
