@@ -28,6 +28,14 @@ describe('CalendarDay', () => {
       expect(wrapper.text()).to.equal(dayName);
     });
 
+    it('passes modifiers to renderDay', () => {
+      const modifiers = new Set().add(BLOCKED_MODIFIER);
+      const renderDay = (day, mods) => `${day.format('dddd')}${mods.has(BLOCKED_MODIFIER) ? 'BLOCKED' : ''}`;
+      const expected = `${moment().format('dddd')}BLOCKED`;
+      const wrapper = shallow(<CalendarDay renderDay={renderDay} modifiers={modifiers} />).dive();
+      expect(wrapper.text()).to.equal(expected);
+    });
+
     describe('button', () => {
       it('contains a button', () => {
         const wrapper = shallow(<CalendarDay />).dive();
