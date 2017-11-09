@@ -337,6 +337,7 @@ class SingleDatePicker extends React.Component {
       navNext,
       onPrevMonthClick,
       onNextMonthClick,
+      onClose,
       withPortal,
       withFullScreenPortal,
       keepOpenOnDateSelect,
@@ -397,6 +398,7 @@ class SingleDatePicker extends React.Component {
           navNext={navNext}
           onPrevMonthClick={onPrevMonthClick}
           onNextMonthClick={onNextMonthClick}
+          onClose={onClose}
           renderMonth={renderMonth}
           renderDay={renderDay}
           renderCalendarInfo={renderCalendarInfo}

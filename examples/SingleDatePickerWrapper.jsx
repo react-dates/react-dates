@@ -8,7 +8,7 @@ import SingleDatePicker from '../src/components/SingleDatePicker';
 
 import { SingleDatePickerPhrases } from '../src/defaultPhrases';
 import SingleDatePickerShape from '../src/shapes/SingleDatePickerShape';
-import { HORIZONTAL_ORIENTATION, ANCHOR_LEFT } from '../constants';
+import { HORIZONTAL_ORIENTATION, ANCHOR_LEFT } from '../src/constants';
 import isInclusivelyAfterDay from '../src/utils/isInclusivelyAfterDay';
 
 const propTypes = {
@@ -57,6 +57,7 @@ const defaultProps = {
   navNext: null,
   onPrevMonthClick() {},
   onNextMonthClick() {},
+  onClose() {},
 
   // day presentation and interaction related props
   renderDay: null,

@@ -60,7 +60,7 @@
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^6.4.1",
-    "babel-plugin-inline-react-svg": "^0.4.0",
+    "babel-plugin-inline-react-svg": "^0.5.1",
     "babel-plugin-istanbul": "^4.1.5",
     "babel-plugin-syntax-jsx": "^6.18.0",
     "babel-plugin-transform-replace-object-assign": "^0.2.1",

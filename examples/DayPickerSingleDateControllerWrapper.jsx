@@ -10,7 +10,7 @@ import DayPickerSingleDateController from '../src/components/DayPickerSingleDate
 
 import ScrollableOrientationShape from '../src/shapes/ScrollableOrientationShape';
 
-import { HORIZONTAL_ORIENTATION } from '../constants';
+import { HORIZONTAL_ORIENTATION } from '../src/constants';
 import isInclusivelyAfterDay from '../src/utils/isInclusivelyAfterDay';
 
 const propTypes = forbidExtraProps({

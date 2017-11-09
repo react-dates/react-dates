@@ -19,10 +19,15 @@ module.exports = {
               presets: ['airbnb'],
             },
           },
+        ],
+      },
+      {
+        test: /\.jsx$/,
+        use: [
           {
-            loader: 'react-svg-loader',
+            loader: 'babel-loader',
             query: {
-              jsx: true,
+              presets: ['airbnb'],
             },
           },
         ],

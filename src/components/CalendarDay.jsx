@@ -163,7 +163,7 @@ class CalendarDay extends React.Component {
           onClick={(e) => { this.onDayClick(day, e); }}
           tabIndex={tabIndex}
         >
-          {renderDay ? renderDay(day) : day.format('D')}
+          {renderDay ? renderDay(day, modifiers) : day.format('D')}
         </button>
       </td>
     );
