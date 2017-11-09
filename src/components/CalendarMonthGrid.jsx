@@ -149,8 +149,9 @@ class CalendarMonthGrid extends React.Component {
       newMonths = getMonths(initialMonth, numberOfMonths, withoutTransitionMonths);
     }
 
-    if (this.locale !== moment.locale()) {
-      this.locale = moment.locale();
+    const momentLocale = moment.locale();
+    if (this.locale !== momentLocale) {
+      this.locale = momentLocale;
       newMonths = newMonths.map(m => m.locale(this.locale));
     }
 
