@@ -108,6 +108,15 @@ class DayPickerKeyboardShortcuts extends React.Component {
         closeKeyboardShortcutsPanel();
         break;
 
+      // only stopPropagation here - this allows the up and down arrows continue their
+      // default behavior of scrolling the content of the Keyboard Shortcuts Panel
+      // which is needed when only a single month is shown for instance.
+      case 'ArrowUp':
+      case 'ArrowDown':
+        e.stopPropagation();
+        break;
+
+      // completely block the rest of the keys that have functionality outside of this panel
       case 'Tab':
       case 'Enter':
       case 'Home':
@@ -118,11 +127,6 @@ class DayPickerKeyboardShortcuts extends React.Component {
       case 'ArrowRight':
         e.stopPropagation();
         e.preventDefault();
-        break;
-
-      case 'ArrowUp':
-      case 'ArrowDown':
-        e.stopPropagation();
         break;
 
       default:
