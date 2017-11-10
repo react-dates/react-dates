@@ -36,7 +36,6 @@ describe('DateRangePicker', () => {
       expect(wrapper.find(DayPickerRangeController)).to.have.length(1);
     });
 
-
     describe('props.orientation === HORIZONTAL_ORIENTATION', () => {
       it('renders <DayPickerRangeController /> with props.numberOfMonths === 2', () => {
         const wrapper = shallow((
@@ -48,6 +47,14 @@ describe('DateRangePicker', () => {
         )).dive();
         expect(wrapper.find(DayPickerRangeController).props().numberOfMonths).to.equal(2);
       });
+    });
+
+    it('should pass onDayPickerBlur as onBlur to <DayPickerRangeController>', () => {
+      const wrapper = shallow((
+        <DateRangePicker {...requiredProps} focusedInput={START_DATE} />
+      )).dive();
+      const { onDayPickerBlur } = wrapper.instance();
+      expect(wrapper.find(DayPickerRangeController).prop('onBlur')).to.equal(onDayPickerBlur);
     });
 
     describe('props.withPortal is truthy', () => {

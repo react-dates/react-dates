@@ -404,6 +404,7 @@ class SingleDatePicker extends React.Component {
           renderCalendarInfo={renderCalendarInfo}
           isFocused={isDayPickerFocused}
           showKeyboardShortcuts={showKeyboardShortcuts}
+          onBlur={this.onDayPickerBlur}
           phrases={phrases}
           daySize={daySize}
           isRTL={isRTL}

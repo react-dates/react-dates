@@ -234,13 +234,10 @@ class DayPicker extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { isFocused, showKeyboardShortcuts } = this.props;
+    const { isFocused } = this.props;
     const { focusedDate } = this.state;
 
-    if (
-      (!prevProps.isFocused && isFocused && !focusedDate) ||
-      (!prevProps.showKeyboardShortcuts && showKeyboardShortcuts)
-    ) {
+    if (!prevProps.isFocused && isFocused && !focusedDate) {
       this.container.focus();
     }
   }

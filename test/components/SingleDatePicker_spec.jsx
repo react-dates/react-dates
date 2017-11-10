@@ -76,6 +76,19 @@ describe('SingleDatePicker', () => {
           expect(wrapper.find(DayPickerSingleDateController).prop('onClose')).to.equal(onCloseStub);
         });
       });
+
+      it('should pass onDayPickerBlur as onBlur to <DayPickerSingleDateController>', () => {
+        const wrapper = shallow((
+          <SingleDatePicker
+            id="date"
+            onDateChange={() => {}}
+            onFocusChange={() => {}}
+            focused
+          />
+        )).dive();
+        const { onDayPickerBlur } = wrapper.instance();
+        expect(wrapper.find(DayPickerSingleDateController).prop('onBlur')).to.equal(onDayPickerBlur);
+      });
     });
 
     describe('props.withPortal is truthy', () => {
