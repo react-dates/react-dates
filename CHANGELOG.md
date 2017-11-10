@@ -1,5 +1,11 @@
 # Change Log
 
+## 15.1.0
+- [fix] Add explicit border-radius on KeyboardShortcuts button ([#792](https://github.com/airbnb/react-dates/pull/792))
+- [fix] Pass onClose from SingleDatePicker to DayPickerSingleDateController ([#816](https://github.com/airbnb/react-dates/pull/816))
+- [new] Pass modifiers to `renderDay` as second arg ([#829](https://github.com/airbnb/react-dates/pull/829))
+- [fix] Fix KeyboardShortcutsPanel focus issues ([#825](https://github.com/airbnb/react-dates/pull/825))
+
 ## 15.0.0
 - [breaking] Rename SDP keydown callback props so that they match the DRP ([#800](https://github.com/airbnb/react-dates/pull/800))
 - [fix] Explicitly set the border-radius on the keyboard shortcuts button ([#792](https://github.com/airbnb/react-dates/pull/792))
