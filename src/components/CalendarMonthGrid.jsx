@@ -54,6 +54,7 @@ const propTypes = forbidExtraProps({
   // i18n
   monthFormat: PropTypes.string,
   phrases: PropTypes.shape(getPhrasePropTypes(CalendarDayPhrases)),
+  dayAriaLabelFormat: PropTypes.string,
 });
 
 const defaultProps = {
@@ -230,6 +231,7 @@ class CalendarMonthGrid extends React.Component {
       isRTL,
       styles,
       phrases,
+      dayAriaLabelFormat,
     } = this.props;
 
     const { months } = this.state;
@@ -306,6 +308,7 @@ class CalendarMonthGrid extends React.Component {
                 isFocused={isFocused}
                 phrases={phrases}
                 setMonthHeight={(height) => { this.setMonthHeight(height, i); }}
+                dayAriaLabelFormat={dayAriaLabelFormat}
               />
             </div>
           );
