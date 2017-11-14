@@ -5,7 +5,7 @@ import { storiesOf, action } from '@storybook/react';
 import isSameDay from '../src/utils/isSameDay';
 import isInclusivelyAfterDay from '../src/utils/isInclusivelyAfterDay';
 
-import { VERTICAL_ORIENTATION } from '../constants';
+import { VERTICAL_ORIENTATION } from '../src/constants';
 
 import DayPickerSingleDateControllerWrapper from '../examples/DayPickerSingleDateControllerWrapper';
 
