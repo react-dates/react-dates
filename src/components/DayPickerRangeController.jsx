@@ -258,6 +258,11 @@ export default class DayPickerRangeController extends React.Component {
     if (didStartDateChange) {
       modifiers = this.deleteModifier(modifiers, this.props.startDate, 'selected-start');
       modifiers = this.addModifier(modifiers, startDate, 'selected-start');
+      if (this.props.startDate) {
+        const startSpan = this.props.startDate.clone().add(1, 'day');
+        const endSpan = this.props.startDate.clone().add(this.props.minimumNights + 1, 'days');
+        modifiers = this.deleteModifierFromRange(modifiers, startSpan, endSpan, 'after-hovered-start');
+      }
     }
 
     if (didEndDateChange) {
@@ -462,10 +467,6 @@ export default class DayPickerRangeController extends React.Component {
       }
 
       if (startDate) {
-        const startSpan = startDate.clone().add(1, 'day');
-        const endSpan = startDate.clone().add(minimumNights + 1, 'days');
-        modifiers = this.deleteModifierFromRange(modifiers, startSpan, endSpan, 'after-hovered-start');
-
         if (isSameDay(day, startDate)) {
           const newStartSpan = startDate.clone().add(1, 'day');
           const newEndSpan = startDate.clone().add(minimumNights + 1, 'days');
