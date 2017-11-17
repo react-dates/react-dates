@@ -24,6 +24,7 @@ env:
   matrix:
     - REACT=0.14
     - REACT=15
+    - REACT=16
 sudo: false
 matrix:
   fast_finish: true
