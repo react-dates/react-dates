@@ -17,7 +17,7 @@ script:
   - 'if [ -n "${LINT-}" ]; then npm run lint ; fi'
   - 'if [ "${TEST-}" = true ]; then npm run tests-only ; fi'
   - 'if [ -n "${KARMA-}" ]; then npm run tests-karma ; fi'
-  - 'if [ -n "${COVERAGE-}" ] && [ "${TRAVIS_BRANCH-}" = "master" ]; then npm run cover; cat ./coverage/lcov.info | ./node_modules/.bin/coveralls ; fi'
+  - 'if [ -n "${COVERAGE-}" ] && [ "${TRAVIS_BRANCH-}" = "master" ]; then npm run react && npm run cover; cat ./coverage/lcov.info | ./node_modules/.bin/coveralls ; fi'
 env:
   global:
     - TEST=true
