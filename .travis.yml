@@ -12,12 +12,11 @@ before_script:
   - 'if [ -n "${KARMA-}" ]; then export DISPLAY=:99.0; fi'
   - 'if [ -n "${KARMA-}" ]; then sh -e /etc/init.d/xvfb start; fi'
   - 'if [ -n "${KARMA-}" ]; then sleep 3; fi'
-  - 'if [ -n "${REACT-}" ] && [ "${TEST-}" = true ]; then npm run react && (npm ls >/dev/null || echo "temporary bypass"); fi'
 script:
   - 'if [ -n "${LINT-}" ]; then npm run lint ; fi'
   - 'if [ "${TEST-}" = true ]; then npm run tests-only ; fi'
   - 'if [ -n "${KARMA-}" ]; then npm run tests-karma ; fi'
-  - 'if [ -n "${COVERAGE-}" ] && [ "${TRAVIS_BRANCH-}" = "master" ]; then npm run react && npm run cover; cat ./coverage/lcov.info | ./node_modules/.bin/coveralls ; fi'
+  - 'if [ -n "${COVERAGE-}" ] && [ "${TRAVIS_BRANCH-}" = "master" ]; then npm run cover; cat ./coverage/lcov.info | ./node_modules/.bin/coveralls ; fi'
 env:
   global:
     - TEST=true
