@@ -37,7 +37,7 @@ Ensure packages are installed with correct version numbers by running:
   Which produces and runs a command like:
 
   ```sh
-  npm install --save react-dates moment@>=#.## react@>=#.## react-dom@>=#.## react-addons-shallow-compare@>=#.##
+  npm install --save react-dates moment@>=#.## react@>=#.## react-dom@>=#.##
   ```
 
 ### Initialize
