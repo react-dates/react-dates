@@ -96,9 +96,9 @@
     "node-sass": "^4.5.3",
     "nyc": "^11.2.1",
     "raw-loader": "^0.5.1",
-    "react": "^0.14 || ^15.5.4",
-    "react-addons-test-utils": "^0.14 || ^15.5.1",
-    "react-dom": "^0.14 || ^15.5.4",
+    "react": "^15.5.4",
+    "react-addons-test-utils": "^15.5.1",
+    "react-dom": "^15.5.4",
     "react-test-renderer": "^15.6.1",
     "react-with-styles-interface-aphrodite": "^3.1.1",
     "react-with-styles-interface-css-compiler": "^1.0.1",
@@ -125,8 +125,8 @@
   },
   "peerDependencies": {
     "moment": "^2.18.1",
-    "react": ">=0.14",
-    "react-dom": ">=0.14"
+    "react": ">=15",
+    "react-dom": ">=15"
   },
   "greenkeeper": {
     "ignore": [
