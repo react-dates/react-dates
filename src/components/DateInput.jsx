@@ -293,6 +293,7 @@ export default withStyles(({
       fontWeight: 200,
       fontSize: font.input.size,
       color: color.text,
+      backgroundColor: color.background,
       width: '100%',
       padding: `${spacing.displayTextPaddingVertical}px ${spacing.displayTextPaddingHorizontal}px`,
       border: border.input.border,
