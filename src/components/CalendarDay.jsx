@@ -180,7 +180,7 @@ export default withStyles(({ reactDates: { color } }) => ({
     padding: 0,
     boxSizing: 'border-box',
     color: color.text,
-    background: '#fff',
+    background: color.background,
 
     ':hover': {
       background: color.core.borderLight,
