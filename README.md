@@ -66,7 +66,7 @@ Create a CSS file with the contents of `require.resolve('react-dates/lib/css/_da
 To see this in action, you can check out https://github.com/majapw/react-dates-demo which adds `react-dates` on top of a simple `create-react-app` setup.
 
 #### Overriding styles
-Right now, the easiest way to tweak `react-dates` to your heart's contents is to create another stylesheet to override the default react-dates styles. For example, you could create a file named `react_dates_overrides.css` with the following contents:
+Right now, the easiest way to tweak `react-dates` to your heart's content is to create another stylesheet to override the default react-dates styles. For example, you could create a file named `react_dates_overrides.css` with the following contents:
 
 ```css
 .CalendarDay__highlighted_calendar {
