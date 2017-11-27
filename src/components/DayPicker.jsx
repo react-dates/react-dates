@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import shallowCompare from 'react-addons-shallow-compare';
 import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 
@@ -131,7 +130,7 @@ export const defaultProps = {
   phrases: DayPickerPhrases,
 };
 
-class DayPicker extends React.Component {
+class DayPicker extends React.PureComponent {
   constructor(props) {
     super(props);
 
@@ -227,10 +226,6 @@ class DayPicker extends React.Component {
         this.setState({ focusedDate: null });
       }
     }
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return shallowCompare(this, nextProps, nextState);
   }
 
   componentDidUpdate(prevProps) {
