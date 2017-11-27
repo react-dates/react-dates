@@ -296,6 +296,34 @@ describe('DayPickerRangeController', () => {
           });
           expect(wrapper.instance().state.visibleDays).to.equal(visibleDays);
         });
+        describe('startDate changed from one date to another', () => {
+          it('removes previous `after-hovered-start` range', () => {
+            const minimumNights = 5;
+            const startDate = moment().add(7, 'days');
+            const dayAfterStartDate = startDate.clone().add(1, 'day');
+            const firstAvailableDate = startDate.clone().add(minimumNights + 1, 'days');
+            const deleteModifierFromRangeSpy = sinon.spy(DayPickerRangeController.prototype, 'deleteModifierFromRange');
+            const nextStartDate = moment().add(4, 'days');
+            const wrapper = shallow((
+              <DayPickerRangeController
+                onDatesChange={sinon.stub()}
+                onFocusChange={sinon.stub()}
+                startDate={startDate}
+                focusedInput={START_DATE}
+                minimumNights={minimumNights}
+              />
+            ));
+            deleteModifierFromRangeSpy.reset();
+            wrapper.instance().componentWillReceiveProps({
+              ...props,
+              startDate: nextStartDate,
+            });
+            const afterHoverStartCalls = getCallsByModifier(deleteModifierFromRangeSpy, 'after-hovered-start');
+            expect(afterHoverStartCalls.length).to.equal(1);
+            expect(isSameDay(afterHoverStartCalls[0].args[1], dayAfterStartDate)).to.equal(true);
+            expect(isSameDay(afterHoverStartCalls[0].args[2], firstAvailableDate)).to.equal(true);
+          });
+        });
       });
     });
 
@@ -1615,29 +1643,6 @@ describe('DayPickerRangeController', () => {
         });
 
         describe('startDate exists', () => {
-          it('removes previous `after-hovered-start` range', () => {
-            const minimumNights = 5;
-            const startDate = moment().add(7, 'days');
-            const dayAfterStartDate = startDate.clone().add(1, 'day');
-            const firstAvailableDate = startDate.clone().add(minimumNights + 1, 'days');
-            const deleteModifierFromRangeSpy = sinon.spy(DayPickerRangeController.prototype, 'deleteModifierFromRange');
-            const wrapper = shallow((
-              <DayPickerRangeController
-                onDatesChange={sinon.stub()}
-                onFocusChange={sinon.stub()}
-                startDate={startDate}
-                focusedInput={START_DATE}
-                minimumNights={minimumNights}
-              />
-            ));
-            deleteModifierFromRangeSpy.reset();
-            wrapper.instance().onDayMouseEnter(today);
-            const afterHoverStartCalls = getCallsByModifier(deleteModifierFromRangeSpy, 'after-hovered-start');
-            expect(afterHoverStartCalls.length).to.equal(1);
-            expect(isSameDay(afterHoverStartCalls[0].args[1], dayAfterStartDate)).to.equal(true);
-            expect(isSameDay(afterHoverStartCalls[0].args[2], firstAvailableDate)).to.equal(true);
-          });
-
           describe('hoverDate is startDate', () => {
             it('adds new `after-hovered-start` range', () => {
               const minimumNights = 5;
