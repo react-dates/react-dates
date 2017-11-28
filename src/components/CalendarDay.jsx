@@ -139,6 +139,7 @@ class CalendarDay extends React.Component {
         {...css(
           styles.CalendarDay_container,
           isOutsideDay && styles.CalendarDay__outside,
+          modifiers.has('today') && styles.CalendarDay__today,
           modifiers.has('highlighted-calendar') && styles.CalendarDay__highlighted_calendar,
           modifiers.has('blocked-minimum-nights') && styles.CalendarDay__blocked_minimum_nights,
           modifiers.has('blocked-calendar') && styles.CalendarDay__blocked_calendar,
@@ -351,5 +352,5 @@ export default withStyles(({ reactDates: { color } }) => ({
 
   CalendarDay__selected_start: {},
   CalendarDay__selected_end: {},
-
+  CalendarDay__today: {},
 }))(CalendarDay);
