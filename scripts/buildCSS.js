@@ -16,12 +16,14 @@ require('../test/_helpers/ignoreSVGStrings');
 registerMaxSpecificity(0);
 registerCSSInterfaceWithDefaultTheme();
 
-const DateRangePickerPath = './src/components/DateRangePicker.jsx';
-const SingleDatePickerPath = './src/components/SingleDatePicker.jsx';
+const DateRangePickerPath = './examples/DateRangePickerWrapper.jsx';
+const SingleDatePickerPath = './examples/SingleDatePickerWrapper.jsx';
+const PresetDateRangePickerPath = './examples/PresetDateRangePicker.jsx';
 
 const dateRangePickerCSS = compileCSS(DateRangePickerPath);
 const singleDatePickerCSS = compileCSS(SingleDatePickerPath);
-const CSS = dateRangePickerCSS + singleDatePickerCSS;
+const presetDatePickerCSS = compileCSS(PresetDateRangePickerPath);
+const CSS = dateRangePickerCSS + singleDatePickerCSS + presetDatePickerCSS;
 
 const format = new CleanCSS({
   level: optimizeForProduction ? 2 : 0,
