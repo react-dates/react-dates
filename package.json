@@ -15,7 +15,7 @@
     "lint": "eslint --ext .js,.jsx src test",
     "mocha": "mocha ./test/_helpers",
     "storybook:uninstall": "npm uninstall --no-save @storybook/react && rimraf node_modules/@storybook node_modules/react-modal node_modules/react-dom-factories",
-    "react": "enzyme-adapter-react-install 15",
+    "react": "enzyme-adapter-react-install 16",
     "pretest": "npm run --silent lint",
     "pretests-only": "npm run react",
     "tests-only": "npm run mocha --silent test",
@@ -96,13 +96,10 @@
     "node-sass": "^4.5.3",
     "nyc": "^11.2.1",
     "raw-loader": "^0.5.1",
-    "react": "^0.14 || ^15.5.4",
-    "react-addons-shallow-compare": "^0.14 || ^15.5.2",
-    "react-addons-test-utils": "^0.14 || ^15.5.1",
-    "react-dom": "^0.14 || ^15.5.4",
-    "react-test-renderer": "^15.6.1",
+    "react": "^0.14 || ^15.5.4 || ^16.1.1",
+    "react-dom": "^0.14 || ^15.5.4 || ^16.1.1",
     "react-with-styles-interface-aphrodite": "^3.1.1",
-    "react-with-styles-interface-css-compiler": "^1.0.1",
+    "react-with-styles-interface-css-compiler": "^1.1.0",
     "rimraf": "^2.6.2",
     "safe-publish-latest": "^1.1.1",
     "sass-loader": "^6.0.6",
@@ -119,6 +116,7 @@
     "object.assign": "^4.0.4",
     "object.values": "^1.0.4",
     "prop-types": "^15.5.10",
+    "react-addons-shallow-compare": "^15.5.2",
     "react-moment-proptypes": "^1.5.0",
     "react-portal": "^3.1.0",
     "react-with-styles": "^2.2.0",
@@ -126,9 +124,8 @@
   },
   "peerDependencies": {
     "moment": "^2.18.1",
-    "react": ">=0.14",
-    "react-dom": ">=0.14",
-    "react-addons-shallow-compare": ">=0.14"
+    "react": "^0.14 || ^15.5.4 || ^16.1.1",
+    "react-dom": "^0.14 || ^15.5.4 || ^16.1.1"
   },
   "greenkeeper": {
     "ignore": [
