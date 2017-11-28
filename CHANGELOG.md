@@ -1,5 +1,12 @@
 # Change Log
 
+## 15.2.0
+- [new] Add back today modifier (and class) ([#861](https://github.com/airbnb/react-dates/pull/861))
+- [new] Add ariaLabelFormat prop to CalendarDay ([#842](https://github.com/airbnb/react-dates/pull/842), [#857](https://github.com/airbnb/react-dates/pull/857))
+- [fix] Reset `after-hover-start` in `componentWillReceiveProps` instead of only on click ([#843](https://github.com/airbnb/react-dates/pull/843))
+- [fix] Use `color.background` variable instead of hardcoded #fff for theming ([#852](https://github.com/airbnb/react-dates/pull/852))
+- [fix] Update CalendarMonthGrid months based on locale change ([#795](https://github.com/airbnb/react-dates/pull/795))
+
 ## 15.1.0
 - [fix] Add explicit border-radius on KeyboardShortcuts button ([#792](https://github.com/airbnb/react-dates/pull/792))
 - [fix] Pass onClose from SingleDatePicker to DayPickerSingleDateController ([#816](https://github.com/airbnb/react-dates/pull/816))
