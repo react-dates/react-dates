@@ -67,6 +67,7 @@ function loadStories() {
   require('../stories/DayPickerRangeController');
   require('../stories/DayPickerSingleDateController');
   require('../stories/DayPicker');
+  require('../stories/PresetDateRangePicker');
 }
 
 setAddon(infoAddon);
