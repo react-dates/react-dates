@@ -171,4 +171,10 @@ storiesOf('DRP - Calendar Props', module)
       onClose={({ startDate, endDate }) => alert(`onClose: startDate = ${startDate}, endDate = ${endDate}`)}
       autoFocus
     />
+  ))
+  .addWithInfo('with no animation', () => (
+    <DateRangePickerWrapper
+      transitionDuration={0}
+      autoFocus
+    />
   ));

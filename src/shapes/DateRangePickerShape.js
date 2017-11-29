@@ -59,6 +59,7 @@ export default {
   renderCalendarInfo: PropTypes.func,
   hideKeyboardShortcutsPanel: PropTypes.bool,
   verticalHeight: nonNegativeInteger,
+  transitionDuration: nonNegativeInteger,
 
   // navigation related props
   navPrev: PropTypes.node,
