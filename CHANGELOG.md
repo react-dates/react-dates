@@ -1,5 +1,8 @@
 # Change Log
 
+## 15.2.1
+- [fix] Republish `_datepicker.css`
+
 ## 15.2.0
 - [new] Add back today modifier (and class) ([#861](https://github.com/airbnb/react-dates/pull/861))
 - [new] Add ariaLabelFormat prop to CalendarDay ([#842](https://github.com/airbnb/react-dates/pull/842), [#857](https://github.com/airbnb/react-dates/pull/857))
