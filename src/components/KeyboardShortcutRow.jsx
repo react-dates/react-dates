@@ -72,7 +72,6 @@ export default withStyles(({ reactDates: { color } }) => ({
   },
 
   KeyboardShortcutRow_keyContainer__block: {
-    width: 'auto',
     textAlign: 'left',
     display: 'inline',
   },
