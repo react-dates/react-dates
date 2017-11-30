@@ -215,4 +215,12 @@ storiesOf('DayPickerSingleDateController', module)
         <TestCustomInfoPanel />
       )}
     />
+  ))
+  .addWithInfo('with no animation', () => (
+    <DayPickerSingleDateControllerWrapper
+      onOutsideClick={action('DayPickerSingleDateController::onOutsideClick')}
+      onPrevMonthClick={action('DayPickerSingleDateController::onPrevMonthClick')}
+      onNextMonthClick={action('DayPickerSingleDateController::onNextMonthClick')}
+      transitionDuration={0}
+    />
   ));

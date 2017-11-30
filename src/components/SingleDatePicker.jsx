@@ -74,6 +74,7 @@ const defaultProps = {
   daySize: DAY_SIZE,
   isRTL: false,
   verticalHeight: null,
+  transitionDuration: undefined,
 
   // navigation related props
   navPrev: null,
@@ -359,6 +360,7 @@ class SingleDatePicker extends React.Component {
       weekDayFormat,
       styles,
       verticalHeight,
+      transitionDuration,
     } = this.props;
     const { dayPickerContainerStyles, isDayPickerFocused, showKeyboardShortcuts } = this.state;
 
@@ -416,6 +418,7 @@ class SingleDatePicker extends React.Component {
           firstDayOfWeek={firstDayOfWeek}
           weekDayFormat={weekDayFormat}
           verticalHeight={verticalHeight}
+          transitionDuration={transitionDuration}
         />
 
         {withFullScreenPortal && (

@@ -235,4 +235,12 @@ storiesOf('DayPickerRangeController', module)
         <TestCustomInfoPanel />
       )}
     />
+  ))
+  .addWithInfo('with no animation', () => (
+    <DayPickerRangeControllerWrapper
+      onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
+      onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
+      onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
+      transitionDuration={0}
+    />
   ));

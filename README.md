@@ -152,6 +152,7 @@ navNext: PropTypes.node,
 onPrevMonthClick: PropTypes.func,
 onNextMonthClick: PropTypes.func,
 onClose: PropTypes.func,
+transitionDuration: nonNegativeInteger, // milliseconds
 
 // day presentation and interaction related props
 renderDay: PropTypes.func,
@@ -224,6 +225,7 @@ navNext: PropTypes.node,
 onPrevMonthClick: PropTypes.func,
 onNextMonthClick: PropTypes.func,
 onClose: PropTypes.func,
+transitionDuration: nonNegativeInteger, // milliseconds
 
 // day presentation and interaction related props
 renderDay: PropTypes.func,
@@ -273,6 +275,7 @@ The following is a list of other *OPTIONAL* props you may provide to the `DayPic
   navNext: PropTypes.node,
   onPrevMonthClick: PropTypes.func,
   onNextMonthClick: PropTypes.func,
+  transitionDuration: nonNegativeInteger, // milliseconds
 
   // day presentation and interaction related props
   renderDay: PropTypes.func,

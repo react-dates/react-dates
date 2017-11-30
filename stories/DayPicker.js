@@ -122,6 +122,11 @@ storiesOf('DayPicker', module)
       weekDayFormat="ddd"
     />
   ))
+  .addWithInfo('with no animation', () => (
+    <DayPicker
+      transitionDuration={0}
+    />
+  ))
   .addWithInfo('noBorder', () => (
     <DayPicker noBorder />
   ));

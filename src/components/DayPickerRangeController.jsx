@@ -71,6 +71,7 @@ const propTypes = forbidExtraProps({
   renderCalendarInfo: PropTypes.func,
   firstDayOfWeek: DayOfWeekShape,
   verticalHeight: nonNegativeInteger,
+  transitionDuration: nonNegativeInteger,
 
   // accessibility
   onBlur: PropTypes.func,
@@ -123,6 +124,7 @@ const defaultProps = {
   firstDayOfWeek: null,
   verticalHeight: null,
   noBorder: false,
+  transitionDuration: undefined,
 
   // accessibility
   onBlur() {},
@@ -907,6 +909,7 @@ export default class DayPickerRangeController extends React.Component {
       dayAriaLabelFormat,
       verticalHeight,
       noBorder,
+      transitionDuration,
     } = this.props;
 
     const { currentMonth, phrases, visibleDays } = this.state;
@@ -947,6 +950,7 @@ export default class DayPickerRangeController extends React.Component {
         dayAriaLabelFormat={dayAriaLabelFormat}
         verticalHeight={verticalHeight}
         noBorder={noBorder}
+        transitionDuration={transitionDuration}
       />
     );
   }

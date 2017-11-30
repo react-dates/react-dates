@@ -38,7 +38,7 @@ const presets = [{
   end: moment().add(1, 'month'),
 }];
 
-storiesOf('PresetDatePicker', module)
+storiesOf('PresetDateRangePicker', module)
   .addDecorator(InfoPanelDecorator(presetDateRangePickerControllerInfo))
   .addWithInfo('default', () => (
     <PresetDateRangePicker
