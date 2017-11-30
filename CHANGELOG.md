@@ -1,5 +1,13 @@
 # Change Log
 
+## 15.3.0
+- [new] Add `transitionDuration` prop ([#865](https://github.com/airbnb/react-dates/pull/865))
+- [fix] Remove default prop values for required startDateId and endDateId props ([#866](https://github.com/airbnb/react-dates/pull/866))
+- [new] Add `block` styling prop ([#871](https://github.com/airbnb/react-dates/pull/871))
+- [new] Add `noBorder` prop to `DayPicker` variations ([#869](https://github.com/airbnb/react-dates/pull/869))
+- [new] Add `noBorder` prop to inputs ([#870](https://github.com/airbnb/react-dates/pull/870))
+- [fix] Remove unused width style in `KeyboardShortcutsRow` ([#867](https://github.com/airbnb/react-dates/pull/867))
+
 ## 15.2.1
 - [fix] Republish `_datepicker.css`
 
