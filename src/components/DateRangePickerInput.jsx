@@ -58,6 +58,7 @@ const propTypes = forbidExtraProps({
   customInputIcon: PropTypes.node,
   customArrowIcon: PropTypes.node,
   customCloseIcon: PropTypes.node,
+  noBorder: PropTypes.bool,
 
   // accessibility
   isFocused: PropTypes.bool, // describes actual DOM focus
@@ -100,6 +101,7 @@ const defaultProps = {
   customInputIcon: null,
   customArrowIcon: null,
   customCloseIcon: null,
+  noBorder: false,
 
   // accessibility
   isFocused: false,
@@ -143,6 +145,7 @@ function DateRangePickerInput({
   isFocused,
   phrases,
   isRTL,
+  noBorder,
   styles,
 }) {
   const calendarIcon = customInputIcon || (
@@ -174,6 +177,7 @@ function DateRangePickerInput({
         styles.DateRangePickerInput,
         disabled && styles.DateRangePickerInput__disabled,
         isRTL && styles.DateRangePickerInput__rtl,
+        !noBorder && styles.DateRangePickerInput__withBorder,
       )}
     >
       {inputIconPosition === ICON_BEFORE_POSITION && inputIcon}
@@ -251,12 +255,15 @@ DateRangePickerInput.defaultProps = defaultProps;
 export default withStyles(({ reactDates: { color, sizing } }) => ({
   DateRangePickerInput: {
     backgroundColor: color.background,
-    border: `1px solid ${color.core.grayLighter}`,
     display: 'inline-block',
   },
 
   DateRangePickerInput__disabled: {
     background: color.disabled,
+  },
+
+  DateRangePickerInput__withBorder: {
+    border: `1px solid ${color.core.grayLighter}`,
   },
 
   DateRangePickerInput__rtl: {

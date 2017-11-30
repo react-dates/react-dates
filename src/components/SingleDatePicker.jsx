@@ -54,6 +54,7 @@ const defaultProps = {
   inputIconPosition: ICON_BEFORE_POSITION,
   customInputIcon: null,
   customCloseIcon: null,
+  noBorder: false,
 
   // calendar presentation and interaction related props
   orientation: HORIZONTAL_ORIENTATION,
@@ -452,6 +453,7 @@ class SingleDatePicker extends React.Component {
       withFullScreenPortal,
       screenReaderInputMessage,
       isRTL,
+      noBorder,
       styles,
     } = this.props;
 
@@ -490,6 +492,7 @@ class SingleDatePicker extends React.Component {
             screenReaderMessage={screenReaderInputMessage}
             phrases={phrases}
             isRTL={isRTL}
+            noBorder={noBorder}
           />
 
           {this.maybeRenderDayPickerWithPortal()}

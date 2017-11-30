@@ -34,6 +34,8 @@ const propTypes = forbidExtraProps({
   inputIconPosition: IconPositionShape,
   customInputIcon: PropTypes.node,
   isRTL: PropTypes.bool,
+  noBorder: PropTypes.bool,
+
   onChange: PropTypes.func,
   onClearDate: PropTypes.func,
   onFocus: PropTypes.func,
@@ -63,6 +65,7 @@ const defaultProps = {
   customCloseIcon: null,
   customInputIcon: null,
   isRTL: false,
+  noBorder: false,
 
   onChange() {},
   onClearDate() {},
@@ -102,6 +105,7 @@ function SingleDatePickerInput({
   customInputIcon,
   openDirection,
   isRTL,
+  noBorder,
   styles,
 }) {
   const calendarIcon = customInputIcon || (
@@ -130,6 +134,7 @@ function SingleDatePickerInput({
         styles.SingleDatePickerInput,
         disabled && styles.SingleDatePickerInput__disabled,
         isRTL && styles.SingleDatePickerInput__rtl,
+        !noBorder && styles.SingleDatePickerInput__withBorder,
       )}
     >
       {inputIconPosition === ICON_BEFORE_POSITION && inputIcon}
@@ -183,6 +188,9 @@ SingleDatePickerInput.defaultProps = defaultProps;
 export default withStyles(({ reactDates: { color } }) => ({
   SingleDatePickerInput: {
     backgroundColor: color.background,
+  },
+
+  SingleDatePickerInput__withBorder: {
     border: `1px solid ${color.core.border}`,
   },
 

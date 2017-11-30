@@ -71,4 +71,10 @@ storiesOf('SDP - Input Props', module)
       initialDate={moment().add(3, 'days')}
       screenReaderInputMessage="Here you could inform screen reader users of the date format, minimum nights, blocked out dates, etc"
     />
+  ))
+  .addWithInfo('noBorder', () => (
+    <SingleDatePickerWrapper
+      initialDate={moment().add(3, 'days')}
+      noBorder
+    />
   ));

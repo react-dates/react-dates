@@ -119,4 +119,11 @@ storiesOf('DRP - Input Props', module)
       initialEndDate={moment().add(10, 'days')}
       screenReaderInputMessage="Here you could inform screen reader users of the date format, minimum nights, blocked out dates, etc"
     />
+  ))
+  .addWithInfo('noBorder', () => (
+    <DateRangePickerWrapper
+      initialStartDate={moment().add(3, 'days')}
+      initialEndDate={moment().add(10, 'days')}
+      noBorder
+    />
   ));
