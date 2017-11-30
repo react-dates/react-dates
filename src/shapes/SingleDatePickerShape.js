@@ -31,6 +31,7 @@ export default {
   showDefaultInputIcon: PropTypes.bool,
   inputIconPosition: IconPositionShape,
   customInputIcon: PropTypes.node,
+  noBorder: PropTypes.bool,
 
   // calendar presentation and interaction related props
   renderMonth: PropTypes.func,

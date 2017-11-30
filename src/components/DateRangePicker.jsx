@@ -60,6 +60,7 @@ const defaultProps = {
   customInputIcon: null,
   customArrowIcon: null,
   customCloseIcon: null,
+  noBorder: false,
 
   // calendar presentation and interaction related props
   renderMonth: null,
@@ -436,6 +437,7 @@ class DateRangePicker extends React.Component {
       onDatesChange,
       onClose,
       isRTL,
+      noBorder,
       styles,
     } = this.props;
 
@@ -481,6 +483,7 @@ class DateRangePicker extends React.Component {
             screenReaderMessage={screenReaderInputMessage}
             isFocused={isDateRangePickerInputFocused}
             isRTL={isRTL}
+            noBorder={noBorder}
           />
 
           {this.maybeRenderDayPickerWithPortal()}
