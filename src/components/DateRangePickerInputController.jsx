@@ -42,6 +42,7 @@ const propTypes = forbidExtraProps({
   readOnly: PropTypes.bool,
   openDirection: openDirectionShape,
   noBorder: PropTypes.bool,
+  block: PropTypes.bool,
 
   keepOpenOnDateSelect: PropTypes.bool,
   reopenPickerOnClearDates: PropTypes.bool,
@@ -90,6 +91,7 @@ const defaultProps = {
   readOnly: false,
   openDirection: OPEN_DOWN,
   noBorder: false,
+  block: false,
 
   keepOpenOnDateSelect: false,
   reopenPickerOnClearDates: false,
@@ -264,6 +266,7 @@ export default class DateRangePickerInputController extends React.Component {
       onKeyDownQuestionMark,
       isRTL,
       noBorder,
+      block,
     } = this.props;
 
     const startDateString = this.getDateString(startDate);
@@ -304,6 +307,7 @@ export default class DateRangePickerInputController extends React.Component {
         onKeyDownQuestionMark={onKeyDownQuestionMark}
         isRTL={isRTL}
         noBorder={noBorder}
+        block={block}
       />
     );
   }
