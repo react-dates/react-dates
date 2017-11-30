@@ -61,6 +61,7 @@ const defaultProps = {
   customArrowIcon: null,
   customCloseIcon: null,
   noBorder: false,
+  block: false,
 
   // calendar presentation and interaction related props
   renderMonth: null,
@@ -438,6 +439,7 @@ class DateRangePicker extends React.Component {
       onClose,
       isRTL,
       noBorder,
+      block,
       styles,
     } = this.props;
 
@@ -446,7 +448,12 @@ class DateRangePicker extends React.Component {
     const onOutsideClick = (!withPortal && !withFullScreenPortal) ? this.onOutsideClick : undefined;
 
     return (
-      <div {...css(styles.DateRangePicker)}>
+      <div
+        {...css(
+          styles.DateRangePicker,
+          block && styles.DateRangePicker__block,
+        )}
+      >
         <OutsideClickHandler onOutsideClick={onOutsideClick}>
           <DateRangePickerInputController
             startDate={startDate}
@@ -484,6 +491,7 @@ class DateRangePicker extends React.Component {
             isFocused={isDateRangePickerInputFocused}
             isRTL={isRTL}
             noBorder={noBorder}
+            block={block}
           />
 
           {this.maybeRenderDayPickerWithPortal()}
@@ -501,6 +509,10 @@ export default withStyles(({ reactDates: { color, zIndex, spacing } }) => ({
   DateRangePicker: {
     position: 'relative',
     display: 'inline-block',
+  },
+
+  DateRangePicker__block: {
+    display: 'block',
   },
 
   DateRangePicker_picker: {

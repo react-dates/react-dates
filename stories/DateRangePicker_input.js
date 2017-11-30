@@ -126,4 +126,12 @@ storiesOf('DRP - Input Props', module)
       initialEndDate={moment().add(10, 'days')}
       noBorder
     />
+  ))
+  .addWithInfo('block styling', () => (
+    <DateRangePickerWrapper
+      initialStartDate={moment().add(3, 'days')}
+      initialEndDate={moment().add(10, 'days')}
+      showClearDates
+      block
+    />
   ));

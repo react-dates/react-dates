@@ -55,6 +55,7 @@ const defaultProps = {
   customInputIcon: null,
   customCloseIcon: null,
   noBorder: false,
+  block: false,
 
   // calendar presentation and interaction related props
   orientation: HORIZONTAL_ORIENTATION,
@@ -454,6 +455,7 @@ class SingleDatePicker extends React.Component {
       screenReaderInputMessage,
       isRTL,
       noBorder,
+      block,
       styles,
     } = this.props;
 
@@ -464,7 +466,12 @@ class SingleDatePicker extends React.Component {
     const onOutsideClick = (!withPortal && !withFullScreenPortal) ? this.onClearFocus : undefined;
 
     return (
-      <div {...css(styles.SingleDatePicker)}>
+      <div
+        {...css(
+          styles.SingleDatePicker,
+          block && styles.SingleDatePicker__block,
+        )}
+      >
         <OutsideClickHandler onOutsideClick={onOutsideClick}>
           <SingleDatePickerInput
             id={id}
@@ -493,6 +500,7 @@ class SingleDatePicker extends React.Component {
             phrases={phrases}
             isRTL={isRTL}
             noBorder={noBorder}
+            block={block}
           />
 
           {this.maybeRenderDayPickerWithPortal()}
@@ -510,6 +518,10 @@ export default withStyles(({ reactDates: { color, spacing, zIndex } }) => ({
   SingleDatePicker: {
     position: 'relative',
     display: 'inline-block',
+  },
+
+  SingleDatePicker__block: {
+    display: 'block',
   },
 
   SingleDatePicker_picker: {
