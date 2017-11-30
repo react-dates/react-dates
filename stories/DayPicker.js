@@ -119,6 +119,9 @@ storiesOf('DayPicker', module)
   ))
   .addWithInfo('with custom week day format', () => (
     <DayPicker
-      weekDayFormat='ddd'
+      weekDayFormat="ddd"
     />
+  ))
+  .addWithInfo('noBorder', () => (
+    <DayPicker noBorder />
   ));

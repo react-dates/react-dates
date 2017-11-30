@@ -262,6 +262,7 @@ The following is a list of other *OPTIONAL* props you may provide to the `DayPic
   renderCalendarInfo: PropTypes.func,
   onOutsideClick: PropTypes.func,
   keepOpenOnDateSelect: PropTypes.bool,
+  noBorder: PropTypes.bool,
 
   // navigation related props
   navPrev: PropTypes.node,
