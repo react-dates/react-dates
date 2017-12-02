@@ -148,14 +148,12 @@ export default {
       captionPaddingTop: 22,
       captionPaddingBottom: 37,
       inputPadding: 0,
-      inputMarginBottom: 72, // spacing in between the input and the picker
       displayTextPaddingVertical: 12,
       displayTextPaddingHorizontal: 12,
     },
 
     sizing: {
       inputWidth: 130,
-      tooltipArrowWidth: 20,
       arrowWidth: 24,
     },
 

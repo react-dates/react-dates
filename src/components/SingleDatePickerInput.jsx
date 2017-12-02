@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { forbidExtraProps } from 'airbnb-prop-types';
+import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 
 import { SingleDatePickerInputPhrases } from '../defaultPhrases';
@@ -36,6 +36,7 @@ const propTypes = forbidExtraProps({
   isRTL: PropTypes.bool,
   noBorder: PropTypes.bool,
   block: PropTypes.bool,
+  verticalSpacing: nonNegativeInteger,
 
   onChange: PropTypes.func,
   onClearDate: PropTypes.func,
@@ -68,6 +69,7 @@ const defaultProps = {
   isRTL: false,
   noBorder: false,
   block: false,
+  verticalSpacing: undefined,
 
   onChange() {},
   onClearDate() {},
@@ -109,6 +111,7 @@ function SingleDatePickerInput({
   isRTL,
   noBorder,
   block,
+  verticalSpacing,
   styles,
 }) {
   const calendarIcon = customInputIcon || (
@@ -162,6 +165,7 @@ function SingleDatePickerInput({
         onKeyDownArrowDown={onKeyDownArrowDown}
         onKeyDownQuestionMark={onKeyDownQuestionMark}
         openDirection={openDirection}
+        verticalSpacing={verticalSpacing}
       />
 
       {showClearDate && (

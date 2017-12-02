@@ -158,5 +158,11 @@ storiesOf('SDP - Calendar Props', module)
       transitionDuration={0}
       autoFocus
     />
+  ))
+  .addWithInfo('with custom vertical spacing', () => (
+    <SingleDatePickerWrapper
+      verticalSpacing={0}
+      autoFocus
+    />
   ));
 

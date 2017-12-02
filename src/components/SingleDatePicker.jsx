@@ -13,6 +13,7 @@ import OutsideClickHandler from './OutsideClickHandler';
 import toMomentObject from '../utils/toMomentObject';
 import toLocalizedDateString from '../utils/toLocalizedDateString';
 import getResponsiveContainerStyles from '../utils/getResponsiveContainerStyles';
+import getInputHeight from '../utils/getInputHeight';
 
 import SingleDatePickerInput from './SingleDatePickerInput';
 import DayPickerSingleDateController from './DayPickerSingleDateController';
@@ -30,6 +31,8 @@ import {
   OPEN_UP,
   DAY_SIZE,
   ICON_BEFORE_POSITION,
+  FANG_HEIGHT_PX,
+  DEFAULT_VERTICAL_SPACING,
 } from '../constants';
 
 const propTypes = forbidExtraProps({
@@ -56,6 +59,7 @@ const defaultProps = {
   customCloseIcon: null,
   noBorder: false,
   block: false,
+  verticalSpacing: DEFAULT_VERTICAL_SPACING,
 
   // calendar presentation and interaction related props
   orientation: HORIZONTAL_ORIENTATION,
@@ -361,11 +365,19 @@ class SingleDatePicker extends React.Component {
       styles,
       verticalHeight,
       transitionDuration,
+      verticalSpacing,
+      theme: { reactDates },
     } = this.props;
     const { dayPickerContainerStyles, isDayPickerFocused, showKeyboardShortcuts } = this.state;
 
     const onOutsideClick = (!withFullScreenPortal && withPortal) ? this.onClearFocus : undefined;
     const closeIcon = customCloseIcon || (<CloseButton />);
+
+    const {
+      font: { input: { lineHeight } },
+      spacing: { inputPadding, displayTextPaddingVertical },
+    } = reactDates;
+    const inputHeight = getInputHeight({ lineHeight, inputPadding, displayTextPaddingVertical });
 
     return (
       <div // eslint-disable-line jsx-a11y/no-static-element-interactions
@@ -376,13 +388,19 @@ class SingleDatePicker extends React.Component {
           anchorDirection === ANCHOR_RIGHT && styles.SingleDatePicker_picker__directionRight,
           openDirection === OPEN_DOWN && styles.SingleDatePicker_picker__openDown,
           openDirection === OPEN_UP && styles.SingleDatePicker_picker__openUp,
+          openDirection === OPEN_DOWN && {
+            top: inputHeight + verticalSpacing,
+          },
+          openDirection === OPEN_UP && {
+            bottom: inputHeight + verticalSpacing,
+          },
           orientation === HORIZONTAL_ORIENTATION && styles.SingleDatePicker_picker__horizontal,
           orientation === VERTICAL_ORIENTATION && styles.SingleDatePicker_picker__vertical,
           (withPortal || withFullScreenPortal) && styles.SingleDatePicker_picker__portal,
           withFullScreenPortal && styles.SingleDatePicker_picker__fullScreenPortal,
           isRTL && styles.SingleDatePicker_picker__rtl,
+          dayPickerContainerStyles,
         )}
-        style={dayPickerContainerStyles}
         onClick={onOutsideClick}
       >
         <DayPickerSingleDateController
@@ -459,6 +477,7 @@ class SingleDatePicker extends React.Component {
       isRTL,
       noBorder,
       block,
+      verticalSpacing,
       styles,
     } = this.props;
 
@@ -467,6 +486,8 @@ class SingleDatePicker extends React.Component {
     const displayValue = this.getDateString(date);
 
     const onOutsideClick = (!withPortal && !withFullScreenPortal) ? this.onClearFocus : undefined;
+
+    const hideFang = verticalSpacing < FANG_HEIGHT_PX;
 
     return (
       <div
@@ -485,7 +506,7 @@ class SingleDatePicker extends React.Component {
             required={required}
             readOnly={readOnly}
             openDirection={openDirection}
-            showCaret={!withPortal && !withFullScreenPortal}
+            showCaret={!withPortal && !withFullScreenPortal && !hideFang}
             onClearDate={this.clearDate}
             showClearDate={showClearDate}
             showDefaultInputIcon={showDefaultInputIcon}
@@ -504,6 +525,7 @@ class SingleDatePicker extends React.Component {
             isRTL={isRTL}
             noBorder={noBorder}
             block={block}
+            verticalSpacing={verticalSpacing}
           />
 
           {this.maybeRenderDayPickerWithPortal()}
@@ -517,7 +539,7 @@ SingleDatePicker.propTypes = propTypes;
 SingleDatePicker.defaultProps = defaultProps;
 
 export { SingleDatePicker as PureSingleDatePicker };
-export default withStyles(({ reactDates: { color, spacing, zIndex } }) => ({
+export default withStyles(({ reactDates: { color, zIndex } }) => ({
   SingleDatePicker: {
     position: 'relative',
     display: 'inline-block',
@@ -543,14 +565,6 @@ export default withStyles(({ reactDates: { color, spacing, zIndex } }) => ({
 
   SingleDatePicker_picker__directionRight: {
     right: 0,
-  },
-
-  SingleDatePicker_picker__openDown: {
-    top: spacing.inputMarginBottom,
-  },
-
-  SingleDatePicker_picker__openUp: {
-    bottom: spacing.inputMarginBottom,
   },
 
   SingleDatePicker_picker__portal: {

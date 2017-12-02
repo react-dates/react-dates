@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { forbidExtraProps } from 'airbnb-prop-types';
+import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 
 import { DateRangePickerInputPhrases } from '../defaultPhrases';
@@ -60,6 +60,7 @@ const propTypes = forbidExtraProps({
   customCloseIcon: PropTypes.node,
   noBorder: PropTypes.bool,
   block: PropTypes.bool,
+  verticalSpacing: nonNegativeInteger,
 
   // accessibility
   isFocused: PropTypes.bool, // describes actual DOM focus
@@ -104,6 +105,7 @@ const defaultProps = {
   customCloseIcon: null,
   noBorder: false,
   block: false,
+  verticalSpacing: undefined,
 
   // accessibility
   isFocused: false,
@@ -149,6 +151,7 @@ function DateRangePickerInput({
   isRTL,
   noBorder,
   block,
+  verticalSpacing,
   styles,
 }) {
   const calendarIcon = customInputIcon || (
@@ -204,6 +207,7 @@ function DateRangePickerInput({
         onKeyDownShiftTab={onStartDateShiftTab}
         onKeyDownArrowDown={onKeyDownArrowDown}
         onKeyDownQuestionMark={onKeyDownQuestionMark}
+        verticalSpacing={verticalSpacing}
       />
 
       <div
@@ -231,6 +235,7 @@ function DateRangePickerInput({
         onKeyDownTab={onEndDateTab}
         onKeyDownArrowDown={onKeyDownArrowDown}
         onKeyDownQuestionMark={onKeyDownQuestionMark}
+        verticalSpacing={verticalSpacing}
       />
 
       {showClearDates && (
