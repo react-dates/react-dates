@@ -1,12 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { forbidExtraProps } from 'airbnb-prop-types';
+import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 import throttle from 'lodash/throttle';
 import isTouchDevice from 'is-touch-device';
 
+import getInputHeight from '../utils/getInputHeight';
 import openDirectionShape from '../shapes/OpenDirectionShape';
-import { OPEN_DOWN, OPEN_UP } from '../constants';
+import {
+  OPEN_DOWN,
+  OPEN_UP,
+  FANG_HEIGHT_PX,
+  FANG_WIDTH_PX,
+  DEFAULT_VERTICAL_SPACING,
+} from '../constants';
+
+const FANG_PATH_TOP = `M0,${FANG_HEIGHT_PX} ${FANG_WIDTH_PX},${FANG_HEIGHT_PX} ${FANG_WIDTH_PX / 2},0z`;
+const FANG_STROKE_TOP = `M0,${FANG_HEIGHT_PX} ${FANG_WIDTH_PX / 2},0 ${FANG_WIDTH_PX},${FANG_HEIGHT_PX}`;
+const FANG_PATH_BOTTOM = `M0,0 ${FANG_WIDTH_PX},0 ${FANG_WIDTH_PX / 2},${FANG_HEIGHT_PX}z`;
+const FANG_STROKE_BOTTOM = `M0,0 ${FANG_WIDTH_PX / 2},${FANG_HEIGHT_PX} ${FANG_WIDTH_PX},0`;
 
 const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
@@ -20,6 +32,7 @@ const propTypes = forbidExtraProps({
   readOnly: PropTypes.bool,
   openDirection: openDirectionShape,
   showCaret: PropTypes.bool,
+  verticalSpacing: nonNegativeInteger,
 
   onChange: PropTypes.func,
   onFocus: PropTypes.func,
@@ -43,6 +56,7 @@ const defaultProps = {
   readOnly: null,
   openDirection: OPEN_DOWN,
   showCaret: false,
+  verticalSpacing: DEFAULT_VERTICAL_SPACING,
 
   onChange() {},
   onFocus() {},
@@ -154,22 +168,30 @@ class DateInput extends React.Component {
       required,
       readOnly,
       openDirection,
+      verticalSpacing,
       styles,
+      theme: { reactDates },
     } = this.props;
 
     const value = displayValue || dateString || '';
     const screenReaderMessageId = `DateInput__screen-reader-message-${id}`;
 
-    const withCaret = showCaret && focused;
+    const withFang = showCaret && focused;
+
+    const {
+      font: { input: { lineHeight } },
+      spacing: { inputPadding, displayTextPaddingVertical },
+    } = reactDates;
+    const inputHeight = getInputHeight({ lineHeight, inputPadding, displayTextPaddingVertical });
 
     return (
       <div
         {...css(
           styles.DateInput,
-          withCaret && styles.DateInput__withCaret,
+          withFang && styles.DateInput__withFang,
           disabled && styles.DateInput__disabled,
-          withCaret && openDirection === OPEN_DOWN && styles.DateInput__openDown,
-          withCaret && openDirection === OPEN_UP && styles.DateInput__openUp,
+          withFang && openDirection === OPEN_DOWN && styles.DateInput__openDown,
+          withFang && openDirection === OPEN_UP && styles.DateInput__openUp,
         )}
       >
         <input
@@ -196,6 +218,31 @@ class DateInput extends React.Component {
           aria-describedby={screenReaderMessage && screenReaderMessageId}
         />
 
+        {withFang && (
+          <svg
+            role="presentation"
+            focusable="false"
+            {...css(
+              styles.DateInput_fang,
+              openDirection === OPEN_DOWN && {
+                top: inputHeight + verticalSpacing - FANG_HEIGHT_PX - 1,
+              },
+              openDirection === OPEN_DOWN && {
+                bottom: inputHeight + verticalSpacing - FANG_HEIGHT_PX - 1,
+              },
+            )}
+          >
+            <path
+              {...css(styles.DateInput_fangShape)}
+              d={openDirection === OPEN_DOWN ? FANG_PATH_TOP : FANG_PATH_BOTTOM}
+            />
+            <path
+              {...css(styles.DateInput_fangStroke)}
+              d={openDirection === OPEN_DOWN ? FANG_STROKE_TOP : FANG_STROKE_BOTTOM}
+            />
+          </svg>
+        )}
+
         {screenReaderMessage && (
           <p {...css(styles.DateInput_screenReaderMessage)} id={screenReaderMessageId}>
             {screenReaderMessage}
@@ -213,124 +260,85 @@ export default withStyles(({
   reactDates: {
     border, color, sizing, spacing, font, zIndex,
   },
-}) => {
-  const inputHeight = parseInt(font.input.lineHeight, 10)
-    + (2 * spacing.inputPadding)
-    + (2 * spacing.displayTextPaddingVertical);
+}) => ({
+  DateInput: {
+    fontWeight: 200,
+    fontSize: font.input.size,
+    lineHeight: font.input.lineHeight,
+    color: color.placeholderText,
+    margin: 0,
+    padding: spacing.inputPadding,
 
-  return {
-    DateInput: {
-      fontWeight: 200,
-      fontSize: font.input.size,
-      lineHeight: font.input.lineHeight,
-      color: color.placeholderText,
-      margin: 0,
-      padding: spacing.inputPadding,
+    background: color.background,
+    position: 'relative',
+    display: 'inline-block',
+    width: sizing.inputWidth,
+    verticalAlign: 'middle',
+  },
 
-      background: color.background,
-      position: 'relative',
-      display: 'inline-block',
-      width: sizing.inputWidth,
-      verticalAlign: 'middle',
-    },
+  DateInput__disabled: {
+    background: color.disabled,
+    color: color.textDisabled,
+  },
 
-    DateInput__withCaret: {
-      ':before': {
-        content: '""',
-        display: 'inline-block',
-        position: 'absolute',
-        bottom: 'auto',
-        border: `${sizing.tooltipArrowWidth / 2}px solid transparent`,
-        left: 22,
-        zIndex: zIndex + 2,
-      },
+  DateInput_input: {
+    fontWeight: 200,
+    fontSize: font.input.size,
+    color: color.text,
+    backgroundColor: color.background,
+    width: '100%',
+    padding: `${spacing.displayTextPaddingVertical}px ${spacing.displayTextPaddingHorizontal}px`,
+    border: border.input.border,
+    borderTop: border.input.borderTop,
+    borderRight: border.input.borderRight,
+    borderBottom: border.input.borderBottom,
+    borderLeft: border.input.borderLeft,
+  },
 
-      ':after': {
-        content: '""',
-        display: 'inline-block',
-        position: 'absolute',
-        bottom: 'auto',
-        border: `${sizing.tooltipArrowWidth / 2}px solid transparent`,
-        left: 22,
-        zIndex: zIndex + 2,
-      },
-    },
+  DateInput_input__readOnly: {
+    userSelect: 'none',
+  },
 
-    DateInput__openUp: {
-      ':before': {
-        borderBottom: 0,
-        top: inputHeight - spacing.inputMarginBottom,
-        borderTopColor: 'rgba(0, 0, 0, 0.1)',
-      },
+  DateInput_input__focused: {
+    outline: border.input.outlineFocused,
+    background: color.backgroundFocused,
+    border: border.input.borderFocused,
+    borderTop: border.input.borderTopFocused,
+    borderRight: border.input.borderRightFocused,
+    borderBottom: border.input.borderBottomFocused,
+    borderLeft: border.input.borderLeftFocused,
+  },
 
-      ':after': {
-        borderBottom: 0,
-        top: inputHeight - spacing.inputMarginBottom - 1,
-        borderTopColor: color.background,
-      },
-    },
+  DateInput_input__disabled: {
+    background: color.disabled,
+    fontStyle: font.input.styleDisabled,
+  },
 
-    DateInput__openDown: {
-      ':before': {
-        borderTop: 0,
-        top: spacing.inputMarginBottom - (sizing.tooltipArrowWidth / 2),
-        borderBottomColor: 'rgba(0, 0, 0, 0.1)',
-      },
+  DateInput_screenReaderMessage: {
+    border: 0,
+    clip: 'rect(0, 0, 0, 0)',
+    height: 1,
+    margin: -1,
+    overflow: 'hidden',
+    padding: 0,
+    position: 'absolute',
+    width: 1,
+  },
 
-      ':after': {
-        borderTop: 0,
-        top: spacing.inputMarginBottom - (sizing.tooltipArrowWidth / 2) + 1,
-        borderBottomColor: color.background,
-      },
-    },
+  DateInput_fang: {
+    position: 'absolute',
+    width: FANG_WIDTH_PX,
+    height: FANG_HEIGHT_PX,
+    left: 22,
+    zIndex: zIndex + 2,
+  },
 
-    DateInput__disabled: {
-      background: color.disabled,
-      color: color.textDisabled,
-    },
+  DateInput_fangShape: {
+    fill: color.background,
+  },
 
-    DateInput_input: {
-      fontWeight: 200,
-      fontSize: font.input.size,
-      color: color.text,
-      backgroundColor: color.background,
-      width: '100%',
-      padding: `${spacing.displayTextPaddingVertical}px ${spacing.displayTextPaddingHorizontal}px`,
-      border: border.input.border,
-      borderTop: border.input.borderTop,
-      borderRight: border.input.borderRight,
-      borderBottom: border.input.borderBottom,
-      borderLeft: border.input.borderLeft,
-    },
-
-    DateInput_input__readOnly: {
-      userSelect: 'none',
-    },
-
-    DateInput_input__focused: {
-      outline: border.input.outlineFocused,
-      background: color.backgroundFocused,
-      border: border.input.borderFocused,
-      borderTop: border.input.borderTopFocused,
-      borderRight: border.input.borderRightFocused,
-      borderBottom: border.input.borderBottomFocused,
-      borderLeft: border.input.borderLeftFocused,
-    },
-
-    DateInput_input__disabled: {
-      background: color.disabled,
-      fontStyle: font.input.styleDisabled,
-    },
-
-    DateInput_screenReaderMessage: {
-      border: 0,
-      clip: 'rect(0, 0, 0, 0)',
-      height: 1,
-      margin: -1,
-      overflow: 'hidden',
-      padding: 0,
-      position: 'absolute',
-      width: 1,
-    },
-  };
-})(DateInput);
+  DateInput_fangStroke: {
+    stroke: color.core.border,
+    fill: 'transparent',
+  },
+}))(DateInput);

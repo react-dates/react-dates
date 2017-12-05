@@ -177,4 +177,11 @@ storiesOf('DRP - Calendar Props', module)
       transitionDuration={0}
       autoFocus
     />
+  ))
+  .addWithInfo('with custom vertical spacing', () => (
+    <DateRangePickerWrapper
+      verticalSpacing={0}
+      autoFocus
+    />
   ));
+

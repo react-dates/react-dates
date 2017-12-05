@@ -60,6 +60,7 @@ export default {
   hideKeyboardShortcutsPanel: PropTypes.bool,
   verticalHeight: nonNegativeInteger,
   transitionDuration: nonNegativeInteger,
+  verticalSpacing: nonNegativeInteger,
 
   // navigation related props
   navPrev: PropTypes.node,
