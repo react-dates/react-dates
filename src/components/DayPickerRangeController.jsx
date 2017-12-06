@@ -430,8 +430,8 @@ export default class DayPickerRangeController extends React.Component {
     let { startDate, endDate } = this.props;
 
     if (range) {
-      startDate = range.before ? range.before(day.clone()) : day.clone();
-      endDate = range.after ? range.after(day.clone()) : day.clone();
+      startDate = range.before ? range.before(day.clone()) : day;
+      endDate = range.after ? range.after(day.clone()) : day;
       if (!keepOpenOnDateSelect) {
         onFocusChange(null);
         onClose({ startDate, endDate });
