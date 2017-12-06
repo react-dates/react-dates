@@ -214,17 +214,14 @@ class DayPickerKeyboardShortcuts extends React.Component {
 
         {showKeyboardShortcutsPanel &&
           <div
-            {...css(
-              styles.DayPickerKeyboardShortcuts_panel,
-              block && styles.DayPickerKeyboardShortcuts_panel__block,
-            )}
+            {...css(styles.DayPickerKeyboardShortcuts_panel)}
             role="dialog"
-            aria-labelledby="DayPickerKeyboardShortcuts__title"
-            aria-describedby="DayPickerKeyboardShortcuts__description"
+            aria-labelledby="DayPickerKeyboardShortcuts_title"
+            aria-describedby="DayPickerKeyboardShortcuts_description"
           >
             <div
               {...css(styles.DayPickerKeyboardShortcuts_title)}
-              id="DayPickerKeyboardShortcuts__title"
+              id="DayPickerKeyboardShortcuts_title"
             >
               {phrases.keyboardShortcuts}
             </div>
@@ -245,8 +242,8 @@ class DayPickerKeyboardShortcuts extends React.Component {
             </button>
 
             <ul
-              {...css(styles.DayPickerKeyboardShortcuts__list)}
-              id="DayPickerKeyboardShortcuts__description"
+              {...css(styles.DayPickerKeyboardShortcuts_list)}
+              id="DayPickerKeyboardShortcuts_description"
             >
               {this.keyboardShortcuts.map(({ unicode, label, action }) => (
                 <KeyboardShortcutRow
@@ -268,7 +265,7 @@ class DayPickerKeyboardShortcuts extends React.Component {
 DayPickerKeyboardShortcuts.propTypes = propTypes;
 DayPickerKeyboardShortcuts.defaultProps = defaultProps;
 
-export default withStyles(({ reactDates: { color, zIndex } }) => ({
+export default withStyles(({ reactDates: { color, font, zIndex } }) => ({
   DayPickerKeyboardShortcuts_buttonReset: {
     background: 'none',
     border: 0,
@@ -279,6 +276,7 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
     overflow: 'visible',
     padding: 0,
     cursor: 'pointer',
+    fontSize: font.size,
 
     ':active': {
       outline: 'none',
@@ -368,6 +366,7 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
   DayPickerKeyboardShortcuts_list: {
     listStyle: 'none',
     padding: 0,
+    fontSize: font.size,
   },
 
   DayPickerKeyboardShortcuts_close: {

@@ -842,7 +842,7 @@ DayPicker.propTypes = propTypes;
 DayPicker.defaultProps = defaultProps;
 
 export { DayPicker as PureDayPicker };
-export default withStyles(({ reactDates: { color, zIndex } }) => ({
+export default withStyles(({ reactDates: { color, font, zIndex } }) => ({
   DayPicker: {
     background: color.background,
     position: 'relative',
@@ -918,6 +918,7 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
     margin: '1px 0',
     paddingLeft: 0,
     paddingRight: 0,
+    fontSize: font.size,
   },
 
   DayPicker_weekHeader_li: {
