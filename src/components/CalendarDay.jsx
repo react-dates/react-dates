@@ -178,7 +178,7 @@ CalendarDay.propTypes = propTypes;
 CalendarDay.defaultProps = defaultProps;
 
 export { CalendarDay as PureCalendarDay };
-export default withStyles(({ reactDates: { color } }) => ({
+export default withStyles(({ reactDates: { color, font } }) => ({
   CalendarDay_container: {
     border: `1px solid ${color.core.borderLight}`,
     padding: 0,
@@ -203,11 +203,13 @@ export default withStyles(({ reactDates: { color } }) => ({
     margin: 0,
     padding: 0,
     color: 'inherit',
-    font: 'inherit',
     lineHeight: 'normal',
     overflow: 'visible',
     boxSizing: 'border-box',
     cursor: 'pointer',
+    fontFamily: 'inherit',
+    fontStyle: 'inherit',
+    fontSize: font.size,
 
     ':active': {
       outline: 0,
