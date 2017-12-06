@@ -482,8 +482,8 @@ export default class DayPickerRangeController extends React.Component {
       let modifiers = {};
 
       if (range && (range.before || range.after)) {
-        const start = range.before ? range.before(day.clone()) : day.clone();
-        const end = range.after ? range.after(day.clone()).add(1, 'day') : day.clone();
+        const start = range.before ? range.before(day.clone()) : day;
+        const end = range.after ? range.after(day.clone()).add(1, 'day') : day;
 
         dateRange = {
           start,
