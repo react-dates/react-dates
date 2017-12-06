@@ -436,33 +436,29 @@ export default class DayPickerRangeController extends React.Component {
         onFocusChange(null);
         onClose({ startDate, endDate });
       }
-    }
+    } else if (focusedInput === START_DATE) {
+      onFocusChange(END_DATE);
 
-    if (!range) {
-      if (focusedInput === START_DATE) {
-        onFocusChange(END_DATE);
+      startDate = day;
 
+      if (isInclusivelyAfterDay(day, endDate)) {
+        endDate = null;
+      }
+    } else if (focusedInput === END_DATE) {
+      const firstAllowedEndDate = startDate && startDate.clone().add(minimumNights, 'days');
+
+      if (!startDate) {
+        endDate = day;
+        onFocusChange(START_DATE);
+      } else if (isInclusivelyAfterDay(day, firstAllowedEndDate)) {
+        endDate = day;
+        if (!keepOpenOnDateSelect) {
+          onFocusChange(null);
+          onClose({ startDate, endDate });
+        }
+      } else {
         startDate = day;
-
-        if (isInclusivelyAfterDay(day, endDate)) {
-          endDate = null;
-        }
-      } else if (focusedInput === END_DATE) {
-        const firstAllowedEndDate = startDate && startDate.clone().add(minimumNights, 'days');
-
-        if (!startDate) {
-          endDate = day;
-          onFocusChange(START_DATE);
-        } else if (isInclusivelyAfterDay(day, firstAllowedEndDate)) {
-          endDate = day;
-          if (!keepOpenOnDateSelect) {
-            onFocusChange(null);
-            onClose({ startDate, endDate });
-          }
-        } else {
-          startDate = day;
-          endDate = null;
-        }
+        endDate = null;
       }
     }
 
