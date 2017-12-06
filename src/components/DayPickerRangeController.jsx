@@ -24,6 +24,7 @@ import toISOMonthString from '../utils/toISOMonthString';
 import FocusedInputShape from '../shapes/FocusedInputShape';
 import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
 import DayOfWeekShape from '../shapes/DayOfWeekShape';
+import RangeShape from '../shapes/RangeShape';
 
 import {
   START_DATE,
@@ -39,10 +40,7 @@ const propTypes = forbidExtraProps({
   startDate: momentPropTypes.momentObj,
   endDate: momentPropTypes.momentObj,
   onDatesChange: PropTypes.func,
-  range: PropTypes.shape({
-    before: PropTypes.func,
-    after: PropTypes.func,
-  }),
+  range: RangeShape,
 
   focusedInput: FocusedInputShape,
   onFocusChange: PropTypes.func,
