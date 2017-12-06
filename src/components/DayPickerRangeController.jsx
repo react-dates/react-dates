@@ -18,6 +18,8 @@ import isBeforeDay from '../utils/isBeforeDay';
 import getVisibleDays from '../utils/getVisibleDays';
 import isDayVisible from '../utils/isDayVisible';
 
+import getRangeDay from '../utils/getRangeDay';
+
 import toISODateString from '../utils/toISODateString';
 import toISOMonthString from '../utils/toISOMonthString';
 
@@ -430,8 +432,9 @@ export default class DayPickerRangeController extends React.Component {
     let { startDate, endDate } = this.props;
 
     if (range) {
-      startDate = range.before ? range.before(day.clone()) : day;
-      endDate = range.after ? range.after(day.clone()) : day;
+      const { before, after } = range;
+      startDate = getRangeDay(before, day);
+      endDate = getRangeDay(after, day);
       if (!keepOpenOnDateSelect) {
         onFocusChange(null);
         onClose({ startDate, endDate });
@@ -482,8 +485,9 @@ export default class DayPickerRangeController extends React.Component {
       let modifiers = {};
 
       if (range && (range.before || range.after)) {
-        const start = range.before ? range.before(day.clone()) : day;
-        const end = range.after ? range.after(day.clone()).add(1, 'day') : day;
+        const { before, after } = range;
+        const start = getRangeDay(before, day);
+        const end = getRangeDay(after, day, rangeDay => rangeDay.add(1, 'day'));
 
         dateRange = {
           start,
