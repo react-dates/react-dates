@@ -34,6 +34,7 @@ export default {
   noBorder: PropTypes.bool,
   block: PropTypes.bool,
   verticalSpacing: nonNegativeInteger,
+  inputHeight: nonNegativeInteger,
 
   // calendar presentation and interaction related props
   renderMonth: PropTypes.func,

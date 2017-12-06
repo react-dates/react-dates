@@ -13,7 +13,6 @@ import OutsideClickHandler from './OutsideClickHandler';
 import toMomentObject from '../utils/toMomentObject';
 import toLocalizedDateString from '../utils/toLocalizedDateString';
 import getResponsiveContainerStyles from '../utils/getResponsiveContainerStyles';
-import getInputHeight from '../utils/getInputHeight';
 
 import SingleDatePickerInput from './SingleDatePickerInput';
 import DayPickerSingleDateController from './DayPickerSingleDateController';
@@ -33,6 +32,7 @@ import {
   ICON_BEFORE_POSITION,
   FANG_HEIGHT_PX,
   DEFAULT_VERTICAL_SPACING,
+  DEFAULT_INPUT_HEIGHT,
 } from '../constants';
 
 const propTypes = forbidExtraProps({
@@ -60,6 +60,7 @@ const defaultProps = {
   noBorder: false,
   block: false,
   verticalSpacing: DEFAULT_VERTICAL_SPACING,
+  inputHeight: DEFAULT_INPUT_HEIGHT,
 
   // calendar presentation and interaction related props
   orientation: HORIZONTAL_ORIENTATION,
@@ -366,18 +367,12 @@ class SingleDatePicker extends React.Component {
       verticalHeight,
       transitionDuration,
       verticalSpacing,
-      theme: { reactDates },
+      inputHeight,
     } = this.props;
     const { dayPickerContainerStyles, isDayPickerFocused, showKeyboardShortcuts } = this.state;
 
     const onOutsideClick = (!withFullScreenPortal && withPortal) ? this.onClearFocus : undefined;
     const closeIcon = customCloseIcon || (<CloseButton />);
-
-    const {
-      font: { input: { lineHeight } },
-      spacing: { inputPadding, displayTextPaddingVertical },
-    } = reactDates;
-    const inputHeight = getInputHeight({ lineHeight, inputPadding, displayTextPaddingVertical });
 
     return (
       <div // eslint-disable-line jsx-a11y/no-static-element-interactions
@@ -478,6 +473,7 @@ class SingleDatePicker extends React.Component {
       noBorder,
       block,
       verticalSpacing,
+      inputHeight,
       styles,
     } = this.props;
 
@@ -526,6 +522,7 @@ class SingleDatePicker extends React.Component {
             noBorder={noBorder}
             block={block}
             verticalSpacing={verticalSpacing}
+            inputHeight={inputHeight}
           />
 
           {this.maybeRenderDayPickerWithPortal()}

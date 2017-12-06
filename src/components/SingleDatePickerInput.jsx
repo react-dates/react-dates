@@ -37,6 +37,7 @@ const propTypes = forbidExtraProps({
   noBorder: PropTypes.bool,
   block: PropTypes.bool,
   verticalSpacing: nonNegativeInteger,
+  inputHeight: nonNegativeInteger,
 
   onChange: PropTypes.func,
   onClearDate: PropTypes.func,
@@ -70,6 +71,7 @@ const defaultProps = {
   noBorder: false,
   block: false,
   verticalSpacing: undefined,
+  inputHeight: undefined,
 
   onChange() {},
   onClearDate() {},
@@ -112,6 +114,7 @@ function SingleDatePickerInput({
   noBorder,
   block,
   verticalSpacing,
+  inputHeight,
   styles,
 }) {
   const calendarIcon = customInputIcon || (
@@ -166,6 +169,7 @@ function SingleDatePickerInput({
         onKeyDownQuestionMark={onKeyDownQuestionMark}
         openDirection={openDirection}
         verticalSpacing={verticalSpacing}
+        inputHeight={inputHeight}
       />
 
       {showClearDate && (

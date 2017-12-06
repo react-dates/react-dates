@@ -11,7 +11,6 @@ import { DateRangePickerPhrases } from '../defaultPhrases';
 
 import OutsideClickHandler from './OutsideClickHandler';
 import getResponsiveContainerStyles from '../utils/getResponsiveContainerStyles';
-import getInputHeight from '../utils/getInputHeight';
 
 import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
 
@@ -35,6 +34,7 @@ import {
   ICON_BEFORE_POSITION,
   FANG_HEIGHT_PX,
   DEFAULT_VERTICAL_SPACING,
+  DEFAULT_INPUT_HEIGHT,
 } from '../constants';
 
 const propTypes = forbidExtraProps({
@@ -63,6 +63,7 @@ const defaultProps = {
   customCloseIcon: null,
   noBorder: false,
   block: false,
+  inputHeight: DEFAULT_INPUT_HEIGHT,
 
   // calendar presentation and interaction related props
   renderMonth: null,
@@ -329,7 +330,7 @@ class DateRangePicker extends React.Component {
       verticalHeight,
       transitionDuration,
       verticalSpacing,
-      theme: { reactDates },
+      inputHeight,
     } = this.props;
     const { dayPickerContainerStyles, isDayPickerFocused, showKeyboardShortcuts } = this.state;
 
@@ -343,12 +344,6 @@ class DateRangePicker extends React.Component {
     const closeIcon = customCloseIcon || (
       <CloseButton {...css(styles.DateRangePicker_closeButton_svg)} />
     );
-
-    const {
-      font: { input: { lineHeight } },
-      spacing: { inputPadding, displayTextPaddingVertical },
-    } = reactDates;
-    const inputHeight = getInputHeight({ lineHeight, inputPadding, displayTextPaddingVertical });
 
     return (
       <div // eslint-disable-line jsx-a11y/no-static-element-interactions
@@ -458,6 +453,7 @@ class DateRangePicker extends React.Component {
       noBorder,
       block,
       verticalSpacing,
+      inputHeight,
       styles,
     } = this.props;
 
@@ -513,6 +509,7 @@ class DateRangePicker extends React.Component {
             noBorder={noBorder}
             block={block}
             verticalSpacing={verticalSpacing}
+            inputHeight={inputHeight}
           />
 
           {this.maybeRenderDayPickerWithPortal()}

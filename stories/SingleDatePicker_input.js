@@ -84,4 +84,10 @@ storiesOf('SDP - Input Props', module)
       showClearDate
       block
     />
+  ))
+  .addWithInfo('custom input height', () => (
+    <SingleDatePickerWrapper
+      initialDate={moment().add(3, 'days')}
+      inputHeight={36}
+    />
   ));
