@@ -419,8 +419,12 @@ export default class DayPickerRangeController extends React.Component {
 
   onDayClick(day, e) {
     const {
-      keepOpenOnDateSelect, minimumNights, onBlur, range,
+      keepOpenOnDateSelect,
+      minimumNights,
+      onBlur,
+      range,
     } = this.props;
+
     if (e) e.preventDefault();
     if (this.isBlocked(day)) return;
 
