@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon-sandbox';
 import moment from 'moment';
-import Portal from 'react-portal';
+import { Portal } from 'react-portal';
 
 import CloseButton from '../../src/components/CloseButton';
 import DayPickerSingleDateController from '../../src/components/DayPickerSingleDateController';
@@ -115,18 +115,6 @@ describe('SingleDatePicker', () => {
           )).dive();
           expect(wrapper.find(Portal)).to.have.length(0);
         });
-
-        it('isOpened prop is true if props.focused is true', () => {
-          const wrapper = shallow((
-            <SingleDatePicker
-              onDateChange={() => {}}
-              onFocusChange={() => {}}
-              withPortal
-              focused
-            />
-          )).dive();
-          expect(wrapper.find(Portal).props().isOpened).to.equal(true);
-        });
       });
     });
 
@@ -165,18 +153,6 @@ describe('SingleDatePicker', () => {
             />
           )).dive();
           expect(wrapper.find(Portal)).to.have.length(0);
-        });
-
-        it('isOpened prop is true if props.focused is truthy', () => {
-          const wrapper = shallow((
-            <SingleDatePicker
-              onDateChange={() => {}}
-              onFocusChange={() => {}}
-              withFullScreenPortal
-              focused
-            />
-          )).dive();
-          expect(wrapper.find(Portal).props().isOpened).to.equal(true);
         });
       });
     });
