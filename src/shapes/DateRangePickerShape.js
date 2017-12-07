@@ -40,6 +40,7 @@ export default {
   customCloseIcon: PropTypes.node,
   noBorder: PropTypes.bool,
   block: PropTypes.bool,
+  small: PropTypes.bool,
 
   // calendar presentation and interaction related props
   renderMonth: PropTypes.func,

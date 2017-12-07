@@ -59,6 +59,7 @@ const defaultProps = {
   customCloseIcon: null,
   noBorder: false,
   block: false,
+  small: false,
   verticalSpacing: DEFAULT_VERTICAL_SPACING,
 
   // calendar presentation and interaction related props
@@ -366,6 +367,7 @@ class SingleDatePicker extends React.Component {
       verticalHeight,
       transitionDuration,
       verticalSpacing,
+      small,
       theme: { reactDates },
     } = this.props;
     const { dayPickerContainerStyles, isDayPickerFocused, showKeyboardShortcuts } = this.state;
@@ -373,11 +375,7 @@ class SingleDatePicker extends React.Component {
     const onOutsideClick = (!withFullScreenPortal && withPortal) ? this.onClearFocus : undefined;
     const closeIcon = customCloseIcon || (<CloseButton />);
 
-    const {
-      font: { input: { lineHeight } },
-      spacing: { inputPadding, displayTextPaddingVertical },
-    } = reactDates;
-    const inputHeight = getInputHeight({ lineHeight, inputPadding, displayTextPaddingVertical });
+    const inputHeight = getInputHeight(reactDates, small);
 
     return (
       <div // eslint-disable-line jsx-a11y/no-static-element-interactions
@@ -477,6 +475,7 @@ class SingleDatePicker extends React.Component {
       isRTL,
       noBorder,
       block,
+      small,
       verticalSpacing,
       styles,
     } = this.props;
@@ -525,6 +524,7 @@ class SingleDatePicker extends React.Component {
             isRTL={isRTL}
             noBorder={noBorder}
             block={block}
+            small={small}
             verticalSpacing={verticalSpacing}
           />
 

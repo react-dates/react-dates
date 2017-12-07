@@ -63,6 +63,7 @@ const defaultProps = {
   customCloseIcon: null,
   noBorder: false,
   block: false,
+  small: false,
 
   // calendar presentation and interaction related props
   renderMonth: null,
@@ -329,6 +330,7 @@ class DateRangePicker extends React.Component {
       verticalHeight,
       transitionDuration,
       verticalSpacing,
+      small,
       theme: { reactDates },
     } = this.props;
     const { dayPickerContainerStyles, isDayPickerFocused, showKeyboardShortcuts } = this.state;
@@ -344,11 +346,7 @@ class DateRangePicker extends React.Component {
       <CloseButton {...css(styles.DateRangePicker_closeButton_svg)} />
     );
 
-    const {
-      font: { input: { lineHeight } },
-      spacing: { inputPadding, displayTextPaddingVertical },
-    } = reactDates;
-    const inputHeight = getInputHeight({ lineHeight, inputPadding, displayTextPaddingVertical });
+    const inputHeight = getInputHeight(reactDates, small);
 
     return (
       <div // eslint-disable-line jsx-a11y/no-static-element-interactions
@@ -458,6 +456,7 @@ class DateRangePicker extends React.Component {
       noBorder,
       block,
       verticalSpacing,
+      small,
       styles,
     } = this.props;
 
@@ -512,6 +511,7 @@ class DateRangePicker extends React.Component {
             isRTL={isRTL}
             noBorder={noBorder}
             block={block}
+            small={small}
             verticalSpacing={verticalSpacing}
           />
 
