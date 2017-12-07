@@ -148,13 +148,25 @@ export default {
       captionPaddingTop: 22,
       captionPaddingBottom: 37,
       inputPadding: 0,
-      displayTextPaddingVertical: 12,
-      displayTextPaddingHorizontal: 12,
+      displayTextPaddingVertical: undefined,
+      displayTextPaddingTop: 13,
+      displayTextPaddingBottom: 11,
+      displayTextPaddingHorizontal: undefined,
+      displayTextPaddingLeft: 12,
+      displayTextPaddingRight: 12,
+      displayTextPaddingVertical_small: undefined,
+      displayTextPaddingTop_small: 9,
+      displayTextPaddingBottom_small: 7,
+      displayTextPaddingHorizontal_small: undefined,
+      displayTextPaddingLeft_small: 8,
+      displayTextPaddingRight_small: 8,
     },
 
     sizing: {
       inputWidth: 130,
+      inputWidth_small: 90,
       arrowWidth: 24,
+      arrowWidth_small: 19,
     },
 
     font: {
@@ -163,6 +175,8 @@ export default {
       input: {
         size: 18,
         lineHeight: '24px',
+        size_small: 14,
+        lineHeight_small: '18px',
         styleDisabled: 'italic',
       },
     },

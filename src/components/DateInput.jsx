@@ -33,6 +33,7 @@ const propTypes = forbidExtraProps({
   openDirection: openDirectionShape,
   showCaret: PropTypes.bool,
   verticalSpacing: nonNegativeInteger,
+  small: PropTypes.bool,
 
   onChange: PropTypes.func,
   onFocus: PropTypes.func,
@@ -57,6 +58,7 @@ const defaultProps = {
   openDirection: OPEN_DOWN,
   showCaret: false,
   verticalSpacing: DEFAULT_VERTICAL_SPACING,
+  small: false,
 
   onChange() {},
   onFocus() {},
@@ -169,6 +171,7 @@ class DateInput extends React.Component {
       readOnly,
       openDirection,
       verticalSpacing,
+      small,
       styles,
       theme: { reactDates },
     } = this.props;
@@ -178,16 +181,13 @@ class DateInput extends React.Component {
 
     const withFang = showCaret && focused;
 
-    const {
-      font: { input: { lineHeight } },
-      spacing: { inputPadding, displayTextPaddingVertical },
-    } = reactDates;
-    const inputHeight = getInputHeight({ lineHeight, inputPadding, displayTextPaddingVertical });
+    const inputHeight = getInputHeight(reactDates, small);
 
     return (
       <div
         {...css(
           styles.DateInput,
+          small && styles.DateInput__small,
           withFang && styles.DateInput__withFang,
           disabled && styles.DateInput__disabled,
           withFang && openDirection === OPEN_DOWN && styles.DateInput__openDown,
@@ -197,6 +197,7 @@ class DateInput extends React.Component {
         <input
           {...css(
             styles.DateInput_input,
+            small && styles.DateInput_input__small,
             readOnly && styles.DateInput_input__readOnly,
             focused && styles.DateInput_input__focused,
             disabled && styles.DateInput_input__disabled,
@@ -262,18 +263,17 @@ export default withStyles(({
   },
 }) => ({
   DateInput: {
-    fontWeight: 200,
-    fontSize: font.input.size,
-    lineHeight: font.input.lineHeight,
-    color: color.placeholderText,
     margin: 0,
     padding: spacing.inputPadding,
-
     background: color.background,
     position: 'relative',
     display: 'inline-block',
     width: sizing.inputWidth,
     verticalAlign: 'middle',
+  },
+
+  DateInput__small: {
+    width: sizing.inputWidth_small,
   },
 
   DateInput__disabled: {
@@ -284,15 +284,30 @@ export default withStyles(({
   DateInput_input: {
     fontWeight: 200,
     fontSize: font.input.size,
+    lineHeight: font.input.lineHeight,
     color: color.text,
     backgroundColor: color.background,
     width: '100%',
     padding: `${spacing.displayTextPaddingVertical}px ${spacing.displayTextPaddingHorizontal}px`,
+    paddingTop: spacing.displayTextPaddingTop,
+    paddingBottom: spacing.displayTextPaddingBottom,
+    paddingLeft: spacing.displayTextPaddingLeft,
+    paddingRight: spacing.displayTextPaddingRight,
     border: border.input.border,
     borderTop: border.input.borderTop,
     borderRight: border.input.borderRight,
     borderBottom: border.input.borderBottom,
     borderLeft: border.input.borderLeft,
+  },
+
+  DateInput_input__small: {
+    fontSize: font.input.size_small,
+    lineHeight: font.input.lineHeight_small,
+    padding: `${spacing.displayTextPaddingVertical_small}px ${spacing.displayTextPaddingHorizontal_small}px`,
+    paddingTop: spacing.displayTextPaddingTop_small,
+    paddingBottom: spacing.displayTextPaddingBottom_small,
+    paddingLeft: spacing.displayTextPaddingLeft_small,
+    paddingRight: spacing.displayTextPaddingRight_small,
   },
 
   DateInput_input__readOnly: {

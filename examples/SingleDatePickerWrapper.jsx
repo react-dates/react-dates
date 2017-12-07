@@ -38,6 +38,9 @@ const defaultProps = {
   showClearDate: false,
   showDefaultInputIcon: false,
   customInputIcon: null,
+  block: false,
+  small: false,
+  verticalSpacing: undefined,
 
   // calendar presentation and interaction related props
   renderMonth: null,

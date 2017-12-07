@@ -47,6 +47,8 @@ const defaultProps = {
   customInputIcon: null,
   customArrowIcon: null,
   customCloseIcon: null,
+  block: false,
+  small: false,
 
   // calendar presentation and interaction related props
   renderMonth: null,
