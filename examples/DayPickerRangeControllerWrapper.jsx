@@ -20,7 +20,6 @@ const propTypes = forbidExtraProps({
   autoFocusEndDate: PropTypes.bool,
   initialStartDate: momentPropTypes.momentObj,
   initialEndDate: momentPropTypes.momentObj,
-  range: RangeShape,
 
   keepOpenOnDateSelect: PropTypes.bool,
   minimumNights: PropTypes.number,
@@ -34,6 +33,7 @@ const propTypes = forbidExtraProps({
   orientation: ScrollableOrientationShape,
   withPortal: PropTypes.bool,
   initialVisibleMonth: PropTypes.func,
+  range: RangeShape,
   renderCalendarInfo: PropTypes.func,
 
   navPrev: PropTypes.node,
@@ -55,7 +55,6 @@ const defaultProps = {
   autoFocusEndDate: false,
   initialStartDate: null,
   initialEndDate: null,
-  range: undefined,
 
   // day presentation and interaction related props
   renderDay: null,
@@ -64,6 +63,7 @@ const defaultProps = {
   isOutsideRange: day => !isInclusivelyAfterDay(day, moment()),
   isDayHighlighted: () => false,
   enableOutsideDays: false,
+  range: undefined,
 
   // calendar presentation and interaction related props
   orientation: HORIZONTAL_ORIENTATION,
