@@ -1,5 +1,8 @@
 # Change Log
 
+## 15.5.0
+- [new] Add `small` variant ([#891](https://github.com/airbnb/react-dates/pull/891))
+
 ## 15.4.0
 - [fix] Set font sizes according to theme variable ([#885](https://github.com/airbnb/react-dates/pull/885))
 - [new] Add `verticalSpacing` prop ([#883](https://github.com/airbnb/react-dates/pull/883))
