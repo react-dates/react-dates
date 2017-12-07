@@ -1,5 +1,9 @@
 # Change Log
 
+## 15.4.0
+- [fix] Set font sizes according to theme variable ([#885](https://github.com/airbnb/react-dates/pull/885))
+- [new] Add `verticalSpacing` prop ([#883](https://github.com/airbnb/react-dates/pull/883))
+
 ## 15.3.0
 - [new] Add `transitionDuration` prop ([#865](https://github.com/airbnb/react-dates/pull/865))
 - [fix] Remove default prop values for required startDateId and endDateId props ([#866](https://github.com/airbnb/react-dates/pull/866))
