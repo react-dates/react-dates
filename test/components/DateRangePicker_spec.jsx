@@ -3,7 +3,7 @@ import moment from 'moment';
 import { expect } from 'chai';
 import sinon from 'sinon-sandbox';
 import { shallow } from 'enzyme';
-import Portal from 'react-portal';
+import { Portal } from 'react-portal';
 
 import DateRangePicker, { PureDateRangePicker } from '../../src/components/DateRangePicker';
 
@@ -76,17 +76,6 @@ describe('DateRangePicker', () => {
           )).dive();
           expect(wrapper.find(Portal)).to.have.length(0);
         });
-
-        it('isOpened prop is true if props.focusedInput !== null', () => {
-          const wrapper = shallow((
-            <DateRangePicker
-              {...requiredProps}
-              withPortal
-              focusedInput={START_DATE}
-            />
-          )).dive();
-          expect(wrapper.find(Portal).props().isOpened).to.equal(true);
-        });
       });
     });
 
@@ -113,17 +102,6 @@ describe('DateRangePicker', () => {
             />
           )).dive();
           expect(wrapper.find(Portal)).to.have.length(0);
-        });
-
-        it('isOpened prop is true if props.focusedInput !== null', () => {
-          const wrapper = shallow((
-            <DateRangePicker
-              {...requiredProps}
-              withFullScreenPortal
-              focusedInput={START_DATE}
-            />
-          )).dive();
-          expect(wrapper.find(Portal).props().isOpened).to.equal(true);
         });
       });
     });
