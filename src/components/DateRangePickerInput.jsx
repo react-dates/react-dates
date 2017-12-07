@@ -61,6 +61,7 @@ const propTypes = forbidExtraProps({
   noBorder: PropTypes.bool,
   block: PropTypes.bool,
   verticalSpacing: nonNegativeInteger,
+  inputHeight: nonNegativeInteger,
 
   // accessibility
   isFocused: PropTypes.bool, // describes actual DOM focus
@@ -106,6 +107,7 @@ const defaultProps = {
   noBorder: false,
   block: false,
   verticalSpacing: undefined,
+  inputHeight: undefined,
 
   // accessibility
   isFocused: false,
@@ -152,6 +154,7 @@ function DateRangePickerInput({
   noBorder,
   block,
   verticalSpacing,
+  inputHeight,
   styles,
 }) {
   const calendarIcon = customInputIcon || (
@@ -208,6 +211,7 @@ function DateRangePickerInput({
         onKeyDownArrowDown={onKeyDownArrowDown}
         onKeyDownQuestionMark={onKeyDownQuestionMark}
         verticalSpacing={verticalSpacing}
+        inputHeight={inputHeight}
       />
 
       <div
@@ -236,6 +240,7 @@ function DateRangePickerInput({
         onKeyDownArrowDown={onKeyDownArrowDown}
         onKeyDownQuestionMark={onKeyDownQuestionMark}
         verticalSpacing={verticalSpacing}
+        inputHeight={inputHeight}
       />
 
       {showClearDates && (

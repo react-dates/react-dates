@@ -38,7 +38,9 @@ const TestCustomCloseIcon = () => (
       color: '#484848',
       padding: '3px',
     }}
-  >'X'</span>
+  >
+    X
+  </span>
 );
 
 storiesOf('DRP - Input Props', module)
@@ -133,5 +135,12 @@ storiesOf('DRP - Input Props', module)
       initialEndDate={moment().add(10, 'days')}
       showClearDates
       block
+    />
+  ))
+  .addWithInfo('custom input height', () => (
+    <DateRangePickerWrapper
+      initialStartDate={moment().add(3, 'days')}
+      initialEndDate={moment().add(10, 'days')}
+      inputHeight={36}
     />
   ));

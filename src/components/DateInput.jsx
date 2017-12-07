@@ -5,7 +5,6 @@ import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 import throttle from 'lodash/throttle';
 import isTouchDevice from 'is-touch-device';
 
-import getInputHeight from '../utils/getInputHeight';
 import openDirectionShape from '../shapes/OpenDirectionShape';
 import {
   OPEN_DOWN,
@@ -13,6 +12,7 @@ import {
   FANG_HEIGHT_PX,
   FANG_WIDTH_PX,
   DEFAULT_VERTICAL_SPACING,
+  DEFAULT_INPUT_HEIGHT,
 } from '../constants';
 
 const FANG_PATH_TOP = `M0,${FANG_HEIGHT_PX} ${FANG_WIDTH_PX},${FANG_HEIGHT_PX} ${FANG_WIDTH_PX / 2},0z`;
@@ -33,6 +33,7 @@ const propTypes = forbidExtraProps({
   openDirection: openDirectionShape,
   showCaret: PropTypes.bool,
   verticalSpacing: nonNegativeInteger,
+  inputHeight: nonNegativeInteger,
 
   onChange: PropTypes.func,
   onFocus: PropTypes.func,
@@ -57,6 +58,7 @@ const defaultProps = {
   openDirection: OPEN_DOWN,
   showCaret: false,
   verticalSpacing: DEFAULT_VERTICAL_SPACING,
+  inputHeight: DEFAULT_INPUT_HEIGHT,
 
   onChange() {},
   onFocus() {},
@@ -169,20 +171,14 @@ class DateInput extends React.Component {
       readOnly,
       openDirection,
       verticalSpacing,
+      inputHeight,
       styles,
-      theme: { reactDates },
     } = this.props;
 
     const value = displayValue || dateString || '';
     const screenReaderMessageId = `DateInput__screen-reader-message-${id}`;
 
     const withFang = showCaret && focused;
-
-    const {
-      font: { input: { lineHeight } },
-      spacing: { inputPadding, displayTextPaddingVertical },
-    } = reactDates;
-    const inputHeight = getInputHeight({ lineHeight, inputPadding, displayTextPaddingVertical });
 
     return (
       <div
@@ -200,6 +196,9 @@ class DateInput extends React.Component {
             readOnly && styles.DateInput_input__readOnly,
             focused && styles.DateInput_input__focused,
             disabled && styles.DateInput_input__disabled,
+            {
+              height: inputHeight,
+            },
           )}
           aria-label={placeholder}
           type="text"
