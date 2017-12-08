@@ -1,5 +1,8 @@
 # Change Log
 
+## 15.5.1
+- [fix] Adjust `small` variant height to be 36px ([#892](https://github.com/airbnb/react-dates/pull/892))
+
 ## 15.5.0
 - [new] Add `small` variant ([#891](https://github.com/airbnb/react-dates/pull/891))
 
