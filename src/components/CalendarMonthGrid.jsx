@@ -42,7 +42,8 @@ const propTypes = forbidExtraProps({
   onDayMouseLeave: PropTypes.func,
   onMonthTransitionEnd: PropTypes.func,
   renderMonth: PropTypes.func,
-  renderDay: PropTypes.func,
+  renderCalendarDay: PropTypes.func,
+  renderDayContents: PropTypes.func,
   transformValue: PropTypes.string,
   daySize: nonNegativeInteger,
   focusedDate: momentPropTypes.momentObj, // indicates focusable day
@@ -71,7 +72,8 @@ const defaultProps = {
   onDayMouseLeave() {},
   onMonthTransitionEnd() {},
   renderMonth: null,
-  renderDay: null,
+  renderCalendarDay: undefined,
+  renderDayContents: null,
   transformValue: 'none',
   daySize: DAY_SIZE,
   focusedDate: null,
@@ -231,7 +233,8 @@ class CalendarMonthGrid extends React.Component {
       onDayMouseLeave,
       onDayClick,
       renderMonth,
-      renderDay,
+      renderCalendarDay,
+      renderDayContents,
       onMonthTransitionEnd,
       firstDayOfWeek,
       focusedDate,
@@ -310,7 +313,8 @@ class CalendarMonthGrid extends React.Component {
                 onDayMouseLeave={onDayMouseLeave}
                 onDayClick={onDayClick}
                 renderMonth={renderMonth}
-                renderDay={renderDay}
+                renderCalendarDay={renderCalendarDay}
+                renderDayContents={renderDayContents}
                 firstDayOfWeek={firstDayOfWeek}
                 daySize={daySize}
                 focusedDate={isVisible ? focusedDate : null}

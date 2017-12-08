@@ -5,6 +5,8 @@ import { storiesOf } from '@storybook/react';
 import isSameDay from '../src/utils/isSameDay';
 import isInclusivelyAfterDay from '../src/utils/isInclusivelyAfterDay';
 
+import CustomizableCalendarDay from '../src/components/CustomizableCalendarDay';
+
 import DateRangePickerWrapper from '../examples/DateRangePickerWrapper';
 
 const datesList = [
@@ -17,6 +19,43 @@ const datesList = [
   moment().add(12, 'days'),
   moment().add(13, 'days'),
 ];
+
+const selectedStyles = {
+  background: '#590098',
+  border: '1px solid #590098',
+  color: '#fff',
+
+  hover: {
+    background: '#7A32AC',
+    border: '1px solid #7A32AC',
+    color: '#fff',
+  },
+};
+
+const hoveredStyles = {
+  background: '#cd99d0',
+  border: '1px solid #cd99d0',
+  color: '#fff',
+};
+
+const customDayStyles = {
+  selectedStartStyles: selectedStyles,
+  selectedEndStyles: selectedStyles,
+  hoveredSpanStyles: hoveredStyles,
+  afterHoveredStartStyles: hoveredStyles,
+
+  selectedSpanStyles: {
+    background: '#9b32a2',
+    border: '1px solid #9b32a2',
+    color: '#fff',
+
+    hover: {
+      background: '#83008b',
+      border: '1px solid #83008b',
+      color: '#fff',
+    },
+  },
+};
 
 storiesOf('DRP - Day Props', module)
   .addWithInfo('default', () => (
@@ -71,7 +110,13 @@ storiesOf('DRP - Day Props', module)
   ))
   .addWithInfo('with custom daily details', () => (
     <DateRangePickerWrapper
-      renderDay={day => day.format('ddd')}
+      renderDayContents={day => <td className="foo-bar">{day.format('ddd')}</td>}
+      autoFocus
+    />
+  ))
+  .addWithInfo('one-off custom styling', () => (
+    <DateRangePickerWrapper
+      renderCalendarDay={props => <CustomizableCalendarDay {...props} {...customDayStyles} />}
       autoFocus
     />
   ));
