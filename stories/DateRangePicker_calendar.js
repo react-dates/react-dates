@@ -15,7 +15,7 @@ const TestPrevIcon = () => (
       padding: '3px',
     }}
   >
-    Prev
+    1
   </span>
 );
 
@@ -32,11 +32,23 @@ const TestNextIcon = () => (
   </span>
 );
 
-const TestCustomInfoPanel = () => (
+const INFO_POSITION_BOTTOM = () => (
   <div
     style={{
       padding: '10px 21px',
       borderTop: '1px solid #dce0e0',
+      color: '#484848',
+    }}
+  >
+    &#x2755; Some useful info here
+  </div>
+);
+
+const TestCustomInfoPanel1 = () => (
+  <div
+    style={{
+      padding: '10px 21px',
+      borderbottom: '1px solid #dce0e0',
       color: '#484848',
     }}
   >
@@ -130,10 +142,18 @@ storiesOf('DRP - Calendar Props', module)
       autoFocus
     />
   ))
+  .addWithInfo('with info panel on bottom', () => (
+    <DateRangePickerWrapper
+      renderCalendarInfo={() => (
+        <INFO_POSITION_BOTTOM />
+      )}
+      autoFocus
+    />
+  ))
   .addWithInfo('with info panel', () => (
     <DateRangePickerWrapper
       renderCalendarInfo={() => (
-        <TestCustomInfoPanel />
+        <TestCustomInfoPanel1 />
       )}
       autoFocus
     />
