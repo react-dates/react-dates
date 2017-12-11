@@ -203,7 +203,7 @@ storiesOf('DayPickerSingleDateController', module)
       onOutsideClick={action('DayPickerSingleDateController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerSingleDateController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerSingleDateController::onNextMonthClick')}
-      renderDay={day => day.format('ddd')}
+      renderDayContents={day => day.format('ddd')}
     />
   ))
   .addWithInfo('with info panel', () => (

@@ -87,7 +87,7 @@ storiesOf('DateRangePicker (DRP)', module)
     return (
       <DateRangePickerWrapper
         renderMonth={month => momentJalaali(month).format('jMMMM jYYYY')}
-        renderDay={day => momentJalaali(day).format('jD')}
+        renderDayContents={day => momentJalaali(day).format('jD')}
       />
     );
   })
