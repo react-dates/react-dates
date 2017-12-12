@@ -1,5 +1,10 @@
 # Change Log
 
+## 16.0.0
+- [breaking] Simplify `CalendarDay` component ([#894](https://github.com/airbnb/react-dates/pull/894))
+- [breaking] rename `renderDay` prop to `renderDayContents` ([#894](https://github.com/airbnb/react-dates/pull/894))
+- [new] Add `renderCalendarDay` component to allow for easy one-off customization of `CalendarDay` ([#894](https://github.com/airbnb/react-dates/pull/894))
+
 ## 15.5.1
 - [fix] Adjust `small` variant height to be 36px ([#892](https://github.com/airbnb/react-dates/pull/892))
 
