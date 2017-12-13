@@ -82,6 +82,17 @@ class CalendarDay extends React.Component {
     onDayMouseLeave(day, e);
   }
 
+  onKeyDown(day, e) {
+    const {
+      onDayClick,
+    } = this.props;
+
+    const { key } = e;
+    if (key === 'Enter' || key === ' ') {
+      onDayClick(day, e);
+    }
+  }
+
   setButtonRef(ref) {
     this.buttonRef = ref;
   }
