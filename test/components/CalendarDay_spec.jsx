@@ -59,6 +59,7 @@ describe('CalendarDay', () => {
 
       beforeEach(() => {
         phrases.chooseAvailableDate = sinon.stub().returns('chooseAvailableDate text');
+        phrases.dateIsSelected = sinon.stub().returns('dateIsSelected text');
         phrases.dateIsUnavailable = sinon.stub().returns('dateIsUnavailable text');
       });
 
@@ -73,6 +74,23 @@ describe('CalendarDay', () => {
 
         expect(phrases.chooseAvailableDate.calledWith(expectedFormattedDay)).to.equal(true);
         expect(wrapper.prop('aria-label')).to.equal('chooseAvailableDate text');
+      });
+
+      it('is formatted with the dateIsSelected phrase function when day is selected', () => {
+        const selectedModifiers = new Set(['selected', 'selected-start', 'selected-end']);
+
+        selectedModifiers.forEach((selectedModifier) => {
+          const modifiers = new Set().add(selectedModifier);
+
+          const wrapper = shallow(<CalendarDay
+            modifiers={modifiers}
+            phrases={phrases}
+            day={day}
+          />).dive();
+
+          expect(phrases.dateIsSelected.calledWith(expectedFormattedDay)).to.equal(true);
+          expect(wrapper.prop('aria-label')).to.equal('dateIsSelected text');
+        });
       });
 
       it('is formatted with the dateIsUnavailable phrase function when day is not available', () => {

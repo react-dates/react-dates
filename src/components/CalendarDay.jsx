@@ -110,16 +110,11 @@ class CalendarDay extends React.Component {
       phrases: {
         chooseAvailableDate,
         dateIsUnavailable,
+        dateIsSelected,
       },
     } = this.props;
 
     if (!day) return <td />;
-
-    const formattedDate = { date: day.format(ariaLabelFormat) };
-
-    const ariaLabel = modifiers.has(BLOCKED_MODIFIER)
-      ? getPhrase(dateIsUnavailable, formattedDate)
-      : getPhrase(chooseAvailableDate, formattedDate);
 
     const daySizeStyles = {
       width: daySize,
@@ -144,6 +139,15 @@ class CalendarDay extends React.Component {
     );
 
     const isOutsideRange = modifiers.has('blocked-out-of-range');
+
+    const formattedDate = { date: day.format(ariaLabelFormat) };
+
+    let ariaLabel = getPhrase(chooseAvailableDate, formattedDate);
+    if (modifiers.has(BLOCKED_MODIFIER)) {
+      ariaLabel = getPhrase(dateIsUnavailable, formattedDate);
+    } else if (selected) {
+      ariaLabel = getPhrase(dateIsSelected, formattedDate);
+    }
 
     return (
       <td

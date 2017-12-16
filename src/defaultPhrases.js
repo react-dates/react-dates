@@ -25,13 +25,11 @@ const returnFocusToInput = 'Return to the date input field.';
 const keyboardNavigationInstructions = `Press the down arrow key to interact with the calendar and
   select a date. Press the question mark key to get the keyboard shortcuts for changing dates.`;
 
-// eslint-disable-next-line camelcase
 const chooseAvailableStartDate = ({ date }) => `Choose ${date} as your check-in date. It's available.`;
-
-// eslint-disable-next-line camelcase
 const chooseAvailableEndDate = ({ date }) => `Choose ${date} as your check-out date. It's available.`;
 const chooseAvailableDate = ({ date }) => date;
 const dateIsUnavailable = ({ date }) => `Not available. ${date}`;
+const dateIsSelected = ({ date }) => `Selected. ${date}`;
 
 export default {
   calendarLabel,
@@ -63,6 +61,7 @@ export default {
   chooseAvailableStartDate,
   chooseAvailableEndDate,
   dateIsUnavailable,
+  dateIsSelected,
 };
 
 export const DateRangePickerPhrases = {
@@ -93,6 +92,7 @@ export const DateRangePickerPhrases = {
   chooseAvailableStartDate,
   chooseAvailableEndDate,
   dateIsUnavailable,
+  dateIsSelected,
 };
 
 export const DateRangePickerInputPhrases = {
@@ -127,6 +127,7 @@ export const SingleDatePickerPhrases = {
   keyboardNavigationInstructions,
   chooseAvailableDate,
   dateIsUnavailable,
+  dateIsSelected,
 };
 
 export const SingleDatePickerInputPhrases = {
@@ -159,6 +160,7 @@ export const DayPickerPhrases = {
   chooseAvailableEndDate,
   chooseAvailableDate,
   dateIsUnavailable,
+  dateIsSelected,
 };
 
 export const DayPickerKeyboardShortcutsPhrases = {
@@ -189,4 +191,5 @@ export const DayPickerNavigationPhrases = {
 export const CalendarDayPhrases = {
   chooseAvailableDate,
   dateIsUnavailable,
+  dateIsSelected,
 };
