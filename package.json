@@ -1,10 +1,11 @@
 {
   "name": "react-dates",
-  "version": "15.5.2",
+  "version": "15.5.3",
   "description": "A responsive and accessible date range picker component built with React",
   "main": "index.js",
   "scripts": {
-    "build": "npm run clean && npm run build:cjs && npm run build:esm && npm run build:css -- --optimize ",
+    "prebuild": "npm run clean",
+    "build": "npm run build:cjs && npm run build:esm && npm run build:css -- --optimize ",
     "build:cjs": "BABEL_ENV=cjs babel src/ -d lib/",
     "build:esm": "BABEL_ENV=esm babel src/ -d esm/",
     "prebuild:css": "rimraf lib/css && mkdir -p lib/css",
@@ -119,8 +120,8 @@
     "react-addons-shallow-compare": "^15.5.2",
     "react-moment-proptypes": "^1.5.0",
     "react-portal": "^4.1.0",
-    "react-with-styles": "^2.2.0",
-    "react-with-styles-interface-css": "^3.0.0"
+    "react-with-styles-interface-css": "^3.0.0",
+    "react-with-styles": "=2.2.0"
   },
   "peerDependencies": {
     "moment": "^2.18.1",
