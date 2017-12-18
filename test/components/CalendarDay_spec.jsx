@@ -33,7 +33,7 @@ describe('CalendarDay', () => {
     });
 
     it('passes modifiers to renderDayContents', () => {
-      const modifiers = new Set().add(BLOCKED_MODIFIER);
+      const modifiers = new Set([BLOCKED_MODIFIER]);
       const renderDayContents = (day, mods) => `${day.format('dddd')}${mods.has(BLOCKED_MODIFIER) ? 'BLOCKED' : ''}`;
       const expected = `${moment().format('dddd')}BLOCKED`;
       const wrapper =
@@ -65,11 +65,13 @@ describe('CalendarDay', () => {
       it('is formatted with the chooseAvailableDate phrase function when day is available', () => {
         const modifiers = new Set();
 
-        const wrapper = shallow(<CalendarDay
-          modifiers={modifiers}
-          phrases={phrases}
-          day={day}
-        />).dive();
+        const wrapper = shallow((
+          <CalendarDay
+            modifiers={modifiers}
+            phrases={phrases}
+            day={day}
+          />
+        )).dive();
 
         expect(wrapper.prop('aria-label')).to.equal('chooseAvailableDate text');
       });
@@ -78,26 +80,30 @@ describe('CalendarDay', () => {
         const selectedModifiers = new Set(['selected', 'selected-start', 'selected-end']);
 
         selectedModifiers.forEach((selectedModifier) => {
-          const modifiers = new Set().add(selectedModifier);
+          const modifiers = new Set([selectedModifier]);
 
-          const wrapper = shallow(<CalendarDay
-            modifiers={modifiers}
-            phrases={phrases}
-            day={day}
-          />).dive();
+          const wrapper = shallow((
+            <CalendarDay
+              modifiers={modifiers}
+              phrases={phrases}
+              day={day}
+            />
+          )).dive();
 
           expect(wrapper.prop('aria-label')).to.equal('dateIsSelected text');
         });
       });
 
       it('is formatted with the dateIsUnavailable phrase function when day is not available', () => {
-        const modifiers = new Set().add(BLOCKED_MODIFIER);
+        const modifiers = new Set([BLOCKED_MODIFIER]);
 
-        const wrapper = shallow(<CalendarDay
-          modifiers={modifiers}
-          phrases={phrases}
-          day={day}
-        />).dive();
+        const wrapper = shallow((
+          <CalendarDay
+            modifiers={modifiers}
+            phrases={phrases}
+            day={day}
+          />
+        )).dive();
 
         expect(wrapper.prop('aria-label')).to.equal('dateIsUnavailable text');
       });
