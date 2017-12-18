@@ -57,7 +57,6 @@ describe('CustomizableCalendarDay', () => {
     describe('aria-label', () => {
       const phrases = {};
       const day = moment('10/10/2017');
-      const expectedFormattedDay = { date: 'Tuesday, October 10, 2017' };
 
       beforeEach(() => {
         phrases.chooseAvailableDate = sinon.stub().returns('chooseAvailableDate text');
@@ -74,7 +73,6 @@ describe('CustomizableCalendarDay', () => {
           day={day}
         />).dive();
 
-        expect(phrases.chooseAvailableDate.calledWith(expectedFormattedDay)).to.equal(true);
         expect(wrapper.prop('aria-label')).to.equal('chooseAvailableDate text');
       });
 
@@ -90,7 +88,6 @@ describe('CustomizableCalendarDay', () => {
             day={day}
           />).dive();
 
-          expect(phrases.dateIsSelected.calledWith(expectedFormattedDay)).to.equal(true);
           expect(wrapper.prop('aria-label')).to.equal('dateIsSelected text');
         });
       });
@@ -104,7 +101,6 @@ describe('CustomizableCalendarDay', () => {
           day={day}
         />).dive();
 
-        expect(phrases.dateIsUnavailable.calledWith(expectedFormattedDay)).to.equal(true);
         expect(wrapper.prop('aria-label')).to.equal('dateIsUnavailable text');
       });
 

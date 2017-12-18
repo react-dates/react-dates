@@ -8,9 +8,9 @@ import moment from 'moment';
 
 import { CalendarDayPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
-import getPhrase from '../utils/getPhrase';
+import getCalendarDaySettings from '../utils/getCalendarDaySettings';
 
-import { BLOCKED_MODIFIER, DAY_SIZE } from '../constants';
+import { DAY_SIZE } from '../constants';
 
 const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
@@ -107,47 +107,19 @@ class CalendarDay extends React.Component {
       renderDayContents,
       tabIndex,
       styles,
-      phrases: {
-        chooseAvailableDate,
-        dateIsUnavailable,
-        dateIsSelected,
-      },
+      phrases,
     } = this.props;
 
     if (!day) return <td />;
 
-    const daySizeStyles = {
-      width: daySize,
-      height: daySize - 1,
-    };
-
-    const useDefaultCursor = (
-      modifiers.has('blocked-minimum-nights')
-      || modifiers.has('blocked-calendar')
-      || modifiers.has('blocked-out-of-range')
-    );
-
-    const selected = (
-      modifiers.has('selected')
-      || modifiers.has('selected-start')
-      || modifiers.has('selected-end')
-    );
-
-    const hoveredSpan = !selected && (
-      modifiers.has('hovered-span')
-      || modifiers.has('after-hovered-start')
-    );
-
-    const isOutsideRange = modifiers.has('blocked-out-of-range');
-
-    const formattedDate = { date: day.format(ariaLabelFormat) };
-
-    let ariaLabel = getPhrase(chooseAvailableDate, formattedDate);
-    if (modifiers.has(BLOCKED_MODIFIER)) {
-      ariaLabel = getPhrase(dateIsUnavailable, formattedDate);
-    } else if (selected) {
-      ariaLabel = getPhrase(dateIsSelected, formattedDate);
-    }
+    const {
+      daySizeStyles,
+      useDefaultCursor,
+      selected,
+      hoveredSpan,
+      isOutsideRange,
+      ariaLabel,
+    } = getCalendarDaySettings(day, ariaLabelFormat, daySize, modifiers, phrases);
 
     return (
       <td
