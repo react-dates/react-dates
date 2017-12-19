@@ -184,8 +184,8 @@ class CustomizableCalendarDay extends React.Component {
       : getPhrase(chooseAvailableDate, formattedDate);
 
     const daySizeStyles = {
-      width: daySize,
-      height: daySize - 1,
+      width: 40,
+      height: 17,
     };
 
     const useDefaultCursor = (
