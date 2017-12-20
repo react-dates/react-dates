@@ -20,6 +20,8 @@ const FANG_STROKE_TOP = `M0,${FANG_HEIGHT_PX} ${FANG_WIDTH_PX / 2},0 ${FANG_WIDT
 const FANG_PATH_BOTTOM = `M0,0 ${FANG_WIDTH_PX},0 ${FANG_WIDTH_PX / 2},${FANG_HEIGHT_PX}z`;
 const FANG_STROKE_BOTTOM = `M0,0 ${FANG_WIDTH_PX / 2},${FANG_HEIGHT_PX} ${FANG_WIDTH_PX},0`;
 
+const MODIFIER_NAMES = ['Shift', 'Control', 'Alt', 'Meta'];
+
 const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
   id: PropTypes.string.isRequired,
@@ -127,7 +129,7 @@ class DateInput extends React.Component {
 
   onKeyDown(e) {
     e.stopPropagation();
-    if (!['Shift', 'Control', 'Alt', 'Meta'].includes(e.key)) {
+    if (!MODIFIER_NAMES.includes(e.key)) {
       this.throttledKeyDown(e);
     }
   }
