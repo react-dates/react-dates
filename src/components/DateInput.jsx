@@ -20,6 +20,8 @@ const FANG_STROKE_TOP = `M0,${FANG_HEIGHT_PX} ${FANG_WIDTH_PX / 2},0 ${FANG_WIDT
 const FANG_PATH_BOTTOM = `M0,0 ${FANG_WIDTH_PX},0 ${FANG_WIDTH_PX / 2},${FANG_HEIGHT_PX}z`;
 const FANG_STROKE_BOTTOM = `M0,0 ${FANG_WIDTH_PX / 2},${FANG_HEIGHT_PX} ${FANG_WIDTH_PX},0`;
 
+const MODIFIER_NAMES = ['Shift', 'Control', 'Alt', 'Meta'];
+
 const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
   id: PropTypes.string.isRequired,
@@ -84,6 +86,7 @@ class DateInput extends React.Component {
     this.onChange = this.onChange.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
     this.setInputRef = this.setInputRef.bind(this);
+    this.throttledKeyDown = throttle(this.onFinalKeyDown, 300, { trailing: false });
   }
 
   componentDidMount() {
@@ -126,15 +129,20 @@ class DateInput extends React.Component {
 
   onKeyDown(e) {
     e.stopPropagation();
+    if (!MODIFIER_NAMES.includes(e.key)) {
+      this.throttledKeyDown(e);
+    }
+  }
 
+  onFinalKeyDown(e) {
     const {
       onKeyDownShiftTab,
       onKeyDownTab,
       onKeyDownArrowDown,
       onKeyDownQuestionMark,
     } = this.props;
-
     const { key } = e;
+
     if (key === 'Tab') {
       if (e.shiftKey) {
         onKeyDownShiftTab(e);
@@ -209,7 +217,7 @@ class DateInput extends React.Component {
           ref={this.setInputRef}
           value={value}
           onChange={this.onChange}
-          onKeyDown={throttle(this.onKeyDown, 300)}
+          onKeyDown={this.onKeyDown}
           onFocus={onFocus}
           placeholder={placeholder}
           autoComplete="off"
