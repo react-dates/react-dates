@@ -128,7 +128,7 @@ class DateInput extends React.Component {
 
   onKeyDown(e) {
     e.stopPropagation();
-    if (!MODIFIER_KEY_NAMES.includes(e.key)) {
+    if (!MODIFIER_KEY_NAMES.has(e.key)) {
       this.throttledKeyDown(e);
     }
   }
