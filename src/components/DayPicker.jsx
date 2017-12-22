@@ -32,6 +32,7 @@ import {
   VERTICAL_ORIENTATION,
   VERTICAL_SCROLLABLE,
   DAY_SIZE,
+  MODIFIER_KEY_NAMES,
 } from '../constants';
 
 const MONTH_PADDING = 23;
@@ -173,6 +174,7 @@ class DayPicker extends React.Component {
     this.calendarMonthGridHeight = 0;
 
     this.onKeyDown = this.onKeyDown.bind(this);
+    this.throttledKeyDown = throttle(this.onFinalKeyDown, 200, { trailing: false });
     this.onPrevMonthClick = this.onPrevMonthClick.bind(this);
     this.onNextMonthClick = this.onNextMonthClick.bind(this);
     this.multiplyScrollableMonths = this.multiplyScrollableMonths.bind(this);
@@ -251,7 +253,12 @@ class DayPicker extends React.Component {
 
   onKeyDown(e) {
     e.stopPropagation();
+    if (!MODIFIER_KEY_NAMES.includes(e.key)) {
+      this.throttledKeyDown(e);
+    }
+  }
 
+  onFinalKeyDown(e) {
     this.setState({ withMouseInteractions: false });
 
     const { onBlur, isRTL } = this.props;
@@ -778,7 +785,7 @@ class DayPicker extends React.Component {
             {...css(styles.DayPicker_focusRegion)}
             ref={this.setContainerRef}
             onClick={(e) => { e.stopPropagation(); }}
-            onKeyDown={throttle(this.onKeyDown, 300)}
+            onKeyDown={this.onKeyDown}
             onMouseUp={() => { this.setState({ withMouseInteractions: true }); }}
             role="region"
             tabIndex={-1}

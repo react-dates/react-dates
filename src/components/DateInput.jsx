@@ -13,14 +13,13 @@ import {
   FANG_HEIGHT_PX,
   FANG_WIDTH_PX,
   DEFAULT_VERTICAL_SPACING,
+  MODIFIER_KEY_NAMES,
 } from '../constants';
 
 const FANG_PATH_TOP = `M0,${FANG_HEIGHT_PX} ${FANG_WIDTH_PX},${FANG_HEIGHT_PX} ${FANG_WIDTH_PX / 2},0z`;
 const FANG_STROKE_TOP = `M0,${FANG_HEIGHT_PX} ${FANG_WIDTH_PX / 2},0 ${FANG_WIDTH_PX},${FANG_HEIGHT_PX}`;
 const FANG_PATH_BOTTOM = `M0,0 ${FANG_WIDTH_PX},0 ${FANG_WIDTH_PX / 2},${FANG_HEIGHT_PX}z`;
 const FANG_STROKE_BOTTOM = `M0,0 ${FANG_WIDTH_PX / 2},${FANG_HEIGHT_PX} ${FANG_WIDTH_PX},0`;
-
-const MODIFIER_NAMES = ['Shift', 'Control', 'Alt', 'Meta'];
 
 const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
@@ -129,7 +128,7 @@ class DateInput extends React.Component {
 
   onKeyDown(e) {
     e.stopPropagation();
-    if (!MODIFIER_NAMES.includes(e.key)) {
+    if (!MODIFIER_KEY_NAMES.includes(e.key)) {
       this.throttledKeyDown(e);
     }
   }
