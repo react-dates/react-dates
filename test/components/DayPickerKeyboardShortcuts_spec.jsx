@@ -216,7 +216,7 @@ describe('DayPickerKeyboardShortcuts', () => {
         });
 
         it('onKeyDown Space calls e.stopPropagation and onShowKeyboardShortcutsButtonClick', () => {
-          closeButton.prop('onKeyDown')({ ...event, key: 'Space' });
+          closeButton.prop('onKeyDown')({ ...event, key: ' ' });
           expect(event.stopPropagation.callCount).to.equal(1);
           expect(closeKeyboardShortcutsPanelStub.callCount).to.equal(1);
         });
@@ -227,11 +227,10 @@ describe('DayPickerKeyboardShortcuts', () => {
           expect(closeKeyboardShortcutsPanelStub.callCount).to.equal(1);
         });
 
-        it('onKeyDown Enter calls e.stopPropagation and e.preventDefault and NOT onShowKeyboardShortcutsButtonClick', () => {
+        it('onKeyDown Enter calls e.stopPropagation and onShowKeyboardShortcutsButtonClick', () => {
           closeButton.prop('onKeyDown')({ ...event, key: 'Enter' });
           expect(event.stopPropagation.callCount).to.equal(1);
-          expect(event.preventDefault.callCount).to.equal(1);
-          expect(closeKeyboardShortcutsPanelStub.notCalled).to.equal(true);
+          expect(closeKeyboardShortcutsPanelStub.callCount).to.equal(1);
         });
 
         it('onKeyDown Tab calls e.stopPropagation and e.preventDefault and NOT onShowKeyboardShortcutsButtonClick', () => {
