@@ -296,7 +296,7 @@ describe('DateRangePickerInputController', () => {
     });
 
     describe('matches custom display format', () => {
-      const customFormat = 'MM[foobar]DD';
+      const customFormat = 'YY|MM[foobar]DD';
       const customFormatDateString = moment(today).add(5, 'days').format(customFormat);
       it('calls props.onDatesChange with correct arguments', () => {
         const onDatesChangeStub = sinon.stub();
@@ -627,7 +627,7 @@ describe('DateRangePickerInputController', () => {
     });
 
     describe('matches custom display format', () => {
-      const customFormat = 'MM[foobar]DD';
+      const customFormat = 'YY|MM[foobar]DD';
       const customFormatDateString = moment(today).add(5, 'days').format(customFormat);
       it('calls props.onDatesChange with correct arguments', () => {
         const onDatesChangeStub = sinon.stub();
