@@ -8,6 +8,10 @@ import { BLOCKED_MODIFIER } from '../../src/constants';
 import CustomizableCalendarDay, { PureCustomizableCalendarDay } from '../../src/components/CustomizableCalendarDay';
 
 describe('CustomizableCalendarDay', () => {
+  afterEach(() => {
+    sinon.restore();
+  });
+
   describe('#render', () => {
     it('contains formatted day for single digit days', () => {
       const firstOfMonth = moment().startOf('month');
@@ -60,10 +64,6 @@ describe('CustomizableCalendarDay', () => {
         phrases.dateIsUnavailable = sinon.stub().returns('dateIsUnavailable text');
       });
 
-      afterEach(() => {
-        sinon.restore();
-      });
-
       it('is formatted with the chooseAvailableDate phrase function when day is available', () => {
         const modifiers = new Set();
 
@@ -93,14 +93,89 @@ describe('CustomizableCalendarDay', () => {
       it('should set aria-label with a value pass through ariaLabelFormat prop if it exists', () => {
         const modifiers = new Set();
 
-        const wrapper = shallow(<CustomizableCalendarDay
-          modifiers={modifiers}
-          day={day}
-          ariaLabelFormat="MMMM Do YYYY"
-        />).dive();
+        const wrapper = shallow((
+          <CustomizableCalendarDay
+            modifiers={modifiers}
+            day={day}
+            ariaLabelFormat="MMMM Do YYYY"
+          />
+        )).dive();
 
         expect(wrapper.prop('aria-label')).to.equal('October 10th 2017');
       });
+    });
+
+    describe('event handlers', () => {
+      const day = moment('10/10/2017');
+
+      let wrapper;
+      beforeEach(() => {
+        wrapper = shallow((
+          <CustomizableCalendarDay
+            day={day}
+            ariaLabelFormat="MMMM Do YYYY"
+          />
+        )).dive();
+      });
+
+      it('onMouseUp blurs the event target', () => {
+        const handler = wrapper.prop('onMouseUp');
+        const blur = sinon.spy();
+        handler({ currentTarget: { blur } });
+        expect(blur).to.have.property('callCount', 1);
+      });
+
+      it('onKeyDown calls this.onKeyDown', () => {
+        const spy = sinon.spy(wrapper.instance(), 'onKeyDown');
+        const handler = wrapper.prop('onKeyDown');
+        const event = {};
+        handler(event);
+        expect(spy).to.have.property('callCount', 1);
+        expect(spy.calledWith(day, event)).to.equal(true);
+      });
+    });
+
+    it('renders an empty <td> when no day is given', () => {
+      const wrapper = shallow(<CustomizableCalendarDay day={null} />).dive();
+      expect(wrapper.is('td')).to.equal(true);
+      expect(wrapper.children()).to.have.lengthOf(0);
+      expect(wrapper.props()).to.eql({});
+    });
+  });
+
+  describe('#onKeyDown', () => {
+    const day = moment('10/10/2017');
+
+    let onDayClick;
+    let wrapper;
+    beforeEach(() => {
+      onDayClick = sinon.spy();
+      wrapper = shallow((
+        <CustomizableCalendarDay
+          day={day}
+          onDayClick={onDayClick}
+        />
+      )).dive();
+    });
+
+    it('calls onDayClick with the enter key', () => {
+      const event = { key: 'Enter' };
+      wrapper.instance().onKeyDown(day, event);
+      expect(onDayClick).to.have.property('callCount', 1);
+      expect(onDayClick.calledWith(day, event)).to.equal(true);
+    });
+
+    it('calls onDayClick with the space key', () => {
+      const event = { key: ' ' };
+      wrapper.instance().onKeyDown(day, event);
+      expect(onDayClick).to.have.property('callCount', 1);
+      expect(onDayClick.calledWith(day, event)).to.equal(true);
+    });
+
+    it('does not call onDayClick otherwise', () => {
+      const event = { key: 'Shift' };
+      wrapper.instance().onKeyDown(day, event);
+      expect(onDayClick).to.have.property('callCount', 0);
     });
   });
 
@@ -108,10 +183,6 @@ describe('CustomizableCalendarDay', () => {
     let onDayClickSpy;
     beforeEach(() => {
       onDayClickSpy = sinon.spy(PureCustomizableCalendarDay.prototype, 'onDayClick');
-    });
-
-    afterEach(() => {
-      sinon.restore();
     });
 
     it('gets triggered by click', () => {
@@ -132,10 +203,6 @@ describe('CustomizableCalendarDay', () => {
     let onDayMouseEnterSpy;
     beforeEach(() => {
       onDayMouseEnterSpy = sinon.spy(PureCustomizableCalendarDay.prototype, 'onDayMouseEnter');
-    });
-
-    afterEach(() => {
-      sinon.restore();
     });
 
     it('gets triggered by mouseenter', () => {
@@ -165,10 +232,6 @@ describe('CustomizableCalendarDay', () => {
     let onDayMouseLeaveSpy;
     beforeEach(() => {
       onDayMouseLeaveSpy = sinon.spy(PureCustomizableCalendarDay.prototype, 'onDayMouseLeave');
-    });
-
-    afterEach(() => {
-      sinon.restore();
     });
 
     it('gets triggered by mouseleave', () => {
