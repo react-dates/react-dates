@@ -488,18 +488,20 @@ class DayPicker extends React.Component {
   }
 
   isHorizontal() {
-    return this.props.orientation === HORIZONTAL_ORIENTATION;
+    const { orientation } = this.props;
+    return orientation === HORIZONTAL_ORIENTATION;
   }
 
   isVertical() {
-    return this.props.orientation === VERTICAL_ORIENTATION ||
-      this.props.orientation === VERTICAL_SCROLLABLE;
+    const { orientation } = this.props;
+    return orientation === VERTICAL_ORIENTATION || orientation === VERTICAL_SCROLLABLE;
   }
 
   updateStateAfterMonthTransition() {
     const {
       onPrevMonthClick,
       onNextMonthClick,
+      isRTL,
     } = this.props;
 
     const {
@@ -532,7 +534,7 @@ class DayPicker extends React.Component {
     this.setState({
       currentMonth: newMonth,
       monthTransition: null,
-      translationValue: (this.props.isRTL && this.isHorizontal()) ? -calendarMonthWidth : 0,
+      translationValue: (isRTL && this.isHorizontal()) ? -calendarMonthWidth : 0,
       nextFocusedDate: null,
       focusedDate: newFocusedDate,
     }, () => {
@@ -705,7 +707,7 @@ class DayPicker extends React.Component {
       weekHeaders.push(this.renderWeekHeader(i));
     }
 
-    const verticalScrollable = this.props.orientation === VERTICAL_SCROLLABLE;
+    const verticalScrollable = orientation === VERTICAL_SCROLLABLE;
     const firstVisibleMonthIndex = this.getFirstVisibleIndex();
     const horizontalWidth = (calendarMonthWidth * numberOfMonths) + (2 * DAY_PICKER_PADDING);
 

@@ -415,11 +415,19 @@ export default class DayPickerRangeController extends React.Component {
   }
 
   onDayClick(day, e) {
-    const { keepOpenOnDateSelect, minimumNights, onBlur } = this.props;
+    const {
+      keepOpenOnDateSelect,
+      minimumNights,
+      onBlur,
+      focusedInput,
+      onFocusChange,
+      onClose,
+      onDatesChange,
+    } = this.props;
+
     if (e) e.preventDefault();
     if (this.isBlocked(day)) return;
 
-    const { focusedInput, onFocusChange, onClose } = this.props;
     let { startDate, endDate } = this.props;
 
     if (focusedInput === START_DATE) {
@@ -448,7 +456,7 @@ export default class DayPickerRangeController extends React.Component {
       }
     }
 
-    this.props.onDatesChange({ startDate, endDate });
+    onDatesChange({ startDate, endDate });
     onBlur();
   }
 
