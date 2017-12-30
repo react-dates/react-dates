@@ -20,7 +20,7 @@ const theme = {
 };
 
 describe('#getInputHeight', () => {
-  it('returns the expected value with falsey second arg', () => {
+  it('returns the expected value with falsy second arg', () => {
     const inputHeight = getInputHeight(theme);
     expect(inputHeight).to.equal(55);
   });

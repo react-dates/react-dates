@@ -105,7 +105,7 @@ describe('SingleDatePicker', () => {
           expect(wrapper.find(Portal)).to.have.length(1);
         });
 
-        it('is not rendered if props.focused is falsey', () => {
+        it('is not rendered if props.focused is falsy', () => {
           const wrapper = shallow((
             <SingleDatePicker
               onDateChange={() => {}}
@@ -144,7 +144,7 @@ describe('SingleDatePicker', () => {
           expect(wrapper.find(Portal)).to.have.length(1);
         });
 
-        it('is not rendered when props.focused is falsey', () => {
+        it('is not rendered when props.focused is falsy', () => {
           const wrapper = shallow((
             <SingleDatePicker
               onDateChange={() => {}}
