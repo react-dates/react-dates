@@ -103,7 +103,9 @@ Here is the minimum *REQUIRED* setup you need to get the `DateRangePicker` worki
 ```jsx
 <DateRangePicker
   startDate={this.state.startDate} // momentPropTypes.momentObj or null,
+  startDateId=// PropTypes.string.isRequired,
   endDate={this.state.endDate} // momentPropTypes.momentObj or null,
+  endDateId=// PropTypes.string.isRequired,
   onDatesChange={({ startDate, endDate }) => this.setState({ startDate, endDate })} // PropTypes.func.isRequired,
   focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
   onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
@@ -113,9 +115,7 @@ Here is the minimum *REQUIRED* setup you need to get the `DateRangePicker` worki
 The following is a list of other *OPTIONAL* props you may provide to the `DateRangePicker` to customize appearance and behavior to your heart's desire. Again, please explore the [storybook](http://airbnb.io/react-dates/?selectedKind=DRP%20-%20Input%20Props&selectedStory=default&full=0&down=1&left=1&panelRight=0&downPanel=kadirahq%2Fstorybook-addon-actions%2Factions-panel) for more information on what each of these props do.
 ```js
 // input related props
-startDateId: PropTypes.string.isRequired,
 startDatePlaceholderText: PropTypes.string,
-endDateId: PropTypes.string.isRequired,
 endDatePlaceholderText: PropTypes.string,
 disabled: PropTypes.bool,
 required: PropTypes.bool,
