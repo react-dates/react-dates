@@ -7,7 +7,7 @@ import SingleDatePickerInput from '../../src/components/SingleDatePickerInput';
 
 describe('SingleDatePickerInput', () => {
   describe('clear date', () => {
-    describe('props.showClearDate is falsey', () => {
+    describe('props.showClearDate is falsy', () => {
       it('does not render a clear date button', () => {
         const wrapper = shallow(<SingleDatePickerInput id="date" showClearDate={false} />).dive();
         expect(wrapper.find('button')).to.have.lengthOf(0);
@@ -36,7 +36,7 @@ describe('SingleDatePickerInput', () => {
   });
 
   describe('show calendar icon', () => {
-    describe('props.showInputIcon is falsey', () => {
+    describe('props.showInputIcon is falsy', () => {
       it('does not have a calendar button', () => {
         const wrapper = shallow((
           <SingleDatePickerInput id="date" showDefaultInputIcon={false} />

@@ -374,7 +374,7 @@ describe('DateRangePicker', () => {
       });
     });
 
-    describe('focusedInput is falsey', () => {
+    describe('focusedInput is falsy', () => {
       it('calls onFocusChange', () => {
         const onFocusChangeStub = sinon.stub();
         const wrapper = shallow((

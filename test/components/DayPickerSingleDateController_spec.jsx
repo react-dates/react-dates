@@ -844,7 +844,7 @@ describe('DayPickerSingleDateController', () => {
   });
 
   describe('#getFirstFocusableDay', () => {
-    it('returns first day of arg month if not blocked and props.date is falsey', () => {
+    it('returns first day of arg month if not blocked and props.date is falsy', () => {
       sinon.stub(DayPickerSingleDateController.prototype, 'isBlocked').returns(false);
       const wrapper = shallow((
         <DayPickerSingleDateController

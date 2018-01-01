@@ -80,7 +80,7 @@ describe('DayPicker', () => {
           expect(CalendarMonthGridComponent.prop('isAnimating')).to.equal(true);
         });
 
-        it('is false if state.monthTransition is falsey', () => {
+        it('is false if state.monthTransition is falsy', () => {
           const wrapper = shallow(<DayPicker />).dive();
           wrapper.setState({ monthTransition: null });
           const CalendarMonthGridComponent = wrapper.find(CalendarMonthGrid);
@@ -400,7 +400,7 @@ describe('DayPicker', () => {
       });
     });
 
-    describe('focusedDate is falsey', () => {
+    describe('focusedDate is falsy', () => {
       it('does not call maybeTransitionPrevMonth', () => {
         const maybeTransitionPrevMonthSpy = sinon.spy(PureDayPicker.prototype, 'maybeTransitionPrevMonth');
         const wrapper = shallow(<DayPicker />).dive();
@@ -496,7 +496,7 @@ describe('DayPicker', () => {
       });
     });
 
-    describe('props.getFirstFocusableDay is falsey', () => {
+    describe('props.getFirstFocusableDay is falsy', () => {
       it('returns undefined if no arg', () => {
         const wrapper = shallow(<DayPicker />).dive();
         expect(wrapper.instance().getFocusedDay()).to.equal(undefined);
@@ -741,7 +741,7 @@ describe('DayPicker', () => {
           expect(adjustDayPickerHeightSpy).to.have.property('callCount', 2);
         });
 
-        it('does not call adjustDayPickerHeight if state.monthTransition is falsey', () => {
+        it('does not call adjustDayPickerHeight if state.monthTransition is falsy', () => {
           const wrapper = mount(<DayPicker orientation={HORIZONTAL_ORIENTATION} />);
           wrapper.setState({
             monthTransition: null,
@@ -757,7 +757,7 @@ describe('DayPicker', () => {
           expect(updateStateAfterMonthTransitionSpy).to.have.property('callCount', 1);
         });
 
-        it('does not call updateStateAfterMonthTransition if state.monthTransition is falsey', () => {
+        it('does not call updateStateAfterMonthTransition if state.monthTransition is falsy', () => {
           const wrapper = mount(<DayPicker orientation={HORIZONTAL_ORIENTATION} />);
           wrapper.setState({
             monthTransition: null,
@@ -775,7 +775,7 @@ describe('DayPicker', () => {
           expect(adjustDayPickerHeightSpy.called).to.equal(false);
         });
 
-        it('does not call adjustDayPickerHeight if state.monthTransition is falsey', () => {
+        it('does not call adjustDayPickerHeight if state.monthTransition is falsy', () => {
           const wrapper = mount(<DayPicker orientation={VERTICAL_ORIENTATION} />);
           wrapper.setState({
             monthTransition: null,
@@ -791,7 +791,7 @@ describe('DayPicker', () => {
           expect(updateStateAfterMonthTransitionSpy).to.have.property('callCount', 1);
         });
 
-        it('does not call updateStateAfterMonthTransition if state.monthTransition is falsey', () => {
+        it('does not call updateStateAfterMonthTransition if state.monthTransition is falsy', () => {
           const wrapper = mount(<DayPicker orientation={VERTICAL_ORIENTATION} />);
           wrapper.setState({
             monthTransition: null,

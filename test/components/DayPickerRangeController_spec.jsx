@@ -597,7 +597,7 @@ describe('DayPickerRangeController', () => {
           });
         });
 
-        describe('new start date is falsey', () => {
+        describe('new start date is falsy', () => {
           it('does not call addModifierToRange with `after-hovered-start`', () => {
             const startDate = moment();
             const addModifierToRangeSpy = sinon.spy(DayPickerRangeController.prototype, 'addModifierToRange');
@@ -2020,7 +2020,7 @@ describe('DayPickerRangeController', () => {
         expect(firstFocusableDay.isSame(today, 'day')).to.equal(true);
       });
 
-      it('returns first day of arg month if startDate is falsey', () => {
+      it('returns first day of arg month if startDate is falsy', () => {
         sinon.stub(DayPickerRangeController.prototype, 'isBlocked').returns(false);
         const wrapper = shallow((
           <DayPickerRangeController
@@ -2037,7 +2037,7 @@ describe('DayPickerRangeController', () => {
     });
 
     describe('focusedInput === END_DATE', () => {
-      it('returns endDate if exists and is not blocked and startDate is falsey', () => {
+      it('returns endDate if exists and is not blocked and startDate is falsy', () => {
         sinon.stub(DayPickerRangeController.prototype, 'isBlocked').returns(false);
         const endDate = moment().add(10, 'days');
         const wrapper = shallow((
@@ -2070,7 +2070,7 @@ describe('DayPickerRangeController', () => {
         expect(firstFocusableDay.isSame(startDate.clone().add(minimumNights, 'days'), 'day')).to.equal(true);
       });
 
-      it('returns first day of arg month if startDate and endDate are falsey', () => {
+      it('returns first day of arg month if startDate and endDate are falsy', () => {
         sinon.stub(DayPickerRangeController.prototype, 'isBlocked').returns(false);
         const wrapper = shallow((
           <DayPickerRangeController
@@ -2711,7 +2711,7 @@ describe('DayPickerRangeController', () => {
         expect(wrapper.instance().isDayAfterHoveredStartDate(testDate)).to.equal(true);
       });
 
-      it('returns false if props.startDate is falsey', () => {
+      it('returns false if props.startDate is falsy', () => {
         const testDate = moment(today).add(1, 'days');
         const wrapper = shallow(<DayPickerRangeController startDate={null} />);
         wrapper.setState({
@@ -2775,7 +2775,7 @@ describe('DayPickerRangeController', () => {
     });
 
     describe('#isHovered', () => {
-      it('returns false if focusedInput is falsey', () => {
+      it('returns false if focusedInput is falsy', () => {
         const wrapper = shallow(<DayPickerRangeController focusedInput={null} />);
         wrapper.setState({
           hoverDate: today,
