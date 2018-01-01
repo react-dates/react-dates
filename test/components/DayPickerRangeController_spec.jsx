@@ -1851,7 +1851,7 @@ describe('DayPickerRangeController', () => {
         currentMonth: today,
       });
       wrapper.instance().onPrevMonthClick();
-      expect(wrapper.state().currentMonth.month()).to.equal(today.month() - 1);
+      expect(wrapper.state().currentMonth.month()).to.equal(today.clone().subtract(1, 'month').month());
     });
 
     it('new visibleDays has previous month', () => {
