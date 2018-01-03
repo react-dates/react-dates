@@ -301,6 +301,7 @@ class CalendarMonthGrid extends React.Component {
                   position: 'absolute',
                   top: -this.calendarMonthHeights[0],
                 },
+                !isVisible && !isAnimating && styles.CalendarMonthGrid_month__hidden,
               )}
             >
               <CalendarMonth
@@ -371,5 +372,9 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
     zIndex: zIndex - 1,
     opacity: 0,
     pointerEvents: 'none',
+  },
+
+  CalendarMonthGrid_month__hidden: {
+    visibility: 'hidden',
   },
 }))(CalendarMonthGrid);
