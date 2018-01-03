@@ -3,11 +3,10 @@ import PropTypes from 'prop-types';
 import { forbidExtraProps } from 'airbnb-prop-types';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 
-import KeyboardShortcutRow from './KeyboardShortcutRow';
-
 import { DayPickerKeyboardShortcutsPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 
+import KeyboardShortcutRow from './KeyboardShortcutRow';
 import CloseButton from './CloseButton';
 
 export const TOP_LEFT = 'top-left';
@@ -97,35 +96,35 @@ class DayPickerKeyboardShortcuts extends React.Component {
   }
 
   onKeyDown(e) {
+    e.stopPropagation();
+
     const { closeKeyboardShortcutsPanel } = this.props;
     // Because the close button is the only focusable element inside of the panel, this
-    // amount to a very basic focus trap. The user can exit the panel by "pressing" the
+    // amounts to a very basic focus trap. The user can exit the panel by "pressing" the
     // close button or hitting escape
     switch (e.key) {
-      case 'Space':
+      case 'Enter':
+      case ' ':
+      case 'Spacebar': // for older browsers
       case 'Escape':
-        e.stopPropagation();
         closeKeyboardShortcutsPanel();
         break;
 
-      // only stopPropagation here - this allows the up and down arrows continue their
+      // do nothing - this allows the up and down arrows continue their
       // default behavior of scrolling the content of the Keyboard Shortcuts Panel
       // which is needed when only a single month is shown for instance.
       case 'ArrowUp':
       case 'ArrowDown':
-        e.stopPropagation();
         break;
 
       // completely block the rest of the keys that have functionality outside of this panel
       case 'Tab':
-      case 'Enter':
       case 'Home':
       case 'End':
       case 'PageUp':
       case 'PageDown':
       case 'ArrowLeft':
       case 'ArrowRight':
-        e.stopPropagation();
         e.preventDefault();
         break;
 
