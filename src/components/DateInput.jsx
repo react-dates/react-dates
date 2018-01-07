@@ -93,7 +93,7 @@ class DateInput extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.displayValue) {
+    if (this.state.dateString && nextProps.displayValue) {
       this.setState({
         dateString: '',
       });
@@ -121,8 +121,7 @@ class DateInput extends React.Component {
     if (dateString[dateString.length - 1] === '?') {
       onKeyDownQuestionMark(e);
     } else {
-      this.setState({ dateString });
-      onChange(dateString);
+      this.setState({ dateString }, () => onChange(dateString));
     }
   }
 
