@@ -33,7 +33,7 @@ describe('CustomizableCalendarDay', () => {
     });
 
     it('passes modifiers to renderDay', () => {
-      const modifiers = new Set().add(BLOCKED_MODIFIER);
+      const modifiers = new Set([BLOCKED_MODIFIER]);
       const renderDay = (day, mods) => `${day.format('dddd')}${mods.has(BLOCKED_MODIFIER) ? 'BLOCKED' : ''}`;
       const expected = `${moment().format('dddd')}BLOCKED`;
       const wrapper = shallow(<CustomizableCalendarDay
@@ -57,36 +57,56 @@ describe('CustomizableCalendarDay', () => {
     describe('aria-label', () => {
       const phrases = {};
       const day = moment('10/10/2017');
-      const expectedFormattedDay = { date: 'Tuesday, October 10, 2017' };
 
       beforeEach(() => {
         phrases.chooseAvailableDate = sinon.stub().returns('chooseAvailableDate text');
+        phrases.dateIsSelected = sinon.stub().returns('dateIsSelected text');
         phrases.dateIsUnavailable = sinon.stub().returns('dateIsUnavailable text');
       });
 
       it('is formatted with the chooseAvailableDate phrase function when day is available', () => {
         const modifiers = new Set();
 
-        const wrapper = shallow(<CustomizableCalendarDay
-          modifiers={modifiers}
-          phrases={phrases}
-          day={day}
-        />).dive();
+        const wrapper = shallow((
+          <CustomizableCalendarDay
+            modifiers={modifiers}
+            phrases={phrases}
+            day={day}
+          />
+        )).dive();
 
-        expect(phrases.chooseAvailableDate.calledWith(expectedFormattedDay)).to.equal(true);
         expect(wrapper.prop('aria-label')).to.equal('chooseAvailableDate text');
       });
 
+      it('is formatted with the dateIsSelected phrase function when day is selected', () => {
+        const selectedModifiers = new Set(['selected', 'selected-start', 'selected-end']);
+
+        selectedModifiers.forEach((selectedModifier) => {
+          const modifiers = new Set([selectedModifier]);
+
+          const wrapper = shallow((
+            <CustomizableCalendarDay
+              modifiers={modifiers}
+              phrases={phrases}
+              day={day}
+            />
+          )).dive();
+
+          expect(wrapper.prop('aria-label')).to.equal('dateIsSelected text');
+        });
+      });
+
       it('is formatted with the dateIsUnavailable phrase function when day is not available', () => {
-        const modifiers = new Set().add(BLOCKED_MODIFIER);
+        const modifiers = new Set([BLOCKED_MODIFIER]);
 
-        const wrapper = shallow(<CustomizableCalendarDay
-          modifiers={modifiers}
-          phrases={phrases}
-          day={day}
-        />).dive();
+        const wrapper = shallow((
+          <CustomizableCalendarDay
+            modifiers={modifiers}
+            phrases={phrases}
+            day={day}
+          />
+        )).dive();
 
-        expect(phrases.dateIsUnavailable.calledWith(expectedFormattedDay)).to.equal(true);
         expect(wrapper.prop('aria-label')).to.equal('dateIsUnavailable text');
       });
 
@@ -220,9 +240,11 @@ describe('CustomizableCalendarDay', () => {
 
     it('calls props.onDayMouseEnter', () => {
       const onMouseEnterStub = sinon.stub();
-      const wrapper = shallow(<CustomizableCalendarDay
-        onDayMouseEnter={onMouseEnterStub}
-      />).dive();
+      const wrapper = shallow((
+        <CustomizableCalendarDay
+          onDayMouseEnter={onMouseEnterStub}
+        />
+      )).dive();
       wrapper.instance().onDayMouseEnter();
       expect(onMouseEnterStub).to.have.property('callCount', 1);
     });
@@ -249,9 +271,11 @@ describe('CustomizableCalendarDay', () => {
 
     it('calls props.onDayMouseLeave', () => {
       const onMouseLeaveStub = sinon.stub();
-      const wrapper = shallow(<CustomizableCalendarDay
-        onDayMouseLeave={onMouseLeaveStub}
-      />).dive();
+      const wrapper = shallow((
+        <CustomizableCalendarDay
+          onDayMouseLeave={onMouseLeaveStub}
+        />
+      )).dive();
       wrapper.instance().onDayMouseLeave();
       expect(onMouseLeaveStub).to.have.property('callCount', 1);
     });
