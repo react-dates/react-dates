@@ -1,5 +1,9 @@
 # Change Log
 
+## 16.0.2
+- [fix] Fix keyboard navigation issues ([#916](https://github.com/airbnb/react-dates/pull/916))
+- [fix] Fix React warnings when events are referenced later ([#682](https://github.com/airbnb/react-dates/pull/682))
+
 ## 16.0.1
 - [fix] Add back missing onKeyDown method to `CalendarDay` ([#901](https://github.com/airbnb/react-dates/pull/901))
 
