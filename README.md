@@ -129,6 +129,7 @@ customCloseIcon: PropTypes.node,
 noBorder: PropTypes.bool,
 block: PropTypes.bool,
 small: PropTypes.bool,
+regular: PropTypes.bool,
 
 // calendar presentation and interaction related props
 renderMonth: PropTypes.func,
@@ -203,6 +204,8 @@ showDefaultInputIcon: PropTypes.bool,
 customInputIcon: PropTypes.node,
 noBorder: PropTypes.bool,
 block: PropTypes.bool,
+small: PropTypes.bool,
+regular: PropTypes.bool,
 
 // calendar presentation and interaction related props
 renderMonth: PropTypes.func,

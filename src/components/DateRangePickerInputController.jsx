@@ -44,6 +44,7 @@ const propTypes = forbidExtraProps({
   noBorder: PropTypes.bool,
   block: PropTypes.bool,
   small: PropTypes.bool,
+  regular: PropTypes.bool,
   verticalSpacing: nonNegativeInteger,
 
   keepOpenOnDateSelect: PropTypes.bool,
@@ -95,6 +96,7 @@ const defaultProps = {
   noBorder: false,
   block: false,
   small: false,
+  regular: false,
   verticalSpacing: undefined,
 
   keepOpenOnDateSelect: false,
@@ -273,6 +275,7 @@ export default class DateRangePickerInputController extends React.Component {
       noBorder,
       block,
       small,
+      regular,
       verticalSpacing,
     } = this.props;
 
@@ -316,6 +319,7 @@ export default class DateRangePickerInputController extends React.Component {
         noBorder={noBorder}
         block={block}
         small={small}
+        regular={regular}
         verticalSpacing={verticalSpacing}
       />
     );
