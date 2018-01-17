@@ -235,7 +235,7 @@ class DateInput extends React.Component {
               openDirection === OPEN_DOWN && {
                 top: inputHeight + verticalSpacing - FANG_HEIGHT_PX - 1,
               },
-              openDirection === OPEN_DOWN && {
+              openDirection === OPEN_UP && {
                 bottom: inputHeight + verticalSpacing - FANG_HEIGHT_PX - 1,
               },
             )}
