@@ -1,5 +1,11 @@
 # Change Log
 
+## 16.1.0
+- [fix] Allow for changing of the input value via highlight and replace ([#955](https://github.com/airbnb/react-dates/pull/955))
+- [fix] Fix OPEN_UP styling ([#925](https://github.com/airbnb/react-dates/pull/925))
+- [fix] Don't read invisible months to the screen reader ([#940](https://github.com/airbnb/react-dates/pull/940))
+- [new] Add phrase for aria-label for the selected day ([#905](https://github.com/airbnb/react-dates/pull/905))
+
 ## 16.0.2
 - [fix] Fix keyboard navigation issues ([#916](https://github.com/airbnb/react-dates/pull/916))
 - [fix] Fix React warnings when events are referenced later ([#682](https://github.com/airbnb/react-dates/pull/682))
