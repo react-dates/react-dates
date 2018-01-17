@@ -65,6 +65,7 @@ const defaultProps = {
   block: false,
   small: false,
   regular: false,
+  keepFocusOnInput: false,
 
   // calendar presentation and interaction related props
   renderMonth: null,
@@ -188,10 +189,17 @@ class DateRangePicker extends React.Component {
   }
 
   onDateRangePickerInputFocus(focusedInput) {
-    const { onFocusChange, withPortal, withFullScreenPortal } = this.props;
+    const {
+      onFocusChange,
+      withPortal,
+      withFullScreenPortal,
+      keepFocusOnInput,
+    } = this.props;
 
     if (focusedInput) {
-      const moveFocusToDayPicker = withPortal || withFullScreenPortal || this.isTouchDevice;
+      const withAnyPortal = withPortal || withFullScreenPortal;
+      const moveFocusToDayPicker = withAnyPortal || (this.isTouchDevice && !keepFocusOnInput);
+
       if (moveFocusToDayPicker) {
         this.onDayPickerFocus();
       } else {

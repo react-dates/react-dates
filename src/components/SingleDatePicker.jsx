@@ -62,6 +62,7 @@ const defaultProps = {
   small: false,
   regular: false,
   verticalSpacing: DEFAULT_VERTICAL_SPACING,
+  keepFocusOnInput: false,
 
   // calendar presentation and interaction related props
   orientation: HORIZONTAL_ORIENTATION,
@@ -193,9 +194,12 @@ class SingleDatePicker extends React.Component {
       onFocusChange,
       withPortal,
       withFullScreenPortal,
+      keepFocusOnInput,
     } = this.props;
 
-    const moveFocusToDayPicker = withPortal || withFullScreenPortal || this.isTouchDevice;
+    const withAnyPortal = withPortal || withFullScreenPortal;
+    const moveFocusToDayPicker = withAnyPortal || (this.isTouchDevice && !keepFocusOnInput);
+
     if (moveFocusToDayPicker) {
       this.onDayPickerFocus();
     } else {
