@@ -1478,16 +1478,14 @@ describe('DayPickerRangeController', () => {
     });
 
     describe('props.range', () => {
-      it('calls props.onDatesChange with startDate === range.before(date) and endDate === range.after(date)', () => {
+      it('calls props.onDatesChange with startDate === startDateOffset(date) and endDate === endDateOffset(date)', () => {
         const clickDate = moment(today).clone().add(2, 'days');
         const onDatesChangeStub = sinon.stub();
         const wrapper = shallow((
           <DayPickerRangeController
             onDatesChange={onDatesChangeStub}
-            range={{
-              before: day => day.subtract(2, 'days'),
-              after: day => day.add(4, 'days'),
-            }}
+            startDateOffset={day => day.subtract(2, 'days')}
+            endDateOffset={day => day.add(4, 'days')}
           />
         ));
         wrapper.instance().onDayClick(clickDate);
@@ -1496,15 +1494,13 @@ describe('DayPickerRangeController', () => {
         expect(args.endDate.format()).to.equal(clickDate.clone().add(4, 'days').format());
       });
 
-      it('calls props.onDatesChange with startDate === range.before(date) and endDate === selectedDate when range.after not provided', () => {
+      it('calls props.onDatesChange with startDate === startDateOffset(date) and endDate === selectedDate when endDateOffset not provided', () => {
         const clickDate = moment(today).clone().add(2, 'days');
         const onDatesChangeStub = sinon.stub();
         const wrapper = shallow((
           <DayPickerRangeController
             onDatesChange={onDatesChangeStub}
-            range={{
-              before: day => day.subtract(5, 'days'),
-            }}
+            startDateOffset={day => day.subtract(5, 'days')}
           />
         ));
         wrapper.instance().onDayClick(clickDate);
@@ -1513,15 +1509,13 @@ describe('DayPickerRangeController', () => {
         expect(args.endDate.format()).to.equal(clickDate.format());
       });
 
-      it('calls props.onDatesChange with startDate === selectedDate and endDate === range.after(date) when range.before not provided', () => {
+      it('calls props.onDatesChange with startDate === selectedDate and endDate === endDateOffset(date) when startDateOffset not provided', () => {
         const clickDate = moment(today).clone().add(12, 'days');
         const onDatesChangeStub = sinon.stub();
         const wrapper = shallow((
           <DayPickerRangeController
             onDatesChange={onDatesChangeStub}
-            range={{
-              after: day => day.add(12, 'days'),
-            }}
+            endDateOffset={day => day.add(12, 'days')}
           />
         ));
         wrapper.instance().onDayClick(clickDate);
@@ -1539,18 +1533,16 @@ describe('DayPickerRangeController', () => {
       expect(wrapper.state().hoverDate).to.equal(today);
     });
 
-    it('sets state.dateRange to the start and end date range when range included', () => {
+    it('sets state.dateOffset to the start and end date range when range included', () => {
       const wrapper = shallow((
         <DayPickerRangeController
           focusedInput={START_DATE}
-          range={{
-            after: day => day.add(2, 'days'),
-          }}
+          endDateOffset={day => day.add(2, 'days')}
         />
       ));
       wrapper.instance().onDayMouseEnter(today);
-      expect(wrapper.state().dateRange.start.format()).to.equal(today.format());
-      expect(wrapper.state().dateRange.end.format()).to.equal(today.clone().add(3, 'days').format());
+      expect(wrapper.state().dateOffset.start.format()).to.equal(today.format());
+      expect(wrapper.state().dateOffset.end.format()).to.equal(today.clone().add(3, 'days').format());
     });
 
     describe('modifiers', () => {

@@ -91,10 +91,8 @@ storiesOf('DayPickerRangeController', module)
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
-      range={{
-        before: day => day.subtract(3, 'days'),
-        after: day => day.add(3, 'days'),
-      }}
+      startDateOffset={day => day.subtract(3, 'days')}
+      endDateOffset={day => day.add(3, 'days')}
     />
   ))
   .addWithInfo('with 45 days range selection', () => (
@@ -102,10 +100,8 @@ storiesOf('DayPickerRangeController', module)
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
-      range={{
-        before: day => day.subtract(22, 'days'),
-        after: day => day.add(22, 'days'),
-      }}
+      startDateOffset={day => day.subtract(22, 'days')}
+      endDateOffset={day => day.add(22, 'days')}
     />
   ))
   .addWithInfo('with 4 days after today range selection', () => (
@@ -113,9 +109,7 @@ storiesOf('DayPickerRangeController', module)
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
-      range={{
-        after: day => day.add(4, 'days'),
-      }}
+      endDateOffset={day => day.add(4, 'days')}
     />
   ))
   .addWithInfo('with current week range selection', () => (
@@ -123,10 +117,8 @@ storiesOf('DayPickerRangeController', module)
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
-      range={{
-        before: day => day.startOf('week'),
-        after: day => day.endOf('week'),
-      }}
+      startDateOffset={day => day.startOf('week')}
+      endDateOffset={day => day.endOf('week')}
     />
   ))
   .addWithInfo('with custom inputs', () => (

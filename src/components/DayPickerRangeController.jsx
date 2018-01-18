@@ -18,7 +18,7 @@ import isBeforeDay from '../utils/isBeforeDay';
 import getVisibleDays from '../utils/getVisibleDays';
 import isDayVisible from '../utils/isDayVisible';
 
-import getRangeDay from '../utils/getRangeDay';
+import getSelectedDateOffset from '../utils/getSelectedDateOffset';
 
 import toISODateString from '../utils/toISODateString';
 import toISOMonthString from '../utils/toISOMonthString';
@@ -26,7 +26,6 @@ import toISOMonthString from '../utils/toISOMonthString';
 import FocusedInputShape from '../shapes/FocusedInputShape';
 import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
 import DayOfWeekShape from '../shapes/DayOfWeekShape';
-import RangeShape from '../shapes/RangeShape';
 
 import {
   START_DATE,
@@ -42,7 +41,8 @@ const propTypes = forbidExtraProps({
   startDate: momentPropTypes.momentObj,
   endDate: momentPropTypes.momentObj,
   onDatesChange: PropTypes.func,
-  range: RangeShape,
+  startDateOffset: PropTypes.func,
+  endDateOffset: PropTypes.func,
 
   focusedInput: FocusedInputShape,
   onFocusChange: PropTypes.func,
@@ -95,7 +95,8 @@ const defaultProps = {
   startDate: undefined, // TODO: use null
   endDate: undefined, // TODO: use null
   onDatesChange() {},
-  range: undefined,
+  startDateOffset: undefined,
+  endDateOffset: undefined,
 
   focusedInput: null,
   onFocusChange() {},
@@ -173,6 +174,7 @@ export default class DayPickerRangeController extends React.Component {
       'last-in-range': day => this.isLastInRange(day),
       hovered: day => this.isHovered(day),
       'hovered-span': day => this.isInHoveredSpan(day),
+      'hovered-offset': day => this.isInHoveredSpan(day),
       'after-hovered-start': day => this.isDayAfterHoveredStartDate(day),
     };
 
@@ -422,7 +424,8 @@ export default class DayPickerRangeController extends React.Component {
       keepOpenOnDateSelect,
       minimumNights,
       onBlur,
-      range,
+      startDateOffset,
+      endDateOffset,
     } = this.props;
 
     if (e) e.preventDefault();
@@ -431,10 +434,10 @@ export default class DayPickerRangeController extends React.Component {
     const { focusedInput, onFocusChange, onClose } = this.props;
     let { startDate, endDate } = this.props;
 
-    if (range) {
-      const { before, after } = range;
-      startDate = getRangeDay(before, day);
-      endDate = getRangeDay(after, day);
+    if (startDateOffset || endDateOffset) {
+      startDate = getSelectedDateOffset(startDateOffset, day);
+      endDate = getSelectedDateOffset(endDateOffset, day);
+
       if (!keepOpenOnDateSelect) {
         onFocusChange(null);
         onClose({ startDate, endDate });
@@ -476,31 +479,32 @@ export default class DayPickerRangeController extends React.Component {
       endDate,
       focusedInput,
       minimumNights,
-      range,
+      startDateOffset,
+      endDateOffset,
     } = this.props;
     const { hoverDate, visibleDays } = this.state;
-    let dateRange = null;
+    let dateOffset = null;
 
     if (focusedInput) {
+      const hasOffset = startDateOffset || endDateOffset;
       let modifiers = {};
 
-      if (range && (range.before || range.after)) {
-        const { before, after } = range;
-        const start = getRangeDay(before, day);
-        const end = getRangeDay(after, day, rangeDay => rangeDay.add(1, 'day'));
+      if (hasOffset) {
+        const start = getSelectedDateOffset(startDateOffset, day);
+        const end = getSelectedDateOffset(endDateOffset, day, rangeDay => rangeDay.add(1, 'day'));
 
-        dateRange = {
+        dateOffset = {
           start,
           end,
         };
 
-        if (this.state.dateRange && this.state.dateRange.start && this.state.dateRange.end) {
-          modifiers = this.deleteModifierFromRange(modifiers, this.state.dateRange.start, this.state.dateRange.end, 'hovered');
+        if (this.state.dateOffset && this.state.dateOffset.start && this.state.dateOffset.end) {
+          modifiers = this.deleteModifierFromRange(modifiers, this.state.dateOffset.start, this.state.dateOffset.end, 'hovered-offset');
         }
-        modifiers = this.addModifierToRange(modifiers, start, end, 'hovered');
+        modifiers = this.addModifierToRange(modifiers, start, end, 'hovered-offset');
       }
 
-      if (!range) {
+      if (!hasOffset) {
         modifiers = this.deleteModifier(modifiers, hoverDate, 'hovered');
         modifiers = this.addModifier(modifiers, day, 'hovered');
 
@@ -546,7 +550,7 @@ export default class DayPickerRangeController extends React.Component {
 
       this.setState({
         hoverDate: day,
-        dateRange,
+        dateOffset,
         visibleDays: {
           ...visibleDays,
           ...modifiers,
@@ -557,14 +561,14 @@ export default class DayPickerRangeController extends React.Component {
 
   onDayMouseLeave(day) {
     const { startDate, endDate, minimumNights } = this.props;
-    const { hoverDate, visibleDays, dateRange } = this.state;
+    const { hoverDate, visibleDays, dateOffset } = this.state;
     if (this.isTouchDevice || !hoverDate) return;
 
     let modifiers = {};
     modifiers = this.deleteModifier(modifiers, hoverDate, 'hovered');
 
-    if (dateRange) {
-      modifiers = this.deleteModifierFromRange(modifiers, this.state.dateRange.start, this.state.dateRange.end, 'hovered');
+    if (dateOffset) {
+      modifiers = this.deleteModifierFromRange(modifiers, this.state.dateOffset.start, this.state.dateOffset.end, 'hovered');
     }
 
     if (startDate && !endDate && isAfterDay(hoverDate, startDate)) {

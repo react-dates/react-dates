@@ -13,14 +13,13 @@ import ScrollableOrientationShape from '../src/shapes/ScrollableOrientationShape
 import { START_DATE, END_DATE, HORIZONTAL_ORIENTATION } from '../src/constants';
 import isInclusivelyAfterDay from '../src/utils/isInclusivelyAfterDay';
 
-import RangeShape from '../src/shapes/RangeShape';
-
 const propTypes = forbidExtraProps({
   // example props for the demo
   autoFocusEndDate: PropTypes.bool,
   initialStartDate: momentPropTypes.momentObj,
   initialEndDate: momentPropTypes.momentObj,
-  range: RangeShape,
+  startDateOffset: PropTypes.func,
+  endDateOffset: PropTypes.func,
 
   keepOpenOnDateSelect: PropTypes.bool,
   minimumNights: PropTypes.number,
@@ -55,7 +54,8 @@ const defaultProps = {
   autoFocusEndDate: false,
   initialStartDate: null,
   initialEndDate: null,
-  range: undefined,
+  startDateOffset: undefined,
+  endDateOffset: undefined,
 
   // day presentation and interaction related props
   renderDay: null,
