@@ -64,6 +64,7 @@ const defaultProps = {
   noBorder: false,
   block: false,
   small: false,
+  regular: false,
 
   // calendar presentation and interaction related props
   renderMonth: null,
@@ -460,6 +461,7 @@ class DateRangePicker extends React.Component {
       block,
       verticalSpacing,
       small,
+      regular,
       styles,
     } = this.props;
 
@@ -515,6 +517,7 @@ class DateRangePicker extends React.Component {
             noBorder={noBorder}
             block={block}
             small={small}
+            regular={regular}
             verticalSpacing={verticalSpacing}
           />
 

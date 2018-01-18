@@ -34,6 +34,7 @@ export default {
   noBorder: PropTypes.bool,
   block: PropTypes.bool,
   small: PropTypes.bool,
+  regular: PropTypes.bool,
   verticalSpacing: nonNegativeInteger,
 
   // calendar presentation and interaction related props
