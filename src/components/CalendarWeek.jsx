@@ -10,7 +10,7 @@ const propTypes = forbidExtraProps({
 
 export default function CalendarWeek({ children }) {
   return (
-    <tr>
+    <tr style={{ }}>
       {children}
     </tr>
   );

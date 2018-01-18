@@ -9,6 +9,8 @@ import isInclusivelyAfterDay from '../src/utils/isInclusivelyAfterDay';
 
 import { VERTICAL_ORIENTATION } from '../src/constants';
 
+import CustomizableCalendarDay from '../src/components/CustomizableCalendarDay';
+
 import DayPickerRangeControllerWrapper from '../examples/DayPickerRangeControllerWrapper';
 
 const dayPickerRangeControllerInfo = `The ${monospace('DayPickerRangeController')} component is a
@@ -78,7 +80,6 @@ const datesList = [
 ];
 
 storiesOf('DayPickerRangeController', module)
-  .addDecorator(InfoPanelDecorator(dayPickerRangeControllerInfo))
   .addWithInfo('default', () => (
     <DayPickerRangeControllerWrapper
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
@@ -278,4 +279,148 @@ storiesOf('DayPickerRangeController', module)
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
       transitionDuration={0}
     />
-  ));
+  ))
+  .addWithInfo('luxury styling', () => {
+    const crossOutLine = (
+      <svg
+        style={{ position: 'absolute', right: 28 }}
+        width="30"
+        height="30"
+        viewBox="0 0 30 30"
+      >
+        <path d="M 0 30 L 30 0" stroke="#979797" strokeWidth="1" />
+      </svg>
+    );
+
+    const renderDayContents = (day, modifiers = new Set()) => {
+      const priceString = '$1000';
+
+      const blocked =
+        modifiers.has('blocked');
+      const hoveredSpan =
+        modifiers.has('selected-start') ||
+        modifiers.has('selected-span') ||
+        modifiers.has('selected-end') ||
+        modifiers.has('hovered-span') ||
+        modifiers.has('after-hovered-start');
+
+      let priceStringColor = '#2d49d3';
+      if (hoveredSpan) {
+        priceStringColor = '#fff';
+      } else if (blocked || modifiers.has('blocked-minimum-nights')) {
+        priceStringColor = '#979797';
+      }
+
+      return (
+        <div style={{ position: 'relative' }}>
+          {blocked && crossOutLine}
+          <div>
+            <span style={{ fontSize: 24, fontWeight: 300 }}>{day.format('D')}</span>
+          </div>
+          {priceString && (
+            <div>
+              <span
+                style={{
+                  fontSize: 12,
+                  color: priceStringColor,
+                  // :hover: {
+                    //color: white
+                    //}
+                }}
+              >
+                {priceString}
+              </span>
+            </div>
+          )}
+        </div>
+      );
+    };
+
+    // border radius rules
+    // single hovered or selected should have rounded corners
+    // start and end of range should have border radius (hovered, selected, whatever)
+    // start and end of week should have radius
+
+    // spacing between rows
+
+    // TODO display 6 months
+
+    const selectedStyles = {
+      background: '#3285cb',
+      border: 0,
+      color: '#fff',
+    };
+
+    const blockedStyles = {
+      background: '#fff',
+      color: '#919191',
+    };
+
+    const customDayStyles = {
+      defaultStyles: {
+        border: 0,
+        background: '#fff',
+        color: '#484848',
+
+        hover: {
+          border: 0,
+          background: '#6fa9da',
+          color: '#fff',
+        },
+      },
+      selectedStartStyles: {
+        ...selectedStyles,
+        borderRadius: '3px 0 0 3px',
+      },
+      selectedEndStyles: {
+        ...selectedStyles,
+        borderRadius: '0 3px 3px 0',
+      },
+      selectedSpanStyles: selectedStyles,
+      blockedMinNightsStyles: blockedStyles,
+      blockedCalendarStyles: blockedStyles,
+      blockedOutOfRangeStyles: blockedStyles,
+      hoveredSpanStyles: {
+        background: '#6fa9da',
+        color: '#fff',
+      },
+      firstDayOfWeekStyles: {
+        borderRadius: '3px 0 0 3px',
+      },
+      lastDayOfWeekStyles: {
+        borderRadius: '0 3px 3px 0',
+      },
+    };
+
+    const renderCalendarDay = (props) => {
+      const { modifiers } = props;
+
+      return (
+        <CustomizableCalendarDay
+          {...props}
+          {...customDayStyles}
+          renderDayContents={(day) => renderDayContents(day, modifiers)}
+        />
+      );
+    };
+
+    return (
+      <DayPickerRangeControllerWrapper
+        onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
+        onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
+        onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
+        daySize={80}
+        hideKeyboardShortcutsPanel
+        isDayBlocked={day1 => datesList.some(day2 => isSameDay(day1, day2))}
+        keepOpenOnDateSelect
+        minimumNights={7}
+        monthFormat="MMMM"
+        numberOfMonths={6}
+        orientation={VERTICAL_ORIENTATION}
+        renderCalendarDay={renderCalendarDay}
+
+        initialStartDate={moment('2018-02-12')}
+        initialEndDate={moment('2018-02-23')}
+      />
+    );
+  });

@@ -5,6 +5,8 @@ import { storiesOf } from '@storybook/react';
 import isInclusivelyAfterDay from '../src/utils/isInclusivelyAfterDay';
 import isSameDay from '../src/utils/isSameDay';
 
+import CustomizableCalendarDay from '../src/components/CustomizableCalendarDay';
+
 import SingleDatePickerWrapper from '../examples/SingleDatePickerWrapper';
 
 const datesList = [
@@ -17,6 +19,17 @@ const datesList = [
   moment().add(12, 'days'),
   moment().add(13, 'days'),
 ];
+
+
+const selectedStyles = {
+  background: '#a61d55',
+  border: '1px double #991b4e',
+  color: '#fff',
+};
+
+const customDayStyles = {
+  selectedStyles,
+};
 
 storiesOf('SDP - Day Props', module)
   .addWithInfo('default', () => (
@@ -59,6 +72,12 @@ storiesOf('SDP - Day Props', module)
     <SingleDatePickerWrapper
       numberOfMonths={1}
       renderDayContents={day => day.format('ddd')}
+      autoFocus
+    />
+  ))
+  .addWithInfo('one-off custom styling', () => (
+    <SingleDatePickerWrapper
+      renderCalendarDay={props => <CustomizableCalendarDay {...props} {...customDayStyles} />}
       autoFocus
     />
   ));

@@ -22,12 +22,12 @@ const datesList = [
 
 const selectedStyles = {
   background: '#590098',
-  border: '1px solid #590098',
+  border: 0,
   color: '#fff',
 
   hover: {
     background: '#7A32AC',
-    border: '1px solid #7A32AC',
+    border: 0,
     color: '#fff',
   },
 };
