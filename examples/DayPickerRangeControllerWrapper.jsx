@@ -13,6 +13,8 @@ import ScrollableOrientationShape from '../src/shapes/ScrollableOrientationShape
 import { START_DATE, END_DATE, HORIZONTAL_ORIENTATION } from '../src/constants';
 import isInclusivelyAfterDay from '../src/utils/isInclusivelyAfterDay';
 
+import RangeShape from '../src/shapes/RangeShape';
+
 const propTypes = forbidExtraProps({
   // example props for the demo
   autoFocusEndDate: PropTypes.bool,
@@ -33,6 +35,7 @@ const propTypes = forbidExtraProps({
   orientation: ScrollableOrientationShape,
   withPortal: PropTypes.bool,
   initialVisibleMonth: PropTypes.func,
+  range: RangeShape,
   renderCalendarInfo: PropTypes.func,
 
   navPrev: PropTypes.node,
@@ -64,6 +67,7 @@ const defaultProps = {
   isOutsideRange: day => !isInclusivelyAfterDay(day, moment()),
   isDayHighlighted: () => false,
   enableOutsideDays: false,
+  range: undefined,
 
   // calendar presentation and interaction related props
   orientation: HORIZONTAL_ORIENTATION,

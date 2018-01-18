@@ -26,6 +26,7 @@ import toISOMonthString from '../utils/toISOMonthString';
 import FocusedInputShape from '../shapes/FocusedInputShape';
 import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
 import DayOfWeekShape from '../shapes/DayOfWeekShape';
+import RangeShape from '../shapes/RangeShape';
 
 import {
   START_DATE,
