@@ -361,6 +361,19 @@ describe('DateRangePicker', () => {
         expect(onDayPickerFocusSpy.callCount).to.equal(1);
       });
 
+      it('calls onDayPickerFocus if focusedInput and readOnly', () => {
+        const wrapper = shallow((
+          <DateRangePicker
+            {...requiredProps}
+            onDatesChange={sinon.stub()}
+            onFocusChange={sinon.stub()}
+            readOnly
+          />
+        )).dive();
+        wrapper.instance().onDateRangePickerInputFocus(START_DATE);
+        expect(onDayPickerFocusSpy.callCount).to.equal(1);
+      });
+
       it('calls onDayPickerFocus if focusedInput and isTouchDevice', () => {
         const wrapper = shallow((
           <DateRangePicker
@@ -374,7 +387,7 @@ describe('DateRangePicker', () => {
         expect(onDayPickerFocusSpy.callCount).to.equal(1);
       });
 
-      it('calls onDayPickerBlur if focusedInput and !withPortal/!withFullScreenPortal and keepFocusOnInput', () => {
+      it('calls onDayPickerBlur if focusedInput and !withPortal/!withFullScreenPortal/!readOnly and keepFocusOnInput', () => {
         const wrapper = shallow((
           <DateRangePicker
             {...requiredProps}
@@ -402,7 +415,7 @@ describe('DateRangePicker', () => {
         expect(onDayPickerFocusSpy.callCount).to.equal(1);
       });
 
-      it('calls onDayPickerBlur if focusedInput and !withPortal/!withFullScreenPortal', () => {
+      it('calls onDayPickerBlur if focusedInput and !withPortal/!withFullScreenPortal/!readOnly', () => {
         const wrapper = shallow((
           <DateRangePicker
             {...requiredProps}

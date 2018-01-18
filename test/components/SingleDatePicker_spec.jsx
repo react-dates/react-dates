@@ -482,6 +482,18 @@ describe('SingleDatePicker', () => {
       expect(onDayPickerFocusSpy.callCount).to.equal(1);
     });
 
+    it('calls onDayPickerFocus if readOnly', () => {
+      const wrapper = shallow((
+        <SingleDatePicker
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+          readOnly
+        />
+      )).dive();
+      wrapper.instance().onFocus();
+      expect(onDayPickerFocusSpy.callCount).to.equal(1);
+    });
+
     it('calls onDayPickerFocus if isTouchDevice', () => {
       const wrapper = shallow((
         <SingleDatePicker
@@ -492,6 +504,19 @@ describe('SingleDatePicker', () => {
       wrapper.instance().isTouchDevice = true;
       wrapper.instance().onFocus();
       expect(onDayPickerFocusSpy.callCount).to.equal(1);
+    });
+
+    it('calls onDayPickerBlur if isTouchDevice and keepFocusOnInput', () => {
+      const wrapper = shallow((
+        <SingleDatePicker
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+          keepFocusOnInput
+        />
+      )).dive();
+      wrapper.instance().isTouchDevice = true;
+      wrapper.instance().onFocus();
+      expect(onDayPickerBlurSpy.callCount).to.equal(1);
     });
 
     it('calls onDayPickerBlur if !withPortal/!withFullScreenPortal and keepFocusOnInput', () => {
@@ -520,7 +545,21 @@ describe('SingleDatePicker', () => {
       expect(onDayPickerFocusSpy.callCount).to.equal(1);
     });
 
-    it('calls onDayPickerBlur if !withPortal/!withFullScreenPortal', () => {
+
+    it('calls onDayPickerFocus if readOnly and keepFocusOnInput', () => {
+      const wrapper = shallow((
+        <SingleDatePicker
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+          keepFocusOnInput
+          withFullScreenPortal
+        />
+      )).dive();
+      wrapper.instance().onFocus();
+      expect(onDayPickerFocusSpy.callCount).to.equal(1);
+    });
+
+    it('calls onDayPickerBlur if !withPortal/!withFullScreenPortal/!readOnly', () => {
       const wrapper = shallow((
         <SingleDatePicker
           onDateChange={sinon.stub()}

@@ -204,13 +204,17 @@ class SingleDatePicker extends React.Component {
     const {
       disabled,
       onFocusChange,
+      readOnly,
       withPortal,
       withFullScreenPortal,
       keepFocusOnInput,
     } = this.props;
 
     const withAnyPortal = withPortal || withFullScreenPortal;
-    const moveFocusToDayPicker = withAnyPortal || (this.isTouchDevice && !keepFocusOnInput);
+    const moveFocusToDayPicker =
+      withAnyPortal ||
+      (readOnly && !keepFocusOnInput) ||
+      (this.isTouchDevice && !keepFocusOnInput);
 
     if (moveFocusToDayPicker) {
       this.onDayPickerFocus();
