@@ -86,6 +86,41 @@ storiesOf('DayPickerRangeController', module)
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
     />
   ))
+  .addWithInfo('with 7 days range selection', () => (
+    <DayPickerRangeControllerWrapper
+      onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
+      onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
+      onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
+      startDateOffset={day => day.subtract(3, 'days')}
+      endDateOffset={day => day.add(3, 'days')}
+    />
+  ))
+  .addWithInfo('with 45 days range selection', () => (
+    <DayPickerRangeControllerWrapper
+      onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
+      onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
+      onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
+      startDateOffset={day => day.subtract(22, 'days')}
+      endDateOffset={day => day.add(22, 'days')}
+    />
+  ))
+  .addWithInfo('with 4 days after today range selection', () => (
+    <DayPickerRangeControllerWrapper
+      onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
+      onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
+      onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
+      endDateOffset={day => day.add(4, 'days')}
+    />
+  ))
+  .addWithInfo('with current week range selection', () => (
+    <DayPickerRangeControllerWrapper
+      onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
+      onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
+      onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
+      startDateOffset={day => day.startOf('week')}
+      endDateOffset={day => day.endOf('week')}
+    />
+  ))
   .addWithInfo('with custom inputs', () => (
     <DayPickerRangeControllerWrapper
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}

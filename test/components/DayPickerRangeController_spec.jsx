@@ -1476,6 +1476,54 @@ describe('DayPickerRangeController', () => {
         );
       });
     });
+
+    describe('props.startDateOffset / props.endDateOffset', () => {
+      it('calls props.onDatesChange with startDate === startDateOffset(date) and endDate === endDateOffset(date)', () => {
+        const clickDate = moment(today).clone().add(2, 'days');
+        const onDatesChangeStub = sinon.stub();
+        const wrapper = shallow((
+          <DayPickerRangeController
+            onDatesChange={onDatesChangeStub}
+            startDateOffset={day => day.subtract(2, 'days')}
+            endDateOffset={day => day.add(4, 'days')}
+          />
+        ));
+        wrapper.instance().onDayClick(clickDate);
+        const args = onDatesChangeStub.getCall(0).args[0];
+        expect(args.startDate.format()).to.equal(clickDate.clone().subtract(2, 'days').format());
+        expect(args.endDate.format()).to.equal(clickDate.clone().add(4, 'days').format());
+      });
+
+      it('calls props.onDatesChange with startDate === startDateOffset(date) and endDate === selectedDate when endDateOffset not provided', () => {
+        const clickDate = moment(today).clone().add(2, 'days');
+        const onDatesChangeStub = sinon.stub();
+        const wrapper = shallow((
+          <DayPickerRangeController
+            onDatesChange={onDatesChangeStub}
+            startDateOffset={day => day.subtract(5, 'days')}
+          />
+        ));
+        wrapper.instance().onDayClick(clickDate);
+        const args = onDatesChangeStub.getCall(0).args[0];
+        expect(args.startDate.format()).to.equal(clickDate.clone().subtract(5, 'days').format());
+        expect(args.endDate.format()).to.equal(clickDate.format());
+      });
+
+      it('calls props.onDatesChange with startDate === selectedDate and endDate === endDateOffset(date) when startDateOffset not provided', () => {
+        const clickDate = moment(today).clone().add(12, 'days');
+        const onDatesChangeStub = sinon.stub();
+        const wrapper = shallow((
+          <DayPickerRangeController
+            onDatesChange={onDatesChangeStub}
+            endDateOffset={day => day.add(12, 'days')}
+          />
+        ));
+        wrapper.instance().onDayClick(clickDate);
+        const args = onDatesChangeStub.getCall(0).args[0];
+        expect(args.startDate.format()).to.equal(clickDate.format());
+        expect(args.endDate.format()).to.equal(clickDate.clone().add(12, 'days').format());
+      });
+    });
   });
 
   describe('#onDayMouseEnter', () => {
@@ -1483,6 +1531,18 @@ describe('DayPickerRangeController', () => {
       const wrapper = shallow(<DayPickerRangeController focusedInput={START_DATE} />);
       wrapper.instance().onDayMouseEnter(today);
       expect(wrapper.state().hoverDate).to.equal(today);
+    });
+
+    it('sets state.dateOffset to the start and end date range when range included', () => {
+      const wrapper = shallow((
+        <DayPickerRangeController
+          focusedInput={START_DATE}
+          endDateOffset={day => day.add(2, 'days')}
+        />
+      ));
+      wrapper.instance().onDayMouseEnter(today);
+      expect(wrapper.state().dateOffset.start.format()).to.equal(today.format());
+      expect(wrapper.state().dateOffset.end.format()).to.equal(today.clone().add(3, 'days').format());
     });
 
     describe('modifiers', () => {
