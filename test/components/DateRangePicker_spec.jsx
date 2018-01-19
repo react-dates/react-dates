@@ -263,8 +263,10 @@ describe('DateRangePicker', () => {
 
     describe('new focusedInput is truthy', () => {
       let onDayPickerFocusSpy;
+      let onDayPickerBlurSpy;
       beforeEach(() => {
         onDayPickerFocusSpy = sinon.spy(PureDateRangePicker.prototype, 'onDayPickerFocus');
+        onDayPickerBlurSpy = sinon.spy(PureDateRangePicker.prototype, 'onDayPickerBlur');
       });
 
       afterEach(() => {
@@ -297,8 +299,48 @@ describe('DateRangePicker', () => {
         expect(onDayPickerFocusSpy.callCount).to.equal(1);
       });
 
+      it('calls onDayPickerFocus if focusedInput and isTouchDevice', () => {
+        const wrapper = shallow((
+          <DateRangePicker
+            {...requiredProps}
+            onDatesChange={sinon.stub()}
+            onFocusChange={sinon.stub()}
+          />
+        )).dive();
+        wrapper.instance().isTouchDevice = true;
+        wrapper.instance().onDateRangePickerInputFocus(START_DATE);
+        expect(onDayPickerFocusSpy.callCount).to.equal(1);
+      });
+
+      it('calls onDayPickerBlur if focusedInput and !withPortal/!withFullScreenPortal and keepFocusOnInput', () => {
+        const wrapper = shallow((
+          <DateRangePicker
+            {...requiredProps}
+            onDateChange={sinon.stub()}
+            onFocusChange={sinon.stub()}
+            keepFocusOnInput
+          />
+        )).dive();
+        wrapper.instance().isTouchDevice = true;
+        wrapper.instance().onDateRangePickerInputFocus(START_DATE);
+        expect(onDayPickerBlurSpy.callCount).to.equal(1);
+      });
+
+      it('calls onDayPickerFocus if focusedInput and withPortal/withFullScreenPortal and keepFocusOnInput', () => {
+        const wrapper = shallow((
+          <DateRangePicker
+            {...requiredProps}
+            onDateChange={sinon.stub()}
+            onFocusChange={sinon.stub()}
+            keepFocusOnInput
+            withFullScreenPortal
+          />
+        )).dive();
+        wrapper.instance().onDateRangePickerInputFocus(START_DATE);
+        expect(onDayPickerFocusSpy.callCount).to.equal(1);
+      });
+
       it('calls onDayPickerBlur if focusedInput and !withPortal/!withFullScreenPortal', () => {
-        const onDayPickerBlurSpy = sinon.spy(PureDateRangePicker.prototype, 'onDayPickerBlur');
         const wrapper = shallow((
           <DateRangePicker
             {...requiredProps}

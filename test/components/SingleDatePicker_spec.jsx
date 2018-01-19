@@ -369,8 +369,10 @@ describe('SingleDatePicker', () => {
 
   describe('#onFocus', () => {
     let onDayPickerFocusSpy;
+    let onDayPickerBlurSpy;
     beforeEach(() => {
       onDayPickerFocusSpy = sinon.spy(PureSingleDatePicker.prototype, 'onDayPickerFocus');
+      onDayPickerBlurSpy = sinon.spy(PureSingleDatePicker.prototype, 'onDayPickerBlur');
     });
 
     it('calls props.onFocusChange once', () => {
@@ -415,8 +417,45 @@ describe('SingleDatePicker', () => {
       expect(onDayPickerFocusSpy.callCount).to.equal(1);
     });
 
+    it('calls onDayPickerFocus if isTouchDevice', () => {
+      const wrapper = shallow((
+        <SingleDatePicker
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />
+      )).dive();
+      wrapper.instance().isTouchDevice = true;
+      wrapper.instance().onFocus();
+      expect(onDayPickerFocusSpy.callCount).to.equal(1);
+    });
+
+    it('calls onDayPickerBlur if !withPortal/!withFullScreenPortal and keepFocusOnInput', () => {
+      const wrapper = shallow((
+        <SingleDatePicker
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+          keepFocusOnInput
+        />
+      )).dive();
+      wrapper.instance().isTouchDevice = true;
+      wrapper.instance().onFocus();
+      expect(onDayPickerBlurSpy.callCount).to.equal(1);
+    });
+
+    it('calls onDayPickerFocus if withPortal/withFullScreenPortal and keepFocusOnInput', () => {
+      const wrapper = shallow((
+        <SingleDatePicker
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+          keepFocusOnInput
+          withFullScreenPortal
+        />
+      )).dive();
+      wrapper.instance().onFocus();
+      expect(onDayPickerFocusSpy.callCount).to.equal(1);
+    });
+
     it('calls onDayPickerBlur if !withPortal/!withFullScreenPortal', () => {
-      const onDayPickerBlurSpy = sinon.spy(PureSingleDatePicker.prototype, 'onDayPickerBlur');
       const wrapper = shallow((
         <SingleDatePicker
           onDateChange={sinon.stub()}
