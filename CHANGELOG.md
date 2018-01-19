@@ -1,5 +1,9 @@
 # Change Log
 
+## 16.2.0
+- [new] Add `startDateOffset`/`endDateOffset` props to `DayPickerRangeController` ([#884](https://github.com/airbnb/react-dates/pull/884))
+- [fix] Make all styles inline in `CustomizableCalendarDay` ([#964](https://github.com/airbnb/react-dates/pull/964))
+
 ## 16.1.1
 - [fix] Address some small bugs with `CustomizableCalendarDay` ([#962](https://github.com/airbnb/react-dates/pull/962))
 
