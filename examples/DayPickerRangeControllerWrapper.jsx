@@ -18,6 +18,8 @@ const propTypes = forbidExtraProps({
   autoFocusEndDate: PropTypes.bool,
   initialStartDate: momentPropTypes.momentObj,
   initialEndDate: momentPropTypes.momentObj,
+  startDateOffset: PropTypes.func,
+  endDateOffset: PropTypes.func,
 
   keepOpenOnDateSelect: PropTypes.bool,
   minimumNights: PropTypes.number,
@@ -53,6 +55,8 @@ const defaultProps = {
   autoFocusEndDate: false,
   initialStartDate: null,
   initialEndDate: null,
+  startDateOffset: undefined,
+  endDateOffset: undefined,
 
   // day presentation and interaction related props
   renderCalendarDay: undefined,
