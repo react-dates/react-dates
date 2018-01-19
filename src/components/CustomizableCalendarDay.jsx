@@ -224,7 +224,7 @@ class CustomizableCalendarDay extends React.Component {
           styles.CalendarDay,
           useDefaultCursor && styles.CalendarDay__defaultCursor,
           daySizeStyles,
-          ...hasCustomStyles && [
+          ...!!hasCustomStyles && [
             defaultStyles,
             isOutsideDay && outsideStyles,
             modifiers.has('today') && todayStyles,
@@ -253,6 +253,7 @@ class CustomizableCalendarDay extends React.Component {
             modifiers.has('last-in-range') && styles.CalendarDay__last_in_range,
             modifiers.has('selected-start') && styles.CalendarDay__selected_start,
             modifiers.has('selected-end') && styles.CalendarDay__selected_end,
+            selected && styles.CalendarDay__selected,
             isOutsideRange && (blockedOutOfRangeStyles || styles.CalendarDay__blocked_out_of_range),
           ],
         )}
