@@ -1,5 +1,8 @@
 # Change Log
 
+## 16.1.1
+- [fix] Address some small bugs with `CustomizableCalendarDay` ([#962](https://github.com/airbnb/react-dates/pull/962))
+
 ## 16.1.0
 - [fix] Allow for changing of the input value via highlight and replace ([#955](https://github.com/airbnb/react-dates/pull/955))
 - [fix] Fix OPEN_UP styling ([#925](https://github.com/airbnb/react-dates/pull/925))
