@@ -179,6 +179,7 @@ function SingleDatePickerInput({
         verticalSpacing={verticalSpacing}
         small={small}
         regular={regular}
+        block={block}
       />
 
       {showClearDate && (
