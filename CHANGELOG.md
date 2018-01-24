@@ -1,5 +1,8 @@
 # Change Log
 
+## 16.2.1
+- [fix] SDP `block` styling also makes the input full width ([#972](https://github.com/airbnb/react-dates/pull/972))
+
 ## 16.2.0
 - [new] Add `startDateOffset`/`endDateOffset` props to `DayPickerRangeController` ([#884](https://github.com/airbnb/react-dates/pull/884))
 - [fix] Make all styles inline in `CustomizableCalendarDay` ([#964](https://github.com/airbnb/react-dates/pull/964))
