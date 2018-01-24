@@ -35,6 +35,7 @@ const propTypes = forbidExtraProps({
   showCaret: PropTypes.bool,
   verticalSpacing: nonNegativeInteger,
   small: PropTypes.bool,
+  block: PropTypes.bool,
   regular: PropTypes.bool,
 
   onChange: PropTypes.func,
@@ -61,6 +62,7 @@ const defaultProps = {
   showCaret: false,
   verticalSpacing: DEFAULT_VERTICAL_SPACING,
   small: false,
+  block: false,
   regular: false,
 
   onChange() {},
@@ -181,6 +183,7 @@ class DateInput extends React.Component {
       verticalSpacing,
       small,
       regular,
+      block,
       styles,
       theme: { reactDates },
     } = this.props;
@@ -197,6 +200,7 @@ class DateInput extends React.Component {
         {...css(
           styles.DateInput,
           small && styles.DateInput__small,
+          block && styles.DateInput__block,
           withFang && styles.DateInput__withFang,
           disabled && styles.DateInput__disabled,
           withFang && openDirection === OPEN_DOWN && styles.DateInput__openDown,
@@ -284,6 +288,10 @@ export default withStyles(({
 
   DateInput__small: {
     width: sizing.inputWidth_small,
+  },
+
+  DateInput__block: {
+    width: '100%',
   },
 
   DateInput__disabled: {
