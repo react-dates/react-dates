@@ -63,9 +63,9 @@ const propTypes = forbidExtraProps({
   hoveredSpanStyles: DayStyleShape,
   selectedSpanStyles: DayStyleShape,
   lastInRangeStyles: DayStyleShape,
+  selectedStyles: DayStyleShape,
   selectedStartStyles: DayStyleShape,
   selectedEndStyles: DayStyleShape,
-  selectedStyles: DayStyleShape,
   afterHoveredStartStyles: DayStyleShape,
 
   // internationalization
@@ -169,8 +169,6 @@ const defaultProps = {
   lastInRangeStyles: {
     borderRight: color.core.primary,
   },
-  selectedStartStyles: {},
-  selectedEndStyles: {},
   selectedStyles: {
     background: color.selected.backgroundColor,
     border: `1px solid ${color.selected.borderColor}`,
@@ -182,6 +180,8 @@ const defaultProps = {
       color: color.selected.color_active,
     },
   },
+  selectedStartStyles: {},
+  selectedEndStyles: {},
   afterHoveredStartStyles: {},
 
   // internationalization
@@ -266,9 +266,9 @@ class CustomizableCalendarDay extends React.Component {
       hoveredSpanStyles: hoveredSpanStylesWithHover,
       selectedSpanStyles: selectedSpanStylesWithHover,
       lastInRangeStyles: lastInRangeStylesWithHover,
+      selectedStyles: selectedStylesWithHover,
       selectedStartStyles: selectedStartStylesWithHover,
       selectedEndStyles: selectedEndStylesWithHover,
-      selectedStyles: selectedStylesWithHover,
       afterHoveredStartStyles: afterHoveredStartStylesWithHover,
     } = this.props;
 
@@ -316,9 +316,9 @@ class CustomizableCalendarDay extends React.Component {
           modifiers.has('after-hovered-start') && afterHoveredStartStyles,
           modifiers.has('selected-span') && selectedSpanStyles,
           modifiers.has('last-in-range') && lastInRangeStyles,
+          selected && selectedStyles,
           modifiers.has('selected-start') && selectedStartStyles,
           modifiers.has('selected-end') && selectedEndStyles,
-          selected && selectedStyles,
           isOutsideRange && blockedOutOfRangeStyles,
         )}
         role="button" // eslint-disable-line jsx-a11y/no-noninteractive-element-to-interactive-role
