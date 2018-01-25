@@ -16,7 +16,6 @@ import getResponsiveContainerStyles from '../utils/getResponsiveContainerStyles'
 import getInputHeight from '../utils/getInputHeight';
 
 import SingleDatePickerInput from './SingleDatePickerInput';
-import DayPickerSingleDateController from './DayPickerSingleDateController';
 
 import CloseButton from './CloseButton';
 
@@ -376,6 +375,7 @@ class SingleDatePickerContainer extends React.Component {
       verticalSpacing,
       small,
       theme: { reactDates },
+      DayPickerSingleDateController,
     } = this.props;
     const { dayPickerContainerStyles, isDayPickerFocused, showKeyboardShortcuts } = this.state;
 

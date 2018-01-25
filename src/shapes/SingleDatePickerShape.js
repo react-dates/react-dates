@@ -79,4 +79,7 @@ export default {
   monthFormat: PropTypes.string,
   weekDayFormat: PropTypes.string,
   phrases: PropTypes.shape(getPhrasePropTypes(SingleDatePickerPhrases)),
+
+  // to support code-splitting
+  DayPickerSingleDateController: PropTypes.node,
 };
