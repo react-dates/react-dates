@@ -38,11 +38,26 @@ const hoveredStyles = {
   color: '#fff',
 };
 
+const blockedStyles = {
+  background: '#fff',
+  border: '1px double #e4e7e7',
+  color: '#dce0e0',
+
+  hover: {
+    background: '#fff',
+    border: '1px double #e4e7e7',
+    color: '#dce0e0',
+  },
+};
+
 const customDayStyles = {
   selectedStartStyles: selectedStyles,
   selectedEndStyles: selectedStyles,
   hoveredSpanStyles: hoveredStyles,
   afterHoveredStartStyles: hoveredStyles,
+  blockedMinNightsStyles: blockedStyles,
+  blockedCalendarStyles: blockedStyles,
+  blockedOutOfRangeStyles: blockedStyles,
 
   selectedSpanStyles: {
     background: '#9b32a2',
@@ -116,6 +131,7 @@ storiesOf('DRP - Day Props', module)
   ))
   .addWithInfo('one-off custom styling', () => (
     <DateRangePickerWrapper
+      minimumNights={3}
       renderCalendarDay={props => <CustomizableCalendarDay {...props} {...customDayStyles} />}
       autoFocus
     />
