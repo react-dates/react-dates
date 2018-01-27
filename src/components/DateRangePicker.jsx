@@ -338,6 +338,7 @@ class DateRangePicker extends React.Component {
       customCloseIcon,
       onClose,
       phrases,
+      dayAriaLabelFormat,
       isRTL,
       weekDayFormat,
       styles,
@@ -417,6 +418,7 @@ class DateRangePicker extends React.Component {
           showKeyboardShortcuts={showKeyboardShortcuts}
           onBlur={this.onDayPickerBlur}
           phrases={phrases}
+          dayAriaLabelFormat={dayAriaLabelFormat}
           isRTL={isRTL}
           firstDayOfWeek={firstDayOfWeek}
           weekDayFormat={weekDayFormat}
