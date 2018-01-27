@@ -1344,6 +1344,42 @@ describe('DayPickerSingleDateController', () => {
         expect(wrapper.instance().isToday(moment(today).subtract(1, 'months'))).to.equal(false);
       });
     });
+
+    describe('#isFirstDayOfWeek', () => {
+      it('returns true if first day of this week', () => {
+        const wrapper = shallow(<DayPickerSingleDateController />);
+        expect(wrapper.instance().isFirstDayOfWeek(moment().startOf('week'))).to.equal(true);
+      });
+
+      it('returns true if same day as firstDayOfWeek prop', () => {
+        const firstDayOfWeek = 3;
+        const wrapper = shallow(<DayPickerSingleDateController firstDayOfWeek={firstDayOfWeek} />);
+        expect(wrapper.instance().isFirstDayOfWeek(moment().startOf('week').day(firstDayOfWeek))).to.equal(true);
+      });
+
+      it('returns false if not the first day of the week', () => {
+        const wrapper = shallow(<DayPickerSingleDateController />);
+        expect(wrapper.instance().isFirstDayOfWeek(moment().endOf('week'))).to.equal(false);
+      });
+    });
+
+    describe('#isLastDayOfWeek', () => {
+      it('returns true if last day of week', () => {
+        const wrapper = shallow(<DayPickerSingleDateController />);
+        expect(wrapper.instance().isLastDayOfWeek(moment().endOf('week'))).to.equal(true);
+      });
+
+      it('returns true if 6 days after firstDayOfWeek prop', () => {
+        const firstDayOfWeek = 3;
+        const wrapper = shallow(<DayPickerSingleDateController firstDayOfWeek={firstDayOfWeek} />);
+        expect(wrapper.instance().isLastDayOfWeek(moment().day(firstDayOfWeek).add(6, 'days'))).to.equal(true);
+      });
+
+      it('returns false if not last of week', () => {
+        const wrapper = shallow(<DayPickerSingleDateController />);
+        expect(wrapper.instance().isLastDayOfWeek(moment().startOf('week').add(1, 'day'))).to.equal(false);
+      });
+    });
   });
 
   describe('initialVisibleMonth', () => {

@@ -148,6 +148,8 @@ export default class DayPickerSingleDateController extends React.Component {
       valid: day => !this.isBlocked(day),
       hovered: day => this.isHovered(day),
       selected: day => this.isSelected(day),
+      'first-day-of-week': day => this.isFirstDayOfWeek(day),
+      'last-day-of-week': day => this.isLastDayOfWeek(day),
     };
 
     const { currentMonth, visibleDays } = this.getStateForNewMonth(props);
@@ -569,6 +571,16 @@ export default class DayPickerSingleDateController extends React.Component {
 
   isToday(day) {
     return isSameDay(day, this.today);
+  }
+
+  isFirstDayOfWeek(day) {
+    const { firstDayOfWeek } = this.props;
+    return day.day() === (firstDayOfWeek || moment.localeData().firstDayOfWeek());
+  }
+
+  isLastDayOfWeek(day) {
+    const { firstDayOfWeek } = this.props;
+    return day.day() === ((firstDayOfWeek || moment.localeData().firstDayOfWeek()) + 6) % 7;
   }
 
   render() {

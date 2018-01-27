@@ -178,6 +178,8 @@ export default class DayPickerRangeController extends React.Component {
       'hovered-span': day => this.isInHoveredSpan(day),
       'hovered-offset': day => this.isInHoveredSpan(day),
       'after-hovered-start': day => this.isDayAfterHoveredStartDate(day),
+      'first-day-of-week': day => this.isFirstDayOfWeek(day),
+      'last-day-of-week': day => this.isLastDayOfWeek(day),
     };
 
     const { currentMonth, visibleDays } = this.getStateForNewMonth(props);
@@ -940,6 +942,16 @@ export default class DayPickerRangeController extends React.Component {
 
   isToday(day) {
     return isSameDay(day, this.today);
+  }
+
+  isFirstDayOfWeek(day) {
+    const { firstDayOfWeek } = this.props;
+    return day.day() === (firstDayOfWeek || moment.localeData().firstDayOfWeek());
+  }
+
+  isLastDayOfWeek(day) {
+    const { firstDayOfWeek } = this.props;
+    return day.day() === ((firstDayOfWeek || moment.localeData().firstDayOfWeek()) + 6) % 7;
   }
 
   render() {
