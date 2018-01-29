@@ -56,6 +56,8 @@ const propTypes = forbidExtraProps({
   defaultStyles: DayStyleShape,
   outsideStyles: DayStyleShape,
   todayStyles: DayStyleShape,
+  firstDayOfWeekStyles: DayStyleShape,
+  lastDayOfWeekStyles: DayStyleShape,
   highlightedCalendarStyles: DayStyleShape,
   blockedMinNightsStyles: DayStyleShape,
   blockedCalendarStyles: DayStyleShape,
@@ -183,6 +185,8 @@ const defaultProps = {
   selectedStartStyles: {},
   selectedEndStyles: {},
   afterHoveredStartStyles: {},
+  firstDayOfWeekStyles: {},
+  lastDayOfWeekStyles: {},
 
   // internationalization
   phrases: CalendarDayPhrases,
@@ -259,6 +263,8 @@ class CustomizableCalendarDay extends React.Component {
       defaultStyles: defaultStylesWithHover,
       outsideStyles: outsideStylesWithHover,
       todayStyles: todayStylesWithHover,
+      firstDayOfWeekStyles: firstDayOfWeekStylesWithHover,
+      lastDayOfWeekStyles: lastDayOfWeekStylesWithHover,
       highlightedCalendarStyles: highlightedCalendarStylesWithHover,
       blockedMinNightsStyles: blockedMinNightsStylesWithHover,
       blockedCalendarStyles: blockedCalendarStylesWithHover,
@@ -288,6 +294,8 @@ class CustomizableCalendarDay extends React.Component {
     const defaultStyles = getStyles(defaultStylesWithHover, isHovered);
     const outsideStyles = getStyles(outsideStylesWithHover, isHovered);
     const todayStyles = getStyles(todayStylesWithHover, isHovered);
+    const firstDayOfWeekStyles = getStyles(firstDayOfWeekStylesWithHover, isHovered);
+    const lastDayOfWeekStyles = getStyles(lastDayOfWeekStylesWithHover, isHovered);
     const highlightedCalendarStyles = getStyles(highlightedCalendarStylesWithHover, isHovered);
     const blockedMinNightsStyles = getStyles(blockedMinNightsStylesWithHover, isHovered);
     const blockedCalendarStyles = getStyles(blockedCalendarStylesWithHover, isHovered);
@@ -309,6 +317,8 @@ class CustomizableCalendarDay extends React.Component {
           defaultStyles,
           isOutsideDay && outsideStyles,
           modifiers.has('today') && todayStyles,
+          modifiers.has('first-day-of-week') && firstDayOfWeekStyles,
+          modifiers.has('last-day-of-week') && lastDayOfWeekStyles,
           modifiers.has('highlighted-calendar') && highlightedCalendarStyles,
           modifiers.has('blocked-minimum-nights') && blockedMinNightsStyles,
           modifiers.has('blocked-calendar') && blockedCalendarStyles,
