@@ -27,9 +27,6 @@ import {
   VERTICAL_SCROLLABLE,
   DAY_SIZE,
   INFO_POSITION_TOP,
-  INFO_POSITION_BOTTOM,
-  INFO_POSITION_LEFT,
-  INFO_POSITION_RIGHT,
 } from '../constants';
 
 import DayPicker from './DayPicker';

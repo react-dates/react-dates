@@ -12,10 +12,10 @@ export const VERTICAL_SCROLLABLE = 'verticalScrollable';
 export const ICON_BEFORE_POSITION = 'before';
 export const ICON_AFTER_POSITION = 'after';
 
-export const INFO_POSITION_TOP = 'top'
-export const INFO_POSITION_BOTTOM = 'bottom'
-export const INFO_POSITION_LEFT = 'left'
-export const INFO_POSITION_RIGHT  = 'right'
+export const INFO_POSITION_TOP = 'top';
+export const INFO_POSITION_BOTTOM = 'bottom';
+export const INFO_POSITION_LEFT = 'left';
+export const INFO_POSITION_RIGHT = 'right';
 
 export const ANCHOR_LEFT = 'left';
 export const ANCHOR_RIGHT = 'right';
