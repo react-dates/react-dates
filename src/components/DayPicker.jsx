@@ -759,34 +759,28 @@ class DayPicker extends React.Component {
     const calendarInfoPositionBottom = calendarInfoPosition === INFO_POSITION_BOTTOM;
     const calendarInfoPositionLeft = calendarInfoPosition === INFO_POSITION_LEFT;
     const calendarInfoPositionRight = calendarInfoPosition === INFO_POSITION_RIGHT;
-
-    const calendarInfoStyle = {
-      minHeight: height
-    };
+    const calendarInfoIsInline = calendarInfoPositionLeft || calendarInfoPositionRight;
 
     const calendarInfo = renderCalendarInfo && (
       <div
         ref={this.setCalendarInfoRef}
-        {...css(
-          (calendarInfoPositionLeft || calendarInfoPositionRight) && calendarInfoStyle,
-          (calendarInfoPositionLeft || calendarInfoPositionRight) && styles.DayPicker_calendarInfo__horizontal,
-        )}
+        {...css((calendarInfoIsInline) && styles.DayPicker_calendarInfo__horizontal)}
       >
         { renderCalendarInfo() }
       </div>
     );
 
-    const calendarInfoWith = renderCalendarInfo && (calendarInfoPositionLeft || calendarInfoPositionRight)
+    const calendarInfoWith = renderCalendarInfo && calendarInfoIsInline
       ? calculateDimension(this.calendarInfo, 'width', true, true)
       : 0;
 
     const verticalScrollable = orientation === VERTICAL_SCROLLABLE;
     const firstVisibleMonthIndex = this.getFirstVisibleIndex();
-    const dayPickerWrapperHorizontalWidth = (calendarMonthWidth * numberOfMonths) + (2 * DAY_PICKER_PADDING);
-    const fullHorizontalWidth = (calendarMonthWidth * numberOfMonths) + (2 * DAY_PICKER_PADDING) + calendarInfoWith;
+    const wrapperHorizontalWidth = (calendarMonthWidth * numberOfMonths) + (2 * DAY_PICKER_PADDING);
+    const fullHorizontalWidth = wrapperHorizontalWidth + calendarInfoWith;
 
     const dayPickerWrapperStyle = {
-      width: dayPickerWrapperHorizontalWidth
+      width: wrapperHorizontalWidth,
     };
 
     const dayPickerStyle = {
@@ -819,7 +813,7 @@ class DayPicker extends React.Component {
           <div
             {...css(
               dayPickerWrapperStyle,
-              (calendarInfoPositionLeft || calendarInfoPositionRight) && styles.DayPicker_wrapper__horizontal,
+              (calendarInfoIsInline) && styles.DayPicker_wrapper__horizontal,
             )}
           >
 
