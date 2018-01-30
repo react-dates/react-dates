@@ -26,6 +26,7 @@ import toISOMonthString from '../utils/toISOMonthString';
 import FocusedInputShape from '../shapes/FocusedInputShape';
 import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
 import DayOfWeekShape from '../shapes/DayOfWeekShape';
+import CalendarInfoPositionShape from '../shapes/CalendarInfoPositionShape';
 
 import {
   START_DATE,
@@ -33,6 +34,10 @@ import {
   HORIZONTAL_ORIENTATION,
   VERTICAL_SCROLLABLE,
   DAY_SIZE,
+  INFO_POSITION_TOP,
+  INFO_POSITION_BOTTOM,
+  INFO_POSITION_LEFT,
+  INFO_POSITION_RIGHT,
 } from '../constants';
 
 import DayPicker from './DayPicker';
@@ -74,6 +79,7 @@ const propTypes = forbidExtraProps({
   renderCalendarDay: PropTypes.func,
   renderDayContents: PropTypes.func,
   renderCalendarInfo: PropTypes.func,
+  calendarInfoPosition: CalendarInfoPositionShape,
   firstDayOfWeek: DayOfWeekShape,
   verticalHeight: nonNegativeInteger,
   transitionDuration: nonNegativeInteger,
@@ -129,6 +135,7 @@ const defaultProps = {
   renderCalendarDay: undefined,
   renderDayContents: null,
   renderCalendarInfo: null,
+  calendarInfoPosition: INFO_POSITION_TOP,
   firstDayOfWeek: null,
   verticalHeight: null,
   noBorder: false,
@@ -960,6 +967,7 @@ export default class DayPickerRangeController extends React.Component {
       renderCalendarDay,
       renderDayContents,
       renderCalendarInfo,
+      calendarInfoPosition,
       onBlur,
       isFocused,
       showKeyboardShortcuts,
@@ -998,6 +1006,7 @@ export default class DayPickerRangeController extends React.Component {
         renderCalendarDay={renderCalendarDay}
         renderDayContents={renderDayContents}
         renderCalendarInfo={renderCalendarInfo}
+        calendarInfoPosition={calendarInfoPosition}
         firstDayOfWeek={firstDayOfWeek}
         hideKeyboardShortcutsPanel={hideKeyboardShortcutsPanel}
         isFocused={isFocused}
