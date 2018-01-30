@@ -728,6 +728,7 @@ class DayPicker extends React.Component {
       weekHeaders.push(this.renderWeekHeader(i));
     }
 
+    const verticalScrollable = orientation === VERTICAL_SCROLLABLE;
     let height;
     if (this.isHorizontal()) {
       height = this.calendarMonthGridHeight;
@@ -736,11 +737,6 @@ class DayPicker extends React.Component {
       // we default back to this kind of made-up value that generally looks good
       height = verticalHeight || 1.75 * calendarMonthWidth;
     }
-
-    const transitionContainerStyle = {
-      width: this.isHorizontal() && fullHorizontalWidth,
-      height,
-    };
 
     const isCalendarMonthGridAnimating = monthTransition !== null;
     const transformType = this.isVertical() ? 'translateY' : 'translateX';
@@ -774,10 +770,14 @@ class DayPicker extends React.Component {
       ? calculateDimension(this.calendarInfo, 'width', true, true)
       : 0;
 
-    const verticalScrollable = orientation === VERTICAL_SCROLLABLE;
     const firstVisibleMonthIndex = this.getFirstVisibleIndex();
     const wrapperHorizontalWidth = (calendarMonthWidth * numberOfMonths) + (2 * DAY_PICKER_PADDING);
     const fullHorizontalWidth = wrapperHorizontalWidth + calendarInfoWith;
+
+    const transitionContainerStyle = {
+      width: this.isHorizontal() && wrapperHorizontalWidth,
+      height,
+    };
 
     const dayPickerWrapperStyle = {
       width: wrapperHorizontalWidth,
