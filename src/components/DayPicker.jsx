@@ -762,7 +762,7 @@ class DayPicker extends React.Component {
         ref={this.setCalendarInfoRef}
         {...css((calendarInfoIsInline) && styles.DayPicker_calendarInfo__horizontal)}
       >
-        { renderCalendarInfo() }
+        {renderCalendarInfo()}
       </div>
     );
 
