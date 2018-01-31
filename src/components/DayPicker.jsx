@@ -722,6 +722,8 @@ class DayPicker extends React.Component {
       transitionDuration,
     } = this.props;
 
+    const isHorizontal = this.isHorizontal();
+
     const numOfWeekHeaders = this.isVertical() ? 1 : numberOfMonths;
     const weekHeaders = [];
     for (let i = 0; i < numOfWeekHeaders; i += 1) {
@@ -730,7 +732,7 @@ class DayPicker extends React.Component {
 
     const verticalScrollable = orientation === VERTICAL_SCROLLABLE;
     let height;
-    if (this.isHorizontal()) {
+    if (isHorizontal) {
       height = this.calendarMonthGridHeight;
     } else if (this.isVertical() && !verticalScrollable && !withPortal) {
       // If the user doesn't set a desired height,
@@ -749,7 +751,7 @@ class DayPicker extends React.Component {
       keyboardShortcutButtonLocation = withPortal ? TOP_LEFT : TOP_RIGHT;
     }
 
-    const isHorizontalAndAnimating = this.isHorizontal() && isCalendarMonthGridAnimating;
+    const isHorizontalAndAnimating = isHorizontal && isCalendarMonthGridAnimating;
 
     const calendarInfoPositionTop = calendarInfoPosition === INFO_POSITION_TOP;
     const calendarInfoPositionBottom = calendarInfoPosition === INFO_POSITION_BOTTOM;
@@ -775,7 +777,7 @@ class DayPicker extends React.Component {
     const fullHorizontalWidth = wrapperHorizontalWidth + calendarInfoWith;
 
     const transitionContainerStyle = {
-      width: this.isHorizontal() && wrapperHorizontalWidth,
+      width: isHorizontal && wrapperHorizontalWidth,
       height,
     };
 
@@ -784,11 +786,11 @@ class DayPicker extends React.Component {
     };
 
     const dayPickerStyle = {
-      width: this.isHorizontal() && fullHorizontalWidth,
+      width: isHorizontal && fullHorizontalWidth,
 
       // These values are to center the datepicker (approximately) on the page
-      marginLeft: this.isHorizontal() && withPortal && -fullHorizontalWidth / 2,
-      marginTop: this.isHorizontal() && withPortal && -calendarMonthWidth / 2,
+      marginLeft: isHorizontal && withPortal && -fullHorizontalWidth / 2,
+      marginTop: isHorizontal && withPortal && -calendarMonthWidth / 2,
     };
 
     return (
@@ -797,10 +799,10 @@ class DayPicker extends React.Component {
         aria-label={phrases.calendarLabel}
         {...css(
           styles.DayPicker,
-          this.isHorizontal() && styles.DayPicker__horizontal,
+          isHorizontal && styles.DayPicker__horizontal,
           this.isVertical() && styles.DayPicker__vertical,
           verticalScrollable && styles.DayPicker__verticalScrollable,
-          this.isHorizontal() && withPortal && styles.DayPicker_portal__horizontal,
+          isHorizontal && withPortal && styles.DayPicker_portal__horizontal,
           this.isVertical() && withPortal && styles.DayPicker_portal__vertical,
           dayPickerStyle,
           !hasSetHeight && styles.DayPicker__hidden,
@@ -820,7 +822,7 @@ class DayPicker extends React.Component {
             <div
               {...css(
                 styles.DayPicker_weekHeaders,
-                this.isHorizontal() && styles.DayPicker_weekHeaders__horizontal,
+                isHorizontal && styles.DayPicker_weekHeaders__horizontal,
               )}
               aria-hidden="true"
               role="presentation"
