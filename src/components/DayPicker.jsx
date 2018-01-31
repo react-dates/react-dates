@@ -789,8 +789,8 @@ class DayPicker extends React.Component {
       width: isHorizontal && fullHorizontalWidth,
 
       // These values are to center the datepicker (approximately) on the page
-      marginLeft: isHorizontal && withPortal && -fullHorizontalWidth / 2,
-      marginTop: isHorizontal && withPortal && -calendarMonthWidth / 2,
+      marginLeft: isHorizontal && withPortal ? -fullHorizontalWidth / 2 : null,
+      marginTop: isHorizontal && withPortal ? -calendarMonthWidth / 2 : null,
     };
 
     return (
