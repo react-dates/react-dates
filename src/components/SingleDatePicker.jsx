@@ -31,7 +31,7 @@ import {
   OPEN_UP,
   DAY_SIZE,
   ICON_BEFORE_POSITION,
-  INFO_POSITION_TOP,
+  INFO_POSITION_BOTTOM,
   FANG_HEIGHT_PX,
   DEFAULT_VERTICAL_SPACING,
 } from '../constants';
@@ -78,7 +78,7 @@ const defaultProps = {
   keepOpenOnDateSelect: false,
   reopenPickerOnClearDate: false,
   renderCalendarInfo: null,
-  calendarInfoPosition: INFO_POSITION_TOP,
+  calendarInfoPosition: INFO_POSITION_BOTTOM,
   hideKeyboardShortcutsPanel: false,
   daySize: DAY_SIZE,
   isRTL: false,

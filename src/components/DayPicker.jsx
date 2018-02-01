@@ -109,7 +109,7 @@ export const defaultProps = {
   initialVisibleMonth: () => moment(),
   firstDayOfWeek: null,
   renderCalendarInfo: null,
-  calendarInfoPosition: INFO_POSITION_TOP,
+  calendarInfoPosition: INFO_POSITION_BOTTOM,
   hideKeyboardShortcutsPanel: false,
   daySize: DAY_SIZE,
   isRTL: false,

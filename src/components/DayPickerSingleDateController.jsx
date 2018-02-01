@@ -26,7 +26,7 @@ import {
   HORIZONTAL_ORIENTATION,
   VERTICAL_SCROLLABLE,
   DAY_SIZE,
-  INFO_POSITION_TOP,
+  INFO_POSITION_BOTTOM,
 } from '../constants';
 
 import DayPicker from './DayPicker';
@@ -121,7 +121,7 @@ const defaultProps = {
   renderCalendarDay: undefined,
   renderDayContents: null,
   renderCalendarInfo: null,
-  calendarInfoPosition: INFO_POSITION_TOP,
+  calendarInfoPosition: INFO_POSITION_BOTTOM,
 
   // accessibility
   onBlur() {},
