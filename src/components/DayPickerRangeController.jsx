@@ -648,7 +648,6 @@ export default class DayPickerRangeController extends React.Component {
     }, () => {
       onNextMonthClick(newCurrentMonth.clone());
     });
-
   }
 
   onMultiplyScrollableMonths() {
