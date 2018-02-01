@@ -621,9 +621,9 @@ export default class DayPickerRangeController extends React.Component {
         ...newVisibleDays,
         ...this.getModifiers(prevMonthVisibleDays),
       },
+    }, () => {
+      onPrevMonthClick(newCurrentMonth.clone());
     });
-
-    onPrevMonthClick(newCurrentMonth.clone());
   }
 
   onNextMonthClick() {
@@ -645,9 +645,10 @@ export default class DayPickerRangeController extends React.Component {
         ...newVisibleDays,
         ...this.getModifiers(nextMonthVisibleDays),
       },
+    }, () => {
+      onNextMonthClick(newCurrentMonth.clone());
     });
 
-    onNextMonthClick(newCurrentMonth.clone());
   }
 
   onMultiplyScrollableMonths() {
