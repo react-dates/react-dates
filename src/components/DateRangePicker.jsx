@@ -113,6 +113,7 @@ const defaultProps = {
   monthFormat: 'MMMM YYYY',
   weekDayFormat: 'dd',
   phrases: DateRangePickerPhrases,
+  dayAriaLabelFormat: undefined,
 };
 
 class DateRangePicker extends React.Component {

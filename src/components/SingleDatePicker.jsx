@@ -109,6 +109,7 @@ const defaultProps = {
   monthFormat: 'MMMM YYYY',
   weekDayFormat: 'dd',
   phrases: SingleDatePickerPhrases,
+  dayAriaLabelFormat: undefined,
 };
 
 class SingleDatePicker extends React.Component {
