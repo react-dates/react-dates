@@ -36,8 +36,8 @@ import {
   DAY_SIZE,
   INFO_POSITION_TOP,
   INFO_POSITION_BOTTOM,
-  INFO_POSITION_LEFT,
-  INFO_POSITION_RIGHT,
+  INFO_POSITION_BEFORE,
+  INFO_POSITION_AFTER,
   MODIFIER_KEY_NAMES,
 } from '../constants';
 
@@ -755,9 +755,9 @@ class DayPicker extends React.Component {
 
     const calendarInfoPositionTop = calendarInfoPosition === INFO_POSITION_TOP;
     const calendarInfoPositionBottom = calendarInfoPosition === INFO_POSITION_BOTTOM;
-    const calendarInfoPositionLeft = calendarInfoPosition === INFO_POSITION_LEFT;
-    const calendarInfoPositionRight = calendarInfoPosition === INFO_POSITION_RIGHT;
-    const calendarInfoIsInline = calendarInfoPositionLeft || calendarInfoPositionRight;
+    const calendarInfoPositionBefore = calendarInfoPosition === INFO_POSITION_BEFORE;
+    const calendarInfoPositionAfter = calendarInfoPosition === INFO_POSITION_AFTER;
+    const calendarInfoIsInline = calendarInfoPositionBefore || calendarInfoPositionAfter;
 
     const calendarInfo = renderCalendarInfo && (
       <div
@@ -810,7 +810,7 @@ class DayPicker extends React.Component {
         )}
       >
         <OutsideClickHandler onOutsideClick={onOutsideClick}>
-          {(calendarInfoPositionTop || calendarInfoPositionLeft) && calendarInfo}
+          {(calendarInfoPositionTop || calendarInfoPositionBefore) && calendarInfo}
 
           <div
             {...css(
@@ -895,7 +895,7 @@ class DayPicker extends React.Component {
 
           </div>
 
-          {(calendarInfoPositionBottom || calendarInfoPositionRight) && calendarInfo}
+          {(calendarInfoPositionBottom || calendarInfoPositionAfter) && calendarInfo}
         </OutsideClickHandler>
       </div>
     );

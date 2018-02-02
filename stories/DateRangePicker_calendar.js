@@ -137,18 +137,18 @@ storiesOf('DRP - Calendar Props', module)
       autoFocus
     />
   ))
-  .addWithInfo('with info panel left', () => (
+  .addWithInfo('with info panel before', () => (
     <DateRangePickerWrapper
-      calendarInfoPosition="left"
+      calendarInfoPosition="before"
       renderCalendarInfo={() => (
         <TestCustomInfoPanel />
       )}
       autoFocus
     />
   ))
-  .addWithInfo('with info panel right', () => (
+  .addWithInfo('with info panel after', () => (
     <DateRangePickerWrapper
-      calendarInfoPosition="right"
+      calendarInfoPosition="after"
       renderCalendarInfo={() => (
         <TestCustomInfoPanel />
       )}
