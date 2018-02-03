@@ -137,6 +137,7 @@ export const defaultProps = {
   monthFormat: 'MMMM YYYY',
   weekDayFormat: 'dd',
   phrases: DayPickerPhrases,
+  dayAriaLabelFormat: undefined,
 };
 
 class DayPicker extends React.Component {
