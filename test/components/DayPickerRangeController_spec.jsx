@@ -2219,6 +2219,7 @@ describe('DayPickerRangeController', () => {
       sinon.stub(DayPickerRangeController.prototype, 'isHovered').returns(false);
       sinon.stub(DayPickerRangeController.prototype, 'isInHoveredSpan').returns(false);
       sinon.stub(DayPickerRangeController.prototype, 'isDayAfterHoveredStartDate').returns(false);
+      sinon.stub(DayPickerRangeController.prototype, 'isFirstDayOfWeek').returns(false);
       sinon.stub(DayPickerRangeController.prototype, 'isLastDayOfWeek').returns(false);
       const wrapper = shallow((
         <DayPickerRangeController
