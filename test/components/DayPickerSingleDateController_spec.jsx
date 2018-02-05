@@ -936,6 +936,7 @@ describe('DayPickerSingleDateController', () => {
       const isDayHighlightedStub = sinon.stub().returns(false);
       sinon.stub(DayPickerSingleDateController.prototype, 'isSelected').returns(false);
       sinon.stub(DayPickerSingleDateController.prototype, 'isHovered').returns(false);
+      sinon.stub(DayPickerSingleDateController.prototype, 'isFirstDayOfWeek').returns(false);
       sinon.stub(DayPickerSingleDateController.prototype, 'isLastDayOfWeek').returns(false);
       const wrapper = shallow((
         <DayPickerSingleDateController
