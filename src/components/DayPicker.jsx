@@ -176,10 +176,12 @@ class DayPicker extends React.Component {
       isTouchDevice: isTouchDevice(),
       withMouseInteractions: true,
       hasSetHeight: false,
+      calendarInfoWidth: 0,
     };
 
     this.calendarMonthHeights = [];
     this.calendarMonthGridHeight = 0;
+    this.timeout = null;
 
     this.onKeyDown = this.onKeyDown.bind(this);
     this.throttledKeyDown = throttle(this.onFinalKeyDown, 200, { trailing: false });
@@ -198,7 +200,14 @@ class DayPicker extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({ isTouchDevice: isTouchDevice() });
+    if (this.calendarInfo) {
+      this.setState({
+        isTouchDevice: isTouchDevice(),
+        calendarInfoWidth: calculateDimension(this.calendarInfo, 'width', true, true),
+      });
+    } else {
+      this.setState({ isTouchDevice: isTouchDevice() });
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -251,6 +260,23 @@ class DayPicker extends React.Component {
     return shallowCompare(this, nextProps, nextState);
   }
 
+  componentWillUpdate() {
+    // Calculating the dimensions trigger a DOM repaint which
+    // breaks the CSS transition.
+    // The setTimeout will wait until the transition ends.
+    if (this.calendarInfo) {
+      const { calendarInfoWidth } = this.state;
+      this.timeout = setTimeout(() => {
+        const calendarInfoPanelWidth = calculateDimension(this.calendarInfo, 'width', true, true);
+        if (calendarInfoWidth !== calendarInfoPanelWidth) {
+          this.setState({
+            calendarInfoWidth: calendarInfoPanelWidth,
+          });
+        }
+      }, 200);
+    }
+  }
+
   componentDidUpdate(prevProps) {
     const { isFocused } = this.props;
     const { focusedDate } = this.state;
@@ -258,6 +284,10 @@ class DayPicker extends React.Component {
     if (!prevProps.isFocused && isFocused && !focusedDate) {
       this.container.focus();
     }
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.timeout);
   }
 
   onKeyDown(e) {
@@ -691,6 +721,7 @@ class DayPicker extends React.Component {
       showKeyboardShortcuts,
       isTouchDevice: isTouch,
       hasSetHeight,
+      calendarInfoWidth,
     } = this.state;
 
     const {
@@ -768,13 +799,14 @@ class DayPicker extends React.Component {
       </div>
     );
 
-    const calendarInfoWith = renderCalendarInfo && calendarInfoIsInline
-      ? calculateDimension(this.calendarInfo, 'width', true, true)
+    const calendarInfoPanelWidth = renderCalendarInfo && calendarInfoIsInline
+      ? calendarInfoWidth
       : 0;
 
     const firstVisibleMonthIndex = this.getFirstVisibleIndex();
     const wrapperHorizontalWidth = (calendarMonthWidth * numberOfMonths) + (2 * DAY_PICKER_PADDING);
-    const fullHorizontalWidth = wrapperHorizontalWidth + calendarInfoWith;
+    // Adding `1px` because of whitespace between 2 inline-block
+    const fullHorizontalWidth = wrapperHorizontalWidth + calendarInfoPanelWidth + 1;
 
     const transitionContainerStyle = {
       width: isHorizontal && wrapperHorizontalWidth,
@@ -946,12 +978,12 @@ export default withStyles(({ reactDates: { color, font, zIndex } }) => ({
   },
 
   DayPicker_calendarInfo__horizontal: {
-    display: 'table-cell',
+    display: 'inline-block',
     verticalAlign: 'top',
   },
 
   DayPicker_wrapper__horizontal: {
-    display: 'table-cell',
+    display: 'inline-block',
     verticalAlign: 'top',
   },
 
