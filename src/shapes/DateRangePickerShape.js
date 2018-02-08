@@ -7,7 +7,7 @@ import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 
 import FocusedInputShape from '../shapes/FocusedInputShape';
 import IconPositionShape from '../shapes/IconPositionShape';
-import OrientationShape from '../shapes/OrientationShape';
+import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
 import anchorDirectionShape from '../shapes/AnchorDirectionShape';
 import openDirectionShape from '../shapes/OpenDirectionShape';
 import DayOfWeekShape from '../shapes/DayOfWeekShape';
@@ -46,7 +46,7 @@ export default {
 
   // calendar presentation and interaction related props
   renderMonth: PropTypes.func,
-  orientation: OrientationShape,
+  orientation: ScrollableOrientationShape,
   anchorDirection: anchorDirectionShape,
   openDirection: openDirectionShape,
   horizontalMargin: PropTypes.number,
