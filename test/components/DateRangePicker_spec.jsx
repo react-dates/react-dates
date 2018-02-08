@@ -3,7 +3,7 @@ import moment from 'moment';
 import { expect } from 'chai';
 import sinon from 'sinon-sandbox';
 import { shallow } from 'enzyme';
-import Portal from 'react-portal';
+import { Portal } from 'react-portal';
 
 import DateRangePicker, { PureDateRangePicker } from '../../src/components/DateRangePicker';
 
@@ -76,17 +76,6 @@ describe('DateRangePicker', () => {
           )).dive();
           expect(wrapper.find(Portal)).to.have.length(0);
         });
-
-        it('isOpened prop is true if props.focusedInput !== null', () => {
-          const wrapper = shallow((
-            <DateRangePicker
-              {...requiredProps}
-              withPortal
-              focusedInput={START_DATE}
-            />
-          )).dive();
-          expect(wrapper.find(Portal).props().isOpened).to.equal(true);
-        });
       });
     });
 
@@ -113,17 +102,6 @@ describe('DateRangePicker', () => {
             />
           )).dive();
           expect(wrapper.find(Portal)).to.have.length(0);
-        });
-
-        it('isOpened prop is true if props.focusedInput !== null', () => {
-          const wrapper = shallow((
-            <DateRangePicker
-              {...requiredProps}
-              withFullScreenPortal
-              focusedInput={START_DATE}
-            />
-          )).dive();
-          expect(wrapper.find(Portal).props().isOpened).to.equal(true);
         });
       });
     });
@@ -285,8 +263,10 @@ describe('DateRangePicker', () => {
 
     describe('new focusedInput is truthy', () => {
       let onDayPickerFocusSpy;
+      let onDayPickerBlurSpy;
       beforeEach(() => {
         onDayPickerFocusSpy = sinon.spy(PureDateRangePicker.prototype, 'onDayPickerFocus');
+        onDayPickerBlurSpy = sinon.spy(PureDateRangePicker.prototype, 'onDayPickerBlur');
       });
 
       afterEach(() => {
@@ -319,8 +299,48 @@ describe('DateRangePicker', () => {
         expect(onDayPickerFocusSpy.callCount).to.equal(1);
       });
 
+      it('calls onDayPickerFocus if focusedInput and isTouchDevice', () => {
+        const wrapper = shallow((
+          <DateRangePicker
+            {...requiredProps}
+            onDatesChange={sinon.stub()}
+            onFocusChange={sinon.stub()}
+          />
+        )).dive();
+        wrapper.instance().isTouchDevice = true;
+        wrapper.instance().onDateRangePickerInputFocus(START_DATE);
+        expect(onDayPickerFocusSpy.callCount).to.equal(1);
+      });
+
+      it('calls onDayPickerBlur if focusedInput and !withPortal/!withFullScreenPortal and keepFocusOnInput', () => {
+        const wrapper = shallow((
+          <DateRangePicker
+            {...requiredProps}
+            onDateChange={sinon.stub()}
+            onFocusChange={sinon.stub()}
+            keepFocusOnInput
+          />
+        )).dive();
+        wrapper.instance().isTouchDevice = true;
+        wrapper.instance().onDateRangePickerInputFocus(START_DATE);
+        expect(onDayPickerBlurSpy.callCount).to.equal(1);
+      });
+
+      it('calls onDayPickerFocus if focusedInput and withPortal/withFullScreenPortal and keepFocusOnInput', () => {
+        const wrapper = shallow((
+          <DateRangePicker
+            {...requiredProps}
+            onDateChange={sinon.stub()}
+            onFocusChange={sinon.stub()}
+            keepFocusOnInput
+            withFullScreenPortal
+          />
+        )).dive();
+        wrapper.instance().onDateRangePickerInputFocus(START_DATE);
+        expect(onDayPickerFocusSpy.callCount).to.equal(1);
+      });
+
       it('calls onDayPickerBlur if focusedInput and !withPortal/!withFullScreenPortal', () => {
-        const onDayPickerBlurSpy = sinon.spy(PureDateRangePicker.prototype, 'onDayPickerBlur');
         const wrapper = shallow((
           <DateRangePicker
             {...requiredProps}
@@ -396,7 +416,7 @@ describe('DateRangePicker', () => {
       });
     });
 
-    describe('focusedInput is falsey', () => {
+    describe('focusedInput is falsy', () => {
       it('calls onFocusChange', () => {
         const onFocusChangeStub = sinon.stub();
         const wrapper = shallow((

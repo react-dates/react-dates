@@ -32,6 +32,7 @@ import {
   VERTICAL_ORIENTATION,
   VERTICAL_SCROLLABLE,
   DAY_SIZE,
+  MODIFIER_KEY_NAMES,
 } from '../constants';
 
 const MONTH_PADDING = 23;
@@ -71,7 +72,8 @@ const propTypes = forbidExtraProps({
 
   // day props
   modifiers: PropTypes.object,
-  renderDay: PropTypes.func,
+  renderCalendarDay: PropTypes.func,
+  renderDayContents: PropTypes.func,
   onDayClick: PropTypes.func,
   onDayMouseEnter: PropTypes.func,
   onDayMouseLeave: PropTypes.func,
@@ -119,7 +121,8 @@ export const defaultProps = {
 
   // day props
   modifiers: {},
-  renderDay: null,
+  renderCalendarDay: undefined,
+  renderDayContents: null,
   onDayClick() {},
   onDayMouseEnter() {},
   onDayMouseLeave() {},
@@ -134,6 +137,7 @@ export const defaultProps = {
   monthFormat: 'MMMM YYYY',
   weekDayFormat: 'dd',
   phrases: DayPickerPhrases,
+  dayAriaLabelFormat: undefined,
 };
 
 class DayPicker extends React.Component {
@@ -171,6 +175,7 @@ class DayPicker extends React.Component {
     this.calendarMonthGridHeight = 0;
 
     this.onKeyDown = this.onKeyDown.bind(this);
+    this.throttledKeyDown = throttle(this.onFinalKeyDown, 200, { trailing: false });
     this.onPrevMonthClick = this.onPrevMonthClick.bind(this);
     this.onNextMonthClick = this.onNextMonthClick.bind(this);
     this.multiplyScrollableMonths = this.multiplyScrollableMonths.bind(this);
@@ -249,7 +254,12 @@ class DayPicker extends React.Component {
 
   onKeyDown(e) {
     e.stopPropagation();
+    if (!MODIFIER_KEY_NAMES.has(e.key)) {
+      this.throttledKeyDown(e);
+    }
+  }
 
+  onFinalKeyDown(e) {
     this.setState({ withMouseInteractions: false });
 
     const { onBlur, isRTL } = this.props;
@@ -486,18 +496,20 @@ class DayPicker extends React.Component {
   }
 
   isHorizontal() {
-    return this.props.orientation === HORIZONTAL_ORIENTATION;
+    const { orientation } = this.props;
+    return orientation === HORIZONTAL_ORIENTATION;
   }
 
   isVertical() {
-    return this.props.orientation === VERTICAL_ORIENTATION ||
-      this.props.orientation === VERTICAL_SCROLLABLE;
+    const { orientation } = this.props;
+    return orientation === VERTICAL_ORIENTATION || orientation === VERTICAL_SCROLLABLE;
   }
 
   updateStateAfterMonthTransition() {
     const {
       onPrevMonthClick,
       onNextMonthClick,
+      isRTL,
     } = this.props;
 
     const {
@@ -530,7 +542,7 @@ class DayPicker extends React.Component {
     this.setState({
       currentMonth: newMonth,
       monthTransition: null,
-      translationValue: (this.props.isRTL && this.isHorizontal()) ? -calendarMonthWidth : 0,
+      translationValue: (isRTL && this.isHorizontal()) ? -calendarMonthWidth : 0,
       nextFocusedDate: null,
       focusedDate: newFocusedDate,
     }, () => {
@@ -680,7 +692,8 @@ class DayPicker extends React.Component {
       onDayMouseLeave,
       firstDayOfWeek,
       renderMonth,
-      renderDay,
+      renderCalendarDay,
+      renderDayContents,
       renderCalendarInfo,
       hideKeyboardShortcutsPanel,
       onOutsideClick,
@@ -702,7 +715,7 @@ class DayPicker extends React.Component {
       weekHeaders.push(this.renderWeekHeader(i));
     }
 
-    const verticalScrollable = this.props.orientation === VERTICAL_SCROLLABLE;
+    const verticalScrollable = orientation === VERTICAL_SCROLLABLE;
     const firstVisibleMonthIndex = this.getFirstVisibleIndex();
     const horizontalWidth = (calendarMonthWidth * numberOfMonths) + (2 * DAY_PICKER_PADDING);
 
@@ -773,7 +786,7 @@ class DayPicker extends React.Component {
             {...css(styles.DayPicker_focusRegion)}
             ref={this.setContainerRef}
             onClick={(e) => { e.stopPropagation(); }}
-            onKeyDown={throttle(this.onKeyDown, 300)}
+            onKeyDown={this.onKeyDown}
             onMouseUp={() => { this.setState({ withMouseInteractions: true }); }}
             role="region"
             tabIndex={-1}
@@ -804,7 +817,8 @@ class DayPicker extends React.Component {
                 onDayMouseEnter={onDayMouseEnter}
                 onDayMouseLeave={onDayMouseLeave}
                 renderMonth={renderMonth}
-                renderDay={renderDay}
+                renderCalendarDay={renderCalendarDay}
+                renderDayContents={renderDayContents}
                 onMonthTransitionEnd={this.updateStateAfterMonthTransition}
                 monthFormat={monthFormat}
                 daySize={daySize}
@@ -842,7 +856,7 @@ DayPicker.propTypes = propTypes;
 DayPicker.defaultProps = defaultProps;
 
 export { DayPicker as PureDayPicker };
-export default withStyles(({ reactDates: { color, zIndex } }) => ({
+export default withStyles(({ reactDates: { color, font, zIndex } }) => ({
   DayPicker: {
     background: color.background,
     position: 'relative',
@@ -918,6 +932,7 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
     margin: '1px 0',
     paddingLeft: 0,
     paddingRight: 0,
+    fontSize: font.size,
   },
 
   DayPicker_weekHeader_li: {

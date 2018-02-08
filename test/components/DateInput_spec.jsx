@@ -38,7 +38,7 @@ describe('DateInput', () => {
         });
       });
 
-      describe('props.readOnly is falsey', () => {
+      describe('props.readOnly is falsy', () => {
         it('does not set readOnly', () => {
           const wrapper = shallow(<DateInput id="date" readOnly={false} />).dive();
           expect(!!wrapper.find('input').prop('readOnly')).to.equal(false);
@@ -73,7 +73,7 @@ describe('DateInput', () => {
         });
       });
 
-      describe('props.screenReaderMessage is falsey', () => {
+      describe('props.screenReaderMessage is falsy', () => {
         beforeEach(() => {
           wrapper = shallow(<DateInput id={inputId} />).dive();
         });
@@ -85,6 +85,28 @@ describe('DateInput', () => {
         it('does not have aria-describedby attribute value', () => {
           expect(wrapper.find(`input[aria-describedby="${screenReaderMessageId}"]`)).to.have.lengthOf(0);
         });
+      });
+    });
+  });
+
+  describe('#componentWillReceiveProps', () => {
+    describe('nextProps.displayValue exists', () => {
+      it('sets state.dateString to \'\'', () => {
+        const dateString = 'foo123';
+        const wrapper = shallow(<DateInput id="date" />).dive();
+        wrapper.setState({ dateString });
+        wrapper.instance().componentWillReceiveProps({ displayValue: '1991-07-13' });
+        expect(wrapper.state()).to.have.property('dateString', '');
+      });
+    });
+
+    describe('nextProps.displayValue does not exist', () => {
+      it('does not change state.dateString', () => {
+        const dateString = 'foo123';
+        const wrapper = shallow(<DateInput id="date" />).dive();
+        wrapper.setState({ dateString });
+        wrapper.instance().componentWillReceiveProps({ displayValue: null });
+        expect(wrapper.state()).to.have.property('dateString', dateString);
       });
     });
   });

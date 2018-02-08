@@ -42,7 +42,8 @@ const propTypes = forbidExtraProps({
   onDayMouseLeave: PropTypes.func,
   onMonthTransitionEnd: PropTypes.func,
   renderMonth: PropTypes.func,
-  renderDay: PropTypes.func,
+  renderCalendarDay: PropTypes.func,
+  renderDayContents: PropTypes.func,
   transformValue: PropTypes.string,
   daySize: nonNegativeInteger,
   focusedDate: momentPropTypes.momentObj, // indicates focusable day
@@ -71,7 +72,8 @@ const defaultProps = {
   onDayMouseLeave() {},
   onMonthTransitionEnd() {},
   renderMonth: null,
-  renderDay: null,
+  renderCalendarDay: undefined,
+  renderDayContents: null,
   transformValue: 'none',
   daySize: DAY_SIZE,
   focusedDate: null,
@@ -84,6 +86,7 @@ const defaultProps = {
   // i18n
   monthFormat: 'MMMM YYYY', // english locale
   phrases: CalendarDayPhrases,
+  dayAriaLabelFormat: undefined,
 };
 
 function getMonths(initialMonth, numberOfMonths, withoutTransitionMonths) {
@@ -197,7 +200,8 @@ class CalendarMonthGrid extends React.Component {
   }
 
   onTransitionEnd() {
-    this.props.onMonthTransitionEnd();
+    const { onMonthTransitionEnd } = this.props;
+    onMonthTransitionEnd();
   }
 
   setContainerRef(ref) {
@@ -231,7 +235,8 @@ class CalendarMonthGrid extends React.Component {
       onDayMouseLeave,
       onDayClick,
       renderMonth,
-      renderDay,
+      renderCalendarDay,
+      renderDayContents,
       onMonthTransitionEnd,
       firstDayOfWeek,
       focusedDate,
@@ -297,6 +302,7 @@ class CalendarMonthGrid extends React.Component {
                   position: 'absolute',
                   top: -this.calendarMonthHeights[0],
                 },
+                !isVisible && !isAnimating && styles.CalendarMonthGrid_month__hidden,
               )}
             >
               <CalendarMonth
@@ -310,7 +316,8 @@ class CalendarMonthGrid extends React.Component {
                 onDayMouseLeave={onDayMouseLeave}
                 onDayClick={onDayClick}
                 renderMonth={renderMonth}
-                renderDay={renderDay}
+                renderCalendarDay={renderCalendarDay}
+                renderDayContents={renderDayContents}
                 firstDayOfWeek={firstDayOfWeek}
                 daySize={daySize}
                 focusedDate={isVisible ? focusedDate : null}
@@ -366,5 +373,9 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
     zIndex: zIndex - 1,
     opacity: 0,
     pointerEvents: 'none',
+  },
+
+  CalendarMonthGrid_month__hidden: {
+    visibility: 'hidden',
   },
 }))(CalendarMonthGrid);

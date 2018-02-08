@@ -33,7 +33,10 @@ export default {
   customInputIcon: PropTypes.node,
   noBorder: PropTypes.bool,
   block: PropTypes.bool,
+  small: PropTypes.bool,
+  regular: PropTypes.bool,
   verticalSpacing: nonNegativeInteger,
+  keepFocusOnInput: PropTypes.bool,
 
   // calendar presentation and interaction related props
   renderMonth: PropTypes.func,
@@ -64,7 +67,8 @@ export default {
   onClose: PropTypes.func,
 
   // day presentation and interaction related props
-  renderDay: PropTypes.func,
+  renderCalendarDay: PropTypes.func,
+  renderDayContents: PropTypes.func,
   enableOutsideDays: PropTypes.bool,
   isDayBlocked: PropTypes.func,
   isOutsideRange: PropTypes.func,

@@ -13,7 +13,7 @@ describe('CalendarMonth', () => {
         expect(wrapper.prop('data-visible')).to.equal(true);
       });
 
-      it('data-visible attribute is falsey if !props.isVisible', () => {
+      it('data-visible attribute is falsy if !props.isVisible', () => {
         const wrapper = shallow(<CalendarMonth isVisible={false} />).dive();
         expect(wrapper.prop('data-visible')).to.equal(false);
       });

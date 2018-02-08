@@ -3,7 +3,7 @@ import sinon from 'sinon-sandbox';
 import getPhrase from '../../src/utils/getPhrase';
 
 describe('getPhrase', () => {
-  it('returns empty string when arg is falsey', () => {
+  it('returns empty string when arg is falsy', () => {
     expect(getPhrase()).to.equal('');
   });
 

@@ -43,6 +43,8 @@ const propTypes = forbidExtraProps({
   openDirection: openDirectionShape,
   noBorder: PropTypes.bool,
   block: PropTypes.bool,
+  small: PropTypes.bool,
+  regular: PropTypes.bool,
   verticalSpacing: nonNegativeInteger,
 
   keepOpenOnDateSelect: PropTypes.bool,
@@ -93,6 +95,8 @@ const defaultProps = {
   openDirection: OPEN_DOWN,
   noBorder: false,
   block: false,
+  small: false,
+  regular: false,
   verticalSpacing: undefined,
 
   keepOpenOnDateSelect: false,
@@ -214,8 +218,9 @@ export default class DateRangePickerInputController extends React.Component {
   }
 
   onStartDateFocus() {
-    if (!this.props.disabled) {
-      this.props.onFocusChange(START_DATE);
+    const { disabled, onFocusChange } = this.props;
+    if (!disabled) {
+      onFocusChange(START_DATE);
     }
   }
 
@@ -269,6 +274,8 @@ export default class DateRangePickerInputController extends React.Component {
       isRTL,
       noBorder,
       block,
+      small,
+      regular,
       verticalSpacing,
     } = this.props;
 
@@ -311,6 +318,8 @@ export default class DateRangePickerInputController extends React.Component {
         isRTL={isRTL}
         noBorder={noBorder}
         block={block}
+        small={small}
+        regular={regular}
         verticalSpacing={verticalSpacing}
       />
     );

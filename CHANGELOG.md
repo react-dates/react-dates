@@ -1,5 +1,46 @@
 # Change Log
 
+## 16.2.1
+- [fix] SDP `block` styling also makes the input full width ([#972](https://github.com/airbnb/react-dates/pull/972))
+
+## 16.2.0
+- [new] Add `startDateOffset`/`endDateOffset` props to `DayPickerRangeController` ([#884](https://github.com/airbnb/react-dates/pull/884))
+- [fix] Make all styles inline in `CustomizableCalendarDay` ([#964](https://github.com/airbnb/react-dates/pull/964))
+
+## 16.1.1
+- [fix] Address some small bugs with `CustomizableCalendarDay` ([#962](https://github.com/airbnb/react-dates/pull/962))
+
+## 16.1.0
+- [fix] Allow for changing of the input value via highlight and replace ([#955](https://github.com/airbnb/react-dates/pull/955))
+- [fix] Fix OPEN_UP styling ([#925](https://github.com/airbnb/react-dates/pull/925))
+- [fix] Don't read invisible months to the screen reader ([#940](https://github.com/airbnb/react-dates/pull/940))
+- [new] Add phrase for aria-label for the selected day ([#905](https://github.com/airbnb/react-dates/pull/905))
+
+## 16.0.2
+- [fix] Fix keyboard navigation issues ([#916](https://github.com/airbnb/react-dates/pull/916))
+- [fix] Fix React warnings when events are referenced later ([#682](https://github.com/airbnb/react-dates/pull/682))
+
+## 16.0.1
+- [fix] Add back missing onKeyDown method to `CalendarDay` ([#901](https://github.com/airbnb/react-dates/pull/901))
+
+## 16.0.0
+- [breaking] Simplify `CalendarDay` component ([#894](https://github.com/airbnb/react-dates/pull/894))
+- [breaking] rename `renderDay` prop to `renderDayContents` ([#894](https://github.com/airbnb/react-dates/pull/894))
+- [new] Add `renderCalendarDay` component to allow for easy one-off customization of `CalendarDay` ([#894](https://github.com/airbnb/react-dates/pull/894))
+
+## 15.5.2
+- revert [#866](https://github.com/airbnb/react-dates/pull/866); it turned out to be semver-major
+
+## 15.5.1
+- [fix] Adjust `small` variant height to be 36px ([#892](https://github.com/airbnb/react-dates/pull/892))
+
+## 15.5.0
+- [new] Add `small` variant ([#891](https://github.com/airbnb/react-dates/pull/891))
+
+## 15.4.0
+- [fix] Set font sizes according to theme variable ([#885](https://github.com/airbnb/react-dates/pull/885))
+- [new] Add `verticalSpacing` prop ([#883](https://github.com/airbnb/react-dates/pull/883))
+
 ## 15.3.0
 - [new] Add `transitionDuration` prop ([#865](https://github.com/airbnb/react-dates/pull/865))
 - [fix] Remove default prop values for required startDateId and endDateId props ([#866](https://github.com/airbnb/react-dates/pull/866))
@@ -127,7 +168,7 @@
 ## v11.1.0
 - [fix] Patch issues with vertical scrollable datepickers, after-hovered-start and month transitions ([#503](https://github.com/airbnb/react-dates/pull/503))
 - [new] Adds a `readOnly` prop on the DRP and SDP ([#501](https://github.com/airbnb/react-dates/pull/501))
-- [fix] Disable hover when `focusedInput` is falsey ([#483](https://github.com/airbnb/react-dates/pull/483))
+- [fix] Disable hover when `focusedInput` is falsy ([#483](https://github.com/airbnb/react-dates/pull/483))
 
 ## v11.0.1
 - [fix] Fixes small modifier issues in the DRP after rearchitecture ([#489](https://github.com/airbnb/react-dates/pull/489))

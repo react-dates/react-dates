@@ -8,9 +8,9 @@ import moment from 'moment';
 
 import { CalendarDayPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
-import getPhrase from '../utils/getPhrase';
+import getCalendarDaySettings from '../utils/getCalendarDaySettings';
 
-import { BLOCKED_MODIFIER, DAY_SIZE } from '../constants';
+import { DAY_SIZE } from '../constants';
 
 const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
@@ -23,7 +23,7 @@ const propTypes = forbidExtraProps({
   onDayClick: PropTypes.func,
   onDayMouseEnter: PropTypes.func,
   onDayMouseLeave: PropTypes.func,
-  renderDay: PropTypes.func,
+  renderDayContents: PropTypes.func,
   ariaLabelFormat: PropTypes.string,
 
   // internationalization
@@ -40,7 +40,7 @@ const defaultProps = {
   onDayClick() {},
   onDayMouseEnter() {},
   onDayMouseLeave() {},
-  renderDay: null,
+  renderDayContents: null,
   ariaLabelFormat: 'dddd, LL',
 
   // internationalization
@@ -82,6 +82,17 @@ class CalendarDay extends React.Component {
     onDayMouseLeave(day, e);
   }
 
+  onKeyDown(day, e) {
+    const {
+      onDayClick,
+    } = this.props;
+
+    const { key } = e;
+    if (key === 'Enter' || key === ' ') {
+      onDayClick(day, e);
+    }
+  }
+
   setButtonRef(ref) {
     this.buttonRef = ref;
   }
@@ -93,53 +104,34 @@ class CalendarDay extends React.Component {
       daySize,
       isOutsideDay,
       modifiers,
-      renderDay,
+      renderDayContents,
       tabIndex,
       styles,
-      phrases: {
-        chooseAvailableDate,
-        dateIsUnavailable,
-      },
+      phrases,
     } = this.props;
 
     if (!day) return <td />;
 
-    const formattedDate = { date: day.format(ariaLabelFormat) };
-
-    const ariaLabel = modifiers.has(BLOCKED_MODIFIER)
-      ? getPhrase(dateIsUnavailable, formattedDate)
-      : getPhrase(chooseAvailableDate, formattedDate);
-
-    const daySizeStyles = {
-      width: daySize,
-      height: daySize - 1,
-    };
-
-    const useDefaultCursor = (
-      modifiers.has('blocked-minimum-nights')
-      || modifiers.has('blocked-calendar')
-      || modifiers.has('blocked-out-of-range')
-    );
-
-    const selected = (
-      modifiers.has('selected')
-      || modifiers.has('selected-start')
-      || modifiers.has('selected-end')
-    );
-
-    const hoveredSpan = !selected && (
-      modifiers.has('hovered-span')
-      || modifiers.has('after-hovered-start')
-    );
-
-    const isOutsideRange = modifiers.has('blocked-out-of-range');
+    const {
+      daySizeStyles,
+      useDefaultCursor,
+      selected,
+      hoveredSpan,
+      isOutsideRange,
+      ariaLabel,
+    } = getCalendarDaySettings(day, ariaLabelFormat, daySize, modifiers, phrases);
 
     return (
       <td
         {...css(
-          styles.CalendarDay_container,
+          styles.CalendarDay,
+          useDefaultCursor && styles.CalendarDay__defaultCursor,
+          styles.CalendarDay__default,
           isOutsideDay && styles.CalendarDay__outside,
           modifiers.has('today') && styles.CalendarDay__today,
+          modifiers.has('first-day-of-week') && styles.CalendarDay__firstDayOfWeek,
+          modifiers.has('last-day-of-week') && styles.CalendarDay__lastDayOfWeek,
+          modifiers.has('hovered-offset') && styles.CalendarDay__hovered_offset,
           modifiers.has('highlighted-calendar') && styles.CalendarDay__highlighted_calendar,
           modifiers.has('blocked-minimum-nights') && styles.CalendarDay__blocked_minimum_nights,
           modifiers.has('blocked-calendar') && styles.CalendarDay__blocked_calendar,
@@ -152,23 +144,17 @@ class CalendarDay extends React.Component {
           isOutsideRange && styles.CalendarDay__blocked_out_of_range,
           daySizeStyles,
         )}
+        role="button" // eslint-disable-line jsx-a11y/no-noninteractive-element-to-interactive-role
+        ref={this.setButtonRef}
+        aria-label={ariaLabel}
+        onMouseEnter={(e) => { this.onDayMouseEnter(day, e); }}
+        onMouseLeave={(e) => { this.onDayMouseLeave(day, e); }}
+        onMouseUp={(e) => { e.currentTarget.blur(); }}
+        onClick={(e) => { this.onDayClick(day, e); }}
+        onKeyDown={(e) => { this.onKeyDown(day, e); }}
+        tabIndex={tabIndex}
       >
-        <button
-          {...css(
-            styles.CalendarDay_button,
-            useDefaultCursor && styles.CalendarDay_button__default,
-          )}
-          type="button"
-          ref={this.setButtonRef}
-          aria-label={ariaLabel}
-          onMouseEnter={(e) => { this.onDayMouseEnter(day, e); }}
-          onMouseLeave={(e) => { this.onDayMouseLeave(day, e); }}
-          onMouseUp={(e) => { e.currentTarget.blur(); }}
-          onClick={(e) => { this.onDayClick(day, e); }}
-          tabIndex={tabIndex}
-        >
-          {renderDay ? renderDay(day, modifiers) : day.format('D')}
-        </button>
+        {renderDayContents ? renderDayContents(day, modifiers) : day.format('D')}
       </td>
     );
   }
@@ -178,11 +164,24 @@ CalendarDay.propTypes = propTypes;
 CalendarDay.defaultProps = defaultProps;
 
 export { CalendarDay as PureCalendarDay };
-export default withStyles(({ reactDates: { color } }) => ({
-  CalendarDay_container: {
-    border: `1px solid ${color.core.borderLight}`,
-    padding: 0,
+export default withStyles(({ reactDates: { color, font } }) => ({
+  CalendarDay: {
     boxSizing: 'border-box',
+    cursor: 'pointer',
+    fontSize: font.size,
+    textAlign: 'center',
+
+    ':active': {
+      outline: 0,
+    },
+  },
+
+  CalendarDay__defaultCursor: {
+    cursor: 'default',
+  },
+
+  CalendarDay__default: {
+    border: `1px solid ${color.core.borderLight}`,
     color: color.text,
     background: color.background,
 
@@ -193,29 +192,10 @@ export default withStyles(({ reactDates: { color } }) => ({
     },
   },
 
-  CalendarDay_button: {
-    position: 'relative',
-    height: '100%',
-    width: '100%',
-    textAlign: 'center',
-    background: 'none',
-    border: 0,
-    margin: 0,
-    padding: 0,
+  CalendarDay__hovered_offset: {
+    background: color.core.borderBright,
+    border: `1px double ${color.core.borderLight}`,
     color: 'inherit',
-    font: 'inherit',
-    lineHeight: 'normal',
-    overflow: 'visible',
-    boxSizing: 'border-box',
-    cursor: 'pointer',
-
-    ':active': {
-      outline: 0,
-    },
-  },
-
-  CalendarDay_button__default: {
-    cursor: 'default',
   },
 
   CalendarDay__outside: {
@@ -353,4 +333,6 @@ export default withStyles(({ reactDates: { color } }) => ({
   CalendarDay__selected_start: {},
   CalendarDay__selected_end: {},
   CalendarDay__today: {},
+  CalendarDay__firstDayOfWeek: {},
+  CalendarDay__lastDayOfWeek: {},
 }))(CalendarDay);

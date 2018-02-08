@@ -3,11 +3,10 @@ import PropTypes from 'prop-types';
 import { forbidExtraProps } from 'airbnb-prop-types';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 
-import KeyboardShortcutRow from './KeyboardShortcutRow';
-
 import { DayPickerKeyboardShortcutsPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 
+import KeyboardShortcutRow from './KeyboardShortcutRow';
 import CloseButton from './CloseButton';
 
 export const TOP_LEFT = 'top-left';
@@ -97,35 +96,35 @@ class DayPickerKeyboardShortcuts extends React.Component {
   }
 
   onKeyDown(e) {
+    e.stopPropagation();
+
     const { closeKeyboardShortcutsPanel } = this.props;
     // Because the close button is the only focusable element inside of the panel, this
-    // amount to a very basic focus trap. The user can exit the panel by "pressing" the
+    // amounts to a very basic focus trap. The user can exit the panel by "pressing" the
     // close button or hitting escape
     switch (e.key) {
-      case 'Space':
+      case 'Enter':
+      case ' ':
+      case 'Spacebar': // for older browsers
       case 'Escape':
-        e.stopPropagation();
         closeKeyboardShortcutsPanel();
         break;
 
-      // only stopPropagation here - this allows the up and down arrows continue their
+      // do nothing - this allows the up and down arrows continue their
       // default behavior of scrolling the content of the Keyboard Shortcuts Panel
       // which is needed when only a single month is shown for instance.
       case 'ArrowUp':
       case 'ArrowDown':
-        e.stopPropagation();
         break;
 
       // completely block the rest of the keys that have functionality outside of this panel
       case 'Tab':
-      case 'Enter':
       case 'Home':
       case 'End':
       case 'PageUp':
       case 'PageDown':
       case 'ArrowLeft':
       case 'ArrowRight':
-        e.stopPropagation();
         e.preventDefault();
         break;
 
@@ -214,17 +213,14 @@ class DayPickerKeyboardShortcuts extends React.Component {
 
         {showKeyboardShortcutsPanel &&
           <div
-            {...css(
-              styles.DayPickerKeyboardShortcuts_panel,
-              block && styles.DayPickerKeyboardShortcuts_panel__block,
-            )}
+            {...css(styles.DayPickerKeyboardShortcuts_panel)}
             role="dialog"
-            aria-labelledby="DayPickerKeyboardShortcuts__title"
-            aria-describedby="DayPickerKeyboardShortcuts__description"
+            aria-labelledby="DayPickerKeyboardShortcuts_title"
+            aria-describedby="DayPickerKeyboardShortcuts_description"
           >
             <div
               {...css(styles.DayPickerKeyboardShortcuts_title)}
-              id="DayPickerKeyboardShortcuts__title"
+              id="DayPickerKeyboardShortcuts_title"
             >
               {phrases.keyboardShortcuts}
             </div>
@@ -245,8 +241,8 @@ class DayPickerKeyboardShortcuts extends React.Component {
             </button>
 
             <ul
-              {...css(styles.DayPickerKeyboardShortcuts__list)}
-              id="DayPickerKeyboardShortcuts__description"
+              {...css(styles.DayPickerKeyboardShortcuts_list)}
+              id="DayPickerKeyboardShortcuts_description"
             >
               {this.keyboardShortcuts.map(({ unicode, label, action }) => (
                 <KeyboardShortcutRow
@@ -268,7 +264,7 @@ class DayPickerKeyboardShortcuts extends React.Component {
 DayPickerKeyboardShortcuts.propTypes = propTypes;
 DayPickerKeyboardShortcuts.defaultProps = defaultProps;
 
-export default withStyles(({ reactDates: { color, zIndex } }) => ({
+export default withStyles(({ reactDates: { color, font, zIndex } }) => ({
   DayPickerKeyboardShortcuts_buttonReset: {
     background: 'none',
     border: 0,
@@ -279,6 +275,7 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
     overflow: 'visible',
     padding: 0,
     cursor: 'pointer',
+    fontSize: font.size,
 
     ':active': {
       outline: 'none',
@@ -368,6 +365,7 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
   DayPickerKeyboardShortcuts_list: {
     listStyle: 'none',
     padding: 0,
+    fontSize: font.size,
   },
 
   DayPickerKeyboardShortcuts_close: {
