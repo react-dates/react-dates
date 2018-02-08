@@ -84,6 +84,16 @@ storiesOf('SDP - Calendar Props', module)
       autoFocus
     />
   ))
+  .addWithInfo('horizontal with portal and info panel', () => (
+    <SingleDatePickerWrapper
+      withPortal
+      autoFocus
+      calendarInfoPosition="after"
+      renderCalendarInfo={() => (
+        <TestCustomInfoPanel />
+      )}
+    />
+  ))
   .addWithInfo('horizontal with fullscreen portal', () => (
     <SingleDatePickerWrapper withFullScreenPortal autoFocus />
   ))
