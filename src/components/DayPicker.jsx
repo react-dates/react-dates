@@ -181,7 +181,7 @@ class DayPicker extends React.Component {
 
     this.calendarMonthHeights = [];
     this.calendarMonthGridHeight = 0;
-    this.timeout = null;
+    this.setCalendarInfoWidthTimeout = null;
 
     this.onKeyDown = this.onKeyDown.bind(this);
     this.throttledKeyDown = throttle(this.onFinalKeyDown, 200, { trailing: false });
@@ -261,19 +261,20 @@ class DayPicker extends React.Component {
   }
 
   componentWillUpdate() {
+    const { transitionDuration } = this.props;
     // Calculating the dimensions trigger a DOM repaint which
     // breaks the CSS transition.
     // The setTimeout will wait until the transition ends.
     if (this.calendarInfo) {
       const { calendarInfoWidth } = this.state;
-      this.timeout = setTimeout(() => {
+      this.setCalendarInfoWidthTimeout = setTimeout(() => {
         const calendarInfoPanelWidth = calculateDimension(this.calendarInfo, 'width', true, true);
         if (calendarInfoWidth !== calendarInfoPanelWidth) {
           this.setState({
             calendarInfoWidth: calendarInfoPanelWidth,
           });
         }
-      }, 200);
+      }, transitionDuration);
     }
   }
 
@@ -287,7 +288,7 @@ class DayPicker extends React.Component {
   }
 
   componentWillUnmount() {
-    clearTimeout(this.timeout);
+    clearTimeout(this.setCalendarInfoWidthTimeout);
   }
 
   onKeyDown(e) {
