@@ -2,7 +2,6 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import shallowCompare from 'react-addons-shallow-compare';
 import momentPropTypes from 'react-moment-proptypes';
 import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
@@ -80,7 +79,7 @@ const defaultProps = {
   dayAriaLabelFormat: undefined,
 };
 
-class CalendarMonth extends React.Component {
+class CalendarMonth extends React.PureComponent {
   constructor(props) {
     super(props);
 
@@ -114,10 +113,6 @@ class CalendarMonth extends React.Component {
         ),
       });
     }
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return shallowCompare(this, nextProps, nextState);
   }
 
   componentWillUnmount() {

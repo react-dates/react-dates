@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import shallowCompare from 'react-addons-shallow-compare';
 import momentPropTypes from 'react-moment-proptypes';
 import { forbidExtraProps, nonNegativeInteger, or } from 'airbnb-prop-types';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
@@ -192,7 +191,7 @@ const defaultProps = {
   phrases: CalendarDayPhrases,
 };
 
-class CustomizableCalendarDay extends React.Component {
+class CustomizableCalendarDay extends React.PureComponent {
   constructor(...args) {
     super(...args);
 
@@ -201,10 +200,6 @@ class CustomizableCalendarDay extends React.Component {
     };
 
     this.setButtonRef = this.setButtonRef.bind(this);
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return shallowCompare(this, nextProps, nextState);
   }
 
   componentDidUpdate(prevProps) {

@@ -1,5 +1,4 @@
 import React from 'react';
-import shallowCompare from 'react-addons-shallow-compare';
 import moment from 'moment';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 import { Portal } from 'react-portal';
@@ -115,7 +114,7 @@ const defaultProps = {
   phrases: DateRangePickerPhrases,
 };
 
-class DateRangePicker extends React.Component {
+class DateRangePicker extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -154,10 +153,6 @@ class DateRangePicker extends React.Component {
     }
 
     this.isTouchDevice = isTouchDevice();
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return shallowCompare(this, nextProps, nextState);
   }
 
   componentDidUpdate(prevProps) {
