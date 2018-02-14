@@ -1,5 +1,11 @@
 # Change Log
 
+## 16.3.0
+- [new] customInfoPanel position prop ([#989](https://github.com/airbnb/react-dates/pull/989))
+- [fix] Fix CustomizableCalendarDay selected/selected-start/selected-end specificity issues ([#979](https://github.com/airbnb/react-dates/pull/979))
+- [fix] Add modifiers for `firstDayOfWeek` and `lastDayOfWeek` ([#988](https://github.com/airbnb/react-dates/pull/988))
+- [fix] Ensure callbacks only trigger after state has been updates ([#990](https://github.com/airbnb/react-dates/pull/990))
+
 ## 16.2.1
 - [fix] SDP `block` styling also makes the input full width ([#972](https://github.com/airbnb/react-dates/pull/972))
 

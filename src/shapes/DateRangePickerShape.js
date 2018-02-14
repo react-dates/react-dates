@@ -11,6 +11,7 @@ import OrientationShape from '../shapes/OrientationShape';
 import anchorDirectionShape from '../shapes/AnchorDirectionShape';
 import openDirectionShape from '../shapes/OpenDirectionShape';
 import DayOfWeekShape from '../shapes/DayOfWeekShape';
+import CalendarInfoPositionShape from '../shapes/CalendarInfoPositionShape';
 
 export default {
   // required props for a functional interactive DateRangePicker
@@ -60,6 +61,7 @@ export default {
   keepOpenOnDateSelect: PropTypes.bool,
   reopenPickerOnClearDates: PropTypes.bool,
   renderCalendarInfo: PropTypes.func,
+  calendarInfoPosition: CalendarInfoPositionShape,
   hideKeyboardShortcutsPanel: PropTypes.bool,
   verticalHeight: nonNegativeInteger,
   transitionDuration: nonNegativeInteger,
