@@ -121,7 +121,7 @@
     "react-moment-proptypes": "^1.5.0",
     "react-portal": "^4.1.2",
     "react-with-styles": "=2.2.0",
-    "react-with-styles-interface-css": "^3.0.0"
+    "react-with-styles-interface-css": "^4.0.0"
   },
   "peerDependencies": {
     "moment": "^2.18.1",
