@@ -4,9 +4,7 @@ import sinon from 'sinon-sandbox';
 import { shallow } from 'enzyme';
 
 import DayPickerNavigation from '../../src/components/DayPickerNavigation';
-import {
-  VERTICAL_SCROLLABLE,
-} from '../../src/constants';
+import { VERTICAL_SCROLLABLE } from '../../src/constants';
 
 describe('DayPickerNavigation', () => {
   describe('#render', () => {
