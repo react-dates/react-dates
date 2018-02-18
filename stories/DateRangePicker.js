@@ -88,7 +88,7 @@ storiesOf('DateRangePicker (DRP)', module)
     return (
       <DateRangePickerWrapper
         isRTL
-        isPersianDateRangePicker
+        stateDateWrapper={momentJalaali}
         startDatePlaceholderText="تاریخ شروع"
         endDatePlaceholderText="تاریخ پایان"
         renderMonth={month => momentJalaali(month).format('jMMMM jYYYY')}
