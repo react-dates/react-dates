@@ -133,6 +133,14 @@ storiesOf('DRP - Input Props', module)
       customCloseIcon={<TestCustomCloseIcon />}
     />
   ))
+    .addWithInfo('with show calendar icon after input', () => (
+    <DateRangePickerWrapper
+      initialStartDate={moment().add(3, 'days')}
+      initialEndDate={moment().add(10, 'days')}
+      showDefaultInputIcon
+      inputIconPosition="after"
+    />
+  ))
   .addWithInfo('with screen reader message', () => (
     <DateRangePickerWrapper
       initialStartDate={moment().add(3, 'days')}
