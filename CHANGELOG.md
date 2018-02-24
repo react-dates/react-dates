@@ -1,10 +1,14 @@
 # Change Log
 
+## 16.3.3
+- [revert] Reverts 'Bump react-with-style-interface-css dependency ([#1043](https://github.com/airbnb/react-dates/pull/1043))'
+
 ## 16.3.2
-- [Revert] Bump react-with-styles dependency ([#1041](https://github.com/airbnb/react-dates/pull/1041))
+- [revert] Reverts 'Bump react-with-styles dependency ([#1041](https://github.com/airbnb/react-dates/pull/1041))'
 
 ## 16.3.1
 - [deps] Bump react-with-styles dependency ([#1041](https://github.com/airbnb/react-dates/pull/1041))
+- [deps] Bump react-with-style-interface-css dependency ([#1043](https://github.com/airbnb/react-dates/pull/1043))
 
 ## 16.3.0
 - [new] customInfoPanel position prop ([#989](https://github.com/airbnb/react-dates/pull/989))
