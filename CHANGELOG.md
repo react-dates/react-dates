@@ -1,5 +1,8 @@
 # Change Log
 
+## 16.3.2
+- [Revert] Bump react-with-styles dependency ([#1041](https://github.com/airbnb/react-dates/pull/1041))
+
 ## 16.3.1
 - [deps] Bump react-with-styles dependency ([#1041](https://github.com/airbnb/react-dates/pull/1041))
 
