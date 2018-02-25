@@ -8,9 +8,9 @@ import PresetDateRangePickerWrapper from '../examples/PresetDateRangePicker';
 function App() {
   return (
     <div>
-      <DateRangePickerWrapper />
-      <SingleDatePickerWrapper />
-      <PresetDateRangePickerWrapper />
+      <DateRangePickerWrapper autoFocus />
+      <SingleDatePickerWrapper autoFocus />
+      <PresetDateRangePickerWrapper autoFocus />
     </div>
   );
 }
