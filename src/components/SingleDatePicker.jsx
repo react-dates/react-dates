@@ -451,12 +451,12 @@ class SingleDatePicker extends React.Component {
 
         {withFullScreenPortal && (
           <button
+            {...css(styles.SingleDatePicker_closeButton)}
             aria-label={phrases.closeDatePicker}
-            className="SingleDatePicker__close"
             type="button"
             onClick={this.onClearFocus}
           >
-            <div className="SingleDatePicker__close-icon">
+            <div {...css(styles.SingleDatePicker_closeButton_svg)}>
               {closeIcon}
             </div>
           </button>
