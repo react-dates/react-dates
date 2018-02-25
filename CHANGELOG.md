@@ -1,5 +1,8 @@
 # Change Log
 
+## 16.3.4
+- [fix] Bumps all the RWS libraries again, now with less breakage!
+
 ## 16.3.3
 - [revert] Reverts 'Bump react-with-style-interface-css dependency ([#1043](https://github.com/airbnb/react-dates/pull/1043))'
 
