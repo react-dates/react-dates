@@ -117,7 +117,7 @@ describe('getCalendarDaySettings', () => {
     });
 
     it('should be true when day is not selected and after-hovered-start', () => {
-      const modifiers = new Set(['hovered-span']);
+      const modifiers = new Set(['after-hovered-start']);
       const { hoveredSpan } = getCalendarDaySettings(
         testDay,
         testAriaLabelFormat,
@@ -145,6 +145,40 @@ describe('getCalendarDaySettings', () => {
           testPhrases,
         );
         expect(hoveredSpan).to.equal(false);
+      });
+    });
+  });
+
+  describe('afterHoveredStartSpan', () => {
+    it('should be true when day is not selected and after-hovered-start', () => {
+      const modifiers = new Set(['after-hovered-start']);
+      const { afterHoveredStartSpan } = getCalendarDaySettings(
+        testDay,
+        testAriaLabelFormat,
+        testDaySize,
+        modifiers,
+        testPhrases,
+      );
+      expect(afterHoveredStartSpan).to.equal(true);
+    });
+
+    it('should be false when day is some kind of selected', () => {
+      const selectedModifiers = new Set([
+        'selected',
+        'selected-start',
+        'selected-end',
+      ]);
+
+      selectedModifiers.forEach((selectedModifier) => {
+        const modifiers = new Set([selectedModifier]);
+        const { afterHoveredStartSpan } = getCalendarDaySettings(
+          testDay,
+          testAriaLabelFormat,
+          testDaySize,
+          modifiers,
+          testPhrases,
+        );
+        expect(afterHoveredStartSpan).to.equal(false);
       });
     });
   });

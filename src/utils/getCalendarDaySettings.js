@@ -30,6 +30,9 @@ export default function getCalendarDaySettings(day, ariaLabelFormat, daySize, mo
     || modifiers.has('after-hovered-start')
   );
 
+  const afterHoveredStartSpan = !selected &&
+    modifiers.has('after-hovered-start');
+
   const isOutsideRange = modifiers.has('blocked-out-of-range');
 
   const formattedDate = { date: day.format(ariaLabelFormat) };
@@ -46,6 +49,7 @@ export default function getCalendarDaySettings(day, ariaLabelFormat, daySize, mo
     useDefaultCursor,
     selected,
     hoveredSpan,
+    afterHoveredStartSpan,
     isOutsideRange,
     ariaLabel,
   };

@@ -117,6 +117,7 @@ class CalendarDay extends React.Component {
       useDefaultCursor,
       selected,
       hoveredSpan,
+      afterHoveredStartSpan,
       isOutsideRange,
       ariaLabel,
     } = getCalendarDaySettings(day, ariaLabelFormat, daySize, modifiers, phrases);
@@ -136,6 +137,7 @@ class CalendarDay extends React.Component {
           modifiers.has('blocked-minimum-nights') && styles.CalendarDay__blocked_minimum_nights,
           modifiers.has('blocked-calendar') && styles.CalendarDay__blocked_calendar,
           hoveredSpan && styles.CalendarDay__hovered_span,
+          afterHoveredStartSpan && styles.CalendarDay__after_hovered_start_span,
           modifiers.has('selected-span') && styles.CalendarDay__selected_span,
           modifiers.has('last-in-range') && styles.CalendarDay__last_in_range,
           modifiers.has('selected-start') && styles.CalendarDay__selected_start,
@@ -335,4 +337,5 @@ export default withStyles(({ reactDates: { color, font } }) => ({
   CalendarDay__today: {},
   CalendarDay__firstDayOfWeek: {},
   CalendarDay__lastDayOfWeek: {},
+  CalendarDay__after_hovered_start_span: {},
 }))(CalendarDay);
