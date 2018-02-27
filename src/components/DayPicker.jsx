@@ -816,7 +816,7 @@ class DayPicker extends React.Component {
     };
 
     const dayPickerWrapperStyle = {
-      width: wrapperHorizontalWidth,
+      width: isHorizontal && wrapperHorizontalWidth,
     };
 
     const dayPickerStyle = {
@@ -834,7 +834,6 @@ class DayPicker extends React.Component {
         {...css(
           styles.DayPicker,
           isHorizontal && styles.DayPicker__horizontal,
-          this.isVertical() && styles.DayPicker__vertical,
           verticalScrollable && styles.DayPicker__verticalScrollable,
           isHorizontal && withPortal && styles.DayPicker_portal__horizontal,
           this.isVertical() && withPortal && styles.DayPicker_portal__vertical,
@@ -849,7 +848,7 @@ class DayPicker extends React.Component {
           <div
             {...css(
               dayPickerWrapperStyle,
-              (calendarInfoIsInline) && styles.DayPicker_wrapper__horizontal,
+              calendarInfoIsInline && isHorizontal && styles.DayPicker_wrapper__horizontal,
             )}
           >
 
