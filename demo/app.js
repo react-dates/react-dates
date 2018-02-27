@@ -1,8 +1,10 @@
 /* globals moment */
-import Inferno from 'inferno';
+import { render, version } from 'inferno';
 import MainComponent from './main';
+
+console.log('version', version);
 
 moment.locale('en');
 // moment.locale('ru');
 
-Inferno.render(<MainComponent/>, document.getElementById('app'));
+render(<MainComponent/>, document.getElementById('app'));

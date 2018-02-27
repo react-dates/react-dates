@@ -1,4 +1,4 @@
-import Component from 'inferno-component';
+import { Component } from 'inferno';
 import PropTypes from 'prop-types';
 import { forbidExtraProps } from '../airbnb-prop-types-inferno';
 import cx from 'classnames';

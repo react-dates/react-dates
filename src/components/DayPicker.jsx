@@ -1,11 +1,11 @@
-import Component from 'inferno-component';
+import { Component } from 'inferno';
 import PropTypes from 'prop-types';
 import shallowCompare from 'react-addons-shallow-compare';
-import Inferno from 'inferno';
 import { forbidExtraProps } from '../airbnb-prop-types-inferno';
 import moment from 'moment';
 import cx from 'classnames';
 import throttle from 'lodash.throttle';
+import findDOMNode from '../utils/findDOMNode';
 
 import { DayPickerPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
@@ -109,8 +109,6 @@ export const defaultProps = {
   monthFormat: 'MMMM YYYY',
   phrases: DayPickerPhrases,
 };
-
-Inferno.options.findDOMNodeEnabled = true;
 
 function applyTransformStyles(el, transform, opacity = '') {
   const transformStyles = getTransformStyles(transform);
@@ -483,7 +481,7 @@ export default class DayPicker extends Component {
   initializeDayPickerWidth() {
     this.dayPickerWidth = calculateDimension(
       // eslint-disable-next-line react/no-find-dom-node
-      Inferno.findDOMNode(this.calendarMonthGrid).querySelector('.CalendarMonth'),
+      findDOMNode(this.calendarMonthGrid).querySelector('.CalendarMonth'),
       'width',
       true,
     );
@@ -511,7 +509,7 @@ export default class DayPicker extends Component {
     // clear the previous transforms
     applyTransformStyles(
       // eslint-disable-next-line react/no-find-dom-node
-      Inferno.findDOMNode(this.calendarMonthGrid).querySelector('.CalendarMonth'),
+      findDOMNode(this.calendarMonthGrid).querySelector('.CalendarMonth'),
       'none',
     );
 

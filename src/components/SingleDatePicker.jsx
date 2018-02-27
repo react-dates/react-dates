@@ -1,4 +1,4 @@
-import Component from 'inferno-component';
+import { Component } from 'inferno';
 import moment from 'moment';
 import cx from 'classnames';
 // import Portal from 'react-portal';

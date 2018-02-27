@@ -1,5 +1,4 @@
-import Component from 'inferno-component';
-import Inferno from 'inferno';
+import { Component } from 'inferno';
 import shallowCompare from 'react-addons-shallow-compare';
 import moment from 'moment';
 import cx from 'classnames';
@@ -11,6 +10,7 @@ import { DateRangePickerPhrases } from '../defaultPhrases';
 
 import OutsideClickHandler from './OutsideClickHandler';
 import getResponsiveContainerStyles from '../utils/getResponsiveContainerStyles';
+import findDOMNode from '../utils/findDOMNode';
 import isTouchDevice from '../utils/isTouchDevice';
 
 import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
@@ -89,8 +89,6 @@ const defaultProps = {
   monthFormat: 'MMMM YYYY',
   phrases: DateRangePickerPhrases,
 };
-
-Inferno.options.findDOMNodeEnabled = true;
 
 export default class DateRangePicker extends Component {
   constructor(props) {
@@ -214,7 +212,7 @@ export default class DateRangePicker extends Component {
   }
 
   getDayPickerDOMNode() {
-    return Inferno.findDOMNode(this.dayPicker); // eslint-disable-line react/no-find-dom-node
+    return findDOMNode(this.dayPicker); // eslint-disable-line react/no-find-dom-node
   }
 
   isOpened() {
@@ -322,7 +320,6 @@ export default class DateRangePicker extends Component {
       initialVisibleMonth || (() => (startDate || endDate || moment()));
 
     const closeIcon = customCloseIcon || (<CloseButton />);
-
     return (
       <div // eslint-disable-line jsx-a11y/no-static-element-interactions
         ref={(ref) => { this.dayPickerContainer = ref; }}

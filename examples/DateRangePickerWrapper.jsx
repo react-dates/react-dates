@@ -1,4 +1,4 @@
-import Component from 'inferno-component';
+import { Component } from 'inferno';
 import PropTypes from 'prop-types';
 import momentPropTypes from '../lib/moment-proptypes-inferno';
 import moment from 'moment';
