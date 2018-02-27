@@ -1,5 +1,8 @@
 # Change Log
 
+## 16.3.6
+- [fix] Address width issues for vertical DayPickers ([#1055](https://github.com/airbnb/react-dates/pull/1055))
+
 ## 16.3.5 (I promise this one is good)
 - [fix] Includes all necessary CSS ([c965348](https://github.com/airbnb/react-dates/commit/c96534896d8fe5c28ddc1f1090ef43dfaeebb5d6))
 
