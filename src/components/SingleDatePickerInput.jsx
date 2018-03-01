@@ -127,7 +127,7 @@ function SingleDatePickerInput({
     <CloseButton
       {...css(
         styles.SingleDatePickerInput_clearDate_svg,
-        styles.SingleDatePickerInput_clearDate_svg__small,
+        small && styles.SingleDatePickerInput_clearDate_svg__small,
       )}
     />
   );
