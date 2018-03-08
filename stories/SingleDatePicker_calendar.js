@@ -104,6 +104,21 @@ storiesOf('SDP - Calendar Props', module)
       autoFocus
     />
   ))
+  .addWithInfo('prevent scroll', () => (
+    <div style={{ height: '100vh' }}>
+      <div>This content scrolls.</div>
+      <SingleDatePickerWrapper preventScroll autoFocus />
+    </div>
+  ))
+  .addWithInfo('appended to body', () => <SingleDatePickerWrapper appendToBody autoFocus />)
+  .addWithInfo('appended to body (in scrollable container)', () => (
+    <div style={{ height: 200, overflow: 'auto', background: 'whitesmoke' }}>
+      <div>This content scrolls.</div>
+      <div style={{ marginBottom: 300 }}>
+        <SingleDatePickerWrapper appendToBody autoFocus />
+      </div>
+    </div>
+  ))
   .addWithInfo('does not autoclose the DayPicker on date selection', () => (
     <SingleDatePickerWrapper
       keepOpenOnDateSelect
