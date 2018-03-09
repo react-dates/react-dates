@@ -77,10 +77,10 @@ storiesOf('DRP - Calendar Props', module)
   .addWithInfo('vertical with full screen portal', () => (
     <DateRangePickerWrapper orientation={VERTICAL_ORIENTATION} withFullScreenPortal autoFocus />
   ))
-  .addWithInfo('prevent scroll', () => (
+  .addWithInfo('disable scroll', () => (
     <div style={{ height: '100vh' }}>
       <div>This content scrolls.</div>
-      <DateRangePickerWrapper preventScroll autoFocus />
+      <DateRangePickerWrapper disableScroll autoFocus />
     </div>
   ))
   .addWithInfo('appended to body', () => <DateRangePickerWrapper appendToBody autoFocus />)

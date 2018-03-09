@@ -48,7 +48,7 @@ export default {
   withPortal: PropTypes.bool,
   withFullScreenPortal: PropTypes.bool,
   appendToBody: PropTypes.bool,
-  preventScroll: PropTypes.bool,
+  disableScroll: PropTypes.bool,
   initialVisibleMonth: PropTypes.func,
   firstDayOfWeek: DayOfWeekShape,
   numberOfMonths: PropTypes.number,

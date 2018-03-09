@@ -14,7 +14,7 @@ import getResponsiveContainerStyles from '../utils/getResponsiveContainerStyles'
 import getDetachedContainerStyles from '../utils/getDetachedContainerStyles';
 import getInputHeight from '../utils/getInputHeight';
 import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
-import ScrollManager from '../utils/ScrollManager';
+import disableScroll from '../utils/disableScroll';
 
 import DateRangePickerInputController from './DateRangePickerInputController';
 import DayPickerRangeController from './DayPickerRangeController';
@@ -76,7 +76,7 @@ const defaultProps = {
   withPortal: false,
   withFullScreenPortal: false,
   appendToBody: false,
-  preventScroll: false,
+  disableScroll: false,
   initialVisibleMonth: null,
   numberOfMonths: 2,
   keepOpenOnDateSelect: false,
@@ -136,17 +136,12 @@ class DateRangePicker extends React.Component {
 
     this.responsivizePickerPosition = this.responsivizePickerPosition.bind(this);
     this.disableScroll = this.disableScroll.bind(this);
-    this.enableScroll = this.enableScroll.bind(this);
 
     this.setDayPickerContainerRef = this.setDayPickerContainerRef.bind(this);
     this.setContainerRef = this.setContainerRef.bind(this);
   }
 
   componentDidMount() {
-    if (this.props.appendToBody || this.props.preventScroll) {
-      this.scrollManager = new ScrollManager(this.container);
-    }
-
     this.removeEventListener = addEventListener(
       window,
       'resize',
@@ -176,13 +171,13 @@ class DateRangePicker extends React.Component {
       this.disableScroll();
     } else if (prevProps.focusedInput && !this.props.focusedInput && !this.isOpened()) {
       // The date picker just changed from being open to being closed.
-      this.enableScroll();
+      if (this.enableScroll) this.enableScroll();
     }
   }
 
   componentWillUnmount() {
     if (this.removeEventListener) this.removeEventListener();
-    this.enableScroll();
+    if (this.enableScroll) this.enableScroll();
   }
 
   onOutsideClick(event) {
@@ -260,12 +255,9 @@ class DateRangePicker extends React.Component {
   }
 
   disableScroll() {
+    if (!this.props.appendToBody && !this.props.disableScroll) return;
     if (!this.isOpened()) return;
-    if (this.scrollManager) this.scrollManager.disableScroll();
-  }
-
-  enableScroll() {
-    if (this.scrollManager) this.scrollManager.enableScroll();
+    this.enableScroll = disableScroll(this.container);
   }
 
   responsivizePickerPosition() {

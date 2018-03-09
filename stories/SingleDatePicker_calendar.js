@@ -104,10 +104,10 @@ storiesOf('SDP - Calendar Props', module)
       autoFocus
     />
   ))
-  .addWithInfo('prevent scroll', () => (
+  .addWithInfo('disable scroll', () => (
     <div style={{ height: '100vh' }}>
       <div>This content scrolls.</div>
-      <SingleDatePickerWrapper preventScroll autoFocus />
+      <SingleDatePickerWrapper disableScroll autoFocus />
     </div>
   ))
   .addWithInfo('appended to body', () => <SingleDatePickerWrapper appendToBody autoFocus />)

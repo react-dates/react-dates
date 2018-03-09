@@ -15,7 +15,7 @@ import getResponsiveContainerStyles from '../utils/getResponsiveContainerStyles'
 import getDetachedContainerStyles from '../utils/getDetachedContainerStyles';
 import getInputHeight from '../utils/getInputHeight';
 import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
-import ScrollManager from '../utils/ScrollManager';
+import disableScroll from '../utils/disableScroll';
 
 import SingleDatePickerInput from './SingleDatePickerInput';
 import DayPickerSingleDateController from './DayPickerSingleDateController';
@@ -73,7 +73,7 @@ const defaultProps = {
   withPortal: false,
   withFullScreenPortal: false,
   appendToBody: false,
-  preventScroll: false,
+  disableScroll: false,
   initialVisibleMonth: null,
   firstDayOfWeek: null,
   numberOfMonths: 2,
@@ -137,7 +137,6 @@ class SingleDatePicker extends React.Component {
 
     this.responsivizePickerPosition = this.responsivizePickerPosition.bind(this);
     this.disableScroll = this.disableScroll.bind(this);
-    this.enableScroll = this.enableScroll.bind(this);
 
     this.setDayPickerContainerRef = this.setDayPickerContainerRef.bind(this);
     this.setContainerRef = this.setContainerRef.bind(this);
@@ -145,10 +144,6 @@ class SingleDatePicker extends React.Component {
 
   /* istanbul ignore next */
   componentDidMount() {
-    if (this.props.appendToBody || this.props.preventScroll) {
-      this.scrollManager = new ScrollManager(this.container);
-    }
-
     this.removeEventListener = addEventListener(
       window,
       'resize',
@@ -172,14 +167,14 @@ class SingleDatePicker extends React.Component {
       this.responsivizePickerPosition();
       this.disableScroll();
     } else if (prevProps.focused && !this.props.focused) {
-      this.enableScroll();
+      if (this.enableScroll) this.enableScroll();
     }
   }
 
   /* istanbul ignore next */
   componentWillUnmount() {
     if (this.removeEventListener) this.removeEventListener();
-    this.enableScroll();
+    if (this.enableScroll) this.enableScroll();
   }
 
   onChange(dateString) {
@@ -292,12 +287,9 @@ class SingleDatePicker extends React.Component {
   }
 
   disableScroll() {
+    if (!this.props.appendToBody && !this.props.disableScroll) return;
     if (!this.props.focused) return;
-    if (this.scrollManager) this.scrollManager.disableScroll();
-  }
-
-  enableScroll() {
-    if (this.scrollManager) this.scrollManager.enableScroll();
+    this.enableScroll = disableScroll(this.container);
   }
 
   /* istanbul ignore next */
