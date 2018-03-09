@@ -387,6 +387,8 @@ class SingleDatePicker extends React.Component {
 
     const inputHeight = getInputHeight(reactDates, small);
 
+    const withAnyPortal = withPortal || withFullScreenPortal;
+
     return (
       <div // eslint-disable-line jsx-a11y/no-static-element-interactions
         ref={this.setDayPickerContainerRef}
@@ -396,15 +398,15 @@ class SingleDatePicker extends React.Component {
           anchorDirection === ANCHOR_RIGHT && styles.SingleDatePicker_picker__directionRight,
           openDirection === OPEN_DOWN && styles.SingleDatePicker_picker__openDown,
           openDirection === OPEN_UP && styles.SingleDatePicker_picker__openUp,
-          openDirection === OPEN_DOWN && {
+          !withAnyPortal && openDirection === OPEN_DOWN && {
             top: inputHeight + verticalSpacing,
           },
-          openDirection === OPEN_UP && {
+          !withAnyPortal && openDirection === OPEN_UP && {
             bottom: inputHeight + verticalSpacing,
           },
           orientation === HORIZONTAL_ORIENTATION && styles.SingleDatePicker_picker__horizontal,
           orientation === VERTICAL_ORIENTATION && styles.SingleDatePicker_picker__vertical,
-          (withPortal || withFullScreenPortal) && styles.SingleDatePicker_picker__portal,
+          withAnyPortal && styles.SingleDatePicker_picker__portal,
           withFullScreenPortal && styles.SingleDatePicker_picker__fullScreenPortal,
           isRTL && styles.SingleDatePicker_picker__rtl,
           dayPickerContainerStyles,
@@ -419,7 +421,7 @@ class SingleDatePicker extends React.Component {
           enableOutsideDays={enableOutsideDays}
           numberOfMonths={numberOfMonths}
           monthFormat={monthFormat}
-          withPortal={withPortal || withFullScreenPortal}
+          withPortal={withAnyPortal}
           focused={focused}
           keepOpenOnDateSelect={keepOpenOnDateSelect}
           hideKeyboardShortcutsPanel={hideKeyboardShortcutsPanel}
