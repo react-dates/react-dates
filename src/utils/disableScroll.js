@@ -1,6 +1,4 @@
-const documentScrollingElement = document.scrollingElement || document.documentElement;
-
-function getScrollParent(node) {
+function getScrollParent(node, rootNode) {
   const parent = node.parentElement;
 
   if (parent == null) return null;
@@ -12,14 +10,15 @@ function getScrollParent(node) {
     return parent;
   }
 
-  return getScrollParent(parent) || documentScrollingElement;
+  return getScrollParent(parent) || rootNode;
 }
 
 function getScrollAncestorsOverflow(node, acc = new Map()) {
-  const scrollParent = getScrollParent(node);
+  const rootNode = document.scrollingElement || document.documentElement;
+  const scrollParent = getScrollParent(node, rootNode);
   acc.set(scrollParent, scrollParent.style.overflowY);
 
-  if (scrollParent === documentScrollingElement) return acc;
+  if (scrollParent === rootNode) return acc;
   return getScrollAncestorsOverflow(scrollParent, acc);
 }
 
