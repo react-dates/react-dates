@@ -270,6 +270,7 @@ class DateRangePicker extends React.Component {
     }
 
     const {
+      openDirection,
       anchorDirection,
       horizontalMargin,
       withPortal,
@@ -294,7 +295,11 @@ class DateRangePicker extends React.Component {
             containerEdge,
             horizontalMargin,
           ),
-          ...(appendToBody && getDetachedContainerStyles(this.container)),
+          ...(appendToBody && getDetachedContainerStyles(
+            openDirection,
+            anchorDirection,
+            this.container,
+          )),
         },
       });
     }

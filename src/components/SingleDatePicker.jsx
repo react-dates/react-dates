@@ -299,6 +299,7 @@ class SingleDatePicker extends React.Component {
     this.setState({ dayPickerContainerStyles: {} });
 
     const {
+      openDirection,
       anchorDirection,
       horizontalMargin,
       withPortal,
@@ -329,7 +330,11 @@ class SingleDatePicker extends React.Component {
             containerEdge,
             horizontalMargin,
           ),
-          ...(appendToBody && getDetachedContainerStyles(this.container)),
+          ...(appendToBody && getDetachedContainerStyles(
+            openDirection,
+            anchorDirection,
+            this.container,
+          )),
         },
       });
     }
