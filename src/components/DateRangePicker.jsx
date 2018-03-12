@@ -391,6 +391,8 @@ class DateRangePicker extends React.Component {
 
     const inputHeight = getInputHeight(reactDates, small);
 
+    const withAnyPortal = withPortal || withFullScreenPortal;
+
     return (
       <div // eslint-disable-line jsx-a11y/no-static-element-interactions
         ref={this.setDayPickerContainerRef}
@@ -400,13 +402,13 @@ class DateRangePicker extends React.Component {
           anchorDirection === ANCHOR_RIGHT && styles.DateRangePicker_picker__directionRight,
           orientation === HORIZONTAL_ORIENTATION && styles.DateRangePicker_picker__horizontal,
           orientation === VERTICAL_ORIENTATION && styles.DateRangePicker_picker__vertical,
-          openDirection === OPEN_DOWN && {
+          !withAnyPortal && openDirection === OPEN_DOWN && {
             top: inputHeight + verticalSpacing,
           },
-          openDirection === OPEN_UP && {
+          !withAnyPortal && openDirection === OPEN_UP && {
             bottom: inputHeight + verticalSpacing,
           },
-          (withPortal || withFullScreenPortal) && styles.DateRangePicker_picker__portal,
+          withAnyPortal && styles.DateRangePicker_picker__portal,
           withFullScreenPortal && styles.DateRangePicker_picker__fullScreenPortal,
           isRTL && styles.DateRangePicker_picker__rtl,
           dayPickerContainerStyles,
@@ -427,7 +429,7 @@ class DateRangePicker extends React.Component {
           endDate={endDate}
           monthFormat={monthFormat}
           renderMonth={renderMonth}
-          withPortal={withPortal || withFullScreenPortal}
+          withPortal={withAnyPortal}
           daySize={daySize}
           initialVisibleMonth={initialVisibleMonthThunk}
           hideKeyboardShortcutsPanel={hideKeyboardShortcutsPanel}

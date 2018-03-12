@@ -1338,6 +1338,28 @@ describe('DayPickerRangeController', () => {
           })).to.equal(true);
         });
       });
+
+      describe('minimumNights is 0', () => {
+        it(
+          'calls props.onDatesChange with startDate === today and endDate === today',
+          () => {
+            const onDatesChangeStub = sinon.stub();
+            const wrapper = shallow((
+              <DayPickerRangeController
+                focusedInput={START_DATE}
+                minimumNights={0}
+                onDatesChange={onDatesChangeStub}
+                endDate={today}
+              />
+            ));
+            wrapper.instance().onDayClick(today);
+            expect(onDatesChangeStub.calledWith({
+              startDate: today,
+              endDate: today,
+            })).to.equal(true);
+          },
+        );
+      });
     });
 
     describe('props.focusedInput === END_DATE', () => {
