@@ -57,7 +57,7 @@
     "@storybook/addon-options": "^3.3.13",
     "@storybook/react": "^3.3.13",
     "airbnb-js-shims": "^1.4.1",
-    "aphrodite": "^1.2.5",
+    "aphrodite": "^2.0.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.3",
