@@ -99,7 +99,7 @@
     "raw-loader": "^0.5.1",
     "react": "^0.14 || ^15.5.4 || ^16.1.1",
     "react-dom": "^0.14 || ^15.5.4 || ^16.1.1",
-    "react-with-styles-interface-aphrodite": "^4.0.1",
+    "react-with-styles-interface-aphrodite": "^5.0.0",
     "react-with-styles-interface-css-compiler": "^1.1.2",
     "rimraf": "^2.6.2",
     "safe-publish-latest": "^1.1.1",
