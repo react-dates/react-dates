@@ -1,5 +1,11 @@
 # Change Log
 
+## 16.4.0
+- [new] Export `OutsideClickHandler` in index.js ([#1089](https://github.com/airbnb/react-dates/pull/1089))
+- [fix] Do not apply `verticalSpacing` when `withPortal` or `withFullScreenPortal` is true ([#980](https://github.com/airbnb/react-dates/pull/980))
+- [fix] Handle minimum nights when selecting `startDate` ([#1015](https://github.com/airbnb/react-dates/pull/1015))
+- [fix] Fix style of `CloseIcon` in the SDP ([#1058](https://github.com/airbnb/react-dates/pull/1058))
+
 ## 16.3.6
 - [fix] Address width issues for vertical DayPickers ([#1055](https://github.com/airbnb/react-dates/pull/1055))
 

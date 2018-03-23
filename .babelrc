@@ -4,7 +4,7 @@
       "presets": ["airbnb"],
       "plugins": [
         "inline-react-svg",
-        ["transform-replace-object-assign", "object.assign"],
+        ["transform-replace-object-assign", { "moduleSpecifier": "object.assign" }],
         "istanbul"
       ]
     },
@@ -12,28 +12,28 @@
       "presets": ["airbnb"],
       "plugins": [
         "inline-react-svg",
-        ["transform-replace-object-assign", "object.assign"],
+        ["transform-replace-object-assign", { "moduleSpecifier": "object.assign" }],
       ],
     },
     "production": {
       "presets": ["airbnb"],
       "plugins": [
         "inline-react-svg",
-        ["transform-replace-object-assign", "object.assign"],
+        ["transform-replace-object-assign", { "moduleSpecifier": "object.assign" }],
       ],
     },
     "cjs": {
       "presets": ["airbnb"],
       "plugins": [
         "inline-react-svg",
-        ["transform-replace-object-assign", "object.assign"],
+        ["transform-replace-object-assign", { "moduleSpecifier": "object.assign" }],
       ],
     },
     "esm": {
       "presets": [["airbnb", { modules: false }]],
       "plugins": [
         "inline-react-svg",
-        ["transform-replace-object-assign", "object.assign"],
+        ["transform-replace-object-assign", { "moduleSpecifier": "object.assign" }],
       ],
     },
   },
