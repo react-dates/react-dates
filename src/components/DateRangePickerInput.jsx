@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 
-import selectivelyDisabled from '../shapes/DateRangePickerShape';
-
 import { DateRangePickerInputPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 import openDirectionShape from '../shapes/OpenDirectionShape';
@@ -50,7 +48,7 @@ const propTypes = forbidExtraProps({
   isStartDateFocused: PropTypes.bool,
   isEndDateFocused: PropTypes.bool,
   showClearDates: PropTypes.bool,
-  disabled: PropTypes.bool,
+  disabled: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf([START_DATE, END_DATE])]),
   required: PropTypes.bool,
   readOnly: PropTypes.bool,
   openDirection: openDirectionShape,
@@ -98,7 +96,6 @@ const defaultProps = {
   isEndDateFocused: false,
   showClearDates: false,
   disabled: false,
-  selectivelyDisabled: 'none',
   required: false,
   readOnly: false,
   openDirection: OPEN_DOWN,
@@ -144,7 +141,6 @@ function DateRangePickerInput({
   onClearDates,
   showClearDates,
   disabled,
-  selectivelyDisabled,
   required,
   readOnly,
   showCaret,
@@ -204,9 +200,8 @@ function DateRangePickerInput({
       {calendarIcon}
     </button>
   );
-
-  const isStartDateDisabled = ((selectivelyDisabled === 'startDate') || disabled);
-  const isEndDateDisabled = ((selectivelyDisabled === 'endDate') || disabled);
+  const startDateDisabled = disabled === START_DATE || disabled;
+  const endDateDisabled = disabled === END_DATE || disabled;
 
   return (
     <div
@@ -228,7 +223,7 @@ function DateRangePickerInput({
         screenReaderMessage={screenReaderText}
         focused={isStartDateFocused}
         isFocused={isFocused}
-        disabled={isStartDateDisabled}
+        disabled={startDateDisabled}
         required={required}
         readOnly={readOnly}
         showCaret={showCaret}
@@ -258,7 +253,7 @@ function DateRangePickerInput({
         screenReaderMessage={screenReaderText}
         focused={isEndDateFocused}
         isFocused={isFocused}
-        disabled={isEndDateDisabled}
+        disabled={endDateDisabled}
         required={required}
         readOnly={readOnly}
         showCaret={showCaret}

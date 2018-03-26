@@ -53,7 +53,6 @@ const defaultProps = {
   startDatePlaceholderText: 'Start Date',
   endDatePlaceholderText: 'End Date',
   disabled: false,
-  selectivelyDisabled: 'none',
   required: false,
   readOnly: false,
   screenReaderInputMessage: '',
@@ -346,6 +345,7 @@ class DateRangePicker extends React.Component {
       transitionDuration,
       verticalSpacing,
       small,
+      disabled,
       theme: { reactDates },
     } = this.props;
     const { dayPickerContainerStyles, isDayPickerFocused, showKeyboardShortcuts } = this.state;
@@ -425,6 +425,7 @@ class DateRangePicker extends React.Component {
           weekDayFormat={weekDayFormat}
           verticalHeight={verticalHeight}
           transitionDuration={transitionDuration}
+          disabled={disabled}
         />
 
         {withFullScreenPortal && (
@@ -458,7 +459,6 @@ class DateRangePicker extends React.Component {
       customArrowIcon,
       customCloseIcon,
       disabled,
-      selectivelyDisabled,
       required,
       readOnly,
       openDirection,
@@ -513,7 +513,6 @@ class DateRangePicker extends React.Component {
             customArrowIcon={customArrowIcon}
             customCloseIcon={customCloseIcon}
             disabled={disabled}
-            selectivelyDisabled={selectivelyDisabled}
             required={required}
             readOnly={readOnly}
             openDirection={openDirection}

@@ -117,7 +117,7 @@ The following is a list of other *OPTIONAL* props you may provide to the `DateRa
 // input related props
 startDatePlaceholderText: PropTypes.string,
 endDatePlaceholderText: PropTypes.string,
-disabled: PropTypes.bool,
+disabled: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf([START_DATE, END_DATE])]),
 required: PropTypes.bool,
 readOnly: PropTypes.bool,
 screenReaderInputMessage: PropTypes.string,

@@ -12,6 +12,7 @@ import anchorDirectionShape from '../shapes/AnchorDirectionShape';
 import openDirectionShape from '../shapes/OpenDirectionShape';
 import DayOfWeekShape from '../shapes/DayOfWeekShape';
 import CalendarInfoPositionShape from '../shapes/CalendarInfoPositionShape';
+import { START_DATE, END_DATE } from '../constants';
 
 export default {
   // required props for a functional interactive DateRangePicker
@@ -29,8 +30,7 @@ export default {
   startDatePlaceholderText: PropTypes.string,
   endDateId: PropTypes.string.isRequired,
   endDatePlaceholderText: PropTypes.string,
-  disabled: PropTypes.bool,
-  selectivelyDisabled: PropTypes.oneOf(['none', 'startDate', 'endDate']),
+  disabled: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf([START_DATE, END_DATE])]),
   required: PropTypes.bool,
   readOnly: PropTypes.bool,
   screenReaderInputMessage: PropTypes.string,

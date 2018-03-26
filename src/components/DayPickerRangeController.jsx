@@ -52,6 +52,7 @@ const propTypes = forbidExtraProps({
 
   keepOpenOnDateSelect: PropTypes.bool,
   minimumNights: PropTypes.number,
+  disabled: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf([START_DATE, END_DATE])]),
   isOutsideRange: PropTypes.func,
   isDayBlocked: PropTypes.func,
   isDayHighlighted: PropTypes.func,
@@ -108,6 +109,7 @@ const defaultProps = {
 
   keepOpenOnDateSelect: false,
   minimumNights: 1,
+  disabled: false,
   isOutsideRange() {},
   isDayBlocked() {},
   isDayHighlighted() {},
@@ -439,6 +441,7 @@ export default class DayPickerRangeController extends React.Component {
       onDatesChange,
       startDateOffset,
       endDateOffset,
+      disabled,
     } = this.props;
 
     if (e) e.preventDefault();
@@ -456,13 +459,22 @@ export default class DayPickerRangeController extends React.Component {
       }
     } else if (focusedInput === START_DATE) {
       const lastAllowedStartDate = endDate && endDate.clone().subtract(minimumNights, 'days');
+      const startAfterEnd = isBeforeDay(lastAllowedStartDate, day) ||
+        isAfterDay(startDate, endDate);
+      const endDateDisabled = disabled === END_DATE;
 
-      onFocusChange(END_DATE);
+      if (!endDateDisabled || !startAfterEnd) {
+        startDate = day;
+        if (startAfterEnd) {
+          endDate = null;
+        }
+      }
 
-      startDate = day;
-
-      if (isBeforeDay(lastAllowedStartDate, day) || isAfterDay(startDate, endDate)) {
-        endDate = null;
+      if (endDateDisabled && !startAfterEnd) {
+        onFocusChange(null);
+        onClose({ startDate, endDate });
+      } else if (!endDateDisabled) {
+        onFocusChange(END_DATE);
       }
     } else if (focusedInput === END_DATE) {
       const firstAllowedEndDate = startDate && startDate.clone().add(minimumNights, 'days');
@@ -476,7 +488,7 @@ export default class DayPickerRangeController extends React.Component {
           onFocusChange(null);
           onClose({ startDate, endDate });
         }
-      } else {
+      } else if (disabled !== START_DATE) {
         startDate = day;
         endDate = null;
       }

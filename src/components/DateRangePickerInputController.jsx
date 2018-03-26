@@ -13,8 +13,6 @@ import DateRangePickerInput from './DateRangePickerInput';
 
 import IconPositionShape from '../shapes/IconPositionShape';
 
-import selectivelyDisabled from '../shapes/DateRangePickerShape';
-
 import toMomentObject from '../utils/toMomentObject';
 import toLocalizedDateString from '../utils/toLocalizedDateString';
 
@@ -39,7 +37,7 @@ const propTypes = forbidExtraProps({
   showCaret: PropTypes.bool,
   showDefaultInputIcon: PropTypes.bool,
   inputIconPosition: IconPositionShape,
-  disabled: PropTypes.bool,
+  disabled: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf([START_DATE, END_DATE])]),
   required: PropTypes.bool,
   readOnly: PropTypes.bool,
   openDirection: openDirectionShape,
@@ -92,7 +90,6 @@ const defaultProps = {
   showDefaultInputIcon: false,
   inputIconPosition: ICON_BEFORE_POSITION,
   disabled: false,
-  selectivelyDisabled: 'none',
   required: false,
   readOnly: false,
   openDirection: OPEN_DOWN,
@@ -184,29 +181,34 @@ export default class DateRangePickerInputController extends React.Component {
       disabled,
     } = this.props;
 
-    if (!startDate && withFullScreenPortal && !disabled) {
+    if (!startDate && withFullScreenPortal && disabled !== true && disabled !== START_DATE) {
       // When the datepicker is full screen, we never want to focus the end date first
       // because there's no indication that that is the case once the datepicker is open and it
       // might confuse the user
       onFocusChange(START_DATE);
-    } else if (!disabled) {
+    } else if (disabled !== true && disabled !== END_DATE) {
       onFocusChange(END_DATE);
     }
   }
 
   onStartDateChange(startDateString) {
-    const startDate = toMomentObject(startDateString, this.getDisplayFormat());
-
     let { endDate } = this.props;
     const {
       isOutsideRange,
       minimumNights,
       onDatesChange,
       onFocusChange,
+      disabled,
     } = this.props;
-    const isStartDateValid = startDate && !isOutsideRange(startDate);
+
+    const startDate = toMomentObject(startDateString, this.getDisplayFormat());
+    const endBeforeStart = startDate &&
+      isBeforeDay(endDate, startDate.clone().add(minimumNights, 'days'));
+    const isStartDateValid = startDate && !isOutsideRange(startDate) &&
+      !(disabled === END_DATE && endBeforeStart);
+
     if (isStartDateValid) {
-      if (startDate && isBeforeDay(endDate, startDate.clone().add(minimumNights, 'days'))) {
+      if (endBeforeStart) {
         endDate = null;
       }
 
@@ -222,7 +224,7 @@ export default class DateRangePickerInputController extends React.Component {
 
   onStartDateFocus() {
     const { disabled, onFocusChange } = this.props;
-    if (!disabled) {
+    if (disabled !== true && disabled !== START_DATE) {
       onFocusChange(START_DATE);
     }
   }
@@ -267,7 +269,6 @@ export default class DateRangePickerInputController extends React.Component {
       customArrowIcon,
       customCloseIcon,
       disabled,
-      selectivelyDisabled,
       required,
       readOnly,
       openDirection,
@@ -298,7 +299,6 @@ export default class DateRangePickerInputController extends React.Component {
         isEndDateFocused={isEndDateFocused}
         isFocused={isFocused}
         disabled={disabled}
-        selectivelyDisabled={selectivelyDisabled}
         required={required}
         readOnly={readOnly}
         openDirection={openDirection}
