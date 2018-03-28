@@ -423,6 +423,50 @@ describe('DayPicker', () => {
     });
   });
 
+  describe('#onMonthChange', () => {
+    it('sets state.monthTransition to "month_selection"', () => {
+      const wrapper = shallow(<DayPicker />).dive();
+      wrapper.instance().onMonthChange();
+      expect(wrapper.state().monthTransition).to.equal('month_selection');
+    });
+
+    it('sets state.nextFocusedDate to passed in date', () => {
+      const wrapper = shallow(<DayPicker />).dive();
+      const date = moment();
+      wrapper.instance().onMonthChange(date);
+      expect(wrapper.state().nextFocusedDate).to.equal(date);
+    });
+
+    it('sets state.currentMonth to passed in month', () => {
+      const wrapper = shallow(<DayPicker />).dive();
+      const date = moment();
+      wrapper.instance().onMonthChange(date);
+      expect(wrapper.state().currentMonth).to.equal(date);
+    });
+  });
+
+  describe('#onYearChange', () => {
+    it('sets state.yearTransition to "year_selection"', () => {
+      const wrapper = shallow(<DayPicker />).dive();
+      wrapper.instance().onYearChange();
+      expect(wrapper.state().monthTransition).to.equal('year_selection');
+    });
+
+    it('sets state.nextFocusedDate to passed in date', () => {
+      const wrapper = shallow(<DayPicker />).dive();
+      const date = moment();
+      wrapper.instance().onYearChange(date);
+      expect(wrapper.state().nextFocusedDate).to.equal(date);
+    });
+
+    it('sets state.currentMonth to passed in year', () => {
+      const wrapper = shallow(<DayPicker />).dive();
+      const date = moment();
+      wrapper.instance().onYearChange(date);
+      expect(wrapper.state().currentMonth).to.equal(date);
+    });
+  });
+
   describe('#onPrevMonthClick', () => {
     it('sets state.monthTransition to "prev"', () => {
       const wrapper = shallow(<DayPicker />).dive();

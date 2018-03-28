@@ -46,6 +46,8 @@ const MONTH_PADDING = 23;
 const DAY_PICKER_PADDING = 9;
 const PREV_TRANSITION = 'prev';
 const NEXT_TRANSITION = 'next';
+const MONTH_SELECTION_TRANSITION = 'month_selection';
+const YEAR_SELECTION_TRANSITION = 'year_selection';
 
 const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
@@ -75,10 +77,13 @@ const propTypes = forbidExtraProps({
   noNavButtons: PropTypes.bool,
   onPrevMonthClick: PropTypes.func,
   onNextMonthClick: PropTypes.func,
+  onMonthChange: PropTypes.func,
+  onYearChange: PropTypes.func,
   onMultiplyScrollableMonths: PropTypes.func, // VERTICAL_SCROLLABLE daypickers only
 
   // month props
   renderMonth: PropTypes.func,
+  renderCaption: PropTypes.func,
 
   // day props
   modifiers: PropTypes.object,
@@ -127,10 +132,13 @@ export const defaultProps = {
   noNavButtons: false,
   onPrevMonthClick() {},
   onNextMonthClick() {},
+  onMonthChange() {},
+  onYearChange() {},
   onMultiplyScrollableMonths() {},
 
   // month props
   renderMonth: null,
+  renderCaption: null,
 
   // day props
   modifiers: {},
@@ -195,6 +203,9 @@ class DayPicker extends React.Component {
     this.throttledKeyDown = throttle(this.onFinalKeyDown, 200, { trailing: false });
     this.onPrevMonthClick = this.onPrevMonthClick.bind(this);
     this.onNextMonthClick = this.onNextMonthClick.bind(this);
+    this.onMonthChange = this.onMonthChange.bind(this);
+    this.onYearChange = this.onYearChange.bind(this);
+
     this.multiplyScrollableMonths = this.multiplyScrollableMonths.bind(this);
     this.updateStateAfterMonthTransition = this.updateStateAfterMonthTransition.bind(this);
 
@@ -441,6 +452,30 @@ class DayPicker extends React.Component {
     });
   }
 
+  onMonthChange(currentMonth) {
+    // Translation value is a hack to force an invisible transition that
+    // properly rerenders the CalendarMonthGrid
+    this.setState({
+      monthTransition: MONTH_SELECTION_TRANSITION,
+      translationValue: 0.00001,
+      focusedDate: null,
+      nextFocusedDate: currentMonth,
+      currentMonth,
+    });
+  }
+
+  onYearChange(currentMonth) {
+    // Translation value is a hack to force an invisible transition that
+    // properly rerenders the CalendarMonthGrid
+    this.setState({
+      monthTransition: YEAR_SELECTION_TRANSITION,
+      translationValue: 0.0001,
+      focusedDate: null,
+      nextFocusedDate: currentMonth,
+      currentMonth,
+    });
+  }
+
   onNextMonthClick(nextFocusedDate, e) {
     const { isRTL, numberOfMonths, daySize } = this.props;
     const { calendarMonthWidth, monthTitleHeight } = this.state;
@@ -612,6 +647,8 @@ class DayPicker extends React.Component {
       onPrevMonthClick,
       onNextMonthClick,
       numberOfMonths,
+      onMonthChange,
+      onYearChange,
       isRTL,
     } = this.props;
 
@@ -640,6 +677,12 @@ class DayPicker extends React.Component {
       const newInvisibleMonth = newMonth.clone().add(numberOfMonths, 'month');
       const numberOfWeeks = getNumberOfCalendarMonthWeeks(newInvisibleMonth, firstDayOfWeek);
       this.calendarMonthWeeks = [...this.calendarMonthWeeks.slice(1), numberOfWeeks];
+    } else if (monthTransition === MONTH_SELECTION_TRANSITION) {
+      // TODO: add this.calendarMonthWeeks update
+      if (onMonthChange) onMonthChange(newMonth);
+    } else if (monthTransition === YEAR_SELECTION_TRANSITION) {
+      // TODO: add this.calendarMonthWeeks update
+      if (onYearChange) onYearChange(newMonth);
     }
 
     let newFocusedDate = null;
@@ -813,6 +856,7 @@ class DayPicker extends React.Component {
       renderCalendarDay,
       renderDayContents,
       renderCalendarInfo,
+      renderCaption,
       calendarInfoPosition,
       hideKeyboardShortcutsPanel,
       onOutsideClick,
@@ -969,9 +1013,12 @@ class DayPicker extends React.Component {
                   onDayClick={onDayClick}
                   onDayMouseEnter={onDayMouseEnter}
                   onDayMouseLeave={onDayMouseLeave}
+                  onMonthChange={this.onMonthChange}
+                  onYearChange={this.onYearChange}
                   renderMonth={renderMonth}
                   renderCalendarDay={renderCalendarDay}
                   renderDayContents={renderDayContents}
+                  renderCaption={renderCaption}
                   onMonthTransitionEnd={this.updateStateAfterMonthTransition}
                   monthFormat={monthFormat}
                   daySize={daySize}

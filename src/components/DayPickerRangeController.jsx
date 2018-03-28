@@ -80,6 +80,7 @@ const propTypes = forbidExtraProps({
   renderCalendarDay: PropTypes.func,
   renderDayContents: PropTypes.func,
   renderCalendarInfo: PropTypes.func,
+  renderCaption: PropTypes.func,
   calendarInfoPosition: CalendarInfoPositionShape,
   firstDayOfWeek: DayOfWeekShape,
   verticalHeight: nonNegativeInteger,
@@ -133,11 +134,14 @@ const defaultProps = {
 
   onPrevMonthClick() {},
   onNextMonthClick() {},
+  onMonthChange() {},
+  onYearChange() {},
   onOutsideClick() {},
 
   renderCalendarDay: undefined,
   renderDayContents: null,
   renderCalendarInfo: null,
+  renderCaption: null,
   calendarInfoPosition: INFO_POSITION_BOTTOM,
   firstDayOfWeek: null,
   verticalHeight: null,
@@ -215,6 +219,8 @@ export default class DayPickerRangeController extends React.Component {
     this.onDayMouseLeave = this.onDayMouseLeave.bind(this);
     this.onPrevMonthClick = this.onPrevMonthClick.bind(this);
     this.onNextMonthClick = this.onNextMonthClick.bind(this);
+    this.onMonthChange = this.onMonthChange.bind(this);
+    this.onYearChange = this.onYearChange.bind(this);
     this.onMultiplyScrollableMonths = this.onMultiplyScrollableMonths.bind(this);
     this.getFirstFocusableDay = this.getFirstFocusableDay.bind(this);
     this.setDayPickerRef = this.setDayPickerRef.bind(this);
@@ -681,6 +687,30 @@ export default class DayPickerRangeController extends React.Component {
     });
   }
 
+  onMonthChange(newMonth) {
+    const { numberOfMonths, enableOutsideDays, orientation } = this.props;
+    const withoutTransitionMonths = orientation === VERTICAL_SCROLLABLE;
+    const newVisibleDays =
+      getVisibleDays(newMonth, numberOfMonths, enableOutsideDays, withoutTransitionMonths);
+
+    this.setState({
+      currentMonth: newMonth.clone(),
+      visibleDays: this.getModifiers(newVisibleDays),
+    });
+  }
+
+  onYearChange(newMonth) {
+    const { numberOfMonths, enableOutsideDays, orientation } = this.props;
+    const withoutTransitionMonths = orientation === VERTICAL_SCROLLABLE;
+    const newVisibleDays =
+      getVisibleDays(newMonth, numberOfMonths, enableOutsideDays, withoutTransitionMonths);
+
+    this.setState({
+      currentMonth: newMonth.clone(),
+      visibleDays: this.getModifiers(newVisibleDays),
+    });
+  }
+
   onMultiplyScrollableMonths() {
     const { numberOfMonths, enableOutsideDays } = this.props;
     const { currentMonth, visibleDays } = this.state;
@@ -1003,6 +1033,7 @@ export default class DayPickerRangeController extends React.Component {
       renderCalendarDay,
       renderDayContents,
       renderCalendarInfo,
+      renderCaption,
       calendarInfoPosition,
       onBlur,
       isFocused,
@@ -1030,6 +1061,8 @@ export default class DayPickerRangeController extends React.Component {
         onDayMouseLeave={this.onDayMouseLeave}
         onPrevMonthClick={this.onPrevMonthClick}
         onNextMonthClick={this.onNextMonthClick}
+        onMonthChange={this.onMonthChange}
+        onYearChange={this.onYearChange}
         onMultiplyScrollableMonths={this.onMultiplyScrollableMonths}
         monthFormat={monthFormat}
         renderMonth={renderMonth}
@@ -1044,6 +1077,7 @@ export default class DayPickerRangeController extends React.Component {
         renderCalendarDay={renderCalendarDay}
         renderDayContents={renderDayContents}
         renderCalendarInfo={renderCalendarInfo}
+        renderCaption={renderCaption}
         calendarInfoPosition={calendarInfoPosition}
         firstDayOfWeek={firstDayOfWeek}
         hideKeyboardShortcutsPanel={hideKeyboardShortcutsPanel}

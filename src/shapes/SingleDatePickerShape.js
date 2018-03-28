@@ -73,6 +73,7 @@ export default {
   // day presentation and interaction related props
   renderCalendarDay: PropTypes.func,
   renderDayContents: PropTypes.func,
+  renderCaption: PropTypes.func,
   enableOutsideDays: PropTypes.bool,
   isDayBlocked: PropTypes.func,
   isOutsideRange: PropTypes.func,
