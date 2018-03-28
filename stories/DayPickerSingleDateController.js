@@ -6,6 +6,7 @@ import InfoPanelDecorator, { monospace } from './InfoPanelDecorator';
 
 import isSameDay from '../src/utils/isSameDay';
 import isInclusivelyAfterDay from '../src/utils/isInclusivelyAfterDay';
+import CustomizableCalendarDay, { defaultStyles, selectedStyles } from '../src/components/CustomizableCalendarDay';
 
 import { VERTICAL_ORIENTATION } from '../src/constants';
 
@@ -206,6 +207,32 @@ storiesOf('DayPickerSingleDateController', module)
       renderDayContents={day => day.format('ddd')}
     />
   ))
+  .addWithInfo('with custom day styles', () => {
+    const customDayStyles = {
+      // extend and update styles with es6 spread operators
+      defaultStyles: {
+        ...defaultStyles,
+        color: 'blue',
+        hover: {
+          ...defaultStyles.hover,
+          color: 'blue',
+        },
+      },
+    };
+    return (
+      <DayPickerSingleDateControllerWrapper
+        onOutsideClick={action('DayPickerSingleDateController::onOutsideClick')}
+        onPrevMonthClick={action('DayPickerSingleDateController::onPrevMonthClick')}
+        onNextMonthClick={action('DayPickerSingleDateController::onNextMonthClick')}
+        renderCalendarDay={props => (
+          <CustomizableCalendarDay
+            {...props}
+            {...customDayStyles}
+          />
+        )}
+      />
+    );
+  })
   .addWithInfo('with info panel', () => (
     <DayPickerSingleDateControllerWrapper
       onOutsideClick={action('DayPickerSingleDateController::onOutsideClick')}
