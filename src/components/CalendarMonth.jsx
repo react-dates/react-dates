@@ -161,6 +161,7 @@ class CalendarMonth extends React.Component {
       styles,
       phrases,
       dayAriaLabelFormat,
+      verticalSpacing,
     } = this.props;
 
     const { weeks } = this.state;
@@ -189,7 +190,10 @@ class CalendarMonth extends React.Component {
         </div>
 
         <table
-          {...css(styles.CalendarMonth_table)}
+          {...css(
+            !verticalSpacing && styles.CalendarMonth_table,
+            { borderSpacing: `0px ${verticalSpacing}px` },
+          )}
           role="presentation"
         >
           <tbody ref={this.setGridRef}>
