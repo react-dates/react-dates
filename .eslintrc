@@ -22,7 +22,9 @@
 
     "react/no-did-mount-set-state": 0, // necessary for server-rendering
 
-    "react-with-styles/no-unused-styles": 2
+    "react-with-styles/no-unused-styles": 2,
+
+    "no-restricted-imports": 0, // TODO: enable with full RTL support
   },
 
   "settings": {
