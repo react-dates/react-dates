@@ -23,6 +23,7 @@ import getSelectedDateOffset from '../utils/getSelectedDateOffset';
 import toISODateString from '../utils/toISODateString';
 import toISOMonthString from '../utils/toISOMonthString';
 
+import DisabledShape from '../shapes/DisabledShape';
 import FocusedInputShape from '../shapes/FocusedInputShape';
 import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
 import DayOfWeekShape from '../shapes/DayOfWeekShape';
@@ -52,7 +53,7 @@ const propTypes = forbidExtraProps({
 
   keepOpenOnDateSelect: PropTypes.bool,
   minimumNights: PropTypes.number,
-  disabled: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf([START_DATE, END_DATE])]),
+  disabled: DisabledShape,
   isOutsideRange: PropTypes.func,
   isDayBlocked: PropTypes.func,
   isDayHighlighted: PropTypes.func,
@@ -459,21 +460,21 @@ export default class DayPickerRangeController extends React.Component {
       }
     } else if (focusedInput === START_DATE) {
       const lastAllowedStartDate = endDate && endDate.clone().subtract(minimumNights, 'days');
-      const startAfterEnd = isBeforeDay(lastAllowedStartDate, day) ||
+      const isStartDateAfterEndDate = isBeforeDay(lastAllowedStartDate, day) ||
         isAfterDay(startDate, endDate);
-      const endDateDisabled = disabled === END_DATE;
+      const isEndDateDisabled = disabled === END_DATE;
 
-      if (!endDateDisabled || !startAfterEnd) {
+      if (!isEndDateDisabled || !isStartDateAfterEndDate) {
         startDate = day;
-        if (startAfterEnd) {
+        if (isStartDateAfterEndDate) {
           endDate = null;
         }
       }
 
-      if (endDateDisabled && !startAfterEnd) {
+      if (isEndDateDisabled && !isStartDateAfterEndDate) {
         onFocusChange(null);
         onClose({ startDate, endDate });
-      } else if (!endDateDisabled) {
+      } else if (!isEndDateDisabled) {
         onFocusChange(END_DATE);
       }
     } else if (focusedInput === END_DATE) {
