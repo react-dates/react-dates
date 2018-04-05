@@ -8,6 +8,7 @@ import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 import FocusedInputShape from '../shapes/FocusedInputShape';
 import IconPositionShape from '../shapes/IconPositionShape';
 import OrientationShape from '../shapes/OrientationShape';
+import DisabledShape from '../shapes/DisabledShape';
 import anchorDirectionShape from '../shapes/AnchorDirectionShape';
 import openDirectionShape from '../shapes/OpenDirectionShape';
 import DayOfWeekShape from '../shapes/DayOfWeekShape';
@@ -29,7 +30,7 @@ export default {
   startDatePlaceholderText: PropTypes.string,
   endDateId: PropTypes.string.isRequired,
   endDatePlaceholderText: PropTypes.string,
-  disabled: PropTypes.bool,
+  disabled: DisabledShape,
   required: PropTypes.bool,
   readOnly: PropTypes.bool,
   screenReaderInputMessage: PropTypes.string,

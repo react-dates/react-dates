@@ -2,6 +2,9 @@ import React from 'react';
 import moment from 'moment';
 import { storiesOf } from '@storybook/react';
 
+import isInclusivelyBeforeDay from '../src/utils/isInclusivelyBeforeDay';
+import isInclusivelyAfterDay from '../src/utils/isInclusivelyAfterDay';
+
 import DateRangePickerWrapper from '../examples/DateRangePickerWrapper';
 
 const TestCustomInputIcon = () => (
@@ -53,6 +56,23 @@ storiesOf('DRP - Input Props', module)
       initialStartDate={moment().add(3, 'months')}
       initialEndDate={moment().add(3, 'months').add(10, 'days')}
       disabled
+    />
+  ))
+  .addWithInfo('disabled start date', () => (
+    <DateRangePickerWrapper
+      initialStartDate={moment().add(3, 'months')}
+      initialEndDate={moment().add(3, 'months').add(10, 'days')}
+      disabled="startDate"
+      isOutsideRange={day => !isInclusivelyAfterDay(day, moment().add(3, 'months'))}
+    />
+  ))
+  .addWithInfo('disabled end date', () => (
+    <DateRangePickerWrapper
+      initialStartDate={moment().add(3, 'months')}
+      initialEndDate={moment().add(3, 'months').add(10, 'days')}
+      disabled="endDate"
+      isOutsideRange={day => !isInclusivelyAfterDay(day, moment()) ||
+        !isInclusivelyBeforeDay(day, moment().add(3, 'months').add(10, 'days'))}
     />
   ))
   .addWithInfo('readOnly', () => (

@@ -345,6 +345,7 @@ class DateRangePicker extends React.Component {
       transitionDuration,
       verticalSpacing,
       small,
+      disabled,
       theme: { reactDates },
     } = this.props;
     const { dayPickerContainerStyles, isDayPickerFocused, showKeyboardShortcuts } = this.state;
@@ -424,6 +425,7 @@ class DateRangePicker extends React.Component {
           weekDayFormat={weekDayFormat}
           verticalHeight={verticalHeight}
           transitionDuration={transitionDuration}
+          disabled={disabled}
         />
 
         {withFullScreenPortal && (
