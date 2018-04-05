@@ -1,5 +1,10 @@
 # Change Log
 
+## 16.5.0
+- [new] Export `CustomizeableCalendarDay` default styles ([#1095](https://github.com/airbnb/react-dates/pull/1095))
+- [new] Allow selectively disabling either input in the DRP ([#](https://github.com/airbnb/react-dates/pull/606))
+- [new] Add `dayAriaLabelFormat` prop to the SDP/DRP ([#](https://github.com/airbnb/react-dates/pull/984))
+
 ## 16.4.0
 - [new] Export `OutsideClickHandler` in index.js ([#1089](https://github.com/airbnb/react-dates/pull/1089))
 - [fix] Do not apply `verticalSpacing` when `withPortal` or `withFullScreenPortal` is true ([#980](https://github.com/airbnb/react-dates/pull/980))
