@@ -112,7 +112,7 @@ Here is the minimum *REQUIRED* setup you need to get the `DateRangePicker` worki
 />
 ```
 
-The following is a list of other *OPTIONAL* props you may provide to the `DateRangePicker` to customize appearance and behavior to your heart's desire. Again, please explore the [storybook](http://airbnb.io/react-dates/?selectedKind=DRP%20-%20Input%20Props&selectedStory=default&full=0&down=1&left=1&panelRight=0&downPanel=kadirahq%2Fstorybook-addon-actions%2Factions-panel) for more information on what each of these props do.
+The following is a list of other *OPTIONAL* props you may provide to the `DateRangePicker` to customize appearance and behavior to your heart's desire. All constants (indicated by `ALL_CAPS`) are provided as named exports in `react-dates/constants`. Please explore the [storybook](http://airbnb.io/react-dates/?selectedKind=DRP%20-%20Input%20Props&selectedStory=default&full=0&down=1&left=1&panelRight=0&downPanel=kadirahq%2Fstorybook-addon-actions%2Factions-panel) for more information on what each of these props do. 
 ```js
 // input related props
 startDatePlaceholderText: PropTypes.string,
@@ -133,8 +133,8 @@ regular: PropTypes.bool,
 
 // calendar presentation and interaction related props
 renderMonth: PropTypes.func,
-orientation: OrientationShape,
-anchorDirection: anchorDirectionShape,
+orientation: PropTypes.oneOf([HORIZONTAL_ORIENTATION, VERTICAL_ORIENTATION]),
+anchorDirection: PropTypes.oneOf([ANCHOR_LEFT, ANCHOR_RIGHT]),
 horizontalMargin: PropTypes.number,
 withPortal: PropTypes.bool,
 withFullScreenPortal: PropTypes.bool,
@@ -189,7 +189,7 @@ Here is the minimum *REQUIRED* setup you need to get the `SingleDatePicker` work
 />
 ```
 
-The following is a list of other *OPTIONAL* props you may provide to the `SingleDatePicker` to customize appearance and behavior to your heart's desire. Again, please explore the [storybook](http://airbnb.io/react-dates/?selectedKind=SDP%20-%20Input%20Props&selectedStory=default&full=0&down=1&left=1&panelRight=0&downPanel=kadirahq%2Fstorybook-addon-actions%2Factions-panel) for more information on what each of these props do.
+The following is a list of other *OPTIONAL* props you may provide to the `SingleDatePicker` to customize appearance and behavior to your heart's desire. All constants (indicated by `ALL_CAPS`) are provided as named exports in `react-dates/constants`. Please explore the [storybook](http://airbnb.io/react-dates/?selectedKind=SDP%20-%20Input%20Props&selectedStory=default&full=0&down=1&left=1&panelRight=0&downPanel=kadirahq%2Fstorybook-addon-actions%2Factions-panel) for more information on what each of these props do.
 ```js
 // input related props
 id: PropTypes.string.isRequired,
@@ -209,8 +209,8 @@ regular: PropTypes.bool,
 
 // calendar presentation and interaction related props
 renderMonth: PropTypes.func,
-orientation: OrientationShape,
-anchorDirection: anchorDirectionShape,
+orientation: PropTypes.oneOf([HORIZONTAL_ORIENTATION, VERTICAL_ORIENTATION]),
+anchorDirection: PropTypes.oneOf([ANCHOR_LEFT, ANCHOR_RIGHT]),
 horizontalMargin: PropTypes.number,
 withPortal: PropTypes.bool,
 withFullScreenPortal: PropTypes.bool,
