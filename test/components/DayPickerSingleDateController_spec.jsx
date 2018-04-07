@@ -94,7 +94,7 @@ describe('DayPickerSingleDateController', () => {
           it('does not call isBlocked', () => {
             const isBlockedStub = sinon.stub(DayPickerSingleDateController.prototype, 'isBlocked');
             const wrapper = shallow(<DayPickerSingleDateController {...props} />);
-            isBlockedStub.reset();
+            isBlockedStub.resetHistory();
             wrapper.instance().componentWillReceiveProps({
               ...props,
             });
@@ -120,7 +120,7 @@ describe('DayPickerSingleDateController', () => {
             const isBlockedStub = sinon.stub(DayPickerSingleDateController.prototype, 'isBlocked');
             const wrapper = shallow(<DayPickerSingleDateController {...props} />);
             wrapper.setState({ visibleDays });
-            isBlockedStub.reset();
+            isBlockedStub.resetHistory();
             wrapper.instance().componentWillReceiveProps({
               ...props,
               focused: true,
@@ -620,7 +620,7 @@ describe('DayPickerSingleDateController', () => {
         wrapper.setState({
           hoverDate: null,
         });
-        addModifierSpy.reset();
+        addModifierSpy.resetHistory();
         wrapper.instance().onDayMouseEnter(today);
         expect(addModifierSpy.callCount).to.equal(1);
         expect(addModifierSpy.getCall(0).args[1]).to.equal(today);
@@ -638,7 +638,7 @@ describe('DayPickerSingleDateController', () => {
         wrapper.setState({
           hoverDate: today,
         });
-        deleteModifierSpy.reset();
+        deleteModifierSpy.resetHistory();
         wrapper.instance().onDayMouseEnter(moment().add(10, 'days'));
         expect(deleteModifierSpy.callCount).to.equal(1);
         expect(deleteModifierSpy.getCall(0).args[1]).to.equal(today);
@@ -670,7 +670,7 @@ describe('DayPickerSingleDateController', () => {
       wrapper.setState({
         hoverDate: today,
       });
-      deleteModifierSpy.reset();
+      deleteModifierSpy.resetHistory();
       wrapper.instance().onDayMouseLeave(today);
       expect(deleteModifierSpy.callCount).to.equal(1);
       expect(deleteModifierSpy.getCall(0).args[1]).to.equal(today);
@@ -736,7 +736,7 @@ describe('DayPickerSingleDateController', () => {
           onFocusChange={sinon.stub()}
         />
       ));
-      getModifiersSpy.reset();
+      getModifiersSpy.resetHistory();
       wrapper.instance().onPrevMonthClick();
       expect(getModifiersSpy.callCount).to.equal(1);
     });
@@ -818,7 +818,7 @@ describe('DayPickerSingleDateController', () => {
           onFocusChange={sinon.stub()}
         />
       ));
-      getModifiersSpy.reset();
+      getModifiersSpy.resetHistory();
       wrapper.instance().onNextMonthClick();
       expect(getModifiersSpy.callCount).to.equal(1);
     });
@@ -883,7 +883,7 @@ describe('DayPickerSingleDateController', () => {
           />
         ));
 
-        isBlockedStub.reset();
+        isBlockedStub.resetHistory();
         isBlockedStub.returns(true);
         isBlockedStub.onCall(8).returns(false);
         const firstFocusableDay = wrapper.instance().getFirstFocusableDay(today);
@@ -920,7 +920,7 @@ describe('DayPickerSingleDateController', () => {
           onFocusChange={sinon.stub()}
         />
       ));
-      getModifiersForDaySpy.reset();
+      getModifiersForDaySpy.resetHistory();
       wrapper.instance().getModifiers(visibleDays);
 
       expect(getModifiersForDaySpy.callCount).to.equal(visibleDays[monthISO].length);

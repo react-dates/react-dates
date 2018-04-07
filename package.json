@@ -19,7 +19,7 @@
     "react": "enzyme-adapter-react-install 16",
     "pretest": "npm run --silent lint",
     "pretests-only": "npm run react",
-    "tests-only": "npm run mocha --silent test",
+    "tests-only": "npm run mocha --silent test/**/*_spec*",
     "pretests-karma": "npm run react",
     "tests-karma": "karma start",
     "test": "npm run tests-only",
