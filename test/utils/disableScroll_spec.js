@@ -28,11 +28,18 @@ const createTargetElement = () => {
 };
 
 describeIfWindow('#disableScroll', () => {
-  const grandParentScrollContainer = createScrollContainer(1);
-  const parentScrollContainer = createScrollContainer(2);
-  const scrollContent = createScrollContent();
-  const targetElement = createTargetElement();
-  scrollContent.appendChild(targetElement);
+  let grandParentScrollContainer;
+  let parentScrollContainer;
+  let scrollContent;
+  let targetElement;
+
+  before(() => {
+    grandParentScrollContainer = createScrollContainer(1);
+    parentScrollContainer = createScrollContainer(2);
+    scrollContent = createScrollContent();
+    targetElement = createTargetElement();
+    scrollContent.appendChild(targetElement);
+  });
 
   describe('#getScrollParent', () => {
     describe('with no parent', () => {
