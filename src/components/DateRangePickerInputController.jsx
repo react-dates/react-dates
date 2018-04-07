@@ -12,6 +12,7 @@ import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 import DateRangePickerInput from './DateRangePickerInput';
 
 import IconPositionShape from '../shapes/IconPositionShape';
+import DisabledShape from '../shapes/DisabledShape';
 
 import toMomentObject from '../utils/toMomentObject';
 import toLocalizedDateString from '../utils/toLocalizedDateString';
@@ -37,7 +38,7 @@ const propTypes = forbidExtraProps({
   showCaret: PropTypes.bool,
   showDefaultInputIcon: PropTypes.bool,
   inputIconPosition: IconPositionShape,
-  disabled: PropTypes.bool,
+  disabled: DisabledShape,
   required: PropTypes.bool,
   readOnly: PropTypes.bool,
   openDirection: openDirectionShape,
@@ -181,29 +182,34 @@ export default class DateRangePickerInputController extends React.Component {
       disabled,
     } = this.props;
 
-    if (!startDate && withFullScreenPortal && !disabled) {
+    if (!startDate && withFullScreenPortal && (!disabled || disabled === END_DATE)) {
       // When the datepicker is full screen, we never want to focus the end date first
       // because there's no indication that that is the case once the datepicker is open and it
       // might confuse the user
       onFocusChange(START_DATE);
-    } else if (!disabled) {
+    } else if (!disabled || disabled === START_DATE) {
       onFocusChange(END_DATE);
     }
   }
 
   onStartDateChange(startDateString) {
-    const startDate = toMomentObject(startDateString, this.getDisplayFormat());
-
     let { endDate } = this.props;
     const {
       isOutsideRange,
       minimumNights,
       onDatesChange,
       onFocusChange,
+      disabled,
     } = this.props;
-    const isStartDateValid = startDate && !isOutsideRange(startDate);
+
+    const startDate = toMomentObject(startDateString, this.getDisplayFormat());
+    const isEndDateBeforeStartDate = startDate &&
+      isBeforeDay(endDate, startDate.clone().add(minimumNights, 'days'));
+    const isStartDateValid = startDate && !isOutsideRange(startDate) &&
+      !(disabled === END_DATE && isEndDateBeforeStartDate);
+
     if (isStartDateValid) {
-      if (startDate && isBeforeDay(endDate, startDate.clone().add(minimumNights, 'days'))) {
+      if (isEndDateBeforeStartDate) {
         endDate = null;
       }
 
@@ -219,7 +225,7 @@ export default class DateRangePickerInputController extends React.Component {
 
   onStartDateFocus() {
     const { disabled, onFocusChange } = this.props;
-    if (!disabled) {
+    if (!disabled || disabled === END_DATE) {
       onFocusChange(START_DATE);
     }
   }
