@@ -258,6 +258,10 @@ class DateRangePicker extends React.Component {
   disableScroll() {
     if (!this.props.appendToBody && !this.props.disableScroll) return;
     if (!this.isOpened()) return;
+
+    // Disable scroll for every ancestor of this DateRangePicker up to the
+    // document level. This ensures the input and the picker never move. Other
+    // sibling elements or the picker itself can scroll.
     this.enableScroll = disableScroll(this.container);
   }
 
