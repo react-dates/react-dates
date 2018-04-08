@@ -106,6 +106,17 @@ describe('DateRangePicker', () => {
       });
     });
 
+    describe('props.appendToBody', () => {
+      it('renders <DayPickerRangeController> inside <Portal>', () => {
+        const wrapper = shallow((
+          <DateRangePicker {...requiredProps} appendToBody focusedInput={START_DATE} />
+        )).dive();
+        const portal = wrapper.find(Portal);
+        expect(portal).to.have.length(1);
+        expect(portal.find(DayPickerRangeController)).to.have.length(1);
+      });
+    });
+
     describe('props.focusedInput', () => {
       it('renders <DayPickerRangeController> if props.focusedInput != null', () => {
         const wrapper = shallow((

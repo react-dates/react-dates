@@ -156,6 +156,22 @@ describe('SingleDatePicker', () => {
         });
       });
     });
+
+    describe('props.appendToBody', () => {
+      it('renders <DayPickerSingleDateController> inside <Portal>', () => {
+        const wrapper = shallow((
+          <SingleDatePicker
+            onDateChange={() => {}}
+            onFocusChange={() => {}}
+            appendToBody
+            focused
+          />
+        )).dive();
+        const portal = wrapper.find(Portal);
+        expect(portal).to.have.length(1);
+        expect(portal.find(DayPickerSingleDateController)).to.have.length(1);
+      });
+    });
   });
 
   describe('#onChange', () => {
