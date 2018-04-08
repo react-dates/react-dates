@@ -1,6 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import sinon from 'sinon-sandbox';
 import moment from 'moment';
 import { Portal } from 'react-portal';
@@ -11,6 +11,8 @@ import SingleDatePickerInput from '../../src/components/SingleDatePickerInput';
 import SingleDatePicker, { PureSingleDatePicker } from '../../src/components/SingleDatePicker';
 
 import isSameDay from '../../src/utils/isSameDay';
+
+const describeIfWindow = typeof document === 'undefined' ? describe.skip : describe;
 
 // Set to noon to mimic how days in the picker are configured internally
 const today = moment().startOf('day').hours(12);
@@ -158,18 +160,65 @@ describe('SingleDatePicker', () => {
     });
 
     describe('props.appendToBody', () => {
+      const requiredProps = {
+        onDateChange: () => {},
+        onFocusChange: () => {},
+      };
+
       it('renders <DayPickerSingleDateController> inside <Portal>', () => {
         const wrapper = shallow((
-          <SingleDatePicker
-            onDateChange={() => {}}
-            onFocusChange={() => {}}
-            appendToBody
-            focused
-          />
+          <SingleDatePicker {...requiredProps} appendToBody focused />
         )).dive();
         const portal = wrapper.find(Portal);
         expect(portal).to.have.length(1);
         expect(portal.find(DayPickerSingleDateController)).to.have.length(1);
+      });
+
+      describeIfWindow('mounted', () => {
+        let wrapper;
+        let instance;
+        let onCloseStub;
+
+        beforeEach(() => {
+          onCloseStub = sinon.stub();
+          wrapper = mount(shallow((
+            <SingleDatePicker
+              {...requiredProps}
+              appendToBody
+              focused
+              onClose={onCloseStub}
+            />
+          )).get(0));
+          instance = wrapper.instance();
+        });
+
+        it('positions <DateRangePickerInputController> using top and transform CSS properties', () => {
+          const dayPickerEl = instance.dayPickerContainer;
+          expect(dayPickerEl.style.top).not.to.equal('');
+          expect(dayPickerEl.style.transform).not.to.equal('');
+        });
+
+        it('disables scroll', () => {
+          expect(instance.enableScroll).to.be.a('function');
+        });
+
+        it('ignores click events from inside picker', () => {
+          const event = { target: instance.dayPickerContainer };
+          instance.onClearFocus(event);
+          expect(onCloseStub.callCount).to.equal(0);
+        });
+
+        it('enables scroll when closed', () => {
+          const enableScrollSpy = sinon.spy(instance, 'enableScroll');
+          wrapper.setProps({ focused: false });
+          expect(enableScrollSpy.callCount).to.equal(1);
+        });
+
+        it('enables scroll when unmounted', () => {
+          const enableScrollSpy = sinon.spy(instance, 'enableScroll');
+          wrapper.unmount();
+          expect(enableScrollSpy.callCount).to.equal(1);
+        });
       });
     });
   });
