@@ -81,4 +81,5 @@ export default {
   monthFormat: PropTypes.string,
   weekDayFormat: PropTypes.string,
   phrases: PropTypes.shape(getPhrasePropTypes(SingleDatePickerPhrases)),
+  dayAriaLabelFormat: PropTypes.string,
 };
