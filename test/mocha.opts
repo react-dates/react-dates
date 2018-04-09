@@ -2,4 +2,3 @@
 --compilers js:babel-register,jsx:babel-register
 --require airbnb-js-shims
 --recursive
-test/_helpers test/**/*_spec*

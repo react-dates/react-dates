@@ -8,7 +8,7 @@ module.exports = (config) => {
 
     frameworks: ['mocha', 'sinon', 'chai'],
 
-    files: ['test/tests.webpack.js'],
+    files: ['test/browser-main.js'],
 
     webpack: {
       externals: {
