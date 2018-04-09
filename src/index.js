@@ -11,6 +11,8 @@ export { default as DayPickerSingleDateController } from './components/DayPicker
 export { default as SingleDatePicker } from './components/SingleDatePicker';
 export { default as SingleDatePickerInput } from './components/SingleDatePickerInput';
 export { default as SingleDatePickerShape } from './shapes/SingleDatePickerShape';
+export { default as SingleDateRangeEndPicker } from './components/SingleDateRangeEndPicker';
+export { default as SingleDateRangeEndPickerShape } from './shapes/SingleDateRangeEndPickerShape';
 export { default as isInclusivelyAfterDay } from './utils/isInclusivelyAfterDay';
 export { default as isInclusivelyBeforeDay } from './utils/isInclusivelyBeforeDay';
 export { default as isNextDay } from './utils/isNextDay';
