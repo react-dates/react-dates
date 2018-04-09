@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "prebuild": "npm run clean",
-    "install": "npm run storybook",
+    "postinstall": "npm install && npm run storybook",
     "build": "npm run build:cjs && npm run build:esm && npm run build:css -- --optimize ",
     "build:cjs": "BABEL_ENV=cjs babel src/ -d lib/",
     "build:esm": "BABEL_ENV=esm babel src/ -d esm/",
@@ -119,6 +119,7 @@
     "object.values": "^1.0.4",
     "prop-types": "^15.6.0",
     "react-addons-shallow-compare": "^15.6.2",
+    "react-dates-fork": "^0.1.5",
     "react-moment-proptypes": "^1.5.0",
     "react-portal": "^4.1.2",
     "react-with-styles": "^3.1.0",
