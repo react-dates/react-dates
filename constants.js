@@ -1,2 +1,2 @@
 // eslint-disable-next-line import/no-unresolved
-module.exports = require('./lib/constants');
+module.exports = require('./src/constants');
