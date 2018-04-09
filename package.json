@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "prebuild": "npm run clean",
-    "postinstall": "npm install && npm run storybook",
+    "postinstall": "npm run build",
     "build": "npm run build:cjs && npm run build:esm && npm run build:css -- --optimize ",
     "build:cjs": "BABEL_ENV=cjs babel src/ -d lib/",
     "build:esm": "BABEL_ENV=esm babel src/ -d esm/",
