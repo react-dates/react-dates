@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "prebuild": "npm run clean",
-    "postinstall": "npm run build",
+    "postinstall": "npm install --save react-dates moment@>=2.18.1 react@>=16.2 react-dom@>=16.2 react-addons-shallow-compare@>=15.6.2",
     "build": "npm run build:cjs && npm run build:esm && npm run build:css -- --optimize ",
     "build:cjs": "BABEL_ENV=cjs babel src/ -d lib/",
     "build:esm": "BABEL_ENV=esm babel src/ -d esm/",
