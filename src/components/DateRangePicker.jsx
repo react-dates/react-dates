@@ -113,6 +113,7 @@ const defaultProps = {
   monthFormat: 'MMMM YYYY',
   weekDayFormat: 'dd',
   phrases: DateRangePickerPhrases,
+  dayAriaLabelFormat: undefined,
 };
 
 class DateRangePicker extends React.Component {
@@ -338,6 +339,7 @@ class DateRangePicker extends React.Component {
       customCloseIcon,
       onClose,
       phrases,
+      dayAriaLabelFormat,
       isRTL,
       weekDayFormat,
       styles,
@@ -345,6 +347,7 @@ class DateRangePicker extends React.Component {
       transitionDuration,
       verticalSpacing,
       small,
+      disabled,
       theme: { reactDates },
     } = this.props;
     const { dayPickerContainerStyles, isDayPickerFocused, showKeyboardShortcuts } = this.state;
@@ -419,11 +422,13 @@ class DateRangePicker extends React.Component {
           showKeyboardShortcuts={showKeyboardShortcuts}
           onBlur={this.onDayPickerBlur}
           phrases={phrases}
+          dayAriaLabelFormat={dayAriaLabelFormat}
           isRTL={isRTL}
           firstDayOfWeek={firstDayOfWeek}
           weekDayFormat={weekDayFormat}
           verticalHeight={verticalHeight}
           transitionDuration={transitionDuration}
+          disabled={disabled}
         />
 
         {withFullScreenPortal && (
