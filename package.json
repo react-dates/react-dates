@@ -6,7 +6,6 @@
   "scripts": {
     "prebuild": "npm run clean",
     "build": "npm run build:cjs && npm run build:esm && npm run build:css -- --optimize ",
-    "install": "npm run build",
     "build:cjs": "BABEL_ENV=cjs babel src/ -d lib/",
     "build:esm": "BABEL_ENV=esm babel src/ -d esm/",
     "prebuild:css": "rimraf lib/css && mkdir -p lib/css",
