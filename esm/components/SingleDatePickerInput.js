@@ -161,6 +161,8 @@ function SingleDatePickerInput(_ref) {
       type: 'button',
       disabled: disabled,
       'aria-label': phrases.focusStartDate,
+      'aria-hidden': 'true',
+      tabIndex: '-1',
       onClick: onFocus
     }),
     calendarIcon
