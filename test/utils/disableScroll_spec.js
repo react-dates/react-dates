@@ -117,9 +117,7 @@ describeIfWindow('#disableScroll', () => {
 
       expect(scrollAncestorsOverflowY.get(parentScrollContainer)).to.equal('auto');
       expect(scrollAncestorsOverflowY.get(grandParentScrollContainer)).to.equal('auto');
-      // document is a special case - it doesn't have an explicit overflow property set,
-      // but scrolls by default.
-      expect(scrollAncestorsOverflowY.get(document.documentElement)).to.equal('');
+      expect(scrollAncestorsOverflowY.get(document.documentElement)).to.be.a('string');
     });
   });
 
