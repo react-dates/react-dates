@@ -11,8 +11,6 @@ const registerCSSInterfaceWithDefaultTheme = require('../src/utils/registerCSSIn
 const args = process.argv.slice(2);
 const optimizeForProduction = args.includes('-o') || args.includes('--optimize');
 
-require('../test/_helpers/ignoreSVGStrings');
-
 registerMaxSpecificity(0);
 registerCSSInterfaceWithDefaultTheme();
 
