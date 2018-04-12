@@ -6,7 +6,6 @@ import moment from 'moment';
 
 import DayPicker from '../../src/components/DayPicker';
 import DayPickerSingleDateController from '../../src/components/DayPickerSingleDateController';
-import OutsideClickHandler from '../../src/components/OutsideClickHandler';
 
 import toISODateString from '../../src/utils/toISODateString';
 import toISOMonthString from '../../src/utils/toISOMonthString';
@@ -1428,18 +1427,6 @@ describe('DayPickerSingleDateController', () => {
         const dayPicker = wrapper.find(DayPicker);
         expect(dayPicker.props().initialVisibleMonth().isSame(today, 'day')).to.equal(true);
       });
-    });
-  });
-
-  describe('onOutsideClick', () => {
-    it('should render OutsideClickHandler as it has onOutsideClick prop', () => {
-      const wrapper = shallow(<DayPickerSingleDateController onOutsideClick={() => null} />);
-      expect(wrapper.find(OutsideClickHandler)).to.have.lengthOf(1);
-    });
-
-    it('should NOT render OutsideClickHandler without onOutsideClick prop', () => {
-      const wrapper = shallow(<DayPickerSingleDateController />);
-      expect(wrapper.find(OutsideClickHandler)).to.have.lengthOf(0);
     });
   });
 });
