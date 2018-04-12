@@ -103,6 +103,21 @@ storiesOf('DRP - Calendar Props', module)
       autoFocus
     />
   ))
+  .addWithInfo('disable scroll', () => (
+    <div style={{ height: '100vh' }}>
+      <div>This content scrolls.</div>
+      <DateRangePickerWrapper preventScroll autoFocus />
+    </div>
+  ))
+  .addWithInfo('appended to body', () => <DateRangePickerWrapper appendToBody autoFocus />)
+  .addWithInfo('appended to body (in scrollable container)', () => (
+    <div style={{ height: 200, overflow: 'auto', background: 'whitesmoke' }}>
+      <div>This content scrolls.</div>
+      <div style={{ marginBottom: 300 }}>
+        <DateRangePickerWrapper appendToBody autoFocus />
+      </div>
+    </div>
+  ))
   .addWithInfo('does not autoclose the DayPicker on date selection', () => (
     <DateRangePickerWrapper
       keepOpenOnDateSelect
