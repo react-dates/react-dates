@@ -32,8 +32,7 @@ describeIfNoWindow('#getDetachedContainerStyles', () => {
       describe('on down-left positioning', () => {
         it('returns translation from top-left of window to top-left of reference el', () => {
           const styles = getDetachedContainerStyles(OPEN_DOWN, ANCHOR_LEFT, referenceEl);
-          expect(styles.transform).to.have.string(`translateX(${referenceElRect.left}px)`);
-          expect(styles.transform).to.have.string(`translateY(${referenceElRect.top}px)`);
+          expect(styles.transform).to.equal(`translate3d(${referenceElRect.left}px, ${referenceElRect.top}px, 0)`);
         });
       });
 
@@ -41,8 +40,7 @@ describeIfNoWindow('#getDetachedContainerStyles', () => {
         it('returns translation from bottom-left of window to bottom-left of reference el', () => {
           const styles = getDetachedContainerStyles(OPEN_UP, ANCHOR_LEFT, referenceEl);
           const offsetY = -(windowHeight - referenceElRect.bottom);
-          expect(styles.transform).to.have.string(`translateX(${referenceElRect.left}px)`);
-          expect(styles.transform).to.have.string(`translateY(${offsetY}px)`);
+          expect(styles.transform).to.equal(`translate3d(${referenceElRect.left}px, ${offsetY}px, 0)`);
         });
       });
 
@@ -50,8 +48,7 @@ describeIfNoWindow('#getDetachedContainerStyles', () => {
         it('returns translation from top-right of window to top-right of reference el', () => {
           const styles = getDetachedContainerStyles(OPEN_DOWN, ANCHOR_RIGHT, referenceEl);
           const offsetX = -(windowWidth - referenceElRect.right);
-          expect(styles.transform).to.have.string(`translateX(${offsetX}px)`);
-          expect(styles.transform).to.have.string(`translateY(${referenceElRect.top}px)`);
+          expect(styles.transform).to.equal(`translate3d(${offsetX}px, ${referenceElRect.top}px, 0)`);
         });
       });
 
@@ -60,8 +57,7 @@ describeIfNoWindow('#getDetachedContainerStyles', () => {
           const styles = getDetachedContainerStyles(OPEN_UP, ANCHOR_RIGHT, referenceEl);
           const offsetX = -(windowWidth - referenceElRect.right);
           const offsetY = -(windowHeight - referenceElRect.bottom);
-          expect(styles.transform).to.have.string(`translateX(${offsetX}px)`);
-          expect(styles.transform).to.have.string(`translateY(${offsetY}px)`);
+          expect(styles.transform).to.equal(`translate3d(${offsetX}px, ${offsetY}px, 0)`);
         });
       });
     });
