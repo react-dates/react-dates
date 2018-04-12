@@ -594,7 +594,11 @@ class DayPicker extends React.Component {
       // if the user is navigating around using a mouse
       if (withMouseInteractions) {
         const activeElement = getActiveElement();
-        if (activeElement && activeElement !== document.body) {
+        if (
+          activeElement &&
+          activeElement !== document.body &&
+          this.container.contains(activeElement)
+        ) {
           activeElement.blur();
         }
       }
