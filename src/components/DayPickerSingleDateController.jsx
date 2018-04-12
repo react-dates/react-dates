@@ -56,6 +56,7 @@ const propTypes = forbidExtraProps({
   daySize: nonNegativeInteger,
   verticalHeight: nonNegativeInteger,
   noBorder: PropTypes.bool,
+  verticalBorderSpacing: nonNegativeInteger,
   transitionDuration: nonNegativeInteger,
 
   navPrev: PropTypes.node,
@@ -108,6 +109,7 @@ const defaultProps = {
   daySize: DAY_SIZE,
   verticalHeight: null,
   noBorder: false,
+  verticalBorderSpacing: undefined,
   transitionDuration: undefined,
 
   navPrev: null,
@@ -616,6 +618,7 @@ export default class DayPickerSingleDateController extends React.Component {
       verticalHeight,
       noBorder,
       transitionDuration,
+      verticalBorderSpacing,
     } = this.props;
 
     const { currentMonth, visibleDays } = this.state;
@@ -657,6 +660,7 @@ export default class DayPickerSingleDateController extends React.Component {
         verticalHeight={verticalHeight}
         noBorder={noBorder}
         transitionDuration={transitionDuration}
+        verticalBorderSpacing={verticalBorderSpacing}
       />
     );
   }

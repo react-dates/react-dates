@@ -250,4 +250,13 @@ storiesOf('DayPickerSingleDateController', module)
       onNextMonthClick={action('DayPickerSingleDateController::onNextMonthClick')}
       transitionDuration={0}
     />
+  ))
+  .addWithInfo('with vertical spacing applied', () => (
+    <DayPickerSingleDateControllerWrapper
+      onOutsideClick={action('DayPickerSingleDateController::onOutsideClick')}
+      onPrevMonthClick={action('DayPickerSingleDateController::onPrevMonthClick')}
+      onNextMonthClick={action('DayPickerSingleDateController::onNextMonthClick')}
+      verticalBorderSpacing={16}
+    />
   ));
+
