@@ -1,5 +1,11 @@
 # Change Log
 
+## 16.6.0
+- [new] Add `appendToBody`/`disableScroll` props ([#1069](https://github.com/airbnb/react-dates/pull/1069))
+- [fix] Address unexpected blur call ([#1107](https://github.com/airbnb/react-dates/pull/1107))
+- [new] Add `verticalBorderSpacing` prop to `DayPickerSingleDateController`/`DayPickerRangeController` ([#1096](https://github.com/airbnb/react-dates/pull/1096))
+- [fix] Move focus to `DayPicker` when readOnly is true ([#961](https://github.com/airbnb/react-dates/pull/961))
+
 ## 16.5.0
 - [new] Export `CustomizeableCalendarDay` default styles ([#1095](https://github.com/airbnb/react-dates/pull/1095))
 - [new] Allow selectively disabling either input in the DRP ([#](https://github.com/airbnb/react-dates/pull/606))
