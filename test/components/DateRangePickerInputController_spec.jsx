@@ -772,14 +772,61 @@ describe('DateRangePickerInputController', () => {
       expect(onFocusChangeStub.getCall(0).args[0]).to.equal(START_DATE);
     });
 
-    describe('props.disabled = true', () => {
-      it('does not call props.onFocusChange', () => {
-        const onFocusChangeStub = sinon.stub();
-        const wrapper = shallow((
-          <DateRangePickerInputController disabled onFocusChange={onFocusChangeStub} />
-        ));
-        wrapper.instance().onStartDateFocus();
-        expect(onFocusChangeStub).to.have.property('callCount', 0);
+    describe('props.disabled', () => {
+      describe('props.disabled=START_DATE', () => {
+        it('does not call props.onFocusChange', () => {
+          const onFocusChangeStub = sinon.stub();
+          const wrapper = shallow((
+            <DateRangePickerInputController
+              disabled={START_DATE}
+              onFocusChange={onFocusChangeStub}
+            />
+          ));
+          wrapper.instance().onStartDateFocus();
+          expect(onFocusChangeStub).to.have.property('callCount', 0);
+        });
+      });
+
+      describe('props.disabled=END_DATE', () => {
+        it('does call props.onFocusChange', () => {
+          const onFocusChangeStub = sinon.stub();
+          const wrapper = shallow((
+            <DateRangePickerInputController
+              disabled={END_DATE}
+              onFocusChange={onFocusChangeStub}
+            />
+          ));
+          wrapper.instance().onStartDateFocus();
+          expect(onFocusChangeStub).to.have.property('callCount', 1);
+        });
+      });
+
+      describe('props.disabled=true', () => {
+        it('does not call props.onFocusChange', () => {
+          const onFocusChangeStub = sinon.stub();
+          const wrapper = shallow((
+            <DateRangePickerInputController
+              disabled
+              onFocusChange={onFocusChangeStub}
+            />
+          ));
+          wrapper.instance().onStartDateFocus();
+          expect(onFocusChangeStub).to.have.property('callCount', 0);
+        });
+      });
+
+      describe('props.disabled=false', () => {
+        it('does call props.onFocusChange', () => {
+          const onFocusChangeStub = sinon.stub();
+          const wrapper = shallow((
+            <DateRangePickerInputController
+              disabled={false}
+              onFocusChange={onFocusChangeStub}
+            />
+          ));
+          wrapper.instance().onStartDateFocus();
+          expect(onFocusChangeStub).to.have.property('callCount', 1);
+        });
       });
     });
   });
@@ -840,14 +887,61 @@ describe('DateRangePickerInputController', () => {
       });
     });
 
-    describe('props.disabled = true', () => {
-      it('does not call props.onFocusChange', () => {
-        const onFocusChangeStub = sinon.stub();
-        const wrapper = shallow((
-          <DateRangePickerInputController disabled onFocusChange={onFocusChangeStub} />
-        ));
-        wrapper.instance().onEndDateFocus();
-        expect(onFocusChangeStub.callCount).to.equal(0);
+    describe('props.disabled', () => {
+      describe('props.disabled=START_DATE', () => {
+        it('does call props.onFocusChange', () => {
+          const onFocusChangeStub = sinon.stub();
+          const wrapper = shallow((
+            <DateRangePickerInputController
+              disabled={START_DATE}
+              onFocusChange={onFocusChangeStub}
+            />
+          ));
+          wrapper.instance().onEndDateFocus();
+          expect(onFocusChangeStub.callCount).to.equal(1);
+        });
+      });
+
+      describe('props.disabled=END_DATE', () => {
+        it('does not call props.onFocusChange', () => {
+          const onFocusChangeStub = sinon.stub();
+          const wrapper = shallow((
+            <DateRangePickerInputController
+              disabled={END_DATE}
+              onFocusChange={onFocusChangeStub}
+            />
+          ));
+          wrapper.instance().onEndDateFocus();
+          expect(onFocusChangeStub.callCount).to.equal(0);
+        });
+      });
+
+      describe('props.disabled=true', () => {
+        it('does not call props.onFocusChange', () => {
+          const onFocusChangeStub = sinon.stub();
+          const wrapper = shallow((
+            <DateRangePickerInputController
+              disabled
+              onFocusChange={onFocusChangeStub}
+            />
+          ));
+          wrapper.instance().onEndDateFocus();
+          expect(onFocusChangeStub.callCount).to.equal(0);
+        });
+      });
+
+      describe('props.disabled=false', () => {
+        it('does call props.onFocusChange', () => {
+          const onFocusChangeStub = sinon.stub();
+          const wrapper = shallow((
+            <DateRangePickerInputController
+              disabled={false}
+              onFocusChange={onFocusChangeStub}
+            />
+          ));
+          wrapper.instance().onEndDateFocus();
+          expect(onFocusChangeStub.callCount).to.equal(1);
+        });
       });
     });
   });
