@@ -1,5 +1,9 @@
 # Change Log
 
+## 16.6.1
+- [fix] Fix selective disabling of the `DateRangePicker` ([#1116](https://github.com/airbnb/react-dates/pull/1116))
+- [fix] Fix `onOutsideClick` refactor ([#1115](https://github.com/airbnb/react-dates/pull/1115))
+
 ## 16.6.0
 - [new] Add `appendToBody`/`disableScroll` props ([#1069](https://github.com/airbnb/react-dates/pull/1069))
 - [fix] Address unexpected blur call ([#1107](https://github.com/airbnb/react-dates/pull/1107))
