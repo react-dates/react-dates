@@ -117,7 +117,7 @@ const defaultProps = {
 
   onPrevMonthClick() {},
   onNextMonthClick() {},
-  onOutsideClick: null,
+  onOutsideClick() {},
 
   renderCalendarDay: undefined,
   renderDayContents: null,
