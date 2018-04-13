@@ -192,8 +192,11 @@ class CalendarMonth extends React.Component {
             verticalScrollable && styles.CalendarMonth_caption__verticalScrollable,
           )}
         >
-          {renderCaption && renderCaption({ month, onMonthSelect, onYearSelect })}
-          {!renderCaption && <strong>{monthTitle}</strong>}
+          {
+            renderCaption ?
+              renderCaption({ month, onMonthSelect, onYearSelect }) :
+              <strong>{monthTitle}</strong>
+          }
         </div>
 
         <table
