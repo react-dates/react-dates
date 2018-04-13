@@ -201,8 +201,8 @@ function DateRangePickerInput({
       {calendarIcon}
     </button>
   );
-  const startDateDisabled = disabled === START_DATE || disabled;
-  const endDateDisabled = disabled === END_DATE || disabled;
+  const startDateDisabled = disabled === START_DATE || disabled === true;
+  const endDateDisabled = disabled === END_DATE || disabled === true;
 
   return (
     <div
