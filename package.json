@@ -106,7 +106,7 @@
     "sass-loader": "^6.0.7",
     "sinon": "^4.4.8",
     "sinon-sandbox": "^1.0.2",
-    "style-loader": "^0.20.3",
+    "style-loader": "^0.21.0",
     "webpack": "^2.6.1"
   },
   "dependencies": {
