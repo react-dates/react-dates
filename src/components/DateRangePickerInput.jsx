@@ -237,6 +237,7 @@ function DateRangePickerInput({
         verticalSpacing={verticalSpacing}
         small={small}
         regular={regular}
+        noBorder={noBorder}
       />
 
       <div
@@ -267,6 +268,7 @@ function DateRangePickerInput({
         verticalSpacing={verticalSpacing}
         small={small}
         regular={regular}
+        noBorder={noBorder}
       />
 
       {showClearDates && (

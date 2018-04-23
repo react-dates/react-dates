@@ -36,6 +36,7 @@ const propTypes = forbidExtraProps({
   verticalSpacing: nonNegativeInteger,
   small: PropTypes.bool,
   block: PropTypes.bool,
+  noBorder: PropTypes.bool,
   regular: PropTypes.bool,
 
   onChange: PropTypes.func,
@@ -64,6 +65,7 @@ const defaultProps = {
   small: false,
   block: false,
   regular: false,
+  noBorder: false,
 
   onChange() {},
   onFocus() {},
@@ -185,6 +187,7 @@ class DateInput extends React.Component {
       regular,
       block,
       styles,
+      noBorder,
       theme: { reactDates },
     } = this.props;
 
@@ -240,10 +243,10 @@ class DateInput extends React.Component {
             {...css(
               styles.DateInput_fang,
               openDirection === OPEN_DOWN && {
-                top: inputHeight + verticalSpacing - FANG_HEIGHT_PX - 1,
+                top: inputHeight + verticalSpacing - FANG_HEIGHT_PX - 1 + (noBorder ? 1 : 0),
               },
               openDirection === OPEN_UP && {
-                bottom: inputHeight + verticalSpacing - FANG_HEIGHT_PX - 1,
+                bottom: inputHeight + verticalSpacing - FANG_HEIGHT_PX - 1 + (noBorder ? 1 : 0),
               },
             )}
           >
