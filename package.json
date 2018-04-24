@@ -113,7 +113,7 @@
     "airbnb-prop-types": "^2.8.1",
     "consolidated-events": "^1.1.1",
     "is-touch-device": "^1.0.1",
-    "lodash": "^4.1.1",
+    "lodash": "^4.17.9",
     "object.assign": "^4.1.0",
     "object.values": "^1.0.4",
     "prop-types": "^15.6.0",
