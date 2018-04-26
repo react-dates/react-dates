@@ -6,6 +6,7 @@ node_js:
   - "6"
   - "4"
   - "iojs"
+  - "10"
 before_install:
   - 'nvm install-latest-npm'
 before_script:
