@@ -165,21 +165,21 @@ function DateRangePickerInput({
     <CalendarIcon {...css(styles.DateRangePickerInput_calendarIcon_svg)} />
   );
   const arrowIcon = customArrowIcon || (isRTL
-    ? (
-      <LeftArrow
-        {...css(
-          styles.DateRangePickerInput_arrow_svg,
-          small && styles.DateRangePickerInput_arrow_svg__small,
-        )}
-      />
-    ) : (
-      <RightArrow
-        {...css(
-          styles.DateRangePickerInput_arrow_svg,
-          small && styles.DateRangePickerInput_arrow_svg__small,
-        )}
-      />
-    )
+      ? (
+        <LeftArrow
+          {...css(
+            styles.DateRangePickerInput_arrow_svg,
+            small && styles.DateRangePickerInput_arrow_svg__small,
+          )}
+        />
+      ) : (
+        <RightArrow
+          {...css(
+            styles.DateRangePickerInput_arrow_svg,
+            small && styles.DateRangePickerInput_arrow_svg__small,
+          )}
+        />
+      )
   );
   const closeIcon = customCloseIcon || (
     <CloseButton
@@ -215,29 +215,36 @@ function DateRangePickerInput({
         showClearDates && styles.DateRangePickerInput__showClearDates,
       )}
     >
-      {inputIconPosition === ICON_BEFORE_POSITION && inputIcon}
 
-      <DateInput
-        id={startDateId}
-        placeholder={startDatePlaceholderText}
-        displayValue={startDate}
-        screenReaderMessage={screenReaderText}
-        focused={isStartDateFocused}
-        isFocused={isFocused}
-        disabled={startDateDisabled}
-        required={required}
-        readOnly={readOnly}
-        showCaret={showCaret}
-        openDirection={openDirection}
-        onChange={onStartDateChange}
-        onFocus={onStartDateFocus}
-        onKeyDownShiftTab={onStartDateShiftTab}
-        onKeyDownArrowDown={onKeyDownArrowDown}
-        onKeyDownQuestionMark={onKeyDownQuestionMark}
-        verticalSpacing={verticalSpacing}
-        small={small}
-        regular={regular}
-      />
+      <div
+        {...css(
+          styles.DateRangePickerInput__DateInput,
+          isStartDateFocused && styles.DateRangePickerInput__startDate_focused,
+        )}
+      >
+        {inputIconPosition === ICON_BEFORE_POSITION && inputIcon}
+        <DateInput
+          id={startDateId}
+          placeholder={startDatePlaceholderText}
+          displayValue={startDate}
+          screenReaderMessage={screenReaderText}
+          focused={isStartDateFocused}
+          isFocused={isFocused}
+          disabled={startDateDisabled}
+          required={required}
+          readOnly={readOnly}
+          showCaret={showCaret}
+          openDirection={openDirection}
+          onChange={onStartDateChange}
+          onFocus={onStartDateFocus}
+          onKeyDownShiftTab={onStartDateShiftTab}
+          onKeyDownArrowDown={onKeyDownArrowDown}
+          onKeyDownQuestionMark={onKeyDownQuestionMark}
+          verticalSpacing={verticalSpacing}
+          small={small}
+          regular={regular}
+        />
+      </div>
 
       <div
         {...css(styles.DateRangePickerInput_arrow)}
@@ -247,27 +254,34 @@ function DateRangePickerInput({
         {arrowIcon}
       </div>
 
-      <DateInput
-        id={endDateId}
-        placeholder={endDatePlaceholderText}
-        displayValue={endDate}
-        screenReaderMessage={screenReaderText}
-        focused={isEndDateFocused}
-        isFocused={isFocused}
-        disabled={endDateDisabled}
-        required={required}
-        readOnly={readOnly}
-        showCaret={showCaret}
-        openDirection={openDirection}
-        onChange={onEndDateChange}
-        onFocus={onEndDateFocus}
-        onKeyDownTab={onEndDateTab}
-        onKeyDownArrowDown={onKeyDownArrowDown}
-        onKeyDownQuestionMark={onKeyDownQuestionMark}
-        verticalSpacing={verticalSpacing}
-        small={small}
-        regular={regular}
-      />
+      <div
+        {...css(
+          styles.DateRangePickerInput__DateInput,
+          isEndDateFocused && styles.DateRangePickerInput__endDate_focused,
+        )}
+      >
+        <DateInput
+          id={endDateId}
+          placeholder={endDatePlaceholderText}
+          displayValue={endDate}
+          screenReaderMessage={screenReaderText}
+          focused={isEndDateFocused}
+          isFocused={isFocused}
+          disabled={endDateDisabled}
+          required={required}
+          readOnly={readOnly}
+          showCaret={showCaret}
+          openDirection={openDirection}
+          onChange={onEndDateChange}
+          onFocus={onEndDateFocus}
+          onKeyDownTab={onEndDateTab}
+          onKeyDownArrowDown={onKeyDownArrowDown}
+          onKeyDownQuestionMark={onKeyDownQuestionMark}
+          verticalSpacing={verticalSpacing}
+          small={small}
+          regular={regular}
+        />
+      </div>
 
       {showClearDates && (
         <button
@@ -295,7 +309,7 @@ function DateRangePickerInput({
 DateRangePickerInput.propTypes = propTypes;
 DateRangePickerInput.defaultProps = defaultProps;
 
-export default withStyles(({ reactDates: { color, sizing } }) => ({
+export default withStyles(({ reactDates: { color, border, sizing } }) => ({
   DateRangePickerInput: {
     backgroundColor: color.background,
     display: 'inline-block',
@@ -406,5 +420,34 @@ export default withStyles(({ reactDates: { color, sizing } }) => ({
     height: 15,
     width: 14,
     verticalAlign: 'middle',
+  },
+
+  DateRangePickerInput__DateInput: {
+    display: 'inline-block',
+    border: border.input.border,
+    borderTop: border.input.borderTop,
+    borderRight: border.input.borderRight,
+    borderBottom: border.input.borderBottom,
+    borderLeft: border.input.borderLeft,
+  },
+
+  DateRangePickerInput__startDate_focused: {
+    outline: border.input.outlineFocused,
+    background: color.backgroundFocused,
+    border: border.input.borderFocused,
+    borderTop: border.input.borderTopFocused,
+    borderRight: border.input.borderRightFocused,
+    borderBottom: border.input.borderBottomFocused,
+    borderLeft: border.input.borderLeftFocused,
+  },
+
+  DateRangePickerInput__endDate_focused: {
+    outline: border.input.outlineFocused,
+    background: color.backgroundFocused,
+    border: border.input.borderFocused,
+    borderTop: border.input.borderTopFocused,
+    borderRight: border.input.borderRightFocused,
+    borderBottom: border.input.borderBottomFocused,
+    borderLeft: border.input.borderLeftFocused,
   },
 }))(DateRangePickerInput);

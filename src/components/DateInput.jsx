@@ -14,8 +14,6 @@ import {
   FANG_WIDTH_PX,
   DEFAULT_VERTICAL_SPACING,
   MODIFIER_KEY_NAMES,
-  START_DATE,
-  END_DATE,
 } from '../constants';
 
 const FANG_PATH_TOP = `M0,${FANG_HEIGHT_PX} ${FANG_WIDTH_PX},${FANG_HEIGHT_PX} ${FANG_WIDTH_PX / 2},0z`;
@@ -215,8 +213,7 @@ class DateInput extends React.Component {
             small && styles.DateInput_input__small,
             regular && styles.DateInput_input__regular,
             readOnly && styles.DateInput_input__readOnly,
-            focused && id === START_DATE && styles.DateInput_input__startDate_focused,
-            focused && id === END_DATE && styles.DateInput_input__endDate_focused,
+            focused && styles.DateInput_input__focused,
             disabled && styles.DateInput_input__disabled,
           )}
           aria-label={placeholder}
@@ -303,6 +300,7 @@ export default withStyles(({
   },
 
   DateInput_input: {
+    border: 0,
     fontWeight: 200,
     fontSize: font.input.size,
     lineHeight: font.input.lineHeight,
@@ -314,11 +312,6 @@ export default withStyles(({
     paddingBottom: spacing.displayTextPaddingBottom,
     paddingLeft: spacing.displayTextPaddingLeft,
     paddingRight: spacing.displayTextPaddingRight,
-    border: border.input.border,
-    borderTop: border.input.borderTop,
-    borderRight: border.input.borderRight,
-    borderBottom: border.input.borderBottom,
-    borderLeft: border.input.borderLeft,
   },
 
   DateInput_input__small: {
@@ -339,24 +332,8 @@ export default withStyles(({
     userSelect: 'none',
   },
 
-  DateInput_input__startDate_focused: {
+  DateInput_input__focused: {
     outline: border.input.outlineFocused,
-    background: color.backgroundFocused,
-    border: border.input.borderFocused,
-    borderTop: border.input.borderTopFocused,
-    borderRight: border.input.borderRightFocused,
-    borderBottom: border.input.borderBottomFocused,
-    borderLeft: border.input.borderLeftFocused,
-  },
-
-  DateInput_input__endDate_focused: {
-    outline: border.input.outlineFocused,
-    background: color.backgroundFocused,
-    border: border.input.borderFocused,
-    borderTop: border.input.borderTopFocused,
-    borderRight: border.input.borderRightFocused,
-    borderBottom: border.input.borderBottomFocused,
-    borderLeft: border.input.borderLeftFocused,
   },
 
   DateInput_input__disabled: {
