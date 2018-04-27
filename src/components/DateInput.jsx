@@ -14,6 +14,8 @@ import {
   FANG_WIDTH_PX,
   DEFAULT_VERTICAL_SPACING,
   MODIFIER_KEY_NAMES,
+  START_DATE,
+  END_DATE,
 } from '../constants';
 
 const FANG_PATH_TOP = `M0,${FANG_HEIGHT_PX} ${FANG_WIDTH_PX},${FANG_HEIGHT_PX} ${FANG_WIDTH_PX / 2},0z`;
@@ -213,7 +215,8 @@ class DateInput extends React.Component {
             small && styles.DateInput_input__small,
             regular && styles.DateInput_input__regular,
             readOnly && styles.DateInput_input__readOnly,
-            focused && styles.DateInput_input__focused,
+            focused && id === START_DATE && styles.DateInput_input__startDate_focused,
+            focused && id === END_DATE && styles.DateInput_input__endDate_focused,
             disabled && styles.DateInput_input__disabled,
           )}
           aria-label={placeholder}
@@ -336,7 +339,17 @@ export default withStyles(({
     userSelect: 'none',
   },
 
-  DateInput_input__focused: {
+  DateInput_input__startDate_focused: {
+    outline: border.input.outlineFocused,
+    background: color.backgroundFocused,
+    border: border.input.borderFocused,
+    borderTop: border.input.borderTopFocused,
+    borderRight: border.input.borderRightFocused,
+    borderBottom: border.input.borderBottomFocused,
+    borderLeft: border.input.borderLeftFocused,
+  },
+
+  DateInput_input__endDate_focused: {
     outline: border.input.outlineFocused,
     background: color.backgroundFocused,
     border: border.input.borderFocused,
