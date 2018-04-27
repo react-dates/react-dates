@@ -300,6 +300,7 @@ export default withStyles(({
   },
 
   DateInput_input: {
+    border: 0,
     fontWeight: 200,
     fontSize: font.input.size,
     lineHeight: font.input.lineHeight,
@@ -311,11 +312,6 @@ export default withStyles(({
     paddingBottom: spacing.displayTextPaddingBottom,
     paddingLeft: spacing.displayTextPaddingLeft,
     paddingRight: spacing.displayTextPaddingRight,
-    border: border.input.border,
-    borderTop: border.input.borderTop,
-    borderRight: border.input.borderRight,
-    borderBottom: border.input.borderBottom,
-    borderLeft: border.input.borderLeft,
   },
 
   DateInput_input__small: {
@@ -338,12 +334,6 @@ export default withStyles(({
 
   DateInput_input__focused: {
     outline: border.input.outlineFocused,
-    background: color.backgroundFocused,
-    border: border.input.borderFocused,
-    borderTop: border.input.borderTopFocused,
-    borderRight: border.input.borderRightFocused,
-    borderBottom: border.input.borderBottomFocused,
-    borderLeft: border.input.borderLeftFocused,
   },
 
   DateInput_input__disabled: {
