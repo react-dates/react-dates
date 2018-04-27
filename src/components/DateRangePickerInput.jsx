@@ -165,21 +165,21 @@ function DateRangePickerInput({
     <CalendarIcon {...css(styles.DateRangePickerInput_calendarIcon_svg)} />
   );
   const arrowIcon = customArrowIcon || (isRTL
-      ? (
-        <LeftArrow
-          {...css(
-            styles.DateRangePickerInput_arrow_svg,
-            small && styles.DateRangePickerInput_arrow_svg__small,
-          )}
-        />
-      ) : (
-        <RightArrow
-          {...css(
-            styles.DateRangePickerInput_arrow_svg,
-            small && styles.DateRangePickerInput_arrow_svg__small,
-          )}
-        />
-      )
+    ? (
+      <LeftArrow
+        {...css(
+          styles.DateRangePickerInput_arrow_svg,
+          small && styles.DateRangePickerInput_arrow_svg__small,
+        )}
+      />
+    ) : (
+      <RightArrow
+        {...css(
+          styles.DateRangePickerInput_arrow_svg,
+          small && styles.DateRangePickerInput_arrow_svg__small,
+        )}
+      />
+    )
   );
   const closeIcon = customCloseIcon || (
     <CloseButton
