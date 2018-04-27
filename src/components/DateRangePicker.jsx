@@ -173,6 +173,9 @@ class DateRangePicker extends React.Component {
     } else if (prevProps.focusedInput && !this.props.focusedInput && !this.isOpened()) {
       // The date picker just changed from being open to being closed.
       if (this.enableScroll) this.enableScroll();
+    } else if (prevProps.openDirection !== this.props.openDirection) {
+      // The direction of the date picker has changed
+      this.responsivizePickerPosition();
     }
   }
 
