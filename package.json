@@ -70,7 +70,7 @@
     "babel-register": "^6.26.0",
     "chai": "^4.1.2",
     "clean-css": "^4.1.11",
-    "coveralls": "^2.13.3",
+    "coveralls": "^3.0.1",
     "cross-env": "^5.1.4",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-helper": "^1.2.3",
