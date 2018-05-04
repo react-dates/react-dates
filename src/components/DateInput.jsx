@@ -316,6 +316,7 @@ export default withStyles(({
     borderRight: border.input.borderRight,
     borderBottom: border.input.borderBottom,
     borderLeft: border.input.borderLeft,
+    borderRadius: border.input.borderRadius,
   },
 
   DateInput_input__small: {
