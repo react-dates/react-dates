@@ -40,6 +40,7 @@ export default {
         borderLeftFocused: 0,
         borderBottomFocused: `2px solid ${core.primary_dark}`,
         borderRightFocused: 0,
+        borderRadius: 0,
       },
     },
 
