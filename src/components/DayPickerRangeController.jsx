@@ -72,6 +72,7 @@ const propTypes = forbidExtraProps({
 
   navPrev: PropTypes.node,
   navNext: PropTypes.node,
+  noNavButtons: PropTypes.bool,
 
   onPrevMonthClick: PropTypes.func,
   onNextMonthClick: PropTypes.func,
@@ -128,6 +129,7 @@ const defaultProps = {
 
   navPrev: null,
   navNext: null,
+  noNavButtons: false,
 
   onPrevMonthClick() {},
   onNextMonthClick() {},
@@ -990,6 +992,7 @@ export default class DayPickerRangeController extends React.Component {
       renderMonth,
       navPrev,
       navNext,
+      noNavButtons,
       onOutsideClick,
       withPortal,
       enableOutsideDays,
@@ -1037,6 +1040,7 @@ export default class DayPickerRangeController extends React.Component {
         onOutsideClick={onOutsideClick}
         navPrev={navPrev}
         navNext={navNext}
+        noNavButtons={noNavButtons}
         renderCalendarDay={renderCalendarDay}
         renderDayContents={renderDayContents}
         renderCalendarInfo={renderCalendarInfo}

@@ -71,6 +71,7 @@ const propTypes = forbidExtraProps({
   // navigation props
   navPrev: PropTypes.node,
   navNext: PropTypes.node,
+  noNavButtons: PropTypes.bool,
   onPrevMonthClick: PropTypes.func,
   onNextMonthClick: PropTypes.func,
   onMultiplyScrollableMonths: PropTypes.func, // VERTICAL_SCROLLABLE daypickers only
@@ -122,6 +123,7 @@ export const defaultProps = {
   // navigation props
   navPrev: null,
   navNext: null,
+  noNavButtons: false,
   onPrevMonthClick() {},
   onNextMonthClick() {},
   onMultiplyScrollableMonths() {},
@@ -639,10 +641,15 @@ class DayPicker extends React.Component {
     const {
       navPrev,
       navNext,
+      noNavButtons,
       orientation,
       phrases,
       isRTL,
     } = this.props;
+
+    if (noNavButtons) {
+      return null;
+    }
 
     let onNextMonthClick;
     if (orientation === VERTICAL_SCROLLABLE) {
