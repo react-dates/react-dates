@@ -7,6 +7,7 @@ import { shallow } from 'enzyme';
 import DayPickerRangeController from '../../src/components/DayPickerRangeController';
 
 import DayPicker from '../../src/components/DayPicker';
+import DayPickerNavigation from '../../src/components/DayPickerNavigation';
 
 import toISODateString from '../../src/utils/toISODateString';
 import toISOMonthString from '../../src/utils/toISOMonthString';
@@ -3213,6 +3214,18 @@ describe('DayPickerRangeController', () => {
       it('returns false if not last of week', () => {
         const wrapper = shallow(<DayPickerRangeController />);
         expect(wrapper.instance().isLastDayOfWeek(moment().startOf('week').add(1, 'day'))).to.equal(false);
+      });
+    });
+
+    describe('noNavButtons prop', () => {
+      it('renders navigation button', () => {
+        const wrapper = shallow(<DayPickerRangeController />).dive().dive();
+        expect(wrapper.find(DayPickerNavigation)).to.have.lengthOf(1);
+      });
+
+      it('does not render navigation button when noNavButtons prop applied', () => {
+        const wrapper = shallow(<DayPickerRangeController noNavButtons />).dive().dive();
+        expect(wrapper.find(DayPickerNavigation)).to.have.lengthOf(0);
       });
     });
   });
