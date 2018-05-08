@@ -322,6 +322,7 @@ export default withStyles(({
   DateInput_input__small: {
     fontSize: font.input.size_small,
     lineHeight: font.input.lineHeight_small,
+    letterSpacing: font.input.letterSpacing_small,
     padding: `${spacing.displayTextPaddingVertical_small}px ${spacing.displayTextPaddingHorizontal_small}px`,
     paddingTop: spacing.displayTextPaddingTop_small,
     paddingBottom: spacing.displayTextPaddingBottom_small,

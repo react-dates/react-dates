@@ -696,6 +696,31 @@ describe('DayPickerRangeController', () => {
               expect(isSameDay(minimumNightsCalls[0].args[2], minimumNightsEndSpan)).to.equal(true);
             });
           });
+
+          describe('minimumNights changed', () => {
+            it('calls deleteModifierFromRange with start date + old min nights, and `blocked-minimum-nights`', () => {
+              const deleteModifierFromRangeSpy = sinon.spy(DayPickerRangeController.prototype, 'deleteModifierFromRange');
+              const startDate = today;
+              const focusedInput = START_DATE;
+              const minimumNights = 5;
+              const wrapper = shallow(<DayPickerRangeController
+                startDate={startDate}
+                focusedInput={focusedInput}
+                minimumNights={minimumNights}
+              />);
+              wrapper.instance().componentWillReceiveProps({
+                ...props,
+                focusedInput,
+                startDate,
+                minimumNights: 1,
+              });
+              const minimumNightsEndSpan = startDate.clone().add(minimumNights, 'days');
+              const minimumNightsCalls = getCallsByModifier(deleteModifierFromRangeSpy, 'blocked-minimum-nights');
+              expect(minimumNightsCalls.length).to.equal(1);
+              expect(minimumNightsCalls[0].args[1]).to.equal(startDate);
+              expect(isSameDay(minimumNightsCalls[0].args[2], minimumNightsEndSpan)).to.equal(true);
+            });
+          });
         });
 
         describe('new startDate exists', () => {
@@ -798,10 +823,16 @@ describe('DayPickerRangeController', () => {
           it('if isBlocked(day) is false calls deleteModifier with day and `blocked`', () => {
             const deleteModifierSpy = sinon.spy(DayPickerRangeController.prototype, 'deleteModifier');
             sinon.stub(DayPickerRangeController.prototype, 'isBlocked').returns(false);
-            const wrapper = shallow(<DayPickerRangeController {...props} />);
+            const wrapper = shallow((
+              <DayPickerRangeController
+                {...props}
+                minimumNights={0}
+              />
+            ));
             wrapper.setState({ visibleDays });
             wrapper.instance().componentWillReceiveProps({
               ...props,
+              minimumNights: 0,
               focusedInput: END_DATE,
             });
             const blockedCalendarCalls = getCallsByModifier(deleteModifierSpy, 'blocked');
