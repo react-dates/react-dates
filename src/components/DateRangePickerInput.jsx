@@ -164,23 +164,11 @@ function DateRangePickerInput({
   const calendarIcon = customInputIcon || (
     <CalendarIcon {...css(styles.DateRangePickerInput_calendarIcon_svg)} />
   );
-  const arrowIcon = customArrowIcon || (isRTL
-    ? (
-      <LeftArrow
-        {...css(
-          styles.DateRangePickerInput_arrow_svg,
-          small && styles.DateRangePickerInput_arrow_svg__small,
-        )}
-      />
-    ) : (
-      <RightArrow
-        {...css(
-          styles.DateRangePickerInput_arrow_svg,
-          small && styles.DateRangePickerInput_arrow_svg__small,
-        )}
-      />
-    )
-  );
+
+  let arrowIcon = customArrowIcon || <RightArrow {...css(styles.DateRangePickerInput_arrow_svg)} />;
+  if (isRTL) arrowIcon = <LeftArrow {...css(styles.DateRangePickerInput_arrow_svg)} />;
+  if (small) arrowIcon = '-';
+
   const closeIcon = customCloseIcon || (
     <CloseButton
       {...css(
@@ -239,13 +227,15 @@ function DateRangePickerInput({
         regular={regular}
       />
 
-      <div
-        {...css(styles.DateRangePickerInput_arrow)}
-        aria-hidden="true"
-        role="presentation"
-      >
-        {arrowIcon}
-      </div>
+      {
+        <div
+          {...css(styles.DateRangePickerInput_arrow)}
+          aria-hidden="true"
+          role="presentation"
+        >
+          {arrowIcon}
+        </div>
+      }
 
       <DateInput
         id={endDateId}
@@ -306,7 +296,8 @@ export default withStyles(({ reactDates: { color, sizing } }) => ({
   },
 
   DateRangePickerInput__withBorder: {
-    border: `1px solid ${color.core.grayLighter}`,
+    border: `1px solid ${color.border}`,
+    borderRadius: 2,
   },
 
   DateRangePickerInput__rtl: {
@@ -324,6 +315,7 @@ export default withStyles(({ reactDates: { color, sizing } }) => ({
   DateRangePickerInput_arrow: {
     display: 'inline-block',
     verticalAlign: 'middle',
+    color: color.text,
   },
 
   DateRangePickerInput_arrow_svg: {
@@ -331,11 +323,6 @@ export default withStyles(({ reactDates: { color, sizing } }) => ({
     fill: color.text,
     height: sizing.arrowWidth,
     width: sizing.arrowWidth,
-  },
-
-  DateRangePickerInput_arrow_svg__small: {
-    height: sizing.arrowWidth_small,
-    width: sizing.arrowWidth_small,
   },
 
   DateRangePickerInput_clearDates: {
