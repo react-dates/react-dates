@@ -7,7 +7,7 @@ import InfoPanelDecorator, { monospace } from './InfoPanelDecorator';
 import isSameDay from '../src/utils/isSameDay';
 import isInclusivelyAfterDay from '../src/utils/isInclusivelyAfterDay';
 
-import { VERTICAL_ORIENTATION } from '../src/constants';
+import { VERTICAL_ORIENTATION, VERTICAL_SCROLLABLE } from '../src/constants';
 
 import DayPickerRangeControllerWrapper from '../examples/DayPickerRangeControllerWrapper';
 
@@ -164,6 +164,18 @@ storiesOf('DayPickerRangeController', module)
       orientation={VERTICAL_ORIENTATION}
     />
   ))
+  .addWithInfo('vertical scrollable', () => (
+    <div style={{ height: 300 }}>
+      <DayPickerRangeControllerWrapper
+        onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
+        onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
+        onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
+        orientation={VERTICAL_SCROLLABLE}
+        numberOfMonths={6}
+        verticalHeight={800}
+      />
+    </div>
+  ))
   .addWithInfo('with custom month navigation', () => (
     <DayPickerRangeControllerWrapper
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
@@ -285,5 +297,11 @@ storiesOf('DayPickerRangeController', module)
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
       verticalBorderSpacing={16}
+    />
+  ))
+  .addWithInfo('with no nav buttons', () => (
+    <DayPickerRangeControllerWrapper
+      onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
+      noNavButtons
     />
   ));
