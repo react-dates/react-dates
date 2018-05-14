@@ -1,5 +1,12 @@
 # Change Log
 
+## 16.7.0
+- [fix] Force border-radius to be 0 on the inputs ([#1157](https://github.com/airbnb/react-dates/pull/1157))
+- [fix] Clear previous min nights modifiers, not current ([#994](https://github.com/airbnb/react-dates/pull/994))
+- [fix] Tweak default input styling ([#1158](https://github.com/airbnb/react-dates/pull/1158))
+- [fix] Round transform3d values to fix font blur ([#1155](https://github.com/airbnb/react-dates/pull/1155))
+- [new] Add `noNavButtons` prop ([#1160](https://github.com/airbnb/react-dates/pull/1160))
+
 ## 16.6.1
 - [fix] Fix selective disabling of the `DateRangePicker` ([#1116](https://github.com/airbnb/react-dates/pull/1116))
 - [fix] Fix `onOutsideClick` refactor ([#1115](https://github.com/airbnb/react-dates/pull/1115))
