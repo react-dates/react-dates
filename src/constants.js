@@ -18,6 +18,7 @@ export const INFO_POSITION_BEFORE = 'before';
 export const INFO_POSITION_AFTER = 'after';
 
 export const ANCHOR_LEFT = 'left';
+export const ANCHOR_CENTER = 'center';
 export const ANCHOR_RIGHT = 'right';
 
 export const OPEN_DOWN = 'down';
