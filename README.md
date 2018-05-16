@@ -190,13 +190,13 @@ Here is the minimum *REQUIRED* setup you need to get the `SingleDatePicker` work
   onDateChange={date => this.setState({ date })} // PropTypes.func.isRequired
   focused={this.state.focused} // PropTypes.bool
   onFocusChange={({ focused }) => this.setState({ focused })} // PropTypes.func.isRequired
+  id="your_unique_id" // PropTypes.string.isRequired,
 />
 ```
 
 The following is a list of other *OPTIONAL* props you may provide to the `SingleDatePicker` to customize appearance and behavior to your heart's desire. All constants (indicated by `ALL_CAPS`) are provided as named exports in `react-dates/constants`. Please explore the [storybook](http://airbnb.io/react-dates/?selectedKind=SDP%20-%20Input%20Props&selectedStory=default&full=0&down=1&left=1&panelRight=0&downPanel=kadirahq%2Fstorybook-addon-actions%2Factions-panel) for more information on what each of these props do.
 ```js
 // input related props
-id: PropTypes.string.isRequired,
 placeholder: PropTypes.string,
 disabled: PropTypes.bool,
 required: PropTypes.bool,
