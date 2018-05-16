@@ -309,10 +309,13 @@ The following is a list of other *OPTIONAL* props you may provide to the `DayPic
 
 ## Localization
 
-[Moment.js](http://momentjs.com) is a peer dependency of `react-dates`, so `react-dates` will use a single instance of `moment` which is imported in the user's project. To load a locale it is enough to invoke `moment.locale` in the component where `moment` is imported, with the [locale key](http://momentjs.com/docs/#/i18n/) of choice, e.g.:
-```
+[Moment.js](http://momentjs.com) is a peer dependency of `react-dates`. The latter then uses a single instance of `moment` which is imported in one’s project. Loading a locale is done by calling `moment.locale(..)` in the component where `moment` is imported, with the [locale key](http://momentjs.com/docs/#/i18n/) of choice. For instance:
+
+```js
 moment.locale('pl'); // Polish
 ```
+
+However, this only solves date localization. For complete internationalisation of the components, `react-dates` defines a certain amount of [user interface strings](https://github.com/airbnb/react-dates/blob/master/src/defaultPhrases.js) in English which can be changed through the `phrases` prop (explore the [storybook](http://airbnb.io/react-dates/?selectedKind=DateRangePicker%20%28DRP%29&selectedStory=non-english%20locale&full=0&addons=1&stories=1&panelRight=0&addonPanel=kadirahq%2Fstorybook-addon-actions%2Factions-panel) for examples). For accessibility and usability concerns, **all these UI elements should be translated**.
 
 ## Advanced
 
