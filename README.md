@@ -315,7 +315,7 @@ The following is a list of other *OPTIONAL* props you may provide to the `DayPic
 moment.locale('pl'); // Polish
 ```
 
-However, this only solves date localization. For complete internationalisation of the components, `react-dates` defines a certain amount of [user interface strings](https://github.com/airbnb/react-dates/blob/master/src/defaultPhrases.js) in English which can be changed through the `phrases` prop (explore the [storybook](http://airbnb.io/react-dates/?selectedKind=DateRangePicker%20%28DRP%29&selectedStory=non-english%20locale&full=0&addons=1&stories=1&panelRight=0&addonPanel=kadirahq%2Fstorybook-addon-actions%2Factions-panel) for examples). For accessibility and usability concerns, **all these UI elements should be translated**.
+However, this only solves date localization. For complete internationalization of the components, `react-dates` defines a certain amount of [user interface strings](https://github.com/airbnb/react-dates/blob/master/src/defaultPhrases.js) in English which can be changed through the `phrases` prop (explore the [storybook](http://airbnb.io/react-dates/?selectedKind=DateRangePicker%20%28DRP%29&selectedStory=non-english%20locale&full=0&addons=1&stories=1&panelRight=0&addonPanel=kadirahq%2Fstorybook-addon-actions%2Factions-panel) for examples). For accessibility and usability concerns, **all these UI elements should be translated**.
 
 ## Advanced
 
