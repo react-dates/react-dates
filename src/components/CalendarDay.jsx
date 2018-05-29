@@ -200,9 +200,12 @@ export default withStyles(({ reactDates: { color, font } }) => ({
 
   CalendarDay__outside: {
     border: 0,
-
     background: color.outside.backgroundColor,
     color: color.outside.color,
+
+    ':hover': {
+      border: 0,
+    },
   },
 
   CalendarDay__blocked_minimum_nights: {
