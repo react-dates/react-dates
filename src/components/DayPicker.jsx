@@ -460,6 +460,7 @@ class DayPicker extends React.Component {
       translationValue: 0.00001,
       focusedDate: null,
       nextFocusedDate: currentMonth,
+      // hasSetHeight: false,
       currentMonth,
     });
   }
@@ -472,6 +473,7 @@ class DayPicker extends React.Component {
       translationValue: 0.0001,
       focusedDate: null,
       nextFocusedDate: currentMonth,
+      // hasSetHeight: false,
       currentMonth,
     });
   }

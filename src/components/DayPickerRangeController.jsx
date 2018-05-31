@@ -60,6 +60,7 @@ const propTypes = forbidExtraProps({
 
   // DayPicker props
   renderMonth: PropTypes.func,
+  renderCaption: PropTypes.func,
   enableOutsideDays: PropTypes.bool,
   numberOfMonths: PropTypes.number,
   orientation: ScrollableOrientationShape,
@@ -80,7 +81,6 @@ const propTypes = forbidExtraProps({
   renderCalendarDay: PropTypes.func,
   renderDayContents: PropTypes.func,
   renderCalendarInfo: PropTypes.func,
-  renderCaption: PropTypes.func,
   calendarInfoPosition: CalendarInfoPositionShape,
   firstDayOfWeek: DayOfWeekShape,
   verticalHeight: nonNegativeInteger,
@@ -223,7 +223,6 @@ export default class DayPickerRangeController extends React.Component {
     this.onYearChange = this.onYearChange.bind(this);
     this.onMultiplyScrollableMonths = this.onMultiplyScrollableMonths.bind(this);
     this.getFirstFocusableDay = this.getFirstFocusableDay.bind(this);
-    this.setDayPickerRef = this.setDayPickerRef.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -802,10 +801,6 @@ export default class DayPickerRangeController extends React.Component {
     return { currentMonth, visibleDays };
   }
 
-  setDayPickerRef(ref) {
-    this.dayPicker = ref;
-  }
-
   addModifier(updatedDays, day, modifier) {
     const { numberOfMonths: numberOfVisibleMonths, enableOutsideDays, orientation } = this.props;
     const { currentMonth: firstVisibleMonth, visibleDays } = this.state;
@@ -1051,7 +1046,6 @@ export default class DayPickerRangeController extends React.Component {
 
     return (
       <DayPicker
-        ref={this.setDayPickerRef}
         orientation={orientation}
         enableOutsideDays={enableOutsideDays}
         modifiers={visibleDays}
