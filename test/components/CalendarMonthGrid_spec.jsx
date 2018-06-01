@@ -16,9 +16,9 @@ describe('CalendarMonthGrid', () => {
   });
 
   it('has style equal to getTransformStyles(foo)', () => {
-    const transformValue = 'foo';
-    const transformStyles = getTransformStyles(transformValue);
-    const wrapper = shallow(<CalendarMonthGrid transformValue={transformValue} />).dive();
+    const translationValue = 'foo';
+    const transformStyles = getTransformStyles(`translateX(${translationValue}px)`);
+    const wrapper = shallow(<CalendarMonthGrid translationValue={translationValue} />).dive();
     Object.keys(transformStyles).forEach((key) => {
       expect(wrapper.prop('style')[key]).to.equal(transformStyles[key]);
     });
