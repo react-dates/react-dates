@@ -412,14 +412,10 @@ class DayPicker extends React.Component {
   }
 
   onPrevMonthClick(nextFocusedDate, e) {
-    const { daySize, isRTL } = this.props;
-    const { calendarMonthWidth, currentMonth, monthTitleHeight } = this.state;
+    const { daySize, isRTL, numberOfMonths } = this.props;
+    const { calendarMonthWidth, monthTitleHeight } = this.state;
 
     if (e) e.preventDefault();
-
-    const newMonth = currentMonth.clone().subtract(1, 'month');
-    const numberOfWeeks = getNumberOfCalendarMonthWeeks(newMonth, this.getFirstDayOfWeek());
-    this.calendarMonthWeeks = [numberOfWeeks, ...this.calendarMonthWeeks.slice(0, -1)];
 
     let translationValue;
     if (this.isVertical()) {
@@ -431,7 +427,8 @@ class DayPicker extends React.Component {
         translationValue = -2 * calendarMonthWidth;
       }
 
-      const calendarMonthWeeksHeight = Math.max(0, ...this.calendarMonthWeeks) * (daySize - 1);
+      const visibleCalendarWeeks = this.calendarMonthWeeks.slice(0, numberOfMonths);
+      const calendarMonthWeeksHeight = Math.max(0, ...visibleCalendarWeeks) * (daySize - 1);
       const newMonthHeight = monthTitleHeight + calendarMonthWeeksHeight + 1;
       this.adjustDayPickerHeight(newMonthHeight);
     }
@@ -446,21 +443,17 @@ class DayPicker extends React.Component {
 
   onNextMonthClick(nextFocusedDate, e) {
     const { isRTL, numberOfMonths, daySize } = this.props;
-    const { calendarMonthWidth, currentMonth, monthTitleHeight } = this.state;
+    const { calendarMonthWidth, monthTitleHeight } = this.state;
 
     if (e) e.preventDefault();
-
-    const newMonth = currentMonth.clone().add(numberOfMonths, 'month');
-    const numberOfWeeks = getNumberOfCalendarMonthWeeks(newMonth, this.getFirstDayOfWeek());
 
     let translationValue;
 
     if (this.isVertical()) {
-      const calendarMonthWeeksHeight = this.calendarMonthWeeks[0] * (daySize - 1);
+      const firstVisibleMonthWeeks = this.calendarMonthWeeks[1];
+      const calendarMonthWeeksHeight = firstVisibleMonthWeeks * (daySize - 1);
       translationValue = -(monthTitleHeight + calendarMonthWeeksHeight + 1);
     }
-
-    this.calendarMonthWeeks = [...this.calendarMonthWeeks.slice(1), numberOfWeeks];
 
     if (this.isHorizontal()) {
       translationValue = -calendarMonthWidth;
@@ -468,7 +461,8 @@ class DayPicker extends React.Component {
         translationValue = 0;
       }
 
-      const calendarMonthWeeksHeight = Math.max(0, ...this.calendarMonthWeeks) * (daySize - 1);
+      const visibleCalendarWeeks = this.calendarMonthWeeks.slice(2, numberOfMonths + 2);
+      const calendarMonthWeeksHeight = Math.max(0, ...visibleCalendarWeeks) * (daySize - 1);
       const newMonthHeight = monthTitleHeight + calendarMonthWeeksHeight + 1;
       this.adjustDayPickerHeight(newMonthHeight);
     }
@@ -541,10 +535,12 @@ class DayPicker extends React.Component {
     const { currentMonth } = this.state;
 
     this.calendarMonthWeeks = [];
-    for (let i = 0; i < numberOfMonths; i += 1) {
-      const nextMonth = currentMonth.clone().add(i, 'months');
-      const numberOfWeeks = getNumberOfCalendarMonthWeeks(nextMonth, this.getFirstDayOfWeek());
+    let month = currentMonth.clone().subtract(1, 'months');
+    const firstDayOfWeek = this.getFirstDayOfWeek();
+    for (let i = 0; i < numberOfMonths + 2; i += 1) {
+      const numberOfWeeks = getNumberOfCalendarMonthWeeks(month, firstDayOfWeek);
       this.calendarMonthWeeks.push(numberOfWeeks);
+      month = month.add(1, 'months');
     }
   }
 
@@ -615,6 +611,7 @@ class DayPicker extends React.Component {
     const {
       onPrevMonthClick,
       onNextMonthClick,
+      numberOfMonths,
       isRTL,
     } = this.props;
 
@@ -630,12 +627,19 @@ class DayPicker extends React.Component {
     if (!monthTransition) return;
 
     const newMonth = currentMonth.clone();
+    const firstDayOfWeek = this.getFirstDayOfWeek();
     if (monthTransition === PREV_TRANSITION) {
       if (onPrevMonthClick) onPrevMonthClick();
       newMonth.subtract(1, 'month');
+      const newInvisibleMonth = newMonth.clone().subtract(1, 'month');
+      const numberOfWeeks = getNumberOfCalendarMonthWeeks(newInvisibleMonth, firstDayOfWeek);
+      this.calendarMonthWeeks = [numberOfWeeks, ...this.calendarMonthWeeks.slice(0, -1)];
     } else if (monthTransition === NEXT_TRANSITION) {
       if (onNextMonthClick) onNextMonthClick();
       newMonth.add(1, 'month');
+      const newInvisibleMonth = newMonth.clone().add(numberOfMonths, 'month');
+      const numberOfWeeks = getNumberOfCalendarMonthWeeks(newInvisibleMonth, firstDayOfWeek);
+      this.calendarMonthWeeks = [...this.calendarMonthWeeks.slice(1), numberOfWeeks];
     }
 
     let newFocusedDate = null;
