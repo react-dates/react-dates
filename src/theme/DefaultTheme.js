@@ -42,6 +42,11 @@ export default {
         borderRightFocused: 0,
         borderRadius: 0,
       },
+      pickerInput: {
+        borderWidth: 1,
+        borderStyle: 'solid',
+        borderRadius: 2,
+      },
     },
 
     color: {
