@@ -104,7 +104,7 @@
     "rimraf": "^2.6.2",
     "safe-publish-latest": "^1.1.1",
     "sass-loader": "^6.0.7",
-    "sinon": "^5.0.3",
+    "sinon": "^6.0.0",
     "sinon-sandbox": "^1.0.2",
     "style-loader": "^0.20.3",
     "webpack": "^2.6.1"
