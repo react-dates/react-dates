@@ -426,7 +426,8 @@ describe('DayPicker', () => {
   describe('#onMonthChange', () => {
     it('sets state.monthTransition to "month_selection"', () => {
       const wrapper = shallow(<DayPicker />).dive();
-      wrapper.instance().onMonthChange();
+      const date = moment();
+      wrapper.instance().onMonthChange(date);
       expect(wrapper.state().monthTransition).to.equal('month_selection');
     });
 
@@ -448,7 +449,8 @@ describe('DayPicker', () => {
   describe('#onYearChange', () => {
     it('sets state.yearTransition to "year_selection"', () => {
       const wrapper = shallow(<DayPicker />).dive();
-      wrapper.instance().onYearChange();
+      const date = moment();
+      wrapper.instance().onYearChange(date);
       expect(wrapper.state().monthTransition).to.equal('year_selection');
     });
 
