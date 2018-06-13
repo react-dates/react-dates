@@ -629,14 +629,14 @@ class DayPicker extends React.Component {
     const newMonth = currentMonth.clone();
     const firstDayOfWeek = this.getFirstDayOfWeek();
     if (monthTransition === PREV_TRANSITION) {
-      if (onPrevMonthClick) onPrevMonthClick();
       newMonth.subtract(1, 'month');
+      if (onPrevMonthClick) onPrevMonthClick(newMonth);
       const newInvisibleMonth = newMonth.clone().subtract(1, 'month');
       const numberOfWeeks = getNumberOfCalendarMonthWeeks(newInvisibleMonth, firstDayOfWeek);
       this.calendarMonthWeeks = [numberOfWeeks, ...this.calendarMonthWeeks.slice(0, -1)];
     } else if (monthTransition === NEXT_TRANSITION) {
-      if (onNextMonthClick) onNextMonthClick();
       newMonth.add(1, 'month');
+      if (onNextMonthClick) onNextMonthClick(newMonth);
       const newInvisibleMonth = newMonth.clone().add(numberOfMonths, 'month');
       const numberOfWeeks = getNumberOfCalendarMonthWeeks(newInvisibleMonth, firstDayOfWeek);
       this.calendarMonthWeeks = [...this.calendarMonthWeeks.slice(1), numberOfWeeks];
