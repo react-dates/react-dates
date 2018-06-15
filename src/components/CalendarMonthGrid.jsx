@@ -211,7 +211,6 @@ class CalendarMonthGrid extends React.Component {
       initialMonthSubtraction -= 1;
     }
     newMonth.set('month', newMonthVal).subtract(initialMonthSubtraction, 'months');
-    this.calendarMonthHeights = [];
     onMonthChange(newMonth);
   }
 
@@ -225,7 +224,6 @@ class CalendarMonthGrid extends React.Component {
       initialMonthSubtraction -= 1;
     }
     newMonth.set('year', newYearVal).subtract(initialMonthSubtraction, 'months');
-    this.calendarMonthHeights = [];
     onYearChange(newMonth);
   }
 

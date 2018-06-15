@@ -22,7 +22,6 @@ const event = { preventDefault() {}, stopPropagation() {} };
 describe('DayPicker', () => {
   beforeEach(() => {
     sinon.stub(PureDayPicker.prototype, 'adjustDayPickerHeight');
-    sinon.stub(PureDayPicker.prototype, 'updateStateAfterMonthTransition');
   });
 
   afterEach(() => {

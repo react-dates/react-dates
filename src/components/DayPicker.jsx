@@ -677,10 +677,8 @@ class DayPicker extends React.Component {
       const numberOfWeeks = getNumberOfCalendarMonthWeeks(newInvisibleMonth, firstDayOfWeek);
       this.calendarMonthWeeks = [...this.calendarMonthWeeks.slice(1), numberOfWeeks];
     } else if (monthTransition === MONTH_SELECTION_TRANSITION) {
-      // TODO: add this.calendarMonthWeeks update
       if (onMonthChange) onMonthChange(newMonth);
     } else if (monthTransition === YEAR_SELECTION_TRANSITION) {
-      // TODO: add this.calendarMonthWeeks update
       if (onYearChange) onYearChange(newMonth);
     }
 
