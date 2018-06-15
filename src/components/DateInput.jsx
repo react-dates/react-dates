@@ -110,8 +110,6 @@ class DateInput extends React.Component {
 
     if (focused && isFocused) {
       this.inputRef.focus();
-    } else {
-      this.inputRef.blur();
     }
   }
 
