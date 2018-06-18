@@ -114,6 +114,38 @@ storiesOf('DayPickerSingleDateController', module)
       numberOfMonths={1}
     />
   ))
+  .addWithInfo('single month, custom caption', () => (
+    <DayPickerSingleDateControllerWrapper
+      onOutsideClick={action('DayPickerSingleDateController::onOutsideClick')}
+      onPrevMonthClick={action('DayPickerSingleDateController::onPrevMonthClick')}
+      onNextMonthClick={action('DayPickerSingleDateController::onNextMonthClick')}
+      numberOfMonths={1}
+      renderCaption={({ month, onMonthSelect, onYearSelect }) => (
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <div>
+            <select
+              value={month.month()}
+              onChange={(e) => { onMonthSelect(month, e.target.value); }}
+            >
+              {moment.months().map((label, value) => (
+                <option value={value}>{label}</option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <select
+              value={month.year()}
+              onChange={(e) => { onYearSelect(month, e.target.value); }}
+            >
+              <option value={moment().year() - 1}>Last year</option>
+              <option value={moment().year()}>{moment().year()}</option>
+              <option value={moment().year() + 1}>Next year</option>
+            </select>
+          </div>
+        </div>
+      )}
+    />
+  ))
   .addWithInfo('3 months', () => (
     <DayPickerSingleDateControllerWrapper
       onOutsideClick={action('DayPickerSingleDateController::onOutsideClick')}

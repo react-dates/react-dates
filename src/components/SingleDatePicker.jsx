@@ -101,6 +101,7 @@ const defaultProps = {
   // day presentation and interaction related props
   renderCalendarDay: undefined,
   renderDayContents: null,
+  renderCaption: null,
   enableOutsideDays: false,
   isDayBlocked: () => false,
   isOutsideRange: day => !isInclusivelyAfterDay(day, moment()),
@@ -405,6 +406,7 @@ class SingleDatePicker extends React.Component {
       renderCalendarDay,
       renderDayContents,
       renderCalendarInfo,
+      renderCaption,
       calendarInfoPosition,
       hideKeyboardShortcutsPanel,
       firstDayOfWeek,
@@ -479,6 +481,7 @@ class SingleDatePicker extends React.Component {
           renderCalendarDay={renderCalendarDay}
           renderDayContents={renderDayContents}
           renderCalendarInfo={renderCalendarInfo}
+          renderCaption={renderCaption}
           calendarInfoPosition={calendarInfoPosition}
           isFocused={isDayPickerFocused}
           showKeyboardShortcuts={showKeyboardShortcuts}
