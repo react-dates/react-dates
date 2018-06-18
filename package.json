@@ -118,11 +118,11 @@
     "object.values": "^1.0.4",
     "prop-types": "^15.6.1",
     "react-addons-shallow-compare": "^15.6.2",
-    "react-moment-proptypes": "^1.5.0",
-    "react-outside-click-handler": "^1.0.0",
+    "react-moment-proptypes": "^1.6.0",
+    "react-outside-click-handler": "^1.2.0",
     "react-portal": "^4.1.5",
     "react-with-styles": "^3.2.0",
-    "react-with-styles-interface-css": "^4.0.1"
+    "react-with-styles-interface-css": "^4.0.2"
   },
   "peerDependencies": {
     "moment": "^2.18.1",
