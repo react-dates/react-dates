@@ -68,7 +68,7 @@ const defaultProps = {
   keepFocusOnInput: false,
 
   // calendar presentation and interaction related props
-  renderMonth: null,
+  renderMonthText: null,
   orientation: HORIZONTAL_ORIENTATION,
   anchorDirection: ANCHOR_LEFT,
   openDirection: OPEN_DOWN,
@@ -103,7 +103,7 @@ const defaultProps = {
   // day presentation and interaction related props
   renderCalendarDay: undefined,
   renderDayContents: null,
-  renderCaption: null,
+  renderMonthElement: null,
   minimumNights: 1,
   enableOutsideDays: false,
   isDayBlocked: () => false,
@@ -351,7 +351,7 @@ class DateRangePicker extends React.Component {
       numberOfMonths,
       orientation,
       monthFormat,
-      renderMonth,
+      renderMonthText,
       navPrev,
       navNext,
       onPrevMonthClick,
@@ -370,7 +370,7 @@ class DateRangePicker extends React.Component {
       renderCalendarDay,
       renderDayContents,
       renderCalendarInfo,
-      renderCaption,
+      renderMonthElement,
       calendarInfoPosition,
       firstDayOfWeek,
       initialVisibleMonth,
@@ -441,7 +441,7 @@ class DateRangePicker extends React.Component {
           startDate={startDate}
           endDate={endDate}
           monthFormat={monthFormat}
-          renderMonth={renderMonth}
+          renderMonthText={renderMonthText}
           withPortal={withAnyPortal}
           daySize={daySize}
           initialVisibleMonth={initialVisibleMonthThunk}
@@ -456,7 +456,7 @@ class DateRangePicker extends React.Component {
           renderCalendarDay={renderCalendarDay}
           renderDayContents={renderDayContents}
           renderCalendarInfo={renderCalendarInfo}
-          renderCaption={renderCaption}
+          renderMonthElement={renderMonthElement}
           calendarInfoPosition={calendarInfoPosition}
           isFocused={isDayPickerFocused}
           showKeyboardShortcuts={showKeyboardShortcuts}

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import shallowCompare from 'react-addons-shallow-compare';
 import momentPropTypes from 'react-moment-proptypes';
-import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
+import { forbidExtraProps, mutuallyExclusiveProps, nonNegativeInteger } from 'airbnb-prop-types';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 import moment from 'moment';
 import { addEventListener } from 'consolidated-events';
@@ -44,11 +44,11 @@ const propTypes = forbidExtraProps({
   onMonthTransitionEnd: PropTypes.func,
   onMonthChange: PropTypes.func,
   onYearChange: PropTypes.func,
-  renderMonth: PropTypes.func,
+  renderMonthText: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'),
   renderCalendarDay: PropTypes.func,
   renderDayContents: PropTypes.func,
   translationValue: PropTypes.number,
-  renderCaption: PropTypes.func,
+  renderMonthElement: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'),
   daySize: nonNegativeInteger,
   focusedDate: momentPropTypes.momentObj, // indicates focusable day
   isFocused: PropTypes.bool, // indicates whether or not to move focus to focusable day
@@ -78,11 +78,11 @@ const defaultProps = {
   onMonthChange() {},
   onYearChange() {},
   onMonthTransitionEnd() {},
-  renderMonth: null,
+  renderMonthText: null,
   renderCalendarDay: undefined,
   renderDayContents: null,
   translationValue: null,
-  renderCaption: null,
+  renderMonthElement: null,
   daySize: DAY_SIZE,
   focusedDate: null,
   isFocused: false,
@@ -244,10 +244,10 @@ class CalendarMonthGrid extends React.Component {
       onDayMouseEnter,
       onDayMouseLeave,
       onDayClick,
-      renderMonth,
+      renderMonthText,
       renderCalendarDay,
       renderDayContents,
-      renderCaption,
+      renderMonthElement,
       onMonthTransitionEnd,
       firstDayOfWeek,
       focusedDate,
@@ -333,10 +333,10 @@ class CalendarMonthGrid extends React.Component {
                 onDayClick={onDayClick}
                 onMonthSelect={this.onMonthSelect}
                 onYearSelect={this.onYearSelect}
-                renderMonth={renderMonth}
+                renderMonthText={renderMonthText}
                 renderCalendarDay={renderCalendarDay}
                 renderDayContents={renderDayContents}
-                renderCaption={renderCaption}
+                renderMonthElement={renderMonthElement}
                 firstDayOfWeek={firstDayOfWeek}
                 daySize={daySize}
                 focusedDate={isVisible ? focusedDate : null}

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import shallowCompare from 'react-addons-shallow-compare';
-import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
+import { forbidExtraProps, mutuallyExclusiveProps, nonNegativeInteger } from 'airbnb-prop-types';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 
 import moment from 'moment';
@@ -82,8 +82,8 @@ const propTypes = forbidExtraProps({
   onMultiplyScrollableMonths: PropTypes.func, // VERTICAL_SCROLLABLE daypickers only
 
   // month props
-  renderMonth: PropTypes.func,
-  renderCaption: PropTypes.func,
+  renderMonthText: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'),
+  renderMonthElement: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'),
 
   // day props
   modifiers: PropTypes.object,
@@ -137,8 +137,8 @@ export const defaultProps = {
   onMultiplyScrollableMonths() {},
 
   // month props
-  renderMonth: null,
-  renderCaption: null,
+  renderMonthText: null,
+  renderMonthElement: null,
 
   // day props
   modifiers: {},
@@ -238,7 +238,7 @@ class DayPicker extends React.Component {
       isFocused,
       showKeyboardShortcuts,
       onBlur,
-      renderMonth,
+      renderMonthText,
     } = nextProps;
     const { currentMonth } = this.state;
 
@@ -278,7 +278,7 @@ class DayPicker extends React.Component {
       }
     }
 
-    if (renderMonth !== this.props.renderMonth) {
+    if (renderMonthText !== this.props.renderMonthText) {
       this.setState({
         monthTitleHeight: null,
       });
@@ -867,11 +867,11 @@ class DayPicker extends React.Component {
       onDayMouseEnter,
       onDayMouseLeave,
       firstDayOfWeek,
-      renderMonth,
+      renderMonthText,
       renderCalendarDay,
       renderDayContents,
       renderCalendarInfo,
-      renderCaption,
+      renderMonthElement,
       calendarInfoPosition,
       hideKeyboardShortcutsPanel,
       onOutsideClick,
@@ -1030,10 +1030,10 @@ class DayPicker extends React.Component {
                   onDayMouseLeave={onDayMouseLeave}
                   onMonthChange={this.onMonthChange}
                   onYearChange={this.onYearChange}
-                  renderMonth={renderMonth}
+                  renderMonthText={renderMonthText}
                   renderCalendarDay={renderCalendarDay}
                   renderDayContents={renderDayContents}
-                  renderCaption={renderCaption}
+                  renderMonthElement={renderMonthElement}
                   onMonthTransitionEnd={this.updateStateAfterMonthTransition}
                   monthFormat={monthFormat}
                   daySize={daySize}
