@@ -10,6 +10,8 @@ import registerCSSInterfaceWithDefaultTheme from '../src/utils/registerCSSInterf
 import '../css/storybook.scss';
 import '../css/styles.css';
 
+const isHappoRun = typeof HAPPO !== 'undefined';
+
 registerCSSInterfaceWithDefaultTheme();
 
 addDecorator((story) => {
@@ -28,27 +30,29 @@ const helperText = `All examples are built using a wrapper component that is not
   react-dates. Please see the ${README} for more information about minimal setup or explore
   the ${wrapperSource} to see how to integrate react-dates into your own app.`;
 
-addDecorator(story => (
-  <div>
-    <div
-      style={{
-        background: '#fff',
-        height: 6 * 8,
-        width: '100%',
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        padding: '8px 40px 8px 8px',
-        overflow: 'scroll',
-      }}
-      dangerouslySetInnerHTML={{ __html: helperText }}
-    />
+if (!isHappoRun) {
+  addDecorator(story => (
+    <div>
+      <div
+        style={{
+          background: '#fff',
+          height: 6 * 8,
+          width: '100%',
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          padding: '8px 40px 8px 8px',
+          overflow: 'scroll',
+        }}
+        dangerouslySetInnerHTML={{ __html: helperText }}
+      />
 
-    <div style={{ marginTop: 7 * 8 }}>
-      {story()}
+      <div style={{ marginTop: 7 * 8 }}>
+        {story()}
+      </div>
     </div>
-  </div>
-));
+  ));
+}
 
 setOptions({
   name: 'REACT-DATES',
