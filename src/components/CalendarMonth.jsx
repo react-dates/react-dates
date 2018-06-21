@@ -4,7 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import shallowCompare from 'react-addons-shallow-compare';
 import momentPropTypes from 'react-moment-proptypes';
-import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
+import { forbidExtraProps, mutuallyExclusiveProps, nonNegativeInteger } from 'airbnb-prop-types';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 import moment from 'moment';
 
@@ -42,10 +42,10 @@ const propTypes = forbidExtraProps({
   onDayMouseLeave: PropTypes.func,
   onMonthSelect: PropTypes.func,
   onYearSelect: PropTypes.func,
-  renderMonth: PropTypes.func,
+  renderMonthText: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'),
   renderCalendarDay: PropTypes.func,
   renderDayContents: PropTypes.func,
-  renderCaption: PropTypes.func,
+  renderMonthElement: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'),
   firstDayOfWeek: DayOfWeekShape,
   setMonthTitleHeight: PropTypes.func,
   verticalBorderSpacing: nonNegativeInteger,
@@ -71,10 +71,10 @@ const defaultProps = {
   onDayMouseLeave() {},
   onMonthSelect() {},
   onYearSelect() {},
-  renderMonth: null,
+  renderMonthText: null,
   renderCalendarDay: props => (<CalendarDay {...props} />),
   renderDayContents: null,
-  renderCaption: null,
+  renderMonthElement: null,
   firstDayOfWeek: null,
   setMonthTitleHeight: null,
 
@@ -157,10 +157,10 @@ class CalendarMonth extends React.Component {
       onDayMouseLeave,
       onMonthSelect,
       onYearSelect,
-      renderMonth,
+      renderMonthText,
       renderCalendarDay,
       renderDayContents,
-      renderCaption,
+      renderMonthElement,
       daySize,
       focusedDate,
       isFocused,
@@ -171,7 +171,7 @@ class CalendarMonth extends React.Component {
     } = this.props;
 
     const { weeks } = this.state;
-    const monthTitle = renderMonth ? renderMonth(month) : month.format(monthFormat);
+    const monthTitle = renderMonthText ? renderMonthText(month) : month.format(monthFormat);
 
     const verticalScrollable = orientation === VERTICAL_SCROLLABLE;
 
@@ -193,8 +193,8 @@ class CalendarMonth extends React.Component {
           )}
         >
           {
-            renderCaption ?
-              renderCaption({ month, onMonthSelect, onYearSelect }) :
+            renderMonthElement ?
+              renderMonthElement({ month, onMonthSelect, onYearSelect }) :
               <strong>{monthTitle}</strong>
           }
         </div>

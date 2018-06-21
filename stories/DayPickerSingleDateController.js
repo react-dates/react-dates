@@ -120,7 +120,7 @@ storiesOf('DayPickerSingleDateController', module)
       onPrevMonthClick={action('DayPickerSingleDateController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerSingleDateController::onNextMonthClick')}
       numberOfMonths={1}
-      renderCaption={({ month, onMonthSelect, onYearSelect }) => (
+      renderMonthElement={({ month, onMonthSelect, onYearSelect }) => (
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <div>
             <select
