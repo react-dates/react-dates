@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import momentPropTypes from 'react-moment-proptypes';
-import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
+import { forbidExtraProps, mutuallyExclusiveProps, nonNegativeInteger } from 'airbnb-prop-types';
 import moment from 'moment';
 import values from 'object.values';
 import isTouchDevice from 'is-touch-device';
@@ -30,7 +30,6 @@ import {
 } from '../constants';
 
 import DayPicker from './DayPicker';
-import OutsideClickHandler from './OutsideClickHandler';
 
 const propTypes = forbidExtraProps({
   date: momentPropTypes.momentObj,
@@ -46,7 +45,8 @@ const propTypes = forbidExtraProps({
   isDayHighlighted: PropTypes.func,
 
   // DayPicker props
-  renderMonth: PropTypes.func,
+  renderMonthText: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'),
+  renderMonthElement: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'),
   enableOutsideDays: PropTypes.bool,
   numberOfMonths: PropTypes.number,
   orientation: ScrollableOrientationShape,
@@ -57,6 +57,7 @@ const propTypes = forbidExtraProps({
   daySize: nonNegativeInteger,
   verticalHeight: nonNegativeInteger,
   noBorder: PropTypes.bool,
+  verticalBorderSpacing: nonNegativeInteger,
   transitionDuration: nonNegativeInteger,
 
   navPrev: PropTypes.node,
@@ -98,7 +99,7 @@ const defaultProps = {
   isDayHighlighted() {},
 
   // DayPicker props
-  renderMonth: null,
+  renderMonthText: null,
   enableOutsideDays: false,
   numberOfMonths: 1,
   orientation: HORIZONTAL_ORIENTATION,
@@ -109,6 +110,7 @@ const defaultProps = {
   daySize: DAY_SIZE,
   verticalHeight: null,
   noBorder: false,
+  verticalBorderSpacing: undefined,
   transitionDuration: undefined,
 
   navPrev: null,
@@ -116,11 +118,12 @@ const defaultProps = {
 
   onPrevMonthClick() {},
   onNextMonthClick() {},
-  onOutsideClick: null,
+  onOutsideClick() {},
 
   renderCalendarDay: undefined,
   renderDayContents: null,
   renderCalendarInfo: null,
+  renderMonthElement: null,
   calendarInfoPosition: INFO_POSITION_BOTTOM,
 
   // accessibility
@@ -171,6 +174,8 @@ export default class DayPickerSingleDateController extends React.Component {
 
     this.onPrevMonthClick = this.onPrevMonthClick.bind(this);
     this.onNextMonthClick = this.onNextMonthClick.bind(this);
+    this.onMonthChange = this.onMonthChange.bind(this);
+    this.onYearChange = this.onYearChange.bind(this);
 
     this.getFirstFocusableDay = this.getFirstFocusableDay.bind(this);
   }
@@ -396,6 +401,29 @@ export default class DayPickerSingleDateController extends React.Component {
     });
   }
 
+  onMonthChange(newMonth) {
+    const { numberOfMonths, enableOutsideDays, orientation } = this.props;
+    const withoutTransitionMonths = orientation === VERTICAL_SCROLLABLE;
+    const newVisibleDays =
+      getVisibleDays(newMonth, numberOfMonths, enableOutsideDays, withoutTransitionMonths);
+
+    this.setState({
+      currentMonth: newMonth.clone(),
+      visibleDays: this.getModifiers(newVisibleDays),
+    });
+  }
+
+  onYearChange(newMonth) {
+    const { numberOfMonths, enableOutsideDays, orientation } = this.props;
+    const withoutTransitionMonths = orientation === VERTICAL_SCROLLABLE;
+    const newVisibleDays =
+      getVisibleDays(newMonth, numberOfMonths, enableOutsideDays, withoutTransitionMonths);
+
+    this.setState({
+      currentMonth: newMonth.clone(),
+      visibleDays: this.getModifiers(newVisibleDays),
+    });
+  }
 
   getFirstFocusableDay(newMonth) {
     const { date, numberOfMonths } = this.props;
@@ -593,9 +621,10 @@ export default class DayPickerSingleDateController extends React.Component {
       numberOfMonths,
       orientation,
       monthFormat,
-      renderMonth,
+      renderMonthText,
       navPrev,
       navNext,
+      onOutsideClick,
       withPortal,
       focused,
       enableOutsideDays,
@@ -605,23 +634,24 @@ export default class DayPickerSingleDateController extends React.Component {
       renderCalendarDay,
       renderDayContents,
       renderCalendarInfo,
+      renderMonthElement,
       calendarInfoPosition,
       isFocused,
       isRTL,
       phrases,
       dayAriaLabelFormat,
-      onOutsideClick,
       onBlur,
       showKeyboardShortcuts,
       weekDayFormat,
       verticalHeight,
       noBorder,
       transitionDuration,
+      verticalBorderSpacing,
     } = this.props;
 
     const { currentMonth, visibleDays } = this.state;
 
-    const dayPickerComponent = (
+    return (
       <DayPicker
         orientation={orientation}
         enableOutsideDays={enableOutsideDays}
@@ -632,18 +662,22 @@ export default class DayPickerSingleDateController extends React.Component {
         onDayMouseLeave={this.onDayMouseLeave}
         onPrevMonthClick={this.onPrevMonthClick}
         onNextMonthClick={this.onNextMonthClick}
+        onMonthChange={this.onMonthChange}
+        onYearChange={this.onYearChange}
         monthFormat={monthFormat}
         withPortal={withPortal}
         hidden={!focused}
         hideKeyboardShortcutsPanel={hideKeyboardShortcutsPanel}
         initialVisibleMonth={() => currentMonth}
         firstDayOfWeek={firstDayOfWeek}
+        onOutsideClick={onOutsideClick}
         navPrev={navPrev}
         navNext={navNext}
-        renderMonth={renderMonth}
+        renderMonthText={renderMonthText}
         renderCalendarDay={renderCalendarDay}
         renderDayContents={renderDayContents}
         renderCalendarInfo={renderCalendarInfo}
+        renderMonthElement={renderMonthElement}
         calendarInfoPosition={calendarInfoPosition}
         isFocused={isFocused}
         getFirstFocusableDay={this.getFirstFocusableDay}
@@ -657,20 +691,9 @@ export default class DayPickerSingleDateController extends React.Component {
         verticalHeight={verticalHeight}
         noBorder={noBorder}
         transitionDuration={transitionDuration}
+        verticalBorderSpacing={verticalBorderSpacing}
       />
     );
-
-    if (onOutsideClick) {
-      return (
-        <OutsideClickHandler
-          onOutsideClick={onOutsideClick}
-        >
-          {dayPickerComponent}
-        </OutsideClickHandler>
-      );
-    }
-
-    return dayPickerComponent;
   }
 }
 

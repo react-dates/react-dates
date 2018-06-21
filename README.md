@@ -37,7 +37,7 @@ Ensure packages are installed with correct version numbers by running:
   Which produces and runs a command like:
 
   ```sh
-  npm install --save react-dates moment@>=#.## react@>=#.## react-dom@>=#.## react-addons-shallow-compare@>=#.##
+  npm install --save react-dates moment@>=#.## react@>=#.## react-dom@>=#.##
   ```
 
 ### Initialize
@@ -112,12 +112,12 @@ Here is the minimum *REQUIRED* setup you need to get the `DateRangePicker` worki
 />
 ```
 
-The following is a list of other *OPTIONAL* props you may provide to the `DateRangePicker` to customize appearance and behavior to your heart's desire. Again, please explore the [storybook](http://airbnb.io/react-dates/?selectedKind=DRP%20-%20Input%20Props&selectedStory=default&full=0&down=1&left=1&panelRight=0&downPanel=kadirahq%2Fstorybook-addon-actions%2Factions-panel) for more information on what each of these props do.
+The following is a list of other *OPTIONAL* props you may provide to the `DateRangePicker` to customize appearance and behavior to your heart's desire. All constants (indicated by `ALL_CAPS`) are provided as named exports in `react-dates/constants`. Please explore the [storybook](http://airbnb.io/react-dates/?selectedKind=DRP%20-%20Input%20Props&selectedStory=default&full=0&down=1&left=1&panelRight=0&downPanel=kadirahq%2Fstorybook-addon-actions%2Factions-panel) for more information on what each of these props do.
 ```js
 // input related props
 startDatePlaceholderText: PropTypes.string,
 endDatePlaceholderText: PropTypes.string,
-disabled: PropTypes.bool,
+disabled: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf([START_DATE, END_DATE])]),
 required: PropTypes.bool,
 readOnly: PropTypes.bool,
 screenReaderInputMessage: PropTypes.string,
@@ -126,18 +126,21 @@ showDefaultInputIcon: PropTypes.bool,
 customInputIcon: PropTypes.node,
 customArrowIcon: PropTypes.node,
 customCloseIcon: PropTypes.node,
+inputIconPosition: PropTypes.oneOf([ICON_BEFORE_POSITION, ICON_AFTER_POSITION]),
 noBorder: PropTypes.bool,
 block: PropTypes.bool,
 small: PropTypes.bool,
 regular: PropTypes.bool,
 
 // calendar presentation and interaction related props
-renderMonth: PropTypes.func,
-orientation: OrientationShape,
-anchorDirection: anchorDirectionShape,
+renderMonthText: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'), // (month) => PropTypes.string,
+orientation: PropTypes.oneOf([HORIZONTAL_ORIENTATION, VERTICAL_ORIENTATION]),
+anchorDirection: PropTypes.oneOf([ANCHOR_LEFT, ANCHOR_RIGHT]),
 horizontalMargin: PropTypes.number,
 withPortal: PropTypes.bool,
 withFullScreenPortal: PropTypes.bool,
+appendToBody: PropTypes.bool,
+disableScroll: PropTypes.bool,
 daySize: nonNegativeInteger,
 isRTL: PropTypes.bool,
 initialVisibleMonth: PropTypes.func,
@@ -146,6 +149,7 @@ numberOfMonths: PropTypes.number,
 keepOpenOnDateSelect: PropTypes.bool,
 reopenPickerOnClearDates: PropTypes.bool,
 renderCalendarInfo: PropTypes.func,
+renderMonthElement: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'), PropTypes.func, // ({ month, onMonthSelect, onYearSelect }) => PropTypes.node,
 hideKeyboardShortcutsPanel: PropTypes.bool,
 
 // navigation related props
@@ -170,6 +174,7 @@ displayFormat: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
 monthFormat: PropTypes.string,
 weekDayFormat: PropTypes.string,
 phrases: PropTypes.shape(getPhrasePropTypes(DateRangePickerPhrases)),
+dayAriaLabelFormat: PropTypes.string,
 ```
 
 #### SingleDatePicker
@@ -186,13 +191,13 @@ Here is the minimum *REQUIRED* setup you need to get the `SingleDatePicker` work
   onDateChange={date => this.setState({ date })} // PropTypes.func.isRequired
   focused={this.state.focused} // PropTypes.bool
   onFocusChange={({ focused }) => this.setState({ focused })} // PropTypes.func.isRequired
+  id="your_unique_id" // PropTypes.string.isRequired,
 />
 ```
 
-The following is a list of other *OPTIONAL* props you may provide to the `SingleDatePicker` to customize appearance and behavior to your heart's desire. Again, please explore the [storybook](http://airbnb.io/react-dates/?selectedKind=SDP%20-%20Input%20Props&selectedStory=default&full=0&down=1&left=1&panelRight=0&downPanel=kadirahq%2Fstorybook-addon-actions%2Factions-panel) for more information on what each of these props do.
+The following is a list of other *OPTIONAL* props you may provide to the `SingleDatePicker` to customize appearance and behavior to your heart's desire. All constants (indicated by `ALL_CAPS`) are provided as named exports in `react-dates/constants`. Please explore the [storybook](http://airbnb.io/react-dates/?selectedKind=SDP%20-%20Input%20Props&selectedStory=default&full=0&down=1&left=1&panelRight=0&downPanel=kadirahq%2Fstorybook-addon-actions%2Factions-panel) for more information on what each of these props do.
 ```js
 // input related props
-id: PropTypes.string.isRequired,
 placeholder: PropTypes.string,
 disabled: PropTypes.bool,
 required: PropTypes.bool,
@@ -202,24 +207,28 @@ showClearDate: PropTypes.bool,
 customCloseIcon: PropTypes.node,
 showDefaultInputIcon: PropTypes.bool,
 customInputIcon: PropTypes.node,
+inputIconPosition: PropTypes.oneOf([ICON_BEFORE_POSITION, ICON_AFTER_POSITION]),
 noBorder: PropTypes.bool,
 block: PropTypes.bool,
 small: PropTypes.bool,
 regular: PropTypes.bool,
 
 // calendar presentation and interaction related props
-renderMonth: PropTypes.func,
-orientation: OrientationShape,
-anchorDirection: anchorDirectionShape,
+renderMonthText: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'), // (month) => PropTypes.string,
+orientation: PropTypes.oneOf([HORIZONTAL_ORIENTATION, VERTICAL_ORIENTATION]),
+anchorDirection: PropTypes.oneOf([ANCHOR_LEFT, ANCHOR_RIGHT]),
 horizontalMargin: PropTypes.number,
 withPortal: PropTypes.bool,
 withFullScreenPortal: PropTypes.bool,
+appendToBody: PropTypes.bool,
+disableScroll: PropTypes.bool,
 initialVisibleMonth: PropTypes.func,
 firstDayOfWeek: PropTypes.oneOf([0, 1, 2, 3, 4, 5, 6]),
 numberOfMonths: PropTypes.number,
 keepOpenOnDateSelect: PropTypes.bool,
 reopenPickerOnClearDate: PropTypes.bool,
 renderCalendarInfo: PropTypes.func,
+renderMonthElement: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'), // ({ month, onMonthSelect, onYearSelect }) => PropTypes.node,
 hideKeyboardShortcutsPanel: PropTypes.bool,
 daySize: nonNegativeInteger,
 isRTL: PropTypes.bool,
@@ -245,6 +254,7 @@ displayFormat: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
 monthFormat: PropTypes.string,
 weekDayFormat: PropTypes.string,
 phrases: PropTypes.shape(getPhrasePropTypes(SingleDatePickerPhrases)),
+dayAriaLabelFormat: PropTypes.string,
 ```
 
 #### DayPickerRangeController
@@ -272,6 +282,7 @@ The following is a list of other *OPTIONAL* props you may provide to the `DayPic
   withPortal: PropTypes.bool,
   initialVisibleMonth: PropTypes.func,
   renderCalendarInfo: PropTypes.func,
+  renderMonthElement: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'), // ({ month, onMonthSelect, onYearSelect }) => PropTypes.node,
   onOutsideClick: PropTypes.func,
   keepOpenOnDateSelect: PropTypes.bool,
   noBorder: PropTypes.bool,
@@ -295,15 +306,19 @@ The following is a list of other *OPTIONAL* props you may provide to the `DayPic
   monthFormat: PropTypes.string,
   weekDayFormat: PropTypes.string,
   phrases: PropTypes.shape(getPhrasePropTypes(DayPickerPhrases)),
+  dayAriaLabelFormat: PropTypes.string,
 />
 ```
 
 ## Localization
 
-[Moment.js](http://momentjs.com) is a peer dependency of `react-dates`, so `react-dates` will use a single instance of `moment` which is imported in the user's project. To load a locale it is enough to invoke `moment.locale` in the component where `moment` is imported, with the [locale key](http://momentjs.com/docs/#/i18n/) of choice, e.g.:
-```
+[Moment.js](http://momentjs.com) is a peer dependency of `react-dates`. The latter then uses a single instance of `moment` which is imported in one’s project. Loading a locale is done by calling `moment.locale(..)` in the component where `moment` is imported, with the [locale key](http://momentjs.com/docs/#/i18n/) of choice. For instance:
+
+```js
 moment.locale('pl'); // Polish
 ```
+
+However, this only solves date localization. For complete internationalization of the components, `react-dates` defines a certain amount of [user interface strings](https://github.com/airbnb/react-dates/blob/master/src/defaultPhrases.js) in English which can be changed through the `phrases` prop (explore the [storybook](http://airbnb.io/react-dates/?selectedKind=DateRangePicker%20%28DRP%29&selectedStory=non-english%20locale&full=0&addons=1&stories=1&panelRight=0&addonPanel=kadirahq%2Fstorybook-addon-actions%2Factions-panel) for examples). For accessibility and usability concerns, **all these UI elements should be translated**.
 
 ## Advanced
 

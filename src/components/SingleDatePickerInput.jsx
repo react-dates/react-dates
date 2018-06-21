@@ -127,7 +127,7 @@ function SingleDatePickerInput({
     <CloseButton
       {...css(
         styles.SingleDatePickerInput_clearDate_svg,
-        styles.SingleDatePickerInput_clearDate_svg__small,
+        small && styles.SingleDatePickerInput_clearDate_svg__small,
       )}
     />
   );
@@ -210,14 +210,17 @@ function SingleDatePickerInput({
 SingleDatePickerInput.propTypes = propTypes;
 SingleDatePickerInput.defaultProps = defaultProps;
 
-export default withStyles(({ reactDates: { color } }) => ({
+export default withStyles(({ reactDates: { border, color } }) => ({
   SingleDatePickerInput: {
     display: 'inline-block',
     backgroundColor: color.background,
   },
 
   SingleDatePickerInput__withBorder: {
-    border: `1px solid ${color.core.border}`,
+    borderColor: color.border,
+    borderWidth: border.pickerInput.borderWidth,
+    borderStyle: border.pickerInput.borderStyle,
+    borderRadius: border.pickerInput.borderRadius,
   },
 
   SingleDatePickerInput__rtl: {

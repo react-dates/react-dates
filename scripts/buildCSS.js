@@ -11,19 +11,11 @@ const registerCSSInterfaceWithDefaultTheme = require('../src/utils/registerCSSIn
 const args = process.argv.slice(2);
 const optimizeForProduction = args.includes('-o') || args.includes('--optimize');
 
-require('../test/_helpers/ignoreSVGStrings');
-
 registerMaxSpecificity(0);
 registerCSSInterfaceWithDefaultTheme();
 
-const DateRangePickerPath = './examples/DateRangePickerWrapper.jsx';
-const SingleDatePickerPath = './examples/SingleDatePickerWrapper.jsx';
-const PresetDateRangePickerPath = './examples/PresetDateRangePicker.jsx';
-
-const dateRangePickerCSS = compileCSS(DateRangePickerPath);
-const singleDatePickerCSS = compileCSS(SingleDatePickerPath);
-const presetDatePickerCSS = compileCSS(PresetDateRangePickerPath);
-const CSS = dateRangePickerCSS + singleDatePickerCSS + presetDatePickerCSS;
+const path = './scripts/renderAllComponents.jsx';
+const CSS = compileCSS(path);
 
 const format = new CleanCSS({
   level: optimizeForProduction ? 2 : 0,

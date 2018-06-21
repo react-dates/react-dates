@@ -25,8 +25,8 @@ const returnFocusToInput = 'Return to the date input field.';
 const keyboardNavigationInstructions = `Press the down arrow key to interact with the calendar and
   select a date. Press the question mark key to get the keyboard shortcuts for changing dates.`;
 
-const chooseAvailableStartDate = ({ date }) => `Choose ${date} as your check-in date. It's available.`;
-const chooseAvailableEndDate = ({ date }) => `Choose ${date} as your check-out date. It's available.`;
+const chooseAvailableStartDate = ({ date }) => `Choose ${date} as your check-in date. It’s available.`;
+const chooseAvailableEndDate = ({ date }) => `Choose ${date} as your check-out date. It’s available.`;
 const chooseAvailableDate = ({ date }) => date;
 const dateIsUnavailable = ({ date }) => `Not available. ${date}`;
 const dateIsSelected = ({ date }) => `Selected. ${date}`;

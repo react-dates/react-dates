@@ -1,5 +1,52 @@
 # Change Log
 
+## 16.7.0
+- [fix] Force border-radius to be 0 on the inputs ([#1157](https://github.com/airbnb/react-dates/pull/1157))
+- [fix] Clear previous min nights modifiers, not current ([#994](https://github.com/airbnb/react-dates/pull/994))
+- [fix] Tweak default input styling ([#1158](https://github.com/airbnb/react-dates/pull/1158))
+- [fix] Round transform3d values to fix font blur ([#1155](https://github.com/airbnb/react-dates/pull/1155))
+- [new] Add `noNavButtons` prop ([#1160](https://github.com/airbnb/react-dates/pull/1160))
+
+## 16.6.1
+- [fix] Fix selective disabling of the `DateRangePicker` ([#1116](https://github.com/airbnb/react-dates/pull/1116))
+- [fix] Fix `onOutsideClick` refactor ([#1115](https://github.com/airbnb/react-dates/pull/1115))
+
+## 16.6.0
+- [new] Add `appendToBody`/`disableScroll` props ([#1069](https://github.com/airbnb/react-dates/pull/1069))
+- [fix] Address unexpected blur call ([#1107](https://github.com/airbnb/react-dates/pull/1107))
+- [new] Add `verticalBorderSpacing` prop to `DayPickerSingleDateController`/`DayPickerRangeController` ([#1096](https://github.com/airbnb/react-dates/pull/1096))
+- [fix] Move focus to `DayPicker` when readOnly is true ([#961](https://github.com/airbnb/react-dates/pull/961))
+
+## 16.5.0
+- [new] Export `CustomizeableCalendarDay` default styles ([#1095](https://github.com/airbnb/react-dates/pull/1095))
+- [new] Allow selectively disabling either input in the DRP ([#](https://github.com/airbnb/react-dates/pull/606))
+- [new] Add `dayAriaLabelFormat` prop to the SDP/DRP ([#](https://github.com/airbnb/react-dates/pull/984))
+
+## 16.4.0
+- [new] Export `OutsideClickHandler` in index.js ([#1089](https://github.com/airbnb/react-dates/pull/1089))
+- [fix] Do not apply `verticalSpacing` when `withPortal` or `withFullScreenPortal` is true ([#980](https://github.com/airbnb/react-dates/pull/980))
+- [fix] Handle minimum nights when selecting `startDate` ([#1015](https://github.com/airbnb/react-dates/pull/1015))
+- [fix] Fix style of `CloseIcon` in the SDP ([#1058](https://github.com/airbnb/react-dates/pull/1058))
+
+## 16.3.6
+- [fix] Address width issues for vertical DayPickers ([#1055](https://github.com/airbnb/react-dates/pull/1055))
+
+## 16.3.5 (I promise this one is good)
+- [fix] Includes all necessary CSS ([c965348](https://github.com/airbnb/react-dates/commit/c96534896d8fe5c28ddc1f1090ef43dfaeebb5d6))
+
+## 16.3.4
+- [fix] Bumps all the RWS libraries again, now with less breakage!
+
+## 16.3.3
+- [revert] Reverts 'Bump react-with-style-interface-css dependency ([#1043](https://github.com/airbnb/react-dates/pull/1043))'
+
+## 16.3.2
+- [revert] Reverts 'Bump react-with-styles dependency ([#1041](https://github.com/airbnb/react-dates/pull/1041))'
+
+## 16.3.1
+- [deps] Bump react-with-styles dependency ([#1041](https://github.com/airbnb/react-dates/pull/1041))
+- [deps] Bump react-with-style-interface-css dependency ([#1043](https://github.com/airbnb/react-dates/pull/1043))
+
 ## 16.3.0
 - [new] customInfoPanel position prop ([#989](https://github.com/airbnb/react-dates/pull/989))
 - [fix] Fix CustomizableCalendarDay selected/selected-start/selected-end specificity issues ([#979](https://github.com/airbnb/react-dates/pull/979))

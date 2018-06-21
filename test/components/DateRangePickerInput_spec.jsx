@@ -3,6 +3,8 @@ import { shallow } from 'enzyme';
 import sinon from 'sinon-sandbox';
 import React from 'react';
 
+import { START_DATE, END_DATE } from '../../src/constants';
+
 import DateInput from '../../src/components/DateInput';
 import DateRangePickerInput from '../../src/components/DateRangePickerInput';
 
@@ -102,6 +104,45 @@ describe('DateRangePickerInput', () => {
         const calendarIconWrapper = wrapper.find('button').at(0);
         calendarIconWrapper.simulate('click');
         expect(onArrowDownSpy.callCount).to.equal(1);
+      });
+    });
+  });
+
+  describe('props.disabled', () => {
+    describe('props.disabled=START_DATE', () => {
+      it('First DateInput gets disabled prop, second does not', () => {
+        const wrapper = shallow(<DateRangePickerInput disabled={START_DATE} />).dive();
+        const [startDateInput, endDateInput] = wrapper.find(DateInput);
+        expect(startDateInput.props.disabled).to.equal(true);
+        expect(endDateInput.props.disabled).to.equal(false);
+      });
+    });
+
+    describe('props.disabled=END_DATE', () => {
+      it('First DateInput gets disabled prop, second does not', () => {
+        const wrapper = shallow(<DateRangePickerInput disabled={END_DATE} />).dive();
+        const [startDateInput, endDateInput] = wrapper.find(DateInput);
+        expect(startDateInput.props.disabled).to.equal(false);
+        expect(endDateInput.props.disabled).to.equal(true);
+      });
+    });
+
+    describe('props.disabled=true', () => {
+      it('First DateInput gets disabled prop, second does not', () => {
+        const wrapper = shallow(<DateRangePickerInput disabled />).dive();
+        const [startDateInput, endDateInput] = wrapper.find(DateInput);
+        expect(startDateInput.props.disabled).to.equal(true);
+        expect(endDateInput.props.disabled).to.equal(true);
+      });
+    });
+
+
+    describe('props.disabled=false', () => {
+      it('First DateInput gets disabled prop, second does not', () => {
+        const wrapper = shallow(<DateRangePickerInput disabled={false} />).dive();
+        const [startDateInput, endDateInput] = wrapper.find(DateInput);
+        expect(startDateInput.props.disabled).to.equal(false);
+        expect(endDateInput.props.disabled).to.equal(false);
       });
     });
   });

@@ -110,8 +110,6 @@ class DateInput extends React.Component {
 
     if (focused && isFocused) {
       this.inputRef.focus();
-    } else {
-      this.inputRef.blur();
     }
   }
 
@@ -316,11 +314,13 @@ export default withStyles(({
     borderRight: border.input.borderRight,
     borderBottom: border.input.borderBottom,
     borderLeft: border.input.borderLeft,
+    borderRadius: border.input.borderRadius,
   },
 
   DateInput_input__small: {
     fontSize: font.input.size_small,
     lineHeight: font.input.lineHeight_small,
+    letterSpacing: font.input.letterSpacing_small,
     padding: `${spacing.displayTextPaddingVertical_small}px ${spacing.displayTextPaddingHorizontal_small}px`,
     paddingTop: spacing.displayTextPaddingTop_small,
     paddingBottom: spacing.displayTextPaddingBottom_small,

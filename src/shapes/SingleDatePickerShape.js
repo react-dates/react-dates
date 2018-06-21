@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import momentPropTypes from 'react-moment-proptypes';
-import { nonNegativeInteger } from 'airbnb-prop-types';
+import { mutuallyExclusiveProps, nonNegativeInteger } from 'airbnb-prop-types';
 
 import { SingleDatePickerPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
@@ -40,13 +40,16 @@ export default {
   keepFocusOnInput: PropTypes.bool,
 
   // calendar presentation and interaction related props
-  renderMonth: PropTypes.func,
+  renderMonthText: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'),
+  renderMonthElement: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'),
   orientation: OrientationShape,
   anchorDirection: anchorDirectionShape,
   openDirection: openDirectionShape,
   horizontalMargin: PropTypes.number,
   withPortal: PropTypes.bool,
   withFullScreenPortal: PropTypes.bool,
+  appendToBody: PropTypes.bool,
+  disableScroll: PropTypes.bool,
   initialVisibleMonth: PropTypes.func,
   firstDayOfWeek: DayOfWeekShape,
   numberOfMonths: PropTypes.number,
@@ -81,4 +84,5 @@ export default {
   monthFormat: PropTypes.string,
   weekDayFormat: PropTypes.string,
   phrases: PropTypes.shape(getPhrasePropTypes(SingleDatePickerPhrases)),
+  dayAriaLabelFormat: PropTypes.string,
 };

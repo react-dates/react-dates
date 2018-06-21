@@ -229,12 +229,10 @@ describe('DateInput', () => {
 
     describe('focus/isFocused', () => {
       const el = {
-        blur() {},
         focus() {},
       };
 
       beforeEach(() => {
-        sinon.spy(el, 'blur');
         sinon.spy(el, 'focus');
       });
 
@@ -252,22 +250,7 @@ describe('DateInput', () => {
 
         wrapper.setProps({ focused: true, isFocused: true });
 
-        expect(el.blur).to.have.property('callCount', 0);
         expect(el.focus).to.have.property('callCount', 1);
-      });
-
-      it('blurs when becoming unfocused', () => {
-        const wrapper = shallow(
-          <DateInput id="date" focused isFocused />,
-          { disableLifecycleMethods: false },
-        ).dive();
-
-        wrapper.instance().inputRef = el;
-
-        wrapper.setProps({ focused: false, isFocused: false });
-
-        expect(el.blur).to.have.property('callCount', 1);
-        expect(el.focus).to.have.property('callCount', 0);
       });
     });
 

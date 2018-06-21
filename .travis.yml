@@ -38,4 +38,3 @@ matrix:
     - node_js: "9"
     - node_js: "7"
     - node_js: "iojs"
-    - env: KARMA=true TEST=false

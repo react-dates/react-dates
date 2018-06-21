@@ -6,6 +6,7 @@ import InfoPanelDecorator, { monospace } from './InfoPanelDecorator';
 
 import isSameDay from '../src/utils/isSameDay';
 import isInclusivelyAfterDay from '../src/utils/isInclusivelyAfterDay';
+import CustomizableCalendarDay, { defaultStyles, selectedStyles } from '../src/components/CustomizableCalendarDay';
 
 import { VERTICAL_ORIENTATION } from '../src/constants';
 
@@ -113,6 +114,38 @@ storiesOf('DayPickerSingleDateController', module)
       numberOfMonths={1}
     />
   ))
+  .addWithInfo('single month, custom caption', () => (
+    <DayPickerSingleDateControllerWrapper
+      onOutsideClick={action('DayPickerSingleDateController::onOutsideClick')}
+      onPrevMonthClick={action('DayPickerSingleDateController::onPrevMonthClick')}
+      onNextMonthClick={action('DayPickerSingleDateController::onNextMonthClick')}
+      numberOfMonths={1}
+      renderMonthElement={({ month, onMonthSelect, onYearSelect }) => (
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <div>
+            <select
+              value={month.month()}
+              onChange={(e) => { onMonthSelect(month, e.target.value); }}
+            >
+              {moment.months().map((label, value) => (
+                <option value={value}>{label}</option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <select
+              value={month.year()}
+              onChange={(e) => { onYearSelect(month, e.target.value); }}
+            >
+              <option value={moment().year() - 1}>Last year</option>
+              <option value={moment().year()}>{moment().year()}</option>
+              <option value={moment().year() + 1}>Next year</option>
+            </select>
+          </div>
+        </div>
+      )}
+    />
+  ))
   .addWithInfo('3 months', () => (
     <DayPickerSingleDateControllerWrapper
       onOutsideClick={action('DayPickerSingleDateController::onOutsideClick')}
@@ -206,6 +239,32 @@ storiesOf('DayPickerSingleDateController', module)
       renderDayContents={day => day.format('ddd')}
     />
   ))
+  .addWithInfo('with custom day styles', () => {
+    const customDayStyles = {
+      // extend and update styles with es6 spread operators
+      defaultStyles: {
+        ...defaultStyles,
+        color: 'blue',
+        hover: {
+          ...defaultStyles.hover,
+          color: 'blue',
+        },
+      },
+    };
+    return (
+      <DayPickerSingleDateControllerWrapper
+        onOutsideClick={action('DayPickerSingleDateController::onOutsideClick')}
+        onPrevMonthClick={action('DayPickerSingleDateController::onPrevMonthClick')}
+        onNextMonthClick={action('DayPickerSingleDateController::onNextMonthClick')}
+        renderCalendarDay={props => (
+          <CustomizableCalendarDay
+            {...props}
+            {...customDayStyles}
+          />
+        )}
+      />
+    );
+  })
   .addWithInfo('with info panel', () => (
     <DayPickerSingleDateControllerWrapper
       onOutsideClick={action('DayPickerSingleDateController::onOutsideClick')}
@@ -223,4 +282,13 @@ storiesOf('DayPickerSingleDateController', module)
       onNextMonthClick={action('DayPickerSingleDateController::onNextMonthClick')}
       transitionDuration={0}
     />
+  ))
+  .addWithInfo('with vertical spacing applied', () => (
+    <DayPickerSingleDateControllerWrapper
+      onOutsideClick={action('DayPickerSingleDateController::onOutsideClick')}
+      onPrevMonthClick={action('DayPickerSingleDateController::onPrevMonthClick')}
+      onNextMonthClick={action('DayPickerSingleDateController::onNextMonthClick')}
+      verticalBorderSpacing={16}
+    />
   ));
+

@@ -8,12 +8,7 @@ module.exports = (config) => {
 
     frameworks: ['mocha', 'sinon', 'chai'],
 
-    files: [
-      'test/_helpers/registerReactWithStylesInterface.js',
-      'test/_helpers/restoreSinonStubs.js',
-      'test/utils/*',
-      'test/components/*',
-    ],
+    files: ['test/browser-main.js'],
 
     webpack: {
       externals: {

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import momentPropTypes from 'react-moment-proptypes';
-import { nonNegativeInteger } from 'airbnb-prop-types';
+import { mutuallyExclusiveProps, nonNegativeInteger } from 'airbnb-prop-types';
 
 import { DateRangePickerPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
@@ -8,6 +8,7 @@ import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 import FocusedInputShape from '../shapes/FocusedInputShape';
 import IconPositionShape from '../shapes/IconPositionShape';
 import OrientationShape from '../shapes/OrientationShape';
+import DisabledShape from '../shapes/DisabledShape';
 import anchorDirectionShape from '../shapes/AnchorDirectionShape';
 import openDirectionShape from '../shapes/OpenDirectionShape';
 import DayOfWeekShape from '../shapes/DayOfWeekShape';
@@ -29,7 +30,7 @@ export default {
   startDatePlaceholderText: PropTypes.string,
   endDateId: PropTypes.string.isRequired,
   endDatePlaceholderText: PropTypes.string,
-  disabled: PropTypes.bool,
+  disabled: DisabledShape,
   required: PropTypes.bool,
   readOnly: PropTypes.bool,
   screenReaderInputMessage: PropTypes.string,
@@ -46,13 +47,16 @@ export default {
   keepFocusOnInput: PropTypes.bool,
 
   // calendar presentation and interaction related props
-  renderMonth: PropTypes.func,
+  renderMonthText: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'),
+  renderMonthElement: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'),
   orientation: OrientationShape,
   anchorDirection: anchorDirectionShape,
   openDirection: openDirectionShape,
   horizontalMargin: PropTypes.number,
   withPortal: PropTypes.bool,
   withFullScreenPortal: PropTypes.bool,
+  appendToBody: PropTypes.bool,
+  disableScroll: PropTypes.bool,
   daySize: nonNegativeInteger,
   isRTL: PropTypes.bool,
   firstDayOfWeek: DayOfWeekShape,
@@ -87,4 +91,5 @@ export default {
   monthFormat: PropTypes.string,
   weekDayFormat: PropTypes.string,
   phrases: PropTypes.shape(getPhrasePropTypes(DateRangePickerPhrases)),
+  dayAriaLabelFormat: PropTypes.string,
 };
