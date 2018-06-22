@@ -85,9 +85,7 @@ const propTypes = forbidExtraProps({
   firstDayOfWeek: DayOfWeekShape,
   verticalHeight: nonNegativeInteger,
   transitionDuration: nonNegativeInteger,
-  onMonthChange: PropTypes.func,
-  onYearChange: PropTypes.func,
-  
+
   // accessibility
   onBlur: PropTypes.func,
   isFocused: PropTypes.bool,
@@ -136,8 +134,6 @@ const defaultProps = {
 
   onPrevMonthClick() {},
   onNextMonthClick() {},
-  onMonthChange() {},
-  onYearChange() {},
   onOutsideClick() {},
 
   renderCalendarDay: undefined,
