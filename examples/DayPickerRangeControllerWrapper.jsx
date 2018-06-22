@@ -32,9 +32,12 @@ const propTypes = forbidExtraProps({
   enableOutsideDays: PropTypes.bool,
   numberOfMonths: PropTypes.number,
   orientation: ScrollableOrientationShape,
+  verticalHeight: PropTypes.number,
   withPortal: PropTypes.bool,
   initialVisibleMonth: PropTypes.func,
   renderCalendarInfo: PropTypes.func,
+  renderMonthElement: PropTypes.func,
+  renderMonthText: PropTypes.func,
 
   navPrev: PropTypes.node,
   navNext: PropTypes.node,
@@ -71,6 +74,7 @@ const defaultProps = {
 
   // calendar presentation and interaction related props
   orientation: HORIZONTAL_ORIENTATION,
+  verticalHeight: undefined,
   withPortal: false,
   initialVisibleMonth: null,
   numberOfMonths: 2,
@@ -78,6 +82,8 @@ const defaultProps = {
   keepOpenOnDateSelect: false,
   renderCalendarInfo: null,
   isRTL: false,
+  renderMonthText: null,
+  renderMonthElement: null,
 
   // navigation related props
   navPrev: null,

@@ -134,8 +134,6 @@ const defaultProps = {
 
   onPrevMonthClick() {},
   onNextMonthClick() {},
-  onMonthChange() {},
-  onYearChange() {},
   onOutsideClick() {},
 
   renderCalendarDay: undefined,
