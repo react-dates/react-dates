@@ -1,5 +1,21 @@
 # Change Log
 
+## 17.0.0
+- [fix] Replace dumb quotes with smart quotes in default phrases ([#1168](https://github.com/airbnb/react-dates/pull/1168))
+- [fix] Fix outside day movement on hover ([#1178](https://github.com/airbnb/react-dates/pull/1178))
+- [fix] Add `focusable="false"` to SVGs ([#1190](https://github.com/airbnb/react-dates/pull/1190))
+- [fix] Use `react-outside-click-handler` instead of the internal component ([#1191](https://github.com/airbnb/react-dates/pull/1191))
+- [breaking] Change the way month heights are calculated and update the name of some `CalendarMonth`/`CalendarMonthGrid` props ([#1192](https://github.com/airbnb/react-dates/pull/1192))
+- [new] Pass nextMonth to `onPrevMonthClick`/`onNextMonthClick` ([#1207](https://github.com/airbnb/react-dates/pull/1207))
+- [new] Allow input border styles to be overridden in the theme ([#1201](https://github.com/airbnb/react-dates/pull/1201))
+- [new] Allow consolidated-events@2.0.0 ([#1218](https://github.com/airbnb/react-dates/pull/1218))
+- [fix] Remove input.blur() call to fix a focus trap in Safari/IE ([#1214](https://github.com/airbnb/react-dates/pull/1214))
+- [new] Add support for month/year transitions ([#1106](https://github.com/airbnb/react-dates/pull/1106))
+- [breaking] Rename renderMonth=>renderMonthText and renderCaption=>renderMonthElement ([#1220](https://github.com/airbnb/react-dates/pull/1220))
+- [breaking] Remove default styling *completely* from the `navNext`/`navPrev` props, including position ([#1204](https://github.com/airbnb/react-dates/pull/1204))
+- [fix] Fix propType warnings for `onMonthChange`/`onYearChange` ([#1222](https://github.com/airbnb/react-dates/pull/1222))
+- [breaking] Remove `OutsideClickHandler` export entirely ([#1225](https://github.com/airbnb/react-dates/pull/1225))
+
 ## 16.7.0
 - [fix] Force border-radius to be 0 on the inputs ([#1157](https://github.com/airbnb/react-dates/pull/1157))
 - [fix] Clear previous min nights modifiers, not current ([#994](https://github.com/airbnb/react-dates/pull/994))
