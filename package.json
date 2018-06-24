@@ -38,7 +38,10 @@
     "prepublish": "in-publish && safe-publish-latest && npm run build || not-in-publish",
     "postpublish": "npm run gh-pages",
     "check-changelog": "expr $(git status --porcelain 2>/dev/null| grep \"^\\s*M.*CHANGELOG.md\" | wc -l) >/dev/null || (echo 'Please edit CHANGELOG.md' && exit 1)",
-    "check-only-changelog-changed": "(expr $(git status --porcelain 2>/dev/null| grep -v \"CHANGELOG.md\" | wc -l) >/dev/null && echo 'Only CHANGELOG.md may have uncommitted changes' && exit 1) || exit 0"
+    "check-only-changelog-changed": "(expr $(git status --porcelain 2>/dev/null| grep -v \"CHANGELOG.md\" | wc -l) >/dev/null && echo 'Only CHANGELOG.md may have uncommitted changes' && exit 1) || exit 0",
+    "styleguide:start": "npx styleguidist server --config .styleguide/config.js",
+    "styleguide:build": "npx styleguidist build",
+    "styleguide:serve": "npx serve -s styleguide"
   },
   "repository": {
     "type": "git",
@@ -99,6 +102,7 @@
     "raw-loader": "^0.5.1",
     "react": "^0.14 || ^15.5.4 || ^16.1.1",
     "react-dom": "^0.14 || ^15.5.4 || ^16.1.1",
+    "react-styleguidist": "^7.0.17",
     "react-with-styles-interface-aphrodite": "^5.0.0",
     "react-with-styles-interface-css-compiler": "^1.1.2",
     "rimraf": "^2.6.2",
