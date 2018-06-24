@@ -1,15 +1,15 @@
-import React from "react";
-import PropTypes from "prop-types";
-import momentPropTypes from "react-moment-proptypes";
-import moment from "moment";
-import omit from "lodash/omit";
+import React from 'react';
+import PropTypes from 'prop-types';
+import momentPropTypes from 'react-moment-proptypes';
+import moment from 'moment';
+import omit from 'lodash/omit';
 
-import SingleDatePicker from "../components/SingleDatePicker";
+import SingleDatePicker from '../components/SingleDatePicker';
 
-import { SingleDatePickerPhrases } from "../defaultPhrases";
-import SingleDatePickerShape from "../shapes/SingleDatePickerShape";
-import { HORIZONTAL_ORIENTATION, ANCHOR_LEFT } from "../constants";
-import isInclusivelyAfterDay from "../utils/isInclusivelyAfterDay";
+import { SingleDatePickerPhrases } from '../defaultPhrases';
+import SingleDatePickerShape from '../shapes/SingleDatePickerShape';
+import { HORIZONTAL_ORIENTATION, ANCHOR_LEFT } from '../constants';
+import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
 
 const propTypes = {
   // example props for the demo
@@ -17,10 +17,10 @@ const propTypes = {
   initialDate: momentPropTypes.momentObj,
 
   ...omit(SingleDatePickerShape, [
-    "date",
-    "onDateChange",
-    "focused",
-    "onFocusChange"
+    'date',
+    'onDateChange',
+    'focused',
+    'onFocusChange'
   ])
 };
 
@@ -30,11 +30,11 @@ const defaultProps = {
   initialDate: null,
 
   // input related props
-  id: "date",
-  placeholder: "Date",
+  id: 'date',
+  placeholder: 'Date',
   disabled: false,
   required: false,
-  screenReaderInputMessage: "",
+  screenReaderInputMessage: '',
   showClearDate: false,
   showDefaultInputIcon: false,
   customInputIcon: null,
@@ -73,8 +73,8 @@ const defaultProps = {
   isDayHighlighted: () => {},
 
   // internationalization props
-  displayFormat: () => moment.localeData().longDateFormat("L"),
-  monthFormat: "MMMM YYYY",
+  displayFormat: () => moment.localeData().longDateFormat('L'),
+  monthFormat: 'MMMM YYYY',
   phrases: SingleDatePickerPhrases
 };
 
@@ -103,7 +103,7 @@ class SingleDatePickerWrapper extends React.Component {
 
     // autoFocus and initialDate are helper props for the example wrapper but are not
     // props on the SingleDatePicker itself and thus, have to be omitted.
-    const props = omit(this.props, ["autoFocus", "initialDate"]);
+    const props = omit(this.props, ['autoFocus', 'initialDate']);
 
     return (
       <SingleDatePicker

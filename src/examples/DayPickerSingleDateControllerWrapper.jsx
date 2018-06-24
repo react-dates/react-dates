@@ -1,17 +1,17 @@
 /* eslint-disable react/no-unused-prop-types */
-import React from "react";
-import PropTypes from "prop-types";
-import momentPropTypes from "react-moment-proptypes";
-import { forbidExtraProps } from "airbnb-prop-types";
-import moment from "moment";
-import omit from "lodash/omit";
+import React from 'react';
+import PropTypes from 'prop-types';
+import momentPropTypes from 'react-moment-proptypes';
+import { forbidExtraProps } from 'airbnb-prop-types';
+import moment from 'moment';
+import omit from 'lodash/omit';
 
-import DayPickerSingleDateController from "../components/DayPickerSingleDateController";
+import DayPickerSingleDateController from '../components/DayPickerSingleDateController';
 
-import ScrollableOrientationShape from "../shapes/ScrollableOrientationShape";
+import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
 
-import { HORIZONTAL_ORIENTATION } from "../constants";
-import isInclusivelyAfterDay from "../utils/isInclusivelyAfterDay";
+import { HORIZONTAL_ORIENTATION } from '../constants';
+import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
 
 const propTypes = forbidExtraProps({
   // example props for the demo
@@ -78,7 +78,7 @@ const defaultProps = {
   onNextMonthClick() {},
 
   // internationalization
-  monthFormat: "MMMM YYYY"
+  monthFormat: 'MMMM YYYY'
 };
 
 class DayPickerSingleDateControllerWrapper extends React.Component {
@@ -107,9 +107,9 @@ class DayPickerSingleDateControllerWrapper extends React.Component {
     const { showInput } = this.props;
     const { focused, date } = this.state;
 
-    const props = omit(this.props, ["autoFocus", "initialDate", "showInput"]);
+    const props = omit(this.props, ['autoFocus', 'initialDate', 'showInput']);
 
-    const dateString = date && date.format("YYYY-MM-DD");
+    const dateString = date && date.format('YYYY-MM-DD');
 
     return (
       <div>
@@ -118,7 +118,7 @@ class DayPickerSingleDateControllerWrapper extends React.Component {
             <input
               type="text"
               name="start date"
-              value={dateString || ""}
+              value={dateString || ''}
               readOnly
             />
           </div>

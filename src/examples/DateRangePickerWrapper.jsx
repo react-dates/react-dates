@@ -1,20 +1,20 @@
-import React from "react";
-import PropTypes from "prop-types";
-import momentPropTypes from "react-moment-proptypes";
-import moment from "moment";
-import omit from "lodash/omit";
+import React from 'react';
+import PropTypes from 'prop-types';
+import momentPropTypes from 'react-moment-proptypes';
+import moment from 'moment';
+import omit from 'lodash/omit';
 
-import DateRangePicker from "../components/DateRangePicker";
+import DateRangePicker from '../components/DateRangePicker';
 
-import { DateRangePickerPhrases } from "../defaultPhrases";
-import DateRangePickerShape from "../shapes/DateRangePickerShape";
+import { DateRangePickerPhrases } from '../defaultPhrases';
+import DateRangePickerShape from '../shapes/DateRangePickerShape';
 import {
   START_DATE,
   END_DATE,
   HORIZONTAL_ORIENTATION,
   ANCHOR_LEFT
-} from "../constants";
-import isInclusivelyAfterDay from "../utils/isInclusivelyAfterDay";
+} from '../constants';
+import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
 
 const propTypes = {
   // example props for the demo
@@ -25,11 +25,11 @@ const propTypes = {
   initialEndDate: momentPropTypes.momentObj,
 
   ...omit(DateRangePickerShape, [
-    "startDate",
-    "endDate",
-    "onDatesChange",
-    "focusedInput",
-    "onFocusChange"
+    'startDate',
+    'endDate',
+    'onDatesChange',
+    'focusedInput',
+    'onFocusChange'
   ])
 };
 
@@ -42,12 +42,12 @@ const defaultProps = {
 
   // input related props
   startDateId: START_DATE,
-  startDatePlaceholderText: "Start Date",
+  startDatePlaceholderText: 'Start Date',
   endDateId: END_DATE,
-  endDatePlaceholderText: "End Date",
+  endDatePlaceholderText: 'End Date',
   disabled: false,
   required: false,
-  screenReaderInputMessage: "",
+  screenReaderInputMessage: '',
   showClearDates: false,
   showDefaultInputIcon: false,
   customInputIcon: null,
@@ -87,8 +87,8 @@ const defaultProps = {
   isDayHighlighted: () => false,
 
   // internationalization
-  displayFormat: () => moment.localeData().longDateFormat("L"),
-  monthFormat: "MMMM YYYY",
+  displayFormat: () => moment.localeData().longDateFormat('L'),
+  monthFormat: 'MMMM YYYY',
   phrases: DateRangePickerPhrases,
 
   stateDateWrapper: date => date
@@ -134,15 +134,15 @@ class DateRangePickerWrapper extends React.Component {
     // example wrapper but are not props on the SingleDatePicker itself and
     // thus, have to be omitted.
     const props = omit(this.props, [
-      "autoFocus",
-      "autoFocusEndDate",
-      "initialStartDate",
-      "initialEndDate",
-      "stateDateWrapper"
+      'autoFocus',
+      'autoFocusEndDate',
+      'initialStartDate',
+      'initialEndDate',
+      'stateDateWrapper'
     ]);
 
     return (
-      <div style={{ width: "100%", height: "400px" }}>
+      <div style={{ width: '100%', height: '400px' }}>
         <DateRangePicker
           {...props}
           onDatesChange={this.onDatesChange}

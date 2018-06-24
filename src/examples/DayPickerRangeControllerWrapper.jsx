@@ -1,17 +1,17 @@
 /* eslint-disable react/no-unused-prop-types */
-import React from "react";
-import PropTypes from "prop-types";
-import momentPropTypes from "react-moment-proptypes";
-import { forbidExtraProps } from "airbnb-prop-types";
-import moment from "moment";
-import omit from "lodash/omit";
+import React from 'react';
+import PropTypes from 'prop-types';
+import momentPropTypes from 'react-moment-proptypes';
+import { forbidExtraProps } from 'airbnb-prop-types';
+import moment from 'moment';
+import omit from 'lodash/omit';
 
-import DayPickerRangeController from "../components/DayPickerRangeController";
+import DayPickerRangeController from '../components/DayPickerRangeController';
 
-import ScrollableOrientationShape from "../shapes/ScrollableOrientationShape";
+import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
 
-import { START_DATE, END_DATE, HORIZONTAL_ORIENTATION } from "../constants";
-import isInclusivelyAfterDay from "../utils/isInclusivelyAfterDay";
+import { START_DATE, END_DATE, HORIZONTAL_ORIENTATION } from '../constants';
+import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
 
 const propTypes = forbidExtraProps({
   // example props for the demo
@@ -86,7 +86,7 @@ const defaultProps = {
   onNextMonthClick() {},
 
   // internationalization
-  monthFormat: "MMMM YYYY"
+  monthFormat: 'MMMM YYYY'
 };
 
 class DayPickerRangeControllerWrapper extends React.Component {
@@ -119,18 +119,18 @@ class DayPickerRangeControllerWrapper extends React.Component {
     const { focusedInput, startDate, endDate } = this.state;
 
     const props = omit(this.props, [
-      "autoFocus",
-      "autoFocusEndDate",
-      "initialStartDate",
-      "initialEndDate",
-      "showInputs"
+      'autoFocus',
+      'autoFocusEndDate',
+      'initialStartDate',
+      'initialEndDate',
+      'showInputs'
     ]);
 
-    const startDateString = startDate && startDate.format("YYYY-MM-DD");
-    const endDateString = endDate && endDate.format("YYYY-MM-DD");
+    const startDateString = startDate && startDate.format('YYYY-MM-DD');
+    const endDateString = endDate && endDate.format('YYYY-MM-DD');
 
     return (
-      <div style={{ height: "100%" }}>
+      <div style={{ height: '100%' }}>
         {showInputs && (
           <div style={{ marginBottom: 16 }}>
             <input
