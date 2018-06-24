@@ -12,7 +12,7 @@ import {
   START_DATE,
   END_DATE,
   HORIZONTAL_ORIENTATION,
-  ANCHOR_LEFT
+  ANCHOR_LEFT,
 } from '../constants';
 import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
 
@@ -29,8 +29,8 @@ const propTypes = {
     'endDate',
     'onDatesChange',
     'focusedInput',
-    'onFocusChange'
-  ])
+    'onFocusChange',
+  ]),
 };
 
 const defaultProps = {
@@ -91,7 +91,7 @@ const defaultProps = {
   monthFormat: 'MMMM YYYY',
   phrases: DateRangePickerPhrases,
 
-  stateDateWrapper: date => date
+  stateDateWrapper: date => date,
 };
 
 class DateRangePickerWrapper extends React.Component {
@@ -108,7 +108,7 @@ class DateRangePickerWrapper extends React.Component {
     this.state = {
       focusedInput,
       startDate: props.initialStartDate,
-      endDate: props.initialEndDate
+      endDate: props.initialEndDate,
     };
 
     this.onDatesChange = this.onDatesChange.bind(this);
@@ -119,7 +119,7 @@ class DateRangePickerWrapper extends React.Component {
     const { stateDateWrapper } = this.props;
     this.setState({
       startDate: startDate && stateDateWrapper(startDate),
-      endDate: endDate && stateDateWrapper(endDate)
+      endDate: endDate && stateDateWrapper(endDate),
     });
   }
 
@@ -138,7 +138,7 @@ class DateRangePickerWrapper extends React.Component {
       'autoFocusEndDate',
       'initialStartDate',
       'initialEndDate',
-      'stateDateWrapper'
+      'stateDateWrapper',
     ]);
 
     return (

@@ -14,7 +14,7 @@ import {
   START_DATE,
   END_DATE,
   HORIZONTAL_ORIENTATION,
-  ANCHOR_LEFT
+  ANCHOR_LEFT,
 } from '../constants';
 import isSameDay from '../utils/isSameDay';
 
@@ -30,8 +30,8 @@ const propTypes = {
     PropTypes.shape({
       text: PropTypes.string,
       start: momentPropTypes.momentObj,
-      end: momentPropTypes.momentObj
-    })
+      end: momentPropTypes.momentObj,
+    }),
   ),
 
   ...omit(DateRangePickerShape, [
@@ -39,8 +39,8 @@ const propTypes = {
     'endDate',
     'onDatesChange',
     'focusedInput',
-    'onFocusChange'
-  ])
+    'onFocusChange',
+  ]),
 };
 
 const defaultProps = {
@@ -96,7 +96,7 @@ const defaultProps = {
   // internationalization
   displayFormat: () => moment.localeData().longDateFormat('L'),
   monthFormat: 'MMMM YYYY',
-  phrases: DateRangePickerPhrases
+  phrases: DateRangePickerPhrases,
 };
 
 class PresetDateRangePickerWrapper extends React.Component {
@@ -113,7 +113,7 @@ class PresetDateRangePickerWrapper extends React.Component {
     this.state = {
       focusedInput,
       startDate: props.initialStartDate,
-      endDate: props.initialEndDate
+      endDate: props.initialEndDate,
     };
 
     this.onDatesChange = this.onDatesChange.bind(this);
@@ -143,7 +143,7 @@ class PresetDateRangePickerWrapper extends React.Component {
               key={text}
               {...css(
                 styles.PresetDateRangePicker_button,
-                isSelected && styles.PresetDateRangePicker_button__selected
+                isSelected && styles.PresetDateRangePicker_button__selected,
               )}
               type="button"
               onClick={() =>
@@ -169,7 +169,7 @@ class PresetDateRangePickerWrapper extends React.Component {
       'autoFocusEndDate',
       'initialStartDate',
       'initialEndDate',
-      'presets'
+      'presets',
     ]);
 
     return (
@@ -193,7 +193,7 @@ PresetDateRangePickerWrapper.defaultProps = defaultProps;
 
 export default withStyles(({ reactDates: { color } }) => ({
   PresetDateRangePicker_panel: {
-    padding: '0 22px 11px 22px'
+    padding: '0 22px 11px 22px',
   },
 
   PresetDateRangePicker_button: {
@@ -213,12 +213,12 @@ export default withStyles(({ reactDates: { color } }) => ({
     cursor: 'pointer',
 
     ':active': {
-      outline: 0
-    }
+      outline: 0,
+    },
   },
 
   PresetDateRangePicker_button__selected: {
     color: color.core.white,
-    background: color.core.primary
-  }
+    background: color.core.primary,
+  },
 }))(PresetDateRangePickerWrapper);

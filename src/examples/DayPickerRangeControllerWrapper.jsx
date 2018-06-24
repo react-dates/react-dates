@@ -48,7 +48,7 @@ const propTypes = forbidExtraProps({
   // i18n
   monthFormat: PropTypes.string,
 
-  isRTL: PropTypes.bool
+  isRTL: PropTypes.bool,
 });
 
 const defaultProps = {
@@ -86,7 +86,7 @@ const defaultProps = {
   onNextMonthClick() {},
 
   // internationalization
-  monthFormat: 'MMMM YYYY'
+  monthFormat: 'MMMM YYYY',
 };
 
 class DayPickerRangeControllerWrapper extends React.Component {
@@ -96,7 +96,7 @@ class DayPickerRangeControllerWrapper extends React.Component {
     this.state = {
       focusedInput: props.autoFocusEndDate ? END_DATE : START_DATE,
       startDate: props.initialStartDate,
-      endDate: props.initialEndDate
+      endDate: props.initialEndDate,
     };
 
     this.onDatesChange = this.onDatesChange.bind(this);
@@ -110,7 +110,7 @@ class DayPickerRangeControllerWrapper extends React.Component {
   onFocusChange(focusedInput) {
     this.setState({
       // Force the focusedInput to always be truthy so that dates are always selectable
-      focusedInput: !focusedInput ? START_DATE : focusedInput
+      focusedInput: !focusedInput ? START_DATE : focusedInput,
     });
   }
 
@@ -123,7 +123,7 @@ class DayPickerRangeControllerWrapper extends React.Component {
       'autoFocusEndDate',
       'initialStartDate',
       'initialEndDate',
-      'showInputs'
+      'showInputs',
     ]);
 
     const startDateString = startDate && startDate.format('YYYY-MM-DD');

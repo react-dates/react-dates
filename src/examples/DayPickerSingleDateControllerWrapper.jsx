@@ -44,7 +44,7 @@ const propTypes = forbidExtraProps({
   // i18n
   monthFormat: PropTypes.string,
 
-  isRTL: PropTypes.bool
+  isRTL: PropTypes.bool,
 });
 
 const defaultProps = {
@@ -78,7 +78,7 @@ const defaultProps = {
   onNextMonthClick() {},
 
   // internationalization
-  monthFormat: 'MMMM YYYY'
+  monthFormat: 'MMMM YYYY',
 };
 
 class DayPickerSingleDateControllerWrapper extends React.Component {
@@ -87,7 +87,7 @@ class DayPickerSingleDateControllerWrapper extends React.Component {
 
     this.state = {
       focused: true,
-      date: props.initialDate
+      date: props.initialDate,
     };
 
     this.onDateChange = this.onDateChange.bind(this);

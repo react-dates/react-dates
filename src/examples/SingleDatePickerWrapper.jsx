@@ -20,8 +20,8 @@ const propTypes = {
     'date',
     'onDateChange',
     'focused',
-    'onFocusChange'
-  ])
+    'onFocusChange',
+  ]),
 };
 
 const defaultProps = {
@@ -75,7 +75,7 @@ const defaultProps = {
   // internationalization props
   displayFormat: () => moment.localeData().longDateFormat('L'),
   monthFormat: 'MMMM YYYY',
-  phrases: SingleDatePickerPhrases
+  phrases: SingleDatePickerPhrases,
 };
 
 class SingleDatePickerWrapper extends React.Component {
@@ -83,7 +83,7 @@ class SingleDatePickerWrapper extends React.Component {
     super(props);
     this.state = {
       focused: props.autoFocus,
-      date: props.initialDate
+      date: props.initialDate,
     };
 
     this.onDateChange = this.onDateChange.bind(this);
