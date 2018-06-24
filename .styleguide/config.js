@@ -21,6 +21,12 @@ module.exports = {
       "@global a": {
         color: "#008489",
         fontWeight: "bold"
+      },
+      sidebar: {
+        width: "300px"
+      },
+      hasSidebar: {
+        paddingLeft: "300px"
       }
     }
   },
