@@ -1,17 +1,22 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import momentPropTypes from 'react-moment-proptypes';
-import moment from 'moment';
-import omit from 'lodash/omit';
+import React from "react";
+import PropTypes from "prop-types";
+import momentPropTypes from "react-moment-proptypes";
+import moment from "moment";
+import omit from "lodash/omit";
 
-import { withStyles, withStylesPropTypes, css } from 'react-with-styles';
+import { withStyles, withStylesPropTypes, css } from "react-with-styles";
 
-import DateRangePicker from '../src/components/DateRangePicker';
+import DateRangePicker from "../components/DateRangePicker";
 
-import { DateRangePickerPhrases } from '../src/defaultPhrases';
-import DateRangePickerShape from '../src/shapes/DateRangePickerShape';
-import { START_DATE, END_DATE, HORIZONTAL_ORIENTATION, ANCHOR_LEFT } from '../src/constants';
-import isSameDay from '../src/utils/isSameDay';
+import { DateRangePickerPhrases } from "../defaultPhrases";
+import DateRangePickerShape from "../shapes/DateRangePickerShape";
+import {
+  START_DATE,
+  END_DATE,
+  HORIZONTAL_ORIENTATION,
+  ANCHOR_LEFT
+} from "../constants";
+import isSameDay from "../utils/isSameDay";
 
 const propTypes = {
   ...withStylesPropTypes,
@@ -21,19 +26,21 @@ const propTypes = {
   autoFocusEndDate: PropTypes.bool,
   initialStartDate: momentPropTypes.momentObj,
   initialEndDate: momentPropTypes.momentObj,
-  presets: PropTypes.arrayOf(PropTypes.shape({
-    text: PropTypes.string,
-    start: momentPropTypes.momentObj,
-    end: momentPropTypes.momentObj,
-  })),
+  presets: PropTypes.arrayOf(
+    PropTypes.shape({
+      text: PropTypes.string,
+      start: momentPropTypes.momentObj,
+      end: momentPropTypes.momentObj
+    })
+  ),
 
   ...omit(DateRangePickerShape, [
-    'startDate',
-    'endDate',
-    'onDatesChange',
-    'focusedInput',
-    'onFocusChange',
-  ]),
+    "startDate",
+    "endDate",
+    "onDatesChange",
+    "focusedInput",
+    "onFocusChange"
+  ])
 };
 
 const defaultProps = {
@@ -46,12 +53,12 @@ const defaultProps = {
 
   // input related props
   startDateId: START_DATE,
-  startDatePlaceholderText: 'Start Date',
+  startDatePlaceholderText: "Start Date",
   endDateId: END_DATE,
-  endDatePlaceholderText: 'End Date',
+  endDatePlaceholderText: "End Date",
   disabled: false,
   required: false,
-  screenReaderInputMessage: '',
+  screenReaderInputMessage: "",
   showClearDates: false,
   showDefaultInputIcon: false,
   customInputIcon: null,
@@ -87,12 +94,12 @@ const defaultProps = {
   isDayHighlighted: () => false,
 
   // internationalization
-  displayFormat: () => moment.localeData().longDateFormat('L'),
-  monthFormat: 'MMMM YYYY',
-  phrases: DateRangePickerPhrases,
+  displayFormat: () => moment.localeData().longDateFormat("L"),
+  monthFormat: "MMMM YYYY",
+  phrases: DateRangePickerPhrases
 };
 
-class DateRangePickerWrapper extends React.Component {
+class PresetDateRangePickerWrapper extends React.Component {
   constructor(props) {
     super(props);
 
@@ -106,7 +113,7 @@ class DateRangePickerWrapper extends React.Component {
     this.state = {
       focusedInput,
       startDate: props.initialStartDate,
-      endDate: props.initialEndDate,
+      endDate: props.initialEndDate
     };
 
     this.onDatesChange = this.onDatesChange.bind(this);
@@ -129,16 +136,19 @@ class DateRangePickerWrapper extends React.Component {
     return (
       <div {...css(styles.PresetDateRangePicker_panel)}>
         {presets.map(({ text, start, end }) => {
-          const isSelected = isSameDay(start, startDate) && isSameDay(end, endDate);
+          const isSelected =
+            isSameDay(start, startDate) && isSameDay(end, endDate);
           return (
             <button
               key={text}
               {...css(
                 styles.PresetDateRangePicker_button,
-                isSelected && styles.PresetDateRangePicker_button__selected,
+                isSelected && styles.PresetDateRangePicker_button__selected
               )}
               type="button"
-              onClick={() => this.onDatesChange({ startDate: start, endDate: end })}
+              onClick={() =>
+                this.onDatesChange({ startDate: start, endDate: end })
+              }
             >
               {text}
             </button>
@@ -155,11 +165,11 @@ class DateRangePickerWrapper extends React.Component {
     // example wrapper but are not props on the SingleDatePicker itself and
     // thus, have to be omitted.
     const props = omit(this.props, [
-      'autoFocus',
-      'autoFocusEndDate',
-      'initialStartDate',
-      'initialEndDate',
-      'presets',
+      "autoFocus",
+      "autoFocusEndDate",
+      "initialStartDate",
+      "initialEndDate",
+      "presets"
     ]);
 
     return (
@@ -178,37 +188,37 @@ class DateRangePickerWrapper extends React.Component {
   }
 }
 
-DateRangePickerWrapper.propTypes = propTypes;
-DateRangePickerWrapper.defaultProps = defaultProps;
+PresetDateRangePickerWrapper.propTypes = propTypes;
+PresetDateRangePickerWrapper.defaultProps = defaultProps;
 
 export default withStyles(({ reactDates: { color } }) => ({
   PresetDateRangePicker_panel: {
-    padding: '0 22px 11px 22px',
+    padding: "0 22px 11px 22px"
   },
 
   PresetDateRangePicker_button: {
-    position: 'relative',
-    height: '100%',
-    textAlign: 'center',
-    background: 'none',
+    position: "relative",
+    height: "100%",
+    textAlign: "center",
+    background: "none",
     border: `2px solid ${color.core.primary}`,
     color: color.core.primary,
-    padding: '4px 12px',
+    padding: "4px 12px",
     marginRight: 8,
-    font: 'inherit',
+    font: "inherit",
     fontWeight: 700,
-    lineHeight: 'normal',
-    overflow: 'visible',
-    boxSizing: 'border-box',
-    cursor: 'pointer',
+    lineHeight: "normal",
+    overflow: "visible",
+    boxSizing: "border-box",
+    cursor: "pointer",
 
-    ':active': {
-      outline: 0,
-    },
+    ":active": {
+      outline: 0
+    }
   },
 
   PresetDateRangePicker_button__selected: {
     color: color.core.white,
-    background: color.core.primary,
-  },
-}))(DateRangePickerWrapper);
+    background: color.core.primary
+  }
+}))(PresetDateRangePickerWrapper);

@@ -1,17 +1,17 @@
 /* eslint-disable react/no-unused-prop-types */
-import React from 'react';
-import PropTypes from 'prop-types';
-import momentPropTypes from 'react-moment-proptypes';
-import { forbidExtraProps } from 'airbnb-prop-types';
-import moment from 'moment';
-import omit from 'lodash/omit';
+import React from "react";
+import PropTypes from "prop-types";
+import momentPropTypes from "react-moment-proptypes";
+import { forbidExtraProps } from "airbnb-prop-types";
+import moment from "moment";
+import omit from "lodash/omit";
 
-import DayPickerRangeController from '../src/components/DayPickerRangeController';
+import DayPickerRangeController from "../components/DayPickerRangeController";
 
-import ScrollableOrientationShape from '../src/shapes/ScrollableOrientationShape';
+import ScrollableOrientationShape from "../shapes/ScrollableOrientationShape";
 
-import { START_DATE, END_DATE, HORIZONTAL_ORIENTATION } from '../src/constants';
-import isInclusivelyAfterDay from '../src/utils/isInclusivelyAfterDay';
+import { START_DATE, END_DATE, HORIZONTAL_ORIENTATION } from "../constants";
+import isInclusivelyAfterDay from "../utils/isInclusivelyAfterDay";
 
 const propTypes = forbidExtraProps({
   // example props for the demo
@@ -48,7 +48,7 @@ const propTypes = forbidExtraProps({
   // i18n
   monthFormat: PropTypes.string,
 
-  isRTL: PropTypes.bool,
+  isRTL: PropTypes.bool
 });
 
 const defaultProps = {
@@ -86,7 +86,7 @@ const defaultProps = {
   onNextMonthClick() {},
 
   // internationalization
-  monthFormat: 'MMMM YYYY',
+  monthFormat: "MMMM YYYY"
 };
 
 class DayPickerRangeControllerWrapper extends React.Component {
@@ -96,7 +96,7 @@ class DayPickerRangeControllerWrapper extends React.Component {
     this.state = {
       focusedInput: props.autoFocusEndDate ? END_DATE : START_DATE,
       startDate: props.initialStartDate,
-      endDate: props.initialEndDate,
+      endDate: props.initialEndDate
     };
 
     this.onDatesChange = this.onDatesChange.bind(this);
@@ -110,7 +110,7 @@ class DayPickerRangeControllerWrapper extends React.Component {
   onFocusChange(focusedInput) {
     this.setState({
       // Force the focusedInput to always be truthy so that dates are always selectable
-      focusedInput: !focusedInput ? START_DATE : focusedInput,
+      focusedInput: !focusedInput ? START_DATE : focusedInput
     });
   }
 
@@ -119,24 +119,29 @@ class DayPickerRangeControllerWrapper extends React.Component {
     const { focusedInput, startDate, endDate } = this.state;
 
     const props = omit(this.props, [
-      'autoFocus',
-      'autoFocusEndDate',
-      'initialStartDate',
-      'initialEndDate',
-      'showInputs',
+      "autoFocus",
+      "autoFocusEndDate",
+      "initialStartDate",
+      "initialEndDate",
+      "showInputs"
     ]);
 
-    const startDateString = startDate && startDate.format('YYYY-MM-DD');
-    const endDateString = endDate && endDate.format('YYYY-MM-DD');
+    const startDateString = startDate && startDate.format("YYYY-MM-DD");
+    const endDateString = endDate && endDate.format("YYYY-MM-DD");
 
     return (
-      <div style={{ height: '100%' }}>
-        {showInputs &&
+      <div style={{ height: "100%" }}>
+        {showInputs && (
           <div style={{ marginBottom: 16 }}>
-            <input type="text" name="start date" value={startDateString} readOnly />
+            <input
+              type="text"
+              name="start date"
+              value={startDateString}
+              readOnly
+            />
             <input type="text" name="end date" value={endDateString} readOnly />
           </div>
-        }
+        )}
 
         <DayPickerRangeController
           {...props}

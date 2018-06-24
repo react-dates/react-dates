@@ -1,17 +1,17 @@
 /* eslint-disable react/no-unused-prop-types */
-import React from 'react';
-import PropTypes from 'prop-types';
-import momentPropTypes from 'react-moment-proptypes';
-import { forbidExtraProps } from 'airbnb-prop-types';
-import moment from 'moment';
-import omit from 'lodash/omit';
+import React from "react";
+import PropTypes from "prop-types";
+import momentPropTypes from "react-moment-proptypes";
+import { forbidExtraProps } from "airbnb-prop-types";
+import moment from "moment";
+import omit from "lodash/omit";
 
-import DayPickerSingleDateController from '../src/components/DayPickerSingleDateController';
+import DayPickerSingleDateController from "../components/DayPickerSingleDateController";
 
-import ScrollableOrientationShape from '../src/shapes/ScrollableOrientationShape';
+import ScrollableOrientationShape from "../shapes/ScrollableOrientationShape";
 
-import { HORIZONTAL_ORIENTATION } from '../src/constants';
-import isInclusivelyAfterDay from '../src/utils/isInclusivelyAfterDay';
+import { HORIZONTAL_ORIENTATION } from "../constants";
+import isInclusivelyAfterDay from "../utils/isInclusivelyAfterDay";
 
 const propTypes = forbidExtraProps({
   // example props for the demo
@@ -44,7 +44,7 @@ const propTypes = forbidExtraProps({
   // i18n
   monthFormat: PropTypes.string,
 
-  isRTL: PropTypes.bool,
+  isRTL: PropTypes.bool
 });
 
 const defaultProps = {
@@ -78,7 +78,7 @@ const defaultProps = {
   onNextMonthClick() {},
 
   // internationalization
-  monthFormat: 'MMMM YYYY',
+  monthFormat: "MMMM YYYY"
 };
 
 class DayPickerSingleDateControllerWrapper extends React.Component {
@@ -87,7 +87,7 @@ class DayPickerSingleDateControllerWrapper extends React.Component {
 
     this.state = {
       focused: true,
-      date: props.initialDate,
+      date: props.initialDate
     };
 
     this.onDateChange = this.onDateChange.bind(this);
@@ -107,21 +107,22 @@ class DayPickerSingleDateControllerWrapper extends React.Component {
     const { showInput } = this.props;
     const { focused, date } = this.state;
 
-    const props = omit(this.props, [
-      'autoFocus',
-      'initialDate',
-      'showInput',
-    ]);
+    const props = omit(this.props, ["autoFocus", "initialDate", "showInput"]);
 
-    const dateString = date && date.format('YYYY-MM-DD');
+    const dateString = date && date.format("YYYY-MM-DD");
 
     return (
       <div>
-        {showInput &&
+        {showInput && (
           <div style={{ marginBottom: 16 }}>
-            <input type="text" name="start date" value={dateString || ''} readOnly />
+            <input
+              type="text"
+              name="start date"
+              value={dateString || ""}
+              readOnly
+            />
           </div>
-        }
+        )}
 
         <DayPickerSingleDateController
           {...props}
