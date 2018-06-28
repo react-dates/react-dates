@@ -34,6 +34,6 @@ export default function getDetachedContainerStyles(openDirection, anchorDirectio
   }
 
   return {
-    transform: `translate3d(${offsetX}px, ${offsetY}px, 0)`,
+    transform: `translate3d(${Math.round(offsetX)}px, ${Math.round(offsetY)}px, 0)`,
   };
 }

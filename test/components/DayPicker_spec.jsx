@@ -22,7 +22,6 @@ const event = { preventDefault() {}, stopPropagation() {} };
 describe('DayPicker', () => {
   beforeEach(() => {
     sinon.stub(PureDayPicker.prototype, 'adjustDayPickerHeight');
-    sinon.stub(PureDayPicker.prototype, 'updateStateAfterMonthTransition');
   });
 
   afterEach(() => {
@@ -420,6 +419,52 @@ describe('DayPicker', () => {
         wrapper.instance().onKeyDown({ ...event, key: 'ArrowRight' });
         expect(maybeTransitionPrevMonthSpy.callCount).to.equal(0);
       });
+    });
+  });
+
+  describe('#onMonthChange', () => {
+    it('sets state.monthTransition to "month_selection"', () => {
+      const wrapper = shallow(<DayPicker />).dive();
+      const date = moment();
+      wrapper.instance().onMonthChange(date);
+      expect(wrapper.state().monthTransition).to.equal('month_selection');
+    });
+
+    it('sets state.nextFocusedDate to passed in date', () => {
+      const wrapper = shallow(<DayPicker />).dive();
+      const date = moment();
+      wrapper.instance().onMonthChange(date);
+      expect(wrapper.state().nextFocusedDate).to.equal(date);
+    });
+
+    it('sets state.currentMonth to passed in month', () => {
+      const wrapper = shallow(<DayPicker />).dive();
+      const date = moment();
+      wrapper.instance().onMonthChange(date);
+      expect(wrapper.state().currentMonth).to.equal(date);
+    });
+  });
+
+  describe('#onYearChange', () => {
+    it('sets state.yearTransition to "year_selection"', () => {
+      const wrapper = shallow(<DayPicker />).dive();
+      const date = moment();
+      wrapper.instance().onYearChange(date);
+      expect(wrapper.state().monthTransition).to.equal('year_selection');
+    });
+
+    it('sets state.nextFocusedDate to passed in date', () => {
+      const wrapper = shallow(<DayPicker />).dive();
+      const date = moment();
+      wrapper.instance().onYearChange(date);
+      expect(wrapper.state().nextFocusedDate).to.equal(date);
+    });
+
+    it('sets state.currentMonth to passed in year', () => {
+      const wrapper = shallow(<DayPicker />).dive();
+      const date = moment();
+      wrapper.instance().onYearChange(date);
+      expect(wrapper.state().currentMonth).to.equal(date);
     });
   });
 
