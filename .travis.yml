@@ -14,6 +14,7 @@ before_script:
   - 'if [ -n "${KARMA-}" ]; then sleep 3; fi'
 script:
   - 'if [ -n "${LINT-}" ]; then npm run lint ; fi'
+  - 'if [ -n "${BUILD-}" ]; then npm run lint ; fi'
   - 'if [ "${TEST-}" = true ]; then npm run tests-only ; fi'
   - 'if [ -n "${KARMA-}" ]; then npm run tests-karma ; fi'
   - 'if [ -n "${COVERAGE-}" ] && [ "${TRAVIS_BRANCH-}" = "master" ]; then npm run cover; cat ./coverage/lcov.info | ./node_modules/.bin/coveralls ; fi'
@@ -29,11 +30,13 @@ matrix:
   fast_finish: true
   include:
     - node_js: "lts/*"
+      env: LINT=true TEST=false
+    - node_js: "lts/*"
+      env: BUILD=true TEST=false
+    - node_js: "lts/*"
       env: COVERAGE=true TEST=false
     - node_js: "lts/*"
       env: KARMA=true TEST=false
-    - node_js: "lts/*"
-      env: LINT=true TEST=false
   allow_failures:
     - node_js: "9"
     - node_js: "7"

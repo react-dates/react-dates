@@ -22,7 +22,7 @@
     "tests-only": "npm run mocha --silent test",
     "pretests-karma": "npm run react",
     "tests-karma": "karma start",
-    "test": "npm run tests-only",
+    "test": "npm run build && npm run tests-only",
     "storybook": "start-storybook -p 6006",
     "storybook:css": "npm run build:css && start-storybook -p 6006 -c .storybook-css",
     "tag": "git tag v$npm_package_version",
