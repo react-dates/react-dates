@@ -547,7 +547,9 @@ class SingleDatePicker extends React.Component {
 
     const displayValue = this.getDateString(date);
 
-    const onOutsideClick = (!withPortal && !withFullScreenPortal) ? this.onClearFocus : undefined;
+    const enabledOutsideClick = (!withPortal && !withFullScreenPortal);
+
+    const onOutsideClick = enabledOutsideClick ? this.onOutsideClick : ()=>{};
 
     const hideFang = verticalSpacing < FANG_HEIGHT_PX;
 
@@ -559,7 +561,10 @@ class SingleDatePicker extends React.Component {
           block && styles.SingleDatePicker__block,
         )}
       >
-        <OutsideClickHandler onOutsideClick={onOutsideClick}>
+        <OutsideClickHandler 
+          onOutsideClick={onOutsideClick}
+          disabled={!enabledOutsideClick}
+        >
           <SingleDatePickerInput
             id={id}
             placeholder={placeholder}
