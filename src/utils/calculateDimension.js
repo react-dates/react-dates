@@ -16,10 +16,10 @@ export default function calculateDimension(el, axis, borderBox = false, withMarg
   // Get the inner size
   if (!borderBox) {
     size -= (
-      parseFloat(style[`padding${axisStart}`]) +
-      parseFloat(style[`padding${axisEnd}`]) +
-      parseFloat(style[`border${axisStart}Width`]) +
-      parseFloat(style[`border${axisEnd}Width`])
+      parseFloat(style[`padding${axisStart}`])
+      + parseFloat(style[`padding${axisEnd}`])
+      + parseFloat(style[`border${axisStart}Width`])
+      + parseFloat(style[`border${axisEnd}Width`])
     );
   }
 

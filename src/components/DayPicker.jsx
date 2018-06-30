@@ -251,13 +251,19 @@ class DayPicker extends React.Component {
       }
     }
 
-    if (nextProps.daySize !== this.props.daySize) {
+    const {
+      daySize,
+      isFocused: prevIsFocused,
+      renderMonthText: prevRenderMonthText,
+    } = this.props;
+
+    if (nextProps.daySize !== daySize) {
       this.setState({
         calendarMonthWidth: getCalendarMonthWidth(nextProps.daySize),
       });
     }
 
-    if (isFocused !== this.props.isFocused) {
+    if (isFocused !== prevIsFocused) {
       if (isFocused) {
         const focusedDate = this.getFocusedDay(currentMonth);
 
@@ -278,7 +284,7 @@ class DayPicker extends React.Component {
       }
     }
 
-    if (renderMonthText !== this.props.renderMonthText) {
+    if (renderMonthText !== prevRenderMonthText) {
       this.setState({
         monthTitleHeight: null,
       });
@@ -626,9 +632,9 @@ class DayPicker extends React.Component {
 
     if (onMultiplyScrollableMonths) onMultiplyScrollableMonths(e);
 
-    this.setState({
-      scrollableMonthMultiple: this.state.scrollableMonthMultiple + 1,
-    });
+    this.setState(({ scrollableMonthMultiple }) => ({
+      scrollableMonthMultiple: scrollableMonthMultiple + 1,
+    }));
   }
 
   isHorizontal() {
@@ -701,9 +707,9 @@ class DayPicker extends React.Component {
       if (withMouseInteractions) {
         const activeElement = getActiveElement();
         if (
-          activeElement &&
-          activeElement !== document.body &&
-          this.container.contains(activeElement)
+          activeElement
+          && activeElement !== document.body
+          && this.container.contains(activeElement)
         ) {
           activeElement.blur();
         }
@@ -1049,7 +1055,7 @@ class DayPicker extends React.Component {
                 {verticalScrollable && this.renderNavigation()}
               </div>
 
-              {!isTouch && !hideKeyboardShortcutsPanel &&
+              {!isTouch && !hideKeyboardShortcutsPanel && (
                 <DayPickerKeyboardShortcuts
                   block={this.isVertical() && !withPortal}
                   buttonLocation={keyboardShortcutButtonLocation}
@@ -1058,7 +1064,7 @@ class DayPicker extends React.Component {
                   closeKeyboardShortcutsPanel={this.closeKeyboardShortcutsPanel}
                   phrases={phrases}
                 />
-              }
+              )}
             </div>
 
           </div>

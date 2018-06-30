@@ -153,7 +153,8 @@ class DateRangePicker extends React.Component {
     this.responsivizePickerPosition();
     this.disableScroll();
 
-    if (this.props.focusedInput) {
+    const { focusedInput } = this.props;
+    if (focusedInput) {
       this.setState({
         isDateRangePickerInputFocused: true,
       });
@@ -167,11 +168,12 @@ class DateRangePicker extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (!prevProps.focusedInput && this.props.focusedInput && this.isOpened()) {
+    const { focusedInput } = this.props;
+    if (!prevProps.focusedInput && focusedInput && this.isOpened()) {
       // The date picker just changed from being closed to being open.
       this.responsivizePickerPosition();
       this.disableScroll();
-    } else if (prevProps.focusedInput && !this.props.focusedInput && !this.isOpened()) {
+    } else if (prevProps.focusedInput && !focusedInput && !this.isOpened()) {
       // The date picker just changed from being open to being closed.
       if (this.enableScroll) this.enableScroll();
     }
@@ -188,9 +190,10 @@ class DateRangePicker extends React.Component {
       onClose,
       startDate,
       endDate,
+      appendToBody,
     } = this.props;
     if (!this.isOpened()) return;
-    if (this.props.appendToBody && this.dayPickerContainer.contains(event.target)) return;
+    if (appendToBody && this.dayPickerContainer.contains(event.target)) return;
 
     this.setState({
       isDateRangePickerInputFocused: false,
@@ -213,10 +216,9 @@ class DateRangePicker extends React.Component {
 
     if (focusedInput) {
       const withAnyPortal = withPortal || withFullScreenPortal;
-      const moveFocusToDayPicker =
-        withAnyPortal ||
-        (readOnly && !keepFocusOnInput) ||
-        (this.isTouchDevice && !keepFocusOnInput);
+      const moveFocusToDayPicker = withAnyPortal
+        || (readOnly && !keepFocusOnInput)
+        || (this.isTouchDevice && !keepFocusOnInput);
 
       if (moveFocusToDayPicker) {
         this.onDayPickerFocus();
@@ -261,7 +263,8 @@ class DateRangePicker extends React.Component {
   }
 
   disableScroll() {
-    if (!this.props.appendToBody && !this.props.disableScroll) return;
+    const { appendToBody, disableScroll: propDisableScroll } = this.props;
+    if (!appendToBody && !propDisableScroll) return;
     if (!this.isOpened()) return;
 
     // Disable scroll for every ancestor of this DateRangePicker up to the

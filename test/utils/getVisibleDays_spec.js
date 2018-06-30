@@ -30,4 +30,3 @@ describe('getVisibleDays', () => {
     expect(containsToday.length > 0).to.equal(true);
   });
 });
-

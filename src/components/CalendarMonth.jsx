@@ -110,9 +110,16 @@ class CalendarMonth extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     const { month, enableOutsideDays, firstDayOfWeek } = nextProps;
-    if (!month.isSame(this.props.month)
-        || enableOutsideDays !== this.props.enableOutsideDays
-        || firstDayOfWeek !== this.props.firstDayOfWeek) {
+    const {
+      month: prevMonth,
+      enableOutsideDays: prevEnableOutsideDays,
+      firstDayOfWeek: prevFirstDayOfWeek,
+    } = this.props;
+    if (
+      !month.isSame(prevMonth)
+      || enableOutsideDays !== prevEnableOutsideDays
+      || firstDayOfWeek !== prevFirstDayOfWeek
+    ) {
       this.setState({
         weeks: getCalendarMonthWeeks(
           month,
@@ -192,11 +199,11 @@ class CalendarMonth extends React.Component {
             verticalScrollable && styles.CalendarMonth_caption__verticalScrollable,
           )}
         >
-          {
-            renderMonthElement ?
-              renderMonthElement({ month, onMonthSelect, onYearSelect }) :
-              <strong>{monthTitle}</strong>
-          }
+          {renderMonthElement ? (
+            renderMonthElement({ month, onMonthSelect, onYearSelect })
+          ) : (
+            <strong>{monthTitle}</strong>
+          )}
         </div>
 
         <table

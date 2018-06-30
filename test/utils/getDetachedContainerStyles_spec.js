@@ -3,7 +3,12 @@ import wrap from 'mocha-wrap';
 
 import getDetachedContainerStyles from '../../src/utils/getDetachedContainerStyles';
 
-import { OPEN_DOWN, OPEN_UP, ANCHOR_LEFT, ANCHOR_RIGHT } from '../../src/constants';
+import {
+  OPEN_DOWN,
+  OPEN_UP,
+  ANCHOR_LEFT,
+  ANCHOR_RIGHT,
+} from '../../src/constants';
 
 const describeIfNoWindow = typeof document === 'undefined' ? describe : describe.skip;
 

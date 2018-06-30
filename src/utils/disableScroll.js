@@ -56,10 +56,9 @@ export function getScrollAncestorsOverflowY(node, acc = new Map()) {
  */
 export default function disableScroll(node) {
   const scrollAncestorsOverflowY = getScrollAncestorsOverflowY(node);
-  const toggle = on =>
-    scrollAncestorsOverflowY.forEach((overflowY, ancestor) => {
-      ancestor.style.setProperty('overflow-y', on ? 'hidden' : overflowY);
-    });
+  const toggle = on => scrollAncestorsOverflowY.forEach((overflowY, ancestor) => {
+    ancestor.style.setProperty('overflow-y', on ? 'hidden' : overflowY);
+  });
 
   toggle(true);
   return () => toggle(false);

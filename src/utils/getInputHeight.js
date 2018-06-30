@@ -51,13 +51,13 @@ export default function getInputHeight({
 }, small) {
   const calcLineHeight = small ? lineHeight_small : lineHeight;
 
-  const padding = small ?
-    getPadding(
+  const padding = small
+    ? getPadding(
       displayTextPaddingVertical_small,
       displayTextPaddingTop_small,
       displayTextPaddingBottom_small,
-    ) :
-    getPadding(
+    )
+    : getPadding(
       displayTextPaddingVertical,
       displayTextPaddingTop,
       displayTextPaddingBottom,

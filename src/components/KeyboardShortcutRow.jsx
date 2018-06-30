@@ -90,4 +90,3 @@ export default withStyles(({ reactDates: { color } }) => ({
     marginLeft: 8,
   },
 }))(KeyboardShortcutRow);
-

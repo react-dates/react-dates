@@ -155,7 +155,9 @@ class SingleDatePicker extends React.Component {
     this.responsivizePickerPosition();
     this.disableScroll();
 
-    if (this.props.focused) {
+    const { focused } = this.props;
+
+    if (focused) {
       this.setState({
         isInputFocused: true,
       });
@@ -165,10 +167,11 @@ class SingleDatePicker extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (!prevProps.focused && this.props.focused) {
+    const { focused } = this.props;
+    if (!prevProps.focused && focused) {
       this.responsivizePickerPosition();
       this.disableScroll();
-    } else if (prevProps.focused && !this.props.focused) {
+    } else if (prevProps.focused && !focused) {
       if (this.enableScroll) this.enableScroll();
     }
   }
@@ -212,10 +215,9 @@ class SingleDatePicker extends React.Component {
     } = this.props;
 
     const withAnyPortal = withPortal || withFullScreenPortal;
-    const moveFocusToDayPicker =
-      withAnyPortal ||
-      (readOnly && !keepFocusOnInput) ||
-      (this.isTouchDevice && !keepFocusOnInput);
+    const moveFocusToDayPicker = withAnyPortal
+      || (readOnly && !keepFocusOnInput)
+      || (this.isTouchDevice && !keepFocusOnInput);
 
     if (moveFocusToDayPicker) {
       this.onDayPickerFocus();
@@ -234,9 +236,10 @@ class SingleDatePicker extends React.Component {
       focused,
       onFocusChange,
       onClose,
+      appendToBody,
     } = this.props;
     if (!focused) return;
-    if (this.props.appendToBody && this.dayPickerContainer.contains(event.target)) return;
+    if (appendToBody && this.dayPickerContainer.contains(event.target)) return;
 
     this.setState({
       isInputFocused: false,
@@ -293,8 +296,9 @@ class SingleDatePicker extends React.Component {
   }
 
   disableScroll() {
-    if (!this.props.appendToBody && !this.props.disableScroll) return;
-    if (!this.props.focused) return;
+    const { appendToBody, disableScroll: propDisableScroll, focused } = this.props;
+    if (!appendToBody && !propDisableScroll) return;
+    if (!focused) return;
 
     // Disable scroll for every ancestor of this <SingleDatePicker> up to the
     // document level. This ensures the input and the picker never move. Other

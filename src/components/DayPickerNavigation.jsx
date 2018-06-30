@@ -95,8 +95,9 @@ function DayPickerNavigation({
     );
   }
 
-  const isDefaultNav =
-    isVerticalScrollable ? isDefaultNavNext : (isDefaultNavNext || isDefaultNavPrev);
+  const isDefaultNav = isVerticalScrollable
+    ? isDefaultNavNext
+    : (isDefaultNavNext || isDefaultNavPrev);
 
   return (
     <div
@@ -163,8 +164,8 @@ function DayPickerNavigation({
             ...isDefaultNavNext && [
               styles.DayPickerNavigation_button__verticalDefault,
               styles.DayPickerNavigation_nextButton__verticalDefault,
-              isVerticalScrollable &&
-                styles.DayPickerNavigation_nextButton__verticalScrollableDefault,
+              isVerticalScrollable
+                && styles.DayPickerNavigation_nextButton__verticalScrollableDefault,
             ],
           ]),
         )}

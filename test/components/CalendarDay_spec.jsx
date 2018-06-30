@@ -36,8 +36,9 @@ describe('CalendarDay', () => {
       const modifiers = new Set([BLOCKED_MODIFIER]);
       const renderDayContents = (day, mods) => `${day.format('dddd')}${mods.has(BLOCKED_MODIFIER) ? 'BLOCKED' : ''}`;
       const expected = `${moment().format('dddd')}BLOCKED`;
-      const wrapper =
-        shallow(<CalendarDay renderDayContents={renderDayContents} modifiers={modifiers} />).dive();
+      const wrapper = shallow((
+        <CalendarDay renderDayContents={renderDayContents} modifiers={modifiers} />
+      )).dive();
       expect(wrapper.text()).to.equal(expected);
     });
 
