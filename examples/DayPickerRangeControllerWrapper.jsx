@@ -34,7 +34,7 @@ const propTypes = forbidExtraProps({
   orientation: ScrollableOrientationShape,
   verticalHeight: PropTypes.number,
   withPortal: PropTypes.bool,
-  initialVisibleMonth: PropTypes.func,
+  // initialVisibleMonth: PropTypes.func,
   renderCalendarInfo: PropTypes.func,
   renderMonthElement: PropTypes.func,
   renderMonthText: PropTypes.func,
@@ -76,8 +76,8 @@ const defaultProps = {
   orientation: HORIZONTAL_ORIENTATION,
   verticalHeight: undefined,
   withPortal: false,
-  initialVisibleMonth: null,
-  numberOfMonths: 2,
+  // initialVisibleMonth: null,
+  numberOfMonths: 1,
   onOutsideClick() {},
   keepOpenOnDateSelect: false,
   renderCalendarInfo: null,
@@ -130,13 +130,14 @@ class DayPickerRangeControllerWrapper extends React.Component {
       'initialStartDate',
       'initialEndDate',
       'showInputs',
+      'hideKeyboardShortcutsPanel',
     ]);
 
     const startDateString = startDate && startDate.format('YYYY-MM-DD');
     const endDateString = endDate && endDate.format('YYYY-MM-DD');
 
     return (
-      <div style={{ height: '100%' }}>
+      <div style={{ height: '100%', display: 'inline-flex' }}>
         {showInputs &&
           <div style={{ marginBottom: 16 }}>
             <input type="text" name="start date" value={startDateString} readOnly />
@@ -151,7 +152,22 @@ class DayPickerRangeControllerWrapper extends React.Component {
           focusedInput={focusedInput}
           startDate={startDate}
           endDate={endDate}
+          initialVisibleMonth={() => startDate}
+          hideKeyboardShortcutsPanel
         />
+        <DayPickerRangeController
+          {...props}
+          onDatesChange={this.onDatesChange}
+          onFocusChange={this.onFocusChange}
+          focusedInput={focusedInput}
+          startDate={startDate}
+          endDate={endDate}
+          initialVisibleMonth={() => endDate}
+          hideKeyboardShortcutsPanel
+        />
+        <div>
+          panel controls
+        </div>
       </div>
     );
   }
