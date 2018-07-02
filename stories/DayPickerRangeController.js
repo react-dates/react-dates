@@ -84,6 +84,9 @@ storiesOf('DayPickerRangeController', module)
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
+      initialStartDate={moment('2018-05-03', 'YYYY-MM-DD')}
+      initialEndDate={moment('2018-07-24', 'YYYY-MM-DD')}
+      isOutsideRange={() => false}
     />
   ))
   .addWithInfo('with 7 days range selection', () => (
@@ -93,6 +96,7 @@ storiesOf('DayPickerRangeController', module)
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
       startDateOffset={day => day.subtract(3, 'days')}
       endDateOffset={day => day.add(3, 'days')}
+      autoFocusEndDate
     />
   ))
   .addWithInfo('with 45 days range selection', () => (
