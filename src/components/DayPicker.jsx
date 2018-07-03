@@ -26,6 +26,7 @@ import calculateDimension from '../utils/calculateDimension';
 import getActiveElement from '../utils/getActiveElement';
 import isDayVisible from '../utils/isDayVisible';
 
+import ModifiersShape from '../shapes/ModifiersShape';
 import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
 import DayOfWeekShape from '../shapes/DayOfWeekShape';
 import CalendarInfoPositionShape from '../shapes/CalendarInfoPositionShape';
@@ -86,7 +87,7 @@ const propTypes = forbidExtraProps({
   renderMonthElement: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'),
 
   // day props
-  modifiers: PropTypes.object,
+  modifiers: PropTypes.objectOf(PropTypes.objectOf(ModifiersShape)),
   renderCalendarDay: PropTypes.func,
   renderDayContents: PropTypes.func,
   onDayClick: PropTypes.func,
