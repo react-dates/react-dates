@@ -68,6 +68,8 @@ function loadStories() {
   require('../stories/DayPickerSingleDateController');
   require('../stories/DayPicker');
   require('../stories/PresetDateRangePicker');
+  require('../stories/PacificRangePicker');
+  require('../stories/PacificDatePicker');
 }
 
 setAddon(infoAddon);
