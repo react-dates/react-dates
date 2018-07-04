@@ -529,7 +529,9 @@ class DateRangePicker extends React.Component {
 
     const { isDateRangePickerInputFocused } = this.state;
 
-    const onOutsideClick = (!withPortal && !withFullScreenPortal) ? this.onOutsideClick : undefined;
+    const enabledOutsideClick = !withPortal && !withFullScreenPortal;
+
+    const onOutsideClick = enabledOutsideClick ? this.onOutsideClick : ()=>{};
 
     const hideFang = verticalSpacing < FANG_HEIGHT_PX;
 
@@ -541,7 +543,10 @@ class DateRangePicker extends React.Component {
           block && styles.DateRangePicker__block,
         )}
       >
-        <OutsideClickHandler onOutsideClick={onOutsideClick}>
+        <OutsideClickHandler 
+          onOutsideClick={onOutsideClick}
+          disabled={!enabledOutsideClick}
+        >
           <DateRangePickerInputController
             startDate={startDate}
             startDateId={startDateId}
