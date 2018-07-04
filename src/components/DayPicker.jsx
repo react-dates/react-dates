@@ -316,8 +316,15 @@ class DayPicker extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { isFocused } = this.props;
+    const { orientation, daySize, isFocused } = this.props;
     const { focusedDate } = this.state;
+
+    if (
+      this.isHorizontal()
+      && (orientation !== prevProps.orientation || daySize !== prevProps.daySize)
+    ) {
+      this.adjustDayPickerHeight();
+    }
 
     if (!prevProps.isFocused && isFocused && !focusedDate) {
       this.container.focus();
