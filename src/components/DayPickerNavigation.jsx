@@ -178,6 +178,10 @@ function DayPickerNavigation({
       >
         {navNextIcon}
       </button>
+      <div {...css(
+        styles.DayPickerNavigation_line
+      )}
+      />
     </div>
   );
 }
@@ -189,6 +193,19 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
   DayPickerNavigation: {
     position: 'relative',
     zIndex: zIndex + 2,
+    position: 'absolute',
+    width: '100%',
+    top: 12,
+  },
+
+  DayPickerNavigation_line: {
+    backgroundColor: color.navigationLine,
+    height: 1,
+    opacity: 0.18,
+    width: 'calc(100% - 28px)',
+    left: '14px',
+    bottom: '-6px',
+    position: 'absolute',
   },
 
   DayPickerNavigation__horizontal: {},
@@ -216,8 +233,8 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
   },
 
   DayPickerNavigation_button__default: {
-    border: `1px solid ${color.core.borderLight}`,
-    backgroundColor: color.background,
+    border: 'none',
+    backgroundColor: 'none',
     color: color.placeholderText,
 
     ':focus': {
@@ -234,6 +251,10 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
   },
 
   DayPickerNavigation_button__horizontal: {
+    lineHeight: 0.78,
+    borderRadius: 3,
+    backgroundColor: 'transparent',
+    height: '24px',
   },
 
   DayPickerNavigation_button__horizontalDefault: {

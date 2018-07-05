@@ -376,7 +376,6 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
 
   CalendarMonthGrid__horizontal: {
     position: 'absolute',
-    left: 9,
   },
 
   CalendarMonthGrid__vertical: {
