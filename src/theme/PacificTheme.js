@@ -69,7 +69,7 @@ export default {
       placeholderText: '#757575',
       weekHeaderLi: colors.colorT3,
       calendarDay: colors.colorBlackPearl,
-
+      navigationLine: '#979797',
       outside: {
         backgroundColor: core.white,
         backgroundColor_active: core.white,

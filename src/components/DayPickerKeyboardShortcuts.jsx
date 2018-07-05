@@ -268,6 +268,7 @@ DayPickerKeyboardShortcuts.defaultProps = defaultProps;
 
 export default withStyles(({ reactDates: { color, font, zIndex } }) => ({
   DayPickerKeyboardShortcuts_buttonReset: {
+    display: 'none',
     background: 'none',
     border: 0,
     borderRadius: 0,

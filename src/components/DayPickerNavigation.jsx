@@ -178,6 +178,10 @@ function DayPickerNavigation({
       >
         {navNextIcon}
       </button>
+      <div {...css(
+        styles.DayPickerNavigation_line
+      )}
+      />
     </div>
   );
 }
@@ -192,6 +196,16 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
     position: 'absolute',
     width: '100%',
     top: 12,
+  },
+
+  DayPickerNavigation_line: {
+    backgroundColor: color.navigationLine,
+    height: 1,
+    opacity: 0.18,
+    width: 'calc(100% - 28px)',
+    left: '14px',
+    bottom: '-6px',
+    position: 'absolute',
   },
 
   DayPickerNavigation__horizontal: {},
