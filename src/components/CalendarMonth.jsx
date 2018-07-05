@@ -57,6 +57,7 @@ const propTypes = forbidExtraProps({
   monthFormat: PropTypes.string,
   phrases: PropTypes.shape(getPhrasePropTypes(CalendarDayPhrases)),
   dayAriaLabelFormat: PropTypes.string,
+  isSingleDate: PropTypes.bool,
 });
 
 const defaultProps = {
@@ -86,6 +87,7 @@ const defaultProps = {
   phrases: CalendarDayPhrases,
   dayAriaLabelFormat: undefined,
   verticalBorderSpacing: undefined,
+  isSingleDate: false,
 };
 
 class CalendarMonth extends React.Component {
@@ -175,6 +177,7 @@ class CalendarMonth extends React.Component {
       phrases,
       dayAriaLabelFormat,
       verticalBorderSpacing,
+      isSingleDate,
     } = this.props;
 
     const { weeks } = this.state;
@@ -231,6 +234,7 @@ class CalendarMonth extends React.Component {
                   phrases,
                   modifiers: modifiers[toISODateString(day)],
                   ariaLabelFormat: dayAriaLabelFormat,
+                  isSingleDate
                 }))}
               </CalendarWeek>
             ))}

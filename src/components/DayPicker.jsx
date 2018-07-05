@@ -106,6 +106,7 @@ const propTypes = forbidExtraProps({
   weekDayFormat: PropTypes.string,
   phrases: PropTypes.shape(getPhrasePropTypes(DayPickerPhrases)),
   dayAriaLabelFormat: PropTypes.string,
+  isSingleDate: PropTypes.string,
 });
 
 export const defaultProps = {
@@ -161,6 +162,7 @@ export const defaultProps = {
   weekDayFormat: 'dd',
   phrases: DayPickerPhrases,
   dayAriaLabelFormat: undefined,
+  isSingleDate: false,
 };
 
 class DayPicker extends React.Component {
@@ -894,6 +896,7 @@ class DayPicker extends React.Component {
       noBorder,
       transitionDuration,
       verticalBorderSpacing,
+      isSingleDate,
     } = this.props;
 
     const isHorizontal = this.isHorizontal();
@@ -1053,6 +1056,7 @@ class DayPicker extends React.Component {
                   dayAriaLabelFormat={dayAriaLabelFormat}
                   transitionDuration={transitionDuration}
                   verticalBorderSpacing={verticalBorderSpacing}
+                  isSingleDate={isSingleDate}
                 />
                 {verticalScrollable && this.renderNavigation()}
               </div>
