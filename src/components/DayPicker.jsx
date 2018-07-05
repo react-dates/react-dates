@@ -41,6 +41,7 @@ import {
   INFO_POSITION_BEFORE,
   INFO_POSITION_AFTER,
   MODIFIER_KEY_NAMES,
+  PADDING_BOTTOM,
 } from '../constants';
 
 const MONTH_PADDING = 23;
@@ -105,6 +106,7 @@ const propTypes = forbidExtraProps({
   weekDayFormat: PropTypes.string,
   phrases: PropTypes.shape(getPhrasePropTypes(DayPickerPhrases)),
   dayAriaLabelFormat: PropTypes.string,
+  isSingleDate: PropTypes.string,
 });
 
 export const defaultProps = {
@@ -160,6 +162,7 @@ export const defaultProps = {
   weekDayFormat: 'dd',
   phrases: DayPickerPhrases,
   dayAriaLabelFormat: undefined,
+  isSingleDate: false,
 };
 
 class DayPicker extends React.Component {
@@ -893,6 +896,7 @@ class DayPicker extends React.Component {
       noBorder,
       transitionDuration,
       verticalBorderSpacing,
+      isSingleDate,
     } = this.props;
 
     const isHorizontal = this.isHorizontal();
@@ -906,7 +910,7 @@ class DayPicker extends React.Component {
     const verticalScrollable = orientation === VERTICAL_SCROLLABLE;
     let height;
     if (isHorizontal) {
-      height = this.calendarMonthGridHeight;
+      height = this.calendarMonthGridHeight + PADDING_BOTTOM;
     } else if (this.isVertical() && !verticalScrollable && !withPortal) {
       // If the user doesn't set a desired height,
       // we default back to this kind of made-up value that generally looks good
@@ -1052,6 +1056,7 @@ class DayPicker extends React.Component {
                   dayAriaLabelFormat={dayAriaLabelFormat}
                   transitionDuration={transitionDuration}
                   verticalBorderSpacing={verticalBorderSpacing}
+                  isSingleDate={isSingleDate}
                 />
                 {verticalScrollable && this.renderNavigation()}
               </div>
@@ -1141,9 +1146,9 @@ export default withStyles(({ reactDates: { color, font, zIndex } }) => ({
   DayPicker_weekHeader: {
     color: color.placeholderText,
     position: 'absolute',
-    top: 62,
+    top: 54,
     zIndex: zIndex + 2,
-    padding: '0 13px',
+    padding: '0 8px',
     textAlign: 'left',
   },
 
@@ -1173,6 +1178,8 @@ export default withStyles(({ reactDates: { color, font, zIndex } }) => ({
   DayPicker_weekHeader_li: {
     display: 'inline-block',
     textAlign: 'center',
+    color: color.weekHeaderLi,
+    fontFamily: font.weekHeaderLiFont,
   },
 
   DayPicker_transitionContainer: {
