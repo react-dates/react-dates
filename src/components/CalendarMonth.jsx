@@ -265,11 +265,24 @@ export default withStyles(({ reactDates: { color, font, spacing } }) => ({
 
   CalendarMonth_caption: {
     color: color.text,
+
     fontSize: font.captionSize,
     textAlign: 'center',
     paddingTop: spacing.captionPaddingTop,
     paddingBottom: spacing.captionPaddingBottom,
     captionSide: 'initial',
+
+
+    // // font-family: AvenirNext;
+    // font-size: 13px;
+    // font-weight: 500;
+    // font-style: normal;
+    // font-stretch: normal;
+    // line-height: 1.38;
+    // letter-spacing: normal;
+    // text-align: center;
+    // color: #20272f;
+    // color: var(--BlacPearl);
   },
 
   CalendarMonth_caption__verticalScrollable: {

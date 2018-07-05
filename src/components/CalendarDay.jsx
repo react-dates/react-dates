@@ -334,8 +334,14 @@ export default withStyles(({ reactDates: { color, font } }) => ({
     },
   },
 
-  CalendarDay__selected_start: {},
-  CalendarDay__selected_end: {},
+  CalendarDay__selected_start: {
+    borderTopLeftRadius: '3px',
+    borderBottomLeftRadius: '3px',
+  },
+  CalendarDay__selected_end: {
+    borderTopRightRadius: '3px',
+    borderBottomRightRadius: '3px',
+  },
   CalendarDay__today: {},
   CalendarDay__firstDayOfWeek: {},
   CalendarDay__lastDayOfWeek: {},

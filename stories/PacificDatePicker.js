@@ -13,55 +13,6 @@ import DayPickerRangeControllerWrapper from '../examples/DayPickerRangeControlle
 
 const dayPickerRangeControllerInfo = `The ${monospace('PacificDatePicker')} component`;
 
-const TestPrevIcon = () => (
-  <span
-    style={{
-      border: '1px solid #dce0e0',
-      backgroundColor: '#fff',
-      color: '#484848',
-      padding: '3px',
-    }}
-  >
-    Prev
-  </span>
-);
-
-const TestNextIcon = () => (
-  <span
-    style={{
-      border: '1px solid #dce0e0',
-      backgroundColor: '#fff',
-      color: '#484848',
-      padding: '3px',
-    }}
-  >
-    Next
-  </span>
-);
-
-const TestCustomInfoPanel = () => (
-  <div
-    style={{
-      padding: '10px 21px',
-      borderTop: '1px solid #dce0e0',
-      color: '#484848',
-    }}
-  >
-    &#x2755; Some useful info here
-  </div>
-);
-
-// const datesList = [
-//   moment(),
-//   moment().add(1, 'days'),
-//   moment().add(3, 'days'),
-//   moment().add(9, 'days'),
-//   moment().add(10, 'days'),
-//   moment().add(11, 'days'),
-//   moment().add(12, 'days'),
-//   moment().add(13, 'days'),
-// ];
-
 storiesOf('PacificDatePicker', module)
   .addDecorator(InfoPanelDecorator(dayPickerRangeControllerInfo))
   .addWithInfo('RangePicker', () => (

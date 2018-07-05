@@ -11,6 +11,9 @@ import { VERTICAL_ORIENTATION, VERTICAL_SCROLLABLE } from '../src/constants';
 
 import DayPickerRangeControllerWrapper from '../examples/DayPickerRangeControllerWrapper';
 
+import UIIcon from './../src/pacificComponents/icon.js'
+import BackSVG from './../src/pacificComponents/back.js'
+
 const dayPickerRangeControllerInfo = `The ${monospace('PacificRangePicker')} component`;
 
 const TestPrevIcon = () => (
@@ -39,28 +42,47 @@ const TestNextIcon = () => (
   </span>
 );
 
-const TestCustomInfoPanel = () => (
-  <div
-    style={{
-      padding: '10px 21px',
-      borderTop: '1px solid #dce0e0',
-      color: '#484848',
-    }}
-  >
-    &#x2755; Some useful info here
-  </div>
+moment.updateLocale('en', {
+  week: {
+    dow: 0,
+  },
+  weekdaysMin: 'M_T_W_T_F_S_S'.split('_')
+});
+
+const { colors } = require('./../src/styles/vars')
+
+const icon = (
+  <UIIcon
+    icon={(color) => (<BackSVG fill={color} />)}
+    color={colors.colorN5}
+    hoverColor={colors.colorBlack}
+  />
 );
 
-// const datesList = [
-//   moment(),
-//   moment().add(1, 'days'),
-//   moment().add(3, 'days'),
-//   moment().add(9, 'days'),
-//   moment().add(10, 'days'),
-//   moment().add(11, 'days'),
-//   moment().add(12, 'days'),
-//   moment().add(13, 'days'),
-// ];
+const navPrevStyle = {
+  position: 'absolute',
+  top: '0',
+  left: '12px',
+}
+
+const navPrev = (
+  <div style={navPrevStyle}>
+    {icon}
+  </div>
+)
+
+const navNextStyle = {
+  position: 'absolute',
+  top: '0',
+  right: '12px',
+  transform: 'rotate(180deg)',
+}
+
+const navNext = (
+  <div style={navNextStyle}>
+    {icon}
+  </div>
+)
 
 storiesOf('PacificRangePicker', module)
   .addDecorator(InfoPanelDecorator(dayPickerRangeControllerInfo))
@@ -70,5 +92,9 @@ storiesOf('PacificRangePicker', module)
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
       numberOfMonths={1}
+      renderMonthText={(m) => m.format('MMMM, YYYY')}
+      verticalBorderSpacing={4}
+      navPrev={navPrev}
+      navNext={navNext}
     />
 ));
