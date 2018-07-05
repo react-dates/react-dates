@@ -25,6 +25,7 @@ const core = {
 
   yellow: '#ffe8bc',
   yellow_dark: '#ffce71',
+  colorBlackPearl: colors.colorBlackPearl,
 };
 
 export default {
@@ -62,9 +63,12 @@ export default {
       backgroundFocused: core.white,
       border: core.transparent,
       text: core.gray,
+      caption: colors.colorBlackPearl,
       textDisabled: core.border,
       textFocused: '#007a87',
       placeholderText: '#757575',
+      weekHeaderLi: colors.colorT3,
+      calendarDay: colors.colorBlackPearl,
 
       outside: {
         backgroundColor: core.white,
@@ -156,7 +160,7 @@ export default {
     },
 
     spacing: {
-      captionPaddingTop: 22,
+      captionPaddingTop: 17,
       captionPaddingBottom: 37,
       inputPadding: 0,
       displayTextPaddingVertical: undefined,
@@ -182,6 +186,9 @@ export default {
     font: {
       size: 9,
       captionSize: 13,
+      captionFont: 'AvenirNextLTPro-Regular',
+      weekHeaderLiFont: 'AvenirNextLTPro-Regular',
+      calendarDayFont: 'AvenirNextLTPro-Regular',
       input: {
         size: 19,
         lineHeight: '24px',

@@ -16,31 +16,8 @@ import BackSVG from './../src/pacificComponents/back.js'
 
 const dayPickerRangeControllerInfo = `The ${monospace('PacificRangePicker')} component`;
 
-const TestPrevIcon = () => (
-  <span
-    style={{
-      border: '1px solid #dce0e0',
-      backgroundColor: '#fff',
-      color: '#484848',
-      padding: '3px',
-    }}
-  >
-    Prev
-  </span>
-);
-
-const TestNextIcon = () => (
-  <span
-    style={{
-      border: '1px solid #dce0e0',
-      backgroundColor: '#fff',
-      color: '#484848',
-      padding: '3px',
-    }}
-  >
-    Next
-  </span>
-);
+import './../src/fonts/fonts.css'
+import './../src/styles/reset.css'
 
 moment.updateLocale('en', {
   week: {
@@ -96,5 +73,6 @@ storiesOf('PacificRangePicker', module)
       verticalBorderSpacing={4}
       navPrev={navPrev}
       navNext={navNext}
+      daySize={25}
     />
 ));

@@ -1,5 +1,4 @@
 /* eslint react/no-array-index-key: 0 */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import shallowCompare from 'react-addons-shallow-compare';
@@ -249,7 +248,7 @@ export default withStyles(({ reactDates: { color, font, spacing } }) => ({
   CalendarMonth: {
     background: color.background,
     textAlign: 'center',
-    padding: '0 13px',
+    padding: '0 16px 11px 16px',
     verticalAlign: 'top',
     userSelect: 'none',
   },
@@ -264,25 +263,19 @@ export default withStyles(({ reactDates: { color, font, spacing } }) => ({
   },
 
   CalendarMonth_caption: {
-    color: color.text,
-
-    fontSize: font.captionSize,
+    color: color.caption,
     textAlign: 'center',
     paddingTop: spacing.captionPaddingTop,
     paddingBottom: spacing.captionPaddingBottom,
     captionSide: 'initial',
 
-
-    // // font-family: AvenirNext;
-    // font-size: 13px;
-    // font-weight: 500;
-    // font-style: normal;
-    // font-stretch: normal;
+    fontSize: font.captionSize,
+    fontFamily: font.captionFont,
+    fontWeight: 500,
+    fontStyle: 'normal',
+    fontStretch: 'normal',
     // line-height: 1.38;
-    // letter-spacing: normal;
-    // text-align: center;
-    // color: #20272f;
-    // color: var(--BlacPearl);
+    letterSpacing: 'normal',
   },
 
   CalendarMonth_caption__verticalScrollable: {

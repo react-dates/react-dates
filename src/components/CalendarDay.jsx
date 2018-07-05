@@ -183,8 +183,10 @@ export default withStyles(({ reactDates: { color, font } }) => ({
 
   CalendarDay__default: {
     border: `1px solid ${color.core.borderLight}`,
-    color: color.text,
+    color: color.calendarDay,
     background: color.background,
+    fontWeight: '600',
+    fontFamily: font.calendarDayFont,
 
     ':hover': {
       background: color.core.borderLight,
