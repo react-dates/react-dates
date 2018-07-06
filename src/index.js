@@ -21,3 +21,7 @@ export { default as toMomentObject } from './utils/toMomentObject';
 
 export { default as PacificDateController } from './components/PacificDateController';
 export { default as PacificRangeController } from './components/PacificRangeController';
+
+import registerCSSInterfaceWithDefaultTheme from './utils/registerCSSInterfaceWithDefaultTheme';
+
+registerCSSInterfaceWithDefaultTheme();
