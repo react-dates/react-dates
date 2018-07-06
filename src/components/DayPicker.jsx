@@ -106,7 +106,7 @@ const propTypes = forbidExtraProps({
   weekDayFormat: PropTypes.string,
   phrases: PropTypes.shape(getPhrasePropTypes(DayPickerPhrases)),
   dayAriaLabelFormat: PropTypes.string,
-  isSingleDate: PropTypes.string,
+  isSingleDate: PropTypes.bool,
 });
 
 export const defaultProps = {
