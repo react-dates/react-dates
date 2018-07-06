@@ -685,7 +685,7 @@ export default class DayPickerSingleDateController extends React.Component {
         onYearChange={this.onYearChange}
         monthFormat={monthFormat}
         withPortal={withPortal}
-        hidden={focused}
+        hidden={!focused}
         hideKeyboardShortcutsPanel={hideKeyboardShortcutsPanel}
         initialVisibleMonth={() => currentMonth}
         firstDayOfWeek={firstDayOfWeek}
