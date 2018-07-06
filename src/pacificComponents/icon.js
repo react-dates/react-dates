@@ -61,7 +61,7 @@ class UIIcon extends Component {
 }
 
 UIIcon.propTypes = {
-  icon: PropTypes.element.isRequired,
+  icon: PropTypes.func.isRequired,
   className: PropTypes.string,
   color: PropTypes.string,
   hoverColor: PropTypes.string,
