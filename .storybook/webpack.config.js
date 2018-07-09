@@ -4,8 +4,17 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.s?css$/,
-        use: ['style-loader', 'raw-loader', 'sass-loader'],
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+        include: [
+          path.resolve(__dirname, '../css/'),
+          path.resolve(__dirname, '../src/fonts/fonts.css'),
+          path.resolve(__dirname, '../src/styles/reset.css'),
+        ],
+      },
+      {
+        test: /\.scss$/,
+        use: ['style-loader', 'css-loader', 'sass-loader'],
         include: [
           path.resolve(__dirname, '../css/'),
         ],
@@ -32,9 +41,13 @@ module.exports = {
           },
         ],
       },
+      {
+          test: /\.(eot|svg|ttf|woff|woff2)$/,
+          loader: 'file-loader?name=public/fonts/[name].[ext]'
+      }
     ],
   },
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx', '.css'],
   },
 };

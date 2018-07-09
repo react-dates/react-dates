@@ -2,8 +2,10 @@
   "name": "react-dates",
   "version": "17.0.0",
   "description": "A responsive and accessible date range picker component built with React",
-  "main": "index.js",
+  "main": "dist/index/index.js",
   "scripts": {
+    "dist": "webpack --env.production --progress -p",
+    "dist:dev": "webpack",
     "prebuild": "npm run clean",
     "build": "npm run build:cjs && npm run build:esm && npm run build:css -- --optimize ",
     "build:cjs": "BABEL_ENV=cjs babel src/ -d lib/",
@@ -107,11 +109,14 @@
     "sinon": "^6.1.0",
     "sinon-sandbox": "^1.0.2",
     "style-loader": "^0.20.3",
+    "uglifyjs-webpack-plugin": "^1.2.7",
     "webpack": "^2.6.1"
   },
   "dependencies": {
     "airbnb-prop-types": "^2.10.0",
     "consolidated-events": "^1.1.1 || ^2.0.0",
+    "css-loader": "^0.28.11",
+    "file-loader": "^1.1.11",
     "is-touch-device": "^1.0.1",
     "lodash": "^4.1.1",
     "object.assign": "^4.1.0",

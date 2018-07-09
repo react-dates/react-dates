@@ -26,6 +26,7 @@ const propTypes = forbidExtraProps({
   onDayMouseLeave: PropTypes.func,
   renderDayContents: PropTypes.func,
   ariaLabelFormat: PropTypes.string,
+  isSingleDate: PropTypes.bool,
 
   // internationalization
   phrases: PropTypes.shape(getPhrasePropTypes(CalendarDayPhrases)),
@@ -46,6 +47,7 @@ const defaultProps = {
 
   // internationalization
   phrases: CalendarDayPhrases,
+  isSingleDate: false,
 };
 
 class CalendarDay extends React.Component {
@@ -109,6 +111,7 @@ class CalendarDay extends React.Component {
       tabIndex,
       styles,
       phrases,
+      isSingleDate,
     } = this.props;
 
     if (!day) return <td />;
@@ -141,6 +144,7 @@ class CalendarDay extends React.Component {
           modifiers.has('last-in-range') && styles.CalendarDay__last_in_range,
           modifiers.has('selected-start') && styles.CalendarDay__selected_start,
           modifiers.has('selected-end') && styles.CalendarDay__selected_end,
+          isSingleDate && styles.CalendarDay__singleDate,
           selected && styles.CalendarDay__selected,
           isOutsideRange && styles.CalendarDay__blocked_out_of_range,
           daySizeStyles,
@@ -177,14 +181,20 @@ export default withStyles(({ reactDates: { color, font } }) => ({
     },
   },
 
+  CalendarDay__singleDate: {
+    borderRadius: '3px',
+  },
+
   CalendarDay__defaultCursor: {
     cursor: 'default',
   },
 
   CalendarDay__default: {
     border: `1px solid ${color.core.borderLight}`,
-    color: color.text,
+    color: color.calendarDay,
     background: color.background,
+    fontWeight: '600',
+    fontFamily: font.calendarDayFont,
 
     ':hover': {
       background: color.core.borderLight,
@@ -334,8 +344,14 @@ export default withStyles(({ reactDates: { color, font } }) => ({
     },
   },
 
-  CalendarDay__selected_start: {},
-  CalendarDay__selected_end: {},
+  CalendarDay__selected_start: {
+    borderTopLeftRadius: '3px',
+    borderBottomLeftRadius: '3px',
+  },
+  CalendarDay__selected_end: {
+    borderTopRightRadius: '3px',
+    borderBottomRightRadius: '3px',
+  },
   CalendarDay__today: {},
   CalendarDay__firstDayOfWeek: {},
   CalendarDay__lastDayOfWeek: {},

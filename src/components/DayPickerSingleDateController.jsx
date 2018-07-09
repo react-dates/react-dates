@@ -711,6 +711,7 @@ export default class DayPickerSingleDateController extends React.Component {
         noBorder={noBorder}
         transitionDuration={transitionDuration}
         verticalBorderSpacing={verticalBorderSpacing}
+        isSingleDate={true}
       />
     );
   }

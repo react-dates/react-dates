@@ -18,3 +18,10 @@ export { default as isSameDay } from './utils/isSameDay';
 export { default as toISODateString } from './utils/toISODateString';
 export { default as toLocalizedDateString } from './utils/toLocalizedDateString';
 export { default as toMomentObject } from './utils/toMomentObject';
+
+export { default as PacificDateController } from './components/PacificDateController';
+export { default as PacificRangeController } from './components/PacificRangeController';
+
+import registerCSSInterfaceWithDefaultTheme from './utils/registerCSSInterfaceWithDefaultTheme';
+
+registerCSSInterfaceWithDefaultTheme();
