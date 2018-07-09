@@ -551,9 +551,44 @@ class SingleDatePicker extends React.Component {
 
     const displayValue = this.getDateString(date);
 
-    const onOutsideClick = (!withPortal && !withFullScreenPortal) ? this.onClearFocus : undefined;
+    const enableOutsideClick = (!withPortal && !withFullScreenPortal);
 
     const hideFang = verticalSpacing < FANG_HEIGHT_PX;
+
+    const input = (
+      <SingleDatePickerInput
+        id={id}
+        placeholder={placeholder}
+        focused={focused}
+        isFocused={isInputFocused}
+        disabled={disabled}
+        required={required}
+        readOnly={readOnly}
+        openDirection={openDirection}
+        showCaret={!withPortal && !withFullScreenPortal && !hideFang}
+        onClearDate={this.clearDate}
+        showClearDate={showClearDate}
+        showDefaultInputIcon={showDefaultInputIcon}
+        inputIconPosition={inputIconPosition}
+        customCloseIcon={customCloseIcon}
+        customInputIcon={customInputIcon}
+        displayValue={displayValue}
+        onChange={this.onChange}
+        onFocus={this.onFocus}
+        onKeyDownShiftTab={this.onClearFocus}
+        onKeyDownTab={this.onClearFocus}
+        onKeyDownArrowDown={this.onDayPickerFocus}
+        onKeyDownQuestionMark={this.showKeyboardShortcutsPanel}
+        screenReaderMessage={screenReaderInputMessage}
+        phrases={phrases}
+        isRTL={isRTL}
+        noBorder={noBorder}
+        block={block}
+        small={small}
+        regular={regular}
+        verticalSpacing={verticalSpacing}
+      />
+    );
 
     return (
       <div
@@ -563,42 +598,14 @@ class SingleDatePicker extends React.Component {
           block && styles.SingleDatePicker__block,
         )}
       >
-        <OutsideClickHandler onOutsideClick={onOutsideClick}>
-          <SingleDatePickerInput
-            id={id}
-            placeholder={placeholder}
-            focused={focused}
-            isFocused={isInputFocused}
-            disabled={disabled}
-            required={required}
-            readOnly={readOnly}
-            openDirection={openDirection}
-            showCaret={!withPortal && !withFullScreenPortal && !hideFang}
-            onClearDate={this.clearDate}
-            showClearDate={showClearDate}
-            showDefaultInputIcon={showDefaultInputIcon}
-            inputIconPosition={inputIconPosition}
-            customCloseIcon={customCloseIcon}
-            customInputIcon={customInputIcon}
-            displayValue={displayValue}
-            onChange={this.onChange}
-            onFocus={this.onFocus}
-            onKeyDownShiftTab={this.onClearFocus}
-            onKeyDownTab={this.onClearFocus}
-            onKeyDownArrowDown={this.onDayPickerFocus}
-            onKeyDownQuestionMark={this.showKeyboardShortcutsPanel}
-            screenReaderMessage={screenReaderInputMessage}
-            phrases={phrases}
-            isRTL={isRTL}
-            noBorder={noBorder}
-            block={block}
-            small={small}
-            regular={regular}
-            verticalSpacing={verticalSpacing}
-          />
-
-          {this.maybeRenderDayPickerWithPortal()}
-        </OutsideClickHandler>
+        {enableOutsideClick && (
+          <OutsideClickHandler onOutsideClick={this.onClearFocus}>
+            {input}
+            {this.maybeRenderDayPickerWithPortal()}
+          </OutsideClickHandler>
+        )}
+        {!enableOutsideClick && input}
+        {!enableOutsideClick && this.maybeRenderDayPickerWithPortal()}
       </div>
     );
   }
