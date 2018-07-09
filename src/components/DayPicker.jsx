@@ -1089,7 +1089,7 @@ export { DayPicker as PureDayPicker };
 export default withStyles(({ reactDates: { color, font, zIndex } }) => ({
   DayPicker: {
     background: color.background,
-    position: 'relative',
+    position: 'absolute',
     textAlign: 'left',
   },
 
@@ -1106,7 +1106,7 @@ export default withStyles(({ reactDates: { color, font, zIndex } }) => ({
   },
 
   DayPicker__withBorder: {
-    boxShadow: '0 2px 6px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.07)',
+    boxShadow: '0 2px 24px 0 rgba(148, 160, 173, 0.36)',
     borderRadius: 3,
   },
 

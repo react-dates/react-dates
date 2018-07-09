@@ -186,9 +186,9 @@ export default {
     font: {
       size: 9,
       captionSize: 13,
-      captionFont: 'AvenirNextLTPro-Regular',
+      captionFont: 'AvenirNextLTPro-Medium',
       weekHeaderLiFont: 'AvenirNextLTPro-Regular',
-      calendarDayFont: 'AvenirNextLTPro-Regular',
+      calendarDayFont: 'AvenirNextLTPro-Demi',
       input: {
         size: 19,
         lineHeight: '24px',
