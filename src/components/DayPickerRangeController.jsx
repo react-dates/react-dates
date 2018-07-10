@@ -370,29 +370,16 @@ export default class DayPickerRangeController extends React.Component {
       }
     }
 
-    if (minimumNights > 0 && startDate && focusedInput === END_DATE) {
-      modifiers = this.addModifierToRange(
-        modifiers,
-        startDate,
-        startDate.clone().add(minimumNights, 'days'),
-        'blocked-minimum-nights',
-      );
-    }
-
     if (didFocusChange || recomputePropModifiers) {
       values(visibleDays).forEach((days) => {
         Object.keys(days).forEach((day) => {
           const momentObj = moment(day);
-
-          if (this.isBlocked(momentObj)) {
-            modifiers = this.addModifier(modifiers, momentObj, 'blocked');
-          } else {
-            modifiers = this.deleteModifier(modifiers, momentObj, 'blocked');
-          }
+          let isBlocked = false;
 
           if (didFocusChange || recomputeOutsideRange) {
             if (isOutsideRange(momentObj)) {
               modifiers = this.addModifier(modifiers, momentObj, 'blocked-out-of-range');
+              isBlocked = true;
             } else {
               modifiers = this.deleteModifier(modifiers, momentObj, 'blocked-out-of-range');
             }
@@ -401,9 +388,16 @@ export default class DayPickerRangeController extends React.Component {
           if (didFocusChange || recomputeDayBlocked) {
             if (isDayBlocked(momentObj)) {
               modifiers = this.addModifier(modifiers, momentObj, 'blocked-calendar');
+              isBlocked = true;
             } else {
               modifiers = this.deleteModifier(modifiers, momentObj, 'blocked-calendar');
             }
+          }
+
+          if (isBlocked) {
+            modifiers = this.addModifier(modifiers, momentObj, 'blocked');
+          } else {
+            modifiers = this.deleteModifier(modifiers, momentObj, 'blocked');
           }
 
           if (didFocusChange || recomputeDayHighlighted) {
@@ -415,6 +409,22 @@ export default class DayPickerRangeController extends React.Component {
           }
         });
       });
+    }
+
+    if (minimumNights > 0 && startDate && focusedInput === END_DATE) {
+      modifiers = this.addModifierToRange(
+        modifiers,
+        startDate,
+        startDate.clone().add(minimumNights, 'days'),
+        'blocked-minimum-nights',
+      );
+
+      modifiers = this.addModifierToRange(
+        modifiers,
+        startDate,
+        startDate.clone().add(minimumNights, 'days'),
+        'blocked',
+      );
     }
 
     const today = moment();
