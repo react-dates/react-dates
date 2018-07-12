@@ -728,8 +728,11 @@ describe('DayPickerRangeController', () => {
           describe('new focusedInput !== END_DATE', () => {
             it('does not call addModifierFromRange with `blocked-minimum-nights', () => {
               const addModifierToRangeSpy = sinon.spy(DayPickerRangeController.prototype, 'addModifierToRange');
+              const startDate = moment(today);
               const wrapper = shallow(<DayPickerRangeController
                 {...props}
+                focusedInput={END_DATE}
+                startDate={startDate}
                 minimumNights={5}
               />);
               wrapper.instance().componentWillReceiveProps({
@@ -740,6 +743,43 @@ describe('DayPickerRangeController', () => {
               });
               const minimumNightsCalls = getCallsByModifier(addModifierToRangeSpy, 'blocked-minimum-nights');
               expect(minimumNightsCalls.length).to.equal(0);
+            });
+
+            it('updates state to remove `blocked-minimum-nights` and `blocked` from the appropriate days', () => {
+              const startDate = today;
+              const minimumNights = 5;
+              const wrapper = shallow(<DayPickerRangeController
+                {...props}
+                focusedInput={END_DATE}
+                startDate={startDate}
+                minimumNights={minimumNights}
+              />);
+              const { visibleDays } = wrapper.state();
+              let day = moment(today);
+              for (let i = 0; i < minimumNights; i += 1) {
+                const monthString = toISOMonthString(day);
+                const dateString = toISODateString(day);
+                expect(visibleDays[monthString][dateString]).to.include('blocked-minimum-nights');
+                expect(visibleDays[monthString][dateString]).to.include('blocked');
+                day.add(1, 'day');
+              }
+
+              wrapper.instance().componentWillReceiveProps({
+                ...props,
+                startDate,
+                focusedInput: START_DATE,
+                minimumNights,
+              });
+
+              const { visibleDays: newVisibleDays } = wrapper.state();
+              day = moment(today);
+              for (let i = 0; i < minimumNights; i += 1) {
+                const monthString = toISOMonthString(day);
+                const dateString = toISODateString(day);
+                expect(newVisibleDays[monthString][dateString]).not.to.include('blocked-minimum-nights');
+                expect(newVisibleDays[monthString][dateString]).not.to.include('blocked');
+                day.add(1, 'day');
+              }
             });
           });
 
@@ -765,79 +805,54 @@ describe('DayPickerRangeController', () => {
               expect(minimumNightsCalls[0].args[1]).to.equal(startDate);
               expect(isSameDay(minimumNightsCalls[0].args[2], minimumNightsEndSpan)).to.equal(true);
             });
-          });
-        });
-      });
 
-      describe('blocked', () => {
-        describe('focusedInput did not change', () => {
-          it('does not call isBlocked', () => {
-            const isBlockedStub = sinon.stub(DayPickerRangeController.prototype, 'isBlocked');
-            const wrapper = shallow(<DayPickerRangeController {...props} />);
-            isBlockedStub.resetHistory();
-            wrapper.instance().componentWillReceiveProps({
-              ...props,
-            });
-            expect(isBlockedStub.callCount).to.equal(0);
-          });
-        });
-
-        describe('focusedInput changed', () => {
-          const numVisibleDays = 3;
-          let visibleDays;
-          beforeEach(() => {
-            const startOfMonth = today.clone().startOf('month');
-            visibleDays = {
-              [toISOMonthString(startOfMonth)]: {
-                [toISODateString(startOfMonth)]: [],
-                [toISODateString(startOfMonth.clone().add(1, 'day'))]: [],
-                [toISODateString(startOfMonth.clone().add(2, 'days'))]: [],
-              },
-            };
-          });
-
-          it('calls isBlocked for every visible day', () => {
-            const isBlockedStub = sinon.stub(DayPickerRangeController.prototype, 'isBlocked');
-            const wrapper = shallow(<DayPickerRangeController {...props} />);
-            wrapper.setState({ visibleDays });
-            isBlockedStub.resetHistory();
-            wrapper.instance().componentWillReceiveProps({
-              ...props,
-              focusedInput: END_DATE,
-            });
-            expect(isBlockedStub.callCount).to.equal(numVisibleDays);
-          });
-
-          it('if isBlocked(day) is true calls addModifier with `blocked` for each day', () => {
-            const addModifierSpy = sinon.spy(DayPickerRangeController.prototype, 'addModifier');
-            sinon.stub(DayPickerRangeController.prototype, 'isBlocked').returns(true);
-            const wrapper = shallow(<DayPickerRangeController {...props} />);
-            wrapper.setState({ visibleDays });
-            wrapper.instance().componentWillReceiveProps({
-              ...props,
-              focusedInput: START_DATE,
-            });
-            const blockedCalendarCalls = getCallsByModifier(addModifierSpy, 'blocked');
-            expect(blockedCalendarCalls.length).to.equal(numVisibleDays);
-          });
-
-          it('if isBlocked(day) is false calls deleteModifier with day and `blocked`', () => {
-            const deleteModifierSpy = sinon.spy(DayPickerRangeController.prototype, 'deleteModifier');
-            sinon.stub(DayPickerRangeController.prototype, 'isBlocked').returns(false);
-            const wrapper = shallow((
-              <DayPickerRangeController
+            it('updates state to include `blocked-minimum-nights` on the appropriate days', () => {
+              const startDate = today;
+              const minimumNights = 5;
+              const wrapper = shallow(<DayPickerRangeController
                 {...props}
-                minimumNights={0}
-              />
-            ));
-            wrapper.setState({ visibleDays });
-            wrapper.instance().componentWillReceiveProps({
-              ...props,
-              minimumNights: 0,
-              focusedInput: END_DATE,
+                startDate={startDate}
+                minimumNights={minimumNights}
+              />);
+              wrapper.instance().componentWillReceiveProps({
+                ...props,
+                startDate,
+                focusedInput: END_DATE,
+                minimumNights,
+              });
+              const { visibleDays } = wrapper.state();
+              const day = moment(today);
+              for (let i = 0; i < minimumNights; i += 1) {
+                const monthString = toISOMonthString(day);
+                const dateString = toISODateString(day);
+                expect(visibleDays[monthString][dateString]).to.include('blocked-minimum-nights');
+                day.add(1, 'day');
+              }
             });
-            const blockedCalendarCalls = getCallsByModifier(deleteModifierSpy, 'blocked');
-            expect(blockedCalendarCalls.length).to.equal(numVisibleDays);
+
+            it('updates state to include `blocked` on the appropriate days', () => {
+              const startDate = today;
+              const minimumNights = 5;
+              const wrapper = shallow(<DayPickerRangeController
+                {...props}
+                startDate={startDate}
+                minimumNights={minimumNights}
+              />);
+              wrapper.instance().componentWillReceiveProps({
+                ...props,
+                startDate,
+                focusedInput: END_DATE,
+                minimumNights,
+              });
+              const { visibleDays } = wrapper.state();
+              const day = moment(today);
+              for (let i = 0; i < minimumNights; i += 1) {
+                const monthString = toISOMonthString(day);
+                const dateString = toISODateString(day);
+                expect(visibleDays[monthString][dateString]).to.include('blocked');
+                day.add(1, 'day');
+              }
+            });
           });
         });
       });
