@@ -1,5 +1,11 @@
 # Change Log
 
+## 17.1.0
+- [new] Add `ModifiersShape` and use throughout the codebase ([#1231](https://github.com/airbnb/react-dates/pull/1231))
+- [fix] Fix minimum nights `blocked` modifiers being applied incorrectly ([#1259](https://github.com/airbnb/react-dates/pull/1259))
+- [fix] Update conditions where `adjustDayPickerHeight` is called ([#1241](https://github.com/airbnb/react-dates/pull/1241))
+- [fix] Do not render `OutsideClickHandler` unnecessarily ([#1256](https://github.com/airbnb/react-dates/pull/1256))
+
 ## 17.0.0
 - [fix] Replace dumb quotes with smart quotes in default phrases ([#1168](https://github.com/airbnb/react-dates/pull/1168))
 - [fix] Fix outside day movement on hover ([#1178](https://github.com/airbnb/react-dates/pull/1178))
