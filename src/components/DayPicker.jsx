@@ -316,8 +316,20 @@ class DayPicker extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { isFocused } = this.props;
-    const { focusedDate } = this.state;
+    const {
+      orientation, daySize, isFocused, numberOfMonths,
+    } = this.props;
+    const { focusedDate, monthTitleHeight } = this.state;
+
+    if (
+      this.isHorizontal()
+      && (orientation !== prevProps.orientation || daySize !== prevProps.daySize)
+    ) {
+      const visibleCalendarWeeks = this.calendarMonthWeeks.slice(1, numberOfMonths + 1);
+      const calendarMonthWeeksHeight = Math.max(0, ...visibleCalendarWeeks) * (daySize - 1);
+      const newMonthHeight = monthTitleHeight + calendarMonthWeeksHeight + 1;
+      this.adjustDayPickerHeight(newMonthHeight);
+    }
 
     if (!prevProps.isFocused && isFocused && !focusedDate) {
       this.container.focus();
