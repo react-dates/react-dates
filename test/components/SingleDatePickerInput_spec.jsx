@@ -78,7 +78,7 @@ describe('SingleDatePickerInput', () => {
         )).dive();
         const clearDateWrapper = wrapper.find('button');
         clearDateWrapper.simulate('click');
-        expect(onClearDateSpy.called).to.equal(true);
+        expect(onClearDateSpy).to.have.property('called', true);
       });
     });
   });

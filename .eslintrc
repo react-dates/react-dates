@@ -25,8 +25,6 @@
     "no-restricted-imports": 0, // TODO: enable with full RTL support
 
     "react/jsx-one-expression-per-line": 1, // TODO: enable once fixed upstream
-
-    "jsx-a11y/aria-proptypes": 1, // TODO: https://github.com/evcohen/eslint-plugin-jsx-a11y/issues/454
   },
 
   "settings": {

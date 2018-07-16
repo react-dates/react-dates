@@ -195,8 +195,8 @@ function SingleDatePickerInput({
           type="button"
           aria-label={phrases.clearDate}
           disabled={disabled}
-          onMouseEnter={this.onClearDateMouseEnter}
-          onMouseLeave={this.onClearDateMouseLeave}
+          onMouseEnter={this && this.onClearDateMouseEnter}
+          onMouseLeave={this && this.onClearDateMouseLeave}
           onClick={onClearDate}
         >
           {closeIcon}
