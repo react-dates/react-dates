@@ -1,5 +1,8 @@
 # Change Log
 
+## 17.1.1
+- [fix] Set `DayPickerNavigation__horizontal` height to zero ([#1265](https://github.com/airbnb/react-dates/pull/1265))
+
 ## 17.1.0
 - [new] Add `ModifiersShape` and use throughout the codebase ([#1231](https://github.com/airbnb/react-dates/pull/1231))
 - [fix] Fix minimum nights `blocked` modifiers being applied incorrectly ([#1259](https://github.com/airbnb/react-dates/pull/1259))
