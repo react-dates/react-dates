@@ -42,6 +42,12 @@ _gh-pages
 
 .nyc_output
 
+# mocha xunit nyc_output
+xunit.xml
+
+# Karma Test output
+reports
+
 # Only apps should have lockfiles
 yarn.lock
 package-lock.json

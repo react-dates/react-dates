@@ -58,7 +58,11 @@ module.exports = (config) => {
       'test/**/*': ['webpack'],
     },
 
-    reporters: ['progress'],
+    reporters: ['progress', 'junit'],
+
+    junitReporter: {
+      outputDir: 'reports/karma', // results will be saved as $outputDir/$browserName.xml
+    },
 
     port: 9876,
 
