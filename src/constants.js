@@ -35,3 +35,4 @@ export const FANG_HEIGHT_PX = 10;
 export const DEFAULT_VERTICAL_SPACING = 22;
 
 export const MODIFIER_KEY_NAMES = new Set(['Shift', 'Control', 'Alt', 'Meta']);
+export const KEYBOARD_NAV_KEY_NAMES = new Set(['ArrowUp', 'ArrowLeft', 'ArrowDown', 'ArrowRight', 'PageUp', 'PageDown']);
