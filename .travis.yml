@@ -20,7 +20,7 @@ script:
   - 'if [ -n "${BUILD-}" ]; then npm run lint ; fi'
   - 'if [ "${TEST-}" = true ]; then npm run tests-only ; fi'
   - 'if [ -n "${KARMA-}" ]; then npm run tests-karma ; fi'
-  - 'if [ -n "${COVERAGE-}" ]; then npm run cover; cat ./coverage/lcov.info | ./node_modules/.bin/coveralls ; fi'
+  - 'if [ -n "${COVERAGE-}" ] && [ "${TRAVIS_BRANCH-}" = "master" ]; then npm run cover; cat ./coverage/lcov.info | ./node_modules/.bin/coveralls ; fi'
 after_script:
   - if [ "${TEST-}" = true ]; then
       testspace [Node-$TRAVIS_NODE_VERSION/React-$REACT]xunit.xml{test};
@@ -38,7 +38,7 @@ env:
     - REACT=16
 sudo: false
 matrix:
-  fast_finish: false
+  fast_finish: true
   include:
     - node_js: "lts/*"
       env: LINT=true TEST=false
