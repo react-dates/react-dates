@@ -31,6 +31,16 @@ describe('DateInput', () => {
         expect(wrapper.find('input').props().value).to.equal(DATE_STRING);
       });
 
+      it('props.displayValue overrides dateString when not null', () => {
+        const DATE_STRING = 'foobar';
+        const DISPLAY_VALUE = 'display-value';
+        const wrapper = shallow(<DateInput id="date" />).dive();
+        wrapper.setState({ dateString: DATE_STRING });
+        expect(wrapper.find('input').props().value).to.equal(DATE_STRING);
+        wrapper.setProps({ displayValue: DISPLAY_VALUE });
+        expect(wrapper.find('input').props().value).to.equal(DISPLAY_VALUE);
+      });
+
       describe('props.readOnly is truthy', () => {
         it('sets readOnly', () => {
           const wrapper = shallow(<DateInput id="date" readOnly />).dive();
