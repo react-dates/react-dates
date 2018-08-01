@@ -16,7 +16,7 @@ import isSameDay from '../../src/utils/isSameDay';
 import * as isDayVisible from '../../src/utils/isDayVisible';
 import getVisibleDays from '../../src/utils/getVisibleDays';
 
-import { START_DATE, END_DATE } from '../../src/constants';
+import { START_DATE, VERTICAL_SCROLLABLE, END_DATE } from '../../src/constants';
 
 // Set to noon to mimic how days in the picker are configured internally
 const today = moment().startOf('day').hours(12);
@@ -2522,7 +2522,7 @@ describe('DayPickerRangeController', () => {
       expect(Object.keys(modifiers[toISOMonthString(today)])).to.contain(toISODateString(today));
     });
 
-    it('return value no longer has modifier arg for day if was in first arg', () => {
+    it('return value now has modifier arg for day if was in first arg', () => {
       const modifierToAdd = 'foo';
       const monthISO = toISOMonthString(today);
       const todayISO = toISODateString(today);
@@ -2539,7 +2539,7 @@ describe('DayPickerRangeController', () => {
       expect(Array.from(modifiers[monthISO][todayISO])).to.contain(modifierToAdd);
     });
 
-    it('return value no longer has modifier arg for day if was in state', () => {
+    it('return value now has modifier arg for day if was in state', () => {
       const modifierToAdd = 'foo';
       const monthISO = toISOMonthString(today);
       const todayISO = toISODateString(today);
@@ -2555,6 +2555,29 @@ describe('DayPickerRangeController', () => {
         },
       });
       const modifiers = wrapper.instance().addModifier({}, today, modifierToAdd);
+      expect(Array.from(modifiers[monthISO][todayISO])).to.contain(modifierToAdd);
+    });
+
+    it('return value now has modifier arg for day after multiplying number of months', () => {
+      const modifierToAdd = 'foo';
+      const futureDateAfterMultiply = today.clone().add(4, 'months');
+      const monthISO = toISOMonthString(futureDateAfterMultiply);
+      const todayISO = toISODateString(futureDateAfterMultiply);
+      const updatedDays = {
+        [monthISO]: { [todayISO]: new Set(['bar', 'baz']) },
+      };
+      const wrapper = shallow((
+        <DayPickerRangeController
+          onDatesChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+          orientation={VERTICAL_SCROLLABLE}
+          numberOfMonths={3}
+        />
+      )).instance();
+      let modifiers = wrapper.addModifier(updatedDays, futureDateAfterMultiply, modifierToAdd);
+      expect(Array.from(modifiers[monthISO][todayISO])).to.not.contain(modifierToAdd);
+      wrapper.onMultiplyScrollableMonths();
+      modifiers = wrapper.addModifier(updatedDays, futureDateAfterMultiply, modifierToAdd);
       expect(Array.from(modifiers[monthISO][todayISO])).to.contain(modifierToAdd);
     });
   });
