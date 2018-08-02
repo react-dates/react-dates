@@ -10,6 +10,9 @@ import DayPickerSingleDateController from '../../src/components/DayPickerSingleD
 import toISODateString from '../../src/utils/toISODateString';
 import toISOMonthString from '../../src/utils/toISOMonthString';
 import * as isDayVisible from '../../src/utils/isDayVisible';
+import getVisibleDays from '../../src/utils/getVisibleDays';
+
+import { VERTICAL_SCROLLABLE } from '../../src/constants';
 
 // Set to noon to mimic how days in the picker are configured internally
 const today = moment().startOf('day').hours(12);
@@ -1134,6 +1137,34 @@ describe('DayPickerSingleDateController', () => {
       const modifiers = wrapper.instance().addModifier({}, today, modifierToAdd);
       expect(Array.from(modifiers[monthISO][todayISO])).to.contain(modifierToAdd);
     });
+
+    it('return new modifier if vertically scrollable load more months', () => {
+      const modifierToAdd = 'foo';
+      const numberOfMonths = 2;
+      const nextMonth = today.clone().add(numberOfMonths, 'month');
+      const nextMonthISO = toISOMonthString(nextMonth);
+      const nextMonthDayISO = toISODateString(nextMonth);
+      const updatedDays = {
+        [nextMonthISO]: { [nextMonthDayISO]: new Set(['bar', 'baz']) },
+      };
+      const wrapper = shallow((
+        <DayPickerSingleDateController
+          onDatesChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+          numberOfMonths={numberOfMonths}
+          orientation={VERTICAL_SCROLLABLE}
+        />
+      ));
+      wrapper.setState({
+        currentMonth: today,
+        visibleDays: {
+          ...getVisibleDays(today, numberOfMonths),
+          ...getVisibleDays(nextMonth, numberOfMonths),
+        },
+      });
+      const modifiers = wrapper.instance().addModifier(updatedDays, nextMonth, modifierToAdd);
+      expect(Array.from(modifiers[nextMonthISO][nextMonthDayISO])).to.contain(modifierToAdd);
+    });
   });
 
   describe('#deleteModifier', () => {
@@ -1218,6 +1249,34 @@ describe('DayPickerSingleDateController', () => {
       });
       const modifiers = wrapper.instance().deleteModifier({}, today, modifierToDelete);
       expect(Array.from(modifiers[monthISO][todayISO])).to.not.contain(modifierToDelete);
+    });
+
+    it('return new modifier if vertically scrollable load more months', () => {
+      const modifierToDelete = 'foo';
+      const numberOfMonths = 2;
+      const nextMonth = today.clone().add(numberOfMonths, 'month');
+      const nextMonthISO = toISOMonthString(nextMonth);
+      const nextMonthDayISO = toISODateString(nextMonth);
+      const updatedDays = {
+        [nextMonthISO]: { [nextMonthDayISO]: new Set(['foo', 'bar', 'baz']) },
+      };
+      const wrapper = shallow((
+        <DayPickerSingleDateController
+          onDatesChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+          numberOfMonths={numberOfMonths}
+          orientation={VERTICAL_SCROLLABLE}
+        />
+      ));
+      wrapper.setState({
+        currentMonth: today,
+        visibleDays: {
+          ...getVisibleDays(today, numberOfMonths),
+          ...getVisibleDays(nextMonth, numberOfMonths),
+        },
+      });
+      const modifiers = wrapper.instance().deleteModifier(updatedDays, nextMonth, modifierToDelete);
+      expect(Array.from(modifiers[nextMonthISO][nextMonthDayISO])).to.not.contain(modifierToDelete);
     });
   });
 
