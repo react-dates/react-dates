@@ -44,7 +44,6 @@ import {
 } from '../constants';
 
 const MONTH_PADDING = 23;
-const DAY_PICKER_PADDING = 9;
 const PREV_TRANSITION = 'prev';
 const NEXT_TRANSITION = 'next';
 const MONTH_SELECTION_TRANSITION = 'month_selection';
@@ -173,8 +172,10 @@ class DayPicker extends React.Component {
       focusedDate = props.getFirstFocusableDay(currentMonth);
     }
 
+    const { reactDates: { spacing: { calendarMonthHorizontalPadding } } } = props.theme;
+
     const translationValue = props.isRTL && this.isHorizontal()
-      ? -getCalendarMonthWidth(props.daySize)
+      ? -getCalendarMonthWidth(props.daySize, calendarMonthHorizontalPadding)
       : 0;
 
     this.hasSetInitialVisibleMonth = !props.hidden;
@@ -183,7 +184,7 @@ class DayPicker extends React.Component {
       monthTransition: null,
       translationValue,
       scrollableMonthMultiple: 1,
-      calendarMonthWidth: getCalendarMonthWidth(props.daySize),
+      calendarMonthWidth: getCalendarMonthWidth(props.daySize, calendarMonthHorizontalPadding),
       focusedDate: (!props.hidden || props.isFocused) ? focusedDate : null,
       nextFocusedDate: null,
       showKeyboardShortcuts: props.showKeyboardShortcuts,
@@ -240,6 +241,7 @@ class DayPicker extends React.Component {
       showKeyboardShortcuts,
       onBlur,
       renderMonthText,
+      theme: { reactDates: { spacing: calendarMonthHorizontalPadding } },
     } = nextProps;
     const { currentMonth } = this.state;
 
@@ -260,7 +262,8 @@ class DayPicker extends React.Component {
 
     if (nextProps.daySize !== daySize) {
       this.setState({
-        calendarMonthWidth: getCalendarMonthWidth(nextProps.daySize),
+        calendarMonthWidth:
+          getCalendarMonthWidth(nextProps.daySize, calendarMonthHorizontalPadding),
       });
     }
 
@@ -899,6 +902,7 @@ class DayPicker extends React.Component {
       isFocused,
       isRTL,
       styles,
+      theme,
       phrases,
       verticalHeight,
       dayAriaLabelFormat,
@@ -906,6 +910,8 @@ class DayPicker extends React.Component {
       transitionDuration,
       verticalBorderSpacing,
     } = this.props;
+
+    const { reactDates: { spacing: { dayPickerHorizontalPadding } } } = theme;
 
     const isHorizontal = this.isHorizontal();
 
@@ -956,7 +962,8 @@ class DayPicker extends React.Component {
       : 0;
 
     const firstVisibleMonthIndex = this.getFirstVisibleIndex();
-    const wrapperHorizontalWidth = (calendarMonthWidth * numberOfMonths) + (2 * DAY_PICKER_PADDING);
+    const wrapperHorizontalWidth = (calendarMonthWidth * numberOfMonths)
+      + (2 * dayPickerHorizontalPadding);
     // Adding `1px` because of whitespace between 2 inline-block
     const fullHorizontalWidth = wrapperHorizontalWidth + calendarInfoPanelWidth + 1;
 
@@ -1093,7 +1100,12 @@ DayPicker.propTypes = propTypes;
 DayPicker.defaultProps = defaultProps;
 
 export { DayPicker as PureDayPicker };
-export default withStyles(({ reactDates: { color, font, zIndex } }) => ({
+
+export default withStyles(({
+  reactDates: {
+    color, font, noScrollBarOnVerticalScrollable, spacing, zIndex,
+  },
+}) => ({
   DayPicker: {
     background: color.background,
     position: 'relative',
@@ -1147,7 +1159,7 @@ export default withStyles(({ reactDates: { color, font, zIndex } }) => ({
   },
 
   DayPicker_weekHeaders__horizontal: {
-    marginLeft: 9,
+    marginLeft: spacing.dayPickerHorizontalPadding,
   },
 
   DayPicker_weekHeader: {
@@ -1155,7 +1167,7 @@ export default withStyles(({ reactDates: { color, font, zIndex } }) => ({
     position: 'absolute',
     top: 62,
     zIndex: zIndex + 2,
-    padding: '0 13px',
+    padding: `0 ${spacing.calendarMonthHorizontalPadding}px`,
     textAlign: 'left',
   },
 
@@ -1210,5 +1222,12 @@ export default withStyles(({ reactDates: { color, font, zIndex } }) => ({
     right: 0,
     left: 0,
     overflowY: 'scroll',
+    ...noScrollBarOnVerticalScrollable && {
+      '-webkitOverflowScrolling': 'touch',
+      '::-webkit-scrollbar': {
+        '-webkit-appearance': 'none',
+        display: 'none',
+      },
+    },
   },
 }))(DayPicker);

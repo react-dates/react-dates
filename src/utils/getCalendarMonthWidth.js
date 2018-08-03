@@ -1,5 +1,3 @@
-const CALENDAR_MONTH_PADDING = 9;
-
-export default function getCalendarMonthWidth(daySize) {
-  return (7 * (daySize + 1)) + (2 * (CALENDAR_MONTH_PADDING + 1));
+export default function getCalendarMonthWidth(daySize, calendarMonthPadding) {
+  return (7 * daySize) + (2 * calendarMonthPadding) + 1;
 }

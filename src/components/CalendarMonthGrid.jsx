@@ -260,6 +260,7 @@ class CalendarMonthGrid extends React.Component {
       isFocused,
       isRTL,
       styles,
+      theme: { reactDates: theme },
       phrases,
       dayAriaLabelFormat,
       transitionDuration,
@@ -272,7 +273,10 @@ class CalendarMonthGrid extends React.Component {
     const isVerticalScrollable = orientation === VERTICAL_SCROLLABLE;
     const isHorizontal = orientation === HORIZONTAL_ORIENTATION;
 
-    const calendarMonthWidth = getCalendarMonthWidth(daySize);
+    const calendarMonthWidth = getCalendarMonthWidth(
+      daySize,
+      theme.spacing.calendarMonthHorizontalPadding,
+    );
 
     const width = isVertical || isVerticalScrollable
       ? calendarMonthWidth
@@ -363,7 +367,14 @@ class CalendarMonthGrid extends React.Component {
 CalendarMonthGrid.propTypes = propTypes;
 CalendarMonthGrid.defaultProps = defaultProps;
 
-export default withStyles(({ reactDates: { color, zIndex } }) => ({
+export default withStyles(({
+  reactDates: {
+    color,
+    noScrollBarOnVerticalScrollable,
+    spacing,
+    zIndex,
+  },
+}) => ({
   CalendarMonthGrid: {
     background: color.background,
     textAlign: 'left',
@@ -376,7 +387,7 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
 
   CalendarMonthGrid__horizontal: {
     position: 'absolute',
-    left: 9,
+    left: spacing.dayPickerHorizontalPadding,
   },
 
   CalendarMonthGrid__vertical: {
@@ -386,6 +397,13 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
   CalendarMonthGrid__vertical_scrollable: {
     margin: '0 auto',
     overflowY: 'scroll',
+    ...noScrollBarOnVerticalScrollable && {
+      '-webkitOverflowScrolling': 'touch',
+      '::-webkit-scrollbar': {
+        '-webkit-appearance': 'none',
+        display: 'none',
+      },
+    },
   },
 
   CalendarMonthGrid_month__horizontal: {

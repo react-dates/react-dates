@@ -249,7 +249,7 @@ export default withStyles(({ reactDates: { color, font, spacing } }) => ({
   CalendarMonth: {
     background: color.background,
     textAlign: 'center',
-    padding: '0 13px',
+    padding: `0 ${spacing.calendarMonthHorizontalPadding}px`,
     verticalAlign: 'top',
     userSelect: 'none',
   },

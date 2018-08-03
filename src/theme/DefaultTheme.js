@@ -153,6 +153,8 @@ export default {
     },
 
     spacing: {
+      calendarMonthHorizontalPadding: 13,
+      dayPickerHorizontalPadding: 9,
       captionPaddingTop: 22,
       captionPaddingBottom: 37,
       inputPadding: 0,
@@ -175,6 +177,8 @@ export default {
       inputWidth_small: 97,
       arrowWidth: 24,
     },
+
+    noScrollBarOnVerticalScrollable: false,
 
     font: {
       size: 14,
