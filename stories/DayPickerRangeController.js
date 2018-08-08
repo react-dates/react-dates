@@ -360,6 +360,19 @@ storiesOf('DayPickerRangeController', module)
       verticalBorderSpacing={16}
     />
   ))
+  .addWithInfo('with custom horizontal month spacing applied', () => (
+    <div style={{ height: 500 }}>
+      <DayPickerRangeControllerWrapper
+        onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
+        onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
+        onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
+        orientation={VERTICAL_SCROLLABLE}
+        numberOfMonths={6}
+        verticalHeight={800}
+        horizontalMonthPadding={0}
+      />
+    </div>
+  ))
   .addWithInfo('with no nav buttons', () => (
     <DayPickerRangeControllerWrapper
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}

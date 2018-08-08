@@ -25,7 +25,6 @@ import DayOfWeekShape from '../shapes/DayOfWeekShape';
 
 import {
   HORIZONTAL_ORIENTATION,
-  VERTICAL_ORIENTATION,
   VERTICAL_SCROLLABLE,
   DAY_SIZE,
 } from '../constants';
@@ -33,6 +32,7 @@ import {
 const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
   month: momentPropTypes.momentObj,
+  horizontalMonthPadding: nonNegativeInteger,
   isVisible: PropTypes.bool,
   enableOutsideDays: PropTypes.bool,
   modifiers: PropTypes.objectOf(ModifiersShape),
@@ -62,6 +62,7 @@ const propTypes = forbidExtraProps({
 
 const defaultProps = {
   month: moment(),
+  horizontalMonthPadding: 13,
   isVisible: true,
   enableOutsideDays: false,
   modifiers: {},
@@ -155,26 +156,27 @@ class CalendarMonth extends React.Component {
 
   render() {
     const {
-      month,
-      monthFormat,
-      orientation,
+      dayAriaLabelFormat,
+      daySize,
+      focusedDate,
+      horizontalMonthPadding,
+      isFocused,
       isVisible,
       modifiers,
+      month,
+      monthFormat,
       onDayClick,
       onDayMouseEnter,
       onDayMouseLeave,
       onMonthSelect,
       onYearSelect,
-      renderMonthText,
+      orientation,
+      phrases,
       renderCalendarDay,
       renderDayContents,
       renderMonthElement,
-      daySize,
-      focusedDate,
-      isFocused,
+      renderMonthText,
       styles,
-      phrases,
-      dayAriaLabelFormat,
       verticalBorderSpacing,
     } = this.props;
 
@@ -187,9 +189,7 @@ class CalendarMonth extends React.Component {
       <div
         {...css(
           styles.CalendarMonth,
-          orientation === HORIZONTAL_ORIENTATION && styles.CalendarMonth__horizontal,
-          orientation === VERTICAL_ORIENTATION && styles.CalendarMonth__vertical,
-          verticalScrollable && styles.CalendarMonth__verticalScrollable,
+          { padding: `0 ${horizontalMonthPadding}px` },
         )}
         data-visible={isVisible}
       >
@@ -203,7 +203,9 @@ class CalendarMonth extends React.Component {
           {renderMonthElement ? (
             renderMonthElement({ month, onMonthSelect, onYearSelect })
           ) : (
-            <strong>{monthTitle}</strong>
+            <strong>
+              {monthTitle}
+            </strong>
           )}
         </div>
 
@@ -249,7 +251,6 @@ export default withStyles(({ reactDates: { color, font, spacing } }) => ({
   CalendarMonth: {
     background: color.background,
     textAlign: 'center',
-    padding: `0 ${spacing.calendarMonthHorizontalPadding}px`,
     verticalAlign: 'top',
     userSelect: 'none',
   },

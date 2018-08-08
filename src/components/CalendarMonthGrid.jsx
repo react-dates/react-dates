@@ -34,6 +34,7 @@ const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
   enableOutsideDays: PropTypes.bool,
   firstVisibleMonthIndex: PropTypes.number,
+  horizontalMonthPadding: nonNegativeInteger,
   initialMonth: momentPropTypes.momentObj,
   isAnimating: PropTypes.bool,
   numberOfMonths: PropTypes.number,
@@ -68,6 +69,7 @@ const propTypes = forbidExtraProps({
 const defaultProps = {
   enableOutsideDays: false,
   firstVisibleMonthIndex: 0,
+  horizontalMonthPadding: 13,
   initialMonth: moment(),
   isAnimating: false,
   numberOfMonths: 1,
@@ -240,6 +242,7 @@ class CalendarMonthGrid extends React.Component {
     const {
       enableOutsideDays,
       firstVisibleMonthIndex,
+      horizontalMonthPadding,
       isAnimating,
       modifiers,
       numberOfMonths,
@@ -260,7 +263,6 @@ class CalendarMonthGrid extends React.Component {
       isFocused,
       isRTL,
       styles,
-      theme: { reactDates: theme },
       phrases,
       dayAriaLabelFormat,
       transitionDuration,
@@ -275,7 +277,7 @@ class CalendarMonthGrid extends React.Component {
 
     const calendarMonthWidth = getCalendarMonthWidth(
       daySize,
-      theme.spacing.calendarMonthHorizontalPadding,
+      horizontalMonthPadding,
     );
 
     const width = isVertical || isVerticalScrollable
@@ -355,6 +357,7 @@ class CalendarMonthGrid extends React.Component {
                 setMonthTitleHeight={setMonthTitleHeight}
                 dayAriaLabelFormat={dayAriaLabelFormat}
                 verticalBorderSpacing={verticalBorderSpacing}
+                horizontalMonthPadding={horizontalMonthPadding}
               />
             </div>
           );
@@ -397,13 +400,13 @@ export default withStyles(({
   CalendarMonthGrid__vertical_scrollable: {
     margin: '0 auto',
     overflowY: 'scroll',
-    ...noScrollBarOnVerticalScrollable && {
+    ...(noScrollBarOnVerticalScrollable && {
       '-webkitOverflowScrolling': 'touch',
       '::-webkit-scrollbar': {
         '-webkit-appearance': 'none',
         display: 'none',
       },
-    },
+    }),
   },
 
   CalendarMonthGrid_month__horizontal: {

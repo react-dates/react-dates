@@ -62,6 +62,7 @@ export default {
   isRTL: PropTypes.bool,
   verticalHeight: nonNegativeInteger,
   transitionDuration: nonNegativeInteger,
+  horizontalMonthPadding: nonNegativeInteger,
 
   // navigation related props
   navPrev: PropTypes.node,
