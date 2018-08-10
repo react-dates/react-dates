@@ -86,6 +86,7 @@ const defaultProps = {
   isRTL: false,
   verticalHeight: null,
   transitionDuration: undefined,
+  horizontalMonthPadding: 13,
 
   // navigation related props
   navPrev: null,
@@ -427,6 +428,7 @@ class SingleDatePicker extends React.Component {
       verticalHeight,
       transitionDuration,
       verticalSpacing,
+      horizontalMonthPadding,
       small,
       theme: { reactDates },
     } = this.props;
@@ -501,6 +503,7 @@ class SingleDatePicker extends React.Component {
           weekDayFormat={weekDayFormat}
           verticalHeight={verticalHeight}
           transitionDuration={transitionDuration}
+          horizontalMonthPadding={horizontalMonthPadding}
         />
 
         {withFullScreenPortal && (

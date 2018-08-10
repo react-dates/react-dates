@@ -34,6 +34,7 @@ const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
   enableOutsideDays: PropTypes.bool,
   firstVisibleMonthIndex: PropTypes.number,
+  horizontalMonthPadding: nonNegativeInteger,
   initialMonth: momentPropTypes.momentObj,
   isAnimating: PropTypes.bool,
   numberOfMonths: PropTypes.number,
@@ -68,6 +69,7 @@ const propTypes = forbidExtraProps({
 const defaultProps = {
   enableOutsideDays: false,
   firstVisibleMonthIndex: 0,
+  horizontalMonthPadding: 13,
   initialMonth: moment(),
   isAnimating: false,
   numberOfMonths: 1,
@@ -240,6 +242,7 @@ class CalendarMonthGrid extends React.Component {
     const {
       enableOutsideDays,
       firstVisibleMonthIndex,
+      horizontalMonthPadding,
       isAnimating,
       modifiers,
       numberOfMonths,
@@ -272,7 +275,10 @@ class CalendarMonthGrid extends React.Component {
     const isVerticalScrollable = orientation === VERTICAL_SCROLLABLE;
     const isHorizontal = orientation === HORIZONTAL_ORIENTATION;
 
-    const calendarMonthWidth = getCalendarMonthWidth(daySize);
+    const calendarMonthWidth = getCalendarMonthWidth(
+      daySize,
+      horizontalMonthPadding,
+    );
 
     const width = isVertical || isVerticalScrollable
       ? calendarMonthWidth
@@ -351,6 +357,7 @@ class CalendarMonthGrid extends React.Component {
                 setMonthTitleHeight={setMonthTitleHeight}
                 dayAriaLabelFormat={dayAriaLabelFormat}
                 verticalBorderSpacing={verticalBorderSpacing}
+                horizontalMonthPadding={horizontalMonthPadding}
               />
             </div>
           );
@@ -363,7 +370,14 @@ class CalendarMonthGrid extends React.Component {
 CalendarMonthGrid.propTypes = propTypes;
 CalendarMonthGrid.defaultProps = defaultProps;
 
-export default withStyles(({ reactDates: { color, zIndex } }) => ({
+export default withStyles(({
+  reactDates: {
+    color,
+    noScrollBarOnVerticalScrollable,
+    spacing,
+    zIndex,
+  },
+}) => ({
   CalendarMonthGrid: {
     background: color.background,
     textAlign: 'left',
@@ -376,7 +390,7 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
 
   CalendarMonthGrid__horizontal: {
     position: 'absolute',
-    left: 9,
+    left: spacing.dayPickerHorizontalPadding,
   },
 
   CalendarMonthGrid__vertical: {
@@ -386,6 +400,13 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
   CalendarMonthGrid__vertical_scrollable: {
     margin: '0 auto',
     overflowY: 'scroll',
+    ...(noScrollBarOnVerticalScrollable && {
+      '-webkitOverflowScrolling': 'touch',
+      '::-webkit-scrollbar': {
+        '-webkit-appearance': 'none',
+        display: 'none',
+      },
+    }),
   },
 
   CalendarMonthGrid_month__horizontal: {
