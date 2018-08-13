@@ -115,7 +115,9 @@ function DayPickerNavigation({
       )}
     >
       {!isVerticalScrollable && (
-        <button
+        <div
+          role="button"
+          tabIndex="0"
           {...css(
             styles.DayPickerNavigation_button,
             isDefaultNavPrev && styles.DayPickerNavigation_button__default,
@@ -135,18 +137,23 @@ function DayPickerNavigation({
               ],
             ]),
           )}
-          type="button"
           aria-label={phrases.jumpToPrevMonth}
           onClick={onPrevMonthClick}
+          onKeyUp={(e) => {
+            const { key } = e;
+            if (key === 'Enter' || key === ' ') onPrevMonthClick(e);
+          }}
           onMouseUp={(e) => {
             e.currentTarget.blur();
           }}
         >
           {navPrevIcon}
-        </button>
+        </div>
       )}
 
-      <button
+      <div
+        role="button"
+        tabIndex="0"
         {...css(
           styles.DayPickerNavigation_button,
           isDefaultNavNext && styles.DayPickerNavigation_button__default,
@@ -169,15 +176,18 @@ function DayPickerNavigation({
             ],
           ]),
         )}
-        type="button"
         aria-label={phrases.jumpToNextMonth}
         onClick={onNextMonthClick}
+        onKeyUp={(e) => {
+          const { key } = e;
+          if (key === 'Enter' || key === ' ') onNextMonthClick(e);
+        }}
         onMouseUp={(e) => {
           e.currentTarget.blur();
         }}
       >
         {navNextIcon}
-      </button>
+      </div>
     </div>
   );
 }
@@ -283,11 +293,13 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
     height: 19,
     width: 19,
     fill: color.core.grayLight,
+    display: 'block',
   },
 
   DayPickerNavigation_svg__vertical: {
     height: 42,
     width: 42,
     fill: color.text,
+    display: 'block',
   },
 }))(DayPickerNavigation);
