@@ -1,5 +1,11 @@
 # Change Log
 
+## 17.2.0
+- [fix] Add modifiers for next months in the vertical scrollable datepickers ([#1293](https://github.com/airbnb/react-dates/pull/1293))
+- [fix] Fix cursor jumping to the end of the controlled input when typing ([#1287](https://github.com/airbnb/react-dates/pull/1287))
+- [new] Add `horizontalMonthPadding` prop and `dayPickerHorizontalPadding` and `noScrollBarOnVerticalScrollable` theme variables ([#1298](https://github.com/airbnb/react-dates/pull/1298))
+- [fix] Fix issue where custom month navigation was not clickable in FF ([#1305](https://github.com/airbnb/react-dates/pull/1305))
+
 ## 17.1.1
 - [fix] Set `DayPickerNavigation__horizontal` height to zero ([#1265](https://github.com/airbnb/react-dates/pull/1265))
 
