@@ -80,6 +80,7 @@ function DayPickerNavigation({
         {...css(
           isHorizontal && styles.DayPickerNavigation_svg__horizontal,
           isVertical && styles.DayPickerNavigation_svg__vertical,
+          !hasPrev && styles.DayPickerNavigation_svg__disabled,
         )}
       />
     );
@@ -96,6 +97,7 @@ function DayPickerNavigation({
         {...css(
           isHorizontal && styles.DayPickerNavigation_svg__horizontal,
           isVertical && styles.DayPickerNavigation_svg__vertical,
+          !hasNext && styles.DayPickerNavigation_svg__disabled,
         )}
       />
     );
@@ -258,14 +260,18 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
 
   DayPickerNavigation_button__disabled: {
     cursor: 'default',
-    opacity: '0.4',
+    border: `1px solid ${color.disabled}`,
 
     ':focus': {
-      border: `1px solid ${color.core.borderLight}`,
+      border: `1px solid ${color.disabled}`,
     },
 
     ':hover': {
-      border: `1px solid ${color.core.borderLight}`,
+      border: `1px solid ${color.disabled}`,
+    },
+
+    ':active': {
+      background: 'none',
     },
   },
 
@@ -324,5 +330,8 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
     height: 42,
     width: 42,
     fill: color.text,
+  },
+  DayPickerNavigation_svg__disabled: {
+     fill: color.disabled,
   },
 }), { pureComponent: typeof React.PureComponent !== 'undefined' })(DayPickerNavigation);
