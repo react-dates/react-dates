@@ -2049,6 +2049,72 @@ describe('DayPickerRangeController', () => {
       expect(onPrevMonthClickStub.firstCall.args[0].year()).to.equal(newMonth.year());
       expect(onPrevMonthClickStub.firstCall.args[0].month()).to.equal(newMonth.month());
     });
+
+    it('calls this.getNavigationStatus', () => {
+      const getNavigationStatusSpy = sinon.spy(DayPickerRangeController.prototype, 'getNavigationStatus');
+      const wrapper = shallow((
+        <DayPickerRangeController
+          onDatesChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />
+      ));
+      getNavigationStatusSpy.resetHistory();
+      wrapper.instance().onPrevMonthClick();
+      expect(getNavigationStatusSpy.callCount).to.equal(1);
+    });
+
+    it('sets hasNext and hasPrev on onPrevMonthClick call withouth maxDate and minDate set', () => {
+      const numberOfMonths = 2;
+      const wrapper = shallow((
+        <DayPickerRangeController
+          onDatesChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+          numberOfMonths={numberOfMonths}
+        />
+      ));
+      wrapper.setState({
+        currentMonth: today,
+      });
+      wrapper.instance().onPrevMonthClick();
+      expect(wrapper.state().hasNext).to.equal(true);
+      expect(wrapper.state().hasPrev).to.equal(true);
+    });
+
+    it('sets hasNext as false when maxDate is in visible month', () => {
+      const numberOfMonths = 2;
+      const wrapper = shallow((
+        <DayPickerRangeController
+          onDatesChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+          numberOfMonths={numberOfMonths}
+          maxDate={today}
+        />
+      ));
+      wrapper.setState({
+        currentMonth: today,
+      });
+      wrapper.instance().onPrevMonthClick();
+      expect(wrapper.state().hasNext).to.equal(false);
+      expect(wrapper.state().hasPrev).to.equal(true);
+    });
+
+    it('sets hasPrev as false when minDate is in visible month', () => {
+      const numberOfMonths = 2;
+      const wrapper = shallow((
+        <DayPickerRangeController
+          onDatesChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+          numberOfMonths={numberOfMonths}
+          minDate={today.clone().subtract(1, 'month')}
+        />
+      ));
+      wrapper.setState({
+        currentMonth: today,
+      });
+      wrapper.instance().onPrevMonthClick();
+      expect(wrapper.state().hasNext).to.equal(true);
+      expect(wrapper.state().hasPrev).to.equal(false);
+    });
   });
 
   describe('#onNextMonthClick', () => {

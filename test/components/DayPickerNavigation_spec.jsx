@@ -37,5 +37,25 @@ describe('DayPickerNavigation', () => {
       nextMonthButton.simulate('click');
       expect(onNextMonthStub).to.have.property('callCount', 1);
     });
+
+    it('props.onPrevMonthClick is not triggered by prev month disabled click', () => {
+      const onPrevMonthStub = sinon.stub();
+      const prevMonthButton = shallow(<DayPickerNavigation
+        onPrevMonthClick={onPrevMonthStub}
+        hasPrev={false}
+      />).dive().find('[role="button"]').at(0);
+      prevMonthButton.simulate('click');
+      expect(onPrevMonthStub).to.have.property('callCount', 0);
+    });
+
+    it('props.onNextMonthClick is not triggered by prev month disabled click', () => {
+      const onNextMonthStub = sinon.stub();
+      const nextMonthButton = shallow(<DayPickerNavigation
+        onNextMonthClick={onNextMonthStub}
+        hasNext={false}
+      />).dive().find('[role="button"]').at(1);
+      nextMonthButton.simulate('click');
+      expect(onNextMonthStub).to.have.property('callCount', 0);
+    });
   });
 });
