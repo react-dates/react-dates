@@ -19,6 +19,8 @@ import {
 
 const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
+  hasPrev: PropTypes.bool,
+  hasNext: PropTypes.bool,
   navPrev: PropTypes.node,
   navNext: PropTypes.node,
   orientation: ScrollableOrientationShape,
@@ -33,6 +35,8 @@ const propTypes = forbidExtraProps({
 });
 
 const defaultProps = {
+  hasPrev: true,
+  hasNext: true,
   navPrev: null,
   navNext: null,
   orientation: HORIZONTAL_ORIENTATION,
@@ -46,6 +50,8 @@ const defaultProps = {
 };
 
 function DayPickerNavigation({
+  hasPrev,
+  hasNext,
   navPrev,
   navNext,
   onPrevMonthClick,
@@ -121,6 +127,7 @@ function DayPickerNavigation({
           {...css(
             styles.DayPickerNavigation_button,
             isDefaultNavPrev && styles.DayPickerNavigation_button__default,
+            !hasPrev && styles.DayPickerNavigation_button__disabled,
             ...(isHorizontal ? [
               styles.DayPickerNavigation_button__horizontal,
               ...(isDefaultNavPrev ? [
@@ -138,8 +145,9 @@ function DayPickerNavigation({
             ] : []),
           )}
           aria-label={phrases.jumpToPrevMonth}
-          onClick={onPrevMonthClick}
+          onClick={hasPrev ? onPrevMonthClick : () => {}}
           onKeyUp={(e) => {
+            if (!hasPrev) return;
             const { key } = e;
             if (key === 'Enter' || key === ' ') onPrevMonthClick(e);
           }}
@@ -157,6 +165,7 @@ function DayPickerNavigation({
         {...css(
           styles.DayPickerNavigation_button,
           isDefaultNavNext && styles.DayPickerNavigation_button__default,
+          !hasNext && styles.DayPickerNavigation_button__disabled,
           ...(isHorizontal ? [
             styles.DayPickerNavigation_button__horizontal,
             ...(isDefaultNavNext ? [
@@ -177,8 +186,9 @@ function DayPickerNavigation({
           ] : []),
         )}
         aria-label={phrases.jumpToNextMonth}
-        onClick={onNextMonthClick}
+        onClick={hasNext ? onNextMonthClick : () => {}}
         onKeyUp={(e) => {
+          if (!hasNext) return;
           const { key } = e;
           if (key === 'Enter' || key === ' ') onNextMonthClick(e);
         }}
@@ -243,6 +253,19 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
 
     ':active': {
       background: color.backgroundDark,
+    },
+  },
+
+  DayPickerNavigation_button__disabled: {
+    cursor: 'default',
+    opacity: '0.4',
+
+    ':focus': {
+      border: `1px solid ${color.core.borderLight}`,
+    },
+
+    ':hover': {
+      border: `1px solid ${color.core.borderLight}`,
     },
   },
 
