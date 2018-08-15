@@ -2050,17 +2050,17 @@ describe('DayPickerRangeController', () => {
       expect(onPrevMonthClickStub.firstCall.args[0].month()).to.equal(newMonth.month());
     });
 
-    it('calls this.getNavigationStatus', () => {
-      const getNavigationStatusSpy = sinon.spy(DayPickerRangeController.prototype, 'getNavigationStatus');
+    it('calls this.shouldDisableMonthNavigation twice', () => {
+      const shouldDisableMonthNavigationSpy = sinon.spy(DayPickerRangeController.prototype, 'shouldDisableMonthNavigation');
       const wrapper = shallow((
         <DayPickerRangeController
           onDatesChange={sinon.stub()}
           onFocusChange={sinon.stub()}
         />
       ));
-      getNavigationStatusSpy.resetHistory();
+      shouldDisableMonthNavigationSpy.resetHistory();
       wrapper.instance().onPrevMonthClick();
-      expect(getNavigationStatusSpy.callCount).to.equal(1);
+      expect(shouldDisableMonthNavigationSpy.callCount).to.equal(2);
     });
 
     it('sets disablePrev and disablePrev as false on onPrevMonthClick call withouth maxDate and minDate set', () => {
