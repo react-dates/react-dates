@@ -148,7 +148,7 @@ function DayPickerNavigation({
           )}
           aria-label={phrases.jumpToPrevMonth}
           onClick={disablePrev ? undefined : onPrevMonthClick}
-          onKeyUp={(e) => {
+          onKeyUp={disablePrev ? undefined : (e) => {
             const { key } = e;
             if (key === 'Enter' || key === ' ') onPrevMonthClick(e);
           }}
@@ -188,7 +188,7 @@ function DayPickerNavigation({
         )}
         aria-label={phrases.jumpToNextMonth}
         onClick={disableNext ? undefined : onNextMonthClick}
-        onKeyUp={(e) => {
+        onKeyUp={disableNext ? undefined : (e) => {
           const { key } = e;
           if (key === 'Enter' || key === ' ') onNextMonthClick(e);
         }}
