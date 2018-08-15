@@ -2063,7 +2063,7 @@ describe('DayPickerRangeController', () => {
       expect(getNavigationStatusSpy.callCount).to.equal(1);
     });
 
-    it('sets hasNext and hasPrev on onPrevMonthClick call withouth maxDate and minDate set', () => {
+    it('sets disablePrev and disablePrev as false on onPrevMonthClick call withouth maxDate and minDate set', () => {
       const numberOfMonths = 2;
       const wrapper = shallow((
         <DayPickerRangeController
@@ -2076,11 +2076,11 @@ describe('DayPickerRangeController', () => {
         currentMonth: today,
       });
       wrapper.instance().onPrevMonthClick();
-      expect(wrapper.state().hasNext).to.equal(true);
-      expect(wrapper.state().hasPrev).to.equal(true);
+      expect(wrapper.state().disablePrev).to.equal(false);
+      expect(wrapper.state().disableNext).to.equal(false);
     });
 
-    it('sets hasNext as false when maxDate is in visible month', () => {
+    it('sets disableNext as true when maxDate is in visible month', () => {
       const numberOfMonths = 2;
       const wrapper = shallow((
         <DayPickerRangeController
@@ -2094,11 +2094,11 @@ describe('DayPickerRangeController', () => {
         currentMonth: today,
       });
       wrapper.instance().onPrevMonthClick();
-      expect(wrapper.state().hasNext).to.equal(false);
-      expect(wrapper.state().hasPrev).to.equal(true);
+      expect(wrapper.state().disableNext).to.equal(true);
+      expect(wrapper.state().disablePrev).to.equal(false);
     });
 
-    it('sets hasPrev as false when minDate is in visible month', () => {
+    it('sets disablePrev as true when minDate is in visible month', () => {
       const numberOfMonths = 2;
       const wrapper = shallow((
         <DayPickerRangeController
@@ -2112,8 +2112,8 @@ describe('DayPickerRangeController', () => {
         currentMonth: today,
       });
       wrapper.instance().onPrevMonthClick();
-      expect(wrapper.state().hasNext).to.equal(true);
-      expect(wrapper.state().hasPrev).to.equal(false);
+      expect(wrapper.state().disableNext).to.equal(false);
+      expect(wrapper.state().disablePrev).to.equal(true);
     });
   });
 

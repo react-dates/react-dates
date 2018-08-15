@@ -768,8 +768,8 @@ export default class DayPickerRangeController extends React.PureComponent {
     const isMaxDateVisible = isDayVisible(maxDate, visibleMonth, numberOfMonths, enableOutsideDays);
 
     return {
-      hasPrev: !isMinDateVisible,
-      hasNext: !isMaxDateVisible,
+      disablePrev: isMinDateVisible,
+      disableNext: isMaxDateVisible,
     };
   }
 
@@ -1107,8 +1107,8 @@ export default class DayPickerRangeController extends React.PureComponent {
       currentMonth,
       phrases,
       visibleDays,
-      hasPrev,
-      hasNext,
+      disablePrev,
+      disableNext,
     } = this.state;
 
     return (
@@ -1134,8 +1134,8 @@ export default class DayPickerRangeController extends React.PureComponent {
         initialVisibleMonth={() => currentMonth}
         daySize={daySize}
         onOutsideClick={onOutsideClick}
-        hasPrev={hasPrev}
-        hasNext={hasNext}
+        disablePrev={disablePrev}
+        disableNext={disableNext}
         navPrev={navPrev}
         navNext={navNext}
         noNavButtons={noNavButtons}

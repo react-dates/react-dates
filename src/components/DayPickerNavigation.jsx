@@ -19,8 +19,8 @@ import {
 
 const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
-  hasPrev: PropTypes.bool,
-  hasNext: PropTypes.bool,
+  disablePrev: PropTypes.bool,
+  disableNext: PropTypes.bool,
   navPrev: PropTypes.node,
   navNext: PropTypes.node,
   orientation: ScrollableOrientationShape,
@@ -35,8 +35,8 @@ const propTypes = forbidExtraProps({
 });
 
 const defaultProps = {
-  hasPrev: true,
-  hasNext: true,
+  disablePrev: false,
+  disableNext: false,
   navPrev: null,
   navNext: null,
   orientation: HORIZONTAL_ORIENTATION,
@@ -50,8 +50,8 @@ const defaultProps = {
 };
 
 function DayPickerNavigation({
-  hasPrev,
-  hasNext,
+  disablePrev,
+  disableNext,
   navPrev,
   navNext,
   onPrevMonthClick,
@@ -80,7 +80,7 @@ function DayPickerNavigation({
         {...css(
           isHorizontal && styles.DayPickerNavigation_svg__horizontal,
           isVertical && styles.DayPickerNavigation_svg__vertical,
-          !hasPrev && styles.DayPickerNavigation_svg__disabled,
+          disablePrev && styles.DayPickerNavigation_svg__disabled,
         )}
       />
     );
@@ -97,7 +97,7 @@ function DayPickerNavigation({
         {...css(
           isHorizontal && styles.DayPickerNavigation_svg__horizontal,
           isVertical && styles.DayPickerNavigation_svg__vertical,
-          !hasNext && styles.DayPickerNavigation_svg__disabled,
+          disableNext && styles.DayPickerNavigation_svg__disabled,
         )}
       />
     );
@@ -129,7 +129,7 @@ function DayPickerNavigation({
           {...css(
             styles.DayPickerNavigation_button,
             isDefaultNavPrev && styles.DayPickerNavigation_button__default,
-            !hasPrev && styles.DayPickerNavigation_button__disabled,
+            disablePrev && styles.DayPickerNavigation_button__disabled,
             ...(isHorizontal ? [
               styles.DayPickerNavigation_button__horizontal,
               ...(isDefaultNavPrev ? [
@@ -147,9 +147,8 @@ function DayPickerNavigation({
             ] : []),
           )}
           aria-label={phrases.jumpToPrevMonth}
-          onClick={hasPrev ? onPrevMonthClick : () => {}}
+          onClick={disablePrev ? undefined : onPrevMonthClick}
           onKeyUp={(e) => {
-            if (!hasPrev) return;
             const { key } = e;
             if (key === 'Enter' || key === ' ') onPrevMonthClick(e);
           }}
@@ -167,7 +166,7 @@ function DayPickerNavigation({
         {...css(
           styles.DayPickerNavigation_button,
           isDefaultNavNext && styles.DayPickerNavigation_button__default,
-          !hasNext && styles.DayPickerNavigation_button__disabled,
+          disableNext && styles.DayPickerNavigation_button__disabled,
           ...(isHorizontal ? [
             styles.DayPickerNavigation_button__horizontal,
             ...(isDefaultNavNext ? [
@@ -188,9 +187,8 @@ function DayPickerNavigation({
           ] : []),
         )}
         aria-label={phrases.jumpToNextMonth}
-        onClick={hasNext ? onNextMonthClick : () => {}}
+        onClick={disableNext ? undefined : onNextMonthClick}
         onKeyUp={(e) => {
-          if (!hasNext) return;
           const { key } = e;
           if (key === 'Enter' || key === ' ') onNextMonthClick(e);
         }}

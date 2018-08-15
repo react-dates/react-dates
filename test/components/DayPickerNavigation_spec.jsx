@@ -42,7 +42,7 @@ describe('DayPickerNavigation', () => {
       const onPrevMonthStub = sinon.stub();
       const prevMonthButton = shallow(<DayPickerNavigation
         onPrevMonthClick={onPrevMonthStub}
-        hasPrev={false}
+        disablePrev
       />).dive().find('[role="button"]').at(0);
       prevMonthButton.simulate('click');
       expect(onPrevMonthStub).to.have.property('callCount', 0);
@@ -52,7 +52,7 @@ describe('DayPickerNavigation', () => {
       const onNextMonthStub = sinon.stub();
       const nextMonthButton = shallow(<DayPickerNavigation
         onNextMonthClick={onNextMonthStub}
-        hasNext={false}
+        disableNext
       />).dive().find('[role="button"]').at(1);
       nextMonthButton.simulate('click');
       expect(onNextMonthStub).to.have.property('callCount', 0);
