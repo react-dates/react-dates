@@ -146,6 +146,7 @@ function DayPickerNavigation({
               ] : []),
             ] : []),
           )}
+          aria-disabled={disablePrev}
           aria-label={phrases.jumpToPrevMonth}
           onClick={disablePrev ? undefined : onPrevMonthClick}
           onKeyUp={disablePrev ? undefined : (e) => {
@@ -186,6 +187,7 @@ function DayPickerNavigation({
             ] : []),
           ] : []),
         )}
+        aria-disabled={disableNext}
         aria-label={phrases.jumpToNextMonth}
         onClick={disableNext ? undefined : onNextMonthClick}
         onKeyUp={disableNext ? undefined : (e) => {
