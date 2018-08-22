@@ -16,6 +16,8 @@
   },
 
   "rules": {
+    "react/forbid-foreign-prop-types": 2, // For babel-plugin-transform-react-remove-prop-types
+
     "jsx-a11y/click-events-have-key-events": 1, // TODO: enable
 
     "react/no-did-mount-set-state": 0, // necessary for server-rendering

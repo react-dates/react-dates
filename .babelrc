@@ -8,6 +8,7 @@
         "istanbul"
       ]
     },
+
     "development": {
       "presets": ["airbnb"],
       "plugins": [
@@ -15,25 +16,43 @@
         ["transform-replace-object-assign", { "moduleSpecifier": "object.assign" }],
       ],
     },
+
     "production": {
       "presets": ["airbnb"],
       "plugins": [
         "inline-react-svg",
         ["transform-replace-object-assign", { "moduleSpecifier": "object.assign" }],
+        ["transform-react-remove-prop-types", {
+          "mode": "wrap",
+          "additionalLibraries": ["airbnb-prop-types"],
+          "ignoreFilenames": ["node_modules"],
+        }],
       ],
     },
+
     "cjs": {
       "presets": ["airbnb"],
       "plugins": [
         "inline-react-svg",
         ["transform-replace-object-assign", { "moduleSpecifier": "object.assign" }],
+        ["transform-react-remove-prop-types", {
+          "mode": "wrap",
+          "additionalLibraries": ["airbnb-prop-types"],
+          "ignoreFilenames": ["node_modules"],
+        }],
       ],
     },
+
     "esm": {
       "presets": [["airbnb", { modules: false }]],
       "plugins": [
         "inline-react-svg",
         ["transform-replace-object-assign", { "moduleSpecifier": "object.assign" }],
+        ["transform-react-remove-prop-types", {
+          "mode": "wrap",
+          "additionalLibraries": ["airbnb-prop-types"],
+          "ignoreFilenames": ["node_modules"],
+        }],
       ],
     },
   },
