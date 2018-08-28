@@ -26,7 +26,16 @@ describe('toMomentObject', () => {
   });
 
   it('parses custom format', () => {
-    const date = toMomentObject('1991---13/07', 'YYYY---DD/MM');
+    const date = toMomentObject('1991---13/07', ['YYYY---DD/MM']);
+
+    expect(date).not.to.equal(null);
+    expect(date.month()).to.equal(6); // moment months are zero-indexed
+    expect(date.date()).to.equal(13);
+    expect(date.year()).to.equal(1991);
+  });
+
+  it('parses custom format matching second input', () => {
+    const date = toMomentObject('1991---13/07', ['YYYY[test]DD/MM', 'YYYY---DD/MM']);
 
     expect(date).not.to.equal(null);
     expect(date.month()).to.equal(6); // moment months are zero-indexed
