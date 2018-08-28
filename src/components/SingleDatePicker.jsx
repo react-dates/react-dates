@@ -110,6 +110,7 @@ const defaultProps = {
 
   // internationalization props
   displayFormat: () => moment.localeData().longDateFormat('L'),
+  inputFormats: [moment.localeData().longDateFormat('L')],
   monthFormat: 'MMMM YYYY',
   weekDayFormat: 'dd',
   phrases: SingleDatePickerPhrases,
@@ -191,7 +192,7 @@ class SingleDatePicker extends React.Component {
       onFocusChange,
       onClose,
     } = this.props;
-    const newDate = toMomentObject(dateString, this.getDisplayFormat());
+    const newDate = toMomentObject(dateString, this.getInputFormats());
 
     const isValid = newDate && !isOutsideRange(newDate);
     if (isValid) {
@@ -278,6 +279,11 @@ class SingleDatePicker extends React.Component {
   getDisplayFormat() {
     const { displayFormat } = this.props;
     return typeof displayFormat === 'string' ? displayFormat : displayFormat();
+  }
+
+  getInputFormats() {
+    const { inputFormats } = this.props;
+    return Array.isArray(inputFormats) ? inputFormats : inputFormats();
   }
 
   setDayPickerContainerRef(ref) {
