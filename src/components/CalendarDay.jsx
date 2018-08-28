@@ -185,7 +185,7 @@ export default withStyles(({ reactDates: { color, font } }) => ({
 
     ':hover': {
       background: color.core.borderLight,
-      border: `1px double ${color.core.borderLight}`,
+      border: `1px solid ${color.core.borderLight}`,
       color: 'inherit',
     },
   },
@@ -239,58 +239,62 @@ export default withStyles(({ reactDates: { color, font } }) => ({
 
   CalendarDay__selected_span: {
     background: color.selectedSpan.backgroundColor,
-    border: `1px solid ${color.selectedSpan.borderColor}`,
+    border: `1px double ${color.selectedSpan.borderColor}`,
     color: color.selectedSpan.color,
 
     ':hover': {
       background: color.selectedSpan.backgroundColor_hover,
-      border: `1px solid ${color.selectedSpan.borderColor}`,
+      border: `1px double ${color.selectedSpan.borderColor}`,
       color: color.selectedSpan.color_active,
     },
 
     ':active': {
       background: color.selectedSpan.backgroundColor_active,
-      border: `1px solid ${color.selectedSpan.borderColor}`,
+      border: `1px double ${color.selectedSpan.borderColor}`,
       color: color.selectedSpan.color_active,
     },
   },
 
   CalendarDay__last_in_range: {
-    borderRight: color.core.primary,
+    borderStyle: 'solid',
+
+    ':hover': {
+      borderStyle: 'solid',
+    },
   },
 
   CalendarDay__selected: {
     background: color.selected.backgroundColor,
-    border: `1px solid ${color.selected.borderColor}`,
+    border: `1px double ${color.selected.borderColor}`,
     color: color.selected.color,
 
     ':hover': {
       background: color.selected.backgroundColor_hover,
-      border: `1px solid ${color.selected.borderColor}`,
+      border: `1px double ${color.selected.borderColor}`,
       color: color.selected.color_active,
     },
 
     ':active': {
       background: color.selected.backgroundColor_active,
-      border: `1px solid ${color.selected.borderColor}`,
+      border: `1px double ${color.selected.borderColor}`,
       color: color.selected.color_active,
     },
   },
 
   CalendarDay__hovered_span: {
     background: color.hoveredSpan.backgroundColor,
-    border: `1px solid ${color.hoveredSpan.borderColor}`,
+    border: `1px double ${color.hoveredSpan.borderColor}`,
     color: color.hoveredSpan.color,
 
     ':hover': {
       background: color.hoveredSpan.backgroundColor_hover,
-      border: `1px solid ${color.hoveredSpan.borderColor}`,
+      border: `1px double ${color.hoveredSpan.borderColor}`,
       color: color.hoveredSpan.color_active,
     },
 
     ':active': {
       background: color.hoveredSpan.backgroundColor_active,
-      border: `1px solid ${color.hoveredSpan.borderColor}`,
+      border: `1px double ${color.hoveredSpan.borderColor}`,
       color: color.hoveredSpan.color_active,
     },
   },
