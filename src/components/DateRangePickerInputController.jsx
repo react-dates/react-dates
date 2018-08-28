@@ -59,6 +59,7 @@ const propTypes = forbidExtraProps({
   minimumNights: nonNegativeInteger,
   isOutsideRange: PropTypes.func,
   displayFormat: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+  inputFormats: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.string), PropTypes.func]),
 
   onFocusChange: PropTypes.func,
   onClose: PropTypes.func,
@@ -111,6 +112,7 @@ const defaultProps = {
   minimumNights: 1,
   isOutsideRange: day => !isInclusivelyAfterDay(day, moment()),
   displayFormat: () => moment.localeData().longDateFormat('L'),
+  inputFormats: () => [moment.localeData().longDateFormat('L')],
 
   onFocusChange() {},
   onClose() {},
@@ -164,7 +166,7 @@ export default class DateRangePickerInputController extends React.Component {
       onDatesChange,
     } = this.props;
 
-    const endDate = toMomentObject(endDateString, this.getDisplayFormat());
+    const endDate = toMomentObject(endDateString, this.getInputFormats());
 
     const isEndDateValid = endDate
       && !isOutsideRange(endDate)
@@ -208,7 +210,7 @@ export default class DateRangePickerInputController extends React.Component {
       disabled,
     } = this.props;
 
-    const startDate = toMomentObject(startDateString, this.getDisplayFormat());
+    const startDate = toMomentObject(startDateString, this.getInputFormats());
     const isEndDateBeforeStartDate = startDate
       && isBeforeDay(endDate, startDate.clone().add(minimumNights, 'days'));
     const isStartDateValid = startDate
@@ -240,6 +242,11 @@ export default class DateRangePickerInputController extends React.Component {
   getDisplayFormat() {
     const { displayFormat } = this.props;
     return typeof displayFormat === 'string' ? displayFormat : displayFormat();
+  }
+
+  getInputFormats() {
+    const { inputFormats } = this.props;
+    return Array.isArray(inputFormats) ? inputFormats : inputFormats();
   }
 
   getDateString(date) {
