@@ -18,41 +18,26 @@
     },
 
     "production": {
-      "presets": ["airbnb"],
+      "presets": [["airbnb", { removePropTypes: true }]],
       "plugins": [
         "inline-react-svg",
         ["transform-replace-object-assign", { "moduleSpecifier": "object.assign" }],
-        ["transform-react-remove-prop-types", {
-          "mode": "wrap",
-          "additionalLibraries": ["airbnb-prop-types"],
-          "ignoreFilenames": ["node_modules"],
-        }],
       ],
     },
 
     "cjs": {
-      "presets": ["airbnb"],
+      "presets": [["airbnb", { removePropTypes: true }]],
       "plugins": [
         "inline-react-svg",
         ["transform-replace-object-assign", { "moduleSpecifier": "object.assign" }],
-        ["transform-react-remove-prop-types", {
-          "mode": "wrap",
-          "additionalLibraries": ["airbnb-prop-types"],
-          "ignoreFilenames": ["node_modules"],
-        }],
       ],
     },
 
     "esm": {
-      "presets": [["airbnb", { modules: false }]],
+      "presets": [["airbnb", { modules: false, removePropTypes: true }]],
       "plugins": [
         "inline-react-svg",
         ["transform-replace-object-assign", { "moduleSpecifier": "object.assign" }],
-        ["transform-react-remove-prop-types", {
-          "mode": "wrap",
-          "additionalLibraries": ["airbnb-prop-types"],
-          "ignoreFilenames": ["node_modules"],
-        }],
       ],
     },
   },
