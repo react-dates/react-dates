@@ -73,6 +73,7 @@ function getKeyboardShortcuts(phrases) {
   ];
 }
 
+/** @extends React.Component */
 class DayPickerKeyboardShortcuts extends baseClass() {
   constructor(...args) {
     super(...args);

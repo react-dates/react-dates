@@ -143,6 +143,7 @@ const defaultProps = {
   isRTL: false,
 };
 
+/** @extends React.Component */
 export default class DayPickerSingleDateController extends baseClass() {
   constructor(props) {
     super(props);

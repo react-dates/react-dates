@@ -114,6 +114,7 @@ function getMonths(initialMonth, numberOfMonths, withoutTransitionMonths) {
   return months;
 }
 
+/** @extends React.Component */
 class CalendarMonthGrid extends baseClass() {
   constructor(props) {
     super(props);

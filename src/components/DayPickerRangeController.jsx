@@ -174,6 +174,7 @@ const getChooseAvailableDatePhrase = (phrases, focusedInput) => {
   return phrases.chooseAvailableDate;
 };
 
+/** @extends React.Component */
 export default class DayPickerRangeController extends baseClass() {
   constructor(props) {
     super(props);

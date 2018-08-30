@@ -163,6 +163,7 @@ export const defaultProps = {
   dayAriaLabelFormat: undefined,
 };
 
+/** @extends React.Component */
 class DayPicker extends baseClass() {
   constructor(props) {
     super(props);

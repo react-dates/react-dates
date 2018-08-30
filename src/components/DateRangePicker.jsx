@@ -118,6 +118,7 @@ const defaultProps = {
   dayAriaLabelFormat: undefined,
 };
 
+/** @extends React.Component */
 class DateRangePicker extends baseClass() {
   constructor(props) {
     super(props);

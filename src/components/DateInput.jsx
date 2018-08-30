@@ -78,6 +78,7 @@ const defaultProps = {
   isFocused: false,
 };
 
+/** @extends React.Component */
 class DateInput extends baseClass() {
   constructor(props) {
     super(props);

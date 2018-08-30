@@ -133,6 +133,7 @@ const defaultProps = {
   isRTL: false,
 };
 
+/** @extends React.Component */
 export default class DateRangePickerInputController extends baseClass() {
   constructor(props) {
     super(props);

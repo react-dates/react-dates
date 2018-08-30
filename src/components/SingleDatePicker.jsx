@@ -117,6 +117,7 @@ const defaultProps = {
   dayAriaLabelFormat: undefined,
 };
 
+/** @extends React.Component */
 class SingleDatePicker extends baseClass() {
   constructor(props) {
     super(props);

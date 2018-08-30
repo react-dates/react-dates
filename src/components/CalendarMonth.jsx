@@ -90,6 +90,7 @@ const defaultProps = {
   verticalBorderSpacing: undefined,
 };
 
+/** @extends React.Component */
 class CalendarMonth extends baseClass() {
   constructor(props) {
     super(props);
