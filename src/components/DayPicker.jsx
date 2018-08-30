@@ -29,7 +29,7 @@ import ModifiersShape from '../shapes/ModifiersShape';
 import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
 import DayOfWeekShape from '../shapes/DayOfWeekShape';
 import CalendarInfoPositionShape from '../shapes/CalendarInfoPositionShape';
-import baseClass, { pureComponentAvailable } from '../utils/baseClass';
+import BaseClass, { pureComponentAvailable } from '../utils/baseClass';
 
 import {
   HORIZONTAL_ORIENTATION,
@@ -164,7 +164,7 @@ export const defaultProps = {
 };
 
 /** @extends React.Component */
-class DayPicker extends baseClass() {
+class DayPicker extends BaseClass {
   constructor(props) {
     super(props);
 
@@ -1238,4 +1238,4 @@ export default withStyles(({
       },
     }),
   },
-}), { pureComponent: pureComponentAvailable() })(DayPicker);
+}), { pureComponent: pureComponentAvailable })(DayPicker);

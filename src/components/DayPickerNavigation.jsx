@@ -303,4 +303,4 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
     fill: color.text,
     display: 'block',
   },
-}), { pureComponent: pureComponentAvailable() })(DayPickerNavigation);
+}), { pureComponent: pureComponentAvailable })(DayPickerNavigation);

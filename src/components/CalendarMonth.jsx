@@ -21,7 +21,7 @@ import toISODateString from '../utils/toISODateString';
 import ModifiersShape from '../shapes/ModifiersShape';
 import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
 import DayOfWeekShape from '../shapes/DayOfWeekShape';
-import baseClass, { pureComponentAvailable } from '../utils/baseClass';
+import BaseClass, { pureComponentAvailable } from '../utils/baseClass';
 
 import {
   HORIZONTAL_ORIENTATION,
@@ -91,7 +91,7 @@ const defaultProps = {
 };
 
 /** @extends React.Component */
-class CalendarMonth extends baseClass() {
+class CalendarMonth extends BaseClass {
   constructor(props) {
     super(props);
 
@@ -274,4 +274,4 @@ export default withStyles(({ reactDates: { color, font, spacing } }) => ({
     paddingTop: 12,
     paddingBottom: 7,
   },
-}), { pureComponent: pureComponentAvailable() })(CalendarMonth);
+}), { pureComponent: pureComponentAvailable })(CalendarMonth);

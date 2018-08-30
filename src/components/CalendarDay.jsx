@@ -9,7 +9,7 @@ import { CalendarDayPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 import getCalendarDaySettings from '../utils/getCalendarDaySettings';
 import ModifiersShape from '../shapes/ModifiersShape';
-import baseClass, { pureComponentAvailable } from '../utils/baseClass';
+import BaseClass, { pureComponentAvailable } from '../utils/baseClass';
 
 import { DAY_SIZE } from '../constants';
 
@@ -49,7 +49,7 @@ const defaultProps = {
 };
 
 /** @extends React.Component */
-class CalendarDay extends baseClass() {
+class CalendarDay extends BaseClass {
   constructor(...args) {
     super(...args);
 
@@ -336,4 +336,4 @@ export default withStyles(({ reactDates: { color, font } }) => ({
   CalendarDay__today: {},
   CalendarDay__firstDayOfWeek: {},
   CalendarDay__lastDayOfWeek: {},
-}), { pureComponent: pureComponentAvailable() })(CalendarDay);
+}), { pureComponent: pureComponentAvailable })(CalendarDay);

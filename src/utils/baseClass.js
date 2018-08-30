@@ -1,9 +1,9 @@
 import React from 'react';
 import shallowCompare from 'react-addons-shallow-compare';
 
-export const pureComponentAvailable = () => typeof React.PureComponent !== 'undefined';
+export const pureComponentAvailable = typeof React.PureComponent !== 'undefined';
 
-export default function baseClass(pureComponent = pureComponentAvailable()) {
+const baseClass = (pureComponent = pureComponentAvailable) => {
   if (pureComponent) {
     if (!React.PureComponent) {
       throw new ReferenceError('withStyles() pureComponent option requires React 15.3.0 or later');
@@ -17,4 +17,6 @@ export default function baseClass(pureComponent = pureComponentAvailable()) {
       return shallowCompare(this, nextProps, nextState);
     }
   };
-}
+};
+
+export default baseClass();

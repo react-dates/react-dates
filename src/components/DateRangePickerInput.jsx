@@ -397,4 +397,4 @@ export default withStyles(({ reactDates: { border, color, sizing } }) => ({
     width: 14,
     verticalAlign: 'middle',
   },
-}), { pureComponent: pureComponentAvailable() })(DateRangePickerInput);
+}), { pureComponent: pureComponentAvailable })(DateRangePickerInput);

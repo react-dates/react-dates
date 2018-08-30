@@ -5,7 +5,7 @@ import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 
 import { DayPickerKeyboardShortcutsPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
-import baseClass, { pureComponentAvailable } from '../utils/baseClass';
+import BaseClass, { pureComponentAvailable } from '../utils/baseClass';
 
 import KeyboardShortcutRow from './KeyboardShortcutRow';
 import CloseButton from './CloseButton';
@@ -74,7 +74,7 @@ function getKeyboardShortcuts(phrases) {
 }
 
 /** @extends React.Component */
-class DayPickerKeyboardShortcuts extends baseClass() {
+class DayPickerKeyboardShortcuts extends BaseClass {
   constructor(...args) {
     super(...args);
 
@@ -396,4 +396,4 @@ export default withStyles(({ reactDates: { color, font, zIndex } }) => ({
       fill: color.core.grayLight,
     },
   },
-}), { pureComponent: pureComponentAvailable() })(DayPickerKeyboardShortcuts);
+}), { pureComponent: pureComponentAvailable })(DayPickerKeyboardShortcuts);
