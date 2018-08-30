@@ -2,7 +2,6 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import shallowCompare from 'react-addons-shallow-compare';
 import momentPropTypes from 'react-moment-proptypes';
 import { forbidExtraProps, mutuallyExclusiveProps, nonNegativeInteger } from 'airbnb-prop-types';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
@@ -22,6 +21,7 @@ import toISODateString from '../utils/toISODateString';
 import ModifiersShape from '../shapes/ModifiersShape';
 import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
 import DayOfWeekShape from '../shapes/DayOfWeekShape';
+import baseClass, { pureComponentAvailable } from '../utils/baseClass';
 
 import {
   HORIZONTAL_ORIENTATION,
@@ -90,7 +90,9 @@ const defaultProps = {
   verticalBorderSpacing: undefined,
 };
 
-class CalendarMonth extends React.Component {
+const BaseClass = baseClass();
+
+class CalendarMonth extends BaseClass {
   constructor(props) {
     super(props);
 
@@ -130,10 +132,6 @@ class CalendarMonth extends React.Component {
         ),
       });
     }
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return shallowCompare(this, nextProps, nextState);
   }
 
   componentWillUnmount() {
@@ -277,4 +275,4 @@ export default withStyles(({ reactDates: { color, font, spacing } }) => ({
     paddingTop: 12,
     paddingBottom: 7,
   },
-}))(CalendarMonth);
+}), { pureComponent: pureComponentAvailable })(CalendarMonth);

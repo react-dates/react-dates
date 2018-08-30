@@ -10,6 +10,7 @@ import openDirectionShape from '../shapes/OpenDirectionShape';
 import DateInput from './DateInput';
 import IconPositionShape from '../shapes/IconPositionShape';
 import DisabledShape from '../shapes/DisabledShape';
+import { pureComponentAvailable } from '../utils/baseClass';
 
 import RightArrow from './RightArrow';
 import LeftArrow from './LeftArrow';
@@ -396,4 +397,4 @@ export default withStyles(({ reactDates: { border, color, sizing } }) => ({
     width: 14,
     verticalAlign: 'middle',
   },
-}))(DateRangePickerInput);
+}), { pureComponent: pureComponentAvailable })(DateRangePickerInput);

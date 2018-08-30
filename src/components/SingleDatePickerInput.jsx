@@ -14,6 +14,7 @@ import CalendarIcon from './CalendarIcon';
 
 import openDirectionShape from '../shapes/OpenDirectionShape';
 import { ICON_BEFORE_POSITION, ICON_AFTER_POSITION, OPEN_DOWN } from '../constants';
+import { pureComponentAvailable } from '../utils/baseClass';
 
 const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
@@ -310,4 +311,4 @@ export default withStyles(({ reactDates: { border, color } }) => ({
     width: 14,
     verticalAlign: 'middle',
   },
-}))(SingleDatePickerInput);
+}), { pureComponent: pureComponentAvailable })(SingleDatePickerInput);

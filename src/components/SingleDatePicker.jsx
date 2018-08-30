@@ -17,6 +17,7 @@ import getDetachedContainerStyles from '../utils/getDetachedContainerStyles';
 import getInputHeight from '../utils/getInputHeight';
 import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
 import disableScroll from '../utils/disableScroll';
+import baseClass, { pureComponentAvailable } from '../utils/baseClass';
 
 import SingleDatePickerInput from './SingleDatePickerInput';
 import DayPickerSingleDateController from './DayPickerSingleDateController';
@@ -116,7 +117,9 @@ const defaultProps = {
   dayAriaLabelFormat: undefined,
 };
 
-class SingleDatePicker extends React.Component {
+const BaseClass = baseClass();
+
+class SingleDatePicker extends BaseClass {
   constructor(props) {
     super(props);
 
@@ -690,4 +693,4 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
     width: 15,
     fill: color.core.grayLighter,
   },
-}))(SingleDatePicker);
+}), { pureComponent: pureComponentAvailable })(SingleDatePicker);
