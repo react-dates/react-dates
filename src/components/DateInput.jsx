@@ -78,9 +78,7 @@ const defaultProps = {
   isFocused: false,
 };
 
-const BaseClass = baseClass();
-
-class DateInput extends BaseClass {
+class DateInput extends baseClass() {
   constructor(props) {
     super(props);
 
@@ -382,4 +380,4 @@ export default withStyles(({
     stroke: color.core.border,
     fill: 'transparent',
   },
-}), { pureComponent: pureComponentAvailable })(DateInput);
+}), { pureComponent: pureComponentAvailable() })(DateInput);

@@ -133,9 +133,7 @@ const defaultProps = {
   isRTL: false,
 };
 
-const BaseClass = baseClass();
-
-export default class DateRangePickerInputController extends BaseClass {
+export default class DateRangePickerInputController extends baseClass() {
   constructor(props) {
     super(props);
 

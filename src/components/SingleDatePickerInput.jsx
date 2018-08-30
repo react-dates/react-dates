@@ -311,4 +311,4 @@ export default withStyles(({ reactDates: { border, color } }) => ({
     width: 14,
     verticalAlign: 'middle',
   },
-}), { pureComponent: pureComponentAvailable })(SingleDatePickerInput);
+}), { pureComponent: pureComponentAvailable() })(SingleDatePickerInput);

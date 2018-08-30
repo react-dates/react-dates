@@ -114,9 +114,7 @@ function getMonths(initialMonth, numberOfMonths, withoutTransitionMonths) {
   return months;
 }
 
-const BaseClass = baseClass();
-
-class CalendarMonthGrid extends BaseClass {
+class CalendarMonthGrid extends baseClass() {
   constructor(props) {
     super(props);
     const withoutTransitionMonths = props.orientation === VERTICAL_SCROLLABLE;
@@ -423,4 +421,4 @@ export default withStyles(({
   CalendarMonthGrid_month__hidden: {
     visibility: 'hidden',
   },
-}), { pureComponent: pureComponentAvailable })(CalendarMonthGrid);
+}), { pureComponent: pureComponentAvailable() })(CalendarMonthGrid);

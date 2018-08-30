@@ -163,9 +163,7 @@ export const defaultProps = {
   dayAriaLabelFormat: undefined,
 };
 
-const BaseClass = baseClass();
-
-class DayPicker extends BaseClass {
+class DayPicker extends baseClass() {
   constructor(props) {
     super(props);
 
@@ -1239,4 +1237,4 @@ export default withStyles(({
       },
     }),
   },
-}), { pureComponent: pureComponentAvailable })(DayPicker);
+}), { pureComponent: pureComponentAvailable() })(DayPicker);

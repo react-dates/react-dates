@@ -143,9 +143,7 @@ const defaultProps = {
   isRTL: false,
 };
 
-const BaseClass = baseClass();
-
-export default class DayPickerSingleDateController extends BaseClass {
+export default class DayPickerSingleDateController extends baseClass() {
   constructor(props) {
     super(props);
 

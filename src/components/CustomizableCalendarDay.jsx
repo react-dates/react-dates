@@ -212,9 +212,7 @@ const defaultProps = {
   phrases: CalendarDayPhrases,
 };
 
-const BaseClass = baseClass();
-
-class CustomizableCalendarDay extends BaseClass {
+class CustomizableCalendarDay extends baseClass() {
   constructor(...args) {
     super(...args);
 
@@ -367,4 +365,4 @@ export default withStyles(({ reactDates: { font } }) => ({
   CalendarDay__defaultCursor: {
     cursor: 'default',
   },
-}), { pureComponent: pureComponentAvailable })(CustomizableCalendarDay);
+}), { pureComponent: pureComponentAvailable() })(CustomizableCalendarDay);

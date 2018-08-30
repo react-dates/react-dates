@@ -118,9 +118,7 @@ const defaultProps = {
   dayAriaLabelFormat: undefined,
 };
 
-const BaseClass = baseClass();
-
-class DateRangePicker extends BaseClass {
+class DateRangePicker extends baseClass() {
   constructor(props) {
     super(props);
     this.state = {
@@ -672,4 +670,4 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
     width: 15,
     fill: color.core.grayLighter,
   },
-}), { pureComponent: pureComponentAvailable })(DateRangePicker);
+}), { pureComponent: pureComponentAvailable() })(DateRangePicker);

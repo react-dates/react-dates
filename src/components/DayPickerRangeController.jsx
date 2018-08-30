@@ -28,7 +28,7 @@ import FocusedInputShape from '../shapes/FocusedInputShape';
 import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
 import DayOfWeekShape from '../shapes/DayOfWeekShape';
 import CalendarInfoPositionShape from '../shapes/CalendarInfoPositionShape';
-import baseClass, { pureComponentAvailable } from '../utils/baseClass';
+import baseClass from '../utils/baseClass';
 
 import {
   START_DATE,
@@ -174,9 +174,7 @@ const getChooseAvailableDatePhrase = (phrases, focusedInput) => {
   return phrases.chooseAvailableDate;
 };
 
-const BaseClass = baseClass();
-
-export default class DayPickerRangeController extends BaseClass {
+export default class DayPickerRangeController extends baseClass() {
   constructor(props) {
     super(props);
 

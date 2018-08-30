@@ -48,9 +48,7 @@ const defaultProps = {
   phrases: CalendarDayPhrases,
 };
 
-const BaseClass = baseClass();
-
-class CalendarDay extends BaseClass {
+class CalendarDay extends baseClass() {
   constructor(...args) {
     super(...args);
 
@@ -337,4 +335,4 @@ export default withStyles(({ reactDates: { color, font } }) => ({
   CalendarDay__today: {},
   CalendarDay__firstDayOfWeek: {},
   CalendarDay__lastDayOfWeek: {},
-}), { pureComponent: pureComponentAvailable })(CalendarDay);
+}), { pureComponent: pureComponentAvailable() })(CalendarDay);

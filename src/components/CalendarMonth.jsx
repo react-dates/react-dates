@@ -90,9 +90,7 @@ const defaultProps = {
   verticalBorderSpacing: undefined,
 };
 
-const BaseClass = baseClass();
-
-class CalendarMonth extends BaseClass {
+class CalendarMonth extends baseClass() {
   constructor(props) {
     super(props);
 
@@ -275,4 +273,4 @@ export default withStyles(({ reactDates: { color, font, spacing } }) => ({
     paddingTop: 12,
     paddingBottom: 7,
   },
-}), { pureComponent: pureComponentAvailable })(CalendarMonth);
+}), { pureComponent: pureComponentAvailable() })(CalendarMonth);

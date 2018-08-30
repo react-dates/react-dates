@@ -73,9 +73,7 @@ function getKeyboardShortcuts(phrases) {
   ];
 }
 
-const BaseClass = baseClass();
-
-class DayPickerKeyboardShortcuts extends BaseClass {
+class DayPickerKeyboardShortcuts extends baseClass() {
   constructor(...args) {
     super(...args);
 
@@ -397,4 +395,4 @@ export default withStyles(({ reactDates: { color, font, zIndex } }) => ({
       fill: color.core.grayLight,
     },
   },
-}), { pureComponent: pureComponentAvailable })(DayPickerKeyboardShortcuts);
+}), { pureComponent: pureComponentAvailable() })(DayPickerKeyboardShortcuts);

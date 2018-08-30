@@ -117,9 +117,7 @@ const defaultProps = {
   dayAriaLabelFormat: undefined,
 };
 
-const BaseClass = baseClass();
-
-class SingleDatePicker extends BaseClass {
+class SingleDatePicker extends baseClass() {
   constructor(props) {
     super(props);
 
@@ -693,4 +691,4 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
     width: 15,
     fill: color.core.grayLighter,
   },
-}), { pureComponent: pureComponentAvailable })(SingleDatePicker);
+}), { pureComponent: pureComponentAvailable() })(SingleDatePicker);
