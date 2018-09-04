@@ -21,6 +21,7 @@ import toISOMonthString from '../utils/toISOMonthString';
 import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
 import DayOfWeekShape from '../shapes/DayOfWeekShape';
 import CalendarInfoPositionShape from '../shapes/CalendarInfoPositionShape';
+import BaseClass from '../utils/baseClass';
 
 import {
   HORIZONTAL_ORIENTATION,
@@ -142,7 +143,8 @@ const defaultProps = {
   isRTL: false,
 };
 
-export default class DayPickerSingleDateController extends React.Component {
+/** @extends React.Component */
+export default class DayPickerSingleDateController extends BaseClass {
   constructor(props) {
     super(props);
 
