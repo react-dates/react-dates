@@ -60,7 +60,7 @@
     "aphrodite": "^2.2.2",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.5",
+    "babel-loader": "^8.0.0",
     "babel-plugin-inline-react-svg": "^0.5.4",
     "babel-plugin-inline-svg": "^1.0.0",
     "babel-plugin-istanbul": "^4.1.6",
