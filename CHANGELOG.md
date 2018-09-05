@@ -1,5 +1,13 @@
 # Change Log
 
+<!-- - []  ([#](https://github.com/airbnb/react-dates/pull/)) -->
+
+## 18.0.0
+- [fix] Conditionally use `PureComponent` instead of `Component` ([#1335](https://github.com/airbnb/react-dates/pull/1335))
+- [breaking] Remove propTypes in production ([#1322](https://github.com/airbnb/react-dates/pull/1322))
+- [fix] Change border-styles to minimise overlap ([#1328](https://github.com/airbnb/react-dates/pull/1328))
+- [fix] Only blur the `activeElement` when available ([#1345](https://github.com/airbnb/react-dates/pull/1345))
+
 ## 17.2.0
 - [fix] Add modifiers for next months in the vertical scrollable datepickers ([#1293](https://github.com/airbnb/react-dates/pull/1293))
 - [fix] Fix cursor jumping to the end of the controlled input when typing ([#1287](https://github.com/airbnb/react-dates/pull/1287))
