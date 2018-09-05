@@ -81,7 +81,7 @@ export const defaultStyles = {
 
   hover: {
     background: color.core.borderLight,
-    border: `1px double ${color.core.borderLight}`,
+    border: `1px solid ${color.core.borderLight}`,
     color: 'inherit',
   },
 };
@@ -139,40 +139,44 @@ export const blockedOutOfRangeStyles = {
 
 export const hoveredSpanStyles = {
   background: color.hoveredSpan.backgroundColor,
-  border: `1px solid ${color.hoveredSpan.borderColor}`,
+  border: `1px double ${color.hoveredSpan.borderColor}`,
   color: color.hoveredSpan.color,
 
   hover: {
     background: color.hoveredSpan.backgroundColor_hover,
-    border: `1px solid ${color.hoveredSpan.borderColor}`,
+    border: `1px double ${color.hoveredSpan.borderColor}`,
     color: color.hoveredSpan.color_active,
   },
 };
 
 export const selectedSpanStyles = {
   background: color.selectedSpan.backgroundColor,
-  border: `1px solid ${color.selectedSpan.borderColor}`,
+  border: `1px double ${color.selectedSpan.borderColor}`,
   color: color.selectedSpan.color,
 
   hover: {
     background: color.selectedSpan.backgroundColor_hover,
-    border: `1px solid ${color.selectedSpan.borderColor}`,
+    border: `1px double ${color.selectedSpan.borderColor}`,
     color: color.selectedSpan.color_active,
   },
 };
 
 export const lastInRangeStyles = {
-  borderRight: color.core.primary,
+  borderStyle: 'solid',
+
+  hover: {
+    borderStyle: 'solid',
+  },
 };
 
 export const selectedStyles = {
   background: color.selected.backgroundColor,
-  border: `1px solid ${color.selected.borderColor}`,
+  border: `1px double ${color.selected.borderColor}`,
   color: color.selected.color,
 
   hover: {
     background: color.selected.backgroundColor_hover,
-    border: `1px solid ${color.selected.borderColor}`,
+    border: `1px double ${color.selected.borderColor}`,
     color: color.selected.color_active,
   },
 };
