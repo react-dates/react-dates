@@ -275,6 +275,7 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
     boxShadow: '0 0 5px 2px rgba(0, 0, 0, 0.1)',
     position: 'relative',
     display: 'inline-block',
+    textAlign: 'center',
     height: '100%',
     width: '50%',
   },
@@ -301,6 +302,5 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
     height: 42,
     width: 42,
     fill: color.text,
-    display: 'block',
   },
 }), { pureComponent: pureComponentAvailable })(DayPickerNavigation);
