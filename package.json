@@ -1,6 +1,6 @@
 {
   "name": "react-dates",
-  "version": "17.2.0",
+  "version": "18.0.1",
   "description": "A responsive and accessible date range picker component built with React",
   "main": "index.js",
   "scripts": {
@@ -36,7 +36,7 @@
     "preversion": "npm run test && npm run check-changelog && npm run check-only-changelog-changed",
     "postversion": "git commit package.json CHANGELOG.md -m \"Version $npm_package_version\" && npm run tag && git push && git push --tags && npm publish --registry=https://registry.npmjs.org/",
     "prepublish": "in-publish && safe-publish-latest && npm run build || not-in-publish",
-    "postpublish": "npm run gh-pages",
+    "postpublish": "[ \"${npm_config_tag:-latest}\" != latest ] || npm run gh-pages",
     "check-changelog": "expr $(git status --porcelain 2>/dev/null| grep \"^\\s*M.*CHANGELOG.md\" | wc -l) >/dev/null || (echo 'Please edit CHANGELOG.md' && exit 1)",
     "check-only-changelog-changed": "(expr $(git status --porcelain 2>/dev/null| grep -v \"CHANGELOG.md\" | wc -l) >/dev/null && echo 'Only CHANGELOG.md may have uncommitted changes' && exit 1) || exit 0"
   },
@@ -122,13 +122,15 @@
     "react-moment-proptypes": "^1.6.0",
     "react-outside-click-handler": "^1.2.0",
     "react-portal": "^4.1.5",
+    "react-with-direction": "^1.3.0",
     "react-with-styles": "^3.2.0",
     "react-with-styles-interface-css": "^4.0.2"
   },
   "peerDependencies": {
     "moment": "^2.18.1",
     "react": "^0.14 || ^15.5.4 || ^16.1.1",
-    "react-dom": "^0.14 || ^15.5.4 || ^16.1.1"
+    "react-dom": "^0.14 || ^15.5.4 || ^16.1.1",
+    "react-with-direction": "^1.3.0"
   },
   "greenkeeper": {
     "ignore": [
