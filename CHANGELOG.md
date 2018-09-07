@@ -1,6 +1,8 @@
 # Change Log
 
 <!-- - []  ([#](https://github.com/airbnb/react-dates/pull/)) -->
+## 18.0.1
+- [fix] Center vertical month navigation ([#1347](https://github.com/airbnb/react-dates/pull/1347))
 
 ## 18.0.0
 - [fix] Conditionally use `PureComponent` instead of `Component` ([#1335](https://github.com/airbnb/react-dates/pull/1335))
