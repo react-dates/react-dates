@@ -122,13 +122,15 @@
     "react-moment-proptypes": "^1.6.0",
     "react-outside-click-handler": "^1.2.0",
     "react-portal": "^4.1.5",
+    "react-with-direction": "^1.3.0",
     "react-with-styles": "^3.2.0",
     "react-with-styles-interface-css": "^4.0.2"
   },
   "peerDependencies": {
     "moment": "^2.18.1",
     "react": "^0.14 || ^15.5.4 || ^16.1.1",
-    "react-dom": "^0.14 || ^15.5.4 || ^16.1.1"
+    "react-dom": "^0.14 || ^15.5.4 || ^16.1.1",
+    "react-with-direction": "^1.3.0"
   },
   "greenkeeper": {
     "ignore": [
