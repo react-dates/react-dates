@@ -3,7 +3,9 @@
     "test": {
       "presets": ["airbnb"],
       "plugins": [
-        "inline-react-svg",
+        ["inline-react-svg", {
+          "svgo": false
+        }],
         ["transform-replace-object-assign", { "moduleSpecifier": "object.assign" }],
         "istanbul"
       ]
@@ -12,7 +14,9 @@
     "development": {
       "presets": ["airbnb"],
       "plugins": [
-        "inline-react-svg",
+        ["inline-react-svg", {
+          "svgo": false
+        }],
         ["transform-replace-object-assign", { "moduleSpecifier": "object.assign" }],
       ],
     },
@@ -20,7 +24,9 @@
     "production": {
       "presets": [["airbnb", { removePropTypes: true }]],
       "plugins": [
-        "inline-react-svg",
+        ["inline-react-svg", {
+          "svgo": false
+        }],
         ["transform-replace-object-assign", { "moduleSpecifier": "object.assign" }],
       ],
     },
@@ -28,7 +34,9 @@
     "cjs": {
       "presets": [["airbnb", { removePropTypes: true }]],
       "plugins": [
-        "inline-react-svg",
+        ["inline-react-svg", {
+          "svgo": false
+        }],
         ["transform-replace-object-assign", { "moduleSpecifier": "object.assign" }],
       ],
     },
@@ -36,7 +44,9 @@
     "esm": {
       "presets": [["airbnb", { modules: false, removePropTypes: true }]],
       "plugins": [
-        "inline-react-svg",
+        ["inline-react-svg", {
+          "svgo": false
+        }],
         ["transform-replace-object-assign", { "moduleSpecifier": "object.assign" }],
       ],
     },
