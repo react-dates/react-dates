@@ -83,7 +83,7 @@ Right now, the easiest way to tweak `react-dates` to your heart's content is to 
 .CalendarDay__selected_span {
   background: #82e0aa; //background
   color: white; //text
-  border: 1px solid $light-red; //defualt styles include a border
+  border: 1px solid $light-red; //default styles include a border
 }
 
 // Will edit selected date or the endpoints of a range of dates
