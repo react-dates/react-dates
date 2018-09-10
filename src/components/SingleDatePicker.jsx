@@ -582,6 +582,7 @@ class SingleDatePicker extends BaseClass {
         onFocus={this.onFocus}
         onKeyDownShiftTab={this.onClearFocus}
         onKeyDownTab={this.onClearFocus}
+        onKeyDownEsc={this.onClearFocus}
         onKeyDownArrowDown={this.onDayPickerFocus}
         onKeyDownQuestionMark={this.showKeyboardShortcutsPanel}
         screenReaderMessage={screenReaderInputMessage}

@@ -46,6 +46,7 @@ const propTypes = forbidExtraProps({
   onFocus: PropTypes.func,
   onKeyDownShiftTab: PropTypes.func,
   onKeyDownTab: PropTypes.func,
+  onKeyDownEsc: PropTypes.func,
   onKeyDownArrowDown: PropTypes.func,
   onKeyDownQuestionMark: PropTypes.func,
 
@@ -81,6 +82,7 @@ const defaultProps = {
   onFocus() {},
   onKeyDownShiftTab() {},
   onKeyDownTab() {},
+  onKeyDownEsc(){},
   onKeyDownArrowDown() {},
   onKeyDownQuestionMark() {},
 
@@ -109,6 +111,7 @@ function SingleDatePickerInput({
   onFocus,
   onKeyDownShiftTab,
   onKeyDownTab,
+  onKeyDownEsc,
   onKeyDownArrowDown,
   onKeyDownQuestionMark,
   screenReaderMessage,
@@ -176,6 +179,7 @@ function SingleDatePickerInput({
         onFocus={onFocus}
         onKeyDownShiftTab={onKeyDownShiftTab}
         onKeyDownTab={onKeyDownTab}
+        onKeyDownEsc={onKeyDownEsc}
         onKeyDownArrowDown={onKeyDownArrowDown}
         onKeyDownQuestionMark={onKeyDownQuestionMark}
         openDirection={openDirection}
