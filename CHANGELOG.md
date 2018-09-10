@@ -1,6 +1,9 @@
 # Change Log
 
 <!-- - []  ([#](https://github.com/airbnb/react-dates/pull/)) -->
+## 18.0.2
+- [fix] Remove svgo from "inline-react-svg" babel plugin options ([#1350](https://github.com/airbnb/react-dates/pull/1350))
+
 ## 18.0.1
 - [fix] Center vertical month navigation ([#1347](https://github.com/airbnb/react-dates/pull/1347))
 
