@@ -145,7 +145,7 @@ class DateInput extends BaseClass {
       onKeyDownTab,
       onKeyDownArrowDown,
       onKeyDownQuestionMark,
-      onKeyDownEsc
+      onKeyDownEsc,
     } = this.props;
     const { key } = e;
 
@@ -160,7 +160,7 @@ class DateInput extends BaseClass {
     } else if (key === '?') {
       e.preventDefault();
       onKeyDownQuestionMark(e);
-    } else if(key === 'Escape') {
+    } else if (key === 'Escape') {
       onKeyDownEsc(e);
     }
   }

@@ -82,7 +82,7 @@ const defaultProps = {
   onFocus() {},
   onKeyDownShiftTab() {},
   onKeyDownTab() {},
-  onKeyDownEsc(){},
+  onKeyDownEsc() {},
   onKeyDownArrowDown() {},
   onKeyDownQuestionMark() {},
 
