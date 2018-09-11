@@ -74,26 +74,39 @@ By default `react-dates` will use `PureComponent` conditionally if it is availab
   ```
 
 #### Overriding styles
-Right now, the easiest way to tweak `react-dates` to your heart's content is to create another stylesheet to override the default react-dates styles. For example, you could create a file named `react_dates_overrides.css` with the following contents:
+Right now, the easiest way to tweak `react-dates` to your heart's content is to create another stylesheet to override the default react-dates styles. For example, you could create a file named `react_dates_overrides.css` with the following contents (Make sure when you import said file to your `app.js`, you import it after the `react-dates` styles):
 
 ```css
-.CalendarDay__highlighted_calendar {
-  background: #82E0AA;
-  color: #186A3B;
+// NOTE: the order of these styles DO matter
+
+// Will edit everything selected including everything between a range of dates
+.CalendarDay__selected_span {
+  background: #82e0aa; //background
+  color: white; //text
+  border: 1px solid $light-red; //default styles include a border
 }
 
-.CalendarDay__highlighted_calendar:hover {
-  background: #58D68D;
-  color: #186A3B;
+// Will edit selected date or the endpoints of a range of dates
+.CalendarDay__selected {
+  background: $dark-red;
+  color: white;
 }
 
-.CalendarDay__highlighted_calendar:active {
-  background: #58D68D;
-  color: #186A3B;
+// Will edit when hovered over. _span style also has this property
+.CalendarDay__selected:hover {
+  background: orange;
+  color: white;
+}
+
+// Will edit when the second date (end date) in a range of dates
+// is not yet selected. Edits the dates between your mouse and said date
+.CalendarDay__hovered_span:hover,
+.CalendarDay__hovered_span {
+  background: brown;
 }
 ```
 
-This would override the background and text colors applied to highlighted calendar days. You can use this method with the default set-up to override any aspect of the calendar to have it better fit to your particular needs.
+This would override the background and text colors applied to highlighted calendar days. You can use this method with the default set-up to override any aspect of the calendar to have it better fit to your particular needs. If there are any styles that you need that aren't listed here, you can always check the source css of each element.
 
 ### Make some awesome datepickers
 
