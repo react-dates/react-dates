@@ -41,6 +41,7 @@ const propTypes = forbidExtraProps({
   onStartDateShiftTab: PropTypes.func,
   onEndDateTab: PropTypes.func,
   onClearDates: PropTypes.func,
+  onKeyDownEsc: PropTypes.func,
   onKeyDownArrowDown: PropTypes.func,
   onKeyDownQuestionMark: PropTypes.func,
 
@@ -88,6 +89,7 @@ const defaultProps = {
   onStartDateShiftTab() {},
   onEndDateTab() {},
   onClearDates() {},
+  onKeyDownEsc() {},
   onKeyDownArrowDown() {},
   onKeyDownQuestionMark() {},
 
@@ -138,6 +140,7 @@ function DateRangePickerInput({
   onEndDateChange,
   onEndDateFocus,
   onEndDateTab,
+  onKeyDownEsc,
   onKeyDownArrowDown,
   onKeyDownQuestionMark,
   onClearDates,
@@ -222,6 +225,7 @@ function DateRangePickerInput({
         onFocus={onStartDateFocus}
         onKeyDownShiftTab={onStartDateShiftTab}
         onKeyDownArrowDown={onKeyDownArrowDown}
+        onKeyDownEsc={onKeyDownEsc}
         onKeyDownQuestionMark={onKeyDownQuestionMark}
         verticalSpacing={verticalSpacing}
         small={small}
@@ -253,6 +257,7 @@ function DateRangePickerInput({
         onChange={onEndDateChange}
         onFocus={onEndDateFocus}
         onKeyDownTab={onEndDateTab}
+        onKeyDownEsc={onKeyDownEsc}
         onKeyDownArrowDown={onKeyDownArrowDown}
         onKeyDownQuestionMark={onKeyDownQuestionMark}
         verticalSpacing={verticalSpacing}

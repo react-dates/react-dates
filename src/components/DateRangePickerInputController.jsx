@@ -326,6 +326,7 @@ export default class DateRangePickerInputController extends BaseClass {
         onEndDateChange={this.onEndDateChange}
         onEndDateFocus={this.onEndDateFocus}
         onEndDateTab={this.onClearFocus}
+        onKeyDownEsc={this.onClearFocus}
         showClearDates={showClearDates}
         onClearDates={this.clearDates}
         screenReaderMessage={screenReaderMessage}

@@ -215,6 +215,15 @@ describe('DateInput', () => {
       wrapper.instance().onKeyDown({ ...event, key: 'foo' });
       expect(onKeyDownQuestionMarkStub.callCount).to.equal(0);
     });
+
+    it('calls props.onKeyDownEsc if e.key === `Escape`', () => {
+      const onKeyDownEscStub = sinon.stub();
+      const wrapper = shallow((
+        <DateInput id="date" onKeyDownEsc={onKeyDownEscStub} />
+      )).dive();
+      wrapper.instance().onKeyDown({ ...event, key: 'Escape' });
+      expect(onKeyDownEscStub.callCount).to.equal(1);
+    });
   });
 
   describe('touch device detection', () => {

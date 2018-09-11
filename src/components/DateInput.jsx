@@ -43,6 +43,7 @@ const propTypes = forbidExtraProps({
   onFocus: PropTypes.func,
   onKeyDownShiftTab: PropTypes.func,
   onKeyDownTab: PropTypes.func,
+  onKeyDownEsc: PropTypes.func,
 
   onKeyDownArrowDown: PropTypes.func,
   onKeyDownQuestionMark: PropTypes.func,
@@ -70,6 +71,7 @@ const defaultProps = {
   onFocus() {},
   onKeyDownShiftTab() {},
   onKeyDownTab() {},
+  onKeyDownEsc() {},
 
   onKeyDownArrowDown() {},
   onKeyDownQuestionMark() {},
@@ -143,6 +145,7 @@ class DateInput extends BaseClass {
       onKeyDownTab,
       onKeyDownArrowDown,
       onKeyDownQuestionMark,
+      onKeyDownEsc,
     } = this.props;
     const { key } = e;
 
@@ -157,6 +160,8 @@ class DateInput extends BaseClass {
     } else if (key === '?') {
       e.preventDefault();
       onKeyDownQuestionMark(e);
+    } else if (key === 'Escape') {
+      onKeyDownEsc(e);
     }
   }
 
