@@ -51,6 +51,8 @@ const defaultProps = {
   // input related props
   startDatePlaceholderText: 'Start Date',
   endDatePlaceholderText: 'End Date',
+  startDateOffset: undefined,
+  endDateOffset: undefined,
   disabled: false,
   required: false,
   readOnly: false,
@@ -402,7 +404,9 @@ class DateRangePicker extends React.PureComponent {
       enableOutsideDays,
       focusedInput,
       startDate,
+      startDateOffset,
       endDate,
+      endDateOffset,
       minimumNights,
       keepOpenOnDateSelect,
       renderCalendarDay,
@@ -479,7 +483,9 @@ class DateRangePicker extends React.PureComponent {
           onClose={onClose}
           focusedInput={focusedInput}
           startDate={startDate}
+          startDateOffset={startDateOffset}
           endDate={endDate}
+          endDateOffset={endDateOffset}
           monthFormat={monthFormat}
           renderMonthText={renderMonthText}
           withPortal={withAnyPortal}

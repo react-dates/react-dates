@@ -59,6 +59,12 @@ storiesOf('DRP - Calendar Props', module)
   .add('3 months', withInfo()(() => (
     <DateRangePickerWrapper numberOfMonths={3} autoFocus />
   )))
+  .add('with 7 days range selection', withInfo()(() => (
+    <DateRangePickerWrapper
+      startDateOffset={day => day.subtract(3, 'days')}
+      endDateOffset={day => day.add(3, 'days')}
+    />
+  )))
   .add('with custom day size', withInfo()(() => (
     <DateRangePickerWrapper daySize={50} autoFocus />
   )))
