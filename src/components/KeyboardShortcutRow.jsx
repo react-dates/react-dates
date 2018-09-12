@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { forbidExtraProps } from 'airbnb-prop-types';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
-import { pureComponentAvailable } from '../utils/baseClass';
 
 const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
@@ -90,4 +89,4 @@ export default withStyles(({ reactDates: { color } }) => ({
     wordBreak: 'break-word',
     marginLeft: 8,
   },
-}), { pureComponent: pureComponentAvailable })(KeyboardShortcutRow);
+}))(KeyboardShortcutRow);

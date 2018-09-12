@@ -5,7 +5,6 @@ import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 
 import { DayPickerNavigationPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
-import { pureComponentAvailable } from '../utils/baseClass';
 
 import LeftArrow from './LeftArrow';
 import RightArrow from './RightArrow';
@@ -303,4 +302,4 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
     width: 42,
     fill: color.text,
   },
-}), { pureComponent: pureComponentAvailable })(DayPickerNavigation);
+}))(DayPickerNavigation);

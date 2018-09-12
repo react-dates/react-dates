@@ -1,4 +1,5 @@
 import React from 'react';
+import shallowCompare from 'react-addons-shallow-compare';
 import moment from 'moment';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 import { Portal } from 'react-portal';
@@ -15,7 +16,6 @@ import getDetachedContainerStyles from '../utils/getDetachedContainerStyles';
 import getInputHeight from '../utils/getInputHeight';
 import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
 import disableScroll from '../utils/disableScroll';
-import BaseClass, { pureComponentAvailable } from '../utils/baseClass';
 
 import DateRangePickerInputController from './DateRangePickerInputController';
 import DayPickerRangeController from './DayPickerRangeController';
@@ -118,8 +118,7 @@ const defaultProps = {
   dayAriaLabelFormat: undefined,
 };
 
-/** @extends React.Component */
-class DateRangePicker extends BaseClass {
+class DateRangePicker extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -162,6 +161,10 @@ class DateRangePicker extends BaseClass {
     }
 
     this.isTouchDevice = isTouchDevice();
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState);
   }
 
   componentDidUpdate(prevProps) {
@@ -671,4 +674,4 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
     width: 15,
     fill: color.core.grayLighter,
   },
-}), { pureComponent: pureComponentAvailable })(DateRangePicker);
+}))(DateRangePicker);
