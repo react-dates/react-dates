@@ -1,6 +1,9 @@
 # Change Log
 
 <!-- - []  ([#](https://github.com/airbnb/react-dates/pull/)) -->
+## 18.0.3
+- [fix] revert 'Conditionally use `PureComponent` instead of `Component`' ([50c382f](https://github.com/airbnb/react-dates/commit/50c382f7cf3e3ba60f4fdaa00eae53cf06d3c97b))
+
 ## 18.0.2
 - [fix] Remove svgo from "inline-react-svg" babel plugin options ([#1350](https://github.com/airbnb/react-dates/pull/1350))
 
