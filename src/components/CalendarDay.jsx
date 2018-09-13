@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import shallowCompare from 'react-addons-shallow-compare';
 import momentPropTypes from 'react-moment-proptypes';
 import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
@@ -10,6 +9,7 @@ import { CalendarDayPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 import getCalendarDaySettings from '../utils/getCalendarDaySettings';
 import ModifiersShape from '../shapes/ModifiersShape';
+import BaseClass, { pureComponentAvailable } from '../utils/baseClass';
 
 import { DAY_SIZE } from '../constants';
 
@@ -48,15 +48,12 @@ const defaultProps = {
   phrases: CalendarDayPhrases,
 };
 
-class CalendarDay extends React.Component {
+/** @extends React.Component */
+class CalendarDay extends BaseClass {
   constructor(...args) {
     super(...args);
 
     this.setButtonRef = this.setButtonRef.bind(this);
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return shallowCompare(this, nextProps, nextState);
   }
 
   componentDidUpdate(prevProps) {
@@ -343,4 +340,4 @@ export default withStyles(({ reactDates: { color, font } }) => ({
   CalendarDay__today: {},
   CalendarDay__firstDayOfWeek: {},
   CalendarDay__lastDayOfWeek: {},
-}))(CalendarDay);
+}), { pureComponent: pureComponentAvailable })(CalendarDay);

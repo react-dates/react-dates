@@ -20,6 +20,8 @@ import toLocalizedDateString from '../utils/toLocalizedDateString';
 import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
 import isBeforeDay from '../utils/isBeforeDay';
 
+import BaseClass from '../utils/baseClass';
+
 import {
   START_DATE,
   END_DATE,
@@ -131,7 +133,8 @@ const defaultProps = {
   isRTL: false,
 };
 
-export default class DateRangePickerInputController extends React.Component {
+/** @extends React.Component */
+export default class DateRangePickerInputController extends BaseClass {
   constructor(props) {
     super(props);
 

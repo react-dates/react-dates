@@ -28,6 +28,7 @@ import FocusedInputShape from '../shapes/FocusedInputShape';
 import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
 import DayOfWeekShape from '../shapes/DayOfWeekShape';
 import CalendarInfoPositionShape from '../shapes/CalendarInfoPositionShape';
+import BaseClass from '../utils/baseClass';
 
 import {
   START_DATE,
@@ -173,7 +174,8 @@ const getChooseAvailableDatePhrase = (phrases, focusedInput) => {
   return phrases.chooseAvailableDate;
 };
 
-export default class DayPickerRangeController extends React.Component {
+/** @extends React.Component */
+export default class DayPickerRangeController extends BaseClass {
   constructor(props) {
     super(props);
 

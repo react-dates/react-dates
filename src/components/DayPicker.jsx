@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import shallowCompare from 'react-addons-shallow-compare';
 import { forbidExtraProps, mutuallyExclusiveProps, nonNegativeInteger } from 'airbnb-prop-types';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 
@@ -30,6 +29,7 @@ import ModifiersShape from '../shapes/ModifiersShape';
 import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
 import DayOfWeekShape from '../shapes/DayOfWeekShape';
 import CalendarInfoPositionShape from '../shapes/CalendarInfoPositionShape';
+import BaseClass, { pureComponentAvailable } from '../utils/baseClass';
 
 import {
   HORIZONTAL_ORIENTATION,
@@ -163,7 +163,8 @@ export const defaultProps = {
   dayAriaLabelFormat: undefined,
 };
 
-class DayPicker extends React.Component {
+/** @extends React.Component */
+class DayPicker extends BaseClass {
   constructor(props) {
     super(props);
 
@@ -297,10 +298,6 @@ class DayPicker extends React.Component {
         monthTitleHeight: null,
       });
     }
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return shallowCompare(this, nextProps, nextState);
   }
 
   componentWillUpdate() {
@@ -1242,4 +1239,4 @@ export default withStyles(({
       },
     }),
   },
-}))(DayPicker);
+}), { pureComponent: pureComponentAvailable })(DayPicker);

@@ -1,4 +1,9 @@
 import React from 'react';
+if (process.env.NODE_ENV !== 'production') {
+  const { whyDidYouUpdate } = require('why-did-you-update');
+  whyDidYouUpdate(React);
+}
+
 import moment from 'moment';
 import aphroditeInterface from 'react-with-styles-interface-aphrodite';
 
