@@ -296,11 +296,10 @@ export default class DayPickerRangeController extends BaseClass {
       )
     ) {
       const newMonthState = this.getStateForNewMonth(nextProps);
-      const { currentMonth } = newMonthState;
-      ({ visibleDays } = newMonthState);
+      const { currentMonth, visibleDays: newVisibleDays } = newMonthState;
       this.setState({
         currentMonth,
-        visibleDays,
+        visibleDays: newVisibleDays,
       });
     }
 
