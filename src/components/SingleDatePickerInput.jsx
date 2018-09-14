@@ -88,8 +88,6 @@ const defaultProps = {
   phrases: SingleDatePickerInputPhrases,
 };
 
-/* eslint react/no-this-in-sfc: 1 */
-
 function SingleDatePickerInput({
   id,
   placeholder,
@@ -196,8 +194,6 @@ function SingleDatePickerInput({
           type="button"
           aria-label={phrases.clearDate}
           disabled={disabled}
-          onMouseEnter={this && this.onClearDateMouseEnter}
-          onMouseLeave={this && this.onClearDateMouseLeave}
           onClick={onClearDate}
         >
           {closeIcon}
