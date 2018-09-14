@@ -112,6 +112,7 @@ const defaultProps = {
 
   // internationalization
   displayFormat: () => moment.localeData().longDateFormat('L'),
+  inputFormats: [moment.localeData().longDateFormat('L')],
   monthFormat: 'MMMM YYYY',
   weekDayFormat: 'dd',
   phrases: DateRangePickerPhrases,

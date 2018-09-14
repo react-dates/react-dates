@@ -293,7 +293,7 @@ describe('SingleDatePicker', () => {
       });
     });
 
-    describe('matches custom display format', () => {
+    describe('matches custom input format', () => {
       const customFormat = 'YY|MM[foobar]DD';
       const customFormatDateString = moment().add(5, 'days').format(customFormat);
       it('calls props.onDateChange once', () => {
@@ -301,7 +301,7 @@ describe('SingleDatePicker', () => {
         const wrapper = shallow((
           <SingleDatePicker
             id="date"
-            displayFormat={customFormat}
+            inputFormats={[customFormat]}
             onDateChange={onDateChangeStub}
             onFocusChange={() => {}}
           />
@@ -315,7 +315,7 @@ describe('SingleDatePicker', () => {
         const wrapper = shallow((
           <SingleDatePicker
             id="date"
-            displayFormat={customFormat}
+            inputFormats={[customFormat]}
             onDateChange={onDateChangeStub}
             onFocusChange={() => {}}
           />
@@ -330,7 +330,7 @@ describe('SingleDatePicker', () => {
         const wrapper = shallow((
           <SingleDatePicker
             id="date"
-            displayFormat={customFormat}
+            inputFormats={[customFormat]}
             onDateChange={() => {}}
             onFocusChange={onFocusChangeStub}
           />
@@ -344,7 +344,7 @@ describe('SingleDatePicker', () => {
         const wrapper = shallow((
           <SingleDatePicker
             id="date"
-            displayFormat={customFormat}
+            inputFormats={[customFormat]}
             onDateChange={() => {}}
             onFocusChange={onFocusChangeStub}
           />

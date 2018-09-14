@@ -295,14 +295,14 @@ describe('DateRangePickerInputController', () => {
       });
     });
 
-    describe('matches custom display format', () => {
+    describe('matches custom input format', () => {
       const customFormat = 'YY|MM[foobar]DD';
       const customFormatDateString = moment(today).add(5, 'days').format(customFormat);
       it('calls props.onDatesChange with correct arguments', () => {
         const onDatesChangeStub = sinon.stub();
         const wrapper = shallow((
           <DateRangePickerInputController
-            displayFormat={customFormat}
+            inputFormats={[customFormat]}
             onDatesChange={onDatesChangeStub}
           />
         ));
@@ -319,7 +319,7 @@ describe('DateRangePickerInputController', () => {
           const onFocusChangeStub = sinon.stub();
           const wrapper = shallow((
             <DateRangePickerInputController
-              displayFormat={customFormat}
+              inputFormats={[customFormat]}
               onFocusChange={onFocusChangeStub}
             />
           ));
@@ -331,7 +331,7 @@ describe('DateRangePickerInputController', () => {
           const onFocusChangeStub = sinon.stub();
           const wrapper = shallow((
             <DateRangePickerInputController
-              displayFormat={customFormat}
+              inputFormats={[customFormat]}
               onFocusChange={onFocusChangeStub}
             />
           ));
@@ -626,14 +626,14 @@ describe('DateRangePickerInputController', () => {
       });
     });
 
-    describe('matches custom display format', () => {
+    describe('matches custom input format', () => {
       const customFormat = 'YY|MM[foobar]DD';
       const customFormatDateString = moment(today).add(5, 'days').format(customFormat);
       it('calls props.onDatesChange with correct arguments', () => {
         const onDatesChangeStub = sinon.stub();
         const wrapper = shallow((
           <DateRangePickerInputController
-            displayFormat={customFormat}
+            inputFormats={[customFormat]}
             onDatesChange={onDatesChangeStub}
           />
         ));
@@ -650,7 +650,7 @@ describe('DateRangePickerInputController', () => {
           const onFocusChangeStub = sinon.stub();
           const wrapper = shallow((
             <DateRangePickerInputController
-              displayFormat={customFormat}
+              inputFormats={[customFormat]}
               onFocusChange={onFocusChangeStub}
             />
           ));
@@ -662,7 +662,7 @@ describe('DateRangePickerInputController', () => {
           const onFocusChangeStub = sinon.stub();
           const wrapper = shallow((
             <DateRangePickerInputController
-              displayFormat={customFormat}
+              inputFormats={[customFormat]}
               onFocusChange={onFocusChangeStub}
             />
           ));
