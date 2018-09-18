@@ -70,6 +70,7 @@ export default {
   verticalHeight: nonNegativeInteger,
   transitionDuration: nonNegativeInteger,
   verticalSpacing: nonNegativeInteger,
+  horizontalMonthPadding: nonNegativeInteger,
 
   // navigation related props
   navPrev: PropTypes.node,
