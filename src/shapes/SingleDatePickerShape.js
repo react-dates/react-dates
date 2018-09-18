@@ -3,7 +3,9 @@ import momentPropTypes from 'react-moment-proptypes';
 
 import SharedPickerShape from './SharedPickerShape';
 
-export const SingleDatePickerOnlyPropTypes = {
+export default {
+  ...SharedPickerShape,
+
   // required props for a functional interactive SingleDatePicker
   date: momentPropTypes.momentObj,
   onDateChange: PropTypes.func.isRequired,
@@ -16,9 +18,4 @@ export const SingleDatePickerOnlyPropTypes = {
 
   showClearDate: PropTypes.bool,
   reopenPickerOnClearDate: PropTypes.bool,
-};
-
-export default {
-  ...SharedPickerShape,
-  ...SingleDatePickerOnlyPropTypes,
 };

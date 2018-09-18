@@ -9,6 +9,14 @@ import DropDownController, { PureDropDownController } from '../../src/components
 
 const describeIfWindow = typeof document === 'undefined' ? describe.skip : describe;
 
+function TestInput() {
+  return <div>Test Input</div>;
+}
+
+function TestDropDown() {
+  return <div>Test DropDown</div>;
+}
+
 describe('DropDownController', () => {
   afterEach(() => {
     sinon.restore();
@@ -16,56 +24,52 @@ describe('DropDownController', () => {
 
   describe('#render', () => {
     it('renders props.input', () => {
-      const input = <div className="unique-input-classname" />;
       const wrapper = shallow((
         <DropDownController
           onFocusChange={() => {}}
-          input={input}
+          input={TestInput}
         />
       )).dive();
-      expect(wrapper.find('.unique-input-classname')).to.have.lengthOf(1);
+      expect(wrapper.find(TestInput)).to.have.lengthOf(1);
     });
 
     describe('props.dropdown', () => {
       describe('props.focused === true', () => {
         it('renders props.dropdown', () => {
-          const dropdown = <div className="unique-dropdown-classname" />;
           const wrapper = shallow((
             <DropDownController
               onFocusChange={() => {}}
-              dropdown={dropdown}
+              dropdown={TestDropDown}
               focused
             />
           )).dive();
-          expect(wrapper.find('.unique-dropdown-classname')).to.have.lengthOf(1);
+          expect(wrapper.find(TestDropDown)).to.have.lengthOf(1);
         });
       });
 
       describe('props.focused === false', () => {
         it('does not render props.dropdown', () => {
-          const dropdown = <div className="unique-dropdown-classname" />;
           const wrapper = shallow((
             <DropDownController
               onFocusChange={() => {}}
-              dropdown={dropdown}
+              dropdown={TestDropDown}
               focused={false}
             />
           )).dive();
-          expect(wrapper.find('.unique-dropdown-classname')).to.have.lengthOf(0);
+          expect(wrapper.find(TestDropDown)).to.have.lengthOf(0);
         });
       });
 
       it('should pass onDayPickerBlur as onBlur to props.dropdown', () => {
-        const dropdown = <div className="unique-dropdown-classname" />;
         const wrapper = shallow((
           <DropDownController
             onFocusChange={() => {}}
-            dropdown={dropdown}
+            dropdown={TestDropDown}
             focused
           />
         )).dive();
         const { onDayPickerBlur } = wrapper.instance();
-        expect(wrapper.find('.unique-dropdown-classname').prop('onBlur')).to.equal(onDayPickerBlur);
+        expect(wrapper.find(TestDropDown).prop('onBlur')).to.equal(onDayPickerBlur);
       });
     });
 
@@ -132,7 +136,7 @@ describe('DropDownController', () => {
 
     describe('props.appendToBody', () => {
       const requiredProps = {
-        dropdown: <div className="unique-dropdown-classname" />,
+        dropdown: TestDropDown,
         onFocusChange: () => {},
       };
 
@@ -142,7 +146,7 @@ describe('DropDownController', () => {
         )).dive();
         const portal = wrapper.find(Portal);
         expect(portal).to.have.length(1);
-        expect(portal.find('.unique-dropdown-classname')).to.have.length(1);
+        expect(portal.find(TestDropDown)).to.have.length(1);
       });
 
       describeIfWindow('mounted', () => {

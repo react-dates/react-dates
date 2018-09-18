@@ -2,14 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 import { Portal } from 'react-portal';
-import { forbidExtraProps } from 'airbnb-prop-types';
+import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
 import { addEventListener } from 'consolidated-events';
 import isTouchDevice from 'is-touch-device';
 import OutsideClickHandler from 'react-outside-click-handler';
 
-import SharedPickerShape from '../shapes/SharedPickerShape';
-import { SingleDatePickerOnlyPropTypes } from '../shapes/SingleDatePickerShape';
-import { DateRangePickerOnlyPropTypes } from '../shapes/DateRangePickerShape';
+import SingleDatePickerShape from '../shapes/SingleDatePickerShape';
+import anchorDirectionShape from '../shapes/AnchorDirectionShape';
+import openDirectionShape from '../shapes/OpenDirectionShape';
+import orientationShape from '../shapes/OrientationShape';
 
 import getResponsiveContainerStyles from '../utils/getResponsiveContainerStyles';
 import getDetachedContainerStyles from '../utils/getDetachedContainerStyles';
@@ -31,16 +32,49 @@ import {
 
 const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
-  ...SharedPickerShape,
-  ...DateRangePickerOnlyPropTypes,
-  ...SingleDatePickerOnlyPropTypes,
-  input: PropTypes.func,
-  inputProps: PropTypes.arrayOf(PropTypes.string),
-  dropdown: PropTypes.func,
-  dropdownProps: PropTypes.arrayOf(PropTypes.string),
+  anchorDirection: anchorDirectionShape,
+  appendToBody: PropTypes.bool,
+  block: PropTypes.bool,
+  customCloseIcon: PropTypes.node,
+  disableScroll: PropTypes.bool,
+  focused: PropTypes.bool,
+  horizontalMargin: nonNegativeInteger,
+  isRTL: PropTypes.bool,
+  keepFocusOnInput: PropTypes.bool,
+  onFocusChange: PropTypes.func,
+  openDirection: openDirectionShape,
+  orientation: orientationShape,
+  phrases: PropTypes.object, // only the closeDatePicker phrase is used
+  readOnly: PropTypes.bool,
+  small: PropTypes.bool,
+  verticalSpacing: nonNegativeInteger,
+  withFullScreenPortal: PropTypes.bool,
+  withPortal: PropTypes.bool,
+  input: PropTypes.func, // React.Component
+  inputProps: PropTypes.shape(SingleDatePickerShape),
+  dropdown: PropTypes.func, // React.Component
+  dropdownProps: PropTypes.object, // TODO: get DayPickerSingleDateController props
 });
 
 const defaultProps = {
+  anchorDirection: ANCHOR_LEFT,
+  appendToBody: false,
+  block: false,
+  customCloseIcon: null,
+  disableScroll: false,
+  focused: false,
+  horizontalMargin: undefined,
+  isRTL: false,
+  keepFocusOnInput: false,
+  onFocusChange() {},
+  openDirection: OPEN_DOWN,
+  orientation: HORIZONTAL_ORIENTATION,
+  phrases: {}, // only the closeDatePicker phrase is used
+  readOnly: false,
+  small: false,
+  verticalSpacing: undefined,
+  withFullScreenPortal: false,
+  withPortal: false,
 };
 
 /** @extends React.Component */
@@ -68,8 +102,6 @@ class DropDownController extends BaseClass {
 
     this.setDayPickerContainerRef = this.setDayPickerContainerRef.bind(this);
     this.setContainerRef = this.setContainerRef.bind(this);
-
-    this.setProps(props);
   }
 
   /* istanbul ignore next */
@@ -92,10 +124,6 @@ class DropDownController extends BaseClass {
     }
 
     this.isTouchDevice = isTouchDevice();
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setProps(nextProps);
   }
 
   componentDidUpdate(prevProps) {
@@ -179,19 +207,6 @@ class DropDownController extends BaseClass {
 
   setContainerRef(ref) {
     this.container = ref;
-  }
-
-  setProps(props) {
-    const { dropdownProps, inputProps } = props;
-    this.inputProps = inputProps.reduce((acc, key) => ({
-      ...acc,
-      [key]: props[key],
-    }), {});
-
-    this.dropdownProps = dropdownProps.reduce((acc, key) => ({
-      ...acc,
-      [key]: props[key],
-    }), {});
   }
 
   disableScroll() {
@@ -287,6 +302,7 @@ class DropDownController extends BaseClass {
   renderDayPicker() {
     const {
       dropdown: DropDown,
+      dropdownProps,
       anchorDirection,
       openDirection,
       orientation,
@@ -335,7 +351,7 @@ class DropDownController extends BaseClass {
       >
         {DropDown && (
           <DropDown
-            {...this.dropdownProps}
+            {...dropdownProps}
             isFocused={isDayPickerFocused}
             showKeyboardShortcuts={showKeyboardShortcuts}
             onBlur={this.onDayPickerBlur}
@@ -365,6 +381,7 @@ class DropDownController extends BaseClass {
       verticalSpacing,
       block,
       input: Input,
+      inputProps,
       styles,
     } = this.props;
 
@@ -375,7 +392,7 @@ class DropDownController extends BaseClass {
 
     const inputEl = Input && (
       <Input
-        {...this.inputProps}
+        {...inputProps}
         showCaret={!withPortal && !withFullScreenPortal && !hideFang}
         isFocused={isInputFocused}
         onFocusChange={this.onInputFocus}

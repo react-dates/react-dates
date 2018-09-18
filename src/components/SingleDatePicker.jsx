@@ -5,6 +5,7 @@ import { forbidExtraProps } from 'airbnb-prop-types';
 import SingleDatePickerShape from '../shapes/SingleDatePickerShape';
 import { SingleDatePickerPhrases } from '../defaultPhrases';
 
+import BaseClass from '../utils/baseClass';
 import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
 
 import SingleDatePickerInputController, { SingleDatePickerInputControllerProps } from './SingleDatePickerInputController';
@@ -100,16 +101,81 @@ const defaultProps = {
   dayAriaLabelFormat: undefined,
 };
 
-export default function SingleDatePicker(props) {
-  return (
-    <DropDownController
-      {...props}
-      input={SingleDatePickerInputController}
-      inputProps={SingleDatePickerInputControllerProps}
-      dropdown={DayPickerSingleDateController}
-      dropdownProps={DayPickerSingleDateControllerProps}
-    />
-  );
+/** @extends React.Component */
+export default class SingleDatePicker extends BaseClass {
+  constructor(props) {
+    super(props);
+    this.cacheProps(props);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.cacheProps(nextProps);
+  }
+
+  cacheProps(props) {
+    this.inputProps = SingleDatePickerInputControllerProps.reduce((acc, key) => ({
+      ...acc,
+      [key]: props[key],
+    }), {});
+
+    this.dropdownProps = DayPickerSingleDateControllerProps.reduce((acc, key) => ({
+      ...acc,
+      [key]: props[key],
+    }), {});
+    // TODO: figure out a better way to add the withPortal prop when it's not just passed through
+    this.dropdownProps.withPortal = props.withPortal || props.withFullScreenPortal;
+  }
+
+  render() {
+    const {
+      anchorDirection,
+      appendToBody,
+      block,
+      customCloseIcon,
+      disableScroll,
+      focused,
+      horizontalMargin,
+      isRTL,
+      keepFocusOnInput,
+      onFocusChange,
+      openDirection,
+      orientation,
+      phrases, // only the closeDatePicker phrase is used
+      readOnly,
+      small,
+      verticalSpacing,
+      withFullScreenPortal,
+      withPortal,
+    } = this.props;
+
+    return (
+      <DropDownController
+        anchorDirection={anchorDirection}
+        appendToBody={appendToBody}
+        block={block}
+        customCloseIcon={customCloseIcon}
+        disableScroll={disableScroll}
+        focused={focused}
+        horizontalMargin={horizontalMargin}
+        isRTL={isRTL}
+        keepFocusOnInput={keepFocusOnInput}
+        onFocusChange={onFocusChange}
+        openDirection={openDirection}
+        orientation={orientation}
+        phrases={phrases}
+        readOnly={readOnly}
+        small={small}
+        verticalSpacing={verticalSpacing}
+        withFullScreenPortal={withFullScreenPortal}
+        withPortal={withPortal}
+
+        input={SingleDatePickerInputController}
+        inputProps={this.inputProps}
+        dropdown={DayPickerSingleDateController}
+        dropdownProps={this.dropdownProps}
+      />
+    );
+  }
 }
 
 SingleDatePicker.propTypes = propTypes;

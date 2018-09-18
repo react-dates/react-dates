@@ -5,7 +5,9 @@ import FocusedInputShape from './FocusedInputShape';
 
 import SharedPickerShape from './SharedPickerShape';
 
-export const DateRangePickerOnlyPropTypes = {
+export default {
+  ...SharedPickerShape,
+
   // required props for a functional interactive DateRangePicker
   startDate: momentPropTypes.momentObj,
   endDate: momentPropTypes.momentObj,
@@ -23,10 +25,4 @@ export const DateRangePickerOnlyPropTypes = {
   customArrowIcon: PropTypes.node,
 
   minimumNights: PropTypes.number,
-};
-
-
-export default {
-  ...SharedPickerShape,
-  ...DateRangePickerOnlyPropTypes,
 };
