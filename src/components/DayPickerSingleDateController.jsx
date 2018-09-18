@@ -32,7 +32,7 @@ import {
 
 import DayPicker from './DayPicker';
 
-const propTypes = forbidExtraProps({
+const propTypes = {
   date: momentPropTypes.momentObj,
   onDateChange: PropTypes.func,
 
@@ -85,7 +85,7 @@ const propTypes = forbidExtraProps({
   dayAriaLabelFormat: PropTypes.string,
 
   isRTL: PropTypes.bool,
-});
+};
 
 const defaultProps = {
   date: undefined, // TODO: use null
@@ -726,5 +726,7 @@ export default class DayPickerSingleDateController extends BaseClass {
   }
 }
 
-DayPickerSingleDateController.propTypes = propTypes;
+export const DayPickerSingleDateControllerProps = Object.keys(propTypes);
+
+DayPickerSingleDateController.propTypes = forbidExtraProps(propTypes);
 DayPickerSingleDateController.defaultProps = defaultProps;

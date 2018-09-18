@@ -2,16 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 import { Portal } from 'react-portal';
-import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
+import { forbidExtraProps } from 'airbnb-prop-types';
 import { addEventListener } from 'consolidated-events';
 import isTouchDevice from 'is-touch-device';
 import OutsideClickHandler from 'react-outside-click-handler';
 
-import defaultPhrases from '../defaultPhrases';
-
-import anchorDirectionShape from '../shapes/AnchorDirectionShape';
-import openDirectionShape from '../shapes/OpenDirectionShape';
-import orientationShape from '../shapes/OrientationShape';
+import SharedPickerShape from '../shapes/SharedPickerShape';
+import { SingleDatePickerOnlyPropTypes } from '../shapes/SingleDatePickerShape';
+import { DateRangePickerOnlyPropTypes } from '../shapes/DateRangePickerShape';
 
 import getResponsiveContainerStyles from '../utils/getResponsiveContainerStyles';
 import getDetachedContainerStyles from '../utils/getDetachedContainerStyles';
@@ -28,52 +26,21 @@ import {
   ANCHOR_RIGHT,
   OPEN_DOWN,
   OPEN_UP,
-  DEFAULT_VERTICAL_SPACING,
+  FANG_HEIGHT_PX,
 } from '../constants';
 
 const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
-  anchorDirection: anchorDirectionShape,
-  appendToBody: PropTypes.bool,
-  block: PropTypes.bool,
-  closeDatePickerPhrase: PropTypes.string,
-  customCloseIcon: PropTypes.node,
-  disableScroll: PropTypes.bool,
-  dropdown: PropTypes.node,
-  focused: PropTypes.bool,
-  input: PropTypes.node,
-  isRTL: PropTypes.bool,
-  keepFocusOnInput: PropTypes.bool,
-  onFocusChange: PropTypes.func,
-  openDirection: openDirectionShape,
-  orientation: orientationShape,
-  readOnly: PropTypes.bool,
-  small: PropTypes.bool,
-  verticalSpacing: nonNegativeInteger,
-  withFullScreenPortal: PropTypes.bool,
-  withPortal: PropTypes.bool,
+  ...SharedPickerShape,
+  ...DateRangePickerOnlyPropTypes,
+  ...SingleDatePickerOnlyPropTypes,
+  input: PropTypes.func,
+  inputProps: PropTypes.arrayOf(PropTypes.string),
+  dropdown: PropTypes.func,
+  dropdownProps: PropTypes.arrayOf(PropTypes.string),
 });
 
 const defaultProps = {
-  anchorDirection: ANCHOR_LEFT,
-  appendToBody: false,
-  block: false,
-  closeDatePickerPhrase: defaultPhrases.closeDatePicker,
-  customCloseIcon: null,
-  disableScroll: false,
-  dropdown: null,
-  focused: false,
-  input: null,
-  isRTL: false,
-  keepFocusOnInput: false,
-  onFocusChange() {},
-  openDirection: OPEN_DOWN,
-  orientation: HORIZONTAL_ORIENTATION,
-  readOnly: false,
-  small: false,
-  verticalSpacing: DEFAULT_VERTICAL_SPACING,
-  withFullScreenPortal: false,
-  withPortal: false,
 };
 
 /** @extends React.Component */
@@ -101,6 +68,8 @@ class DropDownController extends BaseClass {
 
     this.setDayPickerContainerRef = this.setDayPickerContainerRef.bind(this);
     this.setContainerRef = this.setContainerRef.bind(this);
+
+    this.setProps(props);
   }
 
   /* istanbul ignore next */
@@ -123,6 +92,10 @@ class DropDownController extends BaseClass {
     }
 
     this.isTouchDevice = isTouchDevice();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setProps(nextProps);
   }
 
   componentDidUpdate(prevProps) {
@@ -206,6 +179,19 @@ class DropDownController extends BaseClass {
 
   setContainerRef(ref) {
     this.container = ref;
+  }
+
+  setProps(props) {
+    const { dropdownProps, inputProps } = props;
+    this.inputProps = inputProps.reduce((acc, key) => ({
+      ...acc,
+      [key]: props[key],
+    }), {});
+
+    this.dropdownProps = dropdownProps.reduce((acc, key) => ({
+      ...acc,
+      [key]: props[key],
+    }), {});
   }
 
   disableScroll() {
@@ -300,8 +286,7 @@ class DropDownController extends BaseClass {
 
   renderDayPicker() {
     const {
-      closeDatePickerPhrase,
-      dropdown,
+      dropdown: DropDown,
       anchorDirection,
       openDirection,
       orientation,
@@ -311,6 +296,7 @@ class DropDownController extends BaseClass {
       withPortal,
       customCloseIcon,
       small,
+      phrases,
       styles,
       theme: { reactDates },
     } = this.props;
@@ -347,16 +333,19 @@ class DropDownController extends BaseClass {
         )}
         onClick={onOutsideClick}
       >
-        {dropdown && React.cloneElement(dropdown, {
-          isFocused: isDayPickerFocused,
-          showKeyboardShortcuts,
-          onBlur: this.onDayPickerBlur,
-        })}
+        {DropDown && (
+          <DropDown
+            {...this.dropdownProps}
+            isFocused={isDayPickerFocused}
+            showKeyboardShortcuts={showKeyboardShortcuts}
+            onBlur={this.onDayPickerBlur}
+          />
+        )}
 
         {withFullScreenPortal && (
           <button
             {...css(styles.DropDownController_closeButton)}
-            aria-label={closeDatePickerPhrase}
+            aria-label={(phrases || {}).closeDatePicker}
             type="button"
             onClick={this.onOutsideClick}
           >
@@ -373,21 +362,27 @@ class DropDownController extends BaseClass {
     const {
       withFullScreenPortal,
       withPortal,
+      verticalSpacing,
       block,
-      input,
+      input: Input,
       styles,
     } = this.props;
 
     const { isInputFocused } = this.state;
 
     const enableOutsideClick = (!withPortal && !withFullScreenPortal);
+    const hideFang = verticalSpacing < FANG_HEIGHT_PX;
 
-    const inputEl = input && React.cloneElement(input, {
-      isFocused: isInputFocused,
-      onFocusChange: this.onInputFocus,
-      onKeyDownArrowDown: this.onDayPickerFocus,
-      onKeyDownQuestionMark: this.showKeyboardShortcutsPanel,
-    });
+    const inputEl = Input && (
+      <Input
+        {...this.inputProps}
+        showCaret={!withPortal && !withFullScreenPortal && !hideFang}
+        isFocused={isInputFocused}
+        onFocusChange={this.onInputFocus}
+        onKeyDownArrowDown={this.onDayPickerFocus}
+        onKeyDownQuestionMark={this.showKeyboardShortcutsPanel}
+      />
+    );
 
     return (
       <div

@@ -26,7 +26,7 @@ import {
   OPEN_DOWN,
 } from '../constants';
 
-const propTypes = forbidExtraProps({
+const propTypes = {
   date: momentPropTypes.momentObj,
   onDateChange: PropTypes.func.isRequired,
 
@@ -69,7 +69,7 @@ const propTypes = forbidExtraProps({
   phrases: PropTypes.shape(getPhrasePropTypes(SingleDatePickerInputPhrases)),
 
   isRTL: PropTypes.bool,
-});
+};
 
 const defaultProps = {
   date: null,
@@ -259,5 +259,7 @@ export default class SingleDatePickerInputController extends BaseClass {
   }
 }
 
-SingleDatePickerInputController.propTypes = propTypes;
+export const SingleDatePickerInputControllerProps = Object.keys(propTypes);
+
+SingleDatePickerInputController.propTypes = forbidExtraProps(propTypes);
 SingleDatePickerInputController.defaultProps = defaultProps;

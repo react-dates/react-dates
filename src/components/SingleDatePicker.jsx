@@ -7,8 +7,8 @@ import { SingleDatePickerPhrases } from '../defaultPhrases';
 
 import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
 
-import SingleDatePickerInputController from './SingleDatePickerInputController';
-import DayPickerSingleDateController from './DayPickerSingleDateController';
+import SingleDatePickerInputController, { SingleDatePickerInputControllerProps } from './SingleDatePickerInputController';
+import DayPickerSingleDateController, { DayPickerSingleDateControllerProps } from './DayPickerSingleDateController';
 import DropDownController from './DropDownController';
 
 import {
@@ -18,7 +18,6 @@ import {
   DAY_SIZE,
   ICON_BEFORE_POSITION,
   INFO_POSITION_BOTTOM,
-  FANG_HEIGHT_PX,
   DEFAULT_VERTICAL_SPACING,
 } from '../constants';
 
@@ -101,161 +100,14 @@ const defaultProps = {
   dayAriaLabelFormat: undefined,
 };
 
-export default function SingleDatePicker({
-  id,
-  placeholder,
-  disabled,
-  focused,
-  required,
-  readOnly,
-  openDirection,
-  showClearDate,
-  showDefaultInputIcon,
-  inputIconPosition,
-  customCloseIcon,
-  customInputIcon,
-  date,
-  onDateChange,
-  displayFormat,
-  phrases,
-  withPortal,
-  withFullScreenPortal,
-  screenReaderInputMessage,
-  isRTL,
-  noBorder,
-  block,
-  small,
-  regular,
-  verticalSpacing,
-  reopenPickerOnClearDate,
-  keepOpenOnDateSelect,
-  anchorDirection,
-  onFocusChange,
-  enableOutsideDays,
-  numberOfMonths,
-  orientation,
-  monthFormat,
-  navPrev,
-  navNext,
-  onPrevMonthClick,
-  onNextMonthClick,
-  initialVisibleMonth,
-  renderMonthText,
-  renderCalendarDay,
-  renderDayContents,
-  renderCalendarInfo,
-  renderMonthElement,
-  calendarInfoPosition,
-  hideKeyboardShortcutsPanel,
-  firstDayOfWeek,
-  dayAriaLabelFormat,
-  daySize,
-  isOutsideRange,
-  isDayBlocked,
-  isDayHighlighted,
-  weekDayFormat,
-  verticalHeight,
-  transitionDuration,
-  horizontalMonthPadding,
-  onClose,
-  appendToBody,
-  disableScroll,
-}) {
-  const hideFang = verticalSpacing < FANG_HEIGHT_PX;
-  const withAnyPortal = withPortal || withFullScreenPortal;
-
-  const input = (
-    <SingleDatePickerInputController
-      id={id}
-      placeholder={placeholder}
-      focused={focused}
-      disabled={disabled}
-      required={required}
-      readOnly={readOnly}
-      openDirection={openDirection}
-      showCaret={!withPortal && !withFullScreenPortal && !hideFang}
-      showClearDate={showClearDate}
-      showDefaultInputIcon={showDefaultInputIcon}
-      inputIconPosition={inputIconPosition}
-      customCloseIcon={customCloseIcon}
-      customInputIcon={customInputIcon}
-      date={date}
-      onDateChange={onDateChange}
-      displayFormat={displayFormat}
-      onFocusChange={onFocusChange}
-      screenReaderMessage={screenReaderInputMessage}
-      phrases={phrases}
-      isRTL={isRTL}
-      noBorder={noBorder}
-      block={block}
-      small={small}
-      regular={regular}
-      verticalSpacing={verticalSpacing}
-      reopenPickerOnClearDate={reopenPickerOnClearDate}
-      keepOpenOnDateSelect={keepOpenOnDateSelect}
-    />
-  );
-
-  const dropdown = (
-    <DayPickerSingleDateController
-      date={date}
-      onDateChange={onDateChange}
-      onFocusChange={onFocusChange}
-      orientation={orientation}
-      enableOutsideDays={enableOutsideDays}
-      numberOfMonths={numberOfMonths}
-      monthFormat={monthFormat}
-      withPortal={withAnyPortal}
-      focused={focused}
-      keepOpenOnDateSelect={keepOpenOnDateSelect}
-      hideKeyboardShortcutsPanel={hideKeyboardShortcutsPanel}
-      initialVisibleMonth={initialVisibleMonth}
-      navPrev={navPrev}
-      navNext={navNext}
-      onPrevMonthClick={onPrevMonthClick}
-      onNextMonthClick={onNextMonthClick}
-      onClose={onClose}
-      renderMonthText={renderMonthText}
-      renderCalendarDay={renderCalendarDay}
-      renderDayContents={renderDayContents}
-      renderCalendarInfo={renderCalendarInfo}
-      renderMonthElement={renderMonthElement}
-      calendarInfoPosition={calendarInfoPosition}
-      phrases={phrases}
-      dayAriaLabelFormat={dayAriaLabelFormat}
-      daySize={daySize}
-      isRTL={isRTL}
-      isOutsideRange={isOutsideRange}
-      isDayBlocked={isDayBlocked}
-      isDayHighlighted={isDayHighlighted}
-      firstDayOfWeek={firstDayOfWeek}
-      weekDayFormat={weekDayFormat}
-      verticalHeight={verticalHeight}
-      transitionDuration={transitionDuration}
-      horizontalMonthPadding={horizontalMonthPadding}
-    />
-  );
-
+export default function SingleDatePicker(props) {
   return (
     <DropDownController
-      anchorDirection={anchorDirection}
-      appendToBody={appendToBody}
-      block={block}
-      closeDatePickerPhrase={(phrases || {}).closeDatePicker}
-      customCloseIcon={customCloseIcon}
-      disableScroll={disableScroll}
-      focused={focused}
-      isRTL={isRTL}
-      onFocusChange={onFocusChange}
-      openDirection={openDirection}
-      orientation={orientation}
-      readOnly={readOnly}
-      small={small}
-      verticalSpacing={verticalSpacing}
-      withFullScreenPortal={withFullScreenPortal}
-      withPortal={withPortal}
-      input={input}
-      dropdown={dropdown}
+      {...props}
+      input={SingleDatePickerInputController}
+      inputProps={SingleDatePickerInputControllerProps}
+      dropdown={DayPickerSingleDateController}
+      dropdownProps={DayPickerSingleDateControllerProps}
     />
   );
 }
