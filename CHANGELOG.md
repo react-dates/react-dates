@@ -1,6 +1,14 @@
 # Change Log
 
-<!-- - []  ([#](https://github.com/airbnb/react-dates/pull/)) -->
+<!--
+- []  ([#](https://github.com/airbnb/react-dates/pull/))
+-->
+## 18.1.0
+- [fix] Default the `calendarMonthPadding` theme variable to 0 when undefined ([#1355](https://github.com/airbnb/react-dates/pull/1355))
+- [new] Add `SingleDatePickerInputController` component ([#1360](https://github.com/airbnb/react-dates/pull/1360))
+- [new] Add `horizontalMonthPadding` as a prop to the DRP ([#1364](https://github.com/airbnb/react-dates/pull/1364))
+- [fix] Fix unnecessary rerender in `DayPickerNavigation` ([#1363](https://github.com/airbnb/react-dates/pull/1363))
+
 ## 18.0.4
 - [fix] revert 'revert 'Conditionally use `PureComponent` instead of `Component`'' ([4f8eb01](https://github.com/airbnb/react-dates/commit/4f8eb01168ef6c4ae7d74e95ad14acb28960e43e))
 
