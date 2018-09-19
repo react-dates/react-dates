@@ -469,31 +469,49 @@ describe('DayPicker', () => {
   });
 
   describe('#onPrevMonthClick', () => {
-    it('sets state.monthTransition to "prev"', () => {
+    it('calls onPrevMonthTransition', () => {
+      const onPrevMonthTransitionSpy = sinon.spy(PureDayPicker.prototype, 'onPrevMonthTransition');
       const wrapper = shallow(<DayPicker />).dive();
       wrapper.instance().onPrevMonthClick();
+      expect(onPrevMonthTransitionSpy.callCount).to.equal(1);
+    });
+  });
+
+  describe('#onPrevMonthTransition', () => {
+    it('sets state.monthTransition to "prev"', () => {
+      const wrapper = shallow(<DayPicker />).dive();
+      wrapper.instance().onPrevMonthTransition();
       expect(wrapper.state().monthTransition).to.equal('prev');
     });
 
     it('sets state.nextFocusedDate to first arg', () => {
       const test = 'FOOBARBAZ';
       const wrapper = shallow(<DayPicker />).dive();
-      wrapper.instance().onPrevMonthClick(test);
+      wrapper.instance().onPrevMonthTransition(test);
       expect(wrapper.state().nextFocusedDate).to.equal(test);
     });
   });
 
   describe('#onNextMonthClick', () => {
-    it('sets state.monthTransition to "next"', () => {
+    it('calls onNextMonthTransition', () => {
+      const onNextMonthTransitionSpy = sinon.spy(PureDayPicker.prototype, 'onNextMonthTransition');
       const wrapper = shallow(<DayPicker />).dive();
       wrapper.instance().onNextMonthClick();
+      expect(onNextMonthTransitionSpy.callCount).to.equal(1);
+    });
+  });
+
+  describe('#onNextMonthTransition', () => {
+    it('sets state.monthTransition to "next"', () => {
+      const wrapper = shallow(<DayPicker />).dive();
+      wrapper.instance().onNextMonthTransition();
       expect(wrapper.state().monthTransition).to.equal('next');
     });
 
     it('sets state.nextFocusedDate to first arg', () => {
       const test = 'FOOBARBAZ';
       const wrapper = shallow(<DayPicker />).dive();
-      wrapper.instance().onNextMonthClick(test);
+      wrapper.instance().onNextMonthTransition(test);
       expect(wrapper.state().nextFocusedDate).to.equal(test);
     });
   });
@@ -559,13 +577,13 @@ describe('DayPicker', () => {
 
   describe('#maybeTransitionNextMonth', () => {
     describe('arg has same month as state.focusedDate', () => {
-      it('does not call `onNextMonthClick`', () => {
-        const onNextMonthClickSpy = sinon.spy(PureDayPicker.prototype, 'onNextMonthClick');
+      it('does not call `onNextMonthTransition`', () => {
+        const onNextMonthTransitionSpy = sinon.spy(PureDayPicker.prototype, 'onNextMonthTransition');
         const firstOfTodaysMonth = moment().startOf('month');
         const wrapper = shallow(<DayPicker />).dive();
         wrapper.state().focusedDate = firstOfTodaysMonth;
         wrapper.instance().maybeTransitionNextMonth(today);
-        expect(onNextMonthClickSpy.callCount).to.equal(0);
+        expect(onNextMonthTransitionSpy.callCount).to.equal(0);
       });
 
       it('returns false', () => {
@@ -579,13 +597,13 @@ describe('DayPicker', () => {
     describe('arg has different month as state.focusedDate', () => {
       describe('arg is visible', () => {
         it('does not call `onNextMonthClick`', () => {
-          const onNextMonthClickSpy = sinon.spy(PureDayPicker.prototype, 'onNextMonthClick');
+          const onNextMonthTransitionSpy = sinon.spy(PureDayPicker.prototype, 'onNextMonthTransition');
           sinon.stub(isDayVisible, 'default').returns(true);
           const nextMonth = moment().add(1, 'month');
           const wrapper = shallow(<DayPicker />).dive();
           wrapper.state().focusedDate = nextMonth;
           wrapper.instance().maybeTransitionNextMonth(today);
-          expect(onNextMonthClickSpy.callCount).to.equal(0);
+          expect(onNextMonthTransitionSpy.callCount).to.equal(0);
         });
 
         it('returns false', () => {
@@ -598,14 +616,14 @@ describe('DayPicker', () => {
       });
 
       describe('arg is not visible', () => {
-        it('calls `onNextMonthClick`', () => {
-          const onNextMonthClickSpy = sinon.spy(PureDayPicker.prototype, 'onNextMonthClick');
+        it('calls `onNextMonthTransition`', () => {
+          const onNextMonthTransitionSpy = sinon.spy(PureDayPicker.prototype, 'onNextMonthTransition');
           sinon.stub(isDayVisible, 'default').returns(false);
           const nextMonth = moment().add(1, 'month');
           const wrapper = shallow(<DayPicker />).dive();
           wrapper.state().focusedDate = nextMonth;
           wrapper.instance().maybeTransitionNextMonth(today);
-          expect(onNextMonthClickSpy.callCount).to.equal(1);
+          expect(onNextMonthTransitionSpy.callCount).to.equal(1);
         });
 
         it('returns true', () => {
@@ -621,13 +639,13 @@ describe('DayPicker', () => {
 
   describe('#maybeTransitionPrevMonth', () => {
     describe('arg has same month as state.focusedDate', () => {
-      it('does not call `onPrevMonthClick`', () => {
-        const onPrevMonthClickSpy = sinon.spy(PureDayPicker.prototype, 'onPrevMonthClick');
+      it('does not call `onPrevMonthTransition`', () => {
+        const onPrevMonthTransitionSpy = sinon.spy(PureDayPicker.prototype, 'onPrevMonthTransition');
         const firstOfTodaysMonth = moment().startOf('month');
         const wrapper = shallow(<DayPicker />).dive();
         wrapper.state().focusedDate = firstOfTodaysMonth;
         wrapper.instance().maybeTransitionPrevMonth(today);
-        expect(onPrevMonthClickSpy.callCount).to.equal(0);
+        expect(onPrevMonthTransitionSpy.callCount).to.equal(0);
       });
 
       it('returns false', () => {
@@ -640,14 +658,14 @@ describe('DayPicker', () => {
 
     describe('arg has different month as state.focusedDate', () => {
       describe('arg is visible', () => {
-        it('does not call `onPrevMonthClick`', () => {
-          const onPrevMonthClickSpy = sinon.spy(PureDayPicker.prototype, 'onPrevMonthClick');
+        it('does not call `onPrevMonthTransition`', () => {
+          const onPrevMonthTransitionSpy = sinon.spy(PureDayPicker.prototype, 'onPrevMonthTransition');
           sinon.stub(isDayVisible, 'default').returns(true);
           const nextMonth = moment().add(1, 'month');
           const wrapper = shallow(<DayPicker />).dive();
           wrapper.state().focusedDate = nextMonth;
           wrapper.instance().maybeTransitionPrevMonth(today);
-          expect(onPrevMonthClickSpy.callCount).to.equal(0);
+          expect(onPrevMonthTransitionSpy.callCount).to.equal(0);
         });
 
         it('returns false', () => {
@@ -660,14 +678,14 @@ describe('DayPicker', () => {
       });
 
       describe('arg is not visible', () => {
-        it('calls `onPrevMonthClick`', () => {
-          const onPrevMonthClickSpy = sinon.spy(PureDayPicker.prototype, 'onPrevMonthClick');
+        it('calls `onPrevMonthTransition`', () => {
+          const onPrevMonthTransitionSpy = sinon.spy(PureDayPicker.prototype, 'onPrevMonthTransition');
           sinon.stub(isDayVisible, 'default').returns(false);
           const nextMonth = moment().add(1, 'month');
           const wrapper = shallow(<DayPicker />).dive();
           wrapper.state().focusedDate = nextMonth;
           wrapper.instance().maybeTransitionPrevMonth(today);
-          expect(onPrevMonthClickSpy.callCount).to.equal(1);
+          expect(onPrevMonthTransitionSpy.callCount).to.equal(1);
         });
 
         it('returns true', () => {

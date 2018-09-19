@@ -207,7 +207,9 @@ class DayPicker extends BaseClass {
     this.onKeyDown = this.onKeyDown.bind(this);
     this.throttledKeyDown = throttle(this.onFinalKeyDown, 200, { trailing: false });
     this.onPrevMonthClick = this.onPrevMonthClick.bind(this);
+    this.onPrevMonthTransition = this.onPrevMonthTransition.bind(this);
     this.onNextMonthClick = this.onNextMonthClick.bind(this);
+    this.onNextMonthTransition = this.onNextMonthTransition.bind(this);
     this.onMonthChange = this.onMonthChange.bind(this);
     this.onYearChange = this.onYearChange.bind(this);
 
@@ -446,11 +448,15 @@ class DayPicker extends BaseClass {
     }
   }
 
-  onPrevMonthClick(nextFocusedDate, e) {
+
+  onPrevMonthClick(e) {
+    if (e) e.preventDefault();
+    this.onPrevMonthTransition();
+  }
+
+  onPrevMonthTransition(nextFocusedDate) {
     const { daySize, isRTL, numberOfMonths } = this.props;
     const { calendarMonthWidth, monthTitleHeight } = this.state;
-
-    if (e) e.preventDefault();
 
     let translationValue;
     if (this.isVertical()) {
@@ -506,11 +512,14 @@ class DayPicker extends BaseClass {
     });
   }
 
-  onNextMonthClick(nextFocusedDate, e) {
+  onNextMonthClick(e) {
+    if (e) e.preventDefault();
+    this.onNextMonthTransition();
+  }
+
+  onNextMonthTransition(nextFocusedDate) {
     const { isRTL, numberOfMonths, daySize } = this.props;
     const { calendarMonthWidth, monthTitleHeight } = this.state;
-
-    if (e) e.preventDefault();
 
     let translationValue;
 
@@ -621,7 +630,7 @@ class DayPicker extends BaseClass {
     const focusedDateMonth = focusedDate.month();
     const isNewFocusedDateVisible = isDayVisible(newFocusedDate, currentMonth, numberOfMonths);
     if (newFocusedDateMonth !== focusedDateMonth && !isNewFocusedDateVisible) {
-      this.onNextMonthClick(newFocusedDate);
+      this.onNextMonthTransition(newFocusedDate);
       return true;
     }
 
@@ -636,7 +645,7 @@ class DayPicker extends BaseClass {
     const focusedDateMonth = focusedDate.month();
     const isNewFocusedDateVisible = isDayVisible(newFocusedDate, currentMonth, numberOfMonths);
     if (newFocusedDateMonth !== focusedDateMonth && !isNewFocusedDateVisible) {
-      this.onPrevMonthClick(newFocusedDate);
+      this.onPrevMonthTransition(newFocusedDate);
       return true;
     }
 
@@ -795,16 +804,13 @@ class DayPicker extends BaseClass {
       return null;
     }
 
-    let onNextMonthClick;
-    if (orientation === VERTICAL_SCROLLABLE) {
-      onNextMonthClick = this.multiplyScrollableMonths;
-    } else {
-      onNextMonthClick = (e) => { this.onNextMonthClick(null, e); };
-    }
+    const onNextMonthClick = orientation === VERTICAL_SCROLLABLE
+      ? this.multiplyScrollableMonths
+      : this.onNextMonthClick;
 
     return (
       <DayPickerNavigation
-        onPrevMonthClick={(e) => { this.onPrevMonthClick(null, e); }}
+        onPrevMonthClick={this.onPrevMonthClick}
         onNextMonthClick={onNextMonthClick}
         navPrev={navPrev}
         navNext={navNext}
