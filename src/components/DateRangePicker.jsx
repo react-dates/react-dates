@@ -90,6 +90,7 @@ const defaultProps = {
   verticalHeight: null,
   transitionDuration: undefined,
   verticalSpacing: DEFAULT_VERTICAL_SPACING,
+  horizontalMonthPadding: undefined,
 
   // navigation related props
   navPrev: null,
@@ -385,6 +386,7 @@ class DateRangePicker extends BaseClass {
       verticalHeight,
       transitionDuration,
       verticalSpacing,
+      horizontalMonthPadding,
       small,
       disabled,
       theme: { reactDates },
@@ -469,6 +471,7 @@ class DateRangePicker extends BaseClass {
           verticalHeight={verticalHeight}
           transitionDuration={transitionDuration}
           disabled={disabled}
+          horizontalMonthPadding={horizontalMonthPadding}
         />
 
         {withFullScreenPortal && (
