@@ -507,6 +507,7 @@ class SingleDatePicker extends BaseClass {
       reopenPickerOnClearDate,
       keepOpenOnDateSelect,
       styles,
+      isOutsideRange,
     } = this.props;
 
     const { isInputFocused } = this.state;
@@ -529,6 +530,7 @@ class SingleDatePicker extends BaseClass {
         showClearDate={showClearDate}
         showDefaultInputIcon={showDefaultInputIcon}
         inputIconPosition={inputIconPosition}
+        isOutsideRange={isOutsideRange}
         customCloseIcon={customCloseIcon}
         customInputIcon={customInputIcon}
         date={date}
