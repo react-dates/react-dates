@@ -17,15 +17,32 @@ describe('SingleDatePicker', () => {
   });
 
   describe('#render', () => {
-    it('renders a SingleDatePickerInputController', () => {
-      const wrapper = shallow((
-        <SingleDatePicker
-          id="date"
-          onDateChange={() => {}}
-          onFocusChange={() => {}}
-        />
-      )).dive();
-      expect(wrapper.find(SingleDatePickerInputController)).to.have.lengthOf(1);
+    describe('SingleDatePickerInputController', () => {
+      it('renders a SingleDatePickerInputController', () => {
+        const wrapper = shallow((
+          <SingleDatePicker
+            id="date"
+            onDateChange={() => {}}
+            onFocusChange={() => {}}
+          />
+        )).dive();
+        expect(wrapper.find(SingleDatePickerInputController)).to.have.lengthOf(1);
+      });
+
+      describe('props.isOutsideRange is defined', () => {
+        it('should pass props.isOutsideRange to <SingleDatePickerInputController>', () => {
+          const isOutsideRange = sinon.stub();
+          const wrapper = shallow((
+            <SingleDatePicker
+              id="date"
+              onDateChange={() => {}}
+              onFocusChange={() => {}}
+              isOutsideRange={isOutsideRange}
+            />
+          )).dive();
+          expect(wrapper.find(SingleDatePickerInputController).prop('isOutsideRange')).to.equal(isOutsideRange);
+        });
+      });
     });
 
     describe('DayPickerSingleDateController', () => {
