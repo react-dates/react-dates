@@ -174,6 +174,9 @@ class DateRangePicker extends BaseClass {
     } else if (prevProps.focusedInput && !focusedInput && !this.isOpened()) {
       // The date picker just changed from being open to being closed.
       if (this.enableScroll) this.enableScroll();
+    } else if (prevProps.openDirection !== this.props.openDirection) {
+      // The direction of the date picker has changed
+      this.responsivizePickerPosition();
     }
   }
 
