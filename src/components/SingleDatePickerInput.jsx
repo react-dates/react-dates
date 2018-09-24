@@ -136,7 +136,10 @@ function SingleDatePickerInput({
   const screenReaderText = screenReaderMessage || phrases.keyboardNavigationInstructions;
   const inputIcon = (showDefaultInputIcon || customInputIcon !== null) && (
     <button
-      {...css(styles.SingleDatePickerInput_calendarIcon)}
+      {...css(
+        styles.SingleDatePickerInput_calendarIcon,
+        block && styles.SingleDatePickerInput_calendarIcon__block,
+      )}
       type="button"
       disabled={disabled}
       aria-label={phrases.focusStartDate}
@@ -299,6 +302,13 @@ export default withStyles(({ reactDates: { border, color } }) => ({
     verticalAlign: 'middle',
     padding: 10,
     margin: '0 5px 0 10px',
+  },
+
+  SingleDatePickerInput_calendarIcon__block: {
+    position: 'absolute',
+    right: 0,
+    top: '50%',
+    transform: 'translateY(-50%)',
   },
 
   SingleDatePickerInput_calendarIcon_svg: {

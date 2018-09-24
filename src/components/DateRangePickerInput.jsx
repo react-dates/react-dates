@@ -181,7 +181,10 @@ function DateRangePickerInput({
   const screenReaderText = screenReaderMessage || phrases.keyboardNavigationInstructions;
   const inputIcon = (showDefaultInputIcon || customInputIcon !== null) && (
     <button
-      {...css(styles.DateRangePickerInput_calendarIcon)}
+      {...css(
+        styles.DateRangePickerInput_calendarIcon,
+        block && styles.DateRangePickerInput_calendarIcon__block,
+      )}
       type="button"
       disabled={disabled}
       aria-label={phrases.focusStartDate}
@@ -389,6 +392,13 @@ export default withStyles(({ reactDates: { border, color, sizing } }) => ({
     verticalAlign: 'middle',
     padding: 10,
     margin: '0 5px 0 10px',
+  },
+
+  DateRangePickerInput_calendarIcon__block: {
+    position: 'absolute',
+    right: 0,
+    top: '50%',
+    transform: 'translateY(-50%)',
   },
 
   DateRangePickerInput_calendarIcon_svg: {
