@@ -179,11 +179,12 @@ function DateRangePickerInput({
     />
   );
   const screenReaderText = screenReaderMessage || phrases.keyboardNavigationInstructions;
+  const blockIconAfterPosition = (block && inputIconPosition === ICON_AFTER_POSITION) ? styles.DateRangePickerInput_calendarIcon__block : '';
   const inputIcon = (showDefaultInputIcon || customInputIcon !== null) && (
     <button
       {...css(
         styles.DateRangePickerInput_calendarIcon,
-        block && styles.DateRangePickerInput_calendarIcon__block,
+        blockIconAfterPosition,
       )}
       type="button"
       disabled={disabled}

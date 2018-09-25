@@ -134,11 +134,12 @@ function SingleDatePickerInput({
   );
 
   const screenReaderText = screenReaderMessage || phrases.keyboardNavigationInstructions;
+  const blockIconAfterPosition = (block && inputIconPosition === ICON_AFTER_POSITION) ? styles.SingleDatePickerInput_calendarIcon__block : '';
   const inputIcon = (showDefaultInputIcon || customInputIcon !== null) && (
     <button
       {...css(
         styles.SingleDatePickerInput_calendarIcon,
-        block && styles.SingleDatePickerInput_calendarIcon__block,
+        blockIconAfterPosition,
       )}
       type="button"
       disabled={disabled}
