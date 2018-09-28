@@ -296,11 +296,10 @@ export default class DayPickerRangeController extends BaseClass {
       )
     ) {
       const newMonthState = this.getStateForNewMonth(nextProps);
-      const { currentMonth } = newMonthState;
-      ({ visibleDays } = newMonthState);
+      const { currentMonth, visibleDays: newVisibleDays } = newMonthState;
       this.setState({
         currentMonth,
-        visibleDays,
+        visibleDays: newVisibleDays,
       });
     }
 
@@ -529,7 +528,6 @@ export default class DayPickerRangeController extends BaseClass {
   }
 
   onDayMouseEnter(day) {
-    /* eslint react/destructuring-assignment: 1 */
     if (this.isTouchDevice) return;
     const {
       startDate,
@@ -539,27 +537,26 @@ export default class DayPickerRangeController extends BaseClass {
       startDateOffset,
       endDateOffset,
     } = this.props;
-    const { hoverDate, visibleDays } = this.state;
-    let dateOffset = null;
+    const { hoverDate, visibleDays, dateOffset } = this.state;
+    let newDateOffset = null;
 
     if (focusedInput) {
       const hasOffset = startDateOffset || endDateOffset;
       let modifiers = {};
 
       if (hasOffset) {
-        const start = getSelectedDateOffset(startDateOffset, day);
-        const end = getSelectedDateOffset(endDateOffset, day, rangeDay => rangeDay.add(1, 'day'));
+        const newStart = getSelectedDateOffset(startDateOffset, day);
+        const newEnd = getSelectedDateOffset(endDateOffset, day, rangeDay => rangeDay.add(1, 'day'));
 
-        dateOffset = {
-          start,
-          end,
+        newDateOffset = {
+          start: newStart,
+          end: newEnd,
         };
 
-        // eslint-disable-next-line react/destructuring-assignment
-        if (this.state.dateOffset && this.state.dateOffset.start && this.state.dateOffset.end) {
-          modifiers = this.deleteModifierFromRange(modifiers, this.state.dateOffset.start, this.state.dateOffset.end, 'hovered-offset');
+        if (dateOffset && dateOffset.start && dateOffset.end) {
+          modifiers = this.deleteModifierFromRange(modifiers, dateOffset.start, dateOffset.end, 'hovered-offset');
         }
-        modifiers = this.addModifierToRange(modifiers, start, end, 'hovered-offset');
+        modifiers = this.addModifierToRange(modifiers, newStart, newEnd, 'hovered-offset');
       }
 
       if (!hasOffset) {
@@ -608,7 +605,7 @@ export default class DayPickerRangeController extends BaseClass {
 
       this.setState({
         hoverDate: day,
-        dateOffset,
+        dateOffset: newDateOffset,
         visibleDays: {
           ...visibleDays,
           ...modifiers,
@@ -626,7 +623,8 @@ export default class DayPickerRangeController extends BaseClass {
     modifiers = this.deleteModifier(modifiers, hoverDate, 'hovered');
 
     if (dateOffset) {
-      modifiers = this.deleteModifierFromRange(modifiers, this.state.dateOffset.start, this.state.dateOffset.end, 'hovered-offset');
+      const { start, end } = dateOffset;
+      modifiers = this.deleteModifierFromRange(modifiers, start, end, 'hovered-offset');
     }
 
     if (startDate && !endDate && isAfterDay(hoverDate, startDate)) {
