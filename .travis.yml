@@ -18,6 +18,7 @@ script:
 env:
   global:
     - TEST=true
+    - PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
   matrix:
     - REACT=0.14
     - REACT=15
