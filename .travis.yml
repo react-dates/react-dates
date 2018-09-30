@@ -15,11 +15,10 @@ script:
   - 'if [ "${TEST-}" = true ]; then npm run tests-only ; fi'
   - 'if [ -n "${KARMA-}" ]; then npm run tests-karma ; fi'
   - 'if [ -n "${COVERAGE-}" ] && [ "${TRAVIS_BRANCH-}" = "master" ]; then npm run cover; cat ./coverage/lcov.info | ./node_modules/.bin/coveralls ; fi'
-  - 'if [ "${HAPPO-}" = true ] && [ "${REACT-}" = "16" ] && [[ "${TRAVIS_NODE_VERSION-}" == 8* ]]; then npm run happo-ci ; fi'
+  - 'if [ -n "${HAPPO-}" ]; then npm install --no-save happo-plugin-puppeteer && INSTALL_CMD="npm install && npm install --no-save happo-plugin-puppeteer" npm run happo-ci ; fi'
 env:
   global:
     - TEST=true
-    - PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
   matrix:
     - REACT=0.14
     - REACT=15
