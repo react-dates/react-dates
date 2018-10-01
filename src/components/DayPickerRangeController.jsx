@@ -381,7 +381,7 @@ export default class DayPickerRangeController extends BaseClass {
     if (didFocusChange || recomputePropModifiers) {
       values(visibleDays).forEach((days) => {
         Object.keys(days).forEach((day) => {
-          const momentObj = moment(day);
+          const momentObj = moment(day).hour(12);
           let isBlocked = false;
 
           if (didFocusChange || recomputeOutsideRange) {
