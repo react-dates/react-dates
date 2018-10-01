@@ -24,6 +24,6 @@ module.exports = {
 
   plugins: [
     happoPluginStorybook({ configDir: '.storybook-css' }),
-    happoPluginPuppeteer(),
+    happoPluginPuppeteer({ launchOptions: { args: ['--no-sandbox'] } }),
   ],
 };
