@@ -882,6 +882,17 @@ describe('DayPickerRangeController', () => {
             });
             expect(isOutsideRangeStub.callCount).to.not.equal(0);
           });
+
+          it('calls isOutsideRange with moments set at 12pm', () => {
+            const isNoon = sinon.match(day => day.hour() === 12);
+            const isOutsideRangeStub = sinon.stub();
+            const wrapper = shallow(<DayPickerRangeController {...props} />);
+            wrapper.instance().componentWillReceiveProps({
+              ...props,
+              isOutsideRange: isOutsideRangeStub,
+            });
+            expect(isOutsideRangeStub.alwaysCalledWithMatch(isNoon)).to.equal(true);
+          });
         });
 
         describe('focusedInput changed', () => {
@@ -908,6 +919,19 @@ describe('DayPickerRangeController', () => {
               isOutsideRange: isOutsideRangeStub,
             });
             expect(isOutsideRangeStub.callCount).to.equal(numVisibleDays);
+          });
+
+          it('calls isOutsideRange with moments set at 12pm', () => {
+            const isNoon = sinon.match(day => day.hour() === 12);
+            const isOutsideRangeStub = sinon.stub();
+            const wrapper = shallow(<DayPickerRangeController {...props} />);
+            wrapper.setState({ visibleDays });
+            wrapper.instance().componentWillReceiveProps({
+              ...props,
+              focusedInput: END_DATE,
+              isOutsideRange: isOutsideRangeStub,
+            });
+            expect(isOutsideRangeStub.alwaysCalledWithMatch(isNoon)).to.equal(true);
           });
 
           it('if isOutsideRange(day) is true calls addModifier with `blocked-out-of-range` for each day', () => {
@@ -965,6 +989,17 @@ describe('DayPickerRangeController', () => {
             });
             expect(isDayBlockedStub.callCount).to.not.equal(0);
           });
+
+          it('calls isDayBlocked with moments set at 12pm', () => {
+            const isNoon = sinon.match(day => day.hour() === 12);
+            const isDayBlockedStub = sinon.stub();
+            const wrapper = shallow(<DayPickerRangeController {...props} />);
+            wrapper.instance().componentWillReceiveProps({
+              ...props,
+              isDayBlocked: isDayBlockedStub,
+            });
+            expect(isDayBlockedStub.alwaysCalledWithMatch(isNoon)).to.equal(true);
+          });
         });
 
         describe('focusedInput changed', () => {
@@ -991,6 +1026,19 @@ describe('DayPickerRangeController', () => {
               isDayBlocked: isDayBlockedStub,
             });
             expect(isDayBlockedStub.callCount).to.equal(numVisibleDays);
+          });
+
+          it('calls isDayBlocked with moments set at 12pm', () => {
+            const isNoon = sinon.match(day => day.hour() === 12);
+            const isDayBlockedStub = sinon.stub();
+            const wrapper = shallow(<DayPickerRangeController {...props} />);
+            wrapper.setState({ visibleDays });
+            wrapper.instance().componentWillReceiveProps({
+              ...props,
+              focusedInput: END_DATE,
+              isDayBlocked: isDayBlockedStub,
+            });
+            expect(isDayBlockedStub.alwaysCalledWithMatch(isNoon)).to.equal(true);
           });
 
           it('if isDayBlocked(day) is true calls addModifier with `blocked-calendar` for each day', () => {
@@ -1048,6 +1096,17 @@ describe('DayPickerRangeController', () => {
             });
             expect(isDayHighlightedStub.callCount).to.not.equal(0);
           });
+
+          it('calls isDayHighlighted with moments set at 12pm', () => {
+            const isNoon = sinon.match(day => day.hour() === 12);
+            const isDayHighlightedStub = sinon.stub();
+            const wrapper = shallow(<DayPickerRangeController {...props} />);
+            wrapper.instance().componentWillReceiveProps({
+              ...props,
+              isDayHighlighted: isDayHighlightedStub,
+            });
+            expect(isDayHighlightedStub.alwaysCalledWithMatch(isNoon)).to.equal(true);
+          });
         });
 
         describe('focusedInput changed', () => {
@@ -1074,6 +1133,19 @@ describe('DayPickerRangeController', () => {
               isDayHighlighted: isDayHighlightedStub,
             });
             expect(isDayHighlightedStub.callCount).to.equal(numVisibleDays);
+          });
+
+          it('calls isDayHighlighted with moments set at 12pm', () => {
+            const isNoon = sinon.match(day => day.hour() === 12);
+            const isDayHighlightedStub = sinon.stub();
+            const wrapper = shallow(<DayPickerRangeController {...props} />);
+            wrapper.setState({ visibleDays });
+            wrapper.instance().componentWillReceiveProps({
+              ...props,
+              focusedInput: END_DATE,
+              isDayHighlighted: isDayHighlightedStub,
+            });
+            expect(isDayHighlightedStub.alwaysCalledWithMatch(isNoon)).to.equal(true);
           });
 
           it('if isDayHighlighted(day) is true calls addModifier with day and `highlighted-calendar`', () => {
