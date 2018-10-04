@@ -93,7 +93,7 @@
     "mocha": "^3.5.3",
     "mocha-wrap": "^2.1.2",
     "moment": "^2.22.2",
-    "moment-jalaali": "^0.7.4",
+    "moment-jalaali": "^0.8.0",
     "node-sass": "^4.9.2",
     "nyc": "^12.0.2",
     "raw-loader": "^0.5.1",
