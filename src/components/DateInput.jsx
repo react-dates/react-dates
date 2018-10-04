@@ -184,7 +184,6 @@ class DateInput extends BaseClass {
       verticalSpacing,
       small,
       regular,
-      block,
       styles,
       theme: { reactDates },
     } = this.props;
