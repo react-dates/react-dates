@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import { expect } from 'chai';
 import sinon from 'sinon-sandbox';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
 
 import * as isDayVisible from '../../src/utils/isDayVisible';
 
@@ -20,8 +20,9 @@ const today = moment();
 const event = { preventDefault() {}, stopPropagation() {} };
 
 describe('DayPicker', () => {
+  let adjustDayPickerHeightSpy;
   beforeEach(() => {
-    sinon.stub(PureDayPicker.prototype, 'adjustDayPickerHeight');
+    adjustDayPickerHeightSpy = sinon.stub(PureDayPicker.prototype, 'adjustDayPickerHeight');
   });
 
   afterEach(() => {
@@ -766,91 +767,71 @@ describe('DayPicker', () => {
     });
   });
 
-  describe.skip('life cycle methods', () => {
-    let adjustDayPickerHeightSpy;
-    beforeEach(() => {
-      adjustDayPickerHeightSpy = sinon.stub(PureDayPicker.prototype, 'adjustDayPickerHeight');
+  describe('life cycle methods', () => {
+    let setCalendarMonthWeeksSpy;
+    before(() => {
+      setCalendarMonthWeeksSpy = sinon.spy(PureDayPicker.prototype, 'setCalendarMonthWeeks');
     });
 
     describe('#componentDidMount', () => {
-      describe('props.orientation === HORIZONTAL_ORIENTATION', () => {
-        it('calls adjustDayPickerHeight', () => {
-          mount(<DayPicker orientation={HORIZONTAL_ORIENTATION} />);
-          expect(adjustDayPickerHeightSpy).to.have.property('callCount', 1);
-        });
-      });
+      it('calls setCalendarMonthWeeks when component mounts', () => {
+        shallow(
+          <DayPicker orientation={HORIZONTAL_ORIENTATION} />,
+          { disableLifecycleMethods: false },
+        ).dive();
 
-      describe('props.orientation === VERTICAL_ORIENTATION', () => {
-        it('does not call adjustDayPickerHeight', () => {
-          mount(<DayPicker orientation={VERTICAL_ORIENTATION} />);
-          expect(adjustDayPickerHeightSpy.called).to.equal(false);
-        });
+        // calls setCalendarMonthWeeks in the constructor and in componentDidMount
+        expect(setCalendarMonthWeeksSpy).to.have.property('callCount', 2);
       });
     });
 
     describe('#componentDidUpdate', () => {
-      let updateStateAfterMonthTransitionSpy;
-      beforeEach(() => {
-        updateStateAfterMonthTransitionSpy = sinon.stub(
-          DayPicker.prototype,
-          'updateStateAfterMonthTransition',
-        );
-      });
+      // let updateStateAfterMonthTransitionSpy;
+      // beforeEach(() => {
+      //   updateStateAfterMonthTransitionSpy = sinon.stub(
+      //     PureDayPicker.prototype,
+      //     'updateStateAfterMonthTransition',
+      //   );
+      // });
 
       describe('props.orientation === HORIZONTAL_ORIENTATION', () => {
-        it('calls adjustDayPickerHeight if state.monthTransition is truthy', () => {
-          const wrapper = mount(<DayPicker orientation={HORIZONTAL_ORIENTATION} />);
-          wrapper.setState({
-            monthTransition: 'foo',
-          });
-          expect(adjustDayPickerHeightSpy).to.have.property('callCount', 2);
-        });
-
-        it('does not call adjustDayPickerHeight if state.monthTransition is falsy', () => {
-          const wrapper = mount(<DayPicker orientation={HORIZONTAL_ORIENTATION} />);
-          wrapper.setState({
-            monthTransition: null,
-          });
-          expect(adjustDayPickerHeightSpy.calledTwice).to.equal(false);
-        });
-
-        it('calls adjustDayPickerHeight if orientation has changed from HORIZONTAL_ORIENTATION to VERTICAL_ORIENTATION', () => {
-          const wrapper = mount(<DayPicker orientation={HORIZONTAL_ORIENTATION} />);
-          wrapper.setState({
-            orientation: VERTICAL_ORIENTATION,
-          });
-          expect(adjustDayPickerHeightSpy).to.have.property('callCount', 2);
-        });
-
         it('calls adjustDayPickerHeight if daySize has changed', () => {
-          const wrapper = mount(<DayPicker daySize={39} orientation={HORIZONTAL_ORIENTATION} />);
-          wrapper.setState({
+          const wrapper = shallow(
+            <DayPicker daySize={39} orientation={HORIZONTAL_ORIENTATION} />,
+            { disableLifecycleMethods: false },
+          ).dive();
+
+          wrapper.setProps({
             daySize: 40,
             orientation: HORIZONTAL_ORIENTATION,
           });
-          expect(adjustDayPickerHeightSpy).to.have.property('callCount', 2);
+
+          expect(adjustDayPickerHeightSpy).to.have.property('callCount', 1);
         });
 
-        it('calls updateStateAfterMonthTransition if state.monthTransition is truthy', () => {
-          const wrapper = mount(<DayPicker orientation={HORIZONTAL_ORIENTATION} />);
-          wrapper.setState({
-            monthTransition: 'foo',
-          });
-          expect(updateStateAfterMonthTransitionSpy).to.have.property('callCount', 1);
-        });
+        // it('calls updateStateAfterMonthTransition if state.monthTransition is truthy', () => {
+        //   const wrapper = shallow(<DayPicker orientation={HORIZONTAL_ORIENTATION} />,
+        //     { disableLifecycleMethods: false }).dive();
+        //   wrapper.setState({
+        //     monthTransition: 'foo',
+        //   });
+        //   expect(updateStateAfterMonthTransitionSpy).to.have.property('callCount', 1);
+        // });
 
-        it('does not call updateStateAfterMonthTransition if state.monthTransition is falsy', () => {
-          const wrapper = mount(<DayPicker orientation={HORIZONTAL_ORIENTATION} />);
-          wrapper.setState({
-            monthTransition: null,
-          });
-          expect(updateStateAfterMonthTransitionSpy.calledOnce).to.equal(false);
-        });
+      //   it('does not call updateStateAfterMonthTransition if monthTransition is falsy', () => {
+      //     const wrapper = shallow(<DayPicker orientation={HORIZONTAL_ORIENTATION} />,
+      //       { disableLifecycleMethods: false }).dive();
+      //     wrapper.setState({
+      //       monthTransition: null,
+      //     });
+      //     expect(updateStateAfterMonthTransitionSpy.calledOnce).to.equal(false);
+      //   });
       });
 
       describe('props.orientation === VERTICAL_ORIENTATION', () => {
         it('does not call adjustDayPickerHeight if state.monthTransition is truthy', () => {
-          const wrapper = mount(<DayPicker orientation={VERTICAL_ORIENTATION} />);
+          const wrapper = shallow(<DayPicker orientation={VERTICAL_ORIENTATION} />,
+            { disableLifecycleMethods: false }).dive();
           wrapper.setState({
             monthTransition: 'foo',
           });
@@ -858,7 +839,8 @@ describe('DayPicker', () => {
         });
 
         it('does not call adjustDayPickerHeight if state.monthTransition is falsy', () => {
-          const wrapper = mount(<DayPicker orientation={VERTICAL_ORIENTATION} />);
+          const wrapper = shallow(<DayPicker orientation={VERTICAL_ORIENTATION} />,
+            { disableLifecycleMethods: false }).dive();
           wrapper.setState({
             monthTransition: null,
           });
@@ -866,37 +848,41 @@ describe('DayPicker', () => {
         });
 
         it('calls adjustDayPickerHeight if orientation has changed from VERTICAL_ORIENTATION to HORIZONTAL_ORIENTATION', () => {
-          const wrapper = mount(<DayPicker orientation={VERTICAL_ORIENTATION} />);
-          wrapper.setState({
+          const wrapper = shallow(<DayPicker orientation={VERTICAL_ORIENTATION} />,
+            { disableLifecycleMethods: false }).dive();
+          wrapper.setProps({
             orientation: HORIZONTAL_ORIENTATION,
           });
-          expect(adjustDayPickerHeightSpy).to.have.property('callCount', 2);
+          expect(adjustDayPickerHeightSpy).to.have.property('callCount', 1);
         });
 
-        it('calls adjustDayPickerHeight if daySize has changed', () => {
-          const wrapper = mount(<DayPicker daySize={39} orientation={VERTICAL_ORIENTATION} />);
-          wrapper.setState({
+        it('does not call adjustDayPickerHeight if daySize has changed', () => {
+          const wrapper = shallow(<DayPicker daySize={39} orientation={VERTICAL_ORIENTATION} />,
+            { disableLifecycleMethods: false }).dive();
+          wrapper.setProps({
             daySize: 40,
             orientation: VERTICAL_ORIENTATION,
           });
-          expect(adjustDayPickerHeightSpy).to.have.property('callCount', 2);
+          expect(adjustDayPickerHeightSpy.called).to.equal(false);
         });
 
-        it('calls updateStateAfterMonthTransition if state.monthTransition is truthy', () => {
-          const wrapper = mount(<DayPicker orientation={VERTICAL_ORIENTATION} />);
-          wrapper.setState({
-            monthTransition: 'foo',
-          });
-          expect(updateStateAfterMonthTransitionSpy).to.have.property('callCount', 1);
-        });
+        // it('calls updateStateAfterMonthTransition if state.monthTransition is truthy', () => {
+        //   const wrapper = shallow(<DayPicker orientation={VERTICAL_ORIENTATION} />,
+        //     { disableLifecycleMethods: false }).dive();
+        //   wrapper.setProps({
+        //     monthTransition: 'foo',
+        //   });
+        //   expect(updateStateAfterMonthTransitionSpy).to.have.property('callCount', 1);
+        // });
 
-        it('does not call updateStateAfterMonthTransition if state.monthTransition is falsy', () => {
-          const wrapper = mount(<DayPicker orientation={VERTICAL_ORIENTATION} />);
-          wrapper.setState({
-            monthTransition: null,
-          });
-          expect(updateStateAfterMonthTransitionSpy.calledOnce).to.equal(false);
-        });
+        // it('does not call updateStateAfterMonthTransition if monthTransition is falsy', () => {
+        //   const wrapper = shallow(<DayPicker orientation={VERTICAL_ORIENTATION} />,
+        //     { disableLifecycleMethods: false }).dive();
+        //   wrapper.setState({
+        //     monthTransition: null,
+        //   });
+        //   expect(updateStateAfterMonthTransitionSpy.calledOnce).to.equal(false);
+        // });
       });
 
       describe('when isFocused is updated to true', () => {
@@ -917,23 +903,19 @@ describe('DayPicker', () => {
         });
 
         describe('when focusedDate is not defined', () => {
-          before(() => {
+          it('sets focus on the container', () => {
             wrapper.state().focusedDate = undefined;
             wrapper.instance().componentDidUpdate(prevProps);
-          });
 
-          it('sets focus on the container', () => {
             expect(containerFocusStub.callCount).to.equal(1);
           });
         });
 
         describe('when focusedDate is defined', () => {
-          before(() => {
+          it('should not set focus on the container', () => {
             wrapper.state().focusedDate = moment();
             wrapper.instance().componentDidUpdate(prevProps);
-          });
 
-          it('should not set focus on the container', () => {
             expect(containerFocusStub.notCalled).to.equal(true);
           });
         });
