@@ -3,6 +3,10 @@
 <!--
 - []  ([#](https://github.com/airbnb/react-dates/pull/))
 -->
+
+## 18.1.1
+- [fix] Prevent outside range dates from being selected by typing ([#1370](https://github.com/airbnb/react-dates/pull/1370))
+
 ## 18.1.0
 - [fix] Default the `calendarMonthPadding` theme variable to 0 when undefined ([#1355](https://github.com/airbnb/react-dates/pull/1355))
 - [new] Add `SingleDatePickerInputController` component ([#1360](https://github.com/airbnb/react-dates/pull/1360))
