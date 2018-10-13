@@ -786,14 +786,6 @@ describe('DayPicker', () => {
     });
 
     describe('#componentDidUpdate', () => {
-      // let updateStateAfterMonthTransitionSpy;
-      // beforeEach(() => {
-      //   updateStateAfterMonthTransitionSpy = sinon.stub(
-      //     PureDayPicker.prototype,
-      //     'updateStateAfterMonthTransition',
-      //   );
-      // });
-
       describe('props.orientation === HORIZONTAL_ORIENTATION', () => {
         it('calls adjustDayPickerHeight if daySize has changed', () => {
           const wrapper = shallow(
@@ -808,24 +800,6 @@ describe('DayPicker', () => {
 
           expect(adjustDayPickerHeightSpy).to.have.property('callCount', 1);
         });
-
-        // it('calls updateStateAfterMonthTransition if state.monthTransition is truthy', () => {
-        //   const wrapper = shallow(<DayPicker orientation={HORIZONTAL_ORIENTATION} />,
-        //     { disableLifecycleMethods: false }).dive();
-        //   wrapper.setState({
-        //     monthTransition: 'foo',
-        //   });
-        //   expect(updateStateAfterMonthTransitionSpy).to.have.property('callCount', 1);
-        // });
-
-      //   it('does not call updateStateAfterMonthTransition if monthTransition is falsy', () => {
-      //     const wrapper = shallow(<DayPicker orientation={HORIZONTAL_ORIENTATION} />,
-      //       { disableLifecycleMethods: false }).dive();
-      //     wrapper.setState({
-      //       monthTransition: null,
-      //     });
-      //     expect(updateStateAfterMonthTransitionSpy.calledOnce).to.equal(false);
-      //   });
       });
 
       describe('props.orientation === VERTICAL_ORIENTATION', () => {
@@ -865,24 +839,6 @@ describe('DayPicker', () => {
           });
           expect(adjustDayPickerHeightSpy.called).to.equal(false);
         });
-
-        // it('calls updateStateAfterMonthTransition if state.monthTransition is truthy', () => {
-        //   const wrapper = shallow(<DayPicker orientation={VERTICAL_ORIENTATION} />,
-        //     { disableLifecycleMethods: false }).dive();
-        //   wrapper.setProps({
-        //     monthTransition: 'foo',
-        //   });
-        //   expect(updateStateAfterMonthTransitionSpy).to.have.property('callCount', 1);
-        // });
-
-        // it('does not call updateStateAfterMonthTransition if monthTransition is falsy', () => {
-        //   const wrapper = shallow(<DayPicker orientation={VERTICAL_ORIENTATION} />,
-        //     { disableLifecycleMethods: false }).dive();
-        //   wrapper.setState({
-        //     monthTransition: null,
-        //   });
-        //   expect(updateStateAfterMonthTransitionSpy.calledOnce).to.equal(false);
-        // });
       });
 
       describe('when isFocused is updated to true', () => {
