@@ -25,6 +25,7 @@ import {
   HORIZONTAL_ORIENTATION,
   VERTICAL_ORIENTATION,
   ANCHOR_LEFT,
+  ANCHOR_CENTER,
   ANCHOR_RIGHT,
   OPEN_DOWN,
   OPEN_UP,
@@ -283,21 +284,16 @@ class SingleDatePicker extends BaseClass {
       return;
     }
 
-    const isAnchoredLeft = anchorDirection === ANCHOR_LEFT;
-
     if (!withPortal && !withFullScreenPortal) {
       const containerRect = this.dayPickerContainer.getBoundingClientRect();
       const currentOffset = dayPickerContainerStyles[anchorDirection] || 0;
-      const containerEdge = isAnchoredLeft
-        ? containerRect[ANCHOR_RIGHT]
-        : containerRect[ANCHOR_LEFT];
 
       this.setState({
         dayPickerContainerStyles: {
           ...getResponsiveContainerStyles(
             anchorDirection,
             currentOffset,
-            containerEdge,
+            containerRect[anchorDirection],
             horizontalMargin,
           ),
           ...(appendToBody && getDetachedContainerStyles(
@@ -403,6 +399,7 @@ class SingleDatePicker extends BaseClass {
           styles.SingleDatePicker_picker,
           anchorDirection === ANCHOR_LEFT && styles.SingleDatePicker_picker__directionLeft,
           anchorDirection === ANCHOR_RIGHT && styles.SingleDatePicker_picker__directionRight,
+          anchorDirection === ANCHOR_CENTER && styles.SingleDatePicker_picker__directionCenter,
           openDirection === OPEN_DOWN && styles.SingleDatePicker_picker__openDown,
           openDirection === OPEN_UP && styles.SingleDatePicker_picker__openUp,
           !withAnyPortal && openDirection === OPEN_DOWN && {
@@ -603,6 +600,11 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
 
   SingleDatePicker_picker__directionRight: {
     right: 0,
+  },
+
+  SingleDatePicker_picker__directionCenter: {
+    left: '50%',
+    transform: 'translateX(-50%)',
   },
 
   SingleDatePicker_picker__portal: {

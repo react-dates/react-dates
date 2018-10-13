@@ -1,4 +1,4 @@
-import { ANCHOR_LEFT } from '../constants';
+import { ANCHOR_LEFT, ANCHOR_CENTER } from '../constants';
 
 export default function getResponsiveContainerStyles(
   anchorDirection,
@@ -6,6 +6,7 @@ export default function getResponsiveContainerStyles(
   containerEdge,
   margin,
 ) {
+  if (anchorDirection === ANCHOR_CENTER) return {};
   const windowWidth = typeof window !== 'undefined' ? window.innerWidth : 0;
   const calculatedOffset = anchorDirection === ANCHOR_LEFT
     ? windowWidth - containerEdge

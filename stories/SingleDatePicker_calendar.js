@@ -4,7 +4,7 @@ import { storiesOf } from '@storybook/react';
 
 import SingleDatePickerWrapper from '../examples/SingleDatePickerWrapper';
 
-import { VERTICAL_ORIENTATION, ANCHOR_RIGHT, OPEN_UP } from '../src/constants';
+import { VERTICAL_ORIENTATION, ANCHOR_CENTER, ANCHOR_RIGHT, OPEN_UP } from '../src/constants';
 
 const TestPrevIcon = () => (
   <span
@@ -68,6 +68,14 @@ storiesOf('SDP - Calendar Props', module)
     <div style={{ float: 'right' }}>
       <SingleDatePickerWrapper
         anchorDirection={ANCHOR_RIGHT}
+        autoFocus
+      />
+    </div>
+  ))
+  .addWithInfo('anchored center', () => (
+    <div style={{ textAlign: 'center' }}>
+      <SingleDatePickerWrapper
+        anchorDirection={ANCHOR_CENTER}
         autoFocus
       />
     </div>
