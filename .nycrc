@@ -7,7 +7,7 @@
     "src"
   ],
   "require": [
-    "babel-register"
+    "@babel/register"
   ],
   "reporter": [
     "text",
@@ -18,7 +18,7 @@
   "statements": 83,
   "branches": 73,
   "lines": 83,
-  "functions": 70,
+  "functions": 68.68,
   "sourceMap": false,
   "instrument": false
 }
