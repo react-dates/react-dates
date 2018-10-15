@@ -1,3 +1,4 @@
+!.babelrc.js
 lib/
 .storybook/
 test/_helpers/

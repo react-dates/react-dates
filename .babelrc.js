@@ -1,3 +1,5 @@
+/* eslint global-require: 0, import/no-extraneous-dependencies: 0 */
+
 module.exports = (api) => {
   api.assertVersion(7);
 
