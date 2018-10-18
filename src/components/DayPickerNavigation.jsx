@@ -105,14 +105,14 @@ function DayPickerNavigation({
       {...css(
         styles.DayPickerNavigation,
         isHorizontal && styles.DayPickerNavigation__horizontal,
-        ...isVertical && [
+        ...(isVertical ? [
           styles.DayPickerNavigation__vertical,
           isDefaultNav && styles.DayPickerNavigation__verticalDefault,
-        ],
-        ...isVerticalScrollable && [
+        ] : []),
+        ...(isVerticalScrollable ? [
           styles.DayPickerNavigation__verticalScrollable,
           isDefaultNav && styles.DayPickerNavigation__verticalScrollableDefault,
-        ],
+        ] : []),
       )}
     >
       {!isVerticalScrollable && (
@@ -122,21 +122,21 @@ function DayPickerNavigation({
           {...css(
             styles.DayPickerNavigation_button,
             isDefaultNavPrev && styles.DayPickerNavigation_button__default,
-            ...(isHorizontal && [
+            ...(isHorizontal ? [
               styles.DayPickerNavigation_button__horizontal,
-              ...isDefaultNavPrev && [
+              ...(isDefaultNavPrev ? [
                 styles.DayPickerNavigation_button__horizontalDefault,
                 !isRTL && styles.DayPickerNavigation_leftButton__horizontalDefault,
                 isRTL && styles.DayPickerNavigation_rightButton__horizontalDefault,
-              ],
-            ]),
-            ...(isVertical && [
+              ] : []),
+            ] : []),
+            ...(isVertical ? [
               styles.DayPickerNavigation_button__vertical,
-              ...isDefaultNavPrev && [
+              ...(isDefaultNavPrev ? [
                 styles.DayPickerNavigation_button__verticalDefault,
                 styles.DayPickerNavigation_prevButton__verticalDefault,
-              ],
-            ]),
+              ] : []),
+            ] : []),
           )}
           aria-label={phrases.jumpToPrevMonth}
           onClick={onPrevMonthClick}
@@ -158,24 +158,24 @@ function DayPickerNavigation({
         {...css(
           styles.DayPickerNavigation_button,
           isDefaultNavNext && styles.DayPickerNavigation_button__default,
-          ...(isHorizontal && [
+          ...(isHorizontal ? [
             styles.DayPickerNavigation_button__horizontal,
-            ...isDefaultNavNext && [
+            ...(isDefaultNavNext ? [
               styles.DayPickerNavigation_button__horizontalDefault,
               isRTL && styles.DayPickerNavigation_leftButton__horizontalDefault,
               !isRTL && styles.DayPickerNavigation_rightButton__horizontalDefault,
-            ],
-          ]),
-          ...(isVertical && [
+            ] : []),
+          ] : []),
+          ...(isVertical ? [
             styles.DayPickerNavigation_button__vertical,
             styles.DayPickerNavigation_nextButton__vertical,
-            ...isDefaultNavNext && [
+            ...(isDefaultNavNext ? [
               styles.DayPickerNavigation_button__verticalDefault,
               styles.DayPickerNavigation_nextButton__verticalDefault,
               isVerticalScrollable
                 && styles.DayPickerNavigation_nextButton__verticalScrollableDefault,
-            ],
-          ]),
+            ] : []),
+          ] : []),
         )}
         aria-label={phrases.jumpToNextMonth}
         onClick={onNextMonthClick}
