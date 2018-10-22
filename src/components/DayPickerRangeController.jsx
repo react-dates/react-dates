@@ -92,6 +92,8 @@ const propTypes = forbidExtraProps({
   onBlur: PropTypes.func,
   isFocused: PropTypes.bool,
   showKeyboardShortcuts: PropTypes.bool,
+  onTab: PropTypes.func,
+  onShiftTab: PropTypes.func,
 
   // i18n
   monthFormat: PropTypes.string,
@@ -154,6 +156,8 @@ const defaultProps = {
   onBlur() {},
   isFocused: false,
   showKeyboardShortcuts: false,
+  onTab() {},
+  onShiftTab() {},
 
   // i18n
   monthFormat: 'MMMM YYYY',
@@ -626,7 +630,7 @@ export default class DayPickerRangeController extends BaseClass {
     modifiers = this.deleteModifier(modifiers, hoverDate, 'hovered');
 
     if (dateOffset) {
-      modifiers = this.deleteModifierFromRange(modifiers, this.state.dateOffset.start, this.state.dateOffset.end, 'hovered-offset');
+      modifiers = this.deleteModifierFromRange(modifiers, dateOffset.start, dateOffset.end, 'hovered-offset');
     }
 
     if (startDate && !endDate && isAfterDay(hoverDate, startDate)) {
@@ -1065,6 +1069,8 @@ export default class DayPickerRangeController extends BaseClass {
       renderMonthElement,
       calendarInfoPosition,
       onBlur,
+      onShiftTab,
+      onTab,
       isFocused,
       showKeyboardShortcuts,
       isRTL,
@@ -1091,6 +1097,8 @@ export default class DayPickerRangeController extends BaseClass {
         onPrevMonthClick={this.onPrevMonthClick}
         onNextMonthClick={this.onNextMonthClick}
         onMonthChange={this.onMonthChange}
+        onTab={onTab}
+        onShiftTab={onShiftTab}
         onYearChange={this.onYearChange}
         onMultiplyScrollableMonths={this.onMultiplyScrollableMonths}
         monthFormat={monthFormat}
