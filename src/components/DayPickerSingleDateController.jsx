@@ -77,6 +77,8 @@ const propTypes = forbidExtraProps({
   onBlur: PropTypes.func,
   isFocused: PropTypes.bool,
   showKeyboardShortcuts: PropTypes.bool,
+  onTab: PropTypes.func,
+  onShiftTab: PropTypes.func,
 
   // i18n
   monthFormat: PropTypes.string,
@@ -133,6 +135,8 @@ const defaultProps = {
   onBlur() {},
   isFocused: false,
   showKeyboardShortcuts: false,
+  onTab() {},
+  onShiftTab() {},
 
   // i18n
   monthFormat: 'MMMM YYYY',
@@ -652,6 +656,8 @@ export default class DayPickerSingleDateController extends BaseClass {
       navPrev,
       navNext,
       onOutsideClick,
+      onShiftTab,
+      onTab,
       withPortal,
       focused,
       enableOutsideDays,
@@ -710,6 +716,8 @@ export default class DayPickerSingleDateController extends BaseClass {
         isFocused={isFocused}
         getFirstFocusableDay={this.getFirstFocusableDay}
         onBlur={onBlur}
+        onTab={onTab}
+        onShiftTab={onShiftTab}
         phrases={phrases}
         daySize={daySize}
         isRTL={isRTL}

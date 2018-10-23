@@ -397,27 +397,34 @@ describe('DayPicker', () => {
           expect(onBlurStub.callCount).to.equal(1);
         });
       });
+
+      describe('Tab', () => {
+        it('triggers onShiftTab when shift tab is pressed', () => {
+          const onTabStub = sinon.stub();
+          const onShiftTabStub = sinon.stub();
+          const wrapper = shallow(
+            <DayPicker onTab={onTabStub} onShiftTab={onShiftTabStub} />,
+          ).dive();
+          wrapper.setState({ focusedDate: today });
+          wrapper.instance().onKeyDown({ ...event, key: 'Tab', shiftKey: true });
+          expect(onTabStub.callCount).to.equal(0);
+          expect(onShiftTabStub.callCount).to.equal(1);
+        });
+
+        it('triggers onTab', () => {
+          const onTabStub = sinon.stub();
+          const onShiftTabStub = sinon.stub();
+          const wrapper = shallow(
+            <DayPicker onTab={onTabStub} onShiftTab={onShiftTabStub} />,
+          ).dive();
+          wrapper.setState({ focusedDate: today });
+          wrapper.instance().onKeyDown({ ...event, key: 'Tab' });
+          expect(onTabStub.callCount).to.equal(1);
+          expect(onShiftTabStub.callCount).to.equal(0);
+        });
+      });
     });
 
-    describe('Tab', () => {
-      describe('triggers onShiftTab when shift tab is pressed', () => {
-        const onTabStub = sinon.stub();
-        const onShiftTabStub = sinon.stub();
-        const wrapper = shallow(<DayPicker onTab={onTabStub} onShiftTab={onShiftTabStub} />).dive();
-        wrapper.instance().onKeyDown({ ...event, key: 'Tab', shiftKey: true });
-        expect(onTabStub.callCount).to.equal(0);
-        expect(onShiftTabStub.callCount).to.equal(1);
-      });
-
-      describe('triggers onTab', () => {
-        const onTabStub = sinon.stub();
-        const onShiftTabStub = sinon.stub();
-        const wrapper = shallow(<DayPicker onTab={onTabStub} onShiftTab={onShiftTabStub} />).dive();
-        wrapper.instance().onKeyDown({ ...event, key: 'Tab' });
-        expect(onTabStub.callCount).to.equal(1);
-        expect(onShiftTabStub.callCount).to.equal(0);
-      });
-    });
 
     describe('focusedDate is falsy', () => {
       it('does not call maybeTransitionPrevMonth', () => {
