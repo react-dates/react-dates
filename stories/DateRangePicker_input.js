@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import { storiesOf } from '@storybook/react';
+import { withInfo } from '@storybook/addon-info';
 
 import isInclusivelyBeforeDay from '../src/utils/isInclusivelyBeforeDay';
 import isInclusivelyAfterDay from '../src/utils/isInclusivelyAfterDay';
@@ -45,28 +46,28 @@ const TestCustomCloseIcon = () => (
 );
 
 storiesOf('DRP - Input Props', module)
-  .addWithInfo('default', () => (
+  .add('default', withInfo()(() => (
     <DateRangePickerWrapper
       initialStartDate={moment().add(3, 'months')}
       initialEndDate={moment().add(3, 'months').add(10, 'days')}
     />
-  ))
-  .addWithInfo('disabled', () => (
+  )))
+  .add('disabled', withInfo()(() => (
     <DateRangePickerWrapper
       initialStartDate={moment().add(3, 'months')}
       initialEndDate={moment().add(3, 'months').add(10, 'days')}
       disabled
     />
-  ))
-  .addWithInfo('disabled start date', () => (
+  )))
+  .add('disabled start date', withInfo()(() => (
     <DateRangePickerWrapper
       initialStartDate={moment().add(3, 'months')}
       initialEndDate={moment().add(3, 'months').add(10, 'days')}
       disabled="startDate"
       isOutsideRange={day => !isInclusivelyAfterDay(day, moment().add(3, 'months'))}
     />
-  ))
-  .addWithInfo('disabled end date', () => (
+  )))
+  .add('disabled end date', withInfo()(() => (
     <DateRangePickerWrapper
       initialStartDate={moment().add(3, 'months')}
       initialEndDate={moment().add(3, 'months').add(10, 'days')}
@@ -74,108 +75,108 @@ storiesOf('DRP - Input Props', module)
       isOutsideRange={day => !isInclusivelyAfterDay(day, moment()) ||
         !isInclusivelyBeforeDay(day, moment().add(3, 'months').add(10, 'days'))}
     />
-  ))
-  .addWithInfo('readOnly', () => (
+  )))
+  .add('readOnly', withInfo()(() => (
     <DateRangePickerWrapper
       initialStartDate={moment().add(3, 'months')}
       initialEndDate={moment().add(3, 'months').add(10, 'days')}
       readOnly
     />
-  ))
-  .addWithInfo('with clear dates button', () => (
+  )))
+  .add('with clear dates button', withInfo()(() => (
     <DateRangePickerWrapper
       initialStartDate={moment().add(3, 'days')}
       initialEndDate={moment().add(10, 'days')}
       showClearDates
     />
-  ))
-  .addWithInfo('reopens DayPicker on clear dates', () => (
+  )))
+  .add('reopens DayPicker on clear dates', withInfo()(() => (
     <DateRangePickerWrapper
       initialStartDate={moment().add(3, 'days')}
       initialEndDate={moment().add(10, 'days')}
       showClearDates
       reopenPickerOnClearDates
     />
-  ))
-  .addWithInfo('with custom display format', () => (
+  )))
+  .add('with custom display format', withInfo()(() => (
     <DateRangePickerWrapper
       initialStartDate={moment().add(3, 'days')}
       initialEndDate={moment().add(10, 'days')}
       displayFormat="MMM D"
     />
-  ))
-  .addWithInfo('with show calendar icon', () => (
+  )))
+  .add('with show calendar icon', withInfo()(() => (
     <DateRangePickerWrapper
       initialStartDate={moment().add(3, 'days')}
       initialEndDate={moment().add(10, 'days')}
       showDefaultInputIcon
     />
-  ))
-  .addWithInfo('with custom show calendar icon', () => (
+  )))
+  .add('with custom show calendar icon', withInfo()(() => (
     <DateRangePickerWrapper
       initialStartDate={moment().add(3, 'days')}
       initialEndDate={moment().add(10, 'days')}
       customInputIcon={<TestCustomInputIcon />}
     />
-  ))
-  .addWithInfo('with custom arrow icon', () => (
+  )))
+  .add('with custom arrow icon', withInfo()(() => (
     <DateRangePickerWrapper
       initialStartDate={moment().add(3, 'days')}
       initialEndDate={moment().add(10, 'days')}
       customArrowIcon={<TestCustomArrowIcon />}
     />
-  ))
-  .addWithInfo('with custom close icon', () => (
+  )))
+  .add('with custom close icon', withInfo()(() => (
     <DateRangePickerWrapper
       initialStartDate={moment().add(3, 'days')}
       initialEndDate={moment().add(10, 'days')}
       showClearDates
       customCloseIcon={<TestCustomCloseIcon />}
     />
-  ))
-  .addWithInfo('with show calendar icon after input', () => (
+  )))
+  .add('with show calendar icon after input', withInfo()(() => (
     <DateRangePickerWrapper
       initialStartDate={moment().add(3, 'days')}
       initialEndDate={moment().add(10, 'days')}
       showDefaultInputIcon
       inputIconPosition="after"
     />
-  ))
-  .addWithInfo('with screen reader message', () => (
+  )))
+  .add('with screen reader message', withInfo()(() => (
     <DateRangePickerWrapper
       initialStartDate={moment().add(3, 'days')}
       initialEndDate={moment().add(10, 'days')}
       screenReaderInputMessage="Here you could inform screen reader users of the date format, minimum nights, blocked out dates, etc"
     />
-  ))
-  .addWithInfo('noBorder', () => (
+  )))
+  .add('noBorder', withInfo()(() => (
     <DateRangePickerWrapper
       initialStartDate={moment().add(3, 'days')}
       initialEndDate={moment().add(10, 'days')}
       noBorder
     />
-  ))
-  .addWithInfo('block styling', () => (
+  )))
+  .add('block styling', withInfo()(() => (
     <DateRangePickerWrapper
       initialStartDate={moment().add(3, 'days')}
       initialEndDate={moment().add(10, 'days')}
       showClearDates
       block
     />
-  ))
-  .addWithInfo('small styling', () => (
+  )))
+  .add('small styling', withInfo()(() => (
     <DateRangePickerWrapper
       initialStartDate={moment().add(3, 'days')}
       initialEndDate={moment().add(10, 'days')}
       showClearDates
       small
     />
-  ))
-  .addWithInfo('regular styling', () => (
+  )))
+  .add('regular styling', withInfo()(() => (
     <DateRangePickerWrapper
       initialStartDate={moment().add(3, 'days')}
       initialEndDate={moment().add(10, 'days')}
       showClearDates
       regular
     />
-  ));
+  )));
