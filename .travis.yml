@@ -11,7 +11,7 @@ before_script:
   - 'if [ -n "${KARMA-}" ]; then sleep 3; fi'
 script:
   - 'if [ -n "${LINT-}" ]; then npm run lint ; fi'
-  - 'if [ -n "${BUILD-}" ]; then npm run lint ; fi'
+  - 'if [ -n "${BUILD-}" ]; then npm run build ; fi'
   - 'if [ "${TEST-}" = true ]; then npm run tests-only ; fi'
   - 'if [ -n "${KARMA-}" ]; then npm run tests-karma ; fi'
   - 'if [ -n "${COVERAGE-}" ] && [ "${TRAVIS_BRANCH-}" = "master" ]; then npm run cover; cat ./coverage/lcov.info | ./node_modules/.bin/coveralls ; fi'
