@@ -99,6 +99,8 @@ const propTypes = forbidExtraProps({
   getFirstFocusableDay: PropTypes.func,
   onBlur: PropTypes.func,
   showKeyboardShortcuts: PropTypes.bool,
+  onTab: PropTypes.func,
+  onShiftTab: PropTypes.func,
 
   // internationalization
   monthFormat: PropTypes.string,
@@ -155,6 +157,8 @@ export const defaultProps = {
   getFirstFocusableDay: null,
   onBlur() {},
   showKeyboardShortcuts: false,
+  onTab() {},
+  onShiftTab() {},
 
   // internationalization
   monthFormat: 'MMMM YYYY',
@@ -356,7 +360,12 @@ class DayPicker extends BaseClass {
   onFinalKeyDown(e) {
     this.setState({ withMouseInteractions: false });
 
-    const { onBlur, isRTL } = this.props;
+    const {
+      onBlur,
+      onTab,
+      onShiftTab,
+      isRTL,
+    } = this.props;
     const { focusedDate, showKeyboardShortcuts } = this.state;
     if (!focusedDate) return;
 
@@ -431,6 +440,14 @@ class DayPicker extends BaseClass {
           this.closeKeyboardShortcutsPanel();
         } else {
           onBlur();
+        }
+        break;
+
+      case 'Tab':
+        if (e.shiftKey) {
+          onShiftTab();
+        } else {
+          onTab();
         }
         break;
 
