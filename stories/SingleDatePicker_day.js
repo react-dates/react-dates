@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import { storiesOf } from '@storybook/react';
+import { withInfo } from '@storybook/addon-info';
 
 import isInclusivelyAfterDay from '../src/utils/isInclusivelyAfterDay';
 import isSameDay from '../src/utils/isSameDay';
@@ -19,16 +20,16 @@ const datesList = [
 ];
 
 storiesOf('SDP - Day Props', module)
-  .addWithInfo('default', () => (
+  .add('default', withInfo()(() => (
     <SingleDatePickerWrapper autoFocus />
-  ))
-  .addWithInfo('allows all days, including past days', () => (
+  )))
+  .add('allows all days, including past days', withInfo()(() => (
     <SingleDatePickerWrapper
       isOutsideRange={() => false}
       autoFocus
     />
-  ))
-  .addWithInfo('allows next two weeks only', () => (
+  )))
+  .add('allows next two weeks only', withInfo()(() => (
     <SingleDatePickerWrapper
       isOutsideRange={day =>
         !isInclusivelyAfterDay(day, moment()) ||
@@ -36,29 +37,29 @@ storiesOf('SDP - Day Props', module)
       }
       autoFocus
     />
-  ))
-  .addWithInfo('with some blocked dates', () => (
+  )))
+  .add('with some blocked dates', withInfo()(() => (
     <SingleDatePickerWrapper
       isDayBlocked={day1 => datesList.some(day2 => isSameDay(day1, day2))}
       autoFocus
     />
-  ))
-  .addWithInfo('with some highlighted dates', () => (
+  )))
+  .add('with some highlighted dates', withInfo()(() => (
     <SingleDatePickerWrapper
       isDayHighlighted={day1 => datesList.some(day2 => isSameDay(day1, day2))}
       autoFocus
     />
-  ))
-  .addWithInfo('blocks fridays', () => (
+  )))
+  .add('blocks fridays', withInfo()(() => (
     <SingleDatePickerWrapper
       isDayBlocked={day => moment.weekdays(day.weekday()) === 'Friday'}
       autoFocus
     />
-  ))
-  .addWithInfo('with custom daily details', () => (
+  )))
+  .add('with custom daily details', withInfo()(() => (
     <SingleDatePickerWrapper
       numberOfMonths={1}
       renderDayContents={day => day.format('ddd')}
       autoFocus
     />
-  ));
+  )));

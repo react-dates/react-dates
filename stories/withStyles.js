@@ -1,5 +1,6 @@
 import React from 'react';
 import { action, storiesOf } from '@storybook/react';
+import { withInfo } from '@storybook/addon-info';
 
 import CalendarDay from '../src/components/CalendarDay';
 import CustomizableCalendarDay from '../src/components/CustomizableCalendarDay';
@@ -28,7 +29,7 @@ const customStyles = {
 };
 
 storiesOf('withStyles', module)
-  .addWithInfo('CalendarDay', () => (
+  .add('CalendarDay', withInfo()(() => (
     <table>
       <tbody>
         <tr>
@@ -62,16 +63,16 @@ storiesOf('withStyles', module)
         </tr>
       </tbody>
     </table>
-  ))
-  .addWithInfo('CalendarMonth', () => (
+  )))
+  .add('CalendarMonth', withInfo()(() => (
     <CalendarMonth
       isVisible
     />
-  ))
-  .addWithInfo('CalendarMonthGrid', () => (
+  )))
+  .add('CalendarMonthGrid', withInfo()(() => (
     <CalendarMonthGrid />
-  ))
-  .addWithInfo('DayPickerNavigation', () => (
+  )))
+  .add('DayPickerNavigation', withInfo()(() => (
     <div>
       <div
         style={{
@@ -112,15 +113,15 @@ storiesOf('withStyles', module)
         <DayPickerNavigation orientation={VERTICAL_SCROLLABLE} />
       </div>
     </div>
-  ))
-  .addWithInfo('KeyboardShortcutRow', () => (
+  )))
+  .add('KeyboardShortcutRow', withInfo()(() => (
     <KeyboardShortcutRow
       unicode="↵"
       label="Enter key"
       action="Select the currently focused date"
     />
-  ))
-  .addWithInfo('DayPickerKeyboardShortcuts', () => (
+  )))
+  .add('DayPickerKeyboardShortcuts', withInfo()(() => (
     <div>
       <div
         style={{
@@ -134,8 +135,8 @@ storiesOf('withStyles', module)
         <DayPickerKeyboardShortcuts showKeyboardShortcutsPanel />
       </div>
     </div>
-  ))
-  .addWithInfo('DateInput', () => (
+  )))
+  .add('DateInput', withInfo()(() => (
     <div>
       <div>
         <DateInput />
@@ -153,8 +154,8 @@ storiesOf('withStyles', module)
         <DateInput focused showCaret />
       </div>
     </div>
-  ))
-  .addWithInfo('SingleDatePickerInput', () => (
+  )))
+  .add('SingleDatePickerInput', withInfo()(() => (
     <div>
       <div>
         <SingleDatePickerInput />
@@ -172,9 +173,9 @@ storiesOf('withStyles', module)
         <SingleDatePickerInput showDefaultInputIcon />
       </div>
     </div>
-  ))
+  )))
 
-  .addWithInfo('DateRangePickerInput', () => (
+  .add('DateRangePickerInput', withInfo()(() => (
     <div>
       <div>
         <DateRangePickerInput />
@@ -200,4 +201,4 @@ storiesOf('withStyles', module)
         <DateRangePickerInput showDefaultInputIcon />
       </div>
     </div>
-  ));
+  )));

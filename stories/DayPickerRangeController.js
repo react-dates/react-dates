@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import { storiesOf, action } from '@storybook/react';
+import { withInfo } from '@storybook/addon-info';
 
 import InfoPanelDecorator, { monospace } from './InfoPanelDecorator';
 
@@ -79,14 +80,14 @@ const datesList = [
 
 storiesOf('DayPickerRangeController', module)
   .addDecorator(InfoPanelDecorator(dayPickerRangeControllerInfo))
-  .addWithInfo('default', () => (
+  .add('default', withInfo()(() => (
     <DayPickerRangeControllerWrapper
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
     />
-  ))
-  .addWithInfo('with 7 days range selection', () => (
+  )))
+  .add('with 7 days range selection', withInfo()(() => (
     <DayPickerRangeControllerWrapper
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
@@ -94,8 +95,8 @@ storiesOf('DayPickerRangeController', module)
       startDateOffset={day => day.subtract(3, 'days')}
       endDateOffset={day => day.add(3, 'days')}
     />
-  ))
-  .addWithInfo('with 45 days range selection', () => (
+  )))
+  .add('with 45 days range selection', withInfo()(() => (
     <DayPickerRangeControllerWrapper
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
@@ -103,16 +104,16 @@ storiesOf('DayPickerRangeController', module)
       startDateOffset={day => day.subtract(22, 'days')}
       endDateOffset={day => day.add(22, 'days')}
     />
-  ))
-  .addWithInfo('with 4 days after today range selection', () => (
+  )))
+  .add('with 4 days after today range selection', withInfo()(() => (
     <DayPickerRangeControllerWrapper
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
       endDateOffset={day => day.add(4, 'days')}
     />
-  ))
-  .addWithInfo('with current week range selection', () => (
+  )))
+  .add('with current week range selection', withInfo()(() => (
     <DayPickerRangeControllerWrapper
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
@@ -120,16 +121,16 @@ storiesOf('DayPickerRangeController', module)
       startDateOffset={day => day.startOf('week')}
       endDateOffset={day => day.endOf('week')}
     />
-  ))
-  .addWithInfo('with custom inputs', () => (
+  )))
+  .add('with custom inputs', withInfo()(() => (
     <DayPickerRangeControllerWrapper
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
       showInputs
     />
-  ))
-  .addWithInfo('non-english locale', () => {
+  )))
+  .add('non-english locale', withInfo()(() => {
     moment.locale('zh-cn');
     return (
       <DayPickerRangeControllerWrapper
@@ -139,16 +140,16 @@ storiesOf('DayPickerRangeController', module)
         monthFormat="YYYY[年]MMMM"
       />
     );
-  })
-  .addWithInfo('single month', () => (
+  }))
+  .add('single month', withInfo()(() => (
     <DayPickerRangeControllerWrapper
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
       numberOfMonths={1}
     />
-  ))
-  .addWithInfo('single month, custom caption', () => (
+  )))
+  .add('single month, custom caption', withInfo()(() => (
     <DayPickerRangeControllerWrapper
       onOutsideClick={action('DayPickerSingleDateController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerSingleDateController::onPrevMonthClick')}
@@ -179,24 +180,24 @@ storiesOf('DayPickerRangeController', module)
         </div>
       )}
     />
-  ))
-  .addWithInfo('3 months', () => (
+  )))
+  .add('3 months', withInfo()(() => (
     <DayPickerRangeControllerWrapper
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
       numberOfMonths={3}
     />
-  ))
-  .addWithInfo('vertical', () => (
+  )))
+  .add('vertical', withInfo()(() => (
     <DayPickerRangeControllerWrapper
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
       orientation={VERTICAL_ORIENTATION}
     />
-  ))
-  .addWithInfo('vertical scrollable', () => (
+  )))
+  .add('vertical scrollable', withInfo()(() => (
     <div style={{ height: 500 }}>
       <DayPickerRangeControllerWrapper
         onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
@@ -207,8 +208,8 @@ storiesOf('DayPickerRangeController', module)
         verticalHeight={800}
       />
     </div>
-  ))
-  .addWithInfo('vertical scrollable with custom month nav', () => (
+  )))
+  .add('vertical scrollable with custom month nav', withInfo()(() => (
     <div style={{ height: 500 }}>
       <DayPickerRangeControllerWrapper
         onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
@@ -236,8 +237,8 @@ storiesOf('DayPickerRangeController', module)
         }
       />
     </div>
-  ))
-  .addWithInfo('with custom month navigation', () => (
+  )))
+  .add('with custom month navigation', withInfo()(() => (
     <DayPickerRangeControllerWrapper
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
@@ -245,8 +246,8 @@ storiesOf('DayPickerRangeController', module)
       navPrev={<TestPrevIcon />}
       navNext={<TestNextIcon />}
     />
-  ))
-  .addWithInfo('with outside days enabled', () => (
+  )))
+  .add('with outside days enabled', withInfo()(() => (
     <DayPickerRangeControllerWrapper
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
@@ -254,16 +255,16 @@ storiesOf('DayPickerRangeController', module)
       numberOfMonths={1}
       enableOutsideDays
     />
-  ))
-  .addWithInfo('with month specified on open', () => (
+  )))
+  .add('with month specified on open', withInfo()(() => (
     <DayPickerRangeControllerWrapper
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
       initialVisibleMonth={() => moment().add(10, 'months')}
     />
-  ))
-  .addWithInfo('with minimum nights set', () => (
+  )))
+  .add('with minimum nights set', withInfo()(() => (
     <DayPickerRangeControllerWrapper
       minimumNights={3}
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
@@ -272,8 +273,8 @@ storiesOf('DayPickerRangeController', module)
       initialStartDate={moment().add(3, 'days')}
       autoFocusEndDate
     />
-  ))
-  .addWithInfo('allows single day range', () => (
+  )))
+  .add('allows single day range', withInfo()(() => (
     <DayPickerRangeControllerWrapper
       minimumNights={0}
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
@@ -282,16 +283,16 @@ storiesOf('DayPickerRangeController', module)
       initialStartDate={moment().add(3, 'days')}
       autoFocusEndDate
     />
-  ))
-  .addWithInfo('allows all days, including past days', () => (
+  )))
+  .add('allows all days, including past days', withInfo()(() => (
     <DayPickerRangeControllerWrapper
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
       isOutsideRange={() => false}
     />
-  ))
-  .addWithInfo('allows next two weeks only', () => (
+  )))
+  .add('allows next two weeks only', withInfo()(() => (
     <DayPickerRangeControllerWrapper
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
@@ -301,40 +302,40 @@ storiesOf('DayPickerRangeController', module)
         isInclusivelyAfterDay(day, moment().add(2, 'weeks'))
       }
     />
-  ))
-  .addWithInfo('with some blocked dates', () => (
+  )))
+  .add('with some blocked dates', withInfo()(() => (
     <DayPickerRangeControllerWrapper
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
       isDayBlocked={day1 => datesList.some(day2 => isSameDay(day1, day2))}
     />
-  ))
-  .addWithInfo('with some highlighted dates', () => (
+  )))
+  .add('with some highlighted dates', withInfo()(() => (
     <DayPickerRangeControllerWrapper
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
       isDayHighlighted={day1 => datesList.some(day2 => isSameDay(day1, day2))}
     />
-  ))
-  .addWithInfo('blocks fridays', () => (
+  )))
+  .add('blocks fridays', withInfo()(() => (
     <DayPickerRangeControllerWrapper
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
       isDayBlocked={day => moment.weekdays(day.weekday()) === 'Friday'}
     />
-  ))
-  .addWithInfo('with custom daily details', () => (
+  )))
+  .add('with custom daily details', withInfo()(() => (
     <DayPickerRangeControllerWrapper
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
       renderDayContents={day => day.format('ddd')}
     />
-  ))
-  .addWithInfo('with info panel', () => (
+  )))
+  .add('with info panel', withInfo()(() => (
     <DayPickerRangeControllerWrapper
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
@@ -343,24 +344,24 @@ storiesOf('DayPickerRangeController', module)
         <TestCustomInfoPanel />
       )}
     />
-  ))
-  .addWithInfo('with no animation', () => (
+  )))
+  .add('with no animation', withInfo()(() => (
     <DayPickerRangeControllerWrapper
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
       transitionDuration={0}
     />
-  ))
-  .addWithInfo('with vertical spacing applied', () => (
+  )))
+  .add('with vertical spacing applied', withInfo()(() => (
     <DayPickerRangeControllerWrapper
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
       verticalBorderSpacing={16}
     />
-  ))
-  .addWithInfo('with custom horizontal month spacing applied', () => (
+  )))
+  .add('with custom horizontal month spacing applied', withInfo()(() => (
     <div style={{ height: 500 }}>
       <DayPickerRangeControllerWrapper
         onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
@@ -372,10 +373,10 @@ storiesOf('DayPickerRangeController', module)
         horizontalMonthPadding={0}
       />
     </div>
-  ))
-  .addWithInfo('with no nav buttons', () => (
+  )))
+  .add('with no nav buttons', withInfo()(() => (
     <DayPickerRangeControllerWrapper
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       noNavButtons
     />
-  ));
+  )));

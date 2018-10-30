@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import { storiesOf } from '@storybook/react';
+import { withInfo } from '@storybook/addon-info';
 
 import SingleDatePickerWrapper from '../examples/SingleDatePickerWrapper';
 
@@ -44,47 +45,47 @@ const TestCustomInfoPanel = () => (
 );
 
 storiesOf('SDP - Calendar Props', module)
-  .addWithInfo('default', () => (
+  .add('default', withInfo()(() => (
     <SingleDatePickerWrapper autoFocus />
-  ))
-  .addWithInfo('open up', () => (
+  )))
+  .add('open up', withInfo()(() => (
     <div style={{ marginTop: '450px' }}>
       <SingleDatePickerWrapper
         openDirection={OPEN_UP}
         autoFocus
       />
     </div>
-  ))
-  .addWithInfo('single month', () => (
+  )))
+  .add('single month', withInfo()(() => (
     <SingleDatePickerWrapper
       numberOfMonths={1}
       autoFocus
     />
-  ))
-  .addWithInfo('with custom day size', () => (
+  )))
+  .add('with custom day size', withInfo()(() => (
     <SingleDatePickerWrapper daySize={50} autoFocus />
-  ))
-  .addWithInfo('anchored right', () => (
+  )))
+  .add('anchored right', withInfo()(() => (
     <div style={{ float: 'right' }}>
       <SingleDatePickerWrapper
         anchorDirection={ANCHOR_RIGHT}
         autoFocus
       />
     </div>
-  ))
-  .addWithInfo('vertical', () => (
+  )))
+  .add('vertical', withInfo()(() => (
     <SingleDatePickerWrapper
       orientation={VERTICAL_ORIENTATION}
       autoFocus
     />
-  ))
-  .addWithInfo('horizontal with portal', () => (
+  )))
+  .add('horizontal with portal', withInfo()(() => (
     <SingleDatePickerWrapper
       withPortal
       autoFocus
     />
-  ))
-  .addWithInfo('horizontal with portal and info panel', () => (
+  )))
+  .add('horizontal with portal and info panel', withInfo()(() => (
     <SingleDatePickerWrapper
       withPortal
       autoFocus
@@ -93,67 +94,67 @@ storiesOf('SDP - Calendar Props', module)
         <TestCustomInfoPanel />
       )}
     />
-  ))
-  .addWithInfo('horizontal with fullscreen portal', () => (
+  )))
+  .add('horizontal with fullscreen portal', withInfo()(() => (
     <SingleDatePickerWrapper withFullScreenPortal autoFocus />
-  ))
-  .addWithInfo('vertical with full screen portal', () => (
+  )))
+  .add('vertical with full screen portal', withInfo()(() => (
     <SingleDatePickerWrapper
       orientation={VERTICAL_ORIENTATION}
       withFullScreenPortal
       autoFocus
     />
-  ))
-  .addWithInfo('disable scroll', () => (
+  )))
+  .add('disable scroll', withInfo()(() => (
     <div style={{ height: '100vh' }}>
       <div>This content scrolls.</div>
       <SingleDatePickerWrapper disableScroll autoFocus />
     </div>
-  ))
-  .addWithInfo('appended to body', () => <SingleDatePickerWrapper appendToBody autoFocus />)
-  .addWithInfo('appended to body (in scrollable container)', () => (
+  )))
+  .add('appended to body', withInfo()(() => <SingleDatePickerWrapper appendToBody autoFocus />))
+  .add('appended to body (in scrollable container)', withInfo()(() => (
     <div style={{ height: 200, overflow: 'auto', background: 'whitesmoke' }}>
       <div>This content scrolls.</div>
       <div style={{ marginBottom: 300 }}>
         <SingleDatePickerWrapper appendToBody autoFocus />
       </div>
     </div>
-  ))
-  .addWithInfo('does not autoclose the DayPicker on date selection', () => (
+  )))
+  .add('does not autoclose the DayPicker on date selection', withInfo()(() => (
     <SingleDatePickerWrapper
       keepOpenOnDateSelect
       autoFocus
     />
-  ))
-  .addWithInfo('with month specified on open', () => (
+  )))
+  .add('with month specified on open', withInfo()(() => (
     <SingleDatePickerWrapper
       initialVisibleMonth={() => moment().add(10, 'months')}
       autoFocus
     />
-  ))
-  .addWithInfo('with custom arrows', () => (
+  )))
+  .add('with custom arrows', withInfo()(() => (
     <SingleDatePickerWrapper
       navPrev={<TestPrevIcon />}
       navNext={<TestNextIcon />}
       autoFocus
     />
-  ))
-  .addWithInfo('with outside days enabled', () => (
+  )))
+  .add('with outside days enabled', withInfo()(() => (
     <SingleDatePickerWrapper
       numberOfMonths={1}
       enableOutsideDays
       autoFocus
     />
-  ))
-  .addWithInfo('with info panel default', () => (
+  )))
+  .add('with info panel default', withInfo()(() => (
     <SingleDatePickerWrapper
       renderCalendarInfo={() => (
         <TestCustomInfoPanel borderPosition='borderBottom'/>
       )}
       autoFocus
     />
-  ))
-  .addWithInfo('with info panel before', () => (
+  )))
+  .add('with info panel before', withInfo()(() => (
     <SingleDatePickerWrapper
       calendarInfoPosition="before"
       renderCalendarInfo={() => (
@@ -161,8 +162,8 @@ storiesOf('SDP - Calendar Props', module)
       )}
       autoFocus
     />
-  ))
-  .addWithInfo('with info panel after', () => (
+  )))
+  .add('with info panel after', withInfo()(() => (
     <SingleDatePickerWrapper
       calendarInfoPosition="after"
       renderCalendarInfo={() => (
@@ -170,8 +171,8 @@ storiesOf('SDP - Calendar Props', module)
       )}
       autoFocus
     />
-  ))
-  .addWithInfo('with info panel bottom', () => (
+  )))
+  .add('with info panel bottom', withInfo()(() => (
     <SingleDatePickerWrapper
       calendarInfoPosition="bottom"
       renderCalendarInfo={() => (
@@ -179,8 +180,8 @@ storiesOf('SDP - Calendar Props', module)
       )}
       autoFocus
     />
-  ))
-  .addWithInfo('with info panel top', () => (
+  )))
+  .add('with info panel top', withInfo()(() => (
     <SingleDatePickerWrapper
       calendarInfoPosition="top"
       renderCalendarInfo={() => (
@@ -188,41 +189,40 @@ storiesOf('SDP - Calendar Props', module)
       )}
       autoFocus
     />
-  ))
-  .addWithInfo('with keyboard shorcuts panel hidden', () => (
+  )))
+  .add('with keyboard shorcuts panel hidden', withInfo()(() => (
     <SingleDatePickerWrapper
       hideKeyboardShortcutsPanel
       autoFocus
     />
-  ))
-  .addWithInfo('with RTL support', () => (
+  )))
+  .add('with RTL support', withInfo()(() => (
     <SingleDatePickerWrapper
       isRTL
       autoFocus
     />
-  ))
-  .addWithInfo('with custom first day of week', () => (
+  )))
+  .add('with custom first day of week', withInfo()(() => (
     <SingleDatePickerWrapper
       firstDayOfWeek={3}
       autoFocus
     />
-  ))
-  .addWithInfo('with onClose handler', () => (
+  )))
+  .add('with onClose handler', withInfo()(() => (
     <SingleDatePickerWrapper
       onClose={({ date }) => alert(`onClose: date = ${date}`)}
       autoFocus
     />
-  ))
-  .addWithInfo('with no animation', () => (
+  )))
+  .add('with no animation', withInfo()(() => (
     <SingleDatePickerWrapper
       transitionDuration={0}
       autoFocus
     />
-  ))
-  .addWithInfo('with custom vertical spacing', () => (
+  )))
+  .add('with custom vertical spacing', withInfo()(() => (
     <SingleDatePickerWrapper
       verticalSpacing={0}
       autoFocus
     />
-  ));
-
+  )));
