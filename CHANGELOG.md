@@ -4,6 +4,9 @@
 - []  ([#](https://github.com/airbnb/react-dates/pull/))
 -->
 
+## 18.2.0
+- [new] Add `onTab`/`onShiftTab` callbacks to the DayPicker (and its controllers) ([#1427](https://github.com/airbnb/react-dates/pull/1427))
+
 ## 18.1.1
 - [fix] Prevent outside range dates from being selected by typing ([#1370](https://github.com/airbnb/react-dates/pull/1370))
 
