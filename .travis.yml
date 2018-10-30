@@ -36,3 +36,4 @@ matrix:
       env: KARMA=true TEST=false
   allow_failures:
     - node_js: "9"
+    - env: KARMA=true TEST=false # temporary
