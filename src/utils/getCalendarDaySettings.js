@@ -35,7 +35,9 @@ export default function getCalendarDaySettings(day, ariaLabelFormat, daySize, mo
   const formattedDate = { date: day.format(ariaLabelFormat) };
 
   let ariaLabel = getPhrase(chooseAvailableDate, formattedDate);
-  if (modifiers.has(BLOCKED_MODIFIER)) {
+  if (modifiers.has(BLOCKED_MODIFIER) && selected) {
+    ariaLabel = getPhrase(dateIsSelected, formattedDate);
+  } else if (modifiers.has(BLOCKED_MODIFIER)) {
     ariaLabel = getPhrase(dateIsUnavailable, formattedDate);
   } else if (selected) {
     ariaLabel = getPhrase(dateIsSelected, formattedDate);
