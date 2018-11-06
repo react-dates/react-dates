@@ -19,8 +19,6 @@ import toLocalizedDateString from '../utils/toLocalizedDateString';
 
 import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
 
-import BaseClass from '../utils/baseClass';
-
 import {
   ICON_BEFORE_POSITION,
   OPEN_DOWN,
@@ -112,8 +110,7 @@ const defaultProps = {
   isRTL: false,
 };
 
-/** @extends React.Component */
-export default class SingleDatePickerInputController extends BaseClass {
+export default class SingleDatePickerInputController extends React.PureComponent {
   constructor(props) {
     super(props);
 
