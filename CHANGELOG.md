@@ -4,6 +4,9 @@
 - []  ([#](https://github.com/airbnb/react-dates/pull/))
 -->
 
+## 18.2.1
+- [fix] Add babel transform to handle PureComponent fallbacks ([#1452](https://github.com/airbnb/react-dates/pull/1452))
+
 ## 18.2.0
 - [new] Add `onTab`/`onShiftTab` callbacks to the DayPicker (and its controllers) ([#1427](https://github.com/airbnb/react-dates/pull/1427))
 
