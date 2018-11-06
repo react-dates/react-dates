@@ -7,7 +7,7 @@ import isTouchDevice from 'is-touch-device';
 
 import getInputHeight from '../utils/getInputHeight';
 import openDirectionShape from '../shapes/OpenDirectionShape';
-import BaseClass, { pureComponentAvailable } from '../utils/baseClass';
+
 import {
   OPEN_DOWN,
   OPEN_UP,
@@ -78,8 +78,7 @@ const defaultProps = {
   isFocused: false,
 };
 
-/** @extends React.Component */
-class DateInput extends BaseClass {
+class DateInput extends React.PureComponent {
   constructor(props) {
     super(props);
 
@@ -381,4 +380,4 @@ export default withStyles(({
     stroke: color.core.border,
     fill: 'transparent',
   },
-}), { pureComponent: pureComponentAvailable })(DateInput);
+}), { pureComponent: typeof React.PureComponent !== 'undefined' })(DateInput);
