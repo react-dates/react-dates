@@ -6,9 +6,14 @@ module.exports = function pureComponentFallback({ types: t, template }) {
   const buildShouldComponentUpdate = () => {
     const method = t.classMethod(
       'method',
-      t.identifier('shouldComponentUpdate'),
+      t.logicalExpression(
+        '&&',
+        t.unaryExpression('!', t.memberExpression(t.identifier('React'), t.identifier('PureComponent'))),
+        t.stringLiteral('shouldComponentUpdate')
+      ),
       [t.identifier('nextProps'), t.identifier('nextState')],
-      t.blockStatement([template('return shallowCompare(this, nextProps, nextState);')()])
+      t.blockStatement([template('return shallowCompare(this, nextProps, nextState);')()]),
+      true
     );
     return method;
   };
