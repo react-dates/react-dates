@@ -21,6 +21,7 @@ function CustomMonthNav({ children, style }) {
         marginTop: -2,
         top: 30,
         left: 26,
+        outline: 'inherit',
         ...style,
       }}
     >
