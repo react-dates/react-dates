@@ -105,9 +105,6 @@ class DayPickerKeyboardShortcuts extends React.PureComponent {
     // amounts to a very basic focus trap. The user can exit the panel by "pressing" the
     // close button or hitting escape
     switch (e.key) {
-      case 'Enter':
-      case ' ':
-      case 'Spacebar': // for older browsers
       case 'Escape':
         closeKeyboardShortcutsPanel();
         break;
@@ -190,13 +187,6 @@ class DayPickerKeyboardShortcuts extends React.PureComponent {
           type="button"
           aria-label={toggleButtonText}
           onClick={this.onShowKeyboardShortcutsButtonClick}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') {
-              e.preventDefault();
-            } else if (e.key === 'Space') {
-              this.onShowKeyboardShortcutsButtonClick(e);
-            }
-          }}
           onMouseUp={(e) => {
             e.currentTarget.blur();
           }}
