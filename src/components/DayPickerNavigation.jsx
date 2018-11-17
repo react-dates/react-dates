@@ -331,7 +331,8 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
     width: 42,
     fill: color.text,
   },
+
   DayPickerNavigation_svg__disabled: {
-     fill: color.disabled,
+    fill: color.disabled,
   },
 }), { pureComponent: typeof React.PureComponent !== 'undefined' })(DayPickerNavigation);
