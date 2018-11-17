@@ -221,8 +221,8 @@ export default class DayPickerRangeController extends React.PureComponent {
         chooseAvailableDate,
       },
       visibleDays,
-      disablePrev: false,
-      disableNext: false,
+      disablePrev: this.shouldDisableMonthNavigation(props.minDate, currentMonth),
+      disableNext: this.shouldDisableMonthNavigation(props.maxDate, currentMonth),
     };
 
     this.onDayClick = this.onDayClick.bind(this);
