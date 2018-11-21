@@ -27,6 +27,9 @@ import {
 
 const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
+
+  children: PropTypes.node,
+
   startDateId: PropTypes.string,
   startDatePlaceholderText: PropTypes.string,
   screenReaderMessage: PropTypes.string,
@@ -76,6 +79,7 @@ const propTypes = forbidExtraProps({
 });
 
 const defaultProps = {
+  children: null,
   startDateId: START_DATE,
   endDateId: END_DATE,
   startDatePlaceholderText: 'Start Date',
@@ -123,6 +127,7 @@ const defaultProps = {
 };
 
 function DateRangePickerInput({
+  children,
   startDate,
   startDateId,
   startDatePlaceholderText,
@@ -237,6 +242,8 @@ function DateRangePickerInput({
           {arrowIcon}
         </div>
       }
+
+      {children}
 
       <DateInput
         id={endDateId}

@@ -28,6 +28,8 @@ import {
 } from '../constants';
 
 const propTypes = forbidExtraProps({
+  children: PropTypes.node,
+
   startDate: momentPropTypes.momentObj,
   startDateId: PropTypes.string,
   startDatePlaceholderText: PropTypes.string,
@@ -80,6 +82,8 @@ const propTypes = forbidExtraProps({
 });
 
 const defaultProps = {
+  children: null,
+
   startDate: null,
   startDateId: START_DATE,
   startDatePlaceholderText: 'Start Date',
@@ -260,6 +264,7 @@ export default class DateRangePickerInputController extends React.PureComponent 
 
   render() {
     const {
+      children,
       startDate,
       startDateId,
       startDatePlaceholderText,
@@ -297,6 +302,7 @@ export default class DateRangePickerInputController extends React.PureComponent 
 
     return (
       <DateRangePickerInput
+        children={children}
         startDate={startDateString}
         startDateId={startDateId}
         startDatePlaceholderText={startDatePlaceholderText}
