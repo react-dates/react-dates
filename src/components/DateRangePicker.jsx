@@ -572,7 +572,9 @@ class DateRangePicker extends React.PureComponent {
         small={small}
         regular={regular}
         verticalSpacing={verticalSpacing}
-      />
+      >
+        {this.maybeRenderDayPickerWithPortal()}
+      </DateRangePickerInputController>
     );
 
     return (
@@ -583,14 +585,15 @@ class DateRangePicker extends React.PureComponent {
           block && styles.DateRangePicker__block,
         )}
       >
-        {enableOutsideClick && (
-          <OutsideClickHandler onOutsideClick={this.onOutsideClick}>
-            {input}
-            {this.maybeRenderDayPickerWithPortal()}
-          </OutsideClickHandler>
-        )}
-        {!enableOutsideClick && input}
-        {!enableOutsideClick && this.maybeRenderDayPickerWithPortal()}
+        {
+          enableOutsideClick
+            ? (
+              <OutsideClickHandler onOutsideClick={this.onOutsideClick}>
+                {input}
+              </OutsideClickHandler>
+            )
+            : input
+        }
       </div>
     );
   }
