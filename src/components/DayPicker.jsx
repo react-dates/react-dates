@@ -29,7 +29,6 @@ import ModifiersShape from '../shapes/ModifiersShape';
 import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
 import DayOfWeekShape from '../shapes/DayOfWeekShape';
 import CalendarInfoPositionShape from '../shapes/CalendarInfoPositionShape';
-import BaseClass, { pureComponentAvailable } from '../utils/baseClass';
 
 import {
   HORIZONTAL_ORIENTATION,
@@ -99,6 +98,8 @@ const propTypes = forbidExtraProps({
   getFirstFocusableDay: PropTypes.func,
   onBlur: PropTypes.func,
   showKeyboardShortcuts: PropTypes.bool,
+  onTab: PropTypes.func,
+  onShiftTab: PropTypes.func,
 
   // internationalization
   monthFormat: PropTypes.string,
@@ -155,6 +156,8 @@ export const defaultProps = {
   getFirstFocusableDay: null,
   onBlur() {},
   showKeyboardShortcuts: false,
+  onTab() {},
+  onShiftTab() {},
 
   // internationalization
   monthFormat: 'MMMM YYYY',
@@ -163,8 +166,7 @@ export const defaultProps = {
   dayAriaLabelFormat: undefined,
 };
 
-/** @extends React.Component */
-class DayPicker extends BaseClass {
+class DayPicker extends React.PureComponent {
   constructor(props) {
     super(props);
 
@@ -356,7 +358,12 @@ class DayPicker extends BaseClass {
   onFinalKeyDown(e) {
     this.setState({ withMouseInteractions: false });
 
-    const { onBlur, isRTL } = this.props;
+    const {
+      onBlur,
+      onTab,
+      onShiftTab,
+      isRTL,
+    } = this.props;
     const { focusedDate, showKeyboardShortcuts } = this.state;
     if (!focusedDate) return;
 
@@ -431,6 +438,14 @@ class DayPicker extends BaseClass {
           this.closeKeyboardShortcutsPanel();
         } else {
           onBlur();
+        }
+        break;
+
+      case 'Tab':
+        if (e.shiftKey) {
+          onShiftTab();
+        } else {
+          onTab();
         }
         break;
 
@@ -1245,4 +1260,4 @@ export default withStyles(({
       },
     }),
   },
-}), { pureComponent: pureComponentAvailable })(DayPicker);
+}), { pureComponent: typeof React.PureComponent !== 'undefined' })(DayPicker);

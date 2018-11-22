@@ -124,17 +124,6 @@ describe('DayPickerKeyboardShortcuts', () => {
           buttonWrapper.simulate('click');
           expect(openKeyboardShortcutsPanelStub.callCount).to.equal(1);
         });
-
-        it('onKeyDown Space calls onShowKeyboardShortcutsButtonClick', () => {
-          buttonWrapper.prop('onKeyDown')({ ...event, key: 'Space' });
-          expect(openKeyboardShortcutsPanelStub.callCount).to.equal(1);
-        });
-
-        it('onKeyDown Enter calls e.preventDefault and NOT onShowKeyboardShortcutsButtonClick', () => {
-          buttonWrapper.prop('onKeyDown')({ ...event, key: 'Enter' });
-          expect(event.preventDefault.callCount).to.equal(1);
-          expect(openKeyboardShortcutsPanelStub.notCalled).to.equal(true);
-        });
       });
 
       describe('when Mouse Up', () => {
@@ -215,10 +204,10 @@ describe('DayPickerKeyboardShortcuts', () => {
           expect(closeKeyboardShortcutsPanelStub.callCount).to.equal(1);
         });
 
-        it('onKeyDown Space calls e.stopPropagation and onShowKeyboardShortcutsButtonClick', () => {
+        it('onKeyDown calls e.stopPropagation and NOT onShowKeyboardShortcutsButtonClick', () => {
           closeButton.prop('onKeyDown')({ ...event, key: ' ' });
           expect(event.stopPropagation.callCount).to.equal(1);
-          expect(closeKeyboardShortcutsPanelStub.callCount).to.equal(1);
+          expect(closeKeyboardShortcutsPanelStub.callCount).to.equal(0);
         });
 
         it('onKeyDown Escape calls e.stopPropagation and onShowKeyboardShortcutsButtonClick', () => {
@@ -227,10 +216,10 @@ describe('DayPickerKeyboardShortcuts', () => {
           expect(closeKeyboardShortcutsPanelStub.callCount).to.equal(1);
         });
 
-        it('onKeyDown Enter calls e.stopPropagation and onShowKeyboardShortcutsButtonClick', () => {
+        it('onKeyDown calls e.stopPropagation and NOT onShowKeyboardShortcutsButtonClick', () => {
           closeButton.prop('onKeyDown')({ ...event, key: 'Enter' });
           expect(event.stopPropagation.callCount).to.equal(1);
-          expect(closeKeyboardShortcutsPanelStub.callCount).to.equal(1);
+          expect(closeKeyboardShortcutsPanelStub.callCount).to.equal(0);
         });
 
         it('onKeyDown Tab calls e.stopPropagation and e.preventDefault and NOT onShowKeyboardShortcutsButtonClick', () => {

@@ -1,11 +1,8 @@
 language: node_js
 node_js:
-  - "9"
+  - "10"
   - "8"
-  - "7"
   - "6"
-  - "4"
-  - "iojs"
 before_install:
   - 'nvm install-latest-npm'
 before_script:
@@ -14,7 +11,7 @@ before_script:
   - 'if [ -n "${KARMA-}" ]; then sleep 3; fi'
 script:
   - 'if [ -n "${LINT-}" ]; then npm run lint ; fi'
-  - 'if [ -n "${BUILD-}" ]; then npm run lint ; fi'
+  - 'if [ -n "${BUILD-}" ]; then npm run build ; fi'
   - 'if [ "${TEST-}" = true ]; then npm run tests-only ; fi'
   - 'if [ -n "${KARMA-}" ]; then npm run tests-karma ; fi'
   - 'if [ -n "${COVERAGE-}" ] && [ "${TRAVIS_BRANCH-}" = "master" ]; then npm run cover; cat ./coverage/lcov.info | ./node_modules/.bin/coveralls ; fi'
@@ -39,5 +36,4 @@ matrix:
       env: KARMA=true TEST=false
   allow_failures:
     - node_js: "9"
-    - node_js: "7"
-    - node_js: "iojs"
+    - env: KARMA=true TEST=false # temporary

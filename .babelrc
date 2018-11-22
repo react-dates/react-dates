@@ -7,7 +7,8 @@
           "svgo": false
         }],
         ["transform-replace-object-assign", { "moduleSpecifier": "object.assign" }],
-        "istanbul"
+        "./scripts/pure-component-fallback.js",
+        "istanbul",
       ]
     },
 
@@ -18,6 +19,7 @@
           "svgo": false
         }],
         ["transform-replace-object-assign", { "moduleSpecifier": "object.assign" }],
+        "./scripts/pure-component-fallback.js",
       ],
     },
 
@@ -28,6 +30,7 @@
           "svgo": false
         }],
         ["transform-replace-object-assign", { "moduleSpecifier": "object.assign" }],
+        "./scripts/pure-component-fallback.js",
       ],
     },
 
@@ -38,6 +41,7 @@
           "svgo": false
         }],
         ["transform-replace-object-assign", { "moduleSpecifier": "object.assign" }],
+        "./scripts/pure-component-fallback.js",
       ],
     },
 
@@ -48,6 +52,7 @@
           "svgo": false
         }],
         ["transform-replace-object-assign", { "moduleSpecifier": "object.assign" }],
+        "./scripts/pure-component-fallback.js",
       ],
     },
   },

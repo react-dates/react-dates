@@ -236,5 +236,20 @@ describe('getCalendarDaySettings', () => {
       expect(phrases.dateIsUnavailable.calledWith(expectedFormattedDay)).to.equal(true);
       expect(ariaLabel).to.equal('dateIsUnavailable text');
     });
+
+    it('is formatted with the dateIsSelected phrase function when day is selected for check in', () => {
+      const modifiers = new Set().add(BLOCKED_MODIFIER).add('selected-start');
+
+      const { ariaLabel } = getCalendarDaySettings(
+        testDay,
+        testAriaLabelFormat,
+        testDaySize,
+        modifiers,
+        phrases,
+      );
+
+      expect(phrases.dateIsSelected.calledWith(expectedFormattedDay)).to.equal(true);
+      expect(ariaLabel).to.equal('dateIsSelected text');
+    });
   });
 });
