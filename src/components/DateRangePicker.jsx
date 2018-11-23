@@ -65,6 +65,7 @@ const defaultProps = {
   small: false,
   regular: false,
   keepFocusOnInput: false,
+  autoFocus: false,
 
   // calendar presentation and interaction related props
   renderMonthText: null,
@@ -153,8 +154,8 @@ class DateRangePicker extends React.PureComponent {
     this.responsivizePickerPosition();
     this.disableScroll();
 
-    const { focusedInput } = this.props;
-    if (focusedInput) {
+    const { autoFocus, focusedInput } = this.props;
+    if (autoFocus && focusedInput) {
       this.setState({
         isDateRangePickerInputFocused: true,
       });

@@ -45,6 +45,7 @@ export default {
   small: PropTypes.bool,
   regular: PropTypes.bool,
   keepFocusOnInput: PropTypes.bool,
+  autoFocus: PropTypes.bool,
 
   // calendar presentation and interaction related props
   renderMonthText: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'),

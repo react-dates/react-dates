@@ -123,13 +123,12 @@ class DateRangePickerWrapper extends React.Component {
   }
 
   render() {
-    const { focusedInput, startDate, endDate } = this.state;
+    const { autoFocus, focusedInput, startDate, endDate } = this.state;
 
     // autoFocus, autoFocusEndDate, initialStartDate and initialEndDate are helper props for the
     // example wrapper but are not props on the SingleDatePicker itself and
     // thus, have to be omitted.
     const props = omit(this.props, [
-      'autoFocus',
       'autoFocusEndDate',
       'initialStartDate',
       'initialEndDate',
@@ -145,6 +144,7 @@ class DateRangePickerWrapper extends React.Component {
           focusedInput={focusedInput}
           startDate={startDate}
           endDate={endDate}
+          autoFocus={autoFocus}
         />
       </div>
     );
