@@ -246,6 +246,7 @@ export default class DayPickerRangeController extends React.PureComponent {
       focusedInput,
       minimumNights,
       isOutsideRange,
+      disableOutsideRangeNavigation,
       isDayBlocked,
       isDayHighlighted,
       phrases,
@@ -260,6 +261,7 @@ export default class DayPickerRangeController extends React.PureComponent {
       focusedInput: prevFocusedInput,
       minimumNights: prevMinimumNights,
       isOutsideRange: prevIsOutsideRange,
+      disableOutsideRangeNavigation: prevDisableOutsideRangeNavigation,
       isDayBlocked: prevIsDayBlocked,
       isDayHighlighted: prevIsDayHighlighted,
       phrases: prevPhrases,
@@ -305,13 +307,17 @@ export default class DayPickerRangeController extends React.PureComponent {
         && !prevFocusedInput
         && didFocusChange
       )
+      || disableOutsideRangeNavigation !== prevDisableOutsideRangeNavigation
+      || recomputeOutsideRange
     ) {
       const newMonthState = this.getStateForNewMonth(nextProps);
-      const { currentMonth } = newMonthState;
+      const { currentMonth, renderPrev, renderNext } = newMonthState;
       ({ visibleDays } = newMonthState);
       this.setState({
         currentMonth,
         visibleDays,
+        renderPrev,
+        renderNext
       });
     }
 
