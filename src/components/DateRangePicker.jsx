@@ -108,6 +108,7 @@ const defaultProps = {
   enableOutsideDays: false,
   isDayBlocked: () => false,
   isOutsideRange: day => !isInclusivelyAfterDay(day, moment()),
+  disableOutsideRangeNavigation: false,
   isDayHighlighted: () => false,
 
   // internationalization
@@ -347,6 +348,7 @@ class DateRangePicker extends React.PureComponent {
       isDayBlocked,
       isDayHighlighted,
       isOutsideRange,
+      disableOutsideRangeNavigation,
       numberOfMonths,
       orientation,
       monthFormat,
@@ -450,6 +452,7 @@ class DateRangePicker extends React.PureComponent {
           navNext={navNext}
           minimumNights={minimumNights}
           isOutsideRange={isOutsideRange}
+          disableOutsideRangeNavigation={disableOutsideRangeNavigation}
           isDayHighlighted={isDayHighlighted}
           isDayBlocked={isDayBlocked}
           keepOpenOnDateSelect={keepOpenOnDateSelect}
@@ -508,6 +511,7 @@ class DateRangePicker extends React.PureComponent {
       openDirection,
       phrases,
       isOutsideRange,
+      disableOutsideRangeNavigation,
       minimumNights,
       withPortal,
       withFullScreenPortal,

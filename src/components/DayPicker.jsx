@@ -74,6 +74,8 @@ const propTypes = forbidExtraProps({
   // navigation props
   navPrev: PropTypes.node,
   navNext: PropTypes.node,
+  renderPrev: PropTypes.bool,
+  renderNext: PropTypes.bool,
   noNavButtons: PropTypes.bool,
   onPrevMonthClick: PropTypes.func,
   onNextMonthClick: PropTypes.func,
@@ -132,6 +134,8 @@ export const defaultProps = {
   // navigation props
   navPrev: null,
   navNext: null,
+  renderPrev: true,
+  renderNext: true,
   noNavButtons: false,
   onPrevMonthClick() {},
   onNextMonthClick() {},
@@ -809,6 +813,8 @@ class DayPicker extends React.PureComponent {
     const {
       navPrev,
       navNext,
+      renderPrev,
+      renderNext,
       noNavButtons,
       orientation,
       phrases,
@@ -829,6 +835,8 @@ class DayPicker extends React.PureComponent {
         onNextMonthClick={onNextMonthClick}
         navPrev={navPrev}
         navNext={navNext}
+        renderPrev={renderPrev}
+        renderNext={renderNext}
         orientation={orientation}
         phrases={phrases}
         isRTL={isRTL}

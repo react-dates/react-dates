@@ -104,6 +104,7 @@ const defaultProps = {
   enableOutsideDays: false,
   isDayBlocked: () => false,
   isOutsideRange: day => !isInclusivelyAfterDay(day, moment()),
+  disableOutsideRangeNavigation: false,
   isDayHighlighted: () => {},
 
   // internationalization props
@@ -374,6 +375,7 @@ class SingleDatePicker extends React.PureComponent {
       daySize,
       isRTL,
       isOutsideRange,
+      disableOutsideRangeNavigation,
       isDayBlocked,
       isDayHighlighted,
       weekDayFormat,
