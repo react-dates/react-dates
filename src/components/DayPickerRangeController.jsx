@@ -308,7 +308,7 @@ export default class DayPickerRangeController extends React.PureComponent {
         && didFocusChange
       )
       || disableOutsideRangeNavigation !== prevDisableOutsideRangeNavigation
-      || recomputeOutsideRange
+      || (isOutsideRange !== prevIsOutsideRange && disableOutsideRangeNavigation)
     ) {
       const newMonthState = this.getStateForNewMonth(nextProps);
       const { currentMonth, renderPrev, renderNext } = newMonthState;
