@@ -21,6 +21,8 @@ const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
   navPrev: PropTypes.node,
   navNext: PropTypes.node,
+  renderPrev: PropTypes.bool,
+  renderNext: PropTypes.bool,
   orientation: ScrollableOrientationShape,
 
   onPrevMonthClick: PropTypes.func,

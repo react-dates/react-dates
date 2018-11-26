@@ -78,6 +78,7 @@ export default {
   enableOutsideDays: PropTypes.bool,
   isDayBlocked: PropTypes.func,
   isOutsideRange: PropTypes.func,
+  disableOutsideRangeNavigation: PropTypes.bool,
   isDayHighlighted: PropTypes.func,
 
   // internationalization props
