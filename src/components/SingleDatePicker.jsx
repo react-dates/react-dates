@@ -128,6 +128,7 @@ class SingleDatePicker extends React.PureComponent {
       showKeyboardShortcuts: false,
     };
 
+    this.onFocusOut = this.onFocusOut.bind(this);
     this.onOutsideClick = this.onOutsideClick.bind(this);
     this.onInputFocus = this.onInputFocus.bind(this);
     this.onDayPickerFocus = this.onDayPickerFocus.bind(this);
@@ -161,6 +162,11 @@ class SingleDatePicker extends React.PureComponent {
     }
 
     this.isTouchDevice = isTouchDevice();
+
+    // We manually set event because React has not implemented onFocusIn/onFocusOut.
+    // Keep an eye on https://github.com/facebook/react/issues/6410 for updates
+    // We use "blur w/ useCapture param" vs "onfocusout" for FF browser support
+    this.container.addEventListener('blur', this.onFocusOut, true);
   }
 
   componentDidUpdate(prevProps) {
@@ -177,6 +183,8 @@ class SingleDatePicker extends React.PureComponent {
   componentWillUnmount() {
     if (this.removeEventListener) this.removeEventListener();
     if (this.enableScroll) this.enableScroll();
+
+    this.container.removeEventListener('blur', this.onFocusOut, true);
   }
 
   onOutsideClick(event) {
@@ -240,6 +248,13 @@ class SingleDatePicker extends React.PureComponent {
       isDayPickerFocused: false,
       showKeyboardShortcuts: false,
     });
+  }
+
+  onFocusOut(e) {
+    if (!this.container.contains(e.relatedTarget)) {
+      const { onFocusChange } = this.props;
+      onFocusChange({ focused: false });
+    }
   }
 
   setDayPickerContainerRef(ref) {
@@ -548,7 +563,9 @@ class SingleDatePicker extends React.PureComponent {
         verticalSpacing={verticalSpacing}
         reopenPickerOnClearDate={reopenPickerOnClearDate}
         keepOpenOnDateSelect={keepOpenOnDateSelect}
-      />
+      >
+        {this.maybeRenderDayPickerWithPortal()}
+      </SingleDatePickerInputController>
     );
 
     return (
@@ -559,14 +576,15 @@ class SingleDatePicker extends React.PureComponent {
           block && styles.SingleDatePicker__block,
         )}
       >
-        {enableOutsideClick && (
-          <OutsideClickHandler onOutsideClick={this.onOutsideClick}>
-            {input}
-            {this.maybeRenderDayPickerWithPortal()}
-          </OutsideClickHandler>
-        )}
-        {!enableOutsideClick && input}
-        {!enableOutsideClick && this.maybeRenderDayPickerWithPortal()}
+        {
+          enableOutsideClick
+            ? (
+              <OutsideClickHandler onOutsideClick={this.onOutsideClick}>
+                {input}
+              </OutsideClickHandler>
+            )
+            : input
+        }
       </div>
     );
   }
