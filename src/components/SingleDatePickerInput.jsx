@@ -18,6 +18,7 @@ import { ICON_BEFORE_POSITION, ICON_AFTER_POSITION, OPEN_DOWN } from '../constan
 const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
   id: PropTypes.string.isRequired,
+  children: PropTypes.node,
   placeholder: PropTypes.string, // also used as label
   displayValue: PropTypes.string,
   screenReaderMessage: PropTypes.string,
@@ -53,6 +54,7 @@ const propTypes = forbidExtraProps({
 });
 
 const defaultProps = {
+  children: null,
   placeholder: 'Select Date',
   displayValue: '',
   screenReaderMessage: '',
@@ -89,6 +91,7 @@ const defaultProps = {
 
 function SingleDatePickerInput({
   id,
+  children,
   placeholder,
   displayValue,
   focused,
@@ -181,6 +184,8 @@ function SingleDatePickerInput({
         regular={regular}
         block={block}
       />
+
+      {children}
 
       {showClearDate && (
         <button

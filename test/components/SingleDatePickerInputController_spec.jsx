@@ -28,6 +28,18 @@ describe('SingleDatePickerInputController', () => {
     expect(wrapper.find(SingleDatePickerInput)).to.have.lengthOf(1);
   });
 
+  it('should pass children to the SingleDatePickerInput', () => {
+    const Child = () => <div>CHILD</div>;
+
+    const wrapper = shallow((
+      <SingleDatePickerInputController id="date">
+        <Child />
+      </SingleDatePickerInputController>));
+
+    expect(wrapper.find(SingleDatePickerInput)).to.have.property('children');
+    expect(wrapper.find(Child)).to.have.lengthOf(1);
+  });
+
   describe('#onChange', () => {
     describe('valid future date string', () => {
       const futureDateString = moment().add(10, 'days').format('YYYY-MM-DD');
