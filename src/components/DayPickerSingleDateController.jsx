@@ -430,7 +430,9 @@ export default class DayPickerSingleDateController extends React.PureComponent {
 
     const nextMonth = currentMonth.clone().add(numberOfMonths, 'month');
     const nextMonthVisibleDays = getVisibleDays(nextMonth, 1, enableOutsideDays);
-    const renderNext = disableOutsideRangeNavigation ? !isOutsideRange(nextMonth) : true;
+
+    const newNextMonth = nextMonth.clone().add(1, 'month');
+    const renderNext = disableOutsideRangeNavigation ? !isOutsideRange(newNextMonth) : true;
 
     const newCurrentMonth = currentMonth.clone().add(1, 'month');
     this.setState({
