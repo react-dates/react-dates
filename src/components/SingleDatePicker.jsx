@@ -452,6 +452,7 @@ class SingleDatePicker extends React.PureComponent {
           daySize={daySize}
           isRTL={isRTL}
           isOutsideRange={isOutsideRange}
+          disableOutsideRangeNavigation={disableOutsideRangeNavigation}
           isDayBlocked={isDayBlocked}
           isDayHighlighted={isDayHighlighted}
           firstDayOfWeek={firstDayOfWeek}
