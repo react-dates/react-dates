@@ -302,7 +302,6 @@ export default class DateRangePickerInputController extends React.PureComponent 
 
     return (
       <DateRangePickerInput
-        children={children}
         startDate={startDateString}
         startDateId={startDateId}
         startDatePlaceholderText={startDatePlaceholderText}
@@ -340,7 +339,9 @@ export default class DateRangePickerInputController extends React.PureComponent 
         small={small}
         regular={regular}
         verticalSpacing={verticalSpacing}
-      />
+      >
+        {children}
+      </DateRangePickerInput>
     );
   }
 }
