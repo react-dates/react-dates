@@ -317,7 +317,7 @@ export default class DayPickerRangeController extends React.PureComponent {
         currentMonth,
         visibleDays,
         renderPrev,
-        renderNext
+        renderNext,
       });
     }
 
@@ -697,7 +697,7 @@ export default class DayPickerRangeController extends React.PureComponent {
         ...newVisibleDays,
         ...this.getModifiers(prevMonthVisibleDays),
       },
-      renderPrev: renderPrev,
+      renderPrev,
       renderNext: true,
     }, () => {
       onPrevMonthClick(newCurrentMonth.clone());
@@ -731,7 +731,7 @@ export default class DayPickerRangeController extends React.PureComponent {
         ...newVisibleDays,
         ...this.getModifiers(nextMonthVisibleDays),
       },
-      renderNext: renderNext,
+      renderNext,
       renderPrev: true,
     }, () => {
       onNextMonthClick(newCurrentMonth.clone());
@@ -862,14 +862,19 @@ export default class DayPickerRangeController extends React.PureComponent {
     ));
     let renderPrev = true;
     let renderNext = true;
-    if(disableOutsideRangeNavigation) {
+    if (disableOutsideRangeNavigation) {
       const prevMonth = moment(currentMonth).subtract(1, 'month');
       renderPrev = !isOutsideRange(prevMonth);
       const nextMonth = moment(currentMonth).add(numberOfMonths, 'month');
       renderNext = !isOutsideRange(nextMonth);
     }
 
-    return { currentMonth, visibleDays, renderPrev, renderNext };
+    return {
+      currentMonth,
+      visibleDays,
+      renderPrev,
+      renderNext,
+    };
   }
 
   addModifier(updatedDays, day, modifier) {
@@ -1099,7 +1104,6 @@ export default class DayPickerRangeController extends React.PureComponent {
       renderMonthText,
       navPrev,
       navNext,
-      isOutsideRange,
       noNavButtons,
       onOutsideClick,
       withPortal,
@@ -1133,7 +1137,7 @@ export default class DayPickerRangeController extends React.PureComponent {
       phrases,
       visibleDays,
       renderPrev,
-      renderNext
+      renderNext,
     } = this.state;
 
     return (
