@@ -301,7 +301,7 @@ export default withStyles(({ reactDates: { border, color } }) => ({
   },
 
   SingleDatePickerInput_calendarIcon_svg: {
-    fill: color.core.grayLight,
+    fill: '#cc9933',
     height: 15,
     width: 14,
     verticalAlign: 'middle',
