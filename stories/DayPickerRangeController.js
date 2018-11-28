@@ -248,6 +248,17 @@ storiesOf('DayPickerRangeController', module)
       navNext={<TestNextIcon />}
     />
   )))
+  .add('with custom month navigation and blocked navigation (minDate and maxDate)', withInfo()(() => (
+    <DayPickerRangeControllerWrapper
+      minDate={moment('2018-07-01')}
+      maxDate={moment('2018-10-20')}
+      onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
+      onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
+      onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
+      navPrev={<TestPrevIcon />}
+      navNext={<TestNextIcon />}
+    />
+  )))
   .add('with outside days enabled', withInfo()(() => (
     <DayPickerRangeControllerWrapper
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
@@ -326,6 +337,15 @@ storiesOf('DayPickerRangeController', module)
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
       isDayBlocked={day => moment.weekdays(day.weekday()) === 'Friday'}
+    />
+  )))
+  .add('with navigation blocked (minDate and maxDate)', withInfo()(() => (
+    <DayPickerRangeControllerWrapper
+      minDate={moment('2018-07-01')}
+      maxDate={moment('2018-10-20')}
+      onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
+      onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
+      onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
     />
   )))
   .add('with custom daily details', withInfo()(() => (
