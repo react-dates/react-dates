@@ -2049,6 +2049,72 @@ describe('DayPickerRangeController', () => {
       expect(onPrevMonthClickStub.firstCall.args[0].year()).to.equal(newMonth.year());
       expect(onPrevMonthClickStub.firstCall.args[0].month()).to.equal(newMonth.month());
     });
+
+    it('calls this.shouldDisableMonthNavigation twice', () => {
+      const shouldDisableMonthNavigationSpy = sinon.spy(DayPickerRangeController.prototype, 'shouldDisableMonthNavigation');
+      const wrapper = shallow((
+        <DayPickerRangeController
+          onDatesChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />
+      ));
+      shouldDisableMonthNavigationSpy.resetHistory();
+      wrapper.instance().onPrevMonthClick();
+      expect(shouldDisableMonthNavigationSpy.callCount).to.equal(2);
+    });
+
+    it('sets disablePrev and disablePrev as false on onPrevMonthClick call withouth maxDate and minDate set', () => {
+      const numberOfMonths = 2;
+      const wrapper = shallow((
+        <DayPickerRangeController
+          onDatesChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+          numberOfMonths={numberOfMonths}
+        />
+      ));
+      wrapper.setState({
+        currentMonth: today,
+      });
+      wrapper.instance().onPrevMonthClick();
+      expect(wrapper.state().disablePrev).to.equal(false);
+      expect(wrapper.state().disableNext).to.equal(false);
+    });
+
+    it('sets disableNext as true when maxDate is in visible month', () => {
+      const numberOfMonths = 2;
+      const wrapper = shallow((
+        <DayPickerRangeController
+          onDatesChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+          numberOfMonths={numberOfMonths}
+          maxDate={today}
+        />
+      ));
+      wrapper.setState({
+        currentMonth: today,
+      });
+      wrapper.instance().onPrevMonthClick();
+      expect(wrapper.state().disableNext).to.equal(true);
+      expect(wrapper.state().disablePrev).to.equal(false);
+    });
+
+    it('sets disablePrev as true when minDate is in visible month', () => {
+      const numberOfMonths = 2;
+      const wrapper = shallow((
+        <DayPickerRangeController
+          onDatesChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+          numberOfMonths={numberOfMonths}
+          minDate={today.clone().subtract(1, 'month')}
+        />
+      ));
+      wrapper.setState({
+        currentMonth: today,
+      });
+      wrapper.instance().onPrevMonthClick();
+      expect(wrapper.state().disableNext).to.equal(false);
+      expect(wrapper.state().disablePrev).to.equal(true);
+    });
   });
 
   describe('#onNextMonthClick', () => {
