@@ -268,6 +268,7 @@ export default class DayPickerSingleDateController extends React.PureComponent {
     const recomputePropModifiers = (
       recomputeOutsideRange || recomputeDayBlocked || recomputeDayHighlighted
     );
+    const { currentMonth: prevCurrentMonth } = this.state;
 
     if (
       numberOfMonths !== prevNumberOfMonths
@@ -276,6 +277,11 @@ export default class DayPickerSingleDateController extends React.PureComponent {
         initialVisibleMonth !== prevInitialVisibleMonth
         && !prevFocused
         && focused
+      )
+      || (
+        prevDate
+        && prevDate.diff(date)
+        && !isDayVisible(date, prevCurrentMonth, numberOfMonths)
       )
     ) {
       const newMonthState = this.getStateForNewMonth(nextProps);

@@ -47,6 +47,32 @@ describe('DayPickerSingleDateController', () => {
       onFocusChange() {},
     };
 
+    describe('props.date changed', () => {
+      describe('date is not visible', () => {
+        it('setState gets called with new month', () => {
+          sinon.stub(isDayVisible, 'default').returns(false);
+          const date = today;
+          const newDate = moment().add(1, 'month');
+          const wrapper = shallow(<DayPickerSingleDateController {...props} date={date} />);
+          expect(wrapper.state()).to.have.property('currentMonth', date);
+          wrapper.instance().componentWillReceiveProps({ ...props, date: newDate });
+          expect(wrapper.state()).to.have.property('currentMonth', newDate);
+        });
+      });
+
+      describe('date is visible', () => {
+        it('setState gets called with existing month', () => {
+          sinon.stub(isDayVisible, 'default').returns(true);
+          const date = today;
+          const newDate = moment().add(1, 'month');
+          const wrapper = shallow(<DayPickerSingleDateController {...props} date={date} />);
+          expect(wrapper.state()).to.have.property('currentMonth', date);
+          wrapper.instance().componentWillReceiveProps({ ...props, date: newDate });
+          expect(wrapper.state()).to.have.property('currentMonth', date);
+        });
+      });
+    });
+
     describe('modifiers', () => {
       describe('selected modifier', () => {
         describe('props.date did not change', () => {

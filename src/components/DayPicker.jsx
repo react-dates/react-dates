@@ -300,6 +300,12 @@ class DayPicker extends React.PureComponent {
         this.setState({
           currentMonth: nextProps.initialVisibleMonth(),
         });
+      } else {
+        const { numberOfMonths } = this.props;
+        const newDate = nextProps.initialVisibleMonth();
+        if (!isDayVisible(newDate, currentMonth, numberOfMonths)) {
+          this.onMonthChange(newDate);
+        }
       }
     }
 
