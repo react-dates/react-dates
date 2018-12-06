@@ -10,6 +10,7 @@ import OutsideClickHandler from 'react-outside-click-handler';
 
 import { DayPickerPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
+import noflip from '../utils/noflip';
 
 import CalendarMonthGrid from './CalendarMonthGrid';
 import DayPickerNavigation from './DayPickerNavigation';
@@ -1148,7 +1149,7 @@ export default withStyles(({
   DayPicker: {
     background: color.background,
     position: 'relative',
-    textAlign: 'left',
+    textAlign: noflip('left'),
   },
 
   DayPicker__horizontal: {
@@ -1164,14 +1165,14 @@ export default withStyles(({
   },
 
   DayPicker__withBorder: {
-    boxShadow: '0 2px 6px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.07)',
+    boxShadow: noflip('0 2px 6px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.07)'),
     borderRadius: 3,
   },
 
   DayPicker_portal__horizontal: {
     boxShadow: 'none',
     position: 'absolute',
-    left: '50%',
+    left: noflip('50%'),
     top: '50%',
   },
 
@@ -1198,7 +1199,7 @@ export default withStyles(({
   },
 
   DayPicker_weekHeaders__horizontal: {
-    marginLeft: spacing.dayPickerHorizontalPadding,
+    marginLeft: noflip(spacing.dayPickerHorizontalPadding),
   },
 
   DayPicker_weekHeader: {
@@ -1206,11 +1207,11 @@ export default withStyles(({
     position: 'absolute',
     top: 62,
     zIndex: zIndex + 2,
-    textAlign: 'left',
+    textAlign: noflip('left'),
   },
 
   DayPicker_weekHeader__vertical: {
-    left: '50%',
+    left: noflip('50%'),
   },
 
   DayPicker_weekHeader__verticalScrollable: {
@@ -1218,8 +1219,8 @@ export default withStyles(({
     display: 'table-row',
     borderBottom: `1px solid ${color.core.border}`,
     background: color.background,
-    marginLeft: 0,
-    left: 0,
+    marginLeft: noflip(0),
+    left: noflip(0),
     width: '100%',
     textAlign: 'center',
   },
@@ -1227,8 +1228,8 @@ export default withStyles(({
   DayPicker_weekHeader_ul: {
     listStyle: 'none',
     margin: '1px 0',
-    paddingLeft: 0,
-    paddingRight: 0,
+    paddingLeft: noflip(0),
+    paddingRight: noflip(0),
     fontSize: font.size,
   },
 
@@ -1257,8 +1258,8 @@ export default withStyles(({
     position: 'absolute',
     top: 0,
     bottom: 0,
-    right: 0,
-    left: 0,
+    right: noflip(0),
+    left: noflip(0),
     overflowY: 'scroll',
     ...(noScrollBarOnVerticalScrollable && {
       '-webkitOverflowScrolling': 'touch',

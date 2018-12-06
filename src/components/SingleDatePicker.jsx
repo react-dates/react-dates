@@ -15,6 +15,7 @@ import getDetachedContainerStyles from '../utils/getDetachedContainerStyles';
 import getInputHeight from '../utils/getInputHeight';
 import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
 import disableScroll from '../utils/disableScroll';
+import noflip from '../utils/noflip';
 
 import SingleDatePickerInputController from './SingleDatePickerInputController';
 import DayPickerSingleDateController from './DayPickerSingleDateController';
@@ -592,22 +593,22 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
   },
 
   SingleDatePicker_picker__rtl: {
-    direction: 'rtl',
+    direction: noflip('rtl'),
   },
 
   SingleDatePicker_picker__directionLeft: {
-    left: 0,
+    left: noflip(0),
   },
 
   SingleDatePicker_picker__directionRight: {
-    right: 0,
+    right: noflip(0),
   },
 
   SingleDatePicker_picker__portal: {
     backgroundColor: 'rgba(0, 0, 0, 0.3)',
     position: 'fixed',
     top: 0,
-    left: 0,
+    left: noflip(0),
     height: '100%',
     width: '100%',
   },
@@ -627,7 +628,7 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
 
     position: 'absolute',
     top: 0,
-    right: 0,
+    right: noflip(0),
     padding: 15,
     zIndex: zIndex + 2,
 

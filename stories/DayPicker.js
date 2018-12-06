@@ -1,6 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
+import DirectionProvider, { DIRECTIONS } from 'react-with-direction/dist/DirectionProvider';
 import DayPicker from '../src/components/DayPicker';
 
 import {
@@ -91,6 +92,30 @@ storiesOf('DayPicker', module)
       orientation={VERTICAL_ORIENTATION}
       verticalHeight={568}
     />
+  )))
+  .add('vertical with DirectionProvider', withInfo()(() => (
+    <DirectionProvider direction={DIRECTIONS.RTL}>
+      <DayPicker
+        numberOfMonths={2}
+        orientation={VERTICAL_ORIENTATION}
+        isRTL
+      />
+    </DirectionProvider>
+  )))
+  .add('vertically scrollable with DirectionProvider', withInfo()(() => (
+    <DirectionProvider direction={DIRECTIONS.RTL}>
+      <div
+        style={{
+          height: 568,
+          width: 320,
+        }}
+      >
+        <DayPicker
+          numberOfMonths={12}
+          orientation={VERTICAL_SCROLLABLE}
+        />
+      </div>
+    </DirectionProvider>
   )))
   .add('with custom arrows', withInfo()(() => (
     <DayPicker

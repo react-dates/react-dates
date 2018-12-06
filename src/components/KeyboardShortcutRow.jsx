@@ -67,12 +67,12 @@ export default withStyles(({ reactDates: { color } }) => ({
   KeyboardShortcutRow_keyContainer: {
     display: 'inline-block',
     whiteSpace: 'nowrap',
-    textAlign: 'right',
-    marginRight: 6,
+    textAlign: 'right', // is not handled by isRTL
+    marginRight: 6, // is not handled by isRTL
   },
 
   KeyboardShortcutRow_keyContainer__block: {
-    textAlign: 'left',
+    textAlign: 'left', // is not handled by isRTL
     display: 'inline',
   },
 
@@ -87,6 +87,6 @@ export default withStyles(({ reactDates: { color } }) => ({
   KeyboardShortcutRow_action: {
     display: 'inline',
     wordBreak: 'break-word',
-    marginLeft: 8,
+    marginLeft: 8, // is not handled by isRTL
   },
 }), { pureComponent: typeof React.PureComponent !== 'undefined' })(KeyboardShortcutRow);
