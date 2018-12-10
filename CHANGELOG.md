@@ -4,6 +4,12 @@
 - []  ([#](https://github.com/airbnb/react-dates/pull/))
 -->
 
+## 18.3.0
+- [fix] Update the SDP and DRP to be compatible with `react-with-direction` ([#1482](https://github.com/airbnb/react-dates/pull/1482))
+- [new] Add `minDate` and `maxDate` props to block month navigation ([#1311](https://github.com/airbnb/react-dates/pull/1311))
+- [fix][a11y] Remove space/enter onKeyDown handling for open/close keyboard shortcuts panel ([#1464](https://github.com/airbnb/react-dates/pull/1464))
+- [fix][a11y] Fix lack of visible focus in Firefox and IE on "?" keyboard shortcuts button ([#1463](https://github.com/airbnb/react-dates/pull/1463))
+
 ## 18.2.2
 - [fix] Conditionally apply the `shouldComponentUpdate` method in the babel transform ([#1457](https://github.com/airbnb/react-dates/pull/1457))
 - [fix] Fix incorrect VO for selected check-in date  ([#1451](https://github.com/airbnb/react-dates/pull/1451))
