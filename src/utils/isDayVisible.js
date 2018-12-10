@@ -1,7 +1,10 @@
+import moment from 'moment';
+
 import isBeforeDay from './isBeforeDay';
 import isAfterDay from './isAfterDay';
 
 export default function isDayVisible(day, month, numberOfMonths, enableOutsideDays) {
+  if (!moment.isMoment(day)) return false;
   let firstDayOfFirstMonth = month.clone().startOf('month');
   if (enableOutsideDays) firstDayOfFirstMonth = firstDayOfFirstMonth.startOf('week');
   if (isBeforeDay(day, firstDayOfFirstMonth)) return false;

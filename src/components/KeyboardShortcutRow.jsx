@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { forbidExtraProps } from 'airbnb-prop-types';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
-import { pureComponentAvailable } from '../utils/baseClass';
 
 const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
@@ -68,12 +67,12 @@ export default withStyles(({ reactDates: { color } }) => ({
   KeyboardShortcutRow_keyContainer: {
     display: 'inline-block',
     whiteSpace: 'nowrap',
-    textAlign: 'right',
-    marginRight: 6,
+    textAlign: 'right', // is not handled by isRTL
+    marginRight: 6, // is not handled by isRTL
   },
 
   KeyboardShortcutRow_keyContainer__block: {
-    textAlign: 'left',
+    textAlign: 'left', // is not handled by isRTL
     display: 'inline',
   },
 
@@ -88,6 +87,6 @@ export default withStyles(({ reactDates: { color } }) => ({
   KeyboardShortcutRow_action: {
     display: 'inline',
     wordBreak: 'break-word',
-    marginLeft: 8,
+    marginLeft: 8, // is not handled by isRTL
   },
-}), { pureComponent: pureComponentAvailable })(KeyboardShortcutRow);
+}), { pureComponent: typeof React.PureComponent !== 'undefined' })(KeyboardShortcutRow);

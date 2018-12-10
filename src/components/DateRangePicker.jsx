@@ -15,7 +15,7 @@ import getDetachedContainerStyles from '../utils/getDetachedContainerStyles';
 import getInputHeight from '../utils/getInputHeight';
 import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
 import disableScroll from '../utils/disableScroll';
-import BaseClass, { pureComponentAvailable } from '../utils/baseClass';
+import noflip from '../utils/noflip';
 
 import DateRangePickerInputController from './DateRangePickerInputController';
 import DayPickerRangeController from './DayPickerRangeController';
@@ -119,8 +119,7 @@ const defaultProps = {
   dayAriaLabelFormat: undefined,
 };
 
-/** @extends React.Component */
-class DateRangePicker extends BaseClass {
+class DateRangePicker extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -619,22 +618,22 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
   },
 
   DateRangePicker_picker__rtl: {
-    direction: 'rtl',
+    direction: noflip('rtl'),
   },
 
   DateRangePicker_picker__directionLeft: {
-    left: 0,
+    left: noflip(0),
   },
 
   DateRangePicker_picker__directionRight: {
-    right: 0,
+    right: noflip(0),
   },
 
   DateRangePicker_picker__portal: {
     backgroundColor: 'rgba(0, 0, 0, 0.3)',
     position: 'fixed',
     top: 0,
-    left: 0,
+    left: noflip(0),
     height: '100%',
     width: '100%',
   },
@@ -654,7 +653,7 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
 
     position: 'absolute',
     top: 0,
-    right: 0,
+    right: noflip(0),
     padding: 15,
     zIndex: zIndex + 2,
 
@@ -674,4 +673,4 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
     width: 15,
     fill: color.core.grayLighter,
   },
-}), { pureComponent: pureComponentAvailable })(DateRangePicker);
+}), { pureComponent: typeof React.PureComponent !== 'undefined' })(DateRangePicker);

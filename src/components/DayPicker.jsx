@@ -10,6 +10,7 @@ import OutsideClickHandler from 'react-outside-click-handler';
 
 import { DayPickerPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
+import noflip from '../utils/noflip';
 
 import CalendarMonthGrid from './CalendarMonthGrid';
 import DayPickerNavigation from './DayPickerNavigation';
@@ -29,7 +30,6 @@ import ModifiersShape from '../shapes/ModifiersShape';
 import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
 import DayOfWeekShape from '../shapes/DayOfWeekShape';
 import CalendarInfoPositionShape from '../shapes/CalendarInfoPositionShape';
-import BaseClass, { pureComponentAvailable } from '../utils/baseClass';
 
 import {
   HORIZONTAL_ORIENTATION,
@@ -73,6 +73,8 @@ const propTypes = forbidExtraProps({
   horizontalMonthPadding: nonNegativeInteger,
 
   // navigation props
+  disablePrev: PropTypes.bool,
+  disableNext: PropTypes.bool,
   navPrev: PropTypes.node,
   navNext: PropTypes.node,
   noNavButtons: PropTypes.bool,
@@ -99,6 +101,8 @@ const propTypes = forbidExtraProps({
   getFirstFocusableDay: PropTypes.func,
   onBlur: PropTypes.func,
   showKeyboardShortcuts: PropTypes.bool,
+  onTab: PropTypes.func,
+  onShiftTab: PropTypes.func,
 
   // internationalization
   monthFormat: PropTypes.string,
@@ -129,6 +133,8 @@ export const defaultProps = {
   horizontalMonthPadding: 13,
 
   // navigation props
+  disablePrev: false,
+  disableNext: false,
   navPrev: null,
   navNext: null,
   noNavButtons: false,
@@ -155,6 +161,8 @@ export const defaultProps = {
   getFirstFocusableDay: null,
   onBlur() {},
   showKeyboardShortcuts: false,
+  onTab() {},
+  onShiftTab() {},
 
   // internationalization
   monthFormat: 'MMMM YYYY',
@@ -163,8 +171,7 @@ export const defaultProps = {
   dayAriaLabelFormat: undefined,
 };
 
-/** @extends React.Component */
-class DayPicker extends BaseClass {
+class DayPicker extends React.PureComponent {
   constructor(props) {
     super(props);
 
@@ -356,7 +363,12 @@ class DayPicker extends BaseClass {
   onFinalKeyDown(e) {
     this.setState({ withMouseInteractions: false });
 
-    const { onBlur, isRTL } = this.props;
+    const {
+      onBlur,
+      onTab,
+      onShiftTab,
+      isRTL,
+    } = this.props;
     const { focusedDate, showKeyboardShortcuts } = this.state;
     if (!focusedDate) return;
 
@@ -431,6 +443,14 @@ class DayPicker extends BaseClass {
           this.closeKeyboardShortcutsPanel();
         } else {
           onBlur();
+        }
+        break;
+
+      case 'Tab':
+        if (e.shiftKey) {
+          onShiftTab();
+        } else {
+          onTab();
         }
         break;
 
@@ -792,6 +812,8 @@ class DayPicker extends BaseClass {
 
   renderNavigation() {
     const {
+      disablePrev,
+      disableNext,
       navPrev,
       navNext,
       noNavButtons,
@@ -810,6 +832,8 @@ class DayPicker extends BaseClass {
 
     return (
       <DayPickerNavigation
+        disablePrev={disablePrev}
+        disableNext={disableNext}
         onPrevMonthClick={this.onPrevMonthClick}
         onNextMonthClick={onNextMonthClick}
         navPrev={navPrev}
@@ -1125,7 +1149,7 @@ export default withStyles(({
   DayPicker: {
     background: color.background,
     position: 'relative',
-    textAlign: 'left',
+    textAlign: noflip('left'),
   },
 
   DayPicker__horizontal: {
@@ -1141,14 +1165,14 @@ export default withStyles(({
   },
 
   DayPicker__withBorder: {
-    boxShadow: '0 2px 6px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.07)',
+    boxShadow: noflip('0 2px 6px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.07)'),
     borderRadius: 3,
   },
 
   DayPicker_portal__horizontal: {
     boxShadow: 'none',
     position: 'absolute',
-    left: '50%',
+    left: noflip('50%'),
     top: '50%',
   },
 
@@ -1175,7 +1199,7 @@ export default withStyles(({
   },
 
   DayPicker_weekHeaders__horizontal: {
-    marginLeft: spacing.dayPickerHorizontalPadding,
+    marginLeft: noflip(spacing.dayPickerHorizontalPadding),
   },
 
   DayPicker_weekHeader: {
@@ -1183,11 +1207,11 @@ export default withStyles(({
     position: 'absolute',
     top: 62,
     zIndex: zIndex + 2,
-    textAlign: 'left',
+    textAlign: noflip('left'),
   },
 
   DayPicker_weekHeader__vertical: {
-    left: '50%',
+    left: noflip('50%'),
   },
 
   DayPicker_weekHeader__verticalScrollable: {
@@ -1195,8 +1219,8 @@ export default withStyles(({
     display: 'table-row',
     borderBottom: `1px solid ${color.core.border}`,
     background: color.background,
-    marginLeft: 0,
-    left: 0,
+    marginLeft: noflip(0),
+    left: noflip(0),
     width: '100%',
     textAlign: 'center',
   },
@@ -1204,8 +1228,8 @@ export default withStyles(({
   DayPicker_weekHeader_ul: {
     listStyle: 'none',
     margin: '1px 0',
-    paddingLeft: 0,
-    paddingRight: 0,
+    paddingLeft: noflip(0),
+    paddingRight: noflip(0),
     fontSize: font.size,
   },
 
@@ -1234,8 +1258,8 @@ export default withStyles(({
     position: 'absolute',
     top: 0,
     bottom: 0,
-    right: 0,
-    left: 0,
+    right: noflip(0),
+    left: noflip(0),
     overflowY: 'scroll',
     ...(noScrollBarOnVerticalScrollable && {
       '-webkitOverflowScrolling': 'touch',
@@ -1245,4 +1269,4 @@ export default withStyles(({
       },
     }),
   },
-}), { pureComponent: pureComponentAvailable })(DayPicker);
+}), { pureComponent: typeof React.PureComponent !== 'undefined' })(DayPicker);

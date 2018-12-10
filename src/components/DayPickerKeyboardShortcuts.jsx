@@ -5,7 +5,6 @@ import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 
 import { DayPickerKeyboardShortcutsPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
-import BaseClass, { pureComponentAvailable } from '../utils/baseClass';
 
 import KeyboardShortcutRow from './KeyboardShortcutRow';
 import CloseButton from './CloseButton';
@@ -17,6 +16,7 @@ export const BOTTOM_RIGHT = 'bottom-right';
 const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
   block: PropTypes.bool,
+  // TODO: rename button location to be direction-agnostic
   buttonLocation: PropTypes.oneOf([TOP_LEFT, TOP_RIGHT, BOTTOM_RIGHT]),
   showKeyboardShortcutsPanel: PropTypes.bool,
   openKeyboardShortcutsPanel: PropTypes.func,
@@ -73,8 +73,7 @@ function getKeyboardShortcuts(phrases) {
   ];
 }
 
-/** @extends React.Component */
-class DayPickerKeyboardShortcuts extends BaseClass {
+class DayPickerKeyboardShortcuts extends React.PureComponent {
   constructor(...args) {
     super(...args);
 
@@ -107,9 +106,6 @@ class DayPickerKeyboardShortcuts extends BaseClass {
     // amounts to a very basic focus trap. The user can exit the panel by "pressing" the
     // close button or hitting escape
     switch (e.key) {
-      case 'Enter':
-      case ' ':
-      case 'Spacebar': // for older browsers
       case 'Escape':
         closeKeyboardShortcutsPanel();
         break;
@@ -192,13 +188,6 @@ class DayPickerKeyboardShortcuts extends BaseClass {
           type="button"
           aria-label={toggleButtonText}
           onClick={this.onShowKeyboardShortcutsButtonClick}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') {
-              e.preventDefault();
-            } else if (e.key === 'Space') {
-              this.onShowKeyboardShortcutsButtonClick(e);
-            }
-          }}
           onMouseUp={(e) => {
             e.currentTarget.blur();
           }}
@@ -287,40 +276,62 @@ export default withStyles(({ reactDates: { color, font, zIndex } }) => ({
   },
 
   DayPickerKeyboardShortcuts_show: {
-    width: 22,
+    width: 33,
+    height: 26,
     position: 'absolute',
     zIndex: zIndex + 2,
+
+    '::before': {
+      content: '""',
+      display: 'block',
+      position: 'absolute',
+    },
   },
 
   DayPickerKeyboardShortcuts_show__bottomRight: {
-    borderTop: '26px solid transparent',
-    borderRight: `33px solid ${color.core.primary}`,
     bottom: 0,
     right: 0,
 
-    ':hover': {
+    '::before': {
+      borderTop: '26px solid transparent',
+      borderRight: `33px solid ${color.core.primary}`,
+      bottom: 0,
+      right: 0,
+    },
+
+    ':hover::before': {
       borderRight: `33px solid ${color.core.primary_dark}`,
     },
   },
 
   DayPickerKeyboardShortcuts_show__topRight: {
-    borderBottom: '26px solid transparent',
-    borderRight: `33px solid ${color.core.primary}`,
     top: 0,
     right: 0,
 
-    ':hover': {
+    '::before': {
+      borderBottom: '26px solid transparent',
+      borderRight: `33px solid ${color.core.primary}`,
+      top: 0,
+      right: 0,
+    },
+
+    ':hover::before': {
       borderRight: `33px solid ${color.core.primary_dark}`,
     },
   },
 
   DayPickerKeyboardShortcuts_show__topLeft: {
-    borderBottom: '26px solid transparent',
-    borderLeft: `33px solid ${color.core.primary}`,
     top: 0,
     left: 0,
 
-    ':hover': {
+    '::before': {
+      borderBottom: '26px solid transparent',
+      borderLeft: `33px solid ${color.core.primary}`,
+      top: 0,
+      left: 0,
+    },
+
+    ':hover::before': {
       borderLeft: `33px solid ${color.core.primary_dark}`,
     },
   },
@@ -332,17 +343,17 @@ export default withStyles(({ reactDates: { color, font, zIndex } }) => ({
 
   DayPickerKeyboardShortcuts_showSpan__bottomRight: {
     bottom: 0,
-    right: -28,
+    right: 5,
   },
 
   DayPickerKeyboardShortcuts_showSpan__topRight: {
     top: 1,
-    right: -28,
+    right: 5,
   },
 
   DayPickerKeyboardShortcuts_showSpan__topLeft: {
     top: 1,
-    left: -28,
+    left: 5,
   },
 
   DayPickerKeyboardShortcuts_panel: {
@@ -358,6 +369,7 @@ export default withStyles(({ reactDates: { color, font, zIndex } }) => ({
     zIndex: zIndex + 2,
     padding: 22,
     margin: 33,
+    textAlign: 'left', // TODO: investigate use of text-align throughout the library
   },
 
   DayPickerKeyboardShortcuts_title: {
@@ -396,4 +408,4 @@ export default withStyles(({ reactDates: { color, font, zIndex } }) => ({
       fill: color.core.grayLight,
     },
   },
-}), { pureComponent: pureComponentAvailable })(DayPickerKeyboardShortcuts);
+}), { pureComponent: typeof React.PureComponent !== 'undefined' })(DayPickerKeyboardShortcuts);

@@ -8,6 +8,7 @@ import { addEventListener } from 'consolidated-events';
 
 import { CalendarDayPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
+import noflip from '../utils/noflip';
 
 import CalendarMonth from './CalendarMonth';
 
@@ -21,7 +22,7 @@ import isNextMonth from '../utils/isNextMonth';
 import ModifiersShape from '../shapes/ModifiersShape';
 import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
 import DayOfWeekShape from '../shapes/DayOfWeekShape';
-import BaseClass, { pureComponentAvailable } from '../utils/baseClass';
+
 
 import {
   HORIZONTAL_ORIENTATION,
@@ -114,8 +115,7 @@ function getMonths(initialMonth, numberOfMonths, withoutTransitionMonths) {
   return months;
 }
 
-/** @extends React.Component */
-class CalendarMonthGrid extends BaseClass {
+class CalendarMonthGrid extends React.PureComponent {
   constructor(props) {
     super(props);
     const withoutTransitionMonths = props.orientation === VERTICAL_SCROLLABLE;
@@ -377,7 +377,7 @@ export default withStyles(({
 }) => ({
   CalendarMonthGrid: {
     background: color.background,
-    textAlign: 'left',
+    textAlign: noflip('left'),
     zIndex,
   },
 
@@ -387,7 +387,7 @@ export default withStyles(({
 
   CalendarMonthGrid__horizontal: {
     position: 'absolute',
-    left: spacing.dayPickerHorizontalPadding,
+    left: noflip(spacing.dayPickerHorizontalPadding),
   },
 
   CalendarMonthGrid__vertical: {
@@ -422,4 +422,4 @@ export default withStyles(({
   CalendarMonthGrid_month__hidden: {
     visibility: 'hidden',
   },
-}), { pureComponent: pureComponentAvailable })(CalendarMonthGrid);
+}), { pureComponent: typeof React.PureComponent !== 'undefined' })(CalendarMonthGrid);

@@ -5,12 +5,12 @@ import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 
 import { DateRangePickerInputPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
+import noflip from '../utils/noflip';
 import openDirectionShape from '../shapes/OpenDirectionShape';
 
 import DateInput from './DateInput';
 import IconPositionShape from '../shapes/IconPositionShape';
 import DisabledShape from '../shapes/DisabledShape';
-import { pureComponentAvailable } from '../utils/baseClass';
 
 import RightArrow from './RightArrow';
 import LeftArrow from './LeftArrow';
@@ -304,7 +304,7 @@ export default withStyles(({ reactDates: { border, color, sizing } }) => ({
   },
 
   DateRangePickerInput__rtl: {
-    direction: 'rtl',
+    direction: noflip('rtl'),
   },
 
   DateRangePickerInput__block: {
@@ -312,7 +312,7 @@ export default withStyles(({ reactDates: { border, color, sizing } }) => ({
   },
 
   DateRangePickerInput__showClearDates: {
-    paddingRight: 30,
+    paddingRight: 30, // TODO: should be noflip wrapped and handled by an isRTL prop
   },
 
   DateRangePickerInput_arrow: {
@@ -338,9 +338,9 @@ export default withStyles(({ reactDates: { border, color, sizing } }) => ({
 
     cursor: 'pointer',
     padding: 10,
-    margin: '0 10px 0 5px',
+    margin: '0 10px 0 5px', // TODO: should be noflip wrapped and handled by an isRTL prop
     position: 'absolute',
-    right: 0,
+    right: 0, // TODO: should be noflip wrapped and handled by an isRTL prop
     top: '50%',
     transform: 'translateY(-50%)',
   },
@@ -388,7 +388,7 @@ export default withStyles(({ reactDates: { border, color, sizing } }) => ({
     display: 'inline-block',
     verticalAlign: 'middle',
     padding: 10,
-    margin: '0 5px 0 10px',
+    margin: '0 5px 0 10px', // TODO: should be noflip wrapped and handled by an isRTL prop
   },
 
   DateRangePickerInput_calendarIcon_svg: {
@@ -397,4 +397,4 @@ export default withStyles(({ reactDates: { border, color, sizing } }) => ({
     width: 14,
     verticalAlign: 'middle',
   },
-}), { pureComponent: pureComponentAvailable })(DateRangePickerInput);
+}), { pureComponent: typeof React.PureComponent !== 'undefined' })(DateRangePickerInput);
