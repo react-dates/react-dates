@@ -3,8 +3,11 @@ import moment from 'moment';
 import momentJalaali from 'moment-jalaali';
 import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
+import DirectionProvider, { DIRECTIONS } from 'react-with-direction/dist/DirectionProvider';
+
 import {
   VERTICAL_ORIENTATION,
+  ANCHOR_RIGHT,
 } from '../src/constants';
 
 import SingleDatePickerWrapper from '../examples/SingleDatePickerWrapper';
@@ -60,6 +63,17 @@ storiesOf('SingleDatePicker (SDP)', module)
       />
     );
   }))
+  .add('with DirectionProvider', withInfo()(() => (
+    <DirectionProvider direction={DIRECTIONS.RTL}>
+      <SingleDatePickerWrapper
+        placeholder="تاریخ شروع"
+        anchorDirection={ANCHOR_RIGHT}
+        showDefaultInputIcon
+        showClearDate
+        isRTL
+      />
+    </DirectionProvider>
+  )))
   .add('vertical with custom height', withInfo()(() => (
     <SingleDatePickerWrapper
       orientation={VERTICAL_ORIENTATION}

@@ -16,6 +16,7 @@ export const BOTTOM_RIGHT = 'bottom-right';
 const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
   block: PropTypes.bool,
+  // TODO: rename button location to be direction-agnostic
   buttonLocation: PropTypes.oneOf([TOP_LEFT, TOP_RIGHT, BOTTOM_RIGHT]),
   showKeyboardShortcutsPanel: PropTypes.bool,
   openKeyboardShortcutsPanel: PropTypes.func,
@@ -368,6 +369,7 @@ export default withStyles(({ reactDates: { color, font, zIndex } }) => ({
     zIndex: zIndex + 2,
     padding: 22,
     margin: 33,
+    textAlign: 'left', // TODO: investigate use of text-align throughout the library
   },
 
   DayPickerKeyboardShortcuts_title: {

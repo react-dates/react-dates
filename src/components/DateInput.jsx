@@ -5,6 +5,7 @@ import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 import throttle from 'lodash/throttle';
 import isTouchDevice from 'is-touch-device';
 
+import noflip from '../utils/noflip';
 import getInputHeight from '../utils/getInputHeight';
 import openDirectionShape from '../shapes/OpenDirectionShape';
 
@@ -309,13 +310,13 @@ export default withStyles(({
     padding: `${spacing.displayTextPaddingVertical}px ${spacing.displayTextPaddingHorizontal}px`,
     paddingTop: spacing.displayTextPaddingTop,
     paddingBottom: spacing.displayTextPaddingBottom,
-    paddingLeft: spacing.displayTextPaddingLeft,
-    paddingRight: spacing.displayTextPaddingRight,
+    paddingLeft: noflip(spacing.displayTextPaddingLeft),
+    paddingRight: noflip(spacing.displayTextPaddingRight),
     border: border.input.border,
     borderTop: border.input.borderTop,
-    borderRight: border.input.borderRight,
+    borderRight: noflip(border.input.borderRight),
     borderBottom: border.input.borderBottom,
-    borderLeft: border.input.borderLeft,
+    borderLeft: noflip(border.input.borderLeft),
     borderRadius: border.input.borderRadius,
   },
 
@@ -326,8 +327,8 @@ export default withStyles(({
     padding: `${spacing.displayTextPaddingVertical_small}px ${spacing.displayTextPaddingHorizontal_small}px`,
     paddingTop: spacing.displayTextPaddingTop_small,
     paddingBottom: spacing.displayTextPaddingBottom_small,
-    paddingLeft: spacing.displayTextPaddingLeft_small,
-    paddingRight: spacing.displayTextPaddingRight_small,
+    paddingLeft: noflip(spacing.displayTextPaddingLeft_small),
+    paddingRight: noflip(spacing.displayTextPaddingRight_small),
   },
 
   DateInput_input__regular: {
@@ -343,9 +344,9 @@ export default withStyles(({
     background: color.backgroundFocused,
     border: border.input.borderFocused,
     borderTop: border.input.borderTopFocused,
-    borderRight: border.input.borderRightFocused,
+    borderRight: noflip(border.input.borderRightFocused),
     borderBottom: border.input.borderBottomFocused,
-    borderLeft: border.input.borderLeftFocused,
+    borderLeft: noflip(border.input.borderLeftFocused),
   },
 
   DateInput_input__disabled: {
@@ -368,7 +369,7 @@ export default withStyles(({
     position: 'absolute',
     width: FANG_WIDTH_PX,
     height: FANG_HEIGHT_PX,
-    left: 22,
+    left: 22, // TODO: should be noflip wrapped and handled by an isRTL prop
     zIndex: zIndex + 2,
   },
 

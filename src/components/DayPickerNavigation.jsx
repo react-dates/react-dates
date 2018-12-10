@@ -5,6 +5,7 @@ import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 
 import { DayPickerNavigationPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
+import noflip from '../utils/noflip';
 
 import LeftArrow from './LeftArrow';
 import RightArrow from './RightArrow';
@@ -225,7 +226,7 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
     width: '100%',
     height: 52,
     bottom: 0,
-    left: 0,
+    left: noflip(0),
   },
 
   DayPickerNavigation__verticalScrollableDefault: {
@@ -287,11 +288,11 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
   },
 
   DayPickerNavigation_leftButton__horizontalDefault: {
-    left: 22,
+    left: noflip(22),
   },
 
   DayPickerNavigation_rightButton__horizontalDefault: {
-    right: 22,
+    right: noflip(22),
   },
 
   DayPickerNavigation_button__vertical: {
@@ -300,7 +301,7 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
   DayPickerNavigation_button__verticalDefault: {
     padding: 5,
     background: color.background,
-    boxShadow: '0 0 5px 2px rgba(0, 0, 0, 0.1)',
+    boxShadow: noflip('0 0 5px 2px rgba(0, 0, 0, 0.1)'),
     position: 'relative',
     display: 'inline-block',
     textAlign: 'center',
@@ -312,7 +313,7 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
   },
 
   DayPickerNavigation_nextButton__verticalDefault: {
-    borderLeft: 0,
+    borderLeft: noflip(0),
   },
 
   DayPickerNavigation_nextButton__verticalScrollableDefault: {
