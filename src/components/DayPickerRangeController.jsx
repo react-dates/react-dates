@@ -68,6 +68,7 @@ const propTypes = forbidExtraProps({
   orientation: ScrollableOrientationShape,
   withPortal: PropTypes.bool,
   initialVisibleMonth: PropTypes.func,
+  visibleMonth: PropTypes.func,
   hideKeyboardShortcutsPanel: PropTypes.bool,
   daySize: nonNegativeInteger,
   noBorder: PropTypes.bool,
@@ -133,6 +134,7 @@ const defaultProps = {
   withPortal: false,
   hideKeyboardShortcutsPanel: false,
   initialVisibleMonth: null,
+  visibleMonth: null,
   daySize: DAY_SIZE,
 
   navPrev: null,
@@ -247,6 +249,7 @@ export default class DayPickerRangeController extends React.PureComponent {
       isDayHighlighted,
       phrases,
       initialVisibleMonth,
+      visibleMonth,
       numberOfMonths,
       enableOutsideDays,
     } = nextProps;
@@ -261,11 +264,12 @@ export default class DayPickerRangeController extends React.PureComponent {
       isDayHighlighted: prevIsDayHighlighted,
       phrases: prevPhrases,
       initialVisibleMonth: prevInitialVisibleMonth,
+      visibleMonth: prevVisibleMonth,
       numberOfMonths: prevNumberOfMonths,
       enableOutsideDays: prevEnableOutsideDays,
     } = this.props;
 
-    let { visibleDays } = this.state;
+    let { visibleDays, currentMonth: prevCurrentMonth } = this.state;
 
     let recomputeOutsideRange = false;
     let recomputeDayBlocked = false;
@@ -301,15 +305,13 @@ export default class DayPickerRangeController extends React.PureComponent {
         initialVisibleMonth !== prevInitialVisibleMonth
         && !prevFocusedInput
         && didFocusChange
-      )
+      ) || (
+        visibleMonth
+        && !visibleMonth().isSame(prevCurrentMonth, 'month')
+        )
     ) {
       const newMonthState = this.getStateForNewMonth(nextProps);
-      const { currentMonth } = newMonthState;
-      ({ visibleDays } = newMonthState);
-      this.setState({
-        currentMonth,
-        visibleDays,
-      });
+      this.setState(newMonthState);
     }
 
     let modifiers = {};
@@ -828,15 +830,16 @@ export default class DayPickerRangeController extends React.PureComponent {
   getStateForNewMonth(nextProps) {
     const {
       initialVisibleMonth,
+      visibleMonth,
       numberOfMonths,
       enableOutsideDays,
       orientation,
       startDate,
     } = nextProps;
-    const initialVisibleMonthThunk = initialVisibleMonth || (
+    const visibleMonthThunk = visibleMonth || initialVisibleMonth || (
       startDate ? () => startDate : () => this.today
     );
-    const currentMonth = initialVisibleMonthThunk();
+    const currentMonth = visibleMonthThunk();
     const withoutTransitionMonths = orientation === VERTICAL_SCROLLABLE;
     const visibleDays = this.getModifiers(getVisibleDays(
       currentMonth,
@@ -1142,6 +1145,7 @@ export default class DayPickerRangeController extends React.PureComponent {
         withPortal={withPortal}
         hidden={!focusedInput}
         initialVisibleMonth={() => currentMonth}
+        visibleMonth={this.props.visibleMonth}
         daySize={daySize}
         onOutsideClick={onOutsideClick}
         disablePrev={disablePrev}

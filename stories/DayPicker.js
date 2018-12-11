@@ -8,6 +8,29 @@ import {
   VERTICAL_ORIENTATION,
   VERTICAL_SCROLLABLE,
 } from '../src/constants';
+import moment from 'moment';
+
+class VisibleMonthTest extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentMonth: moment(),
+    };
+  }
+  render() {
+    return (
+      <div>
+        <button onClick={() => this.setState((oldState) => ({currentMonth: moment(oldState.currentMonth).subtract(2, 'months')}))}>
+          {'Go back two months'}
+        </button>
+        <DayPicker
+          initialVisibleMonth={() => moment()}
+          visibleMonth={() => this.state.currentMonth}
+        />
+      </div>
+    );
+  }
+}
 
 const TestPrevIcon = () => (
   <span
@@ -155,4 +178,7 @@ storiesOf('DayPicker', module)
   )))
   .add('noBorder', withInfo()(() => (
     <DayPicker noBorder />
+  )))
+  .add('test test', withInfo()(() => (
+    <VisibleMonthTest />
   )));

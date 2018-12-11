@@ -60,6 +60,7 @@ const propTypes = forbidExtraProps({
   onOutsideClick: PropTypes.func,
   hidden: PropTypes.bool,
   initialVisibleMonth: PropTypes.func,
+  visibleMonth: PropTypes.func,
   firstDayOfWeek: DayOfWeekShape,
   renderCalendarInfo: PropTypes.func,
   calendarInfoPosition: CalendarInfoPositionShape,
@@ -120,6 +121,7 @@ export const defaultProps = {
   onOutsideClick() {},
   hidden: false,
   initialVisibleMonth: () => moment(),
+  visibleMonth: undefined,
   firstDayOfWeek: null,
   renderCalendarInfo: null,
   calendarInfoPosition: INFO_POSITION_BOTTOM,
@@ -263,6 +265,12 @@ class DayPicker extends React.PureComponent {
         this.setState({
           currentMonth: nextProps.initialVisibleMonth(),
         });
+      } else if (nextProps.visibleMonth) {
+        const newDate = nextProps.visibleMonth();
+        const { numberOfMonths } = nextProps;
+        if (!isDayVisible(newDate, currentMonth, numberOfMonths)) {
+          this.onMonthChange(newDate);
+        }
       }
     }
 

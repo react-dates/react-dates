@@ -30,6 +30,31 @@ const dayPickerRangeControllerInfo = `The ${monospace('DayPickerRangeController'
   ${monospace('DateRangePicker')} functionality and calendar presentation, but would like to
   implement your own inputs.`;
 
+class VisibleMonthTest extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        currentMonth: moment(),
+      };
+    }
+    render() {
+      return (
+        <div>
+          <button onClick={() => this.setState((oldState) => ({currentMonth: moment(oldState.currentMonth).add(2, 'months')}))}>
+            {'Go two months ahead'}
+          </button>
+          <DayPickerRangeControllerWrapper
+            onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
+            onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
+            onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
+            initialVisibleMonth={() => moment()}
+            visibleMonth={() => this.state.currentMonth}
+          />
+        </div>
+      );
+    }
+  }
+
 const TestPrevIcon = () => (
   <span
     style={{
@@ -400,4 +425,7 @@ storiesOf('DayPickerRangeController', module)
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       noNavButtons
     />
+  )))
+  .add('with button to change visible month', withInfo()(() => (
+    <VisibleMonthTest />
   )));
