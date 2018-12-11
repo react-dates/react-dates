@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
 import DirectionProvider, { DIRECTIONS } from 'react-with-direction/dist/DirectionProvider';
@@ -8,7 +9,6 @@ import {
   VERTICAL_ORIENTATION,
   VERTICAL_SCROLLABLE,
 } from '../src/constants';
-import moment from 'moment';
 
 class VisibleMonthTest extends React.Component {
   constructor(props) {
@@ -17,12 +17,16 @@ class VisibleMonthTest extends React.Component {
       currentMonth: moment(),
     };
   }
+
   render() {
     return (
       <div>
         <button onClick={() => this.setState((oldState) => ({currentMonth: moment(oldState.currentMonth).subtract(2, 'months')}))}>
           {'Go back two months'}
         </button>
+        <button onClick={() => this.setState((oldState) => ({currentMonth: moment(oldState.currentMonth).add(2, 'months')}))}>
+            {'Go two months ahead'}
+          </button>
         <DayPicker
           initialVisibleMonth={() => moment()}
           visibleMonth={() => this.state.currentMonth}
@@ -179,6 +183,6 @@ storiesOf('DayPicker', module)
   .add('noBorder', withInfo()(() => (
     <DayPicker noBorder />
   )))
-  .add('test test', withInfo()(() => (
+  .add('with buttons to change visible month', withInfo()(() => (
     <VisibleMonthTest />
   )));

@@ -264,12 +264,11 @@ export default class DayPickerRangeController extends React.PureComponent {
       isDayHighlighted: prevIsDayHighlighted,
       phrases: prevPhrases,
       initialVisibleMonth: prevInitialVisibleMonth,
-      visibleMonth: prevVisibleMonth,
       numberOfMonths: prevNumberOfMonths,
       enableOutsideDays: prevEnableOutsideDays,
     } = this.props;
 
-    let { visibleDays, currentMonth: prevCurrentMonth } = this.state;
+    const { visibleDays, currentMonth: prevCurrentMonth } = this.state;
 
     let recomputeOutsideRange = false;
     let recomputeDayBlocked = false;
@@ -308,7 +307,7 @@ export default class DayPickerRangeController extends React.PureComponent {
       ) || (
         visibleMonth
         && !visibleMonth().isSame(prevCurrentMonth, 'month')
-        )
+      )
     ) {
       const newMonthState = this.getStateForNewMonth(nextProps);
       this.setState(newMonthState);

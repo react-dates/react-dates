@@ -31,29 +31,33 @@ const dayPickerRangeControllerInfo = `The ${monospace('DayPickerRangeController'
   implement your own inputs.`;
 
 class VisibleMonthTest extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        currentMonth: moment(),
-      };
-    }
-    render() {
-      return (
-        <div>
-          <button onClick={() => this.setState((oldState) => ({currentMonth: moment(oldState.currentMonth).add(2, 'months')}))}>
-            {'Go two months ahead'}
-          </button>
-          <DayPickerRangeControllerWrapper
-            onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
-            onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
-            onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
-            initialVisibleMonth={() => moment()}
-            visibleMonth={() => this.state.currentMonth}
-          />
-        </div>
-      );
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentMonth: moment(),
+    };
   }
+
+  render() {
+    return (
+      <div>
+        <button onClick={() => this.setState((oldState) => ({currentMonth: moment(oldState.currentMonth).subtract(2, 'months')}))}>
+          {'Go two months back'}
+        </button>
+        <button onClick={() => this.setState((oldState) => ({currentMonth: moment(oldState.currentMonth).add(2, 'months')}))}>
+          {'Go two months ahead'}
+        </button>
+        <DayPickerRangeControllerWrapper
+          onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
+          onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
+          onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
+          initialVisibleMonth={() => moment()}
+          visibleMonth={() => this.state.currentMonth}
+        />
+      </div>
+    );
+  }
+}
 
 const TestPrevIcon = () => (
   <span
@@ -426,6 +430,6 @@ storiesOf('DayPickerRangeController', module)
       noNavButtons
     />
   )))
-  .add('with button to change visible month', withInfo()(() => (
+  .add('with buttons to change visible month', withInfo()(() => (
     <VisibleMonthTest />
   )));

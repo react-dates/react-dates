@@ -31,6 +31,35 @@ const dayPickerSingleDateControllerInfo = `The ${monospace('DayPickerSingleDateC
   ${monospace('SingleDatePicker')} functionality and calendar presentation, but would like to
   implement your own input.`;
 
+class VisibleMonthTest extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentMonth: moment(),
+    };
+  }
+
+  render() {
+    return (
+      <div>
+        <button onClick={() => this.setState((oldState) => ({currentMonth: moment(oldState.currentMonth).subtract(2, 'months')}))}>
+          {'Go two months back'}
+        </button>
+        <button onClick={() => this.setState((oldState) => ({currentMonth: moment(oldState.currentMonth).add(2, 'months')}))}>
+          {'Go two months ahead'}
+        </button>
+        <DayPickerSingleDateControllerWrapper
+          onOutsideClick={action('DayPickerSingleDateController::onOutsideClick')}
+          onPrevMonthClick={action('DayPickerSingleDateController::onPrevMonthClick')}
+          onNextMonthClick={action('DayPickerSingleDateController::onNextMonthClick')}
+          initialVisibleMonth={() => moment()}
+          visibleMonth={() => this.state.currentMonth}
+        />
+      </div>
+    );
+  }
+}
+
 const TestPrevIcon = () => (
   <span
     style={{
@@ -292,4 +321,7 @@ storiesOf('DayPickerSingleDateController', module)
       onNextMonthClick={action('DayPickerSingleDateController::onNextMonthClick')}
       verticalBorderSpacing={16}
     />
+  )))
+  .add('with buttons to change visible month', withInfo()(() => (
+    <VisibleMonthTest />
   )));

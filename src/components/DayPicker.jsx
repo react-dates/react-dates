@@ -121,7 +121,7 @@ export const defaultProps = {
   onOutsideClick() {},
   hidden: false,
   initialVisibleMonth: () => moment(),
-  visibleMonth: undefined,
+  visibleMonth: null,
   firstDayOfWeek: null,
   renderCalendarInfo: null,
   calendarInfoPosition: INFO_POSITION_BOTTOM,

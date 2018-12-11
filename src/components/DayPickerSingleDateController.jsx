@@ -52,6 +52,7 @@ const propTypes = forbidExtraProps({
   orientation: ScrollableOrientationShape,
   withPortal: PropTypes.bool,
   initialVisibleMonth: PropTypes.func,
+  visibleMonth: PropTypes.func,
   firstDayOfWeek: DayOfWeekShape,
   hideKeyboardShortcutsPanel: PropTypes.bool,
   daySize: nonNegativeInteger,
@@ -109,6 +110,7 @@ const defaultProps = {
   withPortal: false,
   hideKeyboardShortcutsPanel: false,
   initialVisibleMonth: null,
+  visibleMonth: null,
   firstDayOfWeek: null,
   daySize: DAY_SIZE,
   verticalHeight: null,
@@ -198,6 +200,7 @@ export default class DayPickerSingleDateController extends React.PureComponent {
       isDayBlocked,
       isDayHighlighted,
       initialVisibleMonth,
+      visibleMonth,
       numberOfMonths,
       enableOutsideDays,
     } = nextProps;
@@ -211,7 +214,7 @@ export default class DayPickerSingleDateController extends React.PureComponent {
       focused: prevFocused,
       date: prevDate,
     } = this.props;
-    let { visibleDays } = this.state;
+    const { visibleDays, currentMonth: prevCurrentMonth } = this.state;
 
     let recomputeOutsideRange = false;
     let recomputeDayBlocked = false;
@@ -243,15 +246,13 @@ export default class DayPickerSingleDateController extends React.PureComponent {
         initialVisibleMonth !== prevInitialVisibleMonth
         && !prevFocused
         && focused
+      ) || (
+        visibleMonth
+        && !visibleMonth().isSame(prevCurrentMonth, 'month')
       )
     ) {
       const newMonthState = this.getStateForNewMonth(nextProps);
-      const { currentMonth } = newMonthState;
-      ({ visibleDays } = newMonthState);
-      this.setState({
-        currentMonth,
-        visibleDays,
-      });
+      this.setState(newMonthState);
     }
 
     const didDateChange = date !== prevDate;
@@ -494,11 +495,12 @@ export default class DayPickerSingleDateController extends React.PureComponent {
   getStateForNewMonth(nextProps) {
     const {
       initialVisibleMonth,
+      visibleMonth,
       date,
       numberOfMonths,
       enableOutsideDays,
     } = nextProps;
-    const initialVisibleMonthThunk = initialVisibleMonth || (date ? () => date : () => this.today);
+    const initialVisibleMonthThunk = visibleMonth || initialVisibleMonth || (date ? () => date : () => this.today);
     const currentMonth = initialVisibleMonthThunk();
     const visibleDays = this.getModifiers(getVisibleDays(
       currentMonth,
@@ -661,6 +663,7 @@ export default class DayPickerSingleDateController extends React.PureComponent {
       enableOutsideDays,
       hideKeyboardShortcutsPanel,
       daySize,
+      visibleMonth,
       firstDayOfWeek,
       renderCalendarDay,
       renderDayContents,
@@ -701,6 +704,7 @@ export default class DayPickerSingleDateController extends React.PureComponent {
         hidden={!focused}
         hideKeyboardShortcutsPanel={hideKeyboardShortcutsPanel}
         initialVisibleMonth={() => currentMonth}
+        visibleMonth={visibleMonth}
         firstDayOfWeek={firstDayOfWeek}
         onOutsideClick={onOutsideClick}
         navPrev={navPrev}

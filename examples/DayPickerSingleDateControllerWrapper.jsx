@@ -30,6 +30,7 @@ const propTypes = forbidExtraProps({
   orientation: ScrollableOrientationShape,
   withPortal: PropTypes.bool,
   initialVisibleMonth: PropTypes.func,
+  visibleMonth: PropTypes.func,
   renderCalendarInfo: PropTypes.func,
 
   navPrev: PropTypes.node,
@@ -65,6 +66,7 @@ const defaultProps = {
   orientation: HORIZONTAL_ORIENTATION,
   withPortal: false,
   initialVisibleMonth: null,
+  visibleMonth: null,
   numberOfMonths: 2,
   onOutsideClick() {},
   keepOpenOnDateSelect: false,
