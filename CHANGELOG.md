@@ -4,6 +4,9 @@
 - []  ([#](https://github.com/airbnb/react-dates/pull/))
 -->
 
+## 18.3.1
+- [fix][RTL] Fix the SDP and DRP noflip util function ([#1492](https://github.com/airbnb/react-dates/pull/1492))
+
 ## 18.3.0
 - [fix] Update the SDP and DRP to be compatible with `react-with-direction` ([#1482](https://github.com/airbnb/react-dates/pull/1482))
 - [new] Add `minDate` and `maxDate` props to block month navigation ([#1311](https://github.com/airbnb/react-dates/pull/1311))
