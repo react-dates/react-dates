@@ -296,6 +296,7 @@ export default class DayPickerRangeController extends React.PureComponent {
     const didStartDateChange = startDate !== prevStartDate;
     const didEndDateChange = endDate !== prevEndDate;
     const didFocusChange = focusedInput !== prevFocusedInput;
+    const nextVisibleMonth = visibleMonth ? visibleMonth() : null;
 
     if (
       numberOfMonths !== prevNumberOfMonths
@@ -305,8 +306,9 @@ export default class DayPickerRangeController extends React.PureComponent {
         && !prevFocusedInput
         && didFocusChange
       ) || (
-        visibleMonth
-        && !visibleMonth().isSame(prevCurrentMonth, 'month')
+        nextVisibleMonth
+        && moment.isMoment(nextVisibleMonth)
+        && !nextVisibleMonth.isSame(prevCurrentMonth, 'month')
       )
     ) {
       const newMonthState = this.getStateForNewMonth(nextProps);
@@ -566,6 +568,7 @@ export default class DayPickerRangeController extends React.PureComponent {
 
         // eslint-disable-next-line react/destructuring-assignment
         if (this.state.dateOffset && this.state.dateOffset.start && this.state.dateOffset.end) {
+          // eslint-disable-next-line react/destructuring-assignment
           modifiers = this.deleteModifierFromRange(modifiers, this.state.dateOffset.start, this.state.dateOffset.end, 'hovered-offset');
         }
         modifiers = this.addModifierToRange(modifiers, start, end, 'hovered-offset');
@@ -1093,6 +1096,7 @@ export default class DayPickerRangeController extends React.PureComponent {
       enableOutsideDays,
       firstDayOfWeek,
       hideKeyboardShortcutsPanel,
+      visibleMonth,
       daySize,
       focusedInput,
       renderCalendarDay,
@@ -1144,7 +1148,7 @@ export default class DayPickerRangeController extends React.PureComponent {
         withPortal={withPortal}
         hidden={!focusedInput}
         initialVisibleMonth={() => currentMonth}
-        visibleMonth={this.props.visibleMonth}
+        visibleMonth={visibleMonth}
         daySize={daySize}
         onOutsideClick={onOutsideClick}
         disablePrev={disablePrev}

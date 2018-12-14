@@ -21,11 +21,11 @@ class VisibleMonthTest extends React.Component {
   render() {
     return (
       <div>
-        <button onClick={() => this.setState((oldState) => ({currentMonth: moment(oldState.currentMonth).subtract(2, 'months')}))}>
-          {'Go back two months'}
+        <button type='button' onClick={() => this.setState((oldState) => ({currentMonth: moment(oldState.currentMonth).subtract(2, 'months')}))}>
+          Go back two months
         </button>
-        <button onClick={() => this.setState((oldState) => ({currentMonth: moment(oldState.currentMonth).add(2, 'months')}))}>
-            {'Go two months ahead'}
+        <button type='button' onClick={() => this.setState((oldState) => ({currentMonth: moment(oldState.currentMonth).add(2, 'months')}))}>
+            Go two months ahead
           </button>
         <DayPicker
           initialVisibleMonth={() => moment()}

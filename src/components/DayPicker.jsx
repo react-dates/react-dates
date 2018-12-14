@@ -256,21 +256,22 @@ class DayPicker extends React.PureComponent {
       onBlur,
       renderMonthText,
       horizontalMonthPadding,
+      visibleMonth,
     } = nextProps;
     const { currentMonth } = this.state;
 
     if (!hidden) {
-      if (!this.hasSetInitialVisibleMonth) {
-        this.hasSetInitialVisibleMonth = true;
-        this.setState({
-          currentMonth: nextProps.initialVisibleMonth(),
-        });
-      } else if (nextProps.visibleMonth) {
-        const newDate = nextProps.visibleMonth();
+      if (visibleMonth) {
+        const newDate = visibleMonth();
         const { numberOfMonths } = nextProps;
         if (!isDayVisible(newDate, currentMonth, numberOfMonths)) {
           this.onMonthChange(newDate);
         }
+      } else if (!this.hasSetInitialVisibleMonth) {
+        this.hasSetInitialVisibleMonth = true;
+        this.setState({
+          currentMonth: nextProps.initialVisibleMonth(),
+        });
       }
     }
 

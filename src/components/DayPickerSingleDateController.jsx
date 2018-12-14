@@ -239,6 +239,8 @@ export default class DayPickerSingleDateController extends React.PureComponent {
       recomputeOutsideRange || recomputeDayBlocked || recomputeDayHighlighted
     );
 
+    const newVisibleMonth = visibleMonth ? visibleMonth() : null;
+
     if (
       numberOfMonths !== prevNumberOfMonths
       || enableOutsideDays !== prevEnableOutsideDays
@@ -247,8 +249,9 @@ export default class DayPickerSingleDateController extends React.PureComponent {
         && !prevFocused
         && focused
       ) || (
-        visibleMonth
-        && !visibleMonth().isSame(prevCurrentMonth, 'month')
+        newVisibleMonth
+        && moment.isMoment(newVisibleMonth)
+        && !newVisibleMonth.isSame(prevCurrentMonth, 'month')
       )
     ) {
       const newMonthState = this.getStateForNewMonth(nextProps);
@@ -500,8 +503,12 @@ export default class DayPickerSingleDateController extends React.PureComponent {
       numberOfMonths,
       enableOutsideDays,
     } = nextProps;
-    const initialVisibleMonthThunk = visibleMonth || initialVisibleMonth || (date ? () => date : () => this.today);
-    const currentMonth = initialVisibleMonthThunk();
+    const nextVisibleMonth = visibleMonth ? visibleMonth() : null;
+    const nextInitialVisibleMonth = initialVisibleMonth ? initialVisibleMonth() : null;
+    const dateOrToday = moment.isMoment(date) ? date : this.today;
+    const currentMonth = (moment.isMoment(nextVisibleMonth) && nextVisibleMonth)
+      || (moment.isMoment(nextInitialVisibleMonth) && nextInitialVisibleMonth)
+      || dateOrToday;
     const visibleDays = this.getModifiers(getVisibleDays(
       currentMonth,
       numberOfMonths,
