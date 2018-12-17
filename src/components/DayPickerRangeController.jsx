@@ -297,6 +297,9 @@ export default class DayPickerRangeController extends React.PureComponent {
     const didEndDateChange = endDate !== prevEndDate;
     const didFocusChange = focusedInput !== prevFocusedInput;
     const nextVisibleMonth = visibleMonth ? visibleMonth() : null;
+    if (nextVisibleMonth && !moment.isMoment(nextVisibleMonth)) {
+      throw new TypeError('visibleMonth in DayPickerRangeController expects a moment object');
+    }
 
     if (
       numberOfMonths !== prevNumberOfMonths
@@ -307,7 +310,6 @@ export default class DayPickerRangeController extends React.PureComponent {
         && didFocusChange
       ) || (
         nextVisibleMonth
-        && moment.isMoment(nextVisibleMonth)
         && !nextVisibleMonth.isSame(prevCurrentMonth, 'month')
       )
     ) {

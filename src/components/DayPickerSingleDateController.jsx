@@ -239,7 +239,10 @@ export default class DayPickerSingleDateController extends React.PureComponent {
       recomputeOutsideRange || recomputeDayBlocked || recomputeDayHighlighted
     );
 
-    const newVisibleMonth = visibleMonth ? visibleMonth() : null;
+    const nextVisibleMonth = visibleMonth ? visibleMonth() : null;
+    if (nextVisibleMonth && !moment.isMoment(nextVisibleMonth)) {
+      throw new TypeError('visibleMonth in DayPickerSingleDateController expects a moment object');
+    }
 
     if (
       numberOfMonths !== prevNumberOfMonths
@@ -249,9 +252,8 @@ export default class DayPickerSingleDateController extends React.PureComponent {
         && !prevFocused
         && focused
       ) || (
-        newVisibleMonth
-        && moment.isMoment(newVisibleMonth)
-        && !newVisibleMonth.isSame(prevCurrentMonth, 'month')
+        nextVisibleMonth
+        && !nextVisibleMonth.isSame(prevCurrentMonth, 'month')
       )
     ) {
       const newMonthState = this.getStateForNewMonth(nextProps);
@@ -504,11 +506,15 @@ export default class DayPickerSingleDateController extends React.PureComponent {
       enableOutsideDays,
     } = nextProps;
     const nextVisibleMonth = visibleMonth ? visibleMonth() : null;
+    if (nextVisibleMonth && !moment.isMoment(nextVisibleMonth)) {
+      throw new TypeError('visibleMonth in DayPickerRangeController expects a moment object');
+    }
     const nextInitialVisibleMonth = initialVisibleMonth ? initialVisibleMonth() : null;
+    if (nextInitialVisibleMonth && !moment.isMoment(nextInitialVisibleMonth)) {
+      throw new TypeError('initialVisibleMonth in DayPickerRangeController expects a moment object');
+    }
     const dateOrToday = moment.isMoment(date) ? date : this.today;
-    const currentMonth = (moment.isMoment(nextVisibleMonth) && nextVisibleMonth)
-      || (moment.isMoment(nextInitialVisibleMonth) && nextInitialVisibleMonth)
-      || dateOrToday;
+    const currentMonth = nextVisibleMonth || nextInitialVisibleMonth || dateOrToday;
     const visibleDays = this.getModifiers(getVisibleDays(
       currentMonth,
       numberOfMonths,
