@@ -35,7 +35,7 @@ class VisibleMonthTest extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentMonth: moment(),
+      currentMonth: moment().add(2, 'months'),
     };
   }
 
@@ -49,9 +49,15 @@ class VisibleMonthTest extends React.Component {
           Go two months ahead
         </button>
         <DayPickerSingleDateControllerWrapper
-          onOutsideClick={action('DayPickerSingleDateController::onOutsideClick')}
-          onPrevMonthClick={action('DayPickerSingleDateController::onPrevMonthClick')}
-          onNextMonthClick={action('DayPickerSingleDateController::onNextMonthClick')}
+          onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
+          onPrevMonthClick={currentMonth => {
+            this.setState({currentMonth});
+            return action('DayPickerRangeController::onPrevMonthClick')(currentMonth);
+          }}
+          onNextMonthClick={currentMonth => {
+            this.setState({currentMonth});
+            return action('DayPickerRangeController::onNextMonthClick')(currentMonth);
+          }}
           initialVisibleMonth={() => moment()}
           visibleMonth={() => this.state.currentMonth}
         />

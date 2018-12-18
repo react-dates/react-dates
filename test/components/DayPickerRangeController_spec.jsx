@@ -210,6 +210,49 @@ describe('DayPickerRangeController', () => {
         });
       });
 
+      describe('visibleMonth', () => {
+        describe('visible month changed', () => {
+          it('calls getStateForNewMonth with nextProps', () => {
+            const getStateForNewMonthSpy = sinon.spy(
+              DayPickerRangeController.prototype,
+              'getStateForNewMonth',
+            );
+            const twoMonthsAgo = moment().subtract(2, 'months').startOf('month');
+            const wrapper = shallow(<DayPickerRangeController {...props} />);
+            getStateForNewMonthSpy.resetHistory();
+            wrapper.setProps({
+              visibleMonth: () => twoMonthsAgo,
+            });
+            expect(getStateForNewMonthSpy.callCount).to.equal(1);
+          });
+
+          it('sets state.currentMonth to next visible month', () => {
+            const twoMonthsAgo = moment().subtract(2, 'months').startOf('month');
+            const wrapper = shallow(<DayPickerRangeController {...props} />);
+            expect(wrapper.instance().state.currentMonth.month()).to.equal(moment().month());
+            wrapper.setProps({
+              visibleMonth: () => twoMonthsAgo,
+            });
+            expect(wrapper.instance().state.currentMonth.month()).to.equal(twoMonthsAgo.month());
+          });
+        });
+
+        describe('visible month is the same', () => {
+          it('does not getStateForNewMonth with nextProps', () => {
+            const getStateForNewMonthSpy = sinon.spy(
+              DayPickerRangeController.prototype,
+              'getStateForNewMonth',
+            );
+            const wrapper = shallow(<DayPickerRangeController {...props} />);
+            getStateForNewMonthSpy.resetHistory();
+            wrapper.setProps({
+              visibleMonth: () => today,
+            });
+            expect(getStateForNewMonthSpy.callCount).to.equal(0);
+          });
+        });
+      });
+
       describe('numberOfMonths changed', () => {
         it('calls getStateForNewMonth with nextProps', () => {
           const getStateForNewMonthSpy = sinon.spy(

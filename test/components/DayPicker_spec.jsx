@@ -793,6 +793,16 @@ describe('DayPicker', () => {
     });
   });
 
+  describe('#visibleMonth', () => {
+    it('visible month changes', () => {
+      const twoMonthsAgo = moment().subtract(2, 'months').startOf('month');
+      const wrapper = shallow(<DayPicker visibleMonth={() => twoMonthsAgo} />).dive();
+      expect(wrapper.state().currentMonth.format('YYYY-MM')).to.equal(moment().format('YYYY-MM'));
+      wrapper.setProps({}); // calls componentWillRecieveProps
+      expect(wrapper.state().currentMonth.format('YYYY-MM')).to.equal(twoMonthsAgo.format('YYYY-MM'));
+    });
+  });
+
   describe.skip('life cycle methods', () => {
     let adjustDayPickerHeightSpy;
     beforeEach(() => {

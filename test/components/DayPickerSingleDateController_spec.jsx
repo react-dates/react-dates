@@ -1488,4 +1488,53 @@ describe('DayPickerSingleDateController', () => {
       });
     });
   });
+
+  describe('visibleMonth', () => {
+    describe('visibleMonth is passed in', () => {
+      it('DayPickerSingleDateController.props.visibleMonth gets passed to DayPicker', () => {
+        const visibleMonth = moment().subtract(2, 'months');
+        const wrapper = shallow((
+          <DayPickerSingleDateController
+            onDateChange={() => {}}
+            onFocusChange={() => {}}
+            visibleMonth={() => visibleMonth}
+            focused
+          />
+        ));
+        const dayPicker = wrapper.find(DayPicker);
+        const month = dayPicker.props().visibleMonth().month();
+        expect(month).to.equal(visibleMonth.month());
+      });
+
+      it('visibleMonth takes precedence over initialVisibleMonth', () => {
+        const visibleMonth = moment().add(3, 'months');
+        const wrapper = shallow((
+          <DayPickerSingleDateController
+            onDateChange={() => {}}
+            onFocusChange={() => {}}
+            initialVisibleMonth={() => moment()}
+            visibleMonth={() => visibleMonth}
+            focused
+          />
+        ));
+        expect(wrapper.state().currentMonth.month()).to.equal(visibleMonth.month());
+      });
+    });
+
+    describe('visibleMonth is not passed in', () => {
+      it('DayPickerSingleDateController.props.visibleMonth defaults null', () => {
+        const date = moment().add(10, 'days');
+        const wrapper = shallow((
+          <DayPickerSingleDateController
+            onDateChange={() => {}}
+            onFocusChange={() => {}}
+            date={date}
+            focused
+          />
+        ));
+        const dayPicker = wrapper.find(DayPicker);
+        expect(dayPicker.props().visibleMonth).to.equal(null);
+      });
+    });
+  });
 });
