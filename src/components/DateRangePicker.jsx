@@ -390,6 +390,7 @@ class DateRangePicker extends React.PureComponent {
       disabled,
       theme: { reactDates },
     } = this.props;
+
     const { dayPickerContainerStyles, isDayPickerFocused, showKeyboardShortcuts } = this.state;
 
     const onOutsideClick = (!withFullScreenPortal && withPortal)

@@ -158,6 +158,7 @@ function DateRangePickerInput({
   customArrowIcon,
   customCloseIcon,
   isFocused,
+  datePickerIsAfterEndInput,
   phrases,
   isRTL,
   noBorder,
@@ -183,6 +184,7 @@ function DateRangePickerInput({
       )}
     />
   );
+
   const screenReaderText = screenReaderMessage || phrases.keyboardNavigationInstructions;
   const inputIcon = (showDefaultInputIcon || customInputIcon !== null) && (
     <button
@@ -195,6 +197,7 @@ function DateRangePickerInput({
       {calendarIcon}
     </button>
   );
+
   const startDateDisabled = disabled === START_DATE || disabled === true;
   const endDateDisabled = disabled === END_DATE || disabled === true;
 
@@ -238,12 +241,13 @@ function DateRangePickerInput({
           {...css(styles.DateRangePickerInput_arrow)}
           aria-hidden="true"
           role="presentation"
+          onKeyDownTab={onEndDateTab}
         >
           {arrowIcon}
         </div>
       }
 
-      {children}
+      {datePickerIsAfterEndInput || children}
 
       <DateInput
         id={endDateId}
@@ -259,13 +263,14 @@ function DateRangePickerInput({
         openDirection={openDirection}
         onChange={onEndDateChange}
         onFocus={onEndDateFocus}
-        onKeyDownTab={onEndDateTab}
         onKeyDownArrowDown={onKeyDownArrowDown}
         onKeyDownQuestionMark={onKeyDownQuestionMark}
         verticalSpacing={verticalSpacing}
         small={small}
         regular={regular}
       />
+
+      {datePickerIsAfterEndInput && children}
 
       {showClearDates && (
         <button
@@ -285,7 +290,6 @@ function DateRangePickerInput({
       )}
 
       {inputIconPosition === ICON_AFTER_POSITION && inputIcon}
-
     </div>
   );
 }
