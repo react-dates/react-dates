@@ -14,6 +14,8 @@ const testPhrases = {
   chooseAvailableDate: sinon.stub(),
   dateIsSelected: sinon.stub(),
   dateIsUnavailable: sinon.stub(),
+  dateIsSelectedAsCheckin: sinon.stub(),
+  dateIsSelectedAsCheckout: sinon.stub(),
 };
 
 describe('getCalendarDaySettings', () => {
@@ -182,6 +184,8 @@ describe('getCalendarDaySettings', () => {
       phrases.chooseAvailableDate = sinon.stub().returns('chooseAvailableDate text');
       phrases.dateIsSelected = sinon.stub().returns('dateIsSelected text');
       phrases.dateIsUnavailable = sinon.stub().returns('dateIsUnavailable text');
+      phrases.dateIsSelectedAsCheckin = sinon.stub().returns('dateIsSelectedAsCheckin text');
+      phrases.dateIsSelectedAsCheckout = sinon.stub().returns('dateIsSelectedAsCheckout text');
     });
 
     afterEach(() => {
@@ -204,22 +208,48 @@ describe('getCalendarDaySettings', () => {
     });
 
     it('is formatted with the dateIsSelected phrase function when day is selected', () => {
-      const selectedModifiers = new Set(['selected', 'selected-start', 'selected-end']);
+      const modifiers = new Set(['selected']);
 
-      selectedModifiers.forEach((selectedModifier) => {
-        const modifiers = new Set().add(selectedModifier);
+      const { ariaLabel } = getCalendarDaySettings(
+        testDay,
+        testAriaLabelFormat,
+        testDaySize,
+        modifiers,
+        phrases,
+      );
 
-        const { ariaLabel } = getCalendarDaySettings(
-          testDay,
-          testAriaLabelFormat,
-          testDaySize,
-          modifiers,
-          phrases,
-        );
+      expect(phrases.dateIsSelected.calledWith(expectedFormattedDay)).to.equal(true);
+      expect(ariaLabel).to.equal('dateIsSelected text');
+    });
 
-        expect(phrases.dateIsSelected.calledWith(expectedFormattedDay)).to.equal(true);
-        expect(ariaLabel).to.equal('dateIsSelected text');
-      });
+    it('is formatted with the dateIsSelectedAsCheckin phrase function when day is selected as checkin', () => {
+      const modifiers = new Set().add(BLOCKED_MODIFIER).add('selected-start');
+
+      const { ariaLabel } = getCalendarDaySettings(
+        testDay,
+        testAriaLabelFormat,
+        testDaySize,
+        modifiers,
+        phrases,
+      );
+
+      expect(phrases.dateIsSelectedAsCheckin.calledWith(expectedFormattedDay)).to.equal(true);
+      expect(ariaLabel).to.equal('dateIsSelectedAsCheckin text');
+    });
+
+    it('is formatted with the dateIsSelectedAsCheckout phrase function when day is selected as checkout', () => {
+      const modifiers = new Set().add(BLOCKED_MODIFIER).add('selected-end');
+
+      const { ariaLabel } = getCalendarDaySettings(
+        testDay,
+        testAriaLabelFormat,
+        testDaySize,
+        modifiers,
+        phrases,
+      );
+
+      expect(phrases.dateIsSelectedAsCheckout.calledWith(expectedFormattedDay)).to.equal(true);
+      expect(ariaLabel).to.equal('dateIsSelectedAsCheckout text');
     });
 
     it('is formatted with the dateIsUnavailable phrase function when day is not available', () => {
@@ -235,21 +265,6 @@ describe('getCalendarDaySettings', () => {
 
       expect(phrases.dateIsUnavailable.calledWith(expectedFormattedDay)).to.equal(true);
       expect(ariaLabel).to.equal('dateIsUnavailable text');
-    });
-
-    it('is formatted with the dateIsSelected phrase function when day is selected for check in', () => {
-      const modifiers = new Set().add(BLOCKED_MODIFIER).add('selected-start');
-
-      const { ariaLabel } = getCalendarDaySettings(
-        testDay,
-        testAriaLabelFormat,
-        testDaySize,
-        modifiers,
-        phrases,
-      );
-
-      expect(phrases.dateIsSelected.calledWith(expectedFormattedDay)).to.equal(true);
-      expect(ariaLabel).to.equal('dateIsSelected text');
     });
   });
 });
