@@ -139,10 +139,6 @@ export default class DateRangePickerInputController extends React.PureComponent 
   constructor(props) {
     super(props);
 
-    this.state = {
-      datePickerIsAfterEndInput: false,
-    };
-
     this.onClearFocus = this.onClearFocus.bind(this);
     this.onStartDateChange = this.onStartDateChange.bind(this);
     this.onStartDateFocus = this.onStartDateFocus.bind(this);
@@ -196,8 +192,6 @@ export default class DateRangePickerInputController extends React.PureComponent 
       disabled,
     } = this.props;
 
-    this.setState({ datePickerIsAfterEndInput: true });
-
     if (!startDate && withFullScreenPortal && (!disabled || disabled === END_DATE)) {
       // When the datepicker is full screen, we never want to focus the end date first
       // because there's no indication that that is the case once the datepicker is open and it
@@ -242,10 +236,6 @@ export default class DateRangePickerInputController extends React.PureComponent 
 
   onStartDateFocus() {
     const { disabled, onFocusChange } = this.props;
-
-    this.setState({
-      datePickerIsAfterEndInput: false,
-    });
 
     if (!disabled || disabled === END_DATE) {
       onFocusChange(START_DATE);
@@ -308,10 +298,6 @@ export default class DateRangePickerInputController extends React.PureComponent 
       verticalSpacing,
     } = this.props;
 
-    const {
-      datePickerIsAfterEndInput,
-    } = this.state;
-
     const startDateString = this.getDateString(startDate);
     const endDateString = this.getDateString(endDate);
 
@@ -336,7 +322,6 @@ export default class DateRangePickerInputController extends React.PureComponent 
         customInputIcon={customInputIcon}
         customArrowIcon={customArrowIcon}
         customCloseIcon={customCloseIcon}
-        datePickerIsAfterEndInput={datePickerIsAfterEndInput}
         phrases={phrases}
         onStartDateChange={this.onStartDateChange}
         onStartDateFocus={this.onStartDateFocus}

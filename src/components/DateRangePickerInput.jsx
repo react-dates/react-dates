@@ -158,7 +158,6 @@ function DateRangePickerInput({
   customArrowIcon,
   customCloseIcon,
   isFocused,
-  datePickerIsAfterEndInput,
   phrases,
   isRTL,
   noBorder,
@@ -241,13 +240,12 @@ function DateRangePickerInput({
           {...css(styles.DateRangePickerInput_arrow)}
           aria-hidden="true"
           role="presentation"
-          onKeyDownTab={onEndDateTab}
         >
           {arrowIcon}
         </div>
       }
 
-      {datePickerIsAfterEndInput || children}
+      {isStartDateFocused || children}
 
       <DateInput
         id={endDateId}
@@ -270,7 +268,7 @@ function DateRangePickerInput({
         regular={regular}
       />
 
-      {datePickerIsAfterEndInput && children}
+      {isEndDateFocused && children}
 
       {showClearDates && (
         <button
