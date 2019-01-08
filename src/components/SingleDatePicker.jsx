@@ -576,15 +576,12 @@ class SingleDatePicker extends React.PureComponent {
           block && styles.SingleDatePicker__block,
         )}
       >
-        {
-          enableOutsideClick
-            ? (
-              <OutsideClickHandler onOutsideClick={this.onOutsideClick}>
-                {input}
-              </OutsideClickHandler>
-            )
-            : input
-        }
+        {enableOutsideClick && (
+          <OutsideClickHandler onOutsideClick={this.onOutsideClick}>
+            {input}
+          </OutsideClickHandler>
+        )}
+        { enableOutsideClick || input}
       </div>
     );
   }

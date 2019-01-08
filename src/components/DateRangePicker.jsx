@@ -189,6 +189,7 @@ class DateRangePicker extends React.PureComponent {
       endDate,
       appendToBody,
     } = this.props;
+
     if (!this.isOpened()) return;
     if (appendToBody && this.dayPickerContainer.contains(event.target)) return;
 
@@ -587,15 +588,12 @@ class DateRangePicker extends React.PureComponent {
           block && styles.DateRangePicker__block,
         )}
       >
-        {
-          enableOutsideClick
-            ? (
-              <OutsideClickHandler onOutsideClick={this.onOutsideClick}>
-                {input}
-              </OutsideClickHandler>
-            )
-            : input
-        }
+        {enableOutsideClick && (
+          <OutsideClickHandler onOutsideClick={this.onOutsideClick}>
+            {input}
+          </OutsideClickHandler>
+        )}
+        {enableOutsideClick || input}
       </div>
     );
   }
