@@ -469,7 +469,6 @@ class DayPicker extends React.PureComponent {
     }
   }
 
-
   onPrevMonthClick(e) {
     if (e) e.preventDefault();
     this.onPrevMonthTransition();
@@ -1123,7 +1122,6 @@ class DayPicker extends React.PureComponent {
                 />
               )}
             </div>
-
           </div>
 
           {(calendarInfoPositionBottom || calendarInfoPositionAfter) && calendarInfo}

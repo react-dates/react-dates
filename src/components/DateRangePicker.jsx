@@ -134,6 +134,7 @@ class DateRangePicker extends React.PureComponent {
     this.onOutsideClick = this.onOutsideClick.bind(this);
     this.onDateRangePickerInputFocus = this.onDateRangePickerInputFocus.bind(this);
     this.onDayPickerFocus = this.onDayPickerFocus.bind(this);
+    this.onDayPickerFocusOut = this.onDayPickerFocusOut.bind(this);
     this.onDayPickerBlur = this.onDayPickerBlur.bind(this);
     this.showKeyboardShortcutsPanel = this.showKeyboardShortcutsPanel.bind(this);
 
@@ -177,6 +178,7 @@ class DateRangePicker extends React.PureComponent {
   }
 
   componentWillUnmount() {
+    this.removeDayPickerEventListeners();
     if (this.removeEventListener) this.removeEventListener();
     if (this.enableScroll) this.enableScroll();
   }
@@ -239,6 +241,11 @@ class DateRangePicker extends React.PureComponent {
     });
   }
 
+  onDayPickerFocusOut(e) {
+    if (this.dayPickerContainer.contains(e.relatedTarget)) return;
+    this.onOutsideClick(e);
+  }
+
   onDayPickerBlur() {
     this.setState({
       isDateRangePickerInputFocused: true,
@@ -248,11 +255,26 @@ class DateRangePicker extends React.PureComponent {
   }
 
   setDayPickerContainerRef(ref) {
+    if (this.dayPickerContainer) this.removeDayPickerEventListeners();
+    if (!ref) return;
     this.dayPickerContainer = ref;
+    this.addDayPickerEventListeners();
   }
 
   setContainerRef(ref) {
     this.container = ref;
+  }
+
+  addDayPickerEventListeners() {
+    this.removeDayPickerFocusOut = addEventListener(
+      this.dayPickerContainer,
+      'focusout',
+      this.onDayPickerFocusOut,
+    );
+  }
+
+  removeDayPickerEventListeners() {
+    if (this.removeDayPickerFocusOut) this.removeDayPickerFocusOut();
   }
 
   isOpened() {
