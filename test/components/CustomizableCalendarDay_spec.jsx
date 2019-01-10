@@ -62,6 +62,8 @@ describe('CustomizableCalendarDay', () => {
         phrases.chooseAvailableDate = sinon.stub().returns('chooseAvailableDate text');
         phrases.dateIsSelected = sinon.stub().returns('dateIsSelected text');
         phrases.dateIsUnavailable = sinon.stub().returns('dateIsUnavailable text');
+        phrases.dateIsSelectedAsStartDate = sinon.stub().returns('dateIsSelectedAsStartDate text');
+        phrases.dateIsSelectedAsEndDate = sinon.stub().returns('dateIsSelectedAsEndDate text');
       });
 
       it('is formatted with the chooseAvailableDate phrase function when day is available', () => {
@@ -79,21 +81,45 @@ describe('CustomizableCalendarDay', () => {
       });
 
       it('is formatted with the dateIsSelected phrase function when day is selected', () => {
-        const selectedModifiers = new Set(['selected', 'selected-start', 'selected-end']);
+        const modifiers = new Set(['selected']);
 
-        selectedModifiers.forEach((selectedModifier) => {
-          const modifiers = new Set([selectedModifier]);
+        const wrapper = shallow((
+          <CustomizableCalendarDay
+            modifiers={modifiers}
+            phrases={phrases}
+            day={day}
+          />
+        )).dive();
 
-          const wrapper = shallow((
-            <CustomizableCalendarDay
-              modifiers={modifiers}
-              phrases={phrases}
-              day={day}
-            />
-          )).dive();
+        expect(wrapper.prop('aria-label')).to.equal('dateIsSelected text');
+      });
 
-          expect(wrapper.prop('aria-label')).to.equal('dateIsSelected text');
-        });
+      it('is formatted with the dateIsSelectedAsStartDate phrase function when day is selected as the start date', () => {
+        const modifiers = new Set().add(BLOCKED_MODIFIER).add('selected-start');
+
+        const wrapper = shallow((
+          <CustomizableCalendarDay
+            modifiers={modifiers}
+            phrases={phrases}
+            day={day}
+          />
+        )).dive();
+
+        expect(wrapper.prop('aria-label')).to.equal('dateIsSelectedAsStartDate text');
+      });
+
+      it('is formatted with the dateIsSelectedAsEndDate phrase function when day is selected as the end date', () => {
+        const modifiers = new Set().add(BLOCKED_MODIFIER).add('selected-end');
+
+        const wrapper = shallow((
+          <CustomizableCalendarDay
+            modifiers={modifiers}
+            phrases={phrases}
+            day={day}
+          />
+        )).dive();
+
+        expect(wrapper.prop('aria-label')).to.equal('dateIsSelectedAsEndDate text');
       });
 
       it('is formatted with the dateIsUnavailable phrase function when day is not available', () => {
