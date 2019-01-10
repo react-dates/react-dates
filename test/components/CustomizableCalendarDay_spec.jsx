@@ -62,8 +62,8 @@ describe('CustomizableCalendarDay', () => {
         phrases.chooseAvailableDate = sinon.stub().returns('chooseAvailableDate text');
         phrases.dateIsSelected = sinon.stub().returns('dateIsSelected text');
         phrases.dateIsUnavailable = sinon.stub().returns('dateIsUnavailable text');
-        phrases.dateIsSelectedAsCheckin = sinon.stub().returns('dateIsSelectedAsCheckin text');
-        phrases.dateIsSelectedAsCheckout = sinon.stub().returns('dateIsSelectedAsCheckout text');
+        phrases.dateIsSelectedAsStartDate = sinon.stub().returns('dateIsSelectedAsStartDate text');
+        phrases.dateIsSelectedAsEndDate = sinon.stub().returns('dateIsSelectedAsEndDate text');
       });
 
       it('is formatted with the chooseAvailableDate phrase function when day is available', () => {
@@ -94,7 +94,7 @@ describe('CustomizableCalendarDay', () => {
         expect(wrapper.prop('aria-label')).to.equal('dateIsSelected text');
       });
 
-      it('is formatted with the dateIsSelectedAsCheckin phrase function when day is selected for check in', () => {
+      it('is formatted with the dateIsSelectedAsStartDate phrase function when day is selected as the start date', () => {
         const modifiers = new Set().add(BLOCKED_MODIFIER).add('selected-start');
 
         const wrapper = shallow((
@@ -105,10 +105,10 @@ describe('CustomizableCalendarDay', () => {
           />
         )).dive();
 
-        expect(wrapper.prop('aria-label')).to.equal('dateIsSelectedAsCheckin text');
+        expect(wrapper.prop('aria-label')).to.equal('dateIsSelectedAsStartDate text');
       });
 
-      it('is formatted with the dateIsSelectedAsCheckout phrase function when day is selected for check out', () => {
+      it('is formatted with the dateIsSelectedAsEndDate phrase function when day is selected as the end date', () => {
         const modifiers = new Set().add(BLOCKED_MODIFIER).add('selected-end');
 
         const wrapper = shallow((
@@ -119,7 +119,7 @@ describe('CustomizableCalendarDay', () => {
           />
         )).dive();
 
-        expect(wrapper.prop('aria-label')).to.equal('dateIsSelectedAsCheckout text');
+        expect(wrapper.prop('aria-label')).to.equal('dateIsSelectedAsEndDate text');
       });
 
       it('is formatted with the dateIsUnavailable phrase function when day is not available', () => {

@@ -6,8 +6,8 @@ export default function getCalendarDaySettings(day, ariaLabelFormat, daySize, mo
     chooseAvailableDate,
     dateIsUnavailable,
     dateIsSelected,
-    dateIsSelectedAsCheckin,
-    dateIsSelectedAsCheckout,
+    dateIsSelectedAsStartDate,
+    dateIsSelectedAsEndDate,
   } = phrases;
 
   const daySizeStyles = {
@@ -38,10 +38,10 @@ export default function getCalendarDaySettings(day, ariaLabelFormat, daySize, mo
 
   let ariaLabel = getPhrase(chooseAvailableDate, formattedDate);
   if (selected) {
-    if (modifiers.has('selected-start')) {
-      ariaLabel = getPhrase(dateIsSelectedAsCheckin, formattedDate);
-    } else if (modifiers.has('selected-end')) {
-      ariaLabel = getPhrase(dateIsSelectedAsCheckout, formattedDate);
+    if (modifiers.has('selected-start') && dateIsSelectedAsStartDate) {
+      ariaLabel = getPhrase(dateIsSelectedAsStartDate, formattedDate);
+    } else if (modifiers.has('selected-end') && dateIsSelectedAsEndDate) {
+      ariaLabel = getPhrase(dateIsSelectedAsEndDate, formattedDate);
     } else {
       ariaLabel = getPhrase(dateIsSelected, formattedDate);
     }

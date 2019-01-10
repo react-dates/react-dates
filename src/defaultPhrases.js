@@ -30,8 +30,8 @@ const chooseAvailableEndDate = ({ date }) => `Choose ${date} as your check-out d
 const chooseAvailableDate = ({ date }) => date;
 const dateIsUnavailable = ({ date }) => `Not available. ${date}`;
 const dateIsSelected = ({ date }) => `Selected. ${date}`;
-const dateIsSelectedAsCheckin = ({ date }) => `Selected for check-in. ${date}`;
-const dateIsSelectedAsCheckout = ({ date }) => `Selected for check-out. ${date}`;
+const dateIsSelectedAsStartDate = ({ date }) => `Selected as start date. ${date}`;
+const dateIsSelectedAsEndDate = ({ date }) => `Selected as end date. ${date}`;
 
 export default {
   calendarLabel,
@@ -64,8 +64,8 @@ export default {
   chooseAvailableEndDate,
   dateIsUnavailable,
   dateIsSelected,
-  dateIsSelectedAsCheckin,
-  dateIsSelectedAsCheckout,
+  dateIsSelectedAsStartDate,
+  dateIsSelectedAsEndDate,
 };
 
 export const DateRangePickerPhrases = {
@@ -97,8 +97,8 @@ export const DateRangePickerPhrases = {
   chooseAvailableEndDate,
   dateIsUnavailable,
   dateIsSelected,
-  dateIsSelectedAsCheckin,
-  dateIsSelectedAsCheckout,
+  dateIsSelectedAsStartDate,
+  dateIsSelectedAsEndDate,
 };
 
 export const DateRangePickerInputPhrases = {
@@ -134,8 +134,6 @@ export const SingleDatePickerPhrases = {
   chooseAvailableDate,
   dateIsUnavailable,
   dateIsSelected,
-  dateIsSelectedAsCheckin,
-  dateIsSelectedAsCheckout,
 };
 
 export const SingleDatePickerInputPhrases = {
@@ -169,8 +167,8 @@ export const DayPickerPhrases = {
   chooseAvailableDate,
   dateIsUnavailable,
   dateIsSelected,
-  dateIsSelectedAsCheckin,
-  dateIsSelectedAsCheckout,
+  dateIsSelectedAsStartDate,
+  dateIsSelectedAsEndDate,
 };
 
 export const DayPickerKeyboardShortcutsPhrases = {
@@ -202,6 +200,6 @@ export const CalendarDayPhrases = {
   chooseAvailableDate,
   dateIsUnavailable,
   dateIsSelected,
-  dateIsSelectedAsCheckin,
-  dateIsSelectedAsCheckout,
+  dateIsSelectedAsStartDate,
+  dateIsSelectedAsEndDate,
 };
