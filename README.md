@@ -33,7 +33,16 @@ Ensure packages are installed with correct version numbers by running:
     npm info "$PKG" peerDependencies --json | command sed 's/[\{\},]//g ; s/: /@/g; s/ *//g' | xargs npm install --save "$PKG"
   )
   ```
-
+  
+  or, for [Yarn](http://yarnpkg.com): 
+  
+ ```sh
+   (
+    export PKG=react-dates;
+    yarn info "$PKG" peerDependencies --json | command sed 's/[\{\},]//g ; s/: /@/g; s/ *//g' | xargs yarn add "$PKG"
+  ) 
+ ```
+  
   Which produces and runs a command like:
 
   ```sh
