@@ -242,7 +242,7 @@ class DateRangePicker extends React.PureComponent {
   }
 
   onDayPickerFocusOut(event) {
-    if (this.dayPickerContainer.contains(event.target || event.relatedTarget)) return;
+    if (this.dayPickerContainer.contains(event.relatedTarget || event.target)) return;
     this.onOutsideClick(event);
   }
 
@@ -255,9 +255,12 @@ class DateRangePicker extends React.PureComponent {
   }
 
   setDayPickerContainerRef(ref) {
+    if (ref === this.dayPickerContainer) return;
     if (this.dayPickerContainer) this.removeDayPickerEventListeners();
-    if (!ref) return;
+
     this.dayPickerContainer = ref;
+    if (!ref) return;
+
     this.addDayPickerEventListeners();
   }
 
