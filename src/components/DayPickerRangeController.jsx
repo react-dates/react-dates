@@ -547,7 +547,13 @@ export default class DayPickerRangeController extends React.PureComponent {
       startDateOffset,
       endDateOffset,
     } = this.props;
-    const { hoverDate, visibleDays } = this.state;
+
+    const {
+      hoverDate,
+      visibleDays,
+      dateOffset: currentDateOffset,
+    } = this.state;
+
     let dateOffset = null;
 
     if (focusedInput) {
@@ -564,8 +570,8 @@ export default class DayPickerRangeController extends React.PureComponent {
         };
 
         // eslint-disable-next-line react/destructuring-assignment
-        if (this.state.dateOffset && this.state.dateOffset.start && this.state.dateOffset.end) {
-          modifiers = this.deleteModifierFromRange(modifiers, this.state.dateOffset.start, this.state.dateOffset.end, 'hovered-offset');
+        if (this.state.dateOffset && currentDateOffset.start && currentDateOffset.end) {
+          modifiers = this.deleteModifierFromRange(modifiers, currentDateOffset.start, currentDateOffset.end, 'hovered-offset');
         }
         modifiers = this.addModifierToRange(modifiers, start, end, 'hovered-offset');
       }

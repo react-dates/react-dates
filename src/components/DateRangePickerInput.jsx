@@ -263,6 +263,7 @@ function DateRangePickerInput({
         onFocus={onEndDateFocus}
         onKeyDownArrowDown={onKeyDownArrowDown}
         onKeyDownQuestionMark={onKeyDownQuestionMark}
+        onKeyDownTab={onEndDateTab}
         verticalSpacing={verticalSpacing}
         small={small}
         regular={regular}

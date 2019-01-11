@@ -8,7 +8,6 @@ import CloseButton from '../../src/components/CloseButton';
 import DayPickerSingleDateController from '../../src/components/DayPickerSingleDateController';
 import SingleDatePickerInputController from '../../src/components/SingleDatePickerInputController';
 import SingleDatePicker, { PureSingleDatePicker } from '../../src/components/SingleDatePicker';
-import DayPickerRangeController from "../../src/components/DayPickerRangeController";
 
 const describeIfWindow = typeof document === 'undefined' ? describe.skip : describe;
 

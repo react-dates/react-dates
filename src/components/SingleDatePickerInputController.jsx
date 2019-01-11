@@ -25,6 +25,8 @@ import {
 } from '../constants';
 
 const propTypes = forbidExtraProps({
+  children: PropTypes.node,
+
   date: momentPropTypes.momentObj,
   onDateChange: PropTypes.func.isRequired,
 
@@ -190,6 +192,7 @@ export default class SingleDatePickerInputController extends React.PureComponent
 
   render() {
     const {
+      children,
       id,
       placeholder,
       disabled,
@@ -250,7 +253,9 @@ export default class SingleDatePickerInputController extends React.PureComponent
         small={small}
         regular={regular}
         verticalSpacing={verticalSpacing}
-      />
+      >
+        {children}
+      </SingleDatePickerInput>
     );
   }
 }
