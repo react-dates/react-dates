@@ -241,9 +241,9 @@ class DateRangePicker extends React.PureComponent {
     });
   }
 
-  onDayPickerFocusOut(e) {
-    if (this.dayPickerContainer.contains(e.relatedTarget)) return;
-    this.onOutsideClick(e);
+  onDayPickerFocusOut(event) {
+    if (this.dayPickerContainer.contains(event.target || event.relatedTarget)) return;
+    this.onOutsideClick(event);
   }
 
   onDayPickerBlur() {
