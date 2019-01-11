@@ -196,8 +196,8 @@ class SingleDatePicker extends React.PureComponent {
       endDate,
       appendToBody,
     } = this.props;
+
     if (!focused) return;
-    if (!this.dayPickerContainer) return;
     if (appendToBody && this.dayPickerContainer.contains(event.target)) return;
 
     this.setState({

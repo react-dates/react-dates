@@ -413,9 +413,7 @@ describe('SingleDatePicker', () => {
             focused
           />
         )).dive();
-        wrapper.setState({
-          isDayPickerFocused: true,
-        });
+        wrapper.setState({ isDayPickerFocused: true });
         wrapper.instance().onOutsideClick();
         expect(wrapper.state().isDayPickerFocused).to.equal(false);
       });
