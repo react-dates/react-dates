@@ -72,6 +72,8 @@ const propTypes = forbidExtraProps({
 });
 
 const defaultProps = {
+  children: null,
+
   date: null,
   focused: false,
 
@@ -254,7 +256,7 @@ export default class SingleDatePickerInputController extends React.PureComponent
         regular={regular}
         verticalSpacing={verticalSpacing}
       >
-        {children}
+        {children && children}
       </SingleDatePickerInput>
     );
   }
