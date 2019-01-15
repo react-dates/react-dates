@@ -4,6 +4,9 @@
 - []  ([#](https://github.com/airbnb/react-dates/pull/))
 -->
 
+## 18.4.0
+- [new] Clarify VoiceOver text for dates selected as start-date and end-date ([#1501](https://github.com/airbnb/react-dates/pull/1501))
+
 ## 18.3.1
 - [fix][RTL] Fix the SDP and DRP noflip util function ([#1492](https://github.com/airbnb/react-dates/pull/1492))
 
