@@ -182,10 +182,10 @@ function DateRangePickerInput({
   const calendarIcon = customInputIcon || (
     <CalendarIcon {...css(styles.DateRangePickerInput_calendarIcon_svg)} />
   );
-
-  let arrowIcon = customArrowIcon || <RightArrow {...css(styles.DateRangePickerInput_arrow_svg)} />;
+  let arrowIcon = <RightArrow {...css(styles.DateRangePickerInput_arrow_svg)} />;
   if (isRTL) arrowIcon = <LeftArrow {...css(styles.DateRangePickerInput_arrow_svg)} />;
   if (small) arrowIcon = '-';
+  if (customArrowIcon) arrowIcon = customArrowIcon;
 
   const closeIcon = customCloseIcon || (
     <CloseButton
