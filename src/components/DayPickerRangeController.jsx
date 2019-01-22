@@ -551,7 +551,7 @@ export default class DayPickerRangeController extends React.PureComponent {
     const {
       hoverDate,
       visibleDays,
-      currentDateOffset,
+      dateOffset,
     } = this.state;
 
     let nextDateOffset = null;
@@ -570,8 +570,8 @@ export default class DayPickerRangeController extends React.PureComponent {
         };
 
         // eslint-disable-next-line react/destructuring-assignment
-        if (this.state.nextDateOffset && currentDateOffset.start && currentDateOffset.end) {
-          modifiers = this.deleteModifierFromRange(modifiers, currentDateOffset.start, currentDateOffset.end, 'hovered-offset');
+        if (this.state.nextDateOffset && dateOffset.start && dateOffset.end) {
+          modifiers = this.deleteModifierFromRange(modifiers, dateOffset.start, dateOffset.end, 'hovered-offset');
         }
         modifiers = this.addModifierToRange(modifiers, start, end, 'hovered-offset');
       }
@@ -622,7 +622,7 @@ export default class DayPickerRangeController extends React.PureComponent {
 
       this.setState({
         hoverDate: day,
-        currentDateOffset: nextDateOffset,
+        dateOffset: nextDateOffset,
         visibleDays: {
           ...visibleDays,
           ...modifiers,
@@ -633,14 +633,14 @@ export default class DayPickerRangeController extends React.PureComponent {
 
   onDayMouseLeave(day) {
     const { startDate, endDate, minimumNights } = this.props;
-    const { hoverDate, visibleDays, currentDateOffset } = this.state;
+    const { hoverDate, visibleDays, dateOffset } = this.state;
     if (this.isTouchDevice || !hoverDate) return;
 
     let modifiers = {};
     modifiers = this.deleteModifier(modifiers, hoverDate, 'hovered');
 
-    if (currentDateOffset) {
-      modifiers = this.deleteModifierFromRange(modifiers, currentDateOffset.start, currentDateOffset.end, 'hovered-offset');
+    if (dateOffset) {
+      modifiers = this.deleteModifierFromRange(modifiers, dateOffset.start, dateOffset.end, 'hovered-offset');
     }
 
     if (startDate && !endDate && isAfterDay(hoverDate, startDate)) {
