@@ -570,7 +570,7 @@ export default class DayPickerRangeController extends React.PureComponent {
         };
 
         // eslint-disable-next-line react/destructuring-assignment
-        if (this.state.nextDateOffset && dateOffset.start && dateOffset.end) {
+        if (dateOffset && dateOffset.start && dateOffset.end) {
           modifiers = this.deleteModifierFromRange(modifiers, dateOffset.start, dateOffset.end, 'hovered-offset');
         }
         modifiers = this.addModifierToRange(modifiers, start, end, 'hovered-offset');
