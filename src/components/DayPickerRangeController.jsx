@@ -551,10 +551,10 @@ export default class DayPickerRangeController extends React.PureComponent {
     const {
       hoverDate,
       visibleDays,
-      dateOffset: currentDateOffset,
+      currentDateOffset,
     } = this.state;
 
-    let dateOffset = null;
+    let nextDateOffset = null;
 
     if (focusedInput) {
       const hasOffset = startDateOffset || endDateOffset;
@@ -564,13 +564,13 @@ export default class DayPickerRangeController extends React.PureComponent {
         const start = getSelectedDateOffset(startDateOffset, day);
         const end = getSelectedDateOffset(endDateOffset, day, rangeDay => rangeDay.add(1, 'day'));
 
-        dateOffset = {
+        nextDateOffset = {
           start,
           end,
         };
 
         // eslint-disable-next-line react/destructuring-assignment
-        if (this.state.dateOffset && currentDateOffset.start && currentDateOffset.end) {
+        if (this.state.nextDateOffset && currentDateOffset.start && currentDateOffset.end) {
           modifiers = this.deleteModifierFromRange(modifiers, currentDateOffset.start, currentDateOffset.end, 'hovered-offset');
         }
         modifiers = this.addModifierToRange(modifiers, start, end, 'hovered-offset');
@@ -622,7 +622,7 @@ export default class DayPickerRangeController extends React.PureComponent {
 
       this.setState({
         hoverDate: day,
-        dateOffset,
+        currentDateOffset: nextDateOffset,
         visibleDays: {
           ...visibleDays,
           ...modifiers,
@@ -633,14 +633,14 @@ export default class DayPickerRangeController extends React.PureComponent {
 
   onDayMouseLeave(day) {
     const { startDate, endDate, minimumNights } = this.props;
-    const { hoverDate, visibleDays, dateOffset } = this.state;
+    const { hoverDate, visibleDays, currentDateOffset } = this.state;
     if (this.isTouchDevice || !hoverDate) return;
 
     let modifiers = {};
     modifiers = this.deleteModifier(modifiers, hoverDate, 'hovered');
 
-    if (dateOffset) {
-      modifiers = this.deleteModifierFromRange(modifiers, dateOffset.start, dateOffset.end, 'hovered-offset');
+    if (currentDateOffset) {
+      modifiers = this.deleteModifierFromRange(modifiers, currentDateOffset.start, currentDateOffset.end, 'hovered-offset');
     }
 
     if (startDate && !endDate && isAfterDay(hoverDate, startDate)) {
