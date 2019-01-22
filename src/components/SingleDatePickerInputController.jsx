@@ -256,7 +256,7 @@ export default class SingleDatePickerInputController extends React.PureComponent
         regular={regular}
         verticalSpacing={verticalSpacing}
       >
-        {children && children}
+        {focused && children}
       </SingleDatePickerInput>
     );
   }
