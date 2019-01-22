@@ -242,6 +242,12 @@ class DateRangePicker extends React.PureComponent {
   }
 
   onDayPickerFocusOut(event) {
+    // In cases where **relatedTarget** is not null, it points to the right
+    // element here. However, in cases where it is null (such as clicking on a
+    // specific day), the appropriate value is **event.target**.
+    //
+    // We handle both situations here by using the ` || ` operator to fallback
+    // to *event.target** when **relatedTarget** is not provided.
     if (this.dayPickerContainer.contains(event.relatedTarget || event.target)) return;
     this.onOutsideClick(event);
   }
