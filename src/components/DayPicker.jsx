@@ -355,6 +355,7 @@ class DayPicker extends React.PureComponent {
 
   onKeyDown(e) {
     e.stopPropagation();
+
     if (!MODIFIER_KEY_NAMES.has(e.key)) {
       this.throttledKeyDown(e);
     }
@@ -442,7 +443,7 @@ class DayPicker extends React.PureComponent {
         if (showKeyboardShortcuts) {
           this.closeKeyboardShortcutsPanel();
         } else {
-          onBlur();
+          onBlur(e);
         }
         break;
 
@@ -450,7 +451,7 @@ class DayPicker extends React.PureComponent {
         if (e.shiftKey) {
           onShiftTab();
         } else {
-          onTab();
+          onTab(e);
         }
         break;
 
@@ -467,7 +468,6 @@ class DayPicker extends React.PureComponent {
       });
     }
   }
-
 
   onPrevMonthClick(e) {
     if (e) e.preventDefault();
@@ -1122,7 +1122,6 @@ class DayPicker extends React.PureComponent {
                 />
               )}
             </div>
-
           </div>
 
           {(calendarInfoPositionBottom || calendarInfoPositionAfter) && calendarInfo}

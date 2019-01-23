@@ -28,6 +28,8 @@ import {
 } from '../constants';
 
 const propTypes = forbidExtraProps({
+  children: PropTypes.node,
+
   startDate: momentPropTypes.momentObj,
   startDateId: PropTypes.string,
   startDatePlaceholderText: PropTypes.string,
@@ -80,6 +82,8 @@ const propTypes = forbidExtraProps({
 });
 
 const defaultProps = {
+  children: null,
+
   startDate: null,
   startDateId: START_DATE,
   startDatePlaceholderText: 'Start Date',
@@ -232,6 +236,7 @@ export default class DateRangePickerInputController extends React.PureComponent 
 
   onStartDateFocus() {
     const { disabled, onFocusChange } = this.props;
+
     if (!disabled || disabled === END_DATE) {
       onFocusChange(START_DATE);
     }
@@ -260,6 +265,7 @@ export default class DateRangePickerInputController extends React.PureComponent 
 
   render() {
     const {
+      children,
       startDate,
       startDateId,
       startDatePlaceholderText,
@@ -322,7 +328,6 @@ export default class DateRangePickerInputController extends React.PureComponent 
         onStartDateShiftTab={this.onClearFocus}
         onEndDateChange={this.onEndDateChange}
         onEndDateFocus={this.onEndDateFocus}
-        onEndDateTab={this.onClearFocus}
         showClearDates={showClearDates}
         onClearDates={this.clearDates}
         screenReaderMessage={screenReaderMessage}
@@ -334,7 +339,9 @@ export default class DateRangePickerInputController extends React.PureComponent 
         small={small}
         regular={regular}
         verticalSpacing={verticalSpacing}
-      />
+      >
+        {children}
+      </DateRangePickerInput>
     );
   }
 }

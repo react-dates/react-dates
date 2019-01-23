@@ -128,6 +128,7 @@ class SingleDatePicker extends React.PureComponent {
       showKeyboardShortcuts: false,
     };
 
+    this.onFocusOut = this.onFocusOut.bind(this);
     this.onOutsideClick = this.onOutsideClick.bind(this);
     this.onInputFocus = this.onInputFocus.bind(this);
     this.onDayPickerFocus = this.onDayPickerFocus.bind(this);
@@ -143,12 +144,13 @@ class SingleDatePicker extends React.PureComponent {
 
   /* istanbul ignore next */
   componentDidMount() {
-    this.removeEventListener = addEventListener(
+    this.removeResizeEventListener = addEventListener(
       window,
       'resize',
       this.responsivizePickerPosition,
       { passive: true },
     );
+
     this.responsivizePickerPosition();
     this.disableScroll();
 
@@ -175,7 +177,8 @@ class SingleDatePicker extends React.PureComponent {
 
   /* istanbul ignore next */
   componentWillUnmount() {
-    if (this.removeEventListener) this.removeEventListener();
+    if (this.removeResizeEventListener) this.removeResizeEventListener();
+    if (this.removeFocusOutEventListener) this.removeFocusOutEventListener();
     if (this.enableScroll) this.enableScroll();
   }
 
@@ -188,6 +191,7 @@ class SingleDatePicker extends React.PureComponent {
       endDate,
       appendToBody,
     } = this.props;
+
     if (!focused) return;
     if (appendToBody && this.dayPickerContainer.contains(event.target)) return;
 
@@ -242,12 +246,39 @@ class SingleDatePicker extends React.PureComponent {
     });
   }
 
+  onFocusOut(e) {
+    const { onFocusChange } = this.props;
+    if (this.container.contains(e.relatedTarget || e.target)) return;
+    onFocusChange({ focused: false });
+  }
+
   setDayPickerContainerRef(ref) {
     this.dayPickerContainer = ref;
   }
 
   setContainerRef(ref) {
+    if (ref === this.container) return;
+    this.removeEventListeners();
+
     this.container = ref;
+    if (!ref) return;
+
+    this.addEventListeners();
+  }
+
+  addEventListeners() {
+    // We manually set event because React has not implemented onFocusIn/onFocusOut.
+    // Keep an eye on https://github.com/facebook/react/issues/6410 for updates
+    // We use "blur w/ useCapture param" vs "onfocusout" for FF browser support
+    this.removeFocusOutEventListener = addEventListener(
+      this.container,
+      'focusout',
+      this.onFocusOut,
+    );
+  }
+
+  removeEventListeners() {
+    if (this.removeFocusOutEventListener) this.removeFocusOutEventListener();
   }
 
   disableScroll() {
@@ -548,7 +579,9 @@ class SingleDatePicker extends React.PureComponent {
         verticalSpacing={verticalSpacing}
         reopenPickerOnClearDate={reopenPickerOnClearDate}
         keepOpenOnDateSelect={keepOpenOnDateSelect}
-      />
+      >
+        {this.maybeRenderDayPickerWithPortal()}
+      </SingleDatePickerInputController>
     );
 
     return (
@@ -562,11 +595,9 @@ class SingleDatePicker extends React.PureComponent {
         {enableOutsideClick && (
           <OutsideClickHandler onOutsideClick={this.onOutsideClick}>
             {input}
-            {this.maybeRenderDayPickerWithPortal()}
           </OutsideClickHandler>
         )}
-        {!enableOutsideClick && input}
-        {!enableOutsideClick && this.maybeRenderDayPickerWithPortal()}
+        {enableOutsideClick || input}
       </div>
     );
   }

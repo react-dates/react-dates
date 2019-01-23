@@ -29,6 +29,19 @@ describe('SingleDatePicker', () => {
         expect(wrapper.find(SingleDatePickerInputController)).to.have.lengthOf(1);
       });
 
+      it('renders with a DayPickerSingleDateController child when focused', () => {
+        const wrapper = shallow((
+          <SingleDatePicker
+            id="date"
+            focused
+          />
+        )).dive();
+        expect(wrapper.find(SingleDatePickerInputController)).to.have.property('children');
+        expect(
+          wrapper.find(SingleDatePickerInputController).find(DayPickerSingleDateController),
+        ).to.have.lengthOf(1);
+      });
+
       describe('props.isOutsideRange is defined', () => {
         it('should pass props.isOutsideRange to <SingleDatePickerInputController>', () => {
           const isOutsideRange = sinon.stub();
@@ -115,6 +128,7 @@ describe('SingleDatePicker', () => {
               focused
             />
           )).dive();
+
           expect(wrapper.find(Portal)).to.have.length(1);
         });
 
@@ -399,9 +413,7 @@ describe('SingleDatePicker', () => {
             focused
           />
         )).dive();
-        wrapper.setState({
-          isDayPickerFocused: true,
-        });
+        wrapper.setState({ isDayPickerFocused: true });
         wrapper.instance().onOutsideClick();
         expect(wrapper.state().isDayPickerFocused).to.equal(false);
       });
@@ -580,6 +592,23 @@ describe('SingleDatePicker', () => {
       });
       wrapper.instance().showKeyboardShortcutsPanel();
       expect(wrapper.state().showKeyboardShortcuts).to.equal(true);
+    });
+  });
+
+  describe('#onFocusOut', () => {
+    it('calls props.onFocusChange with focused: false', () => {
+      const onFocusChangeStub = sinon.stub();
+      const wrapper = shallow((
+        <SingleDatePicker id="date" onFocusChange={onFocusChangeStub} />
+      )).dive();
+
+      wrapper.instance().container = {
+        contains: () => false,
+      };
+
+      wrapper.instance().onFocusOut({});
+      expect(onFocusChangeStub.callCount).to.equal(1);
+      expect(onFocusChangeStub.getCall(0).args[0]).to.deep.equal({ focused: false });
     });
   });
 });
