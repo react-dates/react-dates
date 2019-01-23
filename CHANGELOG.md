@@ -4,6 +4,9 @@
 - []  ([#](https://github.com/airbnb/react-dates/pull/))
 -->
 
+## 18.4.1
+- [fix] Make DRP and SDP calendars tabbable from the inputs ([#1499](https://github.com/airbnb/react-dates/pull/1499))
+
 ## 18.4.0
 - [new] Clarify VoiceOver text for dates selected as start-date and end-date ([#1501](https://github.com/airbnb/react-dates/pull/1501))
 
