@@ -335,6 +335,7 @@ class CustomizableCalendarDay extends React.PureComponent {
         )}
         role="button" // eslint-disable-line jsx-a11y/no-noninteractive-element-to-interactive-role
         ref={this.setButtonRef}
+        aria-disabled={modifiers.has('blocked')}
         aria-label={ariaLabel}
         onMouseEnter={(e) => { this.onDayMouseEnter(day, e); }}
         onMouseLeave={(e) => { this.onDayMouseLeave(day, e); }}
