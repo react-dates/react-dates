@@ -699,4 +699,46 @@ describe('DateRangePicker', () => {
       });
     });
   });
+
+  describe('dateOffsets', () => {
+    describe('startDateOffset is passed in', () => {
+      it('Should pass startDateOffset to DayPickerRangeController', () => {
+        const startDate = moment('2018-10-17');
+        const onDatesChangeStub = sinon.stub();
+        const wrapper = shallow((
+          <DateRangePicker
+            {...requiredProps}
+            startDateOffset={date => date.subtract(5, 'days')}
+            onDatesChange={onDatesChangeStub}
+            focusedInput={START_DATE}
+          />
+        )).dive();
+
+        const dayPicker = wrapper.find(DayPickerRangeController);
+        const dayPickerStartDateOffset = dayPicker.props().startDateOffset(startDate);
+
+        expect(dayPickerStartDateOffset.format()).to.equal(startDate.format());
+      });
+    });
+
+    describe('endDateOffset is passed in', () => {
+      it('Should pass endDateOffset to DayPickerRangeController', () => {
+        const endDate = moment('2018-10-17', 'YYYY-MM-DD');
+        const onDatesChangeStub = sinon.stub();
+        const wrapper = shallow((
+          <DateRangePicker
+            {...requiredProps}
+            endDateOffset={date => date.subtract(5, 'days')}
+            onDatesChange={onDatesChangeStub}
+            focusedInput={START_DATE}
+          />
+        )).dive();
+
+        const dayPicker = wrapper.find(DayPickerRangeController);
+        const dayPickerEndDateOffset = dayPicker.props().endDateOffset(endDate);
+
+        expect(dayPickerEndDateOffset.format()).to.equal(endDate.format());
+      });
+    });
+  });
 });

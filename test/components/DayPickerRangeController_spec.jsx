@@ -1563,6 +1563,35 @@ describe('DayPickerRangeController', () => {
         expect(args.endDate.format()).to.equal(clickDate.clone().add(4, 'days').format());
       });
 
+      it('does not call props.onDatesChange with startDate === startDateOffset(date) and endDate === endDateOffset(date)', () => {
+        const clickDate = moment(today).clone().add(2, 'days');
+        const onDatesChangeStub = sinon.spy();
+        const wrapper = shallow((
+          <DayPickerRangeController
+            onDatesChange={onDatesChangeStub}
+            startDateOffset={day => day.subtract(2, 'days')}
+            endDateOffset={day => day.add(4, 'days')}
+            isOutsideRange={day => day.isAfter(moment(today))}
+          />
+        ));
+        wrapper.instance().onDayClick(clickDate);
+        expect(onDatesChangeStub).to.have.property('callCount', 0);
+      });
+
+      it('does not call props.onDatesChange when dateOffset isOutsideRange', () => {
+        const clickDate = moment(today);
+        const onDatesChangeStub = sinon.stub();
+        const wrapper = shallow((
+          <DayPickerRangeController
+            onDatesChange={onDatesChangeStub}
+            endDateOffset={day => day.add(5, 'days')}
+            isOutsideRange={day => day.isAfter(moment(today).clone().add(1, 'days'))}
+          />
+        ));
+        wrapper.instance().onDayClick(clickDate);
+        expect(onDatesChangeStub).to.have.property('callCount', 0);
+      });
+
       it('calls props.onDatesChange with startDate === startDateOffset(date) and endDate === selectedDate when endDateOffset not provided', () => {
         const clickDate = moment(today).clone().add(2, 'days');
         const onDatesChangeStub = sinon.stub();
