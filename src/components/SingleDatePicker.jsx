@@ -348,27 +348,43 @@ class SingleDatePicker extends React.PureComponent {
     });
   }
 
-  maybeRenderDayPickerWithPortal() {
+  maybeRenderDayPicker() {
     const {
       focused,
-      withPortal,
-      withFullScreenPortal,
-      appendToBody,
     } = this.props;
 
     if (!focused) {
       return null;
     }
 
+    return this.renderDayPicker();
+  }
+
+  maybeWithPortal(children) {
+    const {
+      withPortal,
+      withFullScreenPortal,
+      appendToBody,
+    } = this.props;
+
     if (withPortal || withFullScreenPortal || appendToBody) {
-      return (
-        <Portal>
-          {this.renderDayPicker()}
-        </Portal>
-      );
+      return <Portal>{children}</Portal>;
     }
 
-    return this.renderDayPicker();
+    return children;
+  }
+
+  maybeWithOutsideClickHandler(children) {
+    const { withPortal, withFullScreenPortal } = this.props;
+    const enableOutsideClick = !withPortal && !withFullScreenPortal;
+
+    if (!enableOutsideClick) return children;
+
+    return (
+      <OutsideClickHandler onOutsideClick={this.onOutsideClick}>
+        {children}
+      </OutsideClickHandler>
+    );
   }
 
   renderDayPicker() {
@@ -417,6 +433,7 @@ class SingleDatePicker extends React.PureComponent {
       small,
       theme: { reactDates },
     } = this.props;
+
     const { dayPickerContainerStyles, isDayPickerFocused, showKeyboardShortcuts } = this.state;
 
     const onOutsideClick = (!withFullScreenPortal && withPortal) ? this.onOutsideClick : undefined;
@@ -542,8 +559,6 @@ class SingleDatePicker extends React.PureComponent {
 
     const { isInputFocused } = this.state;
 
-    const enableOutsideClick = (!withPortal && !withFullScreenPortal);
-
     const hideFang = verticalSpacing < FANG_HEIGHT_PX;
 
     const input = (
@@ -580,7 +595,7 @@ class SingleDatePicker extends React.PureComponent {
         reopenPickerOnClearDate={reopenPickerOnClearDate}
         keepOpenOnDateSelect={keepOpenOnDateSelect}
       >
-        {this.maybeRenderDayPickerWithPortal()}
+        {this.maybeRenderDayPicker()}
       </SingleDatePickerInputController>
     );
 
@@ -592,12 +607,7 @@ class SingleDatePicker extends React.PureComponent {
           block && styles.SingleDatePicker__block,
         )}
       >
-        {enableOutsideClick && (
-          <OutsideClickHandler onOutsideClick={this.onOutsideClick}>
-            {input}
-          </OutsideClickHandler>
-        )}
-        {enableOutsideClick || input}
+        {this.maybeWithPortal(this.maybeWithOutsideClickHandler(input))}
       </div>
     );
   }

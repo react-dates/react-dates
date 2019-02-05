@@ -363,22 +363,29 @@ class DateRangePicker extends React.PureComponent {
     });
   }
 
-  maybeRenderDayPickerWithPortal() {
-    const { withPortal, withFullScreenPortal, appendToBody } = this.props;
-
+  maybeRenderDayPicker() {
     if (!this.isOpened()) {
       return null;
     }
 
+    return this.renderDayPicker();
+  }
+
+  maybeWithPortal(children) {
+    // Use the <Portal> component when requested to hoist the element as a
+    // direct child of document.body.
+
+    const { withPortal, withFullScreenPortal, appendToBody } = this.props;
+
     if (withPortal || withFullScreenPortal || appendToBody) {
       return (
         <Portal>
-          {this.renderDayPicker()}
+          {children}
         </Portal>
       );
     }
 
-    return this.renderDayPicker();
+    return children;
   }
 
   renderDayPicker() {
@@ -556,6 +563,7 @@ class DateRangePicker extends React.PureComponent {
       isOutsideRange,
       minimumNights,
       withPortal,
+      appendToBody,
       withFullScreenPortal,
       displayFormat,
       reopenPickerOnClearDates,
@@ -619,11 +627,11 @@ class DateRangePicker extends React.PureComponent {
         regular={regular}
         verticalSpacing={verticalSpacing}
       >
-        {this.maybeRenderDayPickerWithPortal()}
+        {this.maybeRenderDayPicker()}
       </DateRangePickerInputController>
     );
 
-    return (
+    return this.maybeWithPortal(
       <div
         ref={this.setContainerRef}
         {...css(
@@ -637,7 +645,7 @@ class DateRangePicker extends React.PureComponent {
           </OutsideClickHandler>
         )}
         {enableOutsideClick || input}
-      </div>
+      </div>,
     );
   }
 }
