@@ -563,7 +563,6 @@ class DateRangePicker extends React.PureComponent {
       isOutsideRange,
       minimumNights,
       withPortal,
-      appendToBody,
       withFullScreenPortal,
       displayFormat,
       reopenPickerOnClearDates,
