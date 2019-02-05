@@ -1635,7 +1635,7 @@ describe('DayPickerRangeController', () => {
           />
         ));
         wrapper.instance().onDayClick(clickDate);
-        expect(onDatesChangeStub.callCount).to.equal(1);
+        expect(onDatesChangeStub).to.have.property('callCount', 1);
         const args = onDatesChangeStub.getCall(0).args[0];
         expect(args.startDate.format()).to.equal(clickDate.clone().format());
         expect(args.endDate).to.equal(null);
@@ -1652,7 +1652,7 @@ describe('DayPickerRangeController', () => {
           />
         ));
         wrapper.instance().onDayClick(clickDate);
-        expect(onDatesChangeStub.callCount).to.equal(1);
+        expect(onDatesChangeStub).to.have.property('callCount', 1);
         const args = onDatesChangeStub.getCall(0).args[0];
         expect(args.startDate).to.equal(null);
         expect(args.endDate.format()).to.equal(clickDate.clone().format());
@@ -1671,7 +1671,7 @@ describe('DayPickerRangeController', () => {
           />
         ));
         wrapper.instance().onDayClick(clickDate);
-        expect(onDatesChangeStub.callCount).to.equal(1);
+        expect(onDatesChangeStub).to.have.property('callCount', 1);
         const args = onDatesChangeStub.getCall(0).args[0];
         expect(args.startDate.format()).to.equal(startDate.clone().format());
         expect(args.endDate.format()).to.equal(clickDate.clone().format());
@@ -1690,7 +1690,7 @@ describe('DayPickerRangeController', () => {
           />
         ));
         wrapper.instance().onDayClick(clickDate);
-        expect(onDatesChangeStub.callCount).to.equal(1);
+        expect(onDatesChangeStub).to.have.property('callCount', 1);
         const args = onDatesChangeStub.getCall(0).args[0];
         expect(args.startDate.format()).to.equal(clickDate.clone().format());
         expect(args.endDate).to.equal(null);
@@ -1711,7 +1711,7 @@ describe('DayPickerRangeController', () => {
           />
         ));
         wrapper.instance().onDayClick(clickDate);
-        expect(onDatesChangeStub.callCount).to.equal(1);
+        expect(onDatesChangeStub).to.have.property('callCount', 1);
         const args = onDatesChangeStub.getCall(0).args[0];
         expect(args.startDate.format()).to.equal(startDate.clone().format());
         expect(args.endDate).to.equal(null);
@@ -1727,7 +1727,7 @@ describe('DayPickerRangeController', () => {
           />
         ));
         wrapper.instance().onDayClick(clickDate);
-        expect(onDatesChangeStub.callCount).to.equal(1);
+        expect(onDatesChangeStub).to.have.property('callCount', 1);
         const args = onDatesChangeStub.getCall(0).args[0];
         expect(args.startDate.format()).to.equal(clickDate.clone().subtract(2, 'days').format());
         expect(args.endDate.format()).to.equal(clickDate.clone().format());
@@ -1743,7 +1743,7 @@ describe('DayPickerRangeController', () => {
           />
         ));
         wrapper.instance().onDayClick(clickDate);
-        expect(onDatesChangeStub.callCount).to.equal(1);
+        expect(onDatesChangeStub).to.have.property('callCount', 1);
         const args = onDatesChangeStub.getCall(0).args[0];
         expect(args.startDate.format()).to.equal(clickDate.clone().format());
         expect(args.endDate.format()).to.equal(clickDate.clone().add(4, 'days').format());
