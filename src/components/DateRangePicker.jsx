@@ -631,7 +631,7 @@ class DateRangePicker extends React.PureComponent {
       </DateRangePickerInputController>
     );
 
-    return this.maybeWithPortal(
+    return this.maybeWithPortal((
       <div
         ref={this.setContainerRef}
         {...css(
@@ -645,8 +645,8 @@ class DateRangePicker extends React.PureComponent {
           </OutsideClickHandler>
         )}
         {enableOutsideClick || input}
-      </div>,
-    );
+      </div>
+    ));
   }
 }
 
