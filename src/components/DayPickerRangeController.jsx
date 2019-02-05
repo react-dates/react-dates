@@ -490,11 +490,12 @@ export default class DayPickerRangeController extends React.PureComponent {
     if (startDateOffset || endDateOffset) {
       startDate = getSelectedDateOffset(startDateOffset, day);
       endDate = getSelectedDateOffset(endDateOffset, day);
-      onDatesChange({ startDate, endDate });
 
       if (this.isBlocked(startDate) || this.isBlocked(endDate)) {
         return;
       }
+
+      onDatesChange({ startDate, endDate });
 
       if (!keepOpenOnDateSelect) {
         onFocusChange(null);
