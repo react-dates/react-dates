@@ -1622,6 +1622,57 @@ describe('DayPickerRangeController', () => {
         expect(args.endDate.format()).to.equal(clickDate.clone().add(12, 'days').format());
       });
     });
+
+    describe('logic in props.onDatesChange affects props.onFocusChange', () => {
+      let preventFocusChange;
+      let focusedInput;
+      let onDatesChange;
+      let onFocusChange;
+      beforeEach(() => {
+        preventFocusChange = false;
+        focusedInput = START_DATE;
+        onDatesChange = ({ startDate }) => {
+          if (isSameDay(startDate, today)) preventFocusChange = true;
+        };
+        onFocusChange = (input) => {
+          if (!preventFocusChange) {
+            focusedInput = input;
+          } else {
+            preventFocusChange = false;
+          }
+        };
+      });
+
+      it('calls onDayClick with a day that prevents a focus change', () => {
+        const clickDate = moment(today);
+        const wrapper = shallow((
+          <DayPickerRangeController
+            onDatesChange={onDatesChange}
+            onFocusChange={onFocusChange}
+            focusedInput={START_DATE}
+          />
+        ));
+        // The first day click sets preventFocusChange to true, but it doesn't take effect until the
+        // second day click because onFocusChange is called before onDatesChange
+        wrapper.instance().onDayClick(clickDate);
+        expect(focusedInput).to.equal(END_DATE);
+        wrapper.instance().onDayClick(clickDate.clone().add(1, 'days'));
+        expect(focusedInput).to.equal(END_DATE);
+      });
+
+      it('calls onDayClick with a day that does not prevent a focus change', () => {
+        const clickDate = moment(today).clone().add(2, 'days');
+        const wrapper = shallow((
+          <DayPickerRangeController
+            onDatesChange={onDatesChange}
+            onFocusChange={onFocusChange}
+            focusedInput={START_DATE}
+          />
+        ));
+        wrapper.instance().onDayClick(clickDate);
+        expect(focusedInput).to.equal(END_DATE);
+      });
+    });
   });
 
   describe('#onDayMouseEnter', () => {
