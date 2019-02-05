@@ -1779,10 +1779,8 @@ describe('DayPickerRangeController', () => {
             focusedInput={START_DATE}
           />
         ));
-        // The first day click sets preventFocusChange to true, but it doesn't take effect until the
-        // second day click because onFocusChange is called before onDatesChange
         wrapper.instance().onDayClick(clickDate);
-        expect(focusedInput).to.equal(END_DATE);
+        expect(focusedInput).to.equal(START_DATE);
         wrapper.instance().onDayClick(clickDate.clone().add(1, 'days'));
         expect(focusedInput).to.equal(END_DATE);
       });
