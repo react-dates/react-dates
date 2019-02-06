@@ -250,8 +250,9 @@ class DateRangePicker extends React.PureComponent {
     //
     // We handle both situations here by using the ` || ` operator to fallback
     // to *event.target** when **relatedTarget** is not provided.
-    if (this.dayPickerContainer.contains(event.relatedTarget || event.target)
-      || this.dayPickerContainer.contains(event.target)) return;
+    const { contains } = this.dayPickerContainer;
+    const { relatedTarget, target } = event;
+    if (contains(relatedTarget) || contains(target)) return;
     this.onOutsideClick(event);
   }
 
