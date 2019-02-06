@@ -97,7 +97,7 @@
     "node-sass": "^4.9.3",
     "nyc": "^12.0.2",
     "raw-loader": "^0.5.1",
-    "react": "^0.14 || ^15.5.4 || ^16.1.1",
+    "react": "^16.8.1",
     "react-dom": "^0.14 || ^15.5.4 || ^16.1.1",
     "react-with-styles-interface-aphrodite": "^5.0.1",
     "react-with-styles-interface-css-compiler": "^2.0.0",
