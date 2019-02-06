@@ -4,6 +4,9 @@
 - []  ([#](https://github.com/airbnb/react-dates/pull/))
 -->
 
+## 19.0.0
+- [breaking] Call `onDatesChange` before `onFocusChange` in the DRP ([#1525](https://github.com/airbnb/react-dates/pull/1525))
+
 ## 18.5.0
 - [fix] Add `aria-disabled` attribute to the (Customizable)CalendarDay ([#1521](https://github.com/airbnb/react-dates/pull/1521))
 - [new] Add `startDateOffset` and `endDateOffset` props to the DRP ([#1252](https://github.com/airbnb/react-dates/pull/1252))
