@@ -1623,6 +1623,133 @@ describe('DayPickerRangeController', () => {
       });
     });
 
+    describe('props.onDatesChange only called once in onDayClick', () => {
+      it('calls props.onDatesChange once when focusedInput === START_DATE', () => {
+        const clickDate = moment(today);
+        const onDatesChangeStub = sinon.stub();
+        const wrapper = shallow((
+          <DayPickerRangeController
+            onDatesChange={onDatesChangeStub}
+            focusedInput={START_DATE}
+            endDate={null}
+          />
+        ));
+        wrapper.instance().onDayClick(clickDate);
+        expect(onDatesChangeStub).to.have.property('callCount', 1);
+        const args = onDatesChangeStub.getCall(0).args[0];
+        expect(args.startDate.format()).to.equal(clickDate.clone().format());
+        expect(args.endDate).to.equal(null);
+      });
+
+      it('calls props.onDatesChange once when focusedInput === END_DATE and there is no startDate', () => {
+        const clickDate = moment(today);
+        const onDatesChangeStub = sinon.stub();
+        const wrapper = shallow((
+          <DayPickerRangeController
+            onDatesChange={onDatesChangeStub}
+            focusedInput={END_DATE}
+            startDate={null}
+          />
+        ));
+        wrapper.instance().onDayClick(clickDate);
+        expect(onDatesChangeStub).to.have.property('callCount', 1);
+        const args = onDatesChangeStub.getCall(0).args[0];
+        expect(args.startDate).to.equal(null);
+        expect(args.endDate.format()).to.equal(clickDate.clone().format());
+      });
+
+      it('calls props.onDatesChange once when focusedInput === END_DATE and the day is a valid endDate', () => {
+        const clickDate = moment(today);
+        const startDate = clickDate.clone().subtract(2, 'days');
+        const onDatesChangeStub = sinon.stub();
+        const wrapper = shallow((
+          <DayPickerRangeController
+            onDatesChange={onDatesChangeStub}
+            focusedInput={END_DATE}
+            minimumNights={2}
+            startDate={startDate}
+          />
+        ));
+        wrapper.instance().onDayClick(clickDate);
+        expect(onDatesChangeStub).to.have.property('callCount', 1);
+        const args = onDatesChangeStub.getCall(0).args[0];
+        expect(args.startDate.format()).to.equal(startDate.clone().format());
+        expect(args.endDate.format()).to.equal(clickDate.clone().format());
+      });
+
+      it('calls props.onDatesChange once when focusedInput === END_DATE, the day is an invalid endDate, and disabled !== START_DATE', () => {
+        const clickDate = moment(today);
+        const onDatesChangeStub = sinon.stub();
+        const wrapper = shallow((
+          <DayPickerRangeController
+            onDatesChange={onDatesChangeStub}
+            focusedInput={END_DATE}
+            minimumNights={2}
+            startDate={clickDate.clone().add(1, 'days')}
+            endDate={null}
+          />
+        ));
+        wrapper.instance().onDayClick(clickDate);
+        expect(onDatesChangeStub).to.have.property('callCount', 1);
+        const args = onDatesChangeStub.getCall(0).args[0];
+        expect(args.startDate.format()).to.equal(clickDate.clone().format());
+        expect(args.endDate).to.equal(null);
+      });
+
+      it('calls props.onDatesChange once when focusedInput === END_DATE and the day is an invalid endDate', () => {
+        const clickDate = moment(today);
+        const startDate = clickDate.clone().add(1, 'days');
+        const onDatesChangeStub = sinon.stub();
+        const wrapper = shallow((
+          <DayPickerRangeController
+            onDatesChange={onDatesChangeStub}
+            focusedInput={END_DATE}
+            disabled={START_DATE}
+            minimumNights={2}
+            startDate={startDate}
+            endDate={null}
+          />
+        ));
+        wrapper.instance().onDayClick(clickDate);
+        expect(onDatesChangeStub).to.have.property('callCount', 1);
+        const args = onDatesChangeStub.getCall(0).args[0];
+        expect(args.startDate.format()).to.equal(startDate.clone().format());
+        expect(args.endDate).to.equal(null);
+      });
+
+      it('calls props.onDatesChange once when there is a startDateOffset', () => {
+        const clickDate = moment(today);
+        const onDatesChangeStub = sinon.stub();
+        const wrapper = shallow((
+          <DayPickerRangeController
+            onDatesChange={onDatesChangeStub}
+            startDateOffset={day => day.subtract(2, 'days')}
+          />
+        ));
+        wrapper.instance().onDayClick(clickDate);
+        expect(onDatesChangeStub).to.have.property('callCount', 1);
+        const args = onDatesChangeStub.getCall(0).args[0];
+        expect(args.startDate.format()).to.equal(clickDate.clone().subtract(2, 'days').format());
+        expect(args.endDate.format()).to.equal(clickDate.clone().format());
+      });
+
+      it('calls props.onDatesChange once when there is a endDateOffset', () => {
+        const clickDate = moment(today);
+        const onDatesChangeStub = sinon.stub();
+        const wrapper = shallow((
+          <DayPickerRangeController
+            onDatesChange={onDatesChangeStub}
+            endDateOffset={day => day.add(4, 'days')}
+          />
+        ));
+        wrapper.instance().onDayClick(clickDate);
+        expect(onDatesChangeStub).to.have.property('callCount', 1);
+        const args = onDatesChangeStub.getCall(0).args[0];
+        expect(args.startDate.format()).to.equal(clickDate.clone().format());
+        expect(args.endDate.format()).to.equal(clickDate.clone().add(4, 'days').format());
+      });
+    });
+
     describe('logic in props.onDatesChange affects props.onFocusChange', () => {
       let preventFocusChange;
       let focusedInput;
@@ -1652,10 +1779,8 @@ describe('DayPickerRangeController', () => {
             focusedInput={START_DATE}
           />
         ));
-        // The first day click sets preventFocusChange to true, but it doesn't take effect until the
-        // second day click because onFocusChange is called before onDatesChange
         wrapper.instance().onDayClick(clickDate);
-        expect(focusedInput).to.equal(END_DATE);
+        expect(focusedInput).to.equal(START_DATE);
         wrapper.instance().onDayClick(clickDate.clone().add(1, 'days'));
         expect(focusedInput).to.equal(END_DATE);
       });
