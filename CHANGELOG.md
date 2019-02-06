@@ -4,6 +4,10 @@
 - []  ([#](https://github.com/airbnb/react-dates/pull/))
 -->
 
+## 18.5.0
+- [fix] Add `aria-disabled` attribute to the (Customizable)CalendarDay ([#1521](https://github.com/airbnb/react-dates/pull/1521))
+- [new] Add `startDateOffset` and `endDateOffset` props to the DRP ([#1252](https://github.com/airbnb/react-dates/pull/1252))
+
 ## 18.4.1
 - [fix] Make DRP and SDP calendars tabbable from the inputs ([#1499](https://github.com/airbnb/react-dates/pull/1499))
 
