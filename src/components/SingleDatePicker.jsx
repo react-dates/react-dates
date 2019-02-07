@@ -253,17 +253,17 @@ class SingleDatePicker extends React.PureComponent {
   }
 
   setDayPickerContainerRef(ref) {
-    this.dayPickerContainer = ref;
-  }
-
-  setContainerRef(ref) {
-    if (ref === this.container) return;
+    if (ref === this.dayPickerContainer) return;
     this.removeEventListeners();
 
-    this.container = ref;
+    this.dayPickerContainer = ref;
     if (!ref) return;
 
     this.addEventListeners();
+  }
+
+  setContainerRef(ref) {
+    this.container = ref;
   }
 
   addEventListeners() {
@@ -271,7 +271,7 @@ class SingleDatePicker extends React.PureComponent {
     // Keep an eye on https://github.com/facebook/react/issues/6410 for updates
     // We use "blur w/ useCapture param" vs "onfocusout" for FF browser support
     this.removeFocusOutEventListener = addEventListener(
-      this.container,
+      this.dayPickerContainer,
       'focusout',
       this.onFocusOut,
     );
@@ -307,6 +307,7 @@ class SingleDatePicker extends React.PureComponent {
       appendToBody,
       focused,
     } = this.props;
+
     const { dayPickerContainerStyles } = this.state;
 
     if (!focused) {
