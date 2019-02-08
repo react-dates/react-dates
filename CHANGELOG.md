@@ -4,6 +4,10 @@
 - []  ([#](https://github.com/airbnb/react-dates/pull/))
 -->
 
+## 19.0.1
+- [fix] Fix single date picker not responding to input  ([#1533](https://github.com/airbnb/react-dates/pull/1533))
+- [fix] Fixes the focus out event in IE11 ([#1524](https://github.com/airbnb/react-dates/pull/1524))
+
 ## 19.0.0
 - [breaking] Call `onDatesChange` before `onFocusChange` in the DRP ([#1525](https://github.com/airbnb/react-dates/pull/1525))
 
