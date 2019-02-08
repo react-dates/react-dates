@@ -79,9 +79,7 @@ class CalendarDay extends React.PureComponent {
   }
 
   onKeyDown(day, e) {
-    const {
-      onDayClick,
-    } = this.props;
+    const { onDayClick } = this.props;
 
     const { key } = e;
     if (key === 'Enter' || key === ' ') {
@@ -133,7 +131,6 @@ class CalendarDay extends React.PureComponent {
           modifiers.has('blocked-calendar') && styles.CalendarDay__blocked_calendar,
           hoveredSpan && styles.CalendarDay__hovered_span,
           modifiers.has('selected-span') && styles.CalendarDay__selected_span,
-          modifiers.has('last-in-range') && styles.CalendarDay__last_in_range,
           modifiers.has('selected-start') && styles.CalendarDay__selected_start,
           modifiers.has('selected-end') && styles.CalendarDay__selected_end,
           selected && styles.CalendarDay__selected,
@@ -251,14 +248,6 @@ export default withStyles(({ reactDates: { color, font } }) => ({
       background: color.selectedSpan.backgroundColor_active,
       border: `1px double ${color.selectedSpan.borderColor}`,
       color: color.selectedSpan.color_active,
-    },
-  },
-
-  CalendarDay__last_in_range: {
-    borderStyle: 'solid',
-
-    ':hover': {
-      borderStyle: 'solid',
     },
   },
 
