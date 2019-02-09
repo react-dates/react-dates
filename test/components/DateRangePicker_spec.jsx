@@ -522,7 +522,7 @@ describe('DateRangePicker', () => {
     });
   });
 
-  describe('#onDayPickerBlur', () => {
+  describeIfWindow('#onDayPickerBlur', () => {
     it('sets state.isDateRangePickerInputFocused to true', () => {
       const wrapper = shallow((
         <DateRangePicker

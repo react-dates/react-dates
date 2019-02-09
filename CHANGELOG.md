@@ -4,6 +4,17 @@
 - []  ([#](https://github.com/airbnb/react-dates/pull/))
 -->
 
+## 19.0.1
+- [fix] Fix single date picker not responding to input ([#1533](https://github.com/airbnb/react-dates/pull/1533))
+- [fix] Fixes the focus out event in IE11 ([#1524](https://github.com/airbnb/react-dates/pull/1524))
+
+## 19.0.0
+- [breaking] Call `onDatesChange` before `onFocusChange` in the DRP ([#1525](https://github.com/airbnb/react-dates/pull/1525))
+
+## 18.5.0
+- [fix] Add `aria-disabled` attribute to the (Customizable)CalendarDay ([#1521](https://github.com/airbnb/react-dates/pull/1521))
+- [new] Add `startDateOffset` and `endDateOffset` props to the DRP ([#1252](https://github.com/airbnb/react-dates/pull/1252))
+
 ## 18.4.1
 - [fix] Make DRP and SDP calendars tabbable from the inputs ([#1499](https://github.com/airbnb/react-dates/pull/1499))
 
