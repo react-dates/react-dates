@@ -2698,6 +2698,18 @@ describe('DayPickerRangeController', () => {
       expect(modifiers.has('selected-span')).to.equal(true);
     });
 
+    it('contains `last-in-range` if this.isLastInRange returns true', () => {
+      sinon.stub(DayPickerRangeController.prototype, 'isLastInRange').returns(true);
+      const wrapper = shallow((
+        <DayPickerRangeController
+          onDatesChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />
+      ));
+      const modifiers = wrapper.instance().getModifiersForDay(moment());
+      expect(modifiers.has('last-in-range')).to.equal(true);
+    });
+
     it('contains `hovered` if this.isHovered returns true', () => {
       sinon.stub(DayPickerRangeController.prototype, 'isHovered').returns(true);
       const wrapper = shallow(<DayPickerRangeController

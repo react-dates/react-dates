@@ -198,6 +198,7 @@ export default class DayPickerRangeController extends React.PureComponent {
       'selected-end': day => this.isEndDate(day),
       'blocked-minimum-nights': day => this.doesNotMeetMinimumNights(day),
       'selected-span': day => this.isInSelectedSpan(day),
+      'last-in-range': day => this.isLastInRange(day),
       hovered: day => this.isHovered(day),
       'hovered-span': day => this.isInHoveredSpan(day),
       'hovered-offset': day => this.isInHoveredSpan(day),
