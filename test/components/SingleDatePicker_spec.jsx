@@ -602,7 +602,7 @@ describe('SingleDatePicker', () => {
         <SingleDatePicker id="date" onFocusChange={onFocusChangeStub} />
       )).dive();
 
-      wrapper.instance().container = {
+      wrapper.instance().dayPickerContainer = {
         contains: () => false,
       };
 
