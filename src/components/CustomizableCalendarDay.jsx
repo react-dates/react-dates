@@ -63,6 +63,7 @@ const propTypes = forbidExtraProps({
   blockedOutOfRangeStyles: DayStyleShape,
   hoveredSpanStyles: DayStyleShape,
   selectedSpanStyles: DayStyleShape,
+  lastInRangeStyles: DayStyleShape,
   selectedStyles: DayStyleShape,
   selectedStartStyles: DayStyleShape,
   selectedEndStyles: DayStyleShape,
@@ -159,6 +160,8 @@ export const selectedSpanStyles = {
   },
 };
 
+export const lastInRangeStyles = {};
+
 export const selectedStyles = {
   background: color.selected.backgroundColor,
   border: `1px double ${color.selected.borderColor}`,
@@ -194,6 +197,7 @@ const defaultProps = {
   blockedOutOfRangeStyles,
   hoveredSpanStyles,
   selectedSpanStyles,
+  lastInRangeStyles,
   selectedStyles,
   selectedStartStyles: {},
   selectedEndStyles: {},
@@ -280,6 +284,7 @@ class CustomizableCalendarDay extends React.PureComponent {
       blockedOutOfRangeStyles: blockedOutOfRangeStylesWithHover,
       hoveredSpanStyles: hoveredSpanStylesWithHover,
       selectedSpanStyles: selectedSpanStylesWithHover,
+      lastInRangeStyles: lastInRangeStylesWithHover,
       selectedStyles: selectedStylesWithHover,
       selectedStartStyles: selectedStartStylesWithHover,
       selectedEndStyles: selectedEndStylesWithHover,
@@ -316,6 +321,7 @@ class CustomizableCalendarDay extends React.PureComponent {
           hoveredSpan && getStyles(hoveredSpanStylesWithHover, isHovered),
           modifiers.has('after-hovered-start') && getStyles(afterHoveredStartStylesWithHover, isHovered),
           modifiers.has('selected-span') && getStyles(selectedSpanStylesWithHover, isHovered),
+          modifiers.has('last-in-range') && getStyles(lastInRangeStylesWithHover, isHovered),
           selected && getStyles(selectedStylesWithHover, isHovered),
           modifiers.has('selected-start') && getStyles(selectedStartStylesWithHover, isHovered),
           modifiers.has('selected-end') && getStyles(selectedEndStylesWithHover, isHovered),
