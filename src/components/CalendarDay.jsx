@@ -114,6 +114,7 @@ class CalendarDay extends React.PureComponent {
       selected,
       hoveredSpan,
       isOutsideRange,
+      isBeforeToday,
       ariaLabel,
     } = getCalendarDaySettings(day, ariaLabelFormat, daySize, modifiers, phrases);
 
@@ -138,6 +139,7 @@ class CalendarDay extends React.PureComponent {
           modifiers.has('selected-end') && styles.CalendarDay__selected_end,
           selected && styles.CalendarDay__selected,
           isOutsideRange && styles.CalendarDay__blocked_out_of_range,
+          isBeforeToday && styles.CalendarDay__before_today,
           daySizeStyles,
         )}
         role="button" // eslint-disable-line jsx-a11y/no-noninteractive-element-to-interactive-role
@@ -334,6 +336,7 @@ export default withStyles(({ reactDates: { color, font } }) => ({
     },
   },
 
+  CalendarDay__before_today: {},
   CalendarDay__selected_start: {},
   CalendarDay__selected_end: {},
   CalendarDay__today: {},

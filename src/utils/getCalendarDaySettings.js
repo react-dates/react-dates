@@ -1,5 +1,7 @@
+import moment from 'moment';
 import getPhrase from './getPhrase';
 import { BLOCKED_MODIFIER } from '../constants';
+import isBeforeDay from './isBeforeDay';
 
 export default function getCalendarDaySettings(day, ariaLabelFormat, daySize, modifiers, phrases) {
   const {
@@ -33,6 +35,7 @@ export default function getCalendarDaySettings(day, ariaLabelFormat, daySize, mo
   );
 
   const isOutsideRange = modifiers.has('blocked-out-of-range');
+  const isBeforeToday = isBeforeDay(day, moment());
 
   const formattedDate = { date: day.format(ariaLabelFormat) };
 
@@ -55,6 +58,7 @@ export default function getCalendarDaySettings(day, ariaLabelFormat, daySize, mo
     selected,
     hoveredSpan,
     isOutsideRange,
+    isBeforeToday,
     ariaLabel,
   };
 }
