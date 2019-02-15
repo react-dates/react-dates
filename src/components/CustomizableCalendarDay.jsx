@@ -68,6 +68,8 @@ const propTypes = forbidExtraProps({
   selectedStartStyles: DayStyleShape,
   selectedEndStyles: DayStyleShape,
   afterHoveredStartStyles: DayStyleShape,
+  hoveredStartFirstPossibleEndStyles: DayStyleShape,
+  hoveredStartBlockedMinNightsStyles: DayStyleShape,
 
   // internationalization
   phrases: PropTypes.shape(getPhrasePropTypes(CalendarDayPhrases)),
@@ -204,6 +206,8 @@ const defaultProps = {
   afterHoveredStartStyles: {},
   firstDayOfWeekStyles: {},
   lastDayOfWeekStyles: {},
+  hoveredStartFirstPossibleEndStyles: {},
+  hoveredStartBlockedMinNightsStyles: {},
 
   // internationalization
   phrases: CalendarDayPhrases,
@@ -289,6 +293,8 @@ class CustomizableCalendarDay extends React.PureComponent {
       selectedStartStyles: selectedStartStylesWithHover,
       selectedEndStyles: selectedEndStylesWithHover,
       afterHoveredStartStyles: afterHoveredStartStylesWithHover,
+      hoveredStartFirstPossibleEndStyles: hoveredStartFirstPossibleEndStylesWithHover,
+      hoveredStartBlockedMinNightsStyles: hoveredStartBlockedMinNightsStylesWithHover,
     } = this.props;
 
     const { isHovered } = this.state;
@@ -315,6 +321,8 @@ class CustomizableCalendarDay extends React.PureComponent {
           modifiers.has('today') && getStyles(todayStylesWithHover, isHovered),
           modifiers.has('first-day-of-week') && getStyles(firstDayOfWeekStylesWithHover, isHovered),
           modifiers.has('last-day-of-week') && getStyles(lastDayOfWeekStylesWithHover, isHovered),
+          modifiers.has('hovered-start-first-possible-end') && getStyles(hoveredStartFirstPossibleEndStylesWithHover, isHovered),
+          modifiers.has('hovered-start-blocked-minimum-nights') && getStyles(hoveredStartBlockedMinNightsStylesWithHover, isHovered),
           modifiers.has('highlighted-calendar') && getStyles(highlightedCalendarStylesWithHover, isHovered),
           modifiers.has('blocked-minimum-nights') && getStyles(blockedMinNightsStylesWithHover, isHovered),
           modifiers.has('blocked-calendar') && getStyles(blockedCalendarStylesWithHover, isHovered),
