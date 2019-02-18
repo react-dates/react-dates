@@ -296,6 +296,58 @@ describe('DayPicker', () => {
           const arg = maybeTransitionPrevMonthSpy.getCall(0).args[0];
           expect(arg.isSame(oneDayBefore, 'day')).to.equal(true);
         });
+
+        it('arg is end of previous month', () => {
+          const startOfThisMonth = today.clone().startOf('month');
+          const endOfPrevMonth = startOfThisMonth.clone().subtract(1, 'day');
+
+          const maybeTransitionPrevMonthSpy = sinon.spy(PureDayPicker.prototype, 'maybeTransitionPrevMonth');
+          const wrapper = shallow(<DayPicker />).dive();
+          wrapper.setState({
+            focusedDate: startOfThisMonth,
+          });
+          wrapper.instance().onKeyDown({ ...event, key: 'ArrowLeft' });
+          const arg = maybeTransitionPrevMonthSpy.getCall(0).args[0];
+          expect(arg.isSame(endOfPrevMonth, 'day')).to.equal(true);
+        });
+      });
+
+      describe('ArrowLeft -- RTL', () => {
+        it('calls maybeTransitionNextMonth', () => {
+          const maybeTransitionNextMonthSpy = sinon.spy(PureDayPicker.prototype, 'maybeTransitionNextMonth');
+          const wrapper = shallow(<DayPicker isRTL />).dive();
+          wrapper.setState({
+            focusedDate: today,
+          });
+          wrapper.instance().onKeyDown({ ...event, key: 'ArrowLeft' });
+          expect(maybeTransitionNextMonthSpy.callCount).to.equal(1);
+        });
+
+        it('arg is 1 day after focusedDate', () => {
+          const oneDayAfter = today.clone().add(1, 'day');
+          const maybeTransitionNextMonthSpy = sinon.spy(PureDayPicker.prototype, 'maybeTransitionNextMonth');
+          const wrapper = shallow(<DayPicker isRTL />).dive();
+          wrapper.setState({
+            focusedDate: today,
+          });
+          wrapper.instance().onKeyDown({ ...event, key: 'ArrowLeft' });
+          const arg = maybeTransitionNextMonthSpy.getCall(0).args[0];
+          expect(arg.isSame(oneDayAfter, 'day')).to.equal(true);
+        });
+
+        it('arg is start of next month', () => {
+          const endOfThisMonth = today.clone().endOf('month');
+          const startOfNextMonth = endOfThisMonth.clone().add(1, 'day');
+
+          const maybeTransitionNextMonthSpy = sinon.spy(PureDayPicker.prototype, 'maybeTransitionNextMonth');
+          const wrapper = shallow(<DayPicker isRTL />).dive();
+          wrapper.setState({
+            focusedDate: endOfThisMonth,
+          });
+          wrapper.instance().onKeyDown({ ...event, key: 'ArrowLeft' });
+          const arg = maybeTransitionNextMonthSpy.getCall(0).args[0];
+          expect(arg.isSame(startOfNextMonth, 'day')).to.equal(true);
+        });
       });
 
       describe('Home', () => {
@@ -391,6 +443,58 @@ describe('DayPicker', () => {
           wrapper.instance().onKeyDown({ ...event, key: 'ArrowRight' });
           const arg = maybeTransitionNextMonthSpy.getCall(0).args[0];
           expect(arg.isSame(oneDayAfter, 'day')).to.equal(true);
+        });
+
+        it('arg is start of next  month', () => {
+          const endOfThisMonth = today.clone().endOf('month');
+          const startOfNextMonth = endOfThisMonth.clone().add(1, 'day');
+
+          const maybeTransitionNextMonthSpy = sinon.spy(PureDayPicker.prototype, 'maybeTransitionNextMonth');
+          const wrapper = shallow(<DayPicker />).dive();
+          wrapper.setState({
+            focusedDate: endOfThisMonth,
+          });
+          wrapper.instance().onKeyDown({ ...event, key: 'ArrowRight' });
+          const arg = maybeTransitionNextMonthSpy.getCall(0).args[0];
+          expect(arg.isSame(startOfNextMonth, 'day')).to.equal(true);
+        });
+      });
+
+      describe('ArrowRight -- RTL', () => {
+        it('calls maybeTransitionPrevMonth', () => {
+          const maybeTransitionPrevMonthSpy = sinon.spy(PureDayPicker.prototype, 'maybeTransitionPrevMonth');
+          const wrapper = shallow(<DayPicker isRTL />).dive();
+          wrapper.setState({
+            focusedDate: today,
+          });
+          wrapper.instance().onKeyDown({ ...event, key: 'ArrowRight' });
+          expect(maybeTransitionPrevMonthSpy.callCount).to.equal(1);
+        });
+
+        it('arg is 1 day before focusedDate', () => {
+          const oneDayBefore = today.clone().subtract(1, 'day');
+          const maybeTransitionPrevMonthSpy = sinon.spy(PureDayPicker.prototype, 'maybeTransitionPrevMonth');
+          const wrapper = shallow(<DayPicker isRTL />).dive();
+          wrapper.setState({
+            focusedDate: today,
+          });
+          wrapper.instance().onKeyDown({ ...event, key: 'ArrowRight' });
+          const arg = maybeTransitionPrevMonthSpy.getCall(0).args[0];
+          expect(arg.isSame(oneDayBefore, 'day')).to.equal(true);
+        });
+
+        it('arg is end of previous month', () => {
+          const startOfThisMonth = today.clone().startOf('month');
+          const endOfPrevMonth = startOfThisMonth.clone().subtract(1, 'day');
+
+          const maybeTransitionPrevMonthSpy = sinon.spy(PureDayPicker.prototype, 'maybeTransitionPrevMonth');
+          const wrapper = shallow(<DayPicker isRTL />).dive();
+          wrapper.setState({
+            focusedDate: startOfThisMonth,
+          });
+          wrapper.instance().onKeyDown({ ...event, key: 'ArrowRight' });
+          const arg = maybeTransitionPrevMonthSpy.getCall(0).args[0];
+          expect(arg.isSame(endOfPrevMonth, 'day')).to.equal(true);
         });
       });
 

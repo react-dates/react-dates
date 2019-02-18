@@ -473,10 +473,11 @@ class DayPicker extends React.PureComponent {
         e.preventDefault();
         if (isRTL) {
           newFocusedDate.add(1, 'day');
+          didTransitionMonth = this.maybeTransitionNextMonth(newFocusedDate);
         } else {
           newFocusedDate.subtract(1, 'day');
+          didTransitionMonth = this.maybeTransitionPrevMonth(newFocusedDate);
         }
-        didTransitionMonth = this.maybeTransitionPrevMonth(newFocusedDate);
         break;
       case 'Home':
         e.preventDefault();
@@ -498,10 +499,11 @@ class DayPicker extends React.PureComponent {
         e.preventDefault();
         if (isRTL) {
           newFocusedDate.subtract(1, 'day');
+          didTransitionMonth = this.maybeTransitionPrevMonth(newFocusedDate);
         } else {
           newFocusedDate.add(1, 'day');
+          didTransitionMonth = this.maybeTransitionNextMonth(newFocusedDate);
         }
-        didTransitionMonth = this.maybeTransitionNextMonth(newFocusedDate);
         break;
       case 'End':
         e.preventDefault();
