@@ -139,7 +139,7 @@ function SingleDatePickerInput({
     />
   );
 
-  const screenReaderText = screenReaderMessage || phrases.keyboardNavigationInstructions;
+  const screenReaderText = screenReaderMessage || phrases.keyboardForwardNavigationInstructions;
   const inputIcon = (showDefaultInputIcon || customInputIcon !== null) && (
     <button
       {...css(styles.SingleDatePickerInput_calendarIcon)}
