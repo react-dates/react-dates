@@ -1,7 +1,25 @@
 import getPhrase from './getPhrase';
 import { BLOCKED_MODIFIER } from '../constants';
 
-export default function getCalendarDaySettings(day, ariaLabelFormat, daySize, modifiers, phrases) {
+function isSelected(modifiers) {
+  return modifiers.has('selected')
+  || modifiers.has('selected-span')
+  || modifiers.has('selected-start')
+  || modifiers.has('selected-end');
+}
+
+function shouldUseDefaultCursor(modifiers) {
+  return modifiers.has('blocked-minimum-nights')
+  || modifiers.has('blocked-calendar')
+  || modifiers.has('blocked-out-of-range');
+}
+
+function isHoveredSpan(modifiers) {
+  if (isSelected(modifiers)) return false;
+  return modifiers.has('hovered-span') || modifiers.has('after-hovered-start');
+}
+
+function getAriaLabel(phrases, modifiers, day, ariaLabelFormat) {
   const {
     chooseAvailableDate,
     dateIsUnavailable,
@@ -10,51 +28,34 @@ export default function getCalendarDaySettings(day, ariaLabelFormat, daySize, mo
     dateIsSelectedAsEndDate,
   } = phrases;
 
-  const daySizeStyles = {
-    width: daySize,
-    height: daySize - 1,
+  const formattedDate = {
+    date: day.format(ariaLabelFormat),
   };
 
-  const useDefaultCursor = (
-    modifiers.has('blocked-minimum-nights')
-    || modifiers.has('blocked-calendar')
-    || modifiers.has('blocked-out-of-range')
-  );
-
-  const selected = (
-    modifiers.has('selected')
-    || modifiers.has('selected-start')
-    || modifiers.has('selected-end')
-  );
-
-  const hoveredSpan = !selected && (
-    modifiers.has('hovered-span')
-    || modifiers.has('after-hovered-start')
-  );
-
-  const isOutsideRange = modifiers.has('blocked-out-of-range');
-
-  const formattedDate = { date: day.format(ariaLabelFormat) };
-
-  let ariaLabel = getPhrase(chooseAvailableDate, formattedDate);
-  if (selected) {
-    if (modifiers.has('selected-start') && dateIsSelectedAsStartDate) {
-      ariaLabel = getPhrase(dateIsSelectedAsStartDate, formattedDate);
-    } else if (modifiers.has('selected-end') && dateIsSelectedAsEndDate) {
-      ariaLabel = getPhrase(dateIsSelectedAsEndDate, formattedDate);
-    } else {
-      ariaLabel = getPhrase(dateIsSelected, formattedDate);
-    }
-  } else if (modifiers.has(BLOCKED_MODIFIER)) {
-    ariaLabel = getPhrase(dateIsUnavailable, formattedDate);
+  if (modifiers.has('selected-start') && dateIsSelectedAsStartDate) {
+    return getPhrase(dateIsSelectedAsStartDate, formattedDate);
+  } if (modifiers.has('selected-end') && dateIsSelectedAsEndDate) {
+    return getPhrase(dateIsSelectedAsEndDate, formattedDate);
+  } if (isSelected(modifiers) && dateIsSelected) {
+    return getPhrase(dateIsSelected, formattedDate);
+  } if (modifiers.has(BLOCKED_MODIFIER)) {
+    return getPhrase(dateIsUnavailable, formattedDate);
   }
 
+  return getPhrase(chooseAvailableDate, formattedDate);
+}
+
+export default function getCalendarDaySettings(day, ariaLabelFormat, daySize, modifiers, phrases) {
   return {
-    daySizeStyles,
-    useDefaultCursor,
-    selected,
-    hoveredSpan,
-    isOutsideRange,
-    ariaLabel,
+    ariaLabel: getAriaLabel(phrases, modifiers, day, ariaLabelFormat),
+    hoveredSpan: isHoveredSpan(modifiers),
+    isOutsideRange: modifiers.has('blocked-out-of-range'),
+    selected: isSelected(modifiers),
+    useDefaultCursor: shouldUseDefaultCursor(modifiers),
+
+    daySizeStyles: {
+      width: daySize,
+      height: daySize - 1,
+    },
   };
 }

@@ -93,6 +93,20 @@ describe('CalendarDay', () => {
         expect(wrapper.prop('aria-label')).to.equal('dateIsSelected text');
       });
 
+      it('is formatted with the dateIsSelected phrase function when day is selected in a span', () => {
+        const modifiers = new Set(['selected-span']);
+
+        const wrapper = shallow((
+          <CalendarDay
+            modifiers={modifiers}
+            phrases={phrases}
+            day={day}
+          />
+        )).dive();
+
+        expect(wrapper.prop('aria-label')).to.equal('dateIsSelected text');
+      });
+
       it('is formatted with the dateIsSelectedAsStartDate phrase function when day is selected as the start date', () => {
         const modifiers = new Set().add(BLOCKED_MODIFIER).add('selected-start');
 

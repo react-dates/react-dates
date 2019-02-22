@@ -136,7 +136,7 @@ class CalendarDay extends React.PureComponent {
           modifiers.has('last-in-range') && styles.CalendarDay__last_in_range,
           modifiers.has('selected-start') && styles.CalendarDay__selected_start,
           modifiers.has('selected-end') && styles.CalendarDay__selected_end,
-          selected && styles.CalendarDay__selected,
+          selected && !modifiers.has('selected-span') && styles.CalendarDay__selected,
           isOutsideRange && styles.CalendarDay__blocked_out_of_range,
           daySizeStyles,
         )}
