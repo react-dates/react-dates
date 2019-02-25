@@ -4,6 +4,9 @@
 - []  ([#](https://github.com/airbnb/react-dates/pull/))
 -->
 
+## 19.0.4
+- [fix] Added `selected` aria label to dates in the selected range ([#1555](https://github.com/airbnb/react-dates/pull/1555))
+
 ## 19.0.3
 - [fix] Fix date selection in the SDP ([#1540](https://github.com/airbnb/react-dates/pull/1540))
 
