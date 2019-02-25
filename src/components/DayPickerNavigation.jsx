@@ -126,7 +126,7 @@ function DayPickerNavigation({
       {!isVerticalScrollable && (
         <div
           role="button"
-          tabIndex="0"
+          tabIndex={isDefaultNavPrev ? '0' : null}
           {...css(
             styles.DayPickerNavigation_button,
             isDefaultNavPrev && styles.DayPickerNavigation_button__default,
@@ -164,7 +164,7 @@ function DayPickerNavigation({
 
       <div
         role="button"
-        tabIndex="0"
+        tabIndex={isDefaultNavNext ? '0' : null}
         {...css(
           styles.DayPickerNavigation_button,
           isDefaultNavNext && styles.DayPickerNavigation_button__default,
