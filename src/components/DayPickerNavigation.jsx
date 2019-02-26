@@ -128,7 +128,7 @@ function DayPickerNavigation({
       )}
     >
       {!isVerticalScrollable && (
-        <div
+        <div // eslint-disable-line jsx-a11y/interactive-supports-focus
           role="button"
           {...navPrevTabIndex}
           {...css(
@@ -166,7 +166,7 @@ function DayPickerNavigation({
         </div>
       )}
 
-      <div
+      <div // eslint-disable-line jsx-a11y/interactive-supports-focus
         role="button"
         {...navNextTabIndex}
         {...css(
