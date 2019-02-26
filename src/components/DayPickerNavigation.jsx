@@ -70,7 +70,10 @@ function DayPickerNavigation({
   let navNextIcon = navNext;
   let isDefaultNavPrev = false;
   let isDefaultNavNext = false;
+  let navPrevTabIndex = {};
+  let navNextTabIndex = {};
   if (!navPrevIcon) {
+    navPrevTabIndex = { tabIndex: '0' };
     isDefaultNavPrev = true;
     let Icon = isVertical ? ChevronUp : LeftArrow;
     if (isRTL && !isVertical) {
@@ -88,6 +91,7 @@ function DayPickerNavigation({
   }
 
   if (!navNextIcon) {
+    navNextTabIndex = { tabIndex: '0' };
     isDefaultNavNext = true;
     let Icon = isVertical ? ChevronDown : RightArrow;
     if (isRTL && !isVertical) {
@@ -126,7 +130,7 @@ function DayPickerNavigation({
       {!isVerticalScrollable && (
         <div
           role="button"
-          tabIndex={isDefaultNavPrev ? '0' : null}
+          {...navPrevTabIndex}
           {...css(
             styles.DayPickerNavigation_button,
             isDefaultNavPrev && styles.DayPickerNavigation_button__default,
@@ -164,7 +168,7 @@ function DayPickerNavigation({
 
       <div
         role="button"
-        tabIndex={isDefaultNavNext ? '0' : null}
+        {...navNextTabIndex}
         {...css(
           styles.DayPickerNavigation_button,
           isDefaultNavNext && styles.DayPickerNavigation_button__default,
