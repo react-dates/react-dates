@@ -210,6 +210,7 @@ class DayPicker extends React.PureComponent {
 
     this.calendarMonthGridHeight = 0;
     this.setCalendarInfoWidthTimeout = null;
+    this.setCalendarMonthGridHeightTimeout = null;
 
     this.onKeyDown = this.onKeyDown.bind(this);
     this.throttledKeyDown = throttle(this.onFinalKeyDown, 200, { trailing: false });
@@ -351,6 +352,7 @@ class DayPicker extends React.PureComponent {
 
   componentWillUnmount() {
     clearTimeout(this.setCalendarInfoWidthTimeout);
+    clearTimeout(this.setCalendarMonthGridHeightTimeout);
   }
 
   onKeyDown(e) {
@@ -769,7 +771,7 @@ class DayPicker extends React.PureComponent {
     if (monthHeight !== this.calendarMonthGridHeight) {
       this.transitionContainer.style.height = `${monthHeight}px`;
       if (!this.calendarMonthGridHeight) {
-        setTimeout(() => {
+        this.setCalendarMonthGridHeightTimeout = setTimeout(() => {
           this.setState({ hasSetHeight: true });
         }, 0);
       }
