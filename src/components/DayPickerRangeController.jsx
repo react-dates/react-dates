@@ -429,7 +429,7 @@ export default class DayPickerRangeController extends React.PureComponent {
       });
     }
 
-    if (!this.isTouchDevice && didFocusChange && hoverDate) {
+    if (!this.isTouchDevice && didFocusChange && hoverDate && !this.isBlocked(hoverDate)) {
       const minNightsForHoverDate = getMinNightsForHoverDate(hoverDate);
       if (minNightsForHoverDate > 0 && focusedInput === END_DATE) {
         modifiers = this.deleteModifierFromRange(
@@ -673,36 +673,40 @@ export default class DayPickerRangeController extends React.PureComponent {
           }
         }
 
-        const minNightsForPrevHoverDate = getMinNightsForHoverDate(hoverDate);
-        if (hoverDate && minNightsForPrevHoverDate > 0 && focusedInput === START_DATE) {
-          modifiers = this.deleteModifierFromRange(
-            modifiers,
-            hoverDate.clone().add(1, 'days'),
-            hoverDate.clone().add(minNightsForPrevHoverDate, 'days'),
-            'hovered-start-blocked-minimum-nights',
-          );
+        if (hoverDate && !this.isBlocked(hoverDate)) {
+          const minNightsForPrevHoverDate = getMinNightsForHoverDate(hoverDate);
+          if (minNightsForPrevHoverDate > 0 && focusedInput === START_DATE) {
+            modifiers = this.deleteModifierFromRange(
+              modifiers,
+              hoverDate.clone().add(1, 'days'),
+              hoverDate.clone().add(minNightsForPrevHoverDate, 'days'),
+              'hovered-start-blocked-minimum-nights',
+            );
 
-          modifiers = this.deleteModifier(
-            modifiers,
-            hoverDate.clone().add(minNightsForPrevHoverDate, 'days'),
-            'hovered-start-first-possible-end',
-          );
+            modifiers = this.deleteModifier(
+              modifiers,
+              hoverDate.clone().add(minNightsForPrevHoverDate, 'days'),
+              'hovered-start-first-possible-end',
+            );
+          }
         }
 
-        const minNightsForHoverDate = getMinNightsForHoverDate(day);
-        if (minNightsForHoverDate > 0 && focusedInput === START_DATE) {
-          modifiers = this.addModifierToRange(
-            modifiers,
-            day.clone().add(1, 'days'),
-            day.clone().add(minNightsForHoverDate, 'days'),
-            'hovered-start-blocked-minimum-nights',
-          );
+        if (!this.isBlocked(day)) {
+          const minNightsForHoverDate = getMinNightsForHoverDate(day);
+          if (minNightsForHoverDate > 0 && focusedInput === START_DATE) {
+            modifiers = this.addModifierToRange(
+              modifiers,
+              day.clone().add(1, 'days'),
+              day.clone().add(minNightsForHoverDate, 'days'),
+              'hovered-start-blocked-minimum-nights',
+            );
 
-          modifiers = this.addModifier(
-            modifiers,
-            day.clone().add(minNightsForHoverDate, 'days'),
-            'hovered-start-first-possible-end',
-          );
+            modifiers = this.addModifier(
+              modifiers,
+              day.clone().add(minNightsForHoverDate, 'days'),
+              'hovered-start-first-possible-end',
+            );
+          }
         }
       }
 
@@ -750,21 +754,24 @@ export default class DayPickerRangeController extends React.PureComponent {
       modifiers = this.deleteModifierFromRange(modifiers, startSpan, endSpan, 'after-hovered-start');
     }
 
-    const minNightsForHoverDate = getMinNightsForHoverDate(hoverDate);
-    if (minNightsForHoverDate > 0 && focusedInput === START_DATE) {
-      modifiers = this.deleteModifierFromRange(
-        modifiers,
-        hoverDate.clone().add(1, 'days'),
-        hoverDate.clone().add(minNightsForHoverDate, 'days'),
-        'hovered-start-blocked-minimum-nights',
-      );
+    if (!this.isBlocked(hoverDate)) {
+      const minNightsForHoverDate = getMinNightsForHoverDate(hoverDate);
+      if (minNightsForHoverDate > 0 && focusedInput === START_DATE) {
+        modifiers = this.deleteModifierFromRange(
+          modifiers,
+          hoverDate.clone().add(1, 'days'),
+          hoverDate.clone().add(minNightsForHoverDate, 'days'),
+          'hovered-start-blocked-minimum-nights',
+        );
 
-      modifiers = this.deleteModifier(
-        modifiers,
-        hoverDate.clone().add(minNightsForHoverDate, 'days'),
-        'hovered-start-first-possible-end',
-      );
+        modifiers = this.deleteModifier(
+          modifiers,
+          hoverDate.clone().add(minNightsForHoverDate, 'days'),
+          'hovered-start-first-possible-end',
+        );
+      }
     }
+
 
     this.setState({
       hoverDate: null,
@@ -1126,7 +1133,7 @@ export default class DayPickerRangeController extends React.PureComponent {
     } = this.props;
     if (focusedInput !== END_DATE) return false;
 
-    if (hoverDate) {
+    if (hoverDate && !this.isBlocked(hoverDate)) {
       const minNights = getMinNightsForHoverDate(hoverDate);
       const dayDiff = day.diff(hoverDate.clone().startOf('day').hour(12), 'days');
       return dayDiff < minNights && dayDiff >= 0;
@@ -1208,8 +1215,7 @@ export default class DayPickerRangeController extends React.PureComponent {
 
   isFirstPossibleEndDateForHoveredStartDate(day, hoverDate) {
     const { focusedInput, getMinNightsForHoverDate } = this.props;
-    if (focusedInput !== END_DATE) return false;
-    if (!hoverDate) return false;
+    if (focusedInput !== END_DATE || !hoverDate || this.isBlocked(hoverDate)) return false;
     const minNights = getMinNightsForHoverDate(hoverDate);
     const firstAvailableEndDate = hoverDate.clone().add(minNights, 'days');
     return isSameDay(day, firstAvailableEndDate);

@@ -408,4 +408,13 @@ storiesOf('DayPickerRangeController', module)
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
       getMinNightsForHoverDate={() => 2}
     />
+  )))
+  .add('with minimum nights for the hovered date and some blocked dates', withInfo()(() => (
+    <DayPickerRangeControllerWrapper
+      onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
+      onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
+      onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
+      getMinNightsForHoverDate={() => 2}
+      isDayBlocked={day1 => datesList.some(day2 => isSameDay(day1, day2))}
+    />
   )));
