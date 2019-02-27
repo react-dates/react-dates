@@ -26,10 +26,23 @@ describe('DayPickerNavigation', () => {
       expect(nextMonthButton.prop('tabIndex')).to.equal('0');
     });
 
-    it('tabindex is present when custom buttons are used', () => {
+    it('tabindex is not present when custom buttons are used', () => {
       const wrapper = shallow(<DayPickerNavigation navNext={<div />} navPrev={<div />} />).dive();
       const prevMonthButton = wrapper.find('[role="button"]').at(0);
       const nextMonthButton = wrapper.find('[role="button"]').at(1);
+      expect(prevMonthButton.prop('tabIndex')).to.equal(undefined);
+      expect(nextMonthButton.prop('tabIndex')).to.equal(undefined);
+    });
+
+    it('tabindex is present when custom buttons are used and provide a tabIndex', () => {
+      const wrapper = shallow(
+        <DayPickerNavigation
+          navNext={<div id="navNext" tabIndex="0" />} // eslint-disable-line jsx-a11y/no-noninteractive-tabindex
+          navPrev={<div id="navPrev" tabIndex="0" />} // eslint-disable-line jsx-a11y/no-noninteractive-tabindex
+        />,
+      ).dive();
+      const prevMonthButton = wrapper.find('#navPrev');
+      const nextMonthButton = wrapper.find('#navNext');
       expect(prevMonthButton.prop('tabIndex')).to.equal('0');
       expect(nextMonthButton.prop('tabIndex')).to.equal('0');
     });
