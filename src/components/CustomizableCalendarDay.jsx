@@ -160,13 +160,7 @@ export const selectedSpanStyles = {
   },
 };
 
-export const lastInRangeStyles = {
-  borderStyle: 'solid',
-
-  hover: {
-    borderStyle: 'solid',
-  },
-};
+export const lastInRangeStyles = {};
 
 export const selectedStyles = {
   background: color.selected.backgroundColor,
