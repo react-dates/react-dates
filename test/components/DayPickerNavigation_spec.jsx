@@ -17,6 +17,22 @@ describe('DayPickerNavigation', () => {
       const wrapper = shallow(<DayPickerNavigation orientation={VERTICAL_SCROLLABLE} />).dive();
       expect(wrapper.find('[role="button"]')).to.have.lengthOf(1);
     });
+
+    it('tabindex is present when the default buttons are used', () => {
+      const wrapper = shallow(<DayPickerNavigation />).dive();
+      const prevMonthButton = wrapper.find('[role="button"]').at(0);
+      const nextMonthButton = wrapper.find('[role="button"]').at(1);
+      expect(prevMonthButton.prop('tabIndex')).to.equal('0');
+      expect(nextMonthButton.prop('tabIndex')).to.equal('0');
+    });
+
+    it('tabindex is present when custom buttons are used', () => {
+      const wrapper = shallow(<DayPickerNavigation navNext={<div />} navPrev={<div />} />).dive();
+      const prevMonthButton = wrapper.find('[role="button"]').at(0);
+      const nextMonthButton = wrapper.find('[role="button"]').at(1);
+      expect(prevMonthButton.prop('tabIndex')).to.equal('0');
+      expect(nextMonthButton.prop('tabIndex')).to.equal('0');
+    });
   });
 
   describe('interactions', () => {
