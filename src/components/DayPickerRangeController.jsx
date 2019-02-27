@@ -429,7 +429,7 @@ export default class DayPickerRangeController extends React.PureComponent {
       });
     }
 
-    if (didFocusChange && hoverDate) {
+    if (!this.isTouchDevice && didFocusChange && hoverDate) {
       const minNightsForHoverDate = getMinNightsForHoverDate(hoverDate);
       if (minNightsForHoverDate > 0 && focusedInput === END_DATE) {
         modifiers = this.deleteModifierFromRange(
