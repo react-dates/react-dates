@@ -4,6 +4,12 @@
 - []  ([#](https://github.com/airbnb/react-dates/pull/))
 -->
 
+## 20.0.0
+- [breaking] Omit tabindex prop from calendar navigation buttons when custom buttons are supplied ([#1563](https://github.com/airbnb/react-dates/pull/1563))
+- [new] Add hovered-start-blocked-minimun-nights and hovered-start-first-possible-end modifiers ([#1547](https://github.com/airbnb/react-dates/pull/1547))
+- [fix] clearTimeout added for the setCalendarMonthGridHeight timeout ([#1468](https://github.com/airbnb/react-dates/pull/1468))
+- [fix] Remove default styles for the last-in-range modifier ([#1538](https://github.com/airbnb/react-dates/pull/1538))
+
 ## 19.0.4
 - [fix] Added `selected` aria label to dates in the selected range ([#1555](https://github.com/airbnb/react-dates/pull/1555))
 
