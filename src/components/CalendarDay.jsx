@@ -126,6 +126,8 @@ class CalendarDay extends React.PureComponent {
           modifiers.has('first-day-of-week') && styles.CalendarDay__firstDayOfWeek,
           modifiers.has('last-day-of-week') && styles.CalendarDay__lastDayOfWeek,
           modifiers.has('hovered-offset') && styles.CalendarDay__hovered_offset,
+          modifiers.has('hovered-start-first-possible-end') && styles.CalendarDay__hovered_start_first_possible_end,
+          modifiers.has('hovered-start-blocked-minimum-nights') && styles.CalendarDay__hovered_start_blocked_min_nights,
           modifiers.has('highlighted-calendar') && styles.CalendarDay__highlighted_calendar,
           modifiers.has('blocked-minimum-nights') && styles.CalendarDay__blocked_minimum_nights,
           modifiers.has('blocked-calendar') && styles.CalendarDay__blocked_calendar,
@@ -321,6 +323,16 @@ export default withStyles(({ reactDates: { color, font } }) => ({
       border: `1px solid ${color.blocked_out_of_range.borderColor}`,
       color: color.blocked_out_of_range.color_active,
     },
+  },
+
+  CalendarDay__hovered_start_first_possible_end: {
+    background: color.core.borderLighter,
+    border: `1px double ${color.core.borderLighter}`,
+  },
+
+  CalendarDay__hovered_start_blocked_min_nights: {
+    background: color.core.borderLighter,
+    border: `1px double ${color.core.borderLight}`,
   },
 
   CalendarDay__selected_start: {},
