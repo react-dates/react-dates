@@ -179,7 +179,7 @@ class DayPickerKeyboardShortcuts extends React.PureComponent {
 
     return (
       <div>
-        { typeof renderKeyboardShortcutsButton === 'function' ? renderKeyboardShortcutsButton()
+        { renderKeyboardShortcutsButton ? renderKeyboardShortcutsButton()
           : (
             <button
               ref={this.setShowKeyboardShortcutsButtonRef}
