@@ -132,7 +132,7 @@ export const defaultProps = {
   transitionDuration: undefined,
   verticalBorderSpacing: undefined,
   horizontalMonthPadding: 13,
-  renderKeyboardShortcutsButton: props => (<DayPickerKeyboardShortcuts {...props}/>),
+  renderKeyboardShortcutsButton: undefined,
 
   // navigation props
   disablePrev: false,
@@ -1116,14 +1116,17 @@ class DayPicker extends React.PureComponent {
                 {verticalScrollable && this.renderNavigation()}
               </div>
 
-              {!isTouch && !hideKeyboardShortcutsPanel && renderKeyboardShortcutsButton({
-                  block: this.isVertical() && !withPortal,
-                  buttonLocation: keyboardShortcutButtonLocation,
-                  showKeyboardShortcutsPanel: showKeyboardShortcuts,
-                  openKeyboardShortcutsPanel: this.openKeyboardShortcutsPanel,
-                  closeKeyboardShortcutsPanel: this.closeKeyboardShortcutsPanel,
-                  phrases: phrases,
-              })}
+              {!isTouch && !hideKeyboardShortcutsPanel && (
+              <DayPickerKeyboardShortcuts
+                block={this.isVertical() && !withPortal}
+                buttonLocation={keyboardShortcutButtonLocation}
+                showKeyboardShortcutsPanel={showKeyboardShortcuts}
+                openKeyboardShortcutsPanel={this.openKeyboardShortcutsPanel}
+                closeKeyboardShortcutsPanel={this.closeKeyboardShortcutsPanel}
+                phrases={phrases}
+                renderKeyboardShortcutsButton={this.renderKeyboardShortcutsButton}
+              />
+              )}
             </div>
           </div>
 
