@@ -3,6 +3,11 @@
   "version": "20.0.0",
   "description": "A responsive and accessible date range picker component built with React",
   "main": "index.js",
+  "module": "esm/index.js",
+  "sideEffects": [
+    "*.css",
+    "*initialize.js"
+  ],
   "scripts": {
     "prebuild": "npm run clean",
     "build": "npm run build:cjs && npm run build:esm && npm run build:css -- --optimize ",
