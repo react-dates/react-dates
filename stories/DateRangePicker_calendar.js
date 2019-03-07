@@ -9,7 +9,7 @@ import DateRangePickerWrapper from '../examples/DateRangePickerWrapper';
 
 function CustomMonthNav({ children, style }) {
   return (
-    <span
+    <div
       style={{
         border: '1px solid #dce0e0',
         borderRadius: 2,
@@ -21,12 +21,12 @@ function CustomMonthNav({ children, style }) {
         marginTop: -2,
         top: 19,
         left: 13,
-        outline: 'inherit',
         ...style,
       }}
+      tabindex="0"
     >
       {children}
-    </span>
+    </div>
   );
 }
 

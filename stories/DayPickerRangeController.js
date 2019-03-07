@@ -31,7 +31,7 @@ const dayPickerRangeControllerInfo = `The ${monospace('DayPickerRangeController'
   implement your own inputs.`;
 
 const TestPrevIcon = () => (
-  <span
+  <div
     style={{
       border: '1px solid #dce0e0',
       backgroundColor: '#fff',
@@ -41,13 +41,14 @@ const TestPrevIcon = () => (
       position: 'absolute',
       top: '20px',
     }}
+    tabindex="0"
   >
     Prev
-  </span>
+  </div>
 );
 
 const TestNextIcon = () => (
-  <span
+  <div
     style={{
       border: '1px solid #dce0e0',
       backgroundColor: '#fff',
@@ -57,9 +58,10 @@ const TestNextIcon = () => (
       right: '22px',
       top: '20px',
     }}
+    tabindex="0"
   >
     Next
-  </span>
+  </div>
 );
 
 const TestCustomInfoPanel = () => (

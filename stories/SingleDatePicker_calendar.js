@@ -8,7 +8,7 @@ import SingleDatePickerWrapper from '../examples/SingleDatePickerWrapper';
 import { VERTICAL_ORIENTATION, ANCHOR_RIGHT, OPEN_UP } from '../src/constants';
 
 const TestPrevIcon = () => (
-  <span
+  <div
     style={{
       border: '1px solid #dce0e0',
       backgroundColor: '#fff',
@@ -18,13 +18,14 @@ const TestPrevIcon = () => (
       position: 'absolute',
       top: '20px',
     }}
+    tabindex="0"
   >
     Prev
-  </span>
+  </div>
 );
 
 const TestNextIcon = () => (
-  <span
+  <div
     style={{
       border: '1px solid #dce0e0',
       backgroundColor: '#fff',
@@ -34,9 +35,10 @@ const TestNextIcon = () => (
       right: '22px',
       top: '20px',
     }}
+    tabindex="0"
   >
     Next
-  </span>
+  </div>
 );
 
 const TestCustomInfoPanel = () => (
