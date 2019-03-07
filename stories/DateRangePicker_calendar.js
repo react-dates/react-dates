@@ -19,8 +19,8 @@ function CustomMonthNav({ children, style }) {
         padding: '0 3px',
         position: 'absolute',
         marginTop: -2,
-        top: 30,
-        left: 26,
+        top: 19,
+        left: 13,
         outline: 'inherit',
         ...style,
       }}
@@ -131,7 +131,7 @@ storiesOf('DRP - Calendar Props', module)
   .add('with custom month navigation', withInfo()(() => (
     <DateRangePickerWrapper
       navPrev={<CustomMonthNav>&#8249;</CustomMonthNav>}
-      navNext={<CustomMonthNav style={{ left: 48 }}>&#8250;</CustomMonthNav>}
+      navNext={<CustomMonthNav style={{ left: 33 }}>&#8250;</CustomMonthNav>}
       numberOfMonths={1}
       autoFocus
     />
@@ -140,7 +140,7 @@ storiesOf('DRP - Calendar Props', module)
     <DateRangePickerWrapper
       orientation={VERTICAL_ORIENTATION}
       navPrev={<CustomMonthNav>&#8249;</CustomMonthNav>}
-      navNext={<CustomMonthNav style={{ left: 48 }}>&#8250;</CustomMonthNav>}
+      navNext={<CustomMonthNav style={{ left: 33 }}>&#8250;</CustomMonthNav>}
       autoFocus
     />
   )))
