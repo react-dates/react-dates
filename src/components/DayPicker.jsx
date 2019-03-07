@@ -71,6 +71,7 @@ const propTypes = forbidExtraProps({
   transitionDuration: nonNegativeInteger,
   verticalBorderSpacing: nonNegativeInteger,
   horizontalMonthPadding: nonNegativeInteger,
+  renderKeyboardShortcutsButton: PropTypes.func,
 
   // navigation props
   disablePrev: PropTypes.bool,
@@ -131,6 +132,7 @@ export const defaultProps = {
   transitionDuration: undefined,
   verticalBorderSpacing: undefined,
   horizontalMonthPadding: 13,
+  renderKeyboardShortcutsButton: props => (<DayPickerKeyboardShortcuts {...props}/>),
 
   // navigation props
   disablePrev: false,
@@ -930,6 +932,7 @@ class DayPicker extends React.PureComponent {
       renderDayContents,
       renderCalendarInfo,
       renderMonthElement,
+      renderKeyboardShortcutsButton,
       calendarInfoPosition,
       hideKeyboardShortcutsPanel,
       onOutsideClick,
@@ -1113,16 +1116,14 @@ class DayPicker extends React.PureComponent {
                 {verticalScrollable && this.renderNavigation()}
               </div>
 
-              {!isTouch && !hideKeyboardShortcutsPanel && (
-                <DayPickerKeyboardShortcuts
-                  block={this.isVertical() && !withPortal}
-                  buttonLocation={keyboardShortcutButtonLocation}
-                  showKeyboardShortcutsPanel={showKeyboardShortcuts}
-                  openKeyboardShortcutsPanel={this.openKeyboardShortcutsPanel}
-                  closeKeyboardShortcutsPanel={this.closeKeyboardShortcutsPanel}
-                  phrases={phrases}
-                />
-              )}
+              {!isTouch && !hideKeyboardShortcutsPanel && renderKeyboardShortcutsButton({
+                  block: this.isVertical() && !withPortal,
+                  buttonLocation: keyboardShortcutButtonLocation,
+                  showKeyboardShortcutsPanel: showKeyboardShortcuts,
+                  openKeyboardShortcutsPanel: this.openKeyboardShortcutsPanel,
+                  closeKeyboardShortcutsPanel: this.closeKeyboardShortcutsPanel,
+                  phrases: phrases,
+              })}
             </div>
           </div>
 
