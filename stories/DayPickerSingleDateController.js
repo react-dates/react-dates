@@ -37,7 +37,10 @@ const TestPrevIcon = () => (
       border: '1px solid #dce0e0',
       backgroundColor: '#fff',
       color: '#484848',
+      left: '22px',
       padding: '3px',
+      position: 'absolute',
+      top: '20px',
     }}
   >
     Prev
@@ -51,6 +54,9 @@ const TestNextIcon = () => (
       backgroundColor: '#fff',
       color: '#484848',
       padding: '3px',
+      position: 'absolute',
+      right: '22px',
+      top: '20px',
     }}
   >
     Next
