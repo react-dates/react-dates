@@ -84,6 +84,7 @@ const propTypes = forbidExtraProps({
   onOutsideClick: PropTypes.func,
   renderCalendarDay: PropTypes.func,
   renderDayContents: PropTypes.func,
+  renderCalendarInfo: PropTypes.func,
   renderKeyboardShortcutsButton: PropTypes.func,
   calendarInfoPosition: CalendarInfoPositionShape,
   firstDayOfWeek: DayOfWeekShape,
@@ -147,6 +148,7 @@ const defaultProps = {
 
   renderCalendarDay: undefined,
   renderDayContents: null,
+  renderCalendarInfo: null,
   renderMonthElement: null,
   renderKeyboardShortcutsButton: undefined,
   calendarInfoPosition: INFO_POSITION_BOTTOM,
