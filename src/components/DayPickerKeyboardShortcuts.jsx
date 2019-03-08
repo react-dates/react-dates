@@ -179,8 +179,15 @@ class DayPickerKeyboardShortcuts extends React.PureComponent {
 
     return (
       <div>
-        { renderKeyboardShortcutsButton ? renderKeyboardShortcutsButton()
-          : (
+        { renderKeyboardShortcutsButton
+          ? React.cloneElement(
+            renderKeyboardShortcutsButton(),
+            {
+            // can't pass context-specific callbacks from passed-in button
+              ref: this.setShowKeyboardShortcutsButtonRef,
+              onClick: this.onShowKeyboardShortcutsButtonClick,
+            },
+          ) : (
             <button
               ref={this.setShowKeyboardShortcutsButtonRef}
               {...css(
