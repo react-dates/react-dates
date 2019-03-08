@@ -1117,15 +1117,15 @@ class DayPicker extends React.PureComponent {
               </div>
 
               {!isTouch && !hideKeyboardShortcutsPanel && (
-              <DayPickerKeyboardShortcuts
-                block={this.isVertical() && !withPortal}
-                buttonLocation={keyboardShortcutButtonLocation}
-                showKeyboardShortcutsPanel={showKeyboardShortcuts}
-                openKeyboardShortcutsPanel={this.openKeyboardShortcutsPanel}
-                closeKeyboardShortcutsPanel={this.closeKeyboardShortcutsPanel}
-                phrases={phrases}
-                renderKeyboardShortcutsButton={this.renderKeyboardShortcutsButton}
-              />
+                <DayPickerKeyboardShortcuts
+                  block={this.isVertical() && !withPortal}
+                  buttonLocation={keyboardShortcutButtonLocation}
+                  showKeyboardShortcutsPanel={showKeyboardShortcuts}
+                  openKeyboardShortcutsPanel={this.openKeyboardShortcutsPanel}
+                  closeKeyboardShortcutsPanel={this.closeKeyboardShortcutsPanel}
+                  phrases={phrases}
+                  renderKeyboardShortcutsButton={renderKeyboardShortcutsButton}
+                />
               )}
             </div>
           </div>
