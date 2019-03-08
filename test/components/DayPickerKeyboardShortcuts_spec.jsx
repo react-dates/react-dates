@@ -142,7 +142,6 @@ describe('DayPickerKeyboardShortcuts', () => {
           const wrapper = shallow(<DayPickerKeyboardShortcuts {...props} />).dive();
           const buttonWrapper = wrapper.children().find('button');
           expect(buttonWrapper.text()).to.equal('Success!');
-          expect(buttonWrapper.props()).to.contain.keys(['ref', 'onClick']);
         });
       });
     });
