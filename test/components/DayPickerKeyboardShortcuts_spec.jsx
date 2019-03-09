@@ -138,10 +138,12 @@ describe('DayPickerKeyboardShortcuts', () => {
 
       describe('renderKeyboardShortcutsButton', () => {
         it('renders the provided button', () => {
-          const props = { renderKeyboardShortcutsButton: () => (<button type="button">Success!</button>) };
+          function Button() {
+            return (<button type="button">Success!</button>);
+          }
+          const props = { renderKeyboardShortcutsButton: () => (<Button />) };
           const wrapper = shallow(<DayPickerKeyboardShortcuts {...props} />).dive();
-          const buttonWrapper = wrapper.children().find('button');
-          expect(buttonWrapper.text()).to.equal('Success!');
+          expect(wrapper.children().find(Button)).to.have.lengthOf(1);
         });
       });
     });

@@ -179,37 +179,43 @@ class DayPickerKeyboardShortcuts extends React.PureComponent {
 
     return (
       <div>
-        { renderKeyboardShortcutsButton
-          ? renderKeyboardShortcutsButton() : (
-            <button
-              ref={this.setShowKeyboardShortcutsButtonRef}
+        {renderKeyboardShortcutsButton
+          && renderKeyboardShortcutsButton({
+            // passing in context-specific props
+            ref: this.setShowKeyboardShortcutsButtonRef,
+            onClick: this.onShowKeyboardShortcutsButtonClick,
+            ariaLabel: toggleButtonText,
+          })}
+        {renderKeyboardShortcutsButton
+          || (
+          <button
+            ref={this.setShowKeyboardShortcutsButtonRef}
+            {...css(
+              styles.DayPickerKeyboardShortcuts_buttonReset,
+              styles.DayPickerKeyboardShortcuts_show,
+              bottomRight && styles.DayPickerKeyboardShortcuts_show__bottomRight,
+              topRight && styles.DayPickerKeyboardShortcuts_show__topRight,
+              topLeft && styles.DayPickerKeyboardShortcuts_show__topLeft,
+            )}
+            type="button"
+            aria-label={toggleButtonText}
+            onClick={this.onShowKeyboardShortcutsButtonClick}
+            onMouseUp={(e) => {
+              e.currentTarget.blur();
+            }}
+          >
+            <span
               {...css(
-                styles.DayPickerKeyboardShortcuts_buttonReset,
-                styles.DayPickerKeyboardShortcuts_show,
-                bottomRight && styles.DayPickerKeyboardShortcuts_show__bottomRight,
-                topRight && styles.DayPickerKeyboardShortcuts_show__topRight,
-                topLeft && styles.DayPickerKeyboardShortcuts_show__topLeft,
+                styles.DayPickerKeyboardShortcuts_showSpan,
+                bottomRight && styles.DayPickerKeyboardShortcuts_showSpan__bottomRight,
+                topRight && styles.DayPickerKeyboardShortcuts_showSpan__topRight,
+                topLeft && styles.DayPickerKeyboardShortcuts_showSpan__topLeft,
               )}
-              type="button"
-              aria-label={toggleButtonText}
-              onClick={this.onShowKeyboardShortcutsButtonClick}
-              onMouseUp={(e) => {
-                e.currentTarget.blur();
-              }}
             >
-              <span
-                {...css(
-                  styles.DayPickerKeyboardShortcuts_showSpan,
-                  bottomRight && styles.DayPickerKeyboardShortcuts_showSpan__bottomRight,
-                  topRight && styles.DayPickerKeyboardShortcuts_showSpan__topRight,
-                  topLeft && styles.DayPickerKeyboardShortcuts_showSpan__topLeft,
-                )}
-              >
             ?
-              </span>
-            </button>
+            </span>
+          </button>
           )}
-
         {showKeyboardShortcutsPanel && (
           <div
             {...css(styles.DayPickerKeyboardShortcuts_panel)}
