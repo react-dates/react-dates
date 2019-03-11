@@ -264,7 +264,7 @@ storiesOf('DayPickerRangeController', module)
         verticalHeight={300}
         navNext={(
           <div style={{ position: 'relative' }}>
-  <span
+            <span
               style={{
                 position: 'absolute',
                 bottom: 20,
@@ -277,8 +277,8 @@ storiesOf('DayPickerRangeController', module)
             >
               Show More Months
             </span>
-</div>
-)}
+          </div>
+        )}
       />
     </div>
   )))
