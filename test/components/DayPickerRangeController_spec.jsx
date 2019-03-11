@@ -4426,5 +4426,21 @@ describe('DayPickerRangeController', () => {
         expect(wrapper.find(DayPickerNavigation)).to.have.lengthOf(0);
       });
     });
+
+    describe('renderKeyboardShortcutsButton prop', () => {
+      it('pass down custom button render function', () => {
+        const testRenderKeyboardShortcutsButton = () => {};
+        const wrapper = shallow(
+          <DayPickerRangeController
+            renderKeyboardShortcutsButton={testRenderKeyboardShortcutsButton}
+          />,
+        );
+        const dayPicker = wrapper.find(DayPicker);
+        expect(dayPicker).to.have.lengthOf(1);
+        expect(dayPicker.prop('renderKeyboardShortcutsButton'))
+          .to
+          .eql(testRenderKeyboardShortcutsButton);
+      });
+    });
   });
 });

@@ -186,8 +186,7 @@ class DayPickerKeyboardShortcuts extends React.PureComponent {
             onClick: this.onShowKeyboardShortcutsButtonClick,
             ariaLabel: toggleButtonText,
           })}
-        {renderKeyboardShortcutsButton
-          || (
+        {renderKeyboardShortcutsButton || (
           <button
             ref={this.setShowKeyboardShortcutsButtonRef}
             {...css(
@@ -215,7 +214,7 @@ class DayPickerKeyboardShortcuts extends React.PureComponent {
             ?
             </span>
           </button>
-          )}
+        )}
         {showKeyboardShortcutsPanel && (
           <div
             {...css(styles.DayPickerKeyboardShortcuts_panel)}

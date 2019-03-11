@@ -69,7 +69,7 @@ const TestCustomInfoPanel = () => (
 );
 
 function renderKeyboardShortcutsButton(buttonProps) {
-  const { ref, onClick, ariaLabel } = buttonProps || {};
+  const { ref, onClick, ariaLabel } = buttonProps;
 
   const buttonStyle = {
     backgroundColor: '#914669',
@@ -262,9 +262,9 @@ storiesOf('DayPickerRangeController', module)
         orientation={VERTICAL_SCROLLABLE}
         numberOfMonths={3}
         verticalHeight={300}
-        navNext={
+        navNext={(
           <div style={{ position: 'relative' }}>
-            <span
+  <span
               style={{
                 position: 'absolute',
                 bottom: 20,
@@ -277,8 +277,8 @@ storiesOf('DayPickerRangeController', module)
             >
               Show More Months
             </span>
-          </div>
-        }
+</div>
+)}
       />
     </div>
   )))
@@ -352,9 +352,8 @@ storiesOf('DayPickerRangeController', module)
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
-      isOutsideRange={day =>
-        !isInclusivelyAfterDay(day, moment()) ||
-        isInclusivelyAfterDay(day, moment().add(2, 'weeks'))
+      isOutsideRange={day => !isInclusivelyAfterDay(day, moment())
+        || isInclusivelyAfterDay(day, moment().add(2, 'weeks'))
       }
     />
   )))
