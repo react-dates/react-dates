@@ -4,6 +4,9 @@
 - []  ([#](https://github.com/airbnb/react-dates/pull/))
 -->
 
+## 20.1.0
+- [new] Add `renderKeyboardShortcutsButton` prop ([#1576](https://github.com/airbnb/react-dates/pull/1576))
+
 ## 20.0.0
 - [breaking] Omit tabindex prop from calendar navigation buttons when custom buttons are supplied ([#1563](https://github.com/airbnb/react-dates/pull/1563))
 - [new] Add hovered-start-blocked-minimun-nights and hovered-start-first-possible-end modifiers ([#1547](https://github.com/airbnb/react-dates/pull/1547))
