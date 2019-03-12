@@ -68,6 +68,49 @@ const TestCustomInfoPanel = () => (
   </div>
 );
 
+function renderKeyboardShortcutsButton(buttonProps) {
+  const { ref, onClick, ariaLabel } = buttonProps;
+
+  const buttonStyle = {
+    backgroundColor: '#914669',
+    border: 0,
+    borderRadius: 0,
+    color: 'inherit',
+    font: 'inherit',
+    lineHeight: 'normal',
+    overflow: 'visible',
+    padding: 0,
+    cursor: 'pointer',
+    width: 26,
+    height: 26,
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+  };
+
+  const spanStyle = {
+    color: 'white',
+    position: 'absolute',
+    bottom: 5,
+    right: 9,
+  };
+
+  return (
+    <button
+      ref={ref}
+      style={buttonStyle}
+      type="button"
+      aria-label={ariaLabel}
+      onClick={onClick}
+      onMouseUp={(e) => {
+        e.currentTarget.blur();
+      }}
+    >
+      <span style={spanStyle}>?</span>
+    </button>
+  );
+}
+
 const datesList = [
   moment(),
   moment().add(1, 'days'),
@@ -219,7 +262,7 @@ storiesOf('DayPickerRangeController', module)
         orientation={VERTICAL_SCROLLABLE}
         numberOfMonths={3}
         verticalHeight={300}
-        navNext={
+        navNext={(
           <div style={{ position: 'relative' }}>
             <span
               style={{
@@ -235,7 +278,7 @@ storiesOf('DayPickerRangeController', module)
               Show More Months
             </span>
           </div>
-        }
+        )}
       />
     </div>
   )))
@@ -309,9 +352,8 @@ storiesOf('DayPickerRangeController', module)
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
-      isOutsideRange={day =>
-        !isInclusivelyAfterDay(day, moment()) ||
-        isInclusivelyAfterDay(day, moment().add(2, 'weeks'))
+      isOutsideRange={day => !isInclusivelyAfterDay(day, moment())
+        || isInclusivelyAfterDay(day, moment().add(2, 'weeks'))
       }
     />
   )))
@@ -416,5 +458,13 @@ storiesOf('DayPickerRangeController', module)
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
       getMinNightsForHoverDate={() => 2}
       isDayBlocked={day1 => datesList.some(day2 => isSameDay(day1, day2))}
+    />
+  )))
+  .add('with custom keyboard shortcuts button', withInfo()(() => (
+    <DayPickerRangeControllerWrapper
+      onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
+      onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
+      onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
+      renderKeyboardShortcutsButton={renderKeyboardShortcutsButton}
     />
   )));
