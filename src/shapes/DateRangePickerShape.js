@@ -77,6 +77,8 @@ export default {
   horizontalMonthPadding: nonNegativeInteger,
 
   // navigation related props
+  minDate: momentPropTypes.momentObj,
+  maxDate: momentPropTypes.momentObj,
   navPrev: PropTypes.node,
   navNext: PropTypes.node,
   onPrevMonthClick: PropTypes.func,

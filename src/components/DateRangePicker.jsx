@@ -97,6 +97,8 @@ const defaultProps = {
   horizontalMonthPadding: undefined,
 
   // navigation related props
+  minDate: null,
+  maxDate: null,
   navPrev: null,
   navNext: null,
 
@@ -438,6 +440,8 @@ class DateRangePicker extends React.PureComponent {
       horizontalMonthPadding,
       small,
       disabled,
+      minDate,
+      maxDate,
       theme: { reactDates },
     } = this.props;
 
@@ -524,6 +528,8 @@ class DateRangePicker extends React.PureComponent {
           transitionDuration={transitionDuration}
           disabled={disabled}
           horizontalMonthPadding={horizontalMonthPadding}
+          minDate={minDate}
+          maxDate={maxDate}
         />
 
         {withFullScreenPortal && (
