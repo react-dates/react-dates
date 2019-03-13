@@ -177,6 +177,8 @@ renderMonthElement: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'r
 hideKeyboardShortcutsPanel: PropTypes.bool,
 
 // navigation related props
+minDate: momentPropTypes.momentObj,
+maxDate: momentPropTypes.momentObj,
 navPrev: PropTypes.node,
 navNext: PropTypes.node,
 onPrevMonthClick: PropTypes.func,
@@ -315,6 +317,8 @@ The following is a list of other *OPTIONAL* props you may provide to the `DayPic
   noBorder: PropTypes.bool,
 
   // navigation related props
+  minDate: momentPropTypes.momentObj,
+  maxDate: momentPropTypes.momentObj,
   navPrev: PropTypes.node,
   navNext: PropTypes.node,
   onPrevMonthClick: PropTypes.func,
