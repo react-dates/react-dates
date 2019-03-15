@@ -741,4 +741,42 @@ describe('DateRangePicker', () => {
       });
     });
   });
+
+  describe('minDate and maxDate', () => {
+    describe('minDate is passed in', () => {
+      it('Should pass minDate to DayPickerRangeController', () => {
+        const minDate = moment('2018-10-17');
+        const wrapper = shallow((
+          <DateRangePicker
+            {...requiredProps}
+            focusedInput={START_DATE}
+            minDate={minDate}
+          />
+        )).dive();
+
+        const dayPicker = wrapper.find(DayPickerRangeController);
+        const dayPickerMinDate = dayPicker.props().minDate;
+
+        expect(dayPickerMinDate.format()).to.equal(minDate.format());
+      });
+    });
+
+    describe('maxDate is passed in', () => {
+      it('Should pass maxDate to DayPickerRangeController', () => {
+        const maxDate = moment('2018-10-17').add(1, 'month');
+        const wrapper = shallow((
+          <DateRangePicker
+            {...requiredProps}
+            focusedInput={START_DATE}
+            maxDate={maxDate}
+          />
+        )).dive();
+
+        const dayPicker = wrapper.find(DayPickerRangeController);
+        const dayPickerMaxDate = dayPicker.props().maxDate;
+
+        expect(dayPickerMaxDate.format()).to.equal(maxDate.format());
+      });
+    });
+  });
 });
