@@ -117,4 +117,13 @@ storiesOf('DateRangePicker (DRP)', module)
       orientation={VERTICAL_ORIENTATION}
       verticalHeight={568}
     />
-  )));
+  ))).add('with navigation disabled for minDate and maxDate', withInfo()(() => {
+    const minDate = moment()
+    const maxDate = moment().add(2, 'month')
+    return (
+      <DateRangePickerWrapper
+        maxDate={maxDate}
+        minDate={minDate}
+      />
+    )
+  }));
