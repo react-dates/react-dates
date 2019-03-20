@@ -41,7 +41,7 @@ const propTypes = forbidExtraProps({
   isEndDateFocused: PropTypes.bool,
 
   screenReaderMessage: PropTypes.string,
-  ariaDescribedBy: PropTypes.string,
+  ariaLabelledBy: PropTypes.string,
   showClearDates: PropTypes.bool,
   showCaret: PropTypes.bool,
   showDefaultInputIcon: PropTypes.bool,
@@ -96,7 +96,7 @@ const defaultProps = {
   isEndDateFocused: false,
 
   screenReaderMessage: '',
-  ariaDescribedBy: '',
+  ariaLabelledBy: '',
   showClearDates: false,
   showCaret: false,
   showDefaultInputIcon: false,
@@ -277,7 +277,7 @@ export default class DateRangePickerInputController extends React.PureComponent 
       endDatePlaceholderText,
       isEndDateFocused,
       screenReaderMessage,
-      ariaDescribedBy,
+      ariaLabelledBy,
       showClearDates,
       showCaret,
       showDefaultInputIcon,
@@ -334,7 +334,7 @@ export default class DateRangePickerInputController extends React.PureComponent 
         showClearDates={showClearDates}
         onClearDates={this.clearDates}
         screenReaderMessage={screenReaderMessage}
-        ariaDescribedBy={ariaDescribedBy}
+        ariaLabelledBy={ariaLabelledBy}
         onKeyDownArrowDown={onKeyDownArrowDown}
         onKeyDownQuestionMark={onKeyDownQuestionMark}
         isRTL={isRTL}
