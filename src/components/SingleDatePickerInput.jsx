@@ -6,7 +6,7 @@ import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 import { SingleDatePickerInputPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 import noflip from '../utils/noflip';
-import validIdList from '../utils/validIdList'
+import validIdList from '../utils/validIdList';
 
 import DateInput from './DateInput';
 import IconPositionShape from '../shapes/IconPositionShape';

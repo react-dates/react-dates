@@ -1,9 +1,10 @@
-const validIdListRegex = /(([A-Za-z]+[\w\-\:\.]*)\s*)*/;
+const validIdListRegex = /(([A-Za-z]+[\w\-:.]*)\s*)*/;
 
 // A more complex regex is used here so that
 // all IDs in an array must work. Even one incorrect
 // id in the list will cause this to return false.
-function isValidIdList(idList = '') {
+function isValidIdList(idList) {
+  if (!idList) return true;
   const matches = idList.match(validIdListRegex);
   return matches && matches.includes(idList);
 }
@@ -11,11 +12,11 @@ function isValidIdList(idList = '') {
 // validates a list of IDs for use in aria-labelledby attributes
 // valid ID format is listed here:
 // https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id
-export default function (props, propName, componentName) {
-  if (!isValidIdList(props[propName])) {
+export default function (properties, propName, componentName) {
+  if (!isValidIdList(properties[propName])) {
     return new Error(
       `Invalid prop \`${propName}\` supplied to \`${componentName}\`. Validation failed.`,
     );
   }
-  return true;
+  return null;
 }
