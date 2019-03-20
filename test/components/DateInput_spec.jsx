@@ -23,7 +23,7 @@ describe('DateInput', () => {
           hasExternalLabel
           placeholder={placeholder}
         />).dive();
-        expect(wrapper.find('input').props()['aria-label']).to.have.lengthOf(0);
+        expect(wrapper.find('input').props()['aria-label']).to.equal(null);
       });
 
       it('has value === props.displayValue', () => {
