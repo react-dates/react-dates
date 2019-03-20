@@ -52,7 +52,7 @@ const defaultProps = {
   required: false,
   readOnly: false,
   screenReaderInputMessage: '',
-  ariaLabelledBy: '',
+  ariaLabelledBy: null,
   showClearDate: false,
   showDefaultInputIcon: false,
   inputIconPosition: ICON_BEFORE_POSITION,

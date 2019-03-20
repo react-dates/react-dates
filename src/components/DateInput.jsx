@@ -8,6 +8,7 @@ import isTouchDevice from 'is-touch-device';
 import noflip from '../utils/noflip';
 import getInputHeight from '../utils/getInputHeight';
 import openDirectionShape from '../shapes/OpenDirectionShape';
+import isValidIdList from '../utils/isValidIdList';
 
 import {
   OPEN_DOWN,
@@ -29,7 +30,7 @@ const propTypes = forbidExtraProps({
   placeholder: PropTypes.string, // also used as label
   displayValue: PropTypes.string,
   screenReaderMessage: PropTypes.string,
-  ariaLabelledBy: PropTypes.string,
+  ariaLabelledBy: isValidIdList,
   focused: PropTypes.bool,
   disabled: PropTypes.bool,
   required: PropTypes.bool,
@@ -57,7 +58,7 @@ const defaultProps = {
   placeholder: 'Select Date',
   displayValue: '',
   screenReaderMessage: '',
-  ariaLabelledBy: '',
+  ariaLabelledBy: null,
   focused: false,
   disabled: false,
   required: false,
@@ -220,7 +221,7 @@ class DateInput extends React.PureComponent {
             focused && styles.DateInput_input__focused,
             disabled && styles.DateInput_input__disabled,
           )}
-          aria-label={placeholder}
+          aria-label={!ariaLabelledBy && placeholder}
           type="text"
           id={id}
           name={id}

@@ -57,7 +57,7 @@ const defaultProps = {
   required: false,
   readOnly: false,
   screenReaderInputMessage: '',
-  ariaLabelledBy: '',
+  ariaLabelledBy: null,
   showClearDates: false,
   showDefaultInputIcon: false,
   inputIconPosition: ICON_BEFORE_POSITION,
