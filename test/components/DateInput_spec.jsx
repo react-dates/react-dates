@@ -102,6 +102,8 @@ describe('DateInput', () => {
       let wrapper;
       const inputId = 'date';
       const ariaDescribedBy = 'id1 id2';
+      const screenReaderMessage = 'My screen reader message';
+      const screenReaderMessageId = `DateInput__screen-reader-message-${inputId}`;
 
       describe('props.ariaDescribedBy is truthy', () => {
         beforeEach(() => {
@@ -122,6 +124,21 @@ describe('DateInput', () => {
 
         it('does not have aria-describedby attribute value', () => {
           expect(wrapper.find(`input[aria-describedby^="${ariaDescribedBy}"]`)).to.have.lengthOf(0);
+        });
+      });
+
+      describe('props.ariaDescribedBy works with props.screenReaderMessage', () => {
+        beforeEach(() => {
+          wrapper = shallow(<DateInput
+            ariaDescribedBy={ariaDescribedBy}
+            id={inputId}
+            screenReaderMessage={screenReaderMessage}
+          />).dive();
+        });
+
+        it('does not have aria-describedby attribute value', () => {
+          expect(wrapper.find(`input[aria-describedby^="${ariaDescribedBy}"]`)).to.have.lengthOf(1);
+          expect(wrapper.find(`input[aria-describedby$="${screenReaderMessageId}"]`)).to.have.lengthOf(1);
         });
       });
     });
