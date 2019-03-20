@@ -79,7 +79,7 @@ describe('DateInput', () => {
         });
 
         it('has aria-describedby attribute === screen reader message id', () => {
-          expect(wrapper.find(`input[aria-describedby="${screenReaderMessageId}"]`)).to.have.lengthOf(1);
+          expect(wrapper.find(`input[aria-describedby$="${screenReaderMessageId}"]`)).to.have.lengthOf(1);
         });
       });
 
@@ -93,7 +93,35 @@ describe('DateInput', () => {
         });
 
         it('does not have aria-describedby attribute value', () => {
-          expect(wrapper.find(`input[aria-describedby="${screenReaderMessageId}"]`)).to.have.lengthOf(0);
+          expect(wrapper.find(`input[aria-describedby$="${screenReaderMessageId}"]`)).to.have.lengthOf(0);
+        });
+      });
+    });
+
+    describe('aria-describedby', () => {
+      let wrapper;
+      const inputId = 'date';
+      const ariaDescribedBy = 'id1 id2';
+
+      describe('props.ariaDescribedBy is truthy', () => {
+        beforeEach(() => {
+          wrapper = shallow((
+            <DateInput id={inputId} ariaDescribedBy={ariaDescribedBy} />
+          )).dive();
+        });
+
+        it('has aria-describedby attribute that starts with ariaDescribedBy value', () => {
+          expect(wrapper.find(`input[aria-describedby^="${ariaDescribedBy}"]`)).to.have.lengthOf(1);
+        });
+      });
+
+      describe('props.ariaDescribedBy is falsy', () => {
+        beforeEach(() => {
+          wrapper = shallow(<DateInput id={inputId} />).dive();
+        });
+
+        it('does not have aria-describedby attribute value', () => {
+          expect(wrapper.find(`input[aria-describedby^="${ariaDescribedBy}"]`)).to.have.lengthOf(0);
         });
       });
     });

@@ -23,6 +23,7 @@ const propTypes = forbidExtraProps({
   placeholder: PropTypes.string, // also used as label
   displayValue: PropTypes.string,
   screenReaderMessage: PropTypes.string,
+  ariaDescribedBy: PropTypes.string,
   focused: PropTypes.bool,
   isFocused: PropTypes.bool, // describes actual DOM focus
   disabled: PropTypes.bool,
@@ -59,6 +60,7 @@ const defaultProps = {
   placeholder: 'Select Date',
   displayValue: '',
   screenReaderMessage: '',
+  ariaDescribedBy: '',
   focused: false,
   isFocused: false,
   disabled: false,
@@ -113,6 +115,7 @@ function SingleDatePickerInput({
   onKeyDownArrowDown,
   onKeyDownQuestionMark,
   screenReaderMessage,
+  ariaDescribedBy,
   customCloseIcon,
   customInputIcon,
   openDirection,
@@ -167,6 +170,7 @@ function SingleDatePickerInput({
         placeholder={placeholder} // also used as label
         displayValue={displayValue}
         screenReaderMessage={screenReaderText}
+        ariaDescribedBy={ariaDescribedBy}
         focused={focused}
         isFocused={isFocused}
         disabled={disabled}

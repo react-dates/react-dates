@@ -36,6 +36,7 @@ const propTypes = forbidExtraProps({
   id: PropTypes.string.isRequired,
   placeholder: PropTypes.string, // also used as label
   screenReaderMessage: PropTypes.string,
+  ariaDescribedBy: PropTypes.string,
   showClearDate: PropTypes.bool,
   showCaret: PropTypes.bool,
   showDefaultInputIcon: PropTypes.bool,
@@ -79,6 +80,7 @@ const defaultProps = {
 
   placeholder: '',
   screenReaderMessage: 'Date',
+  ariaDescribedBy: '',
   showClearDate: false,
   showCaret: false,
   showDefaultInputIcon: false,
@@ -214,6 +216,7 @@ export default class SingleDatePickerInputController extends React.PureComponent
       onKeyDownArrowDown,
       onKeyDownQuestionMark,
       screenReaderMessage,
+      ariaDescribedBy,
       isRTL,
       noBorder,
       block,
@@ -248,6 +251,7 @@ export default class SingleDatePickerInputController extends React.PureComponent
         onKeyDownArrowDown={onKeyDownArrowDown}
         onKeyDownQuestionMark={onKeyDownQuestionMark}
         screenReaderMessage={screenReaderMessage}
+        ariaDescribedBy={ariaDescribedBy}
         phrases={phrases}
         isRTL={isRTL}
         noBorder={noBorder}
