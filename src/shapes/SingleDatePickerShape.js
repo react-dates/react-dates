@@ -26,6 +26,7 @@ export default {
   disabled: PropTypes.bool,
   required: PropTypes.bool,
   readOnly: PropTypes.bool,
+  noAriaLabel: PropTypes.bool,
   screenReaderInputMessage: PropTypes.string,
   showClearDate: PropTypes.bool,
   customCloseIcon: PropTypes.node,

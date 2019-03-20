@@ -51,6 +51,7 @@ const defaultProps = {
   disabled: false,
   required: false,
   readOnly: false,
+  noAriaLabel: false,
   screenReaderInputMessage: '',
   showClearDate: false,
   showDefaultInputIcon: false,
@@ -516,6 +517,7 @@ class SingleDatePicker extends React.PureComponent {
       focused,
       required,
       readOnly,
+      noAriaLabel,
       openDirection,
       showClearDate,
       showDefaultInputIcon,
@@ -556,6 +558,7 @@ class SingleDatePicker extends React.PureComponent {
         disabled={disabled}
         required={required}
         readOnly={readOnly}
+        noAriaLabel={noAriaLabel}
         openDirection={openDirection}
         showCaret={!withPortal && !withFullScreenPortal && !hideFang}
         showClearDate={showClearDate}

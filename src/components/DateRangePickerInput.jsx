@@ -56,6 +56,7 @@ const propTypes = forbidExtraProps({
   disabled: DisabledShape,
   required: PropTypes.bool,
   readOnly: PropTypes.bool,
+  noAriaLabel: PropTypes.bool,
   openDirection: openDirectionShape,
   showCaret: PropTypes.bool,
   showDefaultInputIcon: PropTypes.bool,
@@ -104,6 +105,7 @@ const defaultProps = {
   disabled: false,
   required: false,
   readOnly: false,
+  noAriaLabel: false,
   openDirection: OPEN_DOWN,
   showCaret: false,
   showDefaultInputIcon: false,
@@ -150,6 +152,7 @@ function DateRangePickerInput({
   disabled,
   required,
   readOnly,
+  noAriaLabel,
   showCaret,
   openDirection,
   showDefaultInputIcon,
@@ -223,6 +226,7 @@ function DateRangePickerInput({
         disabled={startDateDisabled}
         required={required}
         readOnly={readOnly}
+        noAriaLabel={noAriaLabel}
         showCaret={showCaret}
         openDirection={openDirection}
         onChange={onStartDateChange}
@@ -257,6 +261,7 @@ function DateRangePickerInput({
         disabled={endDateDisabled}
         required={required}
         readOnly={readOnly}
+        noAriaLabel={noAriaLabel}
         showCaret={showCaret}
         openDirection={openDirection}
         onChange={onEndDateChange}

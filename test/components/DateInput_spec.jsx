@@ -16,6 +16,16 @@ describe('DateInput', () => {
         expect(wrapper.find('input').props()['aria-label']).to.equal(placeholder);
       });
 
+      it('does not have aria-label if noAriaLabel is true', () => {
+        const placeholder = 'placeholder_foo';
+        const wrapper = shallow(<DateInput
+          id="date"
+          noAriaLabel
+          placeholder={placeholder}
+        />).dive();
+        expect(wrapper.find('input').props()['aria-label']).to.have.lengthOf(0);
+      });
+
       it('has value === props.displayValue', () => {
         const DISPLAY_VALUE = 'foobar';
         const wrapper = shallow(<DateInput id="date" displayValue={DISPLAY_VALUE} />).dive();

@@ -43,6 +43,7 @@ const propTypes = forbidExtraProps({
   disabled: DisabledShape,
   required: PropTypes.bool,
   readOnly: PropTypes.bool,
+  noAriaLabel: PropTypes.bool,
   openDirection: openDirectionShape,
   noBorder: PropTypes.bool,
   block: PropTypes.bool,
@@ -86,6 +87,7 @@ const defaultProps = {
   disabled: false,
   required: false,
   readOnly: false,
+  noAriaLabel: false,
   openDirection: OPEN_DOWN,
   noBorder: false,
   block: false,
@@ -202,6 +204,7 @@ export default class SingleDatePickerInputController extends React.PureComponent
       isFocused,
       required,
       readOnly,
+      noAriaLabel,
       openDirection,
       showClearDate,
       showCaret,
@@ -233,6 +236,7 @@ export default class SingleDatePickerInputController extends React.PureComponent
         disabled={disabled}
         required={required}
         readOnly={readOnly}
+        noAriaLabel={noAriaLabel}
         openDirection={openDirection}
         showCaret={showCaret}
         onClearDate={this.clearDate}

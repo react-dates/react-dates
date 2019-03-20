@@ -33,6 +33,7 @@ const propTypes = forbidExtraProps({
   disabled: PropTypes.bool,
   required: PropTypes.bool,
   readOnly: PropTypes.bool,
+  noAriaLabel: PropTypes.bool,
   openDirection: openDirectionShape,
   showCaret: PropTypes.bool,
   verticalSpacing: nonNegativeInteger,
@@ -60,6 +61,7 @@ const defaultProps = {
   disabled: false,
   required: false,
   readOnly: null,
+  noAriaLabel: false,
   openDirection: OPEN_DOWN,
   showCaret: false,
   verticalSpacing: DEFAULT_VERTICAL_SPACING,
@@ -180,6 +182,7 @@ class DateInput extends React.PureComponent {
       disabled,
       required,
       readOnly,
+      noAriaLabel,
       openDirection,
       verticalSpacing,
       small,
@@ -217,7 +220,7 @@ class DateInput extends React.PureComponent {
             focused && styles.DateInput_input__focused,
             disabled && styles.DateInput_input__disabled,
           )}
-          aria-label={placeholder}
+          aria-label={noAriaLabel ? '' : placeholder}
           type="text"
           id={id}
           name={id}
