@@ -79,7 +79,7 @@ describe('DateInput', () => {
         });
 
         it('has aria-describedby attribute === screen reader message id', () => {
-          expect(wrapper.find(`input[aria-describedby$="${screenReaderMessageId}"]`)).to.have.lengthOf(1);
+          expect(wrapper.find(`input[aria-describedby="${screenReaderMessageId}"]`)).to.have.lengthOf(1);
         });
       });
 
@@ -93,7 +93,7 @@ describe('DateInput', () => {
         });
 
         it('does not have aria-describedby attribute value', () => {
-          expect(wrapper.find(`input[aria-describedby$="${screenReaderMessageId}"]`)).to.have.lengthOf(0);
+          expect(wrapper.find(`input[aria-describedby="${screenReaderMessageId}"]`)).to.have.lengthOf(0);
         });
       });
     });
