@@ -57,7 +57,8 @@ const defaultProps = {
   required: false,
   readOnly: false,
   screenReaderInputMessage: '',
-  ariaLabelledBy: null,
+  startDateAriaLabelledBy: null,
+  endDateAriaLabelledBy: null,
   showClearDates: false,
   showDefaultInputIcon: false,
   inputIconPosition: ICON_BEFORE_POSITION,
@@ -546,7 +547,8 @@ class DateRangePicker extends React.PureComponent {
       endDatePlaceholderText,
       focusedInput,
       screenReaderInputMessage,
-      ariaLabelledBy,
+      startDateAriaLabelledBy,
+      endDateAriaLabelledBy,
       showClearDates,
       showDefaultInputIcon,
       inputIconPosition,
@@ -616,7 +618,8 @@ class DateRangePicker extends React.PureComponent {
         onClose={onClose}
         phrases={phrases}
         screenReaderMessage={screenReaderInputMessage}
-        ariaLabelledBy={ariaLabelledBy}
+        startDateAriaLabelledBy={startDateAriaLabelledBy}
+        endDateAriaLabelledBy={endDateAriaLabelledBy}
         isFocused={isDateRangePickerInputFocused}
         isRTL={isRTL}
         noBorder={noBorder}

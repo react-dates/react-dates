@@ -34,7 +34,8 @@ const propTypes = forbidExtraProps({
   startDateId: PropTypes.string,
   startDatePlaceholderText: PropTypes.string,
   screenReaderMessage: PropTypes.string,
-  ariaLabelledBy: validIdList,
+  startDateAriaLabelledBy: validIdList,
+  endDateAriaLabelledBy: validIdList,
 
   endDateId: PropTypes.string,
   endDatePlaceholderText: PropTypes.string,
@@ -87,7 +88,8 @@ const defaultProps = {
   startDatePlaceholderText: 'Start Date',
   endDatePlaceholderText: 'End Date',
   screenReaderMessage: '',
-  ariaLabelledBy: null,
+  startDateAriaLabelledBy: null,
+  endDateAriaLabelledBy: null,
   onStartDateFocus() {},
   onEndDateFocus() {},
   onStartDateChange() {},
@@ -135,7 +137,8 @@ function DateRangePickerInput({
   startDateId,
   startDatePlaceholderText,
   screenReaderMessage,
-  ariaLabelledBy,
+  startDateAriaLabelledBy,
+  endDateAriaLabelledBy,
   isStartDateFocused,
   onStartDateChange,
   onStartDateFocus,
@@ -222,7 +225,7 @@ function DateRangePickerInput({
         placeholder={startDatePlaceholderText}
         displayValue={startDate}
         screenReaderMessage={screenReaderText}
-        ariaLabelledBy={ariaLabelledBy}
+        ariaLabelledBy={startDateAriaLabelledBy}
         focused={isStartDateFocused}
         isFocused={isFocused}
         disabled={startDateDisabled}
@@ -257,6 +260,7 @@ function DateRangePickerInput({
         placeholder={endDatePlaceholderText}
         displayValue={endDate}
         screenReaderMessage={screenReaderText}
+        ariaLabelledBy={endDateAriaLabelledBy}
         focused={isEndDateFocused}
         isFocused={isFocused}
         disabled={endDateDisabled}
