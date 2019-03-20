@@ -56,7 +56,7 @@ const defaultProps = {
   disabled: false,
   required: false,
   readOnly: false,
-  noAriaLabel: false,
+  hasExternalLabel: false,
   screenReaderInputMessage: '',
   showClearDates: false,
   showDefaultInputIcon: false,
@@ -555,7 +555,7 @@ class DateRangePicker extends React.PureComponent {
       disabled,
       required,
       readOnly,
-      noAriaLabel,
+      hasExternalLabel,
       openDirection,
       phrases,
       isOutsideRange,
@@ -603,7 +603,7 @@ class DateRangePicker extends React.PureComponent {
         disabled={disabled}
         required={required}
         readOnly={readOnly}
-        noAriaLabel={noAriaLabel}
+        hasExternalLabel={hasExternalLabel}
         openDirection={openDirection}
         reopenPickerOnClearDates={reopenPickerOnClearDates}
         keepOpenOnDateSelect={keepOpenOnDateSelect}

@@ -35,7 +35,7 @@ export default {
   disabled: DisabledShape,
   required: PropTypes.bool,
   readOnly: PropTypes.bool,
-  noAriaLabel: PropTypes.bool,
+  hasExternalLabel: PropTypes.bool,
   screenReaderInputMessage: PropTypes.string,
   showClearDates: PropTypes.bool,
   showDefaultInputIcon: PropTypes.bool,

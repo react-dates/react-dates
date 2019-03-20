@@ -28,7 +28,7 @@ const propTypes = forbidExtraProps({
   disabled: PropTypes.bool,
   required: PropTypes.bool,
   readOnly: PropTypes.bool,
-  noAriaLabel: PropTypes.bool,
+  hasExternalLabel: PropTypes.bool,
   openDirection: openDirectionShape,
   showCaret: PropTypes.bool,
   showClearDate: PropTypes.bool,
@@ -65,7 +65,7 @@ const defaultProps = {
   disabled: false,
   required: false,
   readOnly: false,
-  noAriaLabel: false,
+  hasExternalLabel: false,
   openDirection: OPEN_DOWN,
   showCaret: false,
   showClearDate: false,
@@ -102,7 +102,7 @@ function SingleDatePickerInput({
   disabled,
   required,
   readOnly,
-  noAriaLabel,
+  hasExternalLabel,
   showCaret,
   showClearDate,
   showDefaultInputIcon,
@@ -175,7 +175,7 @@ function SingleDatePickerInput({
         disabled={disabled}
         required={required}
         readOnly={readOnly}
-        noAriaLabel={noAriaLabel}
+        hasExternalLabel={hasExternalLabel}
         showCaret={showCaret}
         onChange={onChange}
         onFocus={onFocus}
