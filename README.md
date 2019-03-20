@@ -142,7 +142,8 @@ disabled: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf([START_DATE, END_
 required: PropTypes.bool,
 readOnly: PropTypes.bool,
 screenReaderInputMessage: PropTypes.string,
-ariaLabelledBy: validIdList, // a space separated list of valid id's
+startAriaLabelledBy: validIdList, // a space separated list of valid id's
+endAriaLabelledBy: validIdList,
 showClearDates: PropTypes.bool,
 showDefaultInputIcon: PropTypes.bool,
 customInputIcon: PropTypes.node,
