@@ -12,7 +12,7 @@ function isValidIdList(idList) {
 // validates a list of IDs for use in aria-labelledby attributes
 // valid ID format is listed here:
 // https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id
-export default function (properties, propName, componentName) {
+export default function validIDList(properties, propName, componentName) {
   if (!isValidIdList(properties[propName])) {
     return new Error(
       `Invalid prop \`${propName}\` supplied to \`${componentName}\`. Validation failed.`,
