@@ -8,7 +8,7 @@ import openDirectionShape from '../shapes/OpenDirectionShape';
 
 import { SingleDatePickerInputPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
-import isValidIdList from '../utils/isValidIdList';
+import validIdList from '../utils/validIdList';
 
 import SingleDatePickerInput from './SingleDatePickerInput';
 
@@ -37,7 +37,7 @@ const propTypes = forbidExtraProps({
   id: PropTypes.string.isRequired,
   placeholder: PropTypes.string, // also used as label
   screenReaderMessage: PropTypes.string,
-  ariaLabelledBy: isValidIdList,
+  ariaLabelledBy: validIdList,
   showClearDate: PropTypes.bool,
   showCaret: PropTypes.bool,
   showDefaultInputIcon: PropTypes.bool,

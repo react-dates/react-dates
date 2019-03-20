@@ -6,7 +6,7 @@ import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 import { SingleDatePickerInputPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 import noflip from '../utils/noflip';
-import isValidIdList from '../utils/isValidIdList'
+import validIdList from '../utils/validIdList'
 
 import DateInput from './DateInput';
 import IconPositionShape from '../shapes/IconPositionShape';
@@ -24,7 +24,7 @@ const propTypes = forbidExtraProps({
   placeholder: PropTypes.string, // also used as label
   displayValue: PropTypes.string,
   screenReaderMessage: PropTypes.string,
-  ariaLabelledBy: isValidIdList,
+  ariaLabelledBy: validIdList,
   focused: PropTypes.bool,
   isFocused: PropTypes.bool, // describes actual DOM focus
   disabled: PropTypes.bool,

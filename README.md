@@ -142,7 +142,7 @@ disabled: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf([START_DATE, END_
 required: PropTypes.bool,
 readOnly: PropTypes.bool,
 screenReaderInputMessage: PropTypes.string,
-ariaLabelledBy: PropTypes.string,
+ariaLabelledBy: validIdList, // a space separated list of valid id's
 showClearDates: PropTypes.bool,
 showDefaultInputIcon: PropTypes.bool,
 customInputIcon: PropTypes.node,
@@ -226,7 +226,7 @@ disabled: PropTypes.bool,
 required: PropTypes.bool,
 readOnly: PropTypes.bool,
 screenReaderInputMessage: PropTypes.string,
-ariaLabelledBy: PropTypes.string,
+ariaLabelledBy: validIdList, // a space separated list of valid id's
 showClearDate: PropTypes.bool,
 customCloseIcon: PropTypes.node,
 showDefaultInputIcon: PropTypes.bool,
