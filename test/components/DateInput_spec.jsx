@@ -16,11 +16,11 @@ describe('DateInput', () => {
         expect(wrapper.find('input').props()['aria-label']).to.equal(placeholder);
       });
 
-      it('does not have aria-label if noAriaLabel is true', () => {
+      it('does not have aria-label if hasExternalLabel is true', () => {
         const placeholder = 'placeholder_foo';
         const wrapper = shallow(<DateInput
           id="date"
-          noAriaLabel
+          hasExternalLabel
           placeholder={placeholder}
         />).dive();
         expect(wrapper.find('input').props()['aria-label']).to.have.lengthOf(0);
