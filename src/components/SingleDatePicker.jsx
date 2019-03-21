@@ -48,7 +48,7 @@ const defaultProps = {
   // input related props
   id: 'date',
   placeholder: 'Date',
-  ariaLabel: null,
+  ariaLabel: undefined,
   disabled: false,
   required: false,
   readOnly: false,

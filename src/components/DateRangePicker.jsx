@@ -51,8 +51,8 @@ const defaultProps = {
   // input related props
   startDatePlaceholderText: 'Start Date',
   endDatePlaceholderText: 'End Date',
-  startDateAriaLabel: null,
-  endDateAriaLabel: null,
+  startDateAriaLabel: undefined,
+  endDateAriaLabel: undefined,
   startDateOffset: undefined,
   endDateOffset: undefined,
   disabled: false,
