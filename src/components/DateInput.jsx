@@ -8,7 +8,7 @@ import isTouchDevice from 'is-touch-device';
 import noflip from '../utils/noflip';
 import getInputHeight from '../utils/getInputHeight';
 import openDirectionShape from '../shapes/OpenDirectionShape';
-import validIdList from '../utils/validIdList';
+import validIDList from '../utils/validIDList';
 
 import {
   OPEN_DOWN,
@@ -30,7 +30,7 @@ const propTypes = forbidExtraProps({
   placeholder: PropTypes.string, // also used as label
   displayValue: PropTypes.string,
   screenReaderMessage: PropTypes.string,
-  ariaLabelledBy: validIdList,
+  ariaLabelledBy: validIDList,
   focused: PropTypes.bool,
   disabled: PropTypes.bool,
   required: PropTypes.bool,

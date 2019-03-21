@@ -4,7 +4,7 @@ import { mutuallyExclusiveProps, nonNegativeInteger } from 'airbnb-prop-types';
 
 import { DateRangePickerPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
-import validIdList from '../utils/validIdList';
+import validIDList from '../utils/validIDList';
 
 import FocusedInputShape from './FocusedInputShape';
 import IconPositionShape from './IconPositionShape';
@@ -37,8 +37,8 @@ export default {
   required: PropTypes.bool,
   readOnly: PropTypes.bool,
   screenReaderInputMessage: PropTypes.string,
-  startDateAriaLabelledBy: validIdList,
-  endDateAriaLabelledBy: validIdList,
+  startDateAriaLabelledBy: validIDList,
+  endDateAriaLabelledBy: validIDList,
   showClearDates: PropTypes.bool,
   showDefaultInputIcon: PropTypes.bool,
   inputIconPosition: IconPositionShape,

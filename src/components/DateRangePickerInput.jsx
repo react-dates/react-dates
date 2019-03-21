@@ -7,7 +7,7 @@ import { DateRangePickerInputPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 import noflip from '../utils/noflip';
 import openDirectionShape from '../shapes/OpenDirectionShape';
-import validIdList from '../utils/validIdList';
+import validIDList from '../utils/validIDList';
 
 import DateInput from './DateInput';
 import IconPositionShape from '../shapes/IconPositionShape';
@@ -34,8 +34,8 @@ const propTypes = forbidExtraProps({
   startDateId: PropTypes.string,
   startDatePlaceholderText: PropTypes.string,
   screenReaderMessage: PropTypes.string,
-  startDateAriaLabelledBy: validIdList,
-  endDateAriaLabelledBy: validIdList,
+  startDateAriaLabelledBy: validIDList,
+  endDateAriaLabelledBy: validIDList,
 
   endDateId: PropTypes.string,
   endDatePlaceholderText: PropTypes.string,

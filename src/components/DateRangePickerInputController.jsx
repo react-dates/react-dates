@@ -16,7 +16,7 @@ import DisabledShape from '../shapes/DisabledShape';
 
 import toMomentObject from '../utils/toMomentObject';
 import toLocalizedDateString from '../utils/toLocalizedDateString';
-import validIdList from '../utils/validIdList';
+import validIDList from '../utils/validIDList';
 
 import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
 import isBeforeDay from '../utils/isBeforeDay';
@@ -42,8 +42,8 @@ const propTypes = forbidExtraProps({
   isEndDateFocused: PropTypes.bool,
 
   screenReaderMessage: PropTypes.string,
-  startDateAriaLabelledBy: validIdList,
-  endDateAriaLabelledBy: validIdList,
+  startDateAriaLabelledBy: validIDList,
+  endDateAriaLabelledBy: validIDList,
   showClearDates: PropTypes.bool,
   showCaret: PropTypes.bool,
   showDefaultInputIcon: PropTypes.bool,
