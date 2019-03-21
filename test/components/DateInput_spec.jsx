@@ -122,7 +122,7 @@ describe('DateInput', () => {
 
         it('does not have aria-labelledby attribute value', () => {
           expect(wrapper.find(`input[aria-labelledby="${ariaLabelledBy}"]`)).to.have.lengthOf(0);
-          expect(wrapper.find(`#${inputId}`).prop('aria-labelledby')).to.equal(null);
+          expect(wrapper.find(`#${inputId}`).prop('aria-labelledby')).to.equal(undefined);
         });
       });
     });

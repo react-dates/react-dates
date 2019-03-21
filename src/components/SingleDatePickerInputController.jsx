@@ -81,7 +81,7 @@ const defaultProps = {
 
   placeholder: '',
   screenReaderMessage: 'Date',
-  ariaLabelledBy: null,
+  ariaLabelledBy: undefined,
   showClearDate: false,
   showCaret: false,
   showDefaultInputIcon: false,

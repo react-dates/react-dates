@@ -98,8 +98,8 @@ const defaultProps = {
   isEndDateFocused: false,
 
   screenReaderMessage: '',
-  startDateAriaLabelledBy: null,
-  endDateAriaLabelledBy: null,
+  startDateAriaLabelledBy: undefined,
+  endDateAriaLabelledBy: undefined,
   showClearDates: false,
   showCaret: false,
   showDefaultInputIcon: false,

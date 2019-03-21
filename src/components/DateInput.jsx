@@ -58,7 +58,7 @@ const defaultProps = {
   placeholder: 'Select Date',
   displayValue: '',
   screenReaderMessage: '',
-  ariaLabelledBy: null,
+  ariaLabelledBy: undefined,
   focused: false,
   disabled: false,
   required: false,
@@ -221,7 +221,7 @@ class DateInput extends React.PureComponent {
             focused && styles.DateInput_input__focused,
             disabled && styles.DateInput_input__disabled,
           )}
-          aria-label={!ariaLabelledBy && placeholder}
+          aria-label={ariaLabelledBy ? undefined : placeholder}
           type="text"
           id={id}
           name={id}

@@ -61,7 +61,7 @@ const defaultProps = {
   placeholder: 'Select Date',
   displayValue: '',
   screenReaderMessage: '',
-  ariaLabelledBy: null,
+  ariaLabelledBy: undefined,
   focused: false,
   isFocused: false,
   disabled: false,
