@@ -200,7 +200,7 @@ class DateInput extends React.PureComponent {
     const screenReaderMessageId = `DateInput__screen-reader-message-${id}`;
     // if an aria-labelledby prop exists, then don't use
     // the placeholder for the aria-label attribute
-    const placeholderArialLabel = ariaLabelledBy ? undefined : placeholder;
+    const placeholderAriaLabel = ariaLabelledBy ? undefined : placeholder;
 
     const withFang = showCaret && focused;
 
@@ -227,7 +227,7 @@ class DateInput extends React.PureComponent {
             focused && styles.DateInput_input__focused,
             disabled && styles.DateInput_input__disabled,
           )}
-          aria-label={ariaLabel === undefined ? placeholderArialLabel : ariaLabel}
+          aria-label={ariaLabel === undefined ? placeholderAriaLabel : ariaLabel}
           type="text"
           id={id}
           name={id}
