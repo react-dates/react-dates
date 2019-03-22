@@ -51,6 +51,8 @@ const defaultProps = {
   // input related props
   startDatePlaceholderText: 'Start Date',
   endDatePlaceholderText: 'End Date',
+  startDateAriaLabel: undefined,
+  endDateAriaLabel: undefined,
   startDateOffset: undefined,
   endDateOffset: undefined,
   disabled: false,
@@ -542,9 +544,11 @@ class DateRangePicker extends React.PureComponent {
       startDate,
       startDateId,
       startDatePlaceholderText,
+      startDateAriaLabel,
       endDate,
       endDateId,
       endDatePlaceholderText,
+      endDateAriaLabel,
       focusedInput,
       screenReaderInputMessage,
       startDateAriaLabelledBy,
@@ -590,10 +594,12 @@ class DateRangePicker extends React.PureComponent {
         startDateId={startDateId}
         startDatePlaceholderText={startDatePlaceholderText}
         isStartDateFocused={focusedInput === START_DATE}
+        startDateAriaLabel={startDateAriaLabel}
         endDate={endDate}
         endDateId={endDateId}
         endDatePlaceholderText={endDatePlaceholderText}
         isEndDateFocused={focusedInput === END_DATE}
+        endDateAriaLabel={endDateAriaLabel}
         displayFormat={displayFormat}
         showClearDates={showClearDates}
         showCaret={!withPortal && !withFullScreenPortal && !hideFang}
