@@ -209,6 +209,15 @@ describe('DateInput', () => {
       expect(onKeyDownArrowDownStub.callCount).to.equal(0);
     });
 
+    it('does not call props.onKeyDownEscape if e.key === `Escape`', () => {
+      const onKeyDownEscapeStub = sinon.stub();
+      const wrapper = shallow((
+        <DateInput id="date" onKeyDownEscape={onKeyDownEscapeStub} />
+      )).dive();
+      wrapper.instance().onKeyDown({ ...event, key: 'Escape' });
+      expect(onKeyDownEscapeStub.callCount).to.equal(1);
+    });
+
     it('calls props.onKeyDownQuestionMark if e.key === `?`', () => {
       const onKeyDownQuestionMarkStub = sinon.stub();
       const wrapper = shallow((

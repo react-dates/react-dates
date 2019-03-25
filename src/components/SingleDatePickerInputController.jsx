@@ -58,6 +58,7 @@ const propTypes = forbidExtraProps({
 
   onClose: PropTypes.func,
   onKeyDownArrowDown: PropTypes.func,
+  onKeyDownEscape: PropTypes.func,
   onKeyDownQuestionMark: PropTypes.func,
 
   customInputIcon: PropTypes.node,
@@ -102,6 +103,7 @@ const defaultProps = {
 
   onClose() {},
   onKeyDownArrowDown() {},
+  onKeyDownEscape() {},
   onKeyDownQuestionMark() {},
 
   customInputIcon: null,
@@ -215,6 +217,7 @@ export default class SingleDatePickerInputController extends React.PureComponent
       date,
       phrases,
       onKeyDownArrowDown,
+      onKeyDownEscape,
       onKeyDownQuestionMark,
       screenReaderMessage,
       isRTL,
@@ -250,6 +253,7 @@ export default class SingleDatePickerInputController extends React.PureComponent
         onFocus={this.onFocus}
         onKeyDownShiftTab={this.onClearFocus}
         onKeyDownArrowDown={onKeyDownArrowDown}
+        onKeyDownEscape={onKeyDownEscape}
         onKeyDownQuestionMark={onKeyDownQuestionMark}
         screenReaderMessage={screenReaderMessage}
         phrases={phrases}

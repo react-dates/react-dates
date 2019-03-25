@@ -134,6 +134,7 @@ class SingleDatePicker extends React.PureComponent {
     this.onInputFocus = this.onInputFocus.bind(this);
     this.onDayPickerFocus = this.onDayPickerFocus.bind(this);
     this.onDayPickerBlur = this.onDayPickerBlur.bind(this);
+    this.closeDayPicker = this.closeDayPicker.bind(this);
     this.showKeyboardShortcutsPanel = this.showKeyboardShortcutsPanel.bind(this);
 
     this.responsivizePickerPosition = this.responsivizePickerPosition.bind(this);
@@ -237,6 +238,16 @@ class SingleDatePicker extends React.PureComponent {
       isDayPickerFocused: true,
       showKeyboardShortcuts: false,
     });
+  }
+
+  closeDayPicker() {
+    this.setState({
+      isInputFocused: false,
+      isDayPickerFocused: false,
+      showKeyboardShortcuts: false,
+    });
+
+    this.props.onFocusChange(false)
   }
 
   onDayPickerBlur() {
@@ -572,6 +583,7 @@ class SingleDatePicker extends React.PureComponent {
         displayFormat={displayFormat}
         onFocusChange={this.onInputFocus}
         onKeyDownArrowDown={this.onDayPickerFocus}
+        onKeyDownEscape={this.closeDayPicker}
         onKeyDownQuestionMark={this.showKeyboardShortcutsPanel}
         screenReaderMessage={screenReaderInputMessage}
         phrases={phrases}

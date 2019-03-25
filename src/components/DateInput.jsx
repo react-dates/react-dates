@@ -45,6 +45,7 @@ const propTypes = forbidExtraProps({
   onFocus: PropTypes.func,
   onKeyDownShiftTab: PropTypes.func,
   onKeyDownTab: PropTypes.func,
+  onKeyDownEscape: PropTypes.func,
 
   onKeyDownArrowDown: PropTypes.func,
   onKeyDownQuestionMark: PropTypes.func,
@@ -73,6 +74,7 @@ const defaultProps = {
   onFocus() {},
   onKeyDownShiftTab() {},
   onKeyDownTab() {},
+  onKeyDownEscape() {},
 
   onKeyDownArrowDown() {},
   onKeyDownQuestionMark() {},
@@ -145,6 +147,7 @@ class DateInput extends React.PureComponent {
       onKeyDownTab,
       onKeyDownArrowDown,
       onKeyDownQuestionMark,
+      onKeyDownEscape
     } = this.props;
     const { key } = e;
 
@@ -159,6 +162,8 @@ class DateInput extends React.PureComponent {
     } else if (key === '?') {
       e.preventDefault();
       onKeyDownQuestionMark(e);
+    } else if (key === 'Escape') {
+      onKeyDownEscape(e);
     }
   }
 
