@@ -137,6 +137,8 @@ class CalendarDay extends React.PureComponent {
           modifiers.has('selected-start') && styles.CalendarDay__selected_start,
           modifiers.has('selected-end') && styles.CalendarDay__selected_end,
           selected && !modifiers.has('selected-span') && styles.CalendarDay__selected,
+          modifiers.has('before-hovered-end') && styles.CalendarDay__before_hovered_end,
+          modifiers.has('no-selected-start-before-selected-end') && styles.CalendarDay__no_selected_start_before_selected_end,
           isOutsideRange && styles.CalendarDay__blocked_out_of_range,
           daySizeStyles,
         )}
@@ -341,5 +343,7 @@ export default withStyles(({ reactDates: { color, font } }) => ({
   CalendarDay__today: {},
   CalendarDay__firstDayOfWeek: {},
   CalendarDay__lastDayOfWeek: {},
-  CalendarDay__after_hovered_start: {}
+  CalendarDay__after_hovered_start: {},
+  CalendarDay__before_hovered_end: {},
+  CalendarDay__no_selected_start_before_selected_end: {}
 }), { pureComponent: typeof React.PureComponent !== 'undefined' })(CalendarDay);
