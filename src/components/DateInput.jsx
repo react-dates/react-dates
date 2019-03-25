@@ -147,7 +147,7 @@ class DateInput extends React.PureComponent {
       onKeyDownTab,
       onKeyDownArrowDown,
       onKeyDownQuestionMark,
-      onKeyDownEscape
+      onKeyDownEscape,
     } = this.props;
     const { key } = e;
 

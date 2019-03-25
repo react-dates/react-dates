@@ -240,16 +240,6 @@ class SingleDatePicker extends React.PureComponent {
     });
   }
 
-  closeDayPicker() {
-    this.setState({
-      isInputFocused: false,
-      isDayPickerFocused: false,
-      showKeyboardShortcuts: false,
-    });
-
-    this.props.onFocusChange(false)
-  }
-
   onDayPickerBlur() {
     this.setState({
       isInputFocused: true,
@@ -276,6 +266,17 @@ class SingleDatePicker extends React.PureComponent {
 
   setContainerRef(ref) {
     this.container = ref;
+  }
+
+  closeDayPicker() {
+    const { onFocusChange } = this.props;
+    this.setState({
+      isInputFocused: false,
+      isDayPickerFocused: false,
+      showKeyboardShortcuts: false,
+    });
+
+    onFocusChange(false);
   }
 
   addEventListeners() {
