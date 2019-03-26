@@ -293,8 +293,8 @@ storiesOf('DayPickerRangeController', module)
   )))
   .add('with custom month navigation and blocked navigation (minDate and maxDate)', withInfo()(() => (
     <DayPickerRangeControllerWrapper
-      minDate={moment('2018-07-01')}
-      maxDate={moment('2018-10-20')}
+      minDate={moment().subtract(2, 'months').startOf('month')}
+      maxDate={moment().add(2, 'months').endOf('month')}
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
@@ -383,8 +383,8 @@ storiesOf('DayPickerRangeController', module)
   )))
   .add('with navigation blocked (minDate and maxDate)', withInfo()(() => (
     <DayPickerRangeControllerWrapper
-      minDate={moment('2018-07-01')}
-      maxDate={moment('2018-10-20')}
+      minDate={moment().subtract(2, 'months').startOf('month')}
+      maxDate={moment().add(2, 'months').endOf('month')}
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
