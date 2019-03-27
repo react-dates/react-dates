@@ -288,9 +288,9 @@ class DateRangePicker extends React.PureComponent {
       isDateRangePickerInputFocused: false,
       isDayPickerFocused: false,
       showKeyboardShortcuts: false,
+    }, () => {
+      onFocusChange(null);
     });
-
-    onFocusChange(null);
   }
 
   addDayPickerEventListeners() {

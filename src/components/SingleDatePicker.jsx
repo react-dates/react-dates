@@ -274,9 +274,9 @@ class SingleDatePicker extends React.PureComponent {
       isInputFocused: false,
       isDayPickerFocused: false,
       showKeyboardShortcuts: false,
+    }, () => {
+      onFocusChange(false);
     });
-
-    onFocusChange(false);
   }
 
   addEventListeners() {
