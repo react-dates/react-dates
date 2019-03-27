@@ -140,6 +140,7 @@ class DateRangePicker extends React.PureComponent {
     this.onDayPickerFocus = this.onDayPickerFocus.bind(this);
     this.onDayPickerFocusOut = this.onDayPickerFocusOut.bind(this);
     this.onDayPickerBlur = this.onDayPickerBlur.bind(this);
+    this.closeDayPicker = this.closeDayPicker.bind(this);
     this.showKeyboardShortcutsPanel = this.showKeyboardShortcutsPanel.bind(this);
 
     this.responsivizePickerPosition = this.responsivizePickerPosition.bind(this);
@@ -279,6 +280,17 @@ class DateRangePicker extends React.PureComponent {
 
   setContainerRef(ref) {
     this.container = ref;
+  }
+
+  closeDayPicker() {
+    const { onFocusChange } = this.props;
+    this.setState({
+      isDateRangePickerInputFocused: false,
+      isDayPickerFocused: false,
+      showKeyboardShortcuts: false,
+    });
+
+    onFocusChange(null);
   }
 
   addDayPickerEventListeners() {
@@ -616,6 +628,7 @@ class DateRangePicker extends React.PureComponent {
         onDatesChange={onDatesChange}
         onFocusChange={this.onDateRangePickerInputFocus}
         onKeyDownArrowDown={this.onDayPickerFocus}
+        onKeyDownEscape={this.closeDayPicker}
         onKeyDownQuestionMark={this.showKeyboardShortcutsPanel}
         onClose={onClose}
         phrases={phrases}
