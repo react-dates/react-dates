@@ -59,6 +59,7 @@ const propTypes = forbidExtraProps({
   isOutsideRange: PropTypes.func,
   isDayBlocked: PropTypes.func,
   isDayHighlighted: PropTypes.func,
+  isDayFlexible: PropTypes.func,
   getMinNightsForHoverDate: PropTypes.func,
 
   // DayPicker props
@@ -126,6 +127,7 @@ const defaultProps = {
   isOutsideRange() {},
   isDayBlocked() {},
   isDayHighlighted() {},
+  isDayFlexible() {},
   getMinNightsForHoverDate() {},
 
   // DayPicker props
@@ -197,6 +199,7 @@ export default class DayPickerRangeController extends React.PureComponent {
       'blocked-calendar': day => props.isDayBlocked(day),
       'blocked-out-of-range': day => props.isOutsideRange(day),
       'highlighted-calendar': day => props.isDayHighlighted(day),
+      'flexible-calendar': day => props.isDayFlexible(day),
       valid: day => !this.isBlocked(day),
       'selected-start': day => this.isStartDate(day),
       'selected-end': day => this.isEndDate(day),
@@ -252,6 +255,7 @@ export default class DayPickerRangeController extends React.PureComponent {
       isOutsideRange,
       isDayBlocked,
       isDayHighlighted,
+      isDayFlexible,
       phrases,
       initialVisibleMonth,
       numberOfMonths,
@@ -266,6 +270,7 @@ export default class DayPickerRangeController extends React.PureComponent {
       isOutsideRange: prevIsOutsideRange,
       isDayBlocked: prevIsDayBlocked,
       isDayHighlighted: prevIsDayHighlighted,
+      isDayFlexible: prevIsDayFlexible,
       phrases: prevPhrases,
       initialVisibleMonth: prevInitialVisibleMonth,
       numberOfMonths: prevNumberOfMonths,
@@ -278,6 +283,7 @@ export default class DayPickerRangeController extends React.PureComponent {
     let recomputeOutsideRange = false;
     let recomputeDayBlocked = false;
     let recomputeDayHighlighted = false;
+    let recomputeDayFlexible = false;
 
     if (isOutsideRange !== prevIsOutsideRange) {
       this.modifiers['blocked-out-of-range'] = day => isOutsideRange(day);
@@ -294,8 +300,13 @@ export default class DayPickerRangeController extends React.PureComponent {
       recomputeDayHighlighted = true;
     }
 
+    if (isDayFlexible !== prevIsDayFlexible) {
+      this.modifiers['flexible-calendar'] = day => isDayFlexible(day);
+      recomputeDayFlexible = true;
+    }
+
     const recomputePropModifiers = (
-      recomputeOutsideRange || recomputeDayBlocked || recomputeDayHighlighted
+      recomputeOutsideRange || recomputeDayBlocked || recomputeDayHighlighted || recomputeDayFlexible
     );
 
     const didStartDateChange = startDate !== prevStartDate;
@@ -425,6 +436,14 @@ export default class DayPickerRangeController extends React.PureComponent {
               modifiers = this.addModifier(modifiers, momentObj, 'highlighted-calendar');
             } else {
               modifiers = this.deleteModifier(modifiers, momentObj, 'highlighted-calendar');
+            }
+          }
+
+          if (didFocusChange || recomputeDayFlexible) {
+            if (isDayFlexible(momentObj)) {
+              modifiers = this.addModifier(modifiers, momentObj, 'flexible-calendar');
+            } else {
+              modifiers = this.deleteModifier(modifiers, momentObj, 'flexible-calendar');
             }
           }
         });
