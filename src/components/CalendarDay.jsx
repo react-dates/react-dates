@@ -139,6 +139,10 @@ class CalendarDay extends React.PureComponent {
           selected && !modifiers.has('selected-span') && styles.CalendarDay__selected,
           modifiers.has('before-hovered-end') && styles.CalendarDay__before_hovered_end,
           modifiers.has('no-selected-start-before-selected-end') && styles.CalendarDay__no_selected_start_before_selected_end,
+          modifiers.has('selected-start-in-hovered-span') && styles.CalendarDay__selected_start_in_hovered_span,
+          modifiers.has('selected-end-in-hovered-span') && styles.CalendarDay__selected_end_in_hovered_span,
+          modifiers.has('selected-start-no-selected-end') && styles.CalendarDay__selected_start_no_selected_end,
+          modifiers.has('selected-end-no-selected-start') && styles.CalendarDay__selected_end_no_selected_start,
           isOutsideRange && styles.CalendarDay__blocked_out_of_range,
           daySizeStyles,
         )}
@@ -345,5 +349,9 @@ export default withStyles(({ reactDates: { color, font } }) => ({
   CalendarDay__lastDayOfWeek: {},
   CalendarDay__after_hovered_start: {},
   CalendarDay__before_hovered_end: {},
-  CalendarDay__no_selected_start_before_selected_end: {}
+  CalendarDay__no_selected_start_before_selected_end: {},
+  CalendarDay__selected_start_in_hovered_span: {},
+  CalendarDay__selected_end_in_hovered_span: {},
+  CalendarDay__selected_start_no_selected_end: {},
+  CalendarDay__selected_end_no_selected_start: {}
 }), { pureComponent: typeof React.PureComponent !== 'undefined' })(CalendarDay);
