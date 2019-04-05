@@ -158,9 +158,7 @@ function DayPickerNavigation({
             const { key } = e;
             if (key === 'Enter' || key === ' ') onPrevMonthClick(e);
           }}
-          onMouseUp={disablePrev ? undefined : (e) => {
-            e.currentTarget.blur();
-          }}
+          onMouseDown={e => e.preventDefault()}
         >
           {navPrevIcon}
         </div>
@@ -199,9 +197,7 @@ function DayPickerNavigation({
           const { key } = e;
           if (key === 'Enter' || key === ' ') onNextMonthClick(e);
         }}
-        onMouseUp={disableNext ? undefined : (e) => {
-          e.currentTarget.blur();
-        }}
+        onMouseDown={e => e.preventDefault()}
       >
         {navNextIcon}
       </div>

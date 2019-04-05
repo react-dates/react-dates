@@ -199,9 +199,7 @@ class DayPickerKeyboardShortcuts extends React.PureComponent {
             type="button"
             aria-label={toggleButtonText}
             onClick={this.onShowKeyboardShortcutsButtonClick}
-            onMouseUp={(e) => {
-              e.currentTarget.blur();
-            }}
+            onMouseDown={e => e.preventDefault()}
           >
             <span
               {...css(
