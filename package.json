@@ -83,7 +83,6 @@
     "git-directory-deploy": "^1.5.1",
     "imports-loader": "^0.8.0",
     "in-publish": "^2.0.0",
-    "json-loader": "^0.5.7",
     "karma": "^3.1.1",
     "karma-chai": "^0.1.0",
     "karma-firefox-launcher": "^1.1.0",
