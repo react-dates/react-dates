@@ -4,6 +4,10 @@
 - []  ([#](https://github.com/airbnb/react-dates/pull/))
 -->
 
+## [Unreleased]
+- [fix] Fix date selection in the SDP ([#1530])
+
+
 ## 20.1.0
 - [new] Add `renderKeyboardShortcutsButton` prop ([#1576](https://github.com/airbnb/react-dates/pull/1576))
 
