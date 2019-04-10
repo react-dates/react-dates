@@ -4,7 +4,7 @@
 - []  ([#](https://github.com/airbnb/react-dates/pull/))
 -->
 
-## [Unreleased]	
+## [Unreleased]
 - [fix] Fix date selection in the SDP ([#1530])
 
 
