@@ -4,8 +4,8 @@
 - []  ([#](https://github.com/airbnb/react-dates/pull/))
 -->
 
-## [Unreleased]
-- [fix] Fix date selection in the SDP ([#1530])
+## 20.1.1
+- [fix] add disabledPrev and disabledNext props to DayPickerSingleDateController
 
 
 ## 20.1.0

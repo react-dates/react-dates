@@ -1,6 +1,6 @@
 {
   "name": "react-dates",
-  "version": "20.1.0",
+  "version": "20.1.1",
   "description": "A responsive and accessible date range picker component built with React",
   "main": "index.js",
   "scripts": {
@@ -110,7 +110,7 @@
     "why-did-you-update": "^1.0.6"
   },
   "dependencies": {
-    "airbnb-prop-types": "2.13.1",
+    "airbnb-prop-types": "^2.10.0",
     "consolidated-events": "^1.1.1 || ^2.0.0",
     "is-touch-device": "^1.0.1",
     "lodash": "^4.1.1",
