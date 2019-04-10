@@ -203,8 +203,9 @@ storiesOf('DayPickerSingleDateController', module)
       onOutsideClick={action('DayPickerSingleDateController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerSingleDateController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerSingleDateController::onNextMonthClick')}
-      isOutsideRange={day => !isInclusivelyAfterDay(day, moment())
-        || isInclusivelyAfterDay(day, moment().add(2, 'weeks'))
+      isOutsideRange={day =>
+        !isInclusivelyAfterDay(day, moment()) ||
+        isInclusivelyAfterDay(day, moment().add(2, 'weeks'))
       }
     />
   )))
