@@ -63,8 +63,9 @@ const propTypes = forbidExtraProps({
 
   navPrev: PropTypes.node,
   navNext: PropTypes.node,
-  disablePrev: PropTypes.node,
-  disableNext: PropTypes.node,
+
+  disablePrev: PropTypes.bool,
+  disableNext: PropTypes.bool,
 
   onPrevMonthClick: PropTypes.func,
   onNextMonthClick: PropTypes.func,
