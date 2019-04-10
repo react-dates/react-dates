@@ -63,6 +63,8 @@ const propTypes = forbidExtraProps({
 
   navPrev: PropTypes.node,
   navNext: PropTypes.node,
+  disablePrev: PropTypes.node,
+  disableNext: PropTypes.node,
 
   onPrevMonthClick: PropTypes.func,
   onNextMonthClick: PropTypes.func,
@@ -119,6 +121,8 @@ const defaultProps = {
 
   navPrev: null,
   navNext: null,
+  disablePrev: false,
+  disableNext: false,
 
   onPrevMonthClick() {},
   onNextMonthClick() {},
@@ -653,6 +657,8 @@ export default class DayPickerSingleDateController extends React.PureComponent {
       renderMonthText,
       navPrev,
       navNext,
+      disablePrev,
+      disableNext,
       onOutsideClick,
       onShiftTab,
       onTab,
@@ -705,6 +711,8 @@ export default class DayPickerSingleDateController extends React.PureComponent {
         onOutsideClick={onOutsideClick}
         navPrev={navPrev}
         navNext={navNext}
+        disablePrev={disablePrev}
+        disableNext={disableNext}
         renderMonthText={renderMonthText}
         renderCalendarDay={renderCalendarDay}
         renderDayContents={renderDayContents}
