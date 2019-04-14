@@ -113,21 +113,21 @@ const defaultProps = {
   endDate: undefined, // TODO: use null
   minDate: null,
   maxDate: null,
-  onDatesChange() { },
+  onDatesChange() {},
   startDateOffset: undefined,
   endDateOffset: undefined,
 
   focusedInput: null,
-  onFocusChange() { },
-  onClose() { },
+  onFocusChange() {},
+  onClose() {},
 
   keepOpenOnDateSelect: false,
   minimumNights: 1,
   disabled: false,
-  isOutsideRange() { },
-  isDayBlocked() { },
-  isDayHighlighted() { },
-  getMinNightsForHoverDate() { },
+  isOutsideRange() {},
+  isDayBlocked() {},
+  isDayHighlighted() {},
+  getMinNightsForHoverDate() {},
 
   // DayPicker props
   renderMonthText: null,
@@ -143,9 +143,9 @@ const defaultProps = {
   navNext: null,
   noNavButtons: false,
 
-  onPrevMonthClick() { },
-  onNextMonthClick() { },
-  onOutsideClick() { },
+  onPrevMonthClick() {},
+  onNextMonthClick() {},
+  onOutsideClick() {},
 
   renderCalendarDay: undefined,
   renderDayContents: null,
@@ -161,11 +161,11 @@ const defaultProps = {
   horizontalMonthPadding: 13,
 
   // accessibility
-  onBlur() { },
+  onBlur() {},
   isFocused: false,
   showKeyboardShortcuts: false,
-  onTab() { },
-  onShiftTab() { },
+  onTab() {},
+  onShiftTab() {},
 
   // i18n
   monthFormat: 'MMMM YYYY',
@@ -727,8 +727,7 @@ export default class DayPickerRangeController extends React.PureComponent {
 
         if (endDate) {
           const startSpan = endDate.clone().subtract(minimumNights, 'days');
-          const endSpan = endDate.clone();
-          modifiers = this.deleteModifierFromRange(modifiers, startSpan, endSpan, 'before-hovered-end');
+          modifiers = this.deleteModifierFromRange(modifiers, startSpan, endDate, 'before-hovered-end');
 
           if (isSameDay(day, endDate)) {
             const newStartSpan = endDate.clone().subtract(minimumNights, 'days');

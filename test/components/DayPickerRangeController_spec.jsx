@@ -40,8 +40,8 @@ describe('DayPickerRangeController', () => {
   describe('#componentDidMount', () => {
     const props = {
       ...DayPickerRangeController.defaultProps,
-      onDatesChange() {},
-      onFocusChange() {},
+      onDatesChange() { },
+      onFocusChange() { },
     };
 
     describe('phrases', () => {
@@ -98,8 +98,8 @@ describe('DayPickerRangeController', () => {
   describe('#componentWillReceiveProps', () => {
     const props = {
       ...DayPickerRangeController.defaultProps,
-      onDatesChange() {},
-      onFocusChange() {},
+      onDatesChange() { },
+      onFocusChange() { },
     };
 
     describe('rebuilding currentMonth/visibleDays', () => {
@@ -2306,10 +2306,13 @@ describe('DayPickerRangeController', () => {
             wrapper.setState({ hoverDate });
             deleteModifierFromRangeSpy.resetHistory();
             wrapper.instance().onDayMouseEnter(moment().add(10, 'days'));
-            expect(deleteModifierFromRangeSpy.callCount).to.equal(1);
+            expect(deleteModifierFromRangeSpy.callCount).to.equal(2);
             expect(deleteModifierFromRangeSpy.getCall(0).args[1]).to.equal(hoverDate);
             expect(deleteModifierFromRangeSpy.getCall(0).args[2]).to.equal(endDate);
             expect(deleteModifierFromRangeSpy.getCall(0).args[3]).to.equal('hovered-span');
+            expect(isSameDay(deleteModifierFromRangeSpy.getCall(1).args[1], endDate.subtract(DayPickerRangeController.defaultProps.minimumNights, 'days'))).to.equal(true);
+            expect(deleteModifierFromRangeSpy.getCall(1).args[2]).to.equal(endDate);
+            expect(deleteModifierFromRangeSpy.getCall(1).args[3]).to.equal('before-hovered-end');
           });
         });
 
@@ -4429,7 +4432,7 @@ describe('DayPickerRangeController', () => {
 
     describe('renderKeyboardShortcutsButton prop', () => {
       it('pass down custom button render function', () => {
-        const testRenderKeyboardShortcutsButton = () => {};
+        const testRenderKeyboardShortcutsButton = () => { };
         const wrapper = shallow(
           <DayPickerRangeController
             renderKeyboardShortcutsButton={testRenderKeyboardShortcutsButton}
