@@ -353,5 +353,5 @@ export default withStyles(({ reactDates: { color, font } }) => ({
   CalendarDay__selected_start_in_hovered_span: {},
   CalendarDay__selected_end_in_hovered_span: {},
   CalendarDay__selected_start_no_selected_end: {},
-  CalendarDay__selected_end_no_selected_start: {}
+  CalendarDay__selected_end_no_selected_start: {},
 }), { pureComponent: typeof React.PureComponent !== 'undefined' })(CalendarDay);
