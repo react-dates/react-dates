@@ -595,20 +595,66 @@ describe('SingleDatePicker', () => {
     });
   });
 
-  describe('#onFocusOut', () => {
-    it('calls props.onFocusChange with focused: false', () => {
-      const onFocusChangeStub = sinon.stub();
-      const wrapper = shallow((
+  describeIfWindow('#onFocusOut', () => {
+    let wrapper;
+    let ctrl;
+    let onFocusChangeStub;
+    let dpcContainsStub;
+
+    beforeEach(() => {
+      onFocusChangeStub = sinon.stub();
+      dpcContainsStub = sinon.stub();
+      wrapper = shallow((
         <SingleDatePicker id="date" onFocusChange={onFocusChangeStub} />
       )).dive();
-
-      wrapper.instance().dayPickerContainer = {
-        contains: () => false,
+      ctrl = wrapper.instance();
+      ctrl.dayPickerContainer = {
+        contains: dpcContainsStub.returns(true),
       };
+    });
 
-      wrapper.instance().onFocusOut({});
+    afterEach(() => {
+      onFocusChangeStub.reset();
+      dpcContainsStub.reset();
+    });
+
+    it('calls props.onFocusChange with focused: false when dayPickerContainer does not contain the target', () => {
+      dpcContainsStub.returns(false);
+      ctrl.onFocusOut({});
       expect(onFocusChangeStub.callCount).to.equal(1);
       expect(onFocusChangeStub.getCall(0).args[0]).to.deep.equal({ focused: false });
+    });
+
+    it('should not call props.onFocusChange when dayPickerContainer contains the target', () => {
+      ctrl.onFocusOut({});
+      expect(onFocusChangeStub.callCount).to.equal(0);
+    });
+
+    it('should check the target when related target is the same as the document body', () => {
+      const event = {
+        relatedTarget: document.body,
+        target: 'target',
+      };
+      ctrl.onFocusOut(event);
+      expect(dpcContainsStub.getCall(0).args[0]).to.equal(event.target);
+    });
+
+    it('should check the target when related target is defined', () => {
+      const event = {
+        relatedTarget: 'related target',
+        target: 'target',
+      };
+      ctrl.onFocusOut(event);
+      expect(dpcContainsStub.getCall(0).args[0]).to.equal(event.relatedTarget);
+    });
+
+    it('should check the target when related target is not defined', () => {
+      const event = {
+        relatedTarget: undefined,
+        target: 'target',
+      };
+      ctrl.onFocusOut(event);
+      expect(dpcContainsStub.getCall(0).args[0]).to.equal(event.target);
     });
   });
 });

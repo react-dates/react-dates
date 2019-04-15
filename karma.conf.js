@@ -11,6 +11,7 @@ module.exports = (config) => {
     files: ['test/browser-main.js'],
 
     webpack: {
+      mode: 'development',
       externals: {
         sinon: true,
       },
@@ -36,7 +37,6 @@ module.exports = (config) => {
               presets: ['airbnb'],
             },
           },
-          { test: /\.json$/, loader: 'json-loader' },
 
           // Inject the Airbnb shims into the bundle
           { test: /test\/_helpers/, loader: 'imports-loader?shims=airbnb-js-shims' },
