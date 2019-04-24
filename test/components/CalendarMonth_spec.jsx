@@ -1,6 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
+import sinon from 'sinon-sandbox';
 import moment from 'moment';
 
 import CalendarMonth from '../../src/components/CalendarMonth';
@@ -25,6 +26,25 @@ describe('CalendarMonth', () => {
         const captionWrapper = shallow(<CalendarMonth month={MONTH} />).dive().find('strong');
         expect(captionWrapper.text()).to.equal(MONTH.format('MMMM YYYY'));
       });
+    });
+
+    it('renderMonthElement renders month element when month changes', () => {
+      const renderMonthElementStub = sinon.stub().returns(<div id="month-element" />);
+      const wrapper = shallow(<CalendarMonth renderMonthElement={renderMonthElementStub} />).dive();
+      wrapper.setProps({ month: moment().subtract(1, 'months') });
+
+      const [{
+        month,
+        onMonthSelect,
+        onYearSelect,
+        isVisible,
+      }] = renderMonthElementStub.getCall(0).args;
+
+      expect(moment.isMoment(month)).to.equal(true);
+      expect(typeof onMonthSelect).to.equal('function');
+      expect(typeof onYearSelect).to.equal('function');
+      expect(typeof isVisible).to.equal('boolean');
+      expect(wrapper.find('#month-element').exists()).to.equal(true);
     });
   });
 });
