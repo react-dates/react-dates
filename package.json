@@ -1,18 +1,18 @@
 {
-  "name": "react-dates",
-  "version": "20.1.0",
+  "name": "resdiary-datepicker",
+  "version": "1.0.0",
   "description": "A responsive and accessible date range picker component built with React",
   "main": "index.js",
   "scripts": {
     "prebuild": "npm run clean",
     "build": "npm run build:cjs && npm run build:esm && npm run build:css -- --optimize ",
-    "build:cjs": "BABEL_ENV=cjs babel src/ -d lib/",
-    "build:esm": "BABEL_ENV=esm babel src/ -d esm/",
-    "prebuild:css": "rimraf lib/css && mkdir -p lib/css",
+    "build:cjs": "SET BABEL_ENV=cjs babel src/ -d lib/",
+    "build:esm": "SET BABEL_ENV=esm babel src/ -d esm/",
+    "prebuild:css": "rimraf lib\\css; mkdir lib\\css",
     "build:css": "node scripts/buildCSS.js",
     "clean": "rimraf lib esm",
     "precover": "rimraf coverage && npm run react",
-    "cover": "cross-env NODE_ENV=test node --max-old-space-size=4096 $(which nyc) npm run mocha test",
+    "cover": "cross-env SET NODE_ENV=test node --max-old-space-size=4096 $(which nyc) npm run mocha test",
     "lint": "eslint --ext .js,.jsx src test",
     "mocha": "mocha ./test/_helpers",
     "storybook:uninstall": "npm uninstall --no-save @storybook/react && rimraf node_modules/@storybook node_modules/react-modal node_modules/react-dom-factories",
@@ -42,14 +42,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/airbnb/react-dates.git"
+    "url": "git+https://github.com/ResDiary/ResDiary-DatePicker.git"
   },
   "author": "Maja Wichrowska <maja.wichrowska@airbnb.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/airbnb/react-dates/issues"
   },
-  "homepage": "https://github.com/airbnb/react-dates#readme",
+  "homepage": "https://github.com/ResDiary/ResDiary-DatePicker#readme",
   "devDependencies": {
     "@babel/cli": "^7.1.2",
     "@babel/core": "^7.1.2",

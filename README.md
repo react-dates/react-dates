@@ -1,4 +1,4 @@
-# react-dates <sup>[![Version Badge][npm-version-svg]][package-url]</sup>
+# resdiary-datepicker
 
 [![Build Status][travis-svg]][travis-url]
 [![dependency status][deps-svg]][deps-url]
@@ -6,9 +6,8 @@
 [![License][license-image]][license-url]
 [![Downloads][downloads-image]][downloads-url]
 
-[![npm badge][npm-badge-png]][package-url]
-
 > An easily internationalizable, accessible, mobile-friendly datepicker library for the web.
+> (Forked from https://github.com/airbnb/react-dates)
 
 ![react-dates in action](https://raw.githubusercontent.com/airbnb/react-dates/master/react-dates-demo.gif)
 
