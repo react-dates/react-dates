@@ -84,7 +84,6 @@ const defaultProps = {
   renderMonthElement: null,
   firstDayOfWeek: null,
   setMonthTitleHeight: null,
-
   focusedDate: null,
   isFocused: false,
 
@@ -174,21 +173,7 @@ class CalendarMonth extends React.PureComponent {
       styles,
       firstDayOfWeek,
     } = this.props;
-    const { calendarMonthWidth } = this.state;
     const verticalScrollable = orientation === VERTICAL_SCROLLABLE;
-    const horizontalStyle = {
-      left: index * calendarMonthWidth,
-    };
-    const verticalStyle = {
-      marginLeft: -calendarMonthWidth / 2,
-    };
-
-    let weekHeaderStyle = {}; // no styles applied to the vertical-scrollable orientation
-    if (orientation === HORIZONTAL_ORIENTATION) {
-      weekHeaderStyle = horizontalStyle;
-    } else if (this.isVertical() && !verticalScrollable) {
-      weekHeaderStyle = verticalStyle;
-    }
 
     const header = [];
     for (let i = 0; i < 7; i += 1) {
@@ -205,7 +190,6 @@ class CalendarMonth extends React.PureComponent {
           styles.CalendarMonth_weekHeader,
           this.isVertical() && styles.CalendarMonth_weekHeader__vertical,
           verticalScrollable && styles.CalendarMonth_weekHeader__verticalScrollable,
-          weekHeaderStyle,
         )}
         key={`week-${index}`}
       >
