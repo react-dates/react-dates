@@ -65,6 +65,8 @@ const propTypes = forbidExtraProps({
   withPortal: PropTypes.bool,
   initialVisibleMonth: PropTypes.func,
   firstDayOfWeek: DayOfWeekShape,
+  firstDateOfMonth: DayOfWeekShape,
+  lastDateOfMonth: DayOfWeekShape,
   hideKeyboardShortcutsPanel: PropTypes.bool,
   daySize: nonNegativeInteger,
   verticalHeight: nonNegativeInteger,
@@ -133,6 +135,8 @@ const defaultProps = {
   hideKeyboardShortcutsPanel: false,
   initialVisibleMonth: null,
   firstDayOfWeek: null,
+  firstDateOfMonth: null,
+  lastDateOfMonth: null,
   daySize: DAY_SIZE,
   verticalHeight: null,
   noBorder: false,
@@ -194,6 +198,8 @@ export default class DayPickerSingleDateController extends React.PureComponent {
       selected: (day) => this.isSelected(day),
       'first-day-of-week': (day) => this.isFirstDayOfWeek(day),
       'last-day-of-week': (day) => this.isLastDayOfWeek(day),
+      'first-date-of-month': (day) => this.isFirstDateOfMonth(day),
+      'last-date-of-month': (day) => this.isLastDateOfMonth(day),
     };
 
     const { currentMonth, visibleDays } = this.getStateForNewMonth(props);
@@ -644,6 +650,16 @@ export default class DayPickerSingleDateController extends React.PureComponent {
   isLastDayOfWeek(day) {
     const { firstDayOfWeek } = this.props;
     return day.day() === ((firstDayOfWeek || moment.localeData().firstDayOfWeek()) + 6) % 7;
+  }
+
+  isFirstDateOfMonth(day) {
+    const { firstDateOfMonth } = this.props;
+    return day.date() === (firstDateOfMonth || day.clone().startOf('month').date());
+  }
+
+  isLastDateOfMonth(day) {
+    const { lastDateOfMonth } = this.props;
+    return day.date() === (lastDateOfMonth || day.clone().endOf('month').date());
   }
 
   render() {

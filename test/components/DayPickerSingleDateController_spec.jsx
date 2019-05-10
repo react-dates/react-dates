@@ -1041,6 +1041,8 @@ describe('DayPickerSingleDateController', () => {
       sinon.stub(DayPickerSingleDateController.prototype, 'isHovered').returns(false);
       sinon.stub(DayPickerSingleDateController.prototype, 'isFirstDayOfWeek').returns(false);
       sinon.stub(DayPickerSingleDateController.prototype, 'isLastDayOfWeek').returns(false);
+      sinon.stub(DayPickerSingleDateController.prototype, 'isFirstDateOfMonth').returns(false);
+      sinon.stub(DayPickerSingleDateController.prototype, 'isLastDateOfMonth').returns(false);
       const wrapper = shallow((
         <DayPickerSingleDateController
           onDateChange={sinon.stub()}
@@ -1617,6 +1619,44 @@ describe('DayPickerSingleDateController', () => {
         const wrapper = shallow(<DayPickerSingleDateController />);
         expect(wrapper.instance().isLastDayOfWeek(moment().startOf('week').add(1, 'day'))).to.equal(false);
       });
+    });
+  });
+
+  describe('#isFirstDateOfMonth', () => {
+    it('returns true if first date of this month', () => {
+      const wrapper = shallow(<DayPickerSingleDateController />);
+      expect(wrapper.instance().isFirstDateOfMonth(moment().startOf('month'))).to.equal(true);
+    });
+
+    it('returns true if same date as firstDateOfMonth prop', () => {
+      const firstDateOfMonth = 2;
+      const wrapper = shallow(
+        <DayPickerSingleDateController firstDateOfMonth={firstDateOfMonth} />,
+      );
+      expect(wrapper.instance().isFirstDateOfMonth(moment().startOf('month').date(firstDateOfMonth))).to.equal(true);
+    });
+
+    it('returns false if not the first date of the month', () => {
+      const wrapper = shallow(<DayPickerSingleDateController />);
+      expect(wrapper.instance().isFirstDateOfMonth(moment().endOf('month'))).to.equal(false);
+    });
+  });
+
+  describe('#isLastDateOfMonth', () => {
+    it('returns true if last date of month', () => {
+      const wrapper = shallow(<DayPickerSingleDateController />);
+      expect(wrapper.instance().isLastDateOfMonth(moment().endOf('month'))).to.equal(true);
+    });
+
+    it('returns true if 1 day before next month first date', () => {
+      const firstDateOfNextMonth = moment().endOf('month').add(1, 'day').date();
+      const wrapper = shallow(<DayPickerSingleDateController />);
+      expect(wrapper.instance().isLastDateOfMonth(moment().date(firstDateOfNextMonth).subtract(1, 'days'))).to.equal(true);
+    });
+
+    it('returns false if not last date of month', () => {
+      const wrapper = shallow(<DayPickerSingleDateController />);
+      expect(wrapper.instance().isLastDateOfMonth(moment().startOf('month').add(1, 'day'))).to.equal(false);
     });
   });
 

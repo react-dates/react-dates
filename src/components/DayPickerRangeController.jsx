@@ -101,6 +101,8 @@ const propTypes = forbidExtraProps({
   renderKeyboardShortcutsPanel: PropTypes.func,
   calendarInfoPosition: CalendarInfoPositionShape,
   firstDayOfWeek: DayOfWeekShape,
+  firstDateOfMonth: DayOfWeekShape,
+  lastDateOfMonth: DayOfWeekShape,
   verticalHeight: nonNegativeInteger,
   transitionDuration: nonNegativeInteger,
 
@@ -175,6 +177,8 @@ const defaultProps = {
   renderKeyboardShortcutsPanel: undefined,
   calendarInfoPosition: INFO_POSITION_BOTTOM,
   firstDayOfWeek: null,
+  firstDateOfMonth: null,
+  lastDateOfMonth: null,
   verticalHeight: null,
   noBorder: false,
   transitionDuration: undefined,
@@ -231,6 +235,8 @@ export default class DayPickerRangeController extends React.PureComponent {
       'after-hovered-start': (day) => this.isDayAfterHoveredStartDate(day),
       'first-day-of-week': (day) => this.isFirstDayOfWeek(day),
       'last-day-of-week': (day) => this.isLastDayOfWeek(day),
+      'first-date-of-month': (day) => this.isFirstDateOfMonth(day),
+      'last-date-of-month': (day) => this.isLastDateOfMonth(day),
       'hovered-start-first-possible-end': (day, hoverDate) => this.isFirstPossibleEndDateForHoveredStartDate(day, hoverDate),
       'hovered-start-blocked-minimum-nights': (day, hoverDate) => this.doesNotMeetMinNightsForHoveredStartDate(day, hoverDate),
       'before-hovered-end': (day) => this.isDayBeforeHoveredEndDate(day),
@@ -1257,6 +1263,16 @@ export default class DayPickerRangeController extends React.PureComponent {
   isLastDayOfWeek(day) {
     const { firstDayOfWeek } = this.props;
     return day.day() === ((firstDayOfWeek || moment.localeData().firstDayOfWeek()) + 6) % 7;
+  }
+
+  isFirstDateOfMonth(day) {
+    const { firstDateOfMonth } = this.props;
+    return day.date() === (firstDateOfMonth || day.clone().startOf('month').date());
+  }
+
+  isLastDateOfMonth(day) {
+    const { lastDateOfMonth } = this.props;
+    return day.date() === (lastDateOfMonth || day.clone().endOf('month').date());
   }
 
   isFirstPossibleEndDateForHoveredStartDate(day, hoverDate) {
