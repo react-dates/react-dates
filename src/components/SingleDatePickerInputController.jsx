@@ -54,7 +54,7 @@ const propTypes = forbidExtraProps({
   keepOpenOnDateSelect: PropTypes.bool,
   reopenPickerOnClearDate: PropTypes.bool,
   isOutsideRange: PropTypes.func,
-  displayFormat: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.arrayOf(React.PropTypes.string)]),
+  displayFormat: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.arrayOf(PropTypes.string)]),
 
   onClose: PropTypes.func,
   onKeyDownArrowDown: PropTypes.func,
