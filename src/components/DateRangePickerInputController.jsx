@@ -70,6 +70,7 @@ const propTypes = forbidExtraProps({
   onKeyDownArrowDown: PropTypes.func,
   onKeyDownEscape: PropTypes.func,
   onKeyDownQuestionMark: PropTypes.func,
+  onKeyDownTab: PropTypes.func,
 
   customInputIcon: PropTypes.node,
   customArrowIcon: PropTypes.node,
@@ -127,6 +128,7 @@ const defaultProps = {
   onKeyDownArrowDown() {},
   onKeyDownEscape() {},
   onKeyDownQuestionMark() {},
+  onKeyDownTab() {},
 
   customInputIcon: null,
   customArrowIcon: null,
@@ -299,6 +301,7 @@ export default class DateRangePickerInputController extends React.PureComponent 
       onKeyDownArrowDown,
       onKeyDownEscape,
       onKeyDownQuestionMark,
+      onKeyDownTab,
       isRTL,
       noBorder,
       block,
@@ -345,6 +348,7 @@ export default class DateRangePickerInputController extends React.PureComponent 
         onKeyDownArrowDown={onKeyDownArrowDown}
         onKeyDownEscape={onKeyDownEscape}
         onKeyDownQuestionMark={onKeyDownQuestionMark}
+        onKeyDownTab={onKeyDownTab}
         isRTL={isRTL}
         noBorder={noBorder}
         block={block}

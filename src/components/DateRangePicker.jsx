@@ -148,6 +148,7 @@ class DateRangePicker extends React.PureComponent {
 
     this.setDayPickerContainerRef = this.setDayPickerContainerRef.bind(this);
     this.setContainerRef = this.setContainerRef.bind(this);
+    this.onKeyDownTab = this.onKeyDownTab.bind(this);
   }
 
   componentDidMount() {
@@ -268,6 +269,15 @@ class DateRangePicker extends React.PureComponent {
     });
   }
 
+  onKeyDownTab(evt) {
+    const { focusedInput } = this.props;
+    if (focusedInput !== null) {
+      evt.preventDefault();
+      evt.stopPropagation();
+      this.onDayPickerFocus();
+    }
+  }
+
   setDayPickerContainerRef(ref) {
     if (ref === this.dayPickerContainer) return;
     if (this.dayPickerContainer) this.removeDayPickerEventListeners();
@@ -287,7 +297,6 @@ class DateRangePicker extends React.PureComponent {
     this.setState({
       isDateRangePickerInputFocused: false,
       isDayPickerFocused: false,
-      showKeyboardShortcuts: false,
     }, () => {
       onFocusChange(null);
     });
@@ -630,6 +639,7 @@ class DateRangePicker extends React.PureComponent {
         onKeyDownArrowDown={this.onDayPickerFocus}
         onKeyDownEscape={this.closeDayPicker}
         onKeyDownQuestionMark={this.showKeyboardShortcutsPanel}
+        onKeyDownTab={this.onKeyDownTab}
         onClose={onClose}
         phrases={phrases}
         screenReaderMessage={screenReaderInputMessage}
