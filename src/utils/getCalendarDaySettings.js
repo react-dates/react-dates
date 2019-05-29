@@ -1,7 +1,4 @@
-import getPhrase from './getPhrase';
-import { BLOCKED_MODIFIER } from '../constants';
-
-function isSelected(modifiers) {
+export function isSelected(modifiers) {
   return modifiers.has('selected')
   || modifiers.has('selected-span')
   || modifiers.has('selected-start')
@@ -19,35 +16,8 @@ function isHoveredSpan(modifiers) {
   return modifiers.has('hovered-span') || modifiers.has('after-hovered-start');
 }
 
-function getAriaLabel(phrases, modifiers, day, ariaLabelFormat) {
-  const {
-    chooseAvailableDate,
-    dateIsUnavailable,
-    dateIsSelected,
-    dateIsSelectedAsStartDate,
-    dateIsSelectedAsEndDate,
-  } = phrases;
-
-  const formattedDate = {
-    date: day.format(ariaLabelFormat),
-  };
-
-  if (modifiers.has('selected-start') && dateIsSelectedAsStartDate) {
-    return getPhrase(dateIsSelectedAsStartDate, formattedDate);
-  } if (modifiers.has('selected-end') && dateIsSelectedAsEndDate) {
-    return getPhrase(dateIsSelectedAsEndDate, formattedDate);
-  } if (isSelected(modifiers) && dateIsSelected) {
-    return getPhrase(dateIsSelected, formattedDate);
-  } if (modifiers.has(BLOCKED_MODIFIER)) {
-    return getPhrase(dateIsUnavailable, formattedDate);
-  }
-
-  return getPhrase(chooseAvailableDate, formattedDate);
-}
-
-export default function getCalendarDaySettings(day, ariaLabelFormat, daySize, modifiers, phrases) {
+export default function getCalendarDaySettings(daySize, modifiers) {
   return {
-    ariaLabel: getAriaLabel(phrases, modifiers, day, ariaLabelFormat),
     hoveredSpan: isHoveredSpan(modifiers),
     isOutsideRange: modifiers.has('blocked-out-of-range'),
     selected: isSelected(modifiers),

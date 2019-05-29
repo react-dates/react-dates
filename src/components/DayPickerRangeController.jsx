@@ -191,6 +191,7 @@ export default class DayPickerRangeController extends React.PureComponent {
 
     this.isTouchDevice = isTouchDevice();
     this.today = moment();
+    this.modifiersCache = new Map();
     this.modifiers = {
       today: day => this.isToday(day),
       blocked: day => this.isBlocked(day),
@@ -944,8 +945,19 @@ export default class DayPickerRangeController extends React.PureComponent {
     return modifiers;
   }
 
+  getCachedModifiers(modifiersArray) {
+    const cacheKey = modifiersArray.join('!');
+
+    if (!this.modifiersCache.has(cacheKey)) {
+      this.modifiersCache.set(cacheKey, new Set(modifiersArray));
+    }
+
+    return this.modifiersCache.get(cacheKey);
+  }
+
   getModifiersForDay(day) {
-    return new Set(Object.keys(this.modifiers).filter(modifier => this.modifiers[modifier](day)));
+    const modifiers = Object.keys(this.modifiers).filter(modifier => this.modifiers[modifier](day));
+    return this.getCachedModifiers(modifiers);
   }
 
   getStateForNewMonth(nextProps) {
@@ -1013,7 +1025,7 @@ export default class DayPickerRangeController extends React.PureComponent {
           ...days,
           [monthIso]: {
             ...month,
-            [iso]: modifiers,
+            [iso]: this.getCachedModifiers(Array.from(modifiers)),
           },
         };
       }, updatedDaysAfterAddition);
@@ -1027,7 +1039,7 @@ export default class DayPickerRangeController extends React.PureComponent {
         ...updatedDaysAfterAddition,
         [monthIso]: {
           ...month,
-          [iso]: modifiers,
+          [iso]: this.getCachedModifiers(Array.from(modifiers)),
         },
       };
     }
@@ -1078,7 +1090,7 @@ export default class DayPickerRangeController extends React.PureComponent {
           ...days,
           [monthIso]: {
             ...month,
-            [iso]: modifiers,
+            [iso]: this.getCachedModifiers(Array.from(modifiers)),
           },
         };
       }, updatedDaysAfterDeletion);
@@ -1092,7 +1104,7 @@ export default class DayPickerRangeController extends React.PureComponent {
         ...updatedDaysAfterDeletion,
         [monthIso]: {
           ...month,
-          [iso]: modifiers,
+          [iso]: this.getCachedModifiers(Array.from(modifiers)),
         },
       };
     }

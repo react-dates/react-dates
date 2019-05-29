@@ -5,8 +5,6 @@ import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 import moment from 'moment';
 
-import { CalendarDayPhrases } from '../defaultPhrases';
-import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 import getCalendarDaySettings from '../utils/getCalendarDaySettings';
 import ModifiersShape from '../shapes/ModifiersShape';
 
@@ -24,10 +22,7 @@ const propTypes = forbidExtraProps({
   onDayMouseEnter: PropTypes.func,
   onDayMouseLeave: PropTypes.func,
   renderDayContents: PropTypes.func,
-  ariaLabelFormat: PropTypes.string,
-
-  // internationalization
-  phrases: PropTypes.shape(getPhrasePropTypes(CalendarDayPhrases)),
+  ariaLabel: PropTypes.string.isRequired,
 });
 
 const defaultProps = {
@@ -41,10 +36,6 @@ const defaultProps = {
   onDayMouseEnter() {},
   onDayMouseLeave() {},
   renderDayContents: null,
-  ariaLabelFormat: 'dddd, LL',
-
-  // internationalization
-  phrases: CalendarDayPhrases,
 };
 
 class CalendarDay extends React.PureComponent {
@@ -94,14 +85,13 @@ class CalendarDay extends React.PureComponent {
   render() {
     const {
       day,
-      ariaLabelFormat,
       daySize,
       isOutsideDay,
       modifiers,
       renderDayContents,
       tabIndex,
       styles,
-      phrases,
+      ariaLabel,
     } = this.props;
 
     if (!day) return <td />;
@@ -112,8 +102,7 @@ class CalendarDay extends React.PureComponent {
       selected,
       hoveredSpan,
       isOutsideRange,
-      ariaLabel,
-    } = getCalendarDaySettings(day, ariaLabelFormat, daySize, modifiers, phrases);
+    } = getCalendarDaySettings(daySize, modifiers);
 
     return (
       <td
