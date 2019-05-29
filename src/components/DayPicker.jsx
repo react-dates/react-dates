@@ -98,6 +98,7 @@ const propTypes = forbidExtraProps({
   onDayMouseLeave: PropTypes.func,
 
   // accessibility props
+  id: PropTypes.string.isRequired,
   isFocused: PropTypes.bool,
   getFirstFocusableDay: PropTypes.func,
   onBlur: PropTypes.func,
@@ -918,6 +919,7 @@ class DayPicker extends React.PureComponent {
     } = this.state;
 
     const {
+      id,
       enableOutsideDays,
       numberOfMonths,
       orientation,
@@ -1082,6 +1084,7 @@ class DayPicker extends React.PureComponent {
                 ref={this.setTransitionContainerRef}
               >
                 <CalendarMonthGrid
+                  id={id}
                   setMonthTitleHeight={!monthTitleHeight ? this.setMonthTitleHeight : undefined}
                   translationValue={translationValue}
                   enableOutsideDays={enableOutsideDays}

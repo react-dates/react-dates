@@ -41,6 +41,7 @@ import {
 import DayPicker from './DayPicker';
 
 const propTypes = forbidExtraProps({
+  id: PropTypes.string.isRequired,
   startDate: momentPropTypes.momentObj,
   endDate: momentPropTypes.momentObj,
   onDatesChange: PropTypes.func,
@@ -1237,6 +1238,7 @@ export default class DayPickerRangeController extends React.PureComponent {
 
   render() {
     const {
+      id,
       numberOfMonths,
       orientation,
       monthFormat,
@@ -1282,6 +1284,7 @@ export default class DayPickerRangeController extends React.PureComponent {
 
     return (
       <DayPicker
+        id={id}
         orientation={orientation}
         enableOutsideDays={enableOutsideDays}
         modifiers={visibleDays}

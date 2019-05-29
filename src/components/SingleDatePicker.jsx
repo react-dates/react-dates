@@ -384,6 +384,7 @@ class SingleDatePicker extends React.PureComponent {
 
   renderDayPicker() {
     const {
+      id,
       anchorDirection,
       openDirection,
       onDateChange,
@@ -462,6 +463,7 @@ class SingleDatePicker extends React.PureComponent {
         onClick={onOutsideClick}
       >
         <DayPickerSingleDateController
+          id={`daypickersingle-${id}`}
           date={date}
           onDateChange={onDateChange}
           onFocusChange={onFocusChange}

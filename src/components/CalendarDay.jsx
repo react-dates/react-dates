@@ -22,7 +22,7 @@ const propTypes = forbidExtraProps({
   onDayMouseEnter: PropTypes.func,
   onDayMouseLeave: PropTypes.func,
   renderDayContents: PropTypes.func,
-  ariaLabel: PropTypes.string.isRequired,
+  ariaLabelledby: PropTypes.string.isRequired,
 });
 
 const defaultProps = {
@@ -91,7 +91,7 @@ class CalendarDay extends React.PureComponent {
       renderDayContents,
       tabIndex,
       styles,
-      ariaLabel,
+      ariaLabelledby,
     } = this.props;
 
     if (!day) return <td />;
@@ -131,7 +131,7 @@ class CalendarDay extends React.PureComponent {
         role="button" // eslint-disable-line jsx-a11y/no-noninteractive-element-to-interactive-role
         ref={this.setButtonRef}
         aria-disabled={modifiers.has('blocked')}
-        aria-label={ariaLabel}
+        aria-labelledby={ariaLabelledby}
         onMouseEnter={(e) => { this.onDayMouseEnter(day, e); }}
         onMouseLeave={(e) => { this.onDayMouseLeave(day, e); }}
         onMouseUp={(e) => { e.currentTarget.blur(); }}

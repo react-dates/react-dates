@@ -7,9 +7,6 @@ import { forbidExtraProps, mutuallyExclusiveProps, nonNegativeInteger } from 'ai
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 import moment from 'moment';
 
-import { CalendarDayPhrases } from '../defaultPhrases';
-import getPhrasePropTypes from '../utils/getPhrasePropTypes';
-
 import CalendarWeek from './CalendarWeek';
 import CalendarDay from './CalendarDay';
 
@@ -27,48 +24,7 @@ import {
   HORIZONTAL_ORIENTATION,
   VERTICAL_SCROLLABLE,
   DAY_SIZE,
-  BLOCKED_MODIFIER,
 } from '../constants';
-import getPhrase from '../utils/getPhrase';
-import { isSelected } from '../utils/getCalendarDaySettings';
-
-function getAriaLabel(phrases, modifiers, day, ariaLabelFormat) {
-  if (!day) {
-    return '';
-  }
-
-  const {
-    chooseAvailableDate,
-    dateIsUnavailable,
-    dateIsSelected,
-    dateIsSelectedAsStartDate,
-    dateIsSelectedAsEndDate,
-  } = phrases;
-
-  const formattedDate = {
-    date: day.format(ariaLabelFormat),
-  };
-
-  if (modifiers) {
-    if (modifiers.has('selected-start') && dateIsSelectedAsStartDate) {
-      return getPhrase(dateIsSelectedAsStartDate, formattedDate);
-    }
-
-    if (modifiers.has('selected-end') && dateIsSelectedAsEndDate) {
-      return getPhrase(dateIsSelectedAsEndDate, formattedDate);
-    }
-
-    if (isSelected(modifiers) && dateIsSelected) {
-      return getPhrase(dateIsSelected, formattedDate);
-    }
-
-    if (modifiers.has(BLOCKED_MODIFIER)) {
-      return getPhrase(dateIsUnavailable, formattedDate);
-    }
-  }
-
-  return getPhrase(chooseAvailableDate, formattedDate);
-}
 
 const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
@@ -97,8 +53,7 @@ const propTypes = forbidExtraProps({
 
   // i18n
   monthFormat: PropTypes.string,
-  phrases: PropTypes.shape(getPhrasePropTypes(CalendarDayPhrases)),
-  dayAriaLabelFormat: PropTypes.string,
+  dayLabelledbyId: PropTypes.string.isRequired,
 });
 
 const defaultProps = {
@@ -126,8 +81,6 @@ const defaultProps = {
 
   // i18n
   monthFormat: 'MMMM YYYY', // english locale
-  phrases: CalendarDayPhrases,
-  dayAriaLabelFormat: 'dddd, LL',
   verticalBorderSpacing: undefined,
 };
 
@@ -193,7 +146,7 @@ class CalendarMonth extends React.PureComponent {
 
   render() {
     const {
-      dayAriaLabelFormat,
+      dayLabelledbyId,
       daySize,
       focusedDate,
       horizontalMonthPadding,
@@ -208,7 +161,6 @@ class CalendarMonth extends React.PureComponent {
       onMonthSelect,
       onYearSelect,
       orientation,
-      phrases,
       renderCalendarDay,
       renderDayContents,
       renderMonthElement,
@@ -262,23 +214,20 @@ class CalendarMonth extends React.PureComponent {
           <tbody>
             {weeks.map((week, i) => (
               <CalendarWeek key={i}>
-                {week.map((day, dayOfWeek) => {
-                  const dayModifiers = modifiers[toISODateString(day)];
-                  return renderCalendarDay({
-                    key: dayOfWeek,
-                    day,
-                    daySize,
-                    isOutsideDay: !day || day.month() !== month.month(),
-                    tabIndex: isVisible && isSameDay(day, focusedDate) ? 0 : -1,
-                    isFocused,
-                    onDayMouseEnter,
-                    onDayMouseLeave,
-                    onDayClick,
-                    renderDayContents,
-                    ariaLabel: getAriaLabel(phrases, dayModifiers, day, dayAriaLabelFormat),
-                    modifiers: dayModifiers,
-                  });
-                })}
+                {week.map((day, dayOfWeek) => renderCalendarDay({
+                  key: dayOfWeek,
+                  day,
+                  daySize,
+                  isOutsideDay: !day || day.month() !== month.month(),
+                  tabIndex: isVisible && isSameDay(day, focusedDate) ? 0 : -1,
+                  isFocused,
+                  onDayMouseEnter,
+                  onDayMouseLeave,
+                  onDayClick,
+                  renderDayContents,
+                  ariaLabelledby: dayLabelledbyId,
+                  modifiers: modifiers[toISODateString(day)],
+                }))}
               </CalendarWeek>
             ))}
           </tbody>

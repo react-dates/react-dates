@@ -143,15 +143,16 @@ class DayPickerRangeControllerWrapper extends React.Component {
 
     return (
       <div style={{ height: '100%' }}>
-        {showInputs &&
+        {showInputs && (
           <div style={{ marginBottom: 16 }}>
             <input type="text" name="start date" value={startDateString} readOnly />
             <input type="text" name="end date" value={endDateString} readOnly />
           </div>
-        }
+        )}
 
         <DayPickerRangeController
           {...props}
+          id="storybook-example"
           onDatesChange={this.onDatesChange}
           onFocusChange={this.onFocusChange}
           focusedInput={focusedInput}

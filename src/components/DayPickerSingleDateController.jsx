@@ -73,6 +73,7 @@ const propTypes = forbidExtraProps({
   calendarInfoPosition: CalendarInfoPositionShape,
 
   // accessibility
+  id: PropTypes.string.isRequired,
   onBlur: PropTypes.func,
   isFocused: PropTypes.bool,
   showKeyboardShortcuts: PropTypes.bool,
@@ -659,6 +660,7 @@ export default class DayPickerSingleDateController extends React.PureComponent {
 
   render() {
     const {
+      id,
       numberOfMonths,
       orientation,
       monthFormat,
@@ -697,6 +699,7 @@ export default class DayPickerSingleDateController extends React.PureComponent {
 
     return (
       <DayPicker
+        id={id}
         orientation={orientation}
         enableOutsideDays={enableOutsideDays}
         modifiers={visibleDays}

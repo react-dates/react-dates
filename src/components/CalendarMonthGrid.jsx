@@ -15,6 +15,7 @@ import CalendarMonth from './CalendarMonth';
 import isTransitionEndSupported from '../utils/isTransitionEndSupported';
 import getTransformStyles from '../utils/getTransformStyles';
 import getCalendarMonthWidth from '../utils/getCalendarMonthWidth';
+import toISODateString from '../utils/toISODateString';
 import toISOMonthString from '../utils/toISOMonthString';
 import isPrevMonth from '../utils/isPrevMonth';
 import isNextMonth from '../utils/isNextMonth';
@@ -23,16 +24,20 @@ import ModifiersShape from '../shapes/ModifiersShape';
 import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
 import DayOfWeekShape from '../shapes/DayOfWeekShape';
 
-
 import {
+  BLOCKED_MODIFIER,
   HORIZONTAL_ORIENTATION,
   VERTICAL_ORIENTATION,
   VERTICAL_SCROLLABLE,
   DAY_SIZE,
 } from '../constants';
+import getPhrase from '../utils/getPhrase';
+import { isSelected } from '../utils/getCalendarDaySettings';
+
 
 const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
+  id: PropTypes.string.isRequired,
   enableOutsideDays: PropTypes.bool,
   firstVisibleMonthIndex: PropTypes.number,
   horizontalMonthPadding: nonNegativeInteger,
@@ -99,7 +104,7 @@ const defaultProps = {
   // i18n
   monthFormat: 'MMMM YYYY', // english locale
   phrases: CalendarDayPhrases,
-  dayAriaLabelFormat: undefined,
+  dayAriaLabelFormat: 'dddd, LL',
 };
 
 function getMonths(initialMonth, numberOfMonths, withoutTransitionMonths) {
@@ -114,6 +119,45 @@ function getMonths(initialMonth, numberOfMonths, withoutTransitionMonths) {
 
   return months;
 }
+
+function getAriaLabel(phrases, modifiers, day, ariaLabelFormat) {
+  if (!day) {
+    return '';
+  }
+
+  const {
+    chooseAvailableDate,
+    dateIsUnavailable,
+    dateIsSelected,
+    dateIsSelectedAsStartDate,
+    dateIsSelectedAsEndDate,
+  } = phrases;
+
+  const formattedDate = {
+    date: day.format(ariaLabelFormat),
+  };
+
+  if (modifiers) {
+    if (modifiers.has('selected-start') && dateIsSelectedAsStartDate) {
+      return getPhrase(dateIsSelectedAsStartDate, formattedDate);
+    }
+
+    if (modifiers.has('selected-end') && dateIsSelectedAsEndDate) {
+      return getPhrase(dateIsSelectedAsEndDate, formattedDate);
+    }
+
+    if (isSelected(modifiers) && dateIsSelected) {
+      return getPhrase(dateIsSelected, formattedDate);
+    }
+
+    if (modifiers.has(BLOCKED_MODIFIER)) {
+      return getPhrase(dateIsUnavailable, formattedDate);
+    }
+  }
+
+  return getPhrase(chooseAvailableDate, formattedDate);
+}
+
 
 class CalendarMonthGrid extends React.PureComponent {
   constructor(props) {
@@ -237,6 +281,7 @@ class CalendarMonthGrid extends React.PureComponent {
 
   render() {
     const {
+      id,
       enableOutsideDays,
       firstVisibleMonthIndex,
       horizontalMonthPadding,
@@ -284,6 +329,11 @@ class CalendarMonthGrid extends React.PureComponent {
     const transformType = (isVertical || isVerticalScrollable) ? 'translateY' : 'translateX';
     const transformValue = `${transformType}(${translationValue}px)`;
 
+    const dayLabelledbyId = `${id}-day`;
+    const focusedMonthModifiers = modifiers
+      && focusedDate
+      && modifiers[toISOMonthString(focusedDate)];
+
     return (
       <div
         {...css(
@@ -303,6 +353,15 @@ class CalendarMonthGrid extends React.PureComponent {
         ref={this.setContainerRef}
         onTransitionEnd={onMonthTransitionEnd}
       >
+        <div id={dayLabelledbyId} hidden>
+          {!!focusedDate && getAriaLabel(
+            phrases,
+            focusedMonthModifiers && focusedMonthModifiers[toISODateString(focusedDate)],
+            focusedDate,
+            dayAriaLabelFormat,
+          )}
+        </div>
+
         {months.map((month, i) => {
           const isVisible = (i >= firstVisibleMonthIndex)
             && (i < firstVisibleMonthIndex + numberOfMonths);
@@ -350,9 +409,8 @@ class CalendarMonthGrid extends React.PureComponent {
                 daySize={daySize}
                 focusedDate={isVisible ? focusedDate : null}
                 isFocused={isFocused}
-                phrases={phrases}
                 setMonthTitleHeight={setMonthTitleHeight}
-                dayAriaLabelFormat={dayAriaLabelFormat}
+                dayLabelledbyId={dayLabelledbyId}
                 verticalBorderSpacing={verticalBorderSpacing}
                 horizontalMonthPadding={horizontalMonthPadding}
               />

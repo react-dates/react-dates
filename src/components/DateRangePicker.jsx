@@ -388,6 +388,7 @@ class DateRangePicker extends React.PureComponent {
 
   renderDayPicker() {
     const {
+      startDateId,
       anchorDirection,
       openDirection,
       isDayBlocked,
@@ -478,6 +479,7 @@ class DateRangePicker extends React.PureComponent {
         onClick={onOutsideClick}
       >
         <DayPickerRangeController
+          id={`daypickerrange-${startDateId}`}
           orientation={orientation}
           enableOutsideDays={enableOutsideDays}
           numberOfMonths={numberOfMonths}
