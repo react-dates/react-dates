@@ -165,7 +165,11 @@ export default withStyles(({ reactDates: { color, font } }) => ({
     boxSizing: 'border-box',
     cursor: 'pointer',
     fontSize: font.size,
-    textAlign: 'center',
+
+    // align numbers at top right corner
+    textAlign: 'right',
+    paddingRight: '6px',
+    verticalAlign: 'top',
 
     ':active': {
       outline: 0,
