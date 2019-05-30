@@ -1008,14 +1008,15 @@ export default class DayPickerRangeController extends React.PureComponent {
 
       updatedDaysAfterAddition = monthsToUpdate.reduce((acc, monthIso) => {
         const month = updatedDays[monthIso] || visibleDays[monthIso];
+
         const modifiers = new Set(month[iso]);
         modifiers.add(modifier);
-        return Object.assign(acc, {
-          [monthIso]: {
-            ...month,
-            [iso]: modifiers,
-          },
-        });
+        acc[monthIso] = {
+          ...month,
+          [iso]: modifiers,
+        };
+
+        return acc;
       }, updatedDaysAfterAddition);
     } else {
       const monthIso = toISOMonthString(day);
@@ -1023,12 +1024,9 @@ export default class DayPickerRangeController extends React.PureComponent {
 
       const modifiers = new Set(month[iso]);
       modifiers.add(modifier);
-      updatedDaysAfterAddition = {
-        ...updatedDaysAfterAddition,
-        [monthIso]: {
-          ...month,
-          [iso]: modifiers,
-        },
+      updatedDaysAfterAddition[monthIso] = {
+        ...month,
+        [iso]: modifiers,
       };
     }
 
@@ -1074,12 +1072,11 @@ export default class DayPickerRangeController extends React.PureComponent {
         const month = updatedDays[monthIso] || visibleDays[monthIso];
         const modifiers = new Set(month[iso]);
         modifiers.delete(modifier);
-        return Object.assign(acc, {
-          [monthIso]: {
-            ...month,
-            [iso]: modifiers,
-          },
-        });
+        acc[monthIso] = {
+          ...month,
+          [iso]: modifiers,
+        };
+        return acc;
       }, updatedDaysAfterDeletion);
     } else {
       const monthIso = toISOMonthString(day);
@@ -1087,12 +1084,9 @@ export default class DayPickerRangeController extends React.PureComponent {
 
       const modifiers = new Set(month[iso]);
       modifiers.delete(modifier);
-      updatedDaysAfterDeletion = {
-        ...updatedDaysAfterDeletion,
-        [monthIso]: {
-          ...month,
-          [iso]: modifiers,
-        },
+      updatedDaysAfterDeletion[monthIso] = {
+        ...month,
+        [iso]: modifiers,
       };
     }
 
