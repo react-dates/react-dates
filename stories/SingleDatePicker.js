@@ -13,7 +13,7 @@ import {
 import SingleDatePickerWrapper from '../examples/SingleDatePickerWrapper';
 
 const TestInput = props => (
-  <div style={{ marginTop: 16 }} >
+  <div style={{ marginTop: 16 }}>
     <input
       {...props}
       type="text"
@@ -39,7 +39,7 @@ storiesOf('SingleDatePicker (SDP)', module)
       <TestInput placeholder="Input 2" />
       <TestInput placeholder="Input 3" />
     </div>
-   )))
+  )))
   .add('non-english locale (Chinese)', withInfo()(() => {
     moment.locale('zh-cn');
     return (
@@ -78,5 +78,11 @@ storiesOf('SingleDatePicker (SDP)', module)
     <SingleDatePickerWrapper
       orientation={VERTICAL_ORIENTATION}
       verticalHeight={568}
+    />
+  )))
+  .add('with arrows outside range disabled', withInfo()(() => (
+    <SingleDatePickerWrapper
+      minDate={moment('2019-05-30')}
+      maxDate={moment('2020-05-30')}
     />
   )));
