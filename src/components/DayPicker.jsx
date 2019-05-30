@@ -110,6 +110,9 @@ const propTypes = forbidExtraProps({
   weekDayFormat: PropTypes.string,
   phrases: PropTypes.shape(getPhrasePropTypes(DayPickerPhrases)),
   dayAriaLabelFormat: PropTypes.string,
+
+  //Drift conversation flow analytics props
+  playbookVersionRanges: PropTypes.array
 });
 
 export const defaultProps = {
@@ -965,13 +968,12 @@ class DayPicker extends React.PureComponent {
       transitionDuration,
       verticalBorderSpacing,
       horizontalMonthPadding,
+      playbookVersionRanges
     } = this.props;
 
     const { reactDates: { spacing: { dayPickerHorizontalPadding } } } = theme;
 
     const isHorizontal = this.isHorizontal();
-
-    const playbookVersionRanges = [1,2,3,4,5]
 
     const numOfWeekHeaders = this.isVertical() ? 1 : numberOfMonths;
     const weekHeaders = [];

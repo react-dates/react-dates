@@ -33,6 +33,13 @@ class DatePickerWrapper extends React.Component {
   render() {
     const { focusedInput, startDate, endDate } = this.state;
 
+    const playbookVersionRanges = [
+      {startTimestamp: 123, endTimestamp: 1234},
+      {startTimestamp: 1234, endTimestamp: 12345},
+      {startTimestamp: 12345, endTimestamp: 123456},
+      {startTimestamp: 123456, endTimestamp: 1234567}
+    ]
+
     return (
       <div>
         <DriftDatePicker
@@ -41,6 +48,7 @@ class DatePickerWrapper extends React.Component {
           focusedInput={focusedInput}
           startDate={startDate}
           endDate={endDate}
+          playbookVersionRanges={playbookVersionRanges}
         />
       </div>
     );

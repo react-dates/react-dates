@@ -1258,6 +1258,7 @@ export default class DayPickerRangeController extends React.PureComponent {
       transitionDuration,
       verticalBorderSpacing,
       horizontalMonthPadding,
+      playbookVersionRanges
     } = this.props;
 
     const {
@@ -1317,6 +1318,7 @@ export default class DayPickerRangeController extends React.PureComponent {
         noBorder={noBorder}
         transitionDuration={transitionDuration}
         horizontalMonthPadding={horizontalMonthPadding}
+        playbookVersionRanges={playbookVersionRanges}
       />
     );
   }

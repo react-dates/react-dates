@@ -12,8 +12,6 @@ import DateInput from './DateInput';
 import IconPositionShape from '../shapes/IconPositionShape';
 import DisabledShape from '../shapes/DisabledShape';
 
-import RightArrow from './RightArrow';
-import LeftArrow from './LeftArrow';
 import { Icon } from '@drifthq/tide-core'
 import CloseButton from './CloseButton';
 import CalendarIcon from './CalendarIcon';
@@ -172,7 +170,7 @@ function DateRangePickerInput({
   verticalSpacing,
   small,
   regular,
-  styles,
+  styles
 }) {
   const calendarIcon = customInputIcon || (
     <CalendarIcon {...css(styles.DateRangePickerInput_calendarIcon_svg)} />

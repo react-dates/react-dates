@@ -97,4 +97,7 @@ export default {
   weekDayFormat: PropTypes.string,
   phrases: PropTypes.shape(getPhrasePropTypes(DateRangePickerPhrases)),
   dayAriaLabelFormat: PropTypes.string,
+
+  // Drift conversation flow analytics props
+  playbookVersionRanges: PropTypes.array
 };

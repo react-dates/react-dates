@@ -301,7 +301,7 @@ export default class DateRangePickerInputController extends React.PureComponent 
       block,
       small,
       regular,
-      verticalSpacing,
+      verticalSpacing
     } = this.props;
 
     const startDateString = this.getDateString(startDate);

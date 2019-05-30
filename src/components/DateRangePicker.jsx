@@ -435,6 +435,7 @@ class DateRangePicker extends React.PureComponent {
       horizontalMonthPadding,
       small,
       disabled,
+      playbookVersionRanges,
       theme: { reactDates },
     } = this.props;
 
@@ -521,6 +522,7 @@ class DateRangePicker extends React.PureComponent {
           transitionDuration={transitionDuration}
           disabled={disabled}
           horizontalMonthPadding={horizontalMonthPadding}
+          playbookVersionRanges={playbookVersionRanges}
         />
 
         {withFullScreenPortal && (
@@ -575,7 +577,7 @@ class DateRangePicker extends React.PureComponent {
       verticalSpacing,
       small,
       regular,
-      styles,
+      styles
     } = this.props;
 
     const { isDateRangePickerInputFocused } = this.state;

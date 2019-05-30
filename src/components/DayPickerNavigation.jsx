@@ -269,7 +269,6 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
     position: 'absolute',
     top: 18,
     lineHeight: 0.78,
-    borderRadius: 3,
     padding: '6px 9px',
   },
 
@@ -287,7 +286,6 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
   DayPickerNavigation_button__verticalDefault: {
     padding: 5,
     background: color.background,
-    boxShadow: noflip('0 0 5px 2px rgba(0, 0, 0, 0.1)'),
     position: 'relative',
     display: 'inline-block',
     textAlign: 'center',
