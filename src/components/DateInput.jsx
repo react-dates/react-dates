@@ -5,7 +5,6 @@ import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 import throttle from 'lodash/throttle';
 import isTouchDevice from 'is-touch-device';
 
-import noflip from '../utils/noflip';
 import getInputHeight from '../utils/getInputHeight';
 import openDirectionShape from '../shapes/OpenDirectionShape';
 
@@ -251,6 +250,14 @@ class DateInput extends React.PureComponent {
               },
             )}
           >
+            <path
+                {...css(styles.DateInput_fangShape)}
+                d={openDirection === OPEN_DOWN ? FANG_PATH_TOP : FANG_PATH_BOTTOM}
+            />
+            <path
+              {...css(styles.DateInput_fangStroke)}
+              d={openDirection === OPEN_DOWN ? FANG_STROKE_TOP : FANG_STROKE_BOTTOM}
+            />
           </svg>
         )}
 
@@ -352,5 +359,14 @@ export default withStyles(({
     height: FANG_HEIGHT_PX,
     left: 22, // TODO: should be noflip wrapped and handled by an isRTL prop
     zIndex: zIndex + 2,
+  },
+
+  DateInput_fangShape: {
+    fill: color.background,
+  },
+
+  DateInput_fangStroke: {
+    stroke: color.core.border,
+    fill: 'transparent',
   },
 }), { pureComponent: typeof React.PureComponent !== 'undefined' })(DateInput);
