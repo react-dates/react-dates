@@ -39,6 +39,7 @@ import {
 } from '../constants';
 
 import DayPicker from './DayPicker';
+import getPreviousMonthMemoLast from '../utils/getPreviousMonthMemoLast';
 
 const propTypes = forbidExtraProps({
   startDate: momentPropTypes.momentObj,
@@ -990,7 +991,7 @@ export default class DayPickerRangeController extends React.PureComponent {
     if (orientation === VERTICAL_SCROLLABLE) {
       numberOfMonths = Object.keys(visibleDays).length;
     } else {
-      currentMonth = currentMonth.clone().subtract(1, 'month');
+      currentMonth = getPreviousMonthMemoLast(currentMonth);
       numberOfMonths += 2;
     }
     if (!day || !isDayVisible(day, currentMonth, numberOfMonths, enableOutsideDays)) {
@@ -1055,7 +1056,7 @@ export default class DayPickerRangeController extends React.PureComponent {
     if (orientation === VERTICAL_SCROLLABLE) {
       numberOfMonths = Object.keys(visibleDays).length;
     } else {
-      currentMonth = currentMonth.clone().subtract(1, 'month');
+      currentMonth = getPreviousMonthMemoLast(currentMonth);
       numberOfMonths += 2;
     }
     if (!day || !isDayVisible(day, currentMonth, numberOfMonths, enableOutsideDays)) {
