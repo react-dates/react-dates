@@ -849,6 +849,22 @@ class DayPicker extends React.PureComponent {
     );
   }
 
+  renderPlaybookVersionMessage(playbookVersionRanges) {
+    const { styles } = this.props
+    return (
+      <div
+      {...css(
+        styles.DayPicker_playbookMessaging
+      )}
+      > 
+        There were <span 
+        {...css(
+        styles.DayPicker_playbookMessaging_span
+      )}>{playbookVersionRanges.length} playbook versions</span> during these dates
+      </div>
+    )
+  }
+
   renderWeekHeader(index) {
     const {
       daySize,
@@ -954,6 +970,8 @@ class DayPicker extends React.PureComponent {
     const { reactDates: { spacing: { dayPickerHorizontalPadding } } } = theme;
 
     const isHorizontal = this.isHorizontal();
+
+    const playbookVersionRanges = [1,2,3,4,5]
 
     const numOfWeekHeaders = this.isVertical() ? 1 : numberOfMonths;
     const weekHeaders = [];
@@ -1128,6 +1146,7 @@ class DayPicker extends React.PureComponent {
                 />
               )}
             </div>
+            {playbookVersionRanges && this.renderPlaybookVersionMessage(playbookVersionRanges)}
           </div>
 
           {(calendarInfoPositionBottom || calendarInfoPositionAfter) && calendarInfo}
@@ -1170,7 +1189,8 @@ export default withStyles(({
   },
 
   DayPicker__withBorder: {
-    boxShadow: noflip('0 2px 6px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.07)'),
+    boxShadow: noflip('0 5px 10px 0 rgba(53, 63, 69, 0.05), 0 15px 25px 0 rgba(53, 63, 69, 0.15)'),
+    border: `1px solid ${color.core.blue_6}`,
     borderRadius: 3,
   },
 
@@ -1255,6 +1275,15 @@ export default withStyles(({
 
   DayPicker_transitionContainer__vertical: {
     width: '100%',
+  },
+
+  DayPicker_playbookMessaging: {
+    textAlign: 'center',
+    paddingBottom: '16px'
+  },
+
+  DayPicker_playbookMessaging_span: {
+    fontWeight: 600,
   },
 
   DayPicker_transitionContainer__verticalScrollable: {

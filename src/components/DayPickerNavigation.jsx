@@ -8,6 +8,7 @@ import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 import noflip from '../utils/noflip';
 
 import LeftArrow from './LeftArrow';
+import { Icon } from '@drifthq/tide-core'
 import RightArrow from './RightArrow';
 import ChevronUp from './ChevronUp';
 import ChevronDown from './ChevronDown';
@@ -75,12 +76,13 @@ function DayPickerNavigation({
   if (!navPrevIcon) {
     navPrevTabIndex = { tabIndex: '0' };
     isDefaultNavPrev = true;
-    let Icon = isVertical ? ChevronUp : LeftArrow;
-    if (isRTL && !isVertical) {
-      Icon = RightArrow;
-    }
+    // let Icon = isVertical ? ChevronDown : RightArrow;
+    // if (isRTL && !isVertical) {
+    //   Icon = RightArrow;
+    // }
     navPrevIcon = (
       <Icon
+      name={"arrow-1-left"}
         {...css(
           isHorizontal && styles.DayPickerNavigation_svg__horizontal,
           isVertical && styles.DayPickerNavigation_svg__vertical,
@@ -93,12 +95,15 @@ function DayPickerNavigation({
   if (!navNextIcon) {
     navNextTabIndex = { tabIndex: '0' };
     isDefaultNavNext = true;
-    let Icon = isVertical ? ChevronDown : RightArrow;
-    if (isRTL && !isVertical) {
-      Icon = LeftArrow;
-    }
+    // let Icon = isVertical ? ChevronDown : RightArrow;
+    // if (isRTL && !isVertical) {
+    //   Icon = LeftArrow;
+    // }
     navNextIcon = (
       <Icon
+       width={15}
+       height={10}
+       name='arrow-1-right'
         {...css(
           isHorizontal && styles.DayPickerNavigation_svg__horizontal,
           isVertical && styles.DayPickerNavigation_svg__vertical,
@@ -242,39 +247,16 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
     userSelect: 'none',
     border: 0,
     padding: 0,
-    margin: 0,
+    margin: `3px 0 0 0`,
   },
 
   DayPickerNavigation_button__default: {
-    border: `1px solid ${color.core.borderLight}`,
     backgroundColor: color.background,
     color: color.placeholderText,
-
-    ':focus': {
-      border: `1px solid ${color.core.borderMedium}`,
-    },
-
-    ':hover': {
-      border: `1px solid ${color.core.borderMedium}`,
-    },
-
-    ':active': {
-      background: color.backgroundDark,
-    },
   },
 
   DayPickerNavigation_button__disabled: {
     cursor: 'default',
-    border: `1px solid ${color.disabled}`,
-
-    ':focus': {
-      border: `1px solid ${color.disabled}`,
-    },
-
-    ':hover': {
-      border: `1px solid ${color.disabled}`,
-    },
-
     ':active': {
       background: 'none',
     },
@@ -325,8 +307,8 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
   },
 
   DayPickerNavigation_svg__horizontal: {
-    height: 19,
-    width: 19,
+    height: 10,
+    width: 13,
     fill: color.core.grayLight,
     display: 'block',
   },

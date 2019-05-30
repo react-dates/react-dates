@@ -4,7 +4,6 @@ import momentJalaali from 'moment-jalaali';
 import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
 import DirectionProvider, { DIRECTIONS } from 'react-with-direction/dist/DirectionProvider';
-
 import {
   VERTICAL_ORIENTATION,
   ANCHOR_RIGHT,
@@ -60,6 +59,18 @@ storiesOf('DateRangePicker (DRP)', module)
   .add('default', withInfo()(() => (
     <DateRangePickerWrapper />
   )))
+
+  .add('TIDE TEST', withInfo()(() => (
+    <DateRangePickerWrapper
+      initialStartDate={moment()}
+      initialEndDate={moment().add(30, 'days')}
+      keepOpenOnDateSelect={true}
+      hideKeyboardShortcutsPanel={true}
+      //anchorDirection={ANCHOR_RIGHT}
+      small
+    />
+  )))
+
   .add('hidden with display: none', withInfo()(() => (
     <TestWrapper />
   )))

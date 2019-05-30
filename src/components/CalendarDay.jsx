@@ -177,14 +177,14 @@ export default withStyles(({ reactDates: { color, font } }) => ({
   },
 
   CalendarDay__default: {
-    border: `1px solid ${color.core.borderLight}`,
-    color: color.text,
+    color: color.core.gray_6,
     background: color.background,
+    border: `1px solid ${color.core.borderLight}`,
 
     ':hover': {
-      background: color.core.borderLight,
-      border: `1px solid ${color.core.borderLight}`,
-      color: 'inherit',
+      background: color.core.blue_3,
+      border: `1px solid ${color.core.blue_5}`,
+      color: color.core.blue_6,
     },
   },
 

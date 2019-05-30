@@ -251,14 +251,6 @@ class DateInput extends React.PureComponent {
               },
             )}
           >
-            <path
-              {...css(styles.DateInput_fangShape)}
-              d={openDirection === OPEN_DOWN ? FANG_PATH_TOP : FANG_PATH_BOTTOM}
-            />
-            <path
-              {...css(styles.DateInput_fangStroke)}
-              d={openDirection === OPEN_DOWN ? FANG_STROKE_TOP : FANG_STROKE_BOTTOM}
-            />
           </svg>
         )}
 
@@ -306,32 +298,20 @@ export default withStyles(({
   DateInput_input: {
     fontWeight: 200,
     fontSize: font.input.size,
+    fontFamily: font.family,
     lineHeight: font.input.lineHeight,
     color: color.text,
     backgroundColor: color.background,
     width: '100%',
-    padding: `${spacing.displayTextPaddingVertical}px ${spacing.displayTextPaddingHorizontal}px`,
-    paddingTop: spacing.displayTextPaddingTop,
-    paddingBottom: spacing.displayTextPaddingBottom,
-    paddingLeft: noflip(spacing.displayTextPaddingLeft),
-    paddingRight: noflip(spacing.displayTextPaddingRight),
-    border: border.input.border,
-    borderTop: border.input.borderTop,
-    borderRight: noflip(border.input.borderRight),
-    borderBottom: border.input.borderBottom,
-    borderLeft: noflip(border.input.borderLeft),
-    borderRadius: border.input.borderRadius,
+    padding: '0px',
+    border: 0,
   },
 
   DateInput_input__small: {
     fontSize: font.input.size_small,
     lineHeight: font.input.lineHeight_small,
     letterSpacing: font.input.letterSpacing_small,
-    padding: `${spacing.displayTextPaddingVertical_small}px ${spacing.displayTextPaddingHorizontal_small}px`,
-    paddingTop: spacing.displayTextPaddingTop_small,
-    paddingBottom: spacing.displayTextPaddingBottom_small,
-    paddingLeft: noflip(spacing.displayTextPaddingLeft_small),
-    paddingRight: noflip(spacing.displayTextPaddingRight_small),
+    padding: `2px 8.5px`
   },
 
   DateInput_input__regular: {
@@ -343,13 +323,11 @@ export default withStyles(({
   },
 
   DateInput_input__focused: {
+    border: 0,
+    background: color.core.blue_6,
+    borderRadius: '3px',
+    color: color.core.white,
     outline: border.input.outlineFocused,
-    background: color.backgroundFocused,
-    border: border.input.borderFocused,
-    borderTop: border.input.borderTopFocused,
-    borderRight: noflip(border.input.borderRightFocused),
-    borderBottom: border.input.borderBottomFocused,
-    borderLeft: noflip(border.input.borderLeftFocused),
   },
 
   DateInput_input__disabled: {
@@ -374,14 +352,5 @@ export default withStyles(({
     height: FANG_HEIGHT_PX,
     left: 22, // TODO: should be noflip wrapped and handled by an isRTL prop
     zIndex: zIndex + 2,
-  },
-
-  DateInput_fangShape: {
-    fill: color.background,
-  },
-
-  DateInput_fangStroke: {
-    stroke: color.core.border,
-    fill: 'transparent',
   },
 }), { pureComponent: typeof React.PureComponent !== 'undefined' })(DateInput);

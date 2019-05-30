@@ -14,6 +14,7 @@ import DisabledShape from '../shapes/DisabledShape';
 
 import RightArrow from './RightArrow';
 import LeftArrow from './LeftArrow';
+import { Icon } from '@drifthq/tide-core'
 import CloseButton from './CloseButton';
 import CalendarIcon from './CalendarIcon';
 
@@ -177,9 +178,8 @@ function DateRangePickerInput({
     <CalendarIcon {...css(styles.DateRangePickerInput_calendarIcon_svg)} />
   );
 
-  let arrowIcon = customArrowIcon || <RightArrow {...css(styles.DateRangePickerInput_arrow_svg)} />;
-  if (isRTL) arrowIcon = <LeftArrow {...css(styles.DateRangePickerInput_arrow_svg)} />;
-  if (small) arrowIcon = '-';
+  let arrowIcon = customArrowIcon || <Icon name={'arrow-2-right'} width={18} height={10}/>
+  if (isRTL) arrowIcon = <Icon name={'arrow-2-left'} width={18} height={10} {...css(styles.DateRangePickerInput_arrow_svg)} />;
 
   const closeIcon = customCloseIcon || (
     <CloseButton
@@ -307,7 +307,8 @@ DateRangePickerInput.defaultProps = defaultProps;
 export default withStyles(({ reactDates: { border, color, sizing } }) => ({
   DateRangePickerInput: {
     backgroundColor: color.background,
-    display: 'inline-block',
+    display: 'flex',
+    padding: '4px'
   },
 
   DateRangePickerInput__disabled: {
@@ -315,7 +316,7 @@ export default withStyles(({ reactDates: { border, color, sizing } }) => ({
   },
 
   DateRangePickerInput__withBorder: {
-    borderColor: color.border,
+    borderColor: color.core.blue_4,
     borderWidth: border.pickerInput.borderWidth,
     borderStyle: border.pickerInput.borderStyle,
     borderRadius: border.pickerInput.borderRadius,
@@ -337,6 +338,7 @@ export default withStyles(({ reactDates: { border, color, sizing } }) => ({
     display: 'inline-block',
     verticalAlign: 'middle',
     color: color.text,
+    margin: `0 6px`
   },
 
   DateRangePickerInput_arrow_svg: {
