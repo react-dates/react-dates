@@ -533,17 +533,16 @@ export default class DayPickerSingleDateController extends React.PureComponent {
         Object.keys(visibleDays[monthKey]).indexOf(iso) > -1
       ));
 
-      updatedDaysAfterAddition = monthsToUpdate.reduce((days, monthIso) => {
+      updatedDaysAfterAddition = monthsToUpdate.reduce((acc, monthIso) => {
         const month = updatedDays[monthIso] || visibleDays[monthIso];
         const modifiers = new Set(month[iso]);
         modifiers.add(modifier);
-        return {
-          ...days,
+        return Object.assign(acc, {
           [monthIso]: {
             ...month,
             [iso]: modifiers,
           },
-        };
+        });
       }, updatedDaysAfterAddition);
     } else {
       const monthIso = toISOMonthString(day);
@@ -587,17 +586,16 @@ export default class DayPickerSingleDateController extends React.PureComponent {
         Object.keys(visibleDays[monthKey]).indexOf(iso) > -1
       ));
 
-      updatedDaysAfterDeletion = monthsToUpdate.reduce((days, monthIso) => {
+      updatedDaysAfterDeletion = monthsToUpdate.reduce((acc, monthIso) => {
         const month = updatedDays[monthIso] || visibleDays[monthIso];
         const modifiers = new Set(month[iso]);
         modifiers.delete(modifier);
-        return {
-          ...days,
+        return Object.assign(acc, {
           [monthIso]: {
             ...month,
             [iso]: modifiers,
           },
-        };
+        });
       }, updatedDaysAfterDeletion);
     } else {
       const monthIso = toISOMonthString(day);
