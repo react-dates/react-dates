@@ -10,6 +10,7 @@ import {
 } from '../src/constants';
 
 import DateRangePickerWrapper from '../examples/DateRangePickerWrapper';
+import DatePickerWrapper from '../examples/DriftDatePickerWrapper'
 
 const TestInput = props => (
   <div style={{ marginTop: 16 }}>
@@ -56,19 +57,13 @@ class TestWrapper extends React.Component {
 }
 
 storiesOf('DateRangePicker (DRP)', module)
-  .add('default', withInfo()(() => (
-    <DateRangePickerWrapper />
+
+  .add('DRIFT Component', withInfo()(() => (
+    <DatePickerWrapper/>
   )))
 
-  .add('TIDE TEST', withInfo()(() => (
-    <DateRangePickerWrapper
-      initialStartDate={moment()}
-      initialEndDate={moment().add(30, 'days')}
-      keepOpenOnDateSelect={true}
-      hideKeyboardShortcutsPanel={true}
-      //anchorDirection={ANCHOR_RIGHT}
-      small
-    />
+  .add('default', withInfo()(() => (
+    <DateRangePickerWrapper />
   )))
 
   .add('hidden with display: none', withInfo()(() => (
