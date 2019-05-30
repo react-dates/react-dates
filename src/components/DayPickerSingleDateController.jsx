@@ -536,12 +536,14 @@ export default class DayPickerSingleDateController extends React.PureComponent {
       updatedDaysAfterAddition = monthsToUpdate.reduce((acc, monthIso) => {
         const month = updatedDays[monthIso] || visibleDays[monthIso];
 
-        const modifiers = new Set(month[iso]);
-        modifiers.add(modifier);
-        acc[monthIso] = {
-          ...month,
-          [iso]: modifiers,
-        };
+        if (!month[iso] || !month[iso].has(modifier)) {
+          const modifiers = new Set(month[iso]);
+          modifiers.add(modifier);
+          acc[monthIso] = {
+            ...month,
+            [iso]: modifiers,
+          };
+        }
 
         return acc;
       }, updatedDaysAfterAddition);
@@ -549,12 +551,14 @@ export default class DayPickerSingleDateController extends React.PureComponent {
       const monthIso = toISOMonthString(day);
       const month = updatedDays[monthIso] || visibleDays[monthIso];
 
-      const modifiers = new Set(month[iso]);
-      modifiers.add(modifier);
-      updatedDaysAfterAddition[monthIso] = {
-        ...month,
-        [iso]: modifiers,
-      };
+      if (!month[iso] || !month[iso].has(modifier)) {
+        const modifiers = new Set(month[iso]);
+        modifiers.add(modifier);
+        updatedDaysAfterAddition[monthIso] = {
+          ...month,
+          [iso]: modifiers,
+        };
+      }
     }
 
     return updatedDaysAfterAddition;
@@ -586,24 +590,30 @@ export default class DayPickerSingleDateController extends React.PureComponent {
 
       updatedDaysAfterDeletion = monthsToUpdate.reduce((acc, monthIso) => {
         const month = updatedDays[monthIso] || visibleDays[monthIso];
-        const modifiers = new Set(month[iso]);
-        modifiers.delete(modifier);
-        acc[monthIso] = {
-          ...month,
-          [iso]: modifiers,
-        };
+
+        if (month[iso] && month[iso].has(modifier)) {
+          const modifiers = new Set(month[iso]);
+          modifiers.delete(modifier);
+          acc[monthIso] = {
+            ...month,
+            [iso]: modifiers,
+          };
+        }
+
         return acc;
       }, updatedDaysAfterDeletion);
     } else {
       const monthIso = toISOMonthString(day);
       const month = updatedDays[monthIso] || visibleDays[monthIso];
 
-      const modifiers = new Set(month[iso]);
-      modifiers.delete(modifier);
-      updatedDaysAfterDeletion[monthIso] = {
-        ...month,
-        [iso]: modifiers,
-      };
+      if (month[iso] && month[iso].has(modifier)) {
+        const modifiers = new Set(month[iso]);
+        modifiers.delete(modifier);
+        updatedDaysAfterDeletion[monthIso] = {
+          ...month,
+          [iso]: modifiers,
+        };
+      }
     }
 
     return updatedDaysAfterDeletion;
