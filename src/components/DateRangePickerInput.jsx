@@ -177,7 +177,7 @@ function DateRangePickerInput({
   );
 
   let arrowIcon = customArrowIcon || <Icon name={'arrow-2-right'} width={18} height={10}/>
-  if (isRTL) arrowIcon = <Icon name={'arrow-2-left'} width={18} height={10} {...css(styles.DateRangePickerInput_arrow_svg)} />;
+  if (isRTL) arrowIcon = <Icon name={'arrow-2-left'} width={18} height={10}/>;
 
   const closeIcon = customCloseIcon || (
     <CloseButton
@@ -318,6 +318,10 @@ export default withStyles(({ reactDates: { border, color, sizing } }) => ({
     borderWidth: border.pickerInput.borderWidth,
     borderStyle: border.pickerInput.borderStyle,
     borderRadius: border.pickerInput.borderRadius,
+
+    ':hover': {
+      borderColor: color.core.blue_5,
+    }
   },
 
   DateRangePickerInput__rtl: {

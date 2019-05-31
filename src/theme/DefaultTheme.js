@@ -18,6 +18,7 @@ const core = {
   blue_6: 'var(--color-p3-6)',
   blue_8: 'var(--color-p3-8)',
 
+  gray_3: 'var(--color-p1-3)',
   gray_5: 'var(--color-p1-5)',
   gray_6: 'var(--color-p1-6)',
   gray_10: 'var(--color-p1-10)',

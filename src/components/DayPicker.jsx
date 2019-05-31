@@ -898,7 +898,7 @@ class DayPicker extends React.PureComponent {
     for (let i = 0; i < 7; i += 1) {
       header.push((
         <li key={i} {...css(styles.DayPicker_weekHeader_li, { width: daySize })}>
-          <small>{moment().day((i + firstDayOfWeek) % 7).format(weekDayFormat)}</small>
+          <small {...css(styles.DayPicker_weekHeader_small, { width: daySize })}>{moment().day((i + firstDayOfWeek) % 7).format(weekDayFormat)}</small>
         </li>
       ));
     }
@@ -1191,9 +1191,8 @@ export default withStyles(({
   },
 
   DayPicker__withBorder: {
-    boxShadow: noflip('0 5px 10px 0 rgba(53, 63, 69, 0.05), 0 15px 25px 0 rgba(53, 63, 69, 0.15)'),
-    border: `1px solid ${color.core.blue_6}`,
     borderRadius: 3,
+    boxShadow: `0 0 0 1px ${color.core.blue_6}`,
   },
 
   DayPicker_portal__horizontal: {
@@ -1260,9 +1259,14 @@ export default withStyles(({
     fontSize: font.size,
   },
 
+  DayPicker_weekHeader_small: {
+    fontSize: font.size,
+  },
+
   DayPicker_weekHeader_li: {
     display: 'inline-block',
     textAlign: 'center',
+    fontSize: font.size,
   },
 
   DayPicker_transitionContainer: {

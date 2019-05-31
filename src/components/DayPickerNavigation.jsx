@@ -83,6 +83,8 @@ function DayPickerNavigation({
     navPrevIcon = (
       <Icon
       name={"arrow-1-left"}
+      width={16}
+      height={16}
         {...css(
           isHorizontal && styles.DayPickerNavigation_svg__horizontal,
           isVertical && styles.DayPickerNavigation_svg__vertical,
@@ -101,8 +103,8 @@ function DayPickerNavigation({
     // }
     navNextIcon = (
       <Icon
-       width={15}
-       height={10}
+       width={16}
+       height={16}
        name='arrow-1-right'
         {...css(
           isHorizontal && styles.DayPickerNavigation_svg__horizontal,
@@ -245,9 +247,20 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
   DayPickerNavigation_button: {
     cursor: 'pointer',
     userSelect: 'none',
-    border: 0,
+    border: '1px solid transparent',
     padding: 0,
     margin: `3px 0 0 0`,
+  
+    ':active': {
+      border: 'none',
+    },
+
+    ':hover': {
+      border: `1px solid ${color.core.gray_5}`,
+      color: color.core.gray_10,
+      backgroundColor: color.core.gray_3,
+      borderRadius: 3
+    }
   },
 
   DayPickerNavigation_button__default: {
@@ -305,8 +318,6 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
   },
 
   DayPickerNavigation_svg__horizontal: {
-    height: 10,
-    width: 13,
     fill: color.core.grayLight,
     display: 'block',
   },

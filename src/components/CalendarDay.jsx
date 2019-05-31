@@ -181,20 +181,24 @@ export default withStyles(({ reactDates: { color, font } }) => ({
   },
 
   CalendarDay__default: {
+    border: `1px solid ${color.core.borderLight}`,
     color: color.core.gray_6,
     background: color.background,
-    border: `1px solid ${color.core.borderLight}`,
 
     ':hover': {
       background: color.core.blue_3,
-      border: `1px solid ${color.core.blue_5}`,
       color: color.core.blue_6,
-    },
+      borderColor: color.core.blue_5,
+      border: `1px solid ${color.core.blue_5}`,
+    }
+
+      // borderLeft: `1px solid ${color.core.blue_5}`,
+      // borderTop: `1px solid ${color.core.blue_5}`,
   },
 
   CalendarDay__hovered_offset: {
     background: color.core.borderBright,
-    border: `1px double ${color.core.borderLight}`,
+    border: `1px solid ${color.core.borderLight}`,
     color: 'inherit',
   },
 

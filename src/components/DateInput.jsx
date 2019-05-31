@@ -5,7 +5,6 @@ import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 import throttle from 'lodash/throttle';
 import isTouchDevice from 'is-touch-device';
 
-import noflip from '../utils/noflip';
 import getInputHeight from '../utils/getInputHeight';
 import openDirectionShape from '../shapes/OpenDirectionShape';
 
@@ -17,11 +16,6 @@ import {
   DEFAULT_VERTICAL_SPACING,
   MODIFIER_KEY_NAMES,
 } from '../constants';
-
-const FANG_PATH_TOP = `M0,${FANG_HEIGHT_PX} ${FANG_WIDTH_PX},${FANG_HEIGHT_PX} ${FANG_WIDTH_PX / 2},0z`;
-const FANG_STROKE_TOP = `M0,${FANG_HEIGHT_PX} ${FANG_WIDTH_PX / 2},0 ${FANG_WIDTH_PX},${FANG_HEIGHT_PX}`;
-const FANG_PATH_BOTTOM = `M0,0 ${FANG_WIDTH_PX},0 ${FANG_WIDTH_PX / 2},${FANG_HEIGHT_PX}z`;
-const FANG_STROKE_BOTTOM = `M0,0 ${FANG_WIDTH_PX / 2},${FANG_HEIGHT_PX} ${FANG_WIDTH_PX},0`;
 
 const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
@@ -305,6 +299,12 @@ export default withStyles(({
     width: '100%',
     padding: '0px',
     border: 0,
+
+    ':hover': {
+      background: color.core.blue_2,
+      borderRadius: '3px',
+      cursor: 'pointer'
+    }
   },
 
   DateInput_input__small: {
@@ -328,6 +328,10 @@ export default withStyles(({
     borderRadius: '3px',
     color: color.core.white,
     outline: border.input.outlineFocused,
+
+    ':hover': {
+      background: color.core.blue_6,
+    }
   },
 
   DateInput_input__disabled: {

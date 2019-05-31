@@ -1,7 +1,7 @@
 import React from 'react';
 import DateRangePicker from '../components/DateRangePicker'
 import PropTypes from 'prop-types';
-import { START_DATE, END_DATE, ANCHOR_LEFT } from '../../src/constants';
+import { START_DATE, END_DATE, ANCHOR_LEFT, ANCHOR_RIGHT } from '../../src/constants';
 import momentPropTypes from 'react-moment-proptypes';
 import FocusedInputShape from '../shapes/FocusedInputShape';
 
