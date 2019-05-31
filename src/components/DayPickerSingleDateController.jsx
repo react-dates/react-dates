@@ -31,6 +31,7 @@ import {
 
 import DayPicker from './DayPicker';
 import getPreviousMonthMemoLast from '../utils/getPreviousMonthMemoLast';
+import getPooledMoment from '../utils/getPooledMoment';
 
 const propTypes = forbidExtraProps({
   date: momentPropTypes.momentObj,
@@ -268,7 +269,7 @@ export default class DayPickerSingleDateController extends React.PureComponent {
     if (didFocusChange || recomputePropModifiers) {
       values(visibleDays).forEach((days) => {
         Object.keys(days).forEach((day) => {
-          const momentObj = moment(day);
+          const momentObj = getPooledMoment(day);
           if (this.isBlocked(momentObj)) {
             modifiers = this.addModifier(modifiers, momentObj, 'blocked');
           } else {
