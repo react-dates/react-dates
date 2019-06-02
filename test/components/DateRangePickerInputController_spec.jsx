@@ -25,6 +25,18 @@ describe('DateRangePickerInputController', () => {
       const wrapper = shallow(<DateRangePickerInputController />);
       expect(wrapper.find(DateRangePickerInput)).to.have.lengthOf(1);
     });
+
+    it('should pass children to DateRangePickerInput when provided', () => {
+      const Child = () => <div>CHILD</div>;
+
+      const wrapper = shallow((
+        <DateRangePickerInputController>
+          <Child />
+        </DateRangePickerInputController>
+      ));
+      expect(wrapper.find(DateRangePickerInput)).to.have.property('children');
+      expect(wrapper.find(Child)).to.have.lengthOf(1);
+    });
   });
 
   describe('#clearDates', () => {

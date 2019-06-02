@@ -21,6 +21,8 @@ const propTypes = forbidExtraProps({
   startDateOffset: PropTypes.func,
   endDateOffset: PropTypes.func,
   showInputs: PropTypes.bool,
+  minDate: momentPropTypes.momentObj,
+  maxDate: momentPropTypes.momentObj,
 
   keepOpenOnDateSelect: PropTypes.bool,
   minimumNights: PropTypes.number,
@@ -47,6 +49,7 @@ const propTypes = forbidExtraProps({
   onOutsideClick: PropTypes.func,
   renderCalendarDay: PropTypes.func,
   renderDayContents: PropTypes.func,
+  renderKeyboardShortcutsButton: PropTypes.func,
 
   // i18n
   monthFormat: PropTypes.string,
@@ -62,6 +65,8 @@ const defaultProps = {
   startDateOffset: undefined,
   endDateOffset: undefined,
   showInputs: false,
+  minDate: null,
+  maxDate: null,
 
   // day presentation and interaction related props
   renderCalendarDay: undefined,
@@ -84,6 +89,7 @@ const defaultProps = {
   isRTL: false,
   renderMonthText: null,
   renderMonthElement: null,
+  renderKeyboardShortcutsButton: undefined,
 
   // navigation related props
   navPrev: null,

@@ -16,11 +16,13 @@ export const BOTTOM_RIGHT = 'bottom-right';
 const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
   block: PropTypes.bool,
+  // TODO: rename button location to be direction-agnostic
   buttonLocation: PropTypes.oneOf([TOP_LEFT, TOP_RIGHT, BOTTOM_RIGHT]),
   showKeyboardShortcutsPanel: PropTypes.bool,
   openKeyboardShortcutsPanel: PropTypes.func,
   closeKeyboardShortcutsPanel: PropTypes.func,
   phrases: PropTypes.shape(getPhrasePropTypes(DayPickerKeyboardShortcutsPhrases)),
+  renderKeyboardShortcutsButton: PropTypes.func,
 });
 
 const defaultProps = {
@@ -30,6 +32,7 @@ const defaultProps = {
   openKeyboardShortcutsPanel() {},
   closeKeyboardShortcutsPanel() {},
   phrases: DayPickerKeyboardShortcutsPhrases,
+  renderKeyboardShortcutsButton: undefined,
 };
 
 function getKeyboardShortcuts(phrases) {
@@ -163,6 +166,7 @@ class DayPickerKeyboardShortcuts extends React.PureComponent {
       closeKeyboardShortcutsPanel,
       styles,
       phrases,
+      renderKeyboardShortcutsButton,
     } = this.props;
 
     const toggleButtonText = showKeyboardShortcutsPanel
@@ -175,34 +179,42 @@ class DayPickerKeyboardShortcuts extends React.PureComponent {
 
     return (
       <div>
-        <button
-          ref={this.setShowKeyboardShortcutsButtonRef}
-          {...css(
-            styles.DayPickerKeyboardShortcuts_buttonReset,
-            styles.DayPickerKeyboardShortcuts_show,
-            bottomRight && styles.DayPickerKeyboardShortcuts_show__bottomRight,
-            topRight && styles.DayPickerKeyboardShortcuts_show__topRight,
-            topLeft && styles.DayPickerKeyboardShortcuts_show__topLeft,
-          )}
-          type="button"
-          aria-label={toggleButtonText}
-          onClick={this.onShowKeyboardShortcutsButtonClick}
-          onMouseUp={(e) => {
-            e.currentTarget.blur();
-          }}
-        >
-          <span
+        {renderKeyboardShortcutsButton
+          && renderKeyboardShortcutsButton({
+            // passing in context-specific props
+            ref: this.setShowKeyboardShortcutsButtonRef,
+            onClick: this.onShowKeyboardShortcutsButtonClick,
+            ariaLabel: toggleButtonText,
+          })}
+        {renderKeyboardShortcutsButton || (
+          <button
+            ref={this.setShowKeyboardShortcutsButtonRef}
             {...css(
-              styles.DayPickerKeyboardShortcuts_showSpan,
-              bottomRight && styles.DayPickerKeyboardShortcuts_showSpan__bottomRight,
-              topRight && styles.DayPickerKeyboardShortcuts_showSpan__topRight,
-              topLeft && styles.DayPickerKeyboardShortcuts_showSpan__topLeft,
+              styles.DayPickerKeyboardShortcuts_buttonReset,
+              styles.DayPickerKeyboardShortcuts_show,
+              bottomRight && styles.DayPickerKeyboardShortcuts_show__bottomRight,
+              topRight && styles.DayPickerKeyboardShortcuts_show__topRight,
+              topLeft && styles.DayPickerKeyboardShortcuts_show__topLeft,
             )}
+            type="button"
+            aria-label={toggleButtonText}
+            onClick={this.onShowKeyboardShortcutsButtonClick}
+            onMouseUp={(e) => {
+              e.currentTarget.blur();
+            }}
           >
+            <span
+              {...css(
+                styles.DayPickerKeyboardShortcuts_showSpan,
+                bottomRight && styles.DayPickerKeyboardShortcuts_showSpan__bottomRight,
+                topRight && styles.DayPickerKeyboardShortcuts_showSpan__topRight,
+                topLeft && styles.DayPickerKeyboardShortcuts_showSpan__topLeft,
+              )}
+            >
             ?
-          </span>
-        </button>
-
+            </span>
+          </button>
+        )}
         {showKeyboardShortcutsPanel && (
           <div
             {...css(styles.DayPickerKeyboardShortcuts_panel)}
@@ -368,6 +380,7 @@ export default withStyles(({ reactDates: { color, font, zIndex } }) => ({
     zIndex: zIndex + 2,
     padding: 22,
     margin: 33,
+    textAlign: 'left', // TODO: investigate use of text-align throughout the library
   },
 
   DayPickerKeyboardShortcuts_title: {

@@ -10,8 +10,19 @@ const event = { preventDefault() {}, stopPropagation() {} };
 describe('DateInput', () => {
   describe('#render', () => {
     describe('input', () => {
-      it('has props.placeholder as an aria-label if prop is passed in', () => {
-        const placeholder = 'placeholder_foo';
+      it('has props.ariaLabel as an aria-label if ariaLabel is passed in', () => {
+        const ariaLabel = 'ariaLabelExample';
+        const wrapper = shallow(<DateInput id="date" ariaLabel={ariaLabel} />).dive();
+        expect(wrapper.find('input').props()['aria-label']).to.equal(ariaLabel);
+      });
+
+      it('has no aria-label if props.ariaLabel is null', () => {
+        const wrapper = shallow(<DateInput id="date" ariaLabel={null} />).dive();
+        expect(wrapper.find('input').props()['aria-label']).to.equal(null);
+      });
+
+      it('has props.placeholder as an aria-label if ariaLabel is not passed in', () => {
+        const placeholder = 'placeholder foo';
         const wrapper = shallow(<DateInput id="date" placeholder={placeholder} />).dive();
         expect(wrapper.find('input').props()['aria-label']).to.equal(placeholder);
       });

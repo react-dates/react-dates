@@ -25,6 +25,8 @@ import {
 } from '../constants';
 
 const propTypes = forbidExtraProps({
+  children: PropTypes.node,
+
   date: momentPropTypes.momentObj,
   onDateChange: PropTypes.func.isRequired,
 
@@ -32,7 +34,8 @@ const propTypes = forbidExtraProps({
   onFocusChange: PropTypes.func.isRequired,
 
   id: PropTypes.string.isRequired,
-  placeholder: PropTypes.string, // also used as label
+  placeholder: PropTypes.string,
+  ariaLabel: PropTypes.string,
   screenReaderMessage: PropTypes.string,
   showClearDate: PropTypes.bool,
   showCaret: PropTypes.bool,
@@ -70,10 +73,13 @@ const propTypes = forbidExtraProps({
 });
 
 const defaultProps = {
+  children: null,
+
   date: null,
   focused: false,
 
   placeholder: '',
+  ariaLabel: undefined,
   screenReaderMessage: 'Date',
   showClearDate: false,
   showCaret: false,
@@ -190,8 +196,10 @@ export default class SingleDatePickerInputController extends React.PureComponent
 
   render() {
     const {
+      children,
       id,
       placeholder,
+      ariaLabel,
       disabled,
       focused,
       isFocused,
@@ -223,6 +231,7 @@ export default class SingleDatePickerInputController extends React.PureComponent
       <SingleDatePickerInput
         id={id}
         placeholder={placeholder}
+        ariaLabel={ariaLabel}
         focused={focused}
         isFocused={isFocused}
         disabled={disabled}
@@ -240,7 +249,6 @@ export default class SingleDatePickerInputController extends React.PureComponent
         onChange={this.onChange}
         onFocus={this.onFocus}
         onKeyDownShiftTab={this.onClearFocus}
-        onKeyDownTab={this.onClearFocus}
         onKeyDownArrowDown={onKeyDownArrowDown}
         onKeyDownQuestionMark={onKeyDownQuestionMark}
         screenReaderMessage={screenReaderMessage}
@@ -251,7 +259,9 @@ export default class SingleDatePickerInputController extends React.PureComponent
         small={small}
         regular={regular}
         verticalSpacing={verticalSpacing}
-      />
+      >
+        {children}
+      </SingleDatePickerInput>
     );
   }
 }

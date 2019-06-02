@@ -15,6 +15,7 @@ import getDetachedContainerStyles from '../utils/getDetachedContainerStyles';
 import getInputHeight from '../utils/getInputHeight';
 import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
 import disableScroll from '../utils/disableScroll';
+import noflip from '../utils/noflip';
 
 import DateRangePickerInputController from './DateRangePickerInputController';
 import DayPickerRangeController from './DayPickerRangeController';
@@ -50,6 +51,10 @@ const defaultProps = {
   // input related props
   startDatePlaceholderText: 'Start Date',
   endDatePlaceholderText: 'End Date',
+  startDateAriaLabel: undefined,
+  endDateAriaLabel: undefined,
+  startDateOffset: undefined,
+  endDateOffset: undefined,
   disabled: false,
   required: false,
   readOnly: false,
@@ -133,6 +138,7 @@ class DateRangePicker extends React.PureComponent {
     this.onOutsideClick = this.onOutsideClick.bind(this);
     this.onDateRangePickerInputFocus = this.onDateRangePickerInputFocus.bind(this);
     this.onDayPickerFocus = this.onDayPickerFocus.bind(this);
+    this.onDayPickerFocusOut = this.onDayPickerFocusOut.bind(this);
     this.onDayPickerBlur = this.onDayPickerBlur.bind(this);
     this.showKeyboardShortcutsPanel = this.showKeyboardShortcutsPanel.bind(this);
 
@@ -176,6 +182,7 @@ class DateRangePicker extends React.PureComponent {
   }
 
   componentWillUnmount() {
+    this.removeDayPickerEventListeners();
     if (this.removeEventListener) this.removeEventListener();
     if (this.enableScroll) this.enableScroll();
   }
@@ -188,6 +195,7 @@ class DateRangePicker extends React.PureComponent {
       endDate,
       appendToBody,
     } = this.props;
+
     if (!this.isOpened()) return;
     if (appendToBody && this.dayPickerContainer.contains(event.target)) return;
 
@@ -237,6 +245,20 @@ class DateRangePicker extends React.PureComponent {
     });
   }
 
+  onDayPickerFocusOut(event) {
+    // In cases where **relatedTarget** is not null, it points to the right
+    // element here. However, in cases where it is null (such as clicking on a
+    // specific day) or it is **document.body** (IE11), the appropriate value is **event.target**.
+    //
+    // We handle both situations here by using the ` || ` operator to fallback
+    // to *event.target** when **relatedTarget** is not provided.
+    const relatedTarget = event.relatedTarget === document.body
+      ? event.target
+      : (event.relatedTarget || event.target);
+    if (this.dayPickerContainer.contains(relatedTarget)) return;
+    this.onOutsideClick(event);
+  }
+
   onDayPickerBlur() {
     this.setState({
       isDateRangePickerInputFocused: true,
@@ -246,11 +268,35 @@ class DateRangePicker extends React.PureComponent {
   }
 
   setDayPickerContainerRef(ref) {
+    if (ref === this.dayPickerContainer) return;
+    if (this.dayPickerContainer) this.removeDayPickerEventListeners();
+
     this.dayPickerContainer = ref;
+    if (!ref) return;
+
+    this.addDayPickerEventListeners();
   }
 
   setContainerRef(ref) {
     this.container = ref;
+  }
+
+  addDayPickerEventListeners() {
+    // NOTE: We are using a manual event listener here, because React doesn't
+    // provide FocusOut, while blur and keydown don't provide the information
+    // needed in order to know whether we have left focus or not.
+    //
+    // For reference, this issue is further described here:
+    // - https://github.com/facebook/react/issues/6410
+    this.removeDayPickerFocusOut = addEventListener(
+      this.dayPickerContainer,
+      'focusout',
+      this.onDayPickerFocusOut,
+    );
+  }
+
+  removeDayPickerEventListeners() {
+    if (this.removeDayPickerFocusOut) this.removeDayPickerFocusOut();
   }
 
   isOpened() {
@@ -363,7 +409,9 @@ class DateRangePicker extends React.PureComponent {
       enableOutsideDays,
       focusedInput,
       startDate,
+      startDateOffset,
       endDate,
+      endDateOffset,
       minimumNights,
       keepOpenOnDateSelect,
       renderCalendarDay,
@@ -389,6 +437,7 @@ class DateRangePicker extends React.PureComponent {
       disabled,
       theme: { reactDates },
     } = this.props;
+
     const { dayPickerContainerStyles, isDayPickerFocused, showKeyboardShortcuts } = this.state;
 
     const onOutsideClick = (!withFullScreenPortal && withPortal)
@@ -439,7 +488,9 @@ class DateRangePicker extends React.PureComponent {
           onClose={onClose}
           focusedInput={focusedInput}
           startDate={startDate}
+          startDateOffset={startDateOffset}
           endDate={endDate}
+          endDateOffset={endDateOffset}
           monthFormat={monthFormat}
           renderMonthText={renderMonthText}
           withPortal={withAnyPortal}
@@ -491,9 +542,11 @@ class DateRangePicker extends React.PureComponent {
       startDate,
       startDateId,
       startDatePlaceholderText,
+      startDateAriaLabel,
       endDate,
       endDateId,
       endDatePlaceholderText,
+      endDateAriaLabel,
       focusedInput,
       screenReaderInputMessage,
       showClearDates,
@@ -537,10 +590,12 @@ class DateRangePicker extends React.PureComponent {
         startDateId={startDateId}
         startDatePlaceholderText={startDatePlaceholderText}
         isStartDateFocused={focusedInput === START_DATE}
+        startDateAriaLabel={startDateAriaLabel}
         endDate={endDate}
         endDateId={endDateId}
         endDatePlaceholderText={endDatePlaceholderText}
         isEndDateFocused={focusedInput === END_DATE}
+        endDateAriaLabel={endDateAriaLabel}
         displayFormat={displayFormat}
         showClearDates={showClearDates}
         showCaret={!withPortal && !withFullScreenPortal && !hideFang}
@@ -572,7 +627,9 @@ class DateRangePicker extends React.PureComponent {
         small={small}
         regular={regular}
         verticalSpacing={verticalSpacing}
-      />
+      >
+        {this.maybeRenderDayPickerWithPortal()}
+      </DateRangePickerInputController>
     );
 
     return (
@@ -586,11 +643,9 @@ class DateRangePicker extends React.PureComponent {
         {enableOutsideClick && (
           <OutsideClickHandler onOutsideClick={this.onOutsideClick}>
             {input}
-            {this.maybeRenderDayPickerWithPortal()}
           </OutsideClickHandler>
         )}
-        {!enableOutsideClick && input}
-        {!enableOutsideClick && this.maybeRenderDayPickerWithPortal()}
+        {enableOutsideClick || input}
       </div>
     );
   }
@@ -617,22 +672,22 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
   },
 
   DateRangePicker_picker__rtl: {
-    direction: 'rtl',
+    direction: noflip('rtl'),
   },
 
   DateRangePicker_picker__directionLeft: {
-    left: 0,
+    left: noflip(0),
   },
 
   DateRangePicker_picker__directionRight: {
-    right: 0,
+    right: noflip(0),
   },
 
   DateRangePicker_picker__portal: {
     backgroundColor: 'rgba(0, 0, 0, 0.3)',
     position: 'fixed',
     top: 0,
-    left: 0,
+    left: noflip(0),
     height: '100%',
     width: '100%',
   },
@@ -652,7 +707,7 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
 
     position: 'absolute',
     top: 0,
-    right: 0,
+    right: noflip(0),
     padding: 15,
     zIndex: zIndex + 2,
 

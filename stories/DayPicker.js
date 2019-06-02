@@ -1,6 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
+import DirectionProvider, { DIRECTIONS } from 'react-with-direction/dist/DirectionProvider';
 import DayPicker from '../src/components/DayPicker';
 
 import {
@@ -9,29 +10,37 @@ import {
 } from '../src/constants';
 
 const TestPrevIcon = () => (
-  <span
+  <div
     style={{
       border: '1px solid #dce0e0',
       backgroundColor: '#fff',
       color: '#484848',
+      left: '24px',
       padding: '3px',
+      position: 'absolute',
+      width: '40px',
     }}
+    tabindex="0"
   >
     Prev
-  </span>
+  </div>
 );
 
 const TestNextIcon = () => (
-  <span
+  <div
     style={{
       border: '1px solid #dce0e0',
       backgroundColor: '#fff',
       color: '#484848',
       padding: '3px',
+      position: 'absolute',
+      right: '24px',
+      width: '40px',
     }}
+    tabindex="0"
   >
     Next
-  </span>
+  </div>
 );
 
 const TestCustomInfoPanel = () => (
@@ -91,6 +100,30 @@ storiesOf('DayPicker', module)
       orientation={VERTICAL_ORIENTATION}
       verticalHeight={568}
     />
+  )))
+  .add('vertical with DirectionProvider', withInfo()(() => (
+    <DirectionProvider direction={DIRECTIONS.RTL}>
+      <DayPicker
+        numberOfMonths={2}
+        orientation={VERTICAL_ORIENTATION}
+        isRTL
+      />
+    </DirectionProvider>
+  )))
+  .add('vertically scrollable with DirectionProvider', withInfo()(() => (
+    <DirectionProvider direction={DIRECTIONS.RTL}>
+      <div
+        style={{
+          height: 568,
+          width: 320,
+        }}
+      >
+        <DayPicker
+          numberOfMonths={12}
+          orientation={VERTICAL_SCROLLABLE}
+        />
+      </div>
+    </DirectionProvider>
   )))
   .add('with custom arrows', withInfo()(() => (
     <DayPicker

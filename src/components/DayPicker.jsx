@@ -10,6 +10,7 @@ import OutsideClickHandler from 'react-outside-click-handler';
 
 import { DayPickerPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
+import noflip from '../utils/noflip';
 
 import CalendarMonthGrid from './CalendarMonthGrid';
 import DayPickerNavigation from './DayPickerNavigation';
@@ -70,8 +71,11 @@ const propTypes = forbidExtraProps({
   transitionDuration: nonNegativeInteger,
   verticalBorderSpacing: nonNegativeInteger,
   horizontalMonthPadding: nonNegativeInteger,
+  renderKeyboardShortcutsButton: PropTypes.func,
 
   // navigation props
+  disablePrev: PropTypes.bool,
+  disableNext: PropTypes.bool,
   navPrev: PropTypes.node,
   navNext: PropTypes.node,
   noNavButtons: PropTypes.bool,
@@ -128,8 +132,11 @@ export const defaultProps = {
   transitionDuration: undefined,
   verticalBorderSpacing: undefined,
   horizontalMonthPadding: 13,
+  renderKeyboardShortcutsButton: undefined,
 
   // navigation props
+  disablePrev: false,
+  disableNext: false,
   navPrev: null,
   navNext: null,
   noNavButtons: false,
@@ -205,6 +212,7 @@ class DayPicker extends React.PureComponent {
 
     this.calendarMonthGridHeight = 0;
     this.setCalendarInfoWidthTimeout = null;
+    this.setCalendarMonthGridHeightTimeout = null;
 
     this.onKeyDown = this.onKeyDown.bind(this);
     this.throttledKeyDown = throttle(this.onFinalKeyDown, 200, { trailing: false });
@@ -346,10 +354,12 @@ class DayPicker extends React.PureComponent {
 
   componentWillUnmount() {
     clearTimeout(this.setCalendarInfoWidthTimeout);
+    clearTimeout(this.setCalendarMonthGridHeightTimeout);
   }
 
   onKeyDown(e) {
     e.stopPropagation();
+
     if (!MODIFIER_KEY_NAMES.has(e.key)) {
       this.throttledKeyDown(e);
     }
@@ -437,7 +447,7 @@ class DayPicker extends React.PureComponent {
         if (showKeyboardShortcuts) {
           this.closeKeyboardShortcutsPanel();
         } else {
-          onBlur();
+          onBlur(e);
         }
         break;
 
@@ -445,7 +455,7 @@ class DayPicker extends React.PureComponent {
         if (e.shiftKey) {
           onShiftTab();
         } else {
-          onTab();
+          onTab(e);
         }
         break;
 
@@ -462,7 +472,6 @@ class DayPicker extends React.PureComponent {
       });
     }
   }
-
 
   onPrevMonthClick(e) {
     if (e) e.preventDefault();
@@ -764,7 +773,7 @@ class DayPicker extends React.PureComponent {
     if (monthHeight !== this.calendarMonthGridHeight) {
       this.transitionContainer.style.height = `${monthHeight}px`;
       if (!this.calendarMonthGridHeight) {
-        setTimeout(() => {
+        this.setCalendarMonthGridHeightTimeout = setTimeout(() => {
           this.setState({ hasSetHeight: true });
         }, 0);
       }
@@ -807,6 +816,8 @@ class DayPicker extends React.PureComponent {
 
   renderNavigation() {
     const {
+      disablePrev,
+      disableNext,
       navPrev,
       navNext,
       noNavButtons,
@@ -825,6 +836,8 @@ class DayPicker extends React.PureComponent {
 
     return (
       <DayPickerNavigation
+        disablePrev={disablePrev}
+        disableNext={disableNext}
         onPrevMonthClick={this.onPrevMonthClick}
         onNextMonthClick={onNextMonthClick}
         navPrev={navPrev}
@@ -919,6 +932,7 @@ class DayPicker extends React.PureComponent {
       renderDayContents,
       renderCalendarInfo,
       renderMonthElement,
+      renderKeyboardShortcutsButton,
       calendarInfoPosition,
       hideKeyboardShortcutsPanel,
       onOutsideClick,
@@ -1110,10 +1124,10 @@ class DayPicker extends React.PureComponent {
                   openKeyboardShortcutsPanel={this.openKeyboardShortcutsPanel}
                   closeKeyboardShortcutsPanel={this.closeKeyboardShortcutsPanel}
                   phrases={phrases}
+                  renderKeyboardShortcutsButton={renderKeyboardShortcutsButton}
                 />
               )}
             </div>
-
           </div>
 
           {(calendarInfoPositionBottom || calendarInfoPositionAfter) && calendarInfo}
@@ -1140,7 +1154,7 @@ export default withStyles(({
   DayPicker: {
     background: color.background,
     position: 'relative',
-    textAlign: 'left',
+    textAlign: noflip('left'),
   },
 
   DayPicker__horizontal: {
@@ -1156,14 +1170,14 @@ export default withStyles(({
   },
 
   DayPicker__withBorder: {
-    boxShadow: '0 2px 6px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.07)',
+    boxShadow: noflip('0 2px 6px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.07)'),
     borderRadius: 3,
   },
 
   DayPicker_portal__horizontal: {
     boxShadow: 'none',
     position: 'absolute',
-    left: '50%',
+    left: noflip('50%'),
     top: '50%',
   },
 
@@ -1190,7 +1204,7 @@ export default withStyles(({
   },
 
   DayPicker_weekHeaders__horizontal: {
-    marginLeft: spacing.dayPickerHorizontalPadding,
+    marginLeft: noflip(spacing.dayPickerHorizontalPadding),
   },
 
   DayPicker_weekHeader: {
@@ -1198,11 +1212,11 @@ export default withStyles(({
     position: 'absolute',
     top: 62,
     zIndex: zIndex + 2,
-    textAlign: 'left',
+    textAlign: noflip('left'),
   },
 
   DayPicker_weekHeader__vertical: {
-    left: '50%',
+    left: noflip('50%'),
   },
 
   DayPicker_weekHeader__verticalScrollable: {
@@ -1210,8 +1224,8 @@ export default withStyles(({
     display: 'table-row',
     borderBottom: `1px solid ${color.core.border}`,
     background: color.background,
-    marginLeft: 0,
-    left: 0,
+    marginLeft: noflip(0),
+    left: noflip(0),
     width: '100%',
     textAlign: 'center',
   },
@@ -1219,8 +1233,8 @@ export default withStyles(({
   DayPicker_weekHeader_ul: {
     listStyle: 'none',
     margin: '1px 0',
-    paddingLeft: 0,
-    paddingRight: 0,
+    paddingLeft: noflip(0),
+    paddingRight: noflip(0),
     fontSize: font.size,
   },
 
@@ -1249,8 +1263,8 @@ export default withStyles(({
     position: 'absolute',
     top: 0,
     bottom: 0,
-    right: 0,
-    left: 0,
+    right: noflip(0),
+    left: noflip(0),
     overflowY: 'scroll',
     ...(noScrollBarOnVerticalScrollable && {
       '-webkitOverflowScrolling': 'touch',

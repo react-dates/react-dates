@@ -23,6 +23,7 @@ export default {
   // input related props
   id: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
+  ariaLabel: PropTypes.string,
   disabled: PropTypes.bool,
   required: PropTypes.bool,
   readOnly: PropTypes.bool,

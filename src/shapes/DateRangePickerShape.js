@@ -28,8 +28,12 @@ export default {
   // input related props
   startDateId: PropTypes.string.isRequired,
   startDatePlaceholderText: PropTypes.string,
+  startDateOffset: PropTypes.func,
+  endDateOffset: PropTypes.func,
   endDateId: PropTypes.string.isRequired,
   endDatePlaceholderText: PropTypes.string,
+  startDateAriaLabel: PropTypes.string,
+  endDateAriaLabel: PropTypes.string,
   disabled: DisabledShape,
   required: PropTypes.bool,
   readOnly: PropTypes.bool,

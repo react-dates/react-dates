@@ -29,6 +29,19 @@ describe('SingleDatePicker', () => {
         expect(wrapper.find(SingleDatePickerInputController)).to.have.lengthOf(1);
       });
 
+      it('renders with a DayPickerSingleDateController child when focused', () => {
+        const wrapper = shallow((
+          <SingleDatePicker
+            id="date"
+            focused
+          />
+        )).dive();
+        expect(wrapper.find(SingleDatePickerInputController)).to.have.property('children');
+        expect(
+          wrapper.find(SingleDatePickerInputController).find(DayPickerSingleDateController),
+        ).to.have.lengthOf(1);
+      });
+
       describe('props.isOutsideRange is defined', () => {
         it('should pass props.isOutsideRange to <SingleDatePickerInputController>', () => {
           const isOutsideRange = sinon.stub();
@@ -115,6 +128,7 @@ describe('SingleDatePicker', () => {
               focused
             />
           )).dive();
+
           expect(wrapper.find(Portal)).to.have.length(1);
         });
 
@@ -399,9 +413,7 @@ describe('SingleDatePicker', () => {
             focused
           />
         )).dive();
-        wrapper.setState({
-          isDayPickerFocused: true,
-        });
+        wrapper.setState({ isDayPickerFocused: true });
         wrapper.instance().onOutsideClick();
         expect(wrapper.state().isDayPickerFocused).to.equal(false);
       });
@@ -580,6 +592,69 @@ describe('SingleDatePicker', () => {
       });
       wrapper.instance().showKeyboardShortcutsPanel();
       expect(wrapper.state().showKeyboardShortcuts).to.equal(true);
+    });
+  });
+
+  describeIfWindow('#onFocusOut', () => {
+    let wrapper;
+    let ctrl;
+    let onFocusChangeStub;
+    let dpcContainsStub;
+
+    beforeEach(() => {
+      onFocusChangeStub = sinon.stub();
+      dpcContainsStub = sinon.stub();
+      wrapper = shallow((
+        <SingleDatePicker id="date" onFocusChange={onFocusChangeStub} />
+      )).dive();
+      ctrl = wrapper.instance();
+      ctrl.dayPickerContainer = {
+        contains: dpcContainsStub.returns(true),
+      };
+    });
+
+    afterEach(() => {
+      onFocusChangeStub.reset();
+      dpcContainsStub.reset();
+    });
+
+    it('calls props.onFocusChange with focused: false when dayPickerContainer does not contain the target', () => {
+      dpcContainsStub.returns(false);
+      ctrl.onFocusOut({});
+      expect(onFocusChangeStub.callCount).to.equal(1);
+      expect(onFocusChangeStub.getCall(0).args[0]).to.deep.equal({ focused: false });
+    });
+
+    it('should not call props.onFocusChange when dayPickerContainer contains the target', () => {
+      ctrl.onFocusOut({});
+      expect(onFocusChangeStub.callCount).to.equal(0);
+    });
+
+    it('should check the target when related target is the same as the document body', () => {
+      const event = {
+        relatedTarget: document.body,
+        target: 'target',
+      };
+      ctrl.onFocusOut(event);
+      expect(dpcContainsStub.getCall(0).args[0]).to.equal(event.target);
+    });
+
+    it('should check the target when related target is defined', () => {
+      const event = {
+        relatedTarget: 'related target',
+        target: 'target',
+      };
+      ctrl.onFocusOut(event);
+      expect(dpcContainsStub.getCall(0).args[0]).to.equal(event.relatedTarget);
+    });
+
+    it('should check the target when related target is not defined', () => {
+      const event = {
+        relatedTarget: undefined,
+        target: 'target',
+      };
+      ctrl.onFocusOut(event);
+      expect(dpcContainsStub.getCall(0).args[0]).to.equal(event.target);
     });
   });
 });

@@ -135,6 +135,17 @@ describe('DayPickerKeyboardShortcuts', () => {
           expect(mockEvent.currentTarget.blur.callCount).to.equal(1);
         });
       });
+
+      describe('renderKeyboardShortcutsButton', () => {
+        it('renders the provided button', () => {
+          function Button() {
+            return (<button type="button">Success!</button>);
+          }
+          const props = { renderKeyboardShortcutsButton: () => (<Button />) };
+          const wrapper = shallow(<DayPickerKeyboardShortcuts {...props} />).dive();
+          expect(wrapper.children().find(Button)).to.have.lengthOf(1);
+        });
+      });
     });
 
     describe('#DayPickerKeyboardShortcuts_panel', () => {
