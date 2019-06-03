@@ -4,6 +4,11 @@
 - []  ([#](https://github.com/airbnb/react-dates/pull/))
 -->
 
+## 20.2.1
+- [fix] Compile classes in loose mode ([#1655](https://github.com/airbnb/react-dates/pull/1655))
+- [fix] Performance optimizations ([#1656](https://github.com/airbnb/react-dates/pull/1656), [#1657](https://github.com/airbnb/react-dates/pull/1657), [#1659](https://github.com/airbnb/react-dates/pull/1659), [#1661](https://github.com/airbnb/react-dates/pull/1661), [#1662](https://github.com/airbnb/react-dates/pull/1662), and [#1663](https://github.com/airbnb/react-dates/pull/1663))
+- [docs] Add `initialVisibleMonth` to `DayPickerRangeController` in readme ([@AlokTakshak](https://github.com/AlokTakshak) [1652](https://github.com/airbnb/react-dates/pull/1652))
+
 ## 20.2.0
 - [fix] Fix date selection in the SDP ([#1530](https://github.com/airbnb/react-dates/pull/1530))
 - [new] Add explicit aria label props ([#1594](https://github.com/airbnb/react-dates/pull/1594))
