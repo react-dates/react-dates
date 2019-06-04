@@ -9,12 +9,16 @@ import aphroditeInterface from 'react-with-styles-interface-aphrodite';
 
 import { configure, addDecorator, setAddon } from '@storybook/react';
 import infoAddon from '@storybook/addon-info';
-import { isHappoRun } from 'happo-plugin-storybook/register';
+import { isHappoRun, setDefaultDelay as setHappoDelay } from 'happo-plugin-storybook/register';
 import { setOptions } from '@storybook/addon-options';
 
 import registerInterfaceWithDefaultTheme from '../src/utils/registerInterfaceWithDefaultTheme';
 
 import '../css/storybook.scss';
+
+// Stories take a while to fully render. A delay of 200ms per story should
+// ensure all content is present before Happo takes the screenshot.
+setHappoDelay(200);
 
 registerInterfaceWithDefaultTheme(aphroditeInterface);
 
