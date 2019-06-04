@@ -1,7 +1,8 @@
 import React from 'react';
 import moment from 'moment';
 import { storiesOf } from '@storybook/react';
-import { withInfo } from '@storybook/addon-info';
+
+import withInfo from './withInfo';
 
 import SingleDatePickerWrapper from '../examples/SingleDatePickerWrapper';
 

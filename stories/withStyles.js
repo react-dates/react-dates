@@ -1,6 +1,7 @@
 import React from 'react';
 import { action, storiesOf } from '@storybook/react';
-import { withInfo } from '@storybook/addon-info';
+
+import withInfo from './withInfo';
 
 import CalendarDay from '../src/components/CalendarDay';
 import CustomizableCalendarDay from '../src/components/CustomizableCalendarDay';

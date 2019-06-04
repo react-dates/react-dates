@@ -1,10 +1,10 @@
 import React from 'react';
 import moment from 'moment';
 import { storiesOf } from '@storybook/react';
-import { withInfo } from '@storybook/addon-info';
 
 import isSameDay from '../src/utils/isSameDay';
 import isInclusivelyAfterDay from '../src/utils/isInclusivelyAfterDay';
+import withInfo from './withInfo';
 
 import CustomizableCalendarDay from '../src/components/CustomizableCalendarDay';
 

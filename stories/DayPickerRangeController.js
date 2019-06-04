@@ -2,12 +2,12 @@ import React from 'react';
 import moment from 'moment';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import { withInfo } from '@storybook/addon-info';
 
 import InfoPanelDecorator, { monospace } from './InfoPanelDecorator';
 
 import isSameDay from '../src/utils/isSameDay';
 import isInclusivelyAfterDay from '../src/utils/isInclusivelyAfterDay';
+import withInfo from './withInfo';
 
 import { VERTICAL_ORIENTATION, VERTICAL_SCROLLABLE } from '../src/constants';
 
