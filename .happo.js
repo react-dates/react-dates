@@ -2,7 +2,6 @@ const path = require('path');
 
 const { RemoteBrowserTarget } = require('happo.io');
 const happoPluginStorybook = require('happo-plugin-storybook');
-const happoPluginPuppeteer = require('happo-plugin-puppeteer');
 
 // API tokens are available at https://happo.io/a/32/account for administrators
 // of the react-dates account on happo.io.
@@ -22,8 +21,5 @@ module.exports = {
     }),
   },
 
-  plugins: [
-    happoPluginStorybook({ configDir: '.storybook-css' }),
-    happoPluginPuppeteer({ launchOptions: { args: ['--no-sandbox'] } }),
-  ],
+  plugins: [happoPluginStorybook()],
 };
