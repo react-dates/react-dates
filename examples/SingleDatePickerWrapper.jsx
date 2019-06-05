@@ -34,6 +34,7 @@ const defaultProps = {
   maxDate: null,
 
   // input related props
+  /* eslint-disable react/default-props-match-prop-types */
   id: 'date',
   placeholder: 'Date',
   disabled: false,
@@ -80,6 +81,7 @@ const defaultProps = {
   displayFormat: () => moment.localeData().longDateFormat('L'),
   monthFormat: 'MMMM YYYY',
   phrases: SingleDatePickerPhrases,
+  /* eslint-enable react/default-props-match-prop-types */
 };
 
 class SingleDatePickerWrapper extends React.Component {

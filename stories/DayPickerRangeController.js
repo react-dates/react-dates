@@ -31,6 +31,7 @@ const dayPickerRangeControllerInfo = `The ${monospace('DayPickerRangeController'
   implement your own inputs.`;
 
 const TestPrevIcon = () => (
+  // eslint-disable-next-line react/jsx-filename-extension
   <span
     style={{
       border: '1px solid #dce0e0',
@@ -57,6 +58,7 @@ const TestNextIcon = () => (
 );
 
 const TestCustomInfoPanel = () => (
+  // eslint-disable-next-line jsx-a11y/accessible-emoji
   <div
     style={{
       padding: '10px 21px',

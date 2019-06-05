@@ -13,6 +13,7 @@ import {
 import DateRangePickerWrapper from '../examples/DateRangePickerWrapper';
 
 const TestInput = props => (
+  // eslint-disable-next-line react/jsx-filename-extension
   <div style={{ marginTop: 16 }}>
     <input
       {...props}

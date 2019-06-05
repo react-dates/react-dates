@@ -6,7 +6,6 @@ import sinon from 'sinon-sandbox';
 import { Portal } from 'react-portal';
 
 import CloseButton from '../../src/components/CloseButton';
-// import SingleDatePickerWrapper from '../../examples/SingleDatePickerWrapper';
 import DayPickerSingleDateController from '../../src/components/DayPickerSingleDateController';
 import SingleDatePickerInputController from '../../src/components/SingleDatePickerInputController';
 import SingleDatePicker, { PureSingleDatePicker } from '../../src/components/SingleDatePicker';
