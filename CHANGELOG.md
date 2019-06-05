@@ -4,6 +4,9 @@
 - []  ([#](https://github.com/airbnb/react-dates/pull/))
 -->
 
+## 20.2.2
+- [fix] Add guard for undefined objects in addModifier ([#1667](https://github.com/airbnb/react-dates/pull/1667))
+
 ## 20.2.1
 - [fix] Compile classes in loose mode ([#1655](https://github.com/airbnb/react-dates/pull/1655))
 - [fix] Performance optimizations ([#1656](https://github.com/airbnb/react-dates/pull/1656), [#1657](https://github.com/airbnb/react-dates/pull/1657), [#1659](https://github.com/airbnb/react-dates/pull/1659), [#1661](https://github.com/airbnb/react-dates/pull/1661), [#1662](https://github.com/airbnb/react-dates/pull/1662), and [#1663](https://github.com/airbnb/react-dates/pull/1663))
