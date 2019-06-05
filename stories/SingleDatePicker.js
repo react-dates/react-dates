@@ -6,7 +6,7 @@ import { withInfo } from '@storybook/addon-info';
 import DirectionProvider, { DIRECTIONS } from 'react-with-direction/dist/DirectionProvider';
 
 import {
-  // VERTICAL_ORIENTATION,
+  VERTICAL_ORIENTATION,
   ANCHOR_RIGHT,
 } from '../src/constants';
 
@@ -74,6 +74,12 @@ storiesOf('SingleDatePicker (SDP)', module)
         isRTL
       />
     </DirectionProvider>
+  )))
+  .add('vertical with custom height', withInfo()(() => (
+    <SingleDatePickerWrapper
+      orientation={VERTICAL_ORIENTATION}
+      verticalHeight={568}
+    />
   )))
   .add('with arrows outside range disabled', withInfo()(() => {
     const minDate = moment();
