@@ -1,14 +1,12 @@
 const path = require('path');
 
-module.exports = {
-  module: {
-    rules: [
+module.exports = ({ config }) => {
+  config.module.rules.push(
+    ...[
       {
         test: /\.s?css$/,
         use: ['style-loader', 'raw-loader', 'sass-loader'],
-        include: [
-          path.resolve(__dirname, '../css/'),
-        ],
+        include: [path.resolve(__dirname, '../css/')],
       },
       {
         test: /\.svg$/,
@@ -33,8 +31,7 @@ module.exports = {
         ],
       },
     ],
-  },
-  resolve: {
-    extensions: ['.js', '.jsx'],
-  },
+  );
+  config.resolve.extensions = ['.js', '.jsx'];
+  return config;
 };
