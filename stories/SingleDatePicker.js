@@ -6,14 +6,15 @@ import { withInfo } from '@storybook/addon-info';
 import DirectionProvider, { DIRECTIONS } from 'react-with-direction/dist/DirectionProvider';
 
 import {
-  VERTICAL_ORIENTATION,
+  // VERTICAL_ORIENTATION,
   ANCHOR_RIGHT,
 } from '../src/constants';
 
 import SingleDatePickerWrapper from '../examples/SingleDatePickerWrapper';
 
 const TestInput = props => (
-  <div style={{ marginTop: 16 }} >
+  // eslint-disable-next-line react/jsx-filename-extension
+  <div style={{ marginTop: 16 }}>
     <input
       {...props}
       type="text"
@@ -39,7 +40,7 @@ storiesOf('SingleDatePicker (SDP)', module)
       <TestInput placeholder="Input 2" />
       <TestInput placeholder="Input 3" />
     </div>
-   )))
+  )))
   .add('non-english locale (Chinese)', withInfo()(() => {
     moment.locale('zh-cn');
     return (
@@ -74,9 +75,13 @@ storiesOf('SingleDatePicker (SDP)', module)
       />
     </DirectionProvider>
   )))
-  .add('vertical with custom height', withInfo()(() => (
-    <SingleDatePickerWrapper
-      orientation={VERTICAL_ORIENTATION}
-      verticalHeight={568}
-    />
-  )));
+  .add('with arrows outside range disabled', withInfo()(() => {
+    const minDate = moment();
+    const maxDate = moment().add(12, 'month');
+    return (
+      <SingleDatePickerWrapper
+        minDate={minDate}
+        maxDate={maxDate}
+      />
+    );
+  }));

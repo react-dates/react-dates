@@ -36,6 +36,8 @@ import getPooledMoment from '../utils/getPooledMoment';
 const propTypes = forbidExtraProps({
   date: momentPropTypes.momentObj,
   onDateChange: PropTypes.func,
+  minDate: momentPropTypes.momentObj,
+  maxDate: momentPropTypes.momentObj,
 
   focused: PropTypes.bool,
   onFocusChange: PropTypes.func,
@@ -93,6 +95,8 @@ const propTypes = forbidExtraProps({
 const defaultProps = {
   date: undefined, // TODO: use null
   onDateChange() {},
+  minDate: null,
+  maxDate: null,
 
   focused: false,
   onFocusChange() {},
@@ -174,6 +178,8 @@ export default class DayPickerSingleDateController extends React.PureComponent {
       hoverDate: null,
       currentMonth,
       visibleDays,
+      disablePrev: this.shouldDisableMonthNavigation(props.minDate, currentMonth),
+      disableNext: this.shouldDisableMonthNavigation(props.maxDate, currentMonth),
     };
 
     this.onDayMouseEnter = this.onDayMouseEnter.bind(this);
@@ -373,7 +379,13 @@ export default class DayPickerSingleDateController extends React.PureComponent {
   }
 
   onPrevMonthClick() {
-    const { onPrevMonthClick, numberOfMonths, enableOutsideDays } = this.props;
+    const {
+      onPrevMonthClick,
+      numberOfMonths,
+      enableOutsideDays,
+      maxDate,
+      minDate,
+    } = this.props;
     const { currentMonth, visibleDays } = this.state;
 
     const newVisibleDays = {};
@@ -384,19 +396,28 @@ export default class DayPickerSingleDateController extends React.PureComponent {
     const prevMonth = currentMonth.clone().subtract(1, 'month');
     const prevMonthVisibleDays = getVisibleDays(prevMonth, 1, enableOutsideDays);
 
+    const newCurrentMonth = currentMonth.clone().subtract(1, 'month');
     this.setState({
-      currentMonth: prevMonth,
+      currentMonth: newCurrentMonth,
+      disablePrev: this.shouldDisableMonthNavigation(minDate, newCurrentMonth),
+      disableNext: this.shouldDisableMonthNavigation(maxDate, newCurrentMonth),
       visibleDays: {
         ...newVisibleDays,
         ...this.getModifiers(prevMonthVisibleDays),
       },
     }, () => {
-      onPrevMonthClick(prevMonth.clone());
+      onPrevMonthClick(newCurrentMonth.clone());
     });
   }
 
   onNextMonthClick() {
-    const { onNextMonthClick, numberOfMonths, enableOutsideDays } = this.props;
+    const {
+      onNextMonthClick,
+      numberOfMonths,
+      enableOutsideDays,
+      maxDate,
+      minDate,
+    } = this.props;
     const { currentMonth, visibleDays } = this.state;
 
     const newVisibleDays = {};
@@ -410,6 +431,8 @@ export default class DayPickerSingleDateController extends React.PureComponent {
     const newCurrentMonth = currentMonth.clone().add(1, 'month');
     this.setState({
       currentMonth: newCurrentMonth,
+      disablePrev: this.shouldDisableMonthNavigation(minDate, newCurrentMonth),
+      disableNext: this.shouldDisableMonthNavigation(maxDate, newCurrentMonth),
       visibleDays: {
         ...newVisibleDays,
         ...this.getModifiers(nextMonthVisibleDays),
@@ -508,6 +531,17 @@ export default class DayPickerSingleDateController extends React.PureComponent {
       enableOutsideDays,
     ));
     return { currentMonth, visibleDays };
+  }
+
+  shouldDisableMonthNavigation(date, visibleMonth) {
+    if (!date) return false;
+
+    const {
+      numberOfMonths,
+      enableOutsideDays,
+    } = this.props;
+
+    return isDayVisible(date, visibleMonth, numberOfMonths, enableOutsideDays);
   }
 
   addModifier(updatedDays, day, modifier) {
@@ -685,7 +719,12 @@ export default class DayPickerSingleDateController extends React.PureComponent {
       horizontalMonthPadding,
     } = this.props;
 
-    const { currentMonth, visibleDays } = this.state;
+    const {
+      currentMonth,
+      visibleDays,
+      disablePrev,
+      disableNext,
+    } = this.state;
 
     return (
       <DayPicker
@@ -707,6 +746,8 @@ export default class DayPickerSingleDateController extends React.PureComponent {
         initialVisibleMonth={() => currentMonth}
         firstDayOfWeek={firstDayOfWeek}
         onOutsideClick={onOutsideClick}
+        disablePrev={disablePrev}
+        disableNext={disableNext}
         navPrev={navPrev}
         navNext={navNext}
         renderMonthText={renderMonthText}

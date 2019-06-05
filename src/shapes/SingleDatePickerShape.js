@@ -16,6 +16,8 @@ export default {
   // required props for a functional interactive SingleDatePicker
   date: momentPropTypes.momentObj,
   onDateChange: PropTypes.func.isRequired,
+  minDate: momentPropTypes.momentObj,
+  maxDate: momentPropTypes.momentObj,
 
   focused: PropTypes.bool,
   onFocusChange: PropTypes.func.isRequired,
