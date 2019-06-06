@@ -39,6 +39,8 @@ import {
 } from '../constants';
 
 import DayPicker from './DayPicker';
+import getPreviousMonthMemoLast from '../utils/getPreviousMonthMemoLast';
+import getPooledMoment from '../utils/getPooledMoment';
 
 const propTypes = forbidExtraProps({
   startDate: momentPropTypes.momentObj,
@@ -393,7 +395,7 @@ export default class DayPickerRangeController extends React.PureComponent {
     if (didFocusChange || recomputePropModifiers) {
       values(visibleDays).forEach((days) => {
         Object.keys(days).forEach((day) => {
-          const momentObj = moment(day);
+          const momentObj = getPooledMoment(day);
           let isBlocked = false;
 
           if (didFocusChange || recomputeOutsideRange) {
@@ -990,7 +992,7 @@ export default class DayPickerRangeController extends React.PureComponent {
     if (orientation === VERTICAL_SCROLLABLE) {
       numberOfMonths = Object.keys(visibleDays).length;
     } else {
-      currentMonth = currentMonth.clone().subtract(1, 'month');
+      currentMonth = getPreviousMonthMemoLast(currentMonth);
       numberOfMonths += 2;
     }
     if (!day || !isDayVisible(day, currentMonth, numberOfMonths, enableOutsideDays)) {
@@ -1005,31 +1007,32 @@ export default class DayPickerRangeController extends React.PureComponent {
         Object.keys(visibleDays[monthKey]).indexOf(iso) > -1
       ));
 
-      updatedDaysAfterAddition = monthsToUpdate.reduce((days, monthIso) => {
+      updatedDaysAfterAddition = monthsToUpdate.reduce((acc, monthIso) => {
         const month = updatedDays[monthIso] || visibleDays[monthIso];
-        const modifiers = new Set(month[iso]);
-        modifiers.add(modifier);
-        return {
-          ...days,
-          [monthIso]: {
+
+        if (!month[iso] || !month[iso].has(modifier)) {
+          const modifiers = new Set(month[iso]);
+          modifiers.add(modifier);
+          acc[monthIso] = {
             ...month,
             [iso]: modifiers,
-          },
-        };
+          };
+        }
+
+        return acc;
       }, updatedDaysAfterAddition);
     } else {
       const monthIso = toISOMonthString(day);
       const month = updatedDays[monthIso] || visibleDays[monthIso];
 
-      const modifiers = new Set(month[iso]);
-      modifiers.add(modifier);
-      updatedDaysAfterAddition = {
-        ...updatedDaysAfterAddition,
-        [monthIso]: {
+      if (!month[iso] || !month[iso].has(modifier)) {
+        const modifiers = new Set(month[iso]);
+        modifiers.add(modifier);
+        updatedDaysAfterAddition[monthIso] = {
           ...month,
           [iso]: modifiers,
-        },
-      };
+        };
+      }
     }
 
     return updatedDaysAfterAddition;
@@ -1055,7 +1058,7 @@ export default class DayPickerRangeController extends React.PureComponent {
     if (orientation === VERTICAL_SCROLLABLE) {
       numberOfMonths = Object.keys(visibleDays).length;
     } else {
-      currentMonth = currentMonth.clone().subtract(1, 'month');
+      currentMonth = getPreviousMonthMemoLast(currentMonth);
       numberOfMonths += 2;
     }
     if (!day || !isDayVisible(day, currentMonth, numberOfMonths, enableOutsideDays)) {
@@ -1070,31 +1073,32 @@ export default class DayPickerRangeController extends React.PureComponent {
         Object.keys(visibleDays[monthKey]).indexOf(iso) > -1
       ));
 
-      updatedDaysAfterDeletion = monthsToUpdate.reduce((days, monthIso) => {
+      updatedDaysAfterDeletion = monthsToUpdate.reduce((acc, monthIso) => {
         const month = updatedDays[monthIso] || visibleDays[monthIso];
-        const modifiers = new Set(month[iso]);
-        modifiers.delete(modifier);
-        return {
-          ...days,
-          [monthIso]: {
+
+        if (month[iso] && month[iso].has(modifier)) {
+          const modifiers = new Set(month[iso]);
+          modifiers.delete(modifier);
+          acc[monthIso] = {
             ...month,
             [iso]: modifiers,
-          },
-        };
+          };
+        }
+
+        return acc;
       }, updatedDaysAfterDeletion);
     } else {
       const monthIso = toISOMonthString(day);
       const month = updatedDays[monthIso] || visibleDays[monthIso];
 
-      const modifiers = new Set(month[iso]);
-      modifiers.delete(modifier);
-      updatedDaysAfterDeletion = {
-        ...updatedDaysAfterDeletion,
-        [monthIso]: {
+      if (month[iso] && month[iso].has(modifier)) {
+        const modifiers = new Set(month[iso]);
+        modifiers.delete(modifier);
+        updatedDaysAfterDeletion[monthIso] = {
           ...month,
           [iso]: modifiers,
-        },
-      };
+        };
+      }
     }
 
     return updatedDaysAfterDeletion;

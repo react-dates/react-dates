@@ -111,9 +111,9 @@ describe('DayPickerSingleDateController', () => {
             const startOfMonth = today.clone().startOf('month');
             visibleDays = {
               [toISOMonthString(startOfMonth)]: {
-                [toISODateString(startOfMonth)]: [],
-                [toISODateString(startOfMonth.clone().add(1, 'day'))]: [],
-                [toISODateString(startOfMonth.clone().add(2, 'days'))]: [],
+                [toISODateString(startOfMonth)]: new Set(),
+                [toISODateString(startOfMonth.clone().add(1, 'day'))]: new Set(),
+                [toISODateString(startOfMonth.clone().add(2, 'days'))]: new Set(),
               },
             };
           });
@@ -194,9 +194,9 @@ describe('DayPickerSingleDateController', () => {
             const startOfMonth = today.clone().startOf('month');
             visibleDays = {
               [toISOMonthString(startOfMonth)]: {
-                [toISODateString(startOfMonth)]: [],
-                [toISODateString(startOfMonth.clone().add(1, 'day'))]: [],
-                [toISODateString(startOfMonth.clone().add(2, 'days'))]: [],
+                [toISODateString(startOfMonth)]: new Set(),
+                [toISODateString(startOfMonth.clone().add(1, 'day'))]: new Set(),
+                [toISODateString(startOfMonth.clone().add(2, 'days'))]: new Set(),
               },
             };
           });
@@ -289,9 +289,9 @@ describe('DayPickerSingleDateController', () => {
             const startOfMonth = today.clone().startOf('month');
             visibleDays = {
               [toISOMonthString(startOfMonth)]: {
-                [toISODateString(startOfMonth)]: [],
-                [toISODateString(startOfMonth.clone().add(1, 'day'))]: [],
-                [toISODateString(startOfMonth.clone().add(2, 'days'))]: [],
+                [toISODateString(startOfMonth)]: new Set(),
+                [toISODateString(startOfMonth.clone().add(1, 'day'))]: new Set(),
+                [toISODateString(startOfMonth.clone().add(2, 'days'))]: new Set(),
               },
             };
           });
@@ -372,9 +372,9 @@ describe('DayPickerSingleDateController', () => {
             const startOfMonth = today.clone().startOf('month');
             visibleDays = {
               [toISOMonthString(startOfMonth)]: {
-                [toISODateString(startOfMonth)]: [],
-                [toISODateString(startOfMonth.clone().add(1, 'day'))]: [],
-                [toISODateString(startOfMonth.clone().add(2, 'days'))]: [],
+                [toISODateString(startOfMonth)]: new Set(),
+                [toISODateString(startOfMonth.clone().add(1, 'day'))]: new Set(),
+                [toISODateString(startOfMonth.clone().add(2, 'days'))]: new Set(),
               },
             };
           });
@@ -1087,7 +1087,7 @@ describe('DayPickerSingleDateController', () => {
           onFocusChange={sinon.stub()}
         />
       ));
-      const modifiers = wrapper.instance().addModifier({}, today);
+      const modifiers = wrapper.instance().addModifier({}, today, 'foo');
       expect(Object.keys(modifiers)).to.contain(toISOMonthString(today));
     });
 
@@ -1200,8 +1200,14 @@ describe('DayPickerSingleDateController', () => {
           onFocusChange={sinon.stub()}
         />
       ));
-      const modifiers = wrapper.instance().deleteModifier({}, today);
-      expect(Object.keys(modifiers)).to.contain(toISOMonthString(today));
+
+      const isoMonth = toISOMonthString(today);
+      const isoDate = toISODateString(today);
+      const modifiers = wrapper.instance()
+        .deleteModifier({ [isoMonth]: { [isoDate]: new Set(['foo']) } }, today, 'foo');
+
+      expect(Object.keys(modifiers)).to.contain(isoMonth);
+      expect(modifiers[isoMonth][isoDate].size).to.equal(0);
     });
 
     it('has day ISO as key one layer down', () => {
