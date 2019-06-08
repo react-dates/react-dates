@@ -460,6 +460,23 @@ describe('SingleDatePicker', () => {
         wrapper.instance().onOutsideClick();
         expect(onFocusChangeStub.getCall(0).args[0].focused).to.equal(false);
       });
+
+      it('calls props.onClose with { date: "08-06-2019" } as arg', () => {
+        const onFocusChangeStub = sinon.stub();
+        const onCloseStub = sinon.stub();
+        const wrapper = shallow((
+          <SingleDatePicker
+            id="date"
+            onClose={onCloseStub}
+            onDateChange={() => {}}
+            onFocusChange={onFocusChangeStub}
+            focused
+            date="08-06-2019"
+          />
+        )).dive();
+        wrapper.instance().onOutsideClick();
+        expect(onCloseStub.getCall(0).args[0].date).to.equal("08-06-2019");
+      });
     });
   });
 
