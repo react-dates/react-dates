@@ -475,7 +475,7 @@ describe('SingleDatePicker', () => {
           />
         )).dive();
         wrapper.instance().onOutsideClick();
-        expect(onCloseStub.getCall(0).args[0].date).to.equal("08-06-2019");
+        expect(onCloseStub.getCall(0).args[0].date).to.equal('08-06-2019');
       });
     });
   });
