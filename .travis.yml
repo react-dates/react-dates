@@ -5,10 +5,10 @@ node_js:
   - "6"
 before_install:
   - 'nvm install-latest-npm'
+services:
+  - xvfb
 before_script:
   - 'if [ -n "${KARMA-}" ]; then export DISPLAY=:99.0; fi'
-  - 'if [ -n "${KARMA-}" ]; then sh -e /etc/init.d/xvfb start; fi'
-  - 'if [ -n "${KARMA-}" ]; then sleep 3; fi'
 script:
   - 'if [ -n "${LINT-}" ]; then npm run lint ; fi'
   - 'if [ -n "${BUILD-}" ]; then npm run build ; fi'
@@ -34,6 +34,3 @@ matrix:
       env: COVERAGE=true TEST=false
     - node_js: "lts/*"
       env: KARMA=true TEST=false
-  allow_failures:
-    - node_js: "9"
-    - env: KARMA=true TEST=false # temporary
