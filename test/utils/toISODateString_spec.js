@@ -15,6 +15,12 @@ describe('toISODateString', () => {
     expect(dateString).to.equal('1991-07-13');
   });
 
+  it('matches moment format behavior', () => {
+    const testDate = moment('1991-07-13');
+    const dateString = toISODateString(testDate);
+    expect(dateString).to.equal(testDate.format(ISO_FORMAT));
+  });
+
   it('converts iso date string to ISO date string', () => {
     const testDate = moment('1991-07-13');
     const dateString = toISODateString(testDate.format(ISO_FORMAT));
