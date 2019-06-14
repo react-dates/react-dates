@@ -46,6 +46,7 @@ const defaultProps = {
   focused: false,
 
   // input related props
+  className: undefined,
   id: 'date',
   placeholder: 'Date',
   ariaLabel: undefined,
@@ -520,6 +521,7 @@ class SingleDatePicker extends React.PureComponent {
 
   render() {
     const {
+      className,
       id,
       placeholder,
       ariaLabel,
@@ -600,10 +602,7 @@ class SingleDatePicker extends React.PureComponent {
     return (
       <div
         ref={this.setContainerRef}
-        {...css(
-          styles.SingleDatePicker,
-          block && styles.SingleDatePicker__block,
-        )}
+        {...css(styles.SingleDatePicker, block && styles.SingleDatePicker__block, className)}
       >
         {enableOutsideClick && (
           <OutsideClickHandler onOutsideClick={this.onOutsideClick}>
