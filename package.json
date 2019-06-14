@@ -118,6 +118,7 @@
     "object.values": "^1.0.4",
     "prop-types": "^15.6.1",
     "react-addons-shallow-compare": "^15.6.2",
+    "react-is": "^16.8.6",
     "react-moment-proptypes": "^1.6.0",
     "react-outside-click-handler": "^1.2.0",
     "react-portal": "^4.1.5",
