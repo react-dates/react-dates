@@ -4,6 +4,10 @@
 - []  ([#](https://github.com/airbnb/react-dates/pull/))
 -->
 
+## 20.2.3
+- [fix] Add guard for undefined objects in deleteModifier ([#1687](https://github.com/airbnb/react-dates/pull/1687))
+- [dev] Update Storybook from v4 to v5 ([@trotzig](https://github.com/trotzig) [#1673](https://github.com/airbnb/react-dates/pull/1673))
+
 ## 20.2.2
 - [fix] Add guard for undefined objects in addModifier ([#1667](https://github.com/airbnb/react-dates/pull/1667))
 
