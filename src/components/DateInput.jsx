@@ -7,6 +7,8 @@ import isTouchDevice from 'is-touch-device';
 
 import noflip from '../utils/noflip';
 import getInputHeight from '../utils/getInputHeight';
+import componentPropType from '../utils/componentPropType';
+import getRenderComponent from '../utils/getRenderComponent';
 import openDirectionShape from '../shapes/OpenDirectionShape';
 
 import {
@@ -25,6 +27,7 @@ const FANG_STROKE_BOTTOM = `M0,0 ${FANG_WIDTH_PX / 2},${FANG_HEIGHT_PX} ${FANG_W
 
 const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
+  component: componentPropType,
   id: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   displayValue: PropTypes.string,
@@ -54,6 +57,7 @@ const propTypes = forbidExtraProps({
 });
 
 const defaultProps = {
+  component: 'input',
   placeholder: 'Select Date',
   displayValue: '',
   ariaLabel: undefined,
@@ -172,6 +176,7 @@ class DateInput extends React.PureComponent {
       isTouchDevice: isTouch,
     } = this.state;
     const {
+      component,
       id,
       placeholder,
       ariaLabel,
@@ -199,6 +204,8 @@ class DateInput extends React.PureComponent {
 
     const inputHeight = getInputHeight(reactDates, small);
 
+    const Input = getRenderComponent(component);
+
     return (
       <div
         {...css(
@@ -211,7 +218,7 @@ class DateInput extends React.PureComponent {
           withFang && openDirection === OPEN_UP && styles.DateInput__openUp,
         )}
       >
-        <input
+        <Input
           {...css(
             styles.DateInput_input,
             small && styles.DateInput_input__small,

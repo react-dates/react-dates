@@ -4,6 +4,7 @@ import { mutuallyExclusiveProps, nonNegativeInteger } from 'airbnb-prop-types';
 
 import { SingleDatePickerPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
+import componentPropType from '../utils/componentPropType';
 
 import IconPositionShape from './IconPositionShape';
 import OrientationShape from './OrientationShape';
@@ -21,6 +22,7 @@ export default {
   onFocusChange: PropTypes.func.isRequired,
 
   // input related props
+  component: componentPropType,
   id: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   ariaLabel: PropTypes.string,

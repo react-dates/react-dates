@@ -49,6 +49,7 @@ const defaultProps = {
   focusedInput: null,
 
   // input related props
+  component: 'input',
   startDatePlaceholderText: 'Start Date',
   endDatePlaceholderText: 'End Date',
   startDateAriaLabel: undefined,
