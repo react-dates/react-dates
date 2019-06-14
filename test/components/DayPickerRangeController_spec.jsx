@@ -3615,6 +3615,18 @@ describe('DayPickerRangeController', () => {
       expect(Object.keys(modifiers)).to.contain(toISOMonthString(today));
     });
 
+    it('is resilient when visibleDays is an empty object', () => {
+      const wrapper = shallow((
+        <DayPickerRangeController
+          onDatesChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />
+      ));
+      wrapper.instance().setState({ visibleDays: {} });
+      const modifiers = wrapper.instance().addModifier({}, today);
+      expect(Object.keys(modifiers[toISOMonthString(today)])).to.contain(toISODateString(today));
+    });
+
     it('has day ISO as key one layer down', () => {
       const wrapper = shallow((
         <DayPickerRangeController
@@ -3827,8 +3839,7 @@ describe('DayPickerRangeController', () => {
         />
       ));
       wrapper.instance().setState({ visibleDays: {} });
-      const modifiers = wrapper.instance().addModifier({}, today);
-      expect(Object.keys(modifiers[toISOMonthString(today)])).to.contain(toISODateString(today));
+      expect(() => { wrapper.instance().deleteModifier({}, today); }).to.not.throw();
     });
 
     it('return value no longer has modifier arg for day if was in first arg', () => {

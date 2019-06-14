@@ -1089,7 +1089,7 @@ export default class DayPickerRangeController extends React.PureComponent {
       }, updatedDaysAfterDeletion);
     } else {
       const monthIso = toISOMonthString(day);
-      const month = updatedDays[monthIso] || visibleDays[monthIso];
+      const month = updatedDays[monthIso] || visibleDays[monthIso] || {};
 
       if (month[iso] && month[iso].has(modifier)) {
         const modifiers = new Set(month[iso]);
