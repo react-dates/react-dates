@@ -5,6 +5,7 @@ import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 
 import { DateRangePickerInputPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
+import componentPropType from '../utils/componentPropType';
 import noflip from '../utils/noflip';
 import openDirectionShape from '../shapes/OpenDirectionShape';
 
@@ -29,6 +30,7 @@ const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
 
   children: PropTypes.node,
+  component: componentPropType,
 
   startDateId: PropTypes.string,
   startDatePlaceholderText: PropTypes.string,
@@ -82,6 +84,7 @@ const propTypes = forbidExtraProps({
 
 const defaultProps = {
   children: null,
+  component: 'input',
   startDateId: START_DATE,
   endDateId: END_DATE,
   startDatePlaceholderText: 'Start Date',
@@ -132,6 +135,7 @@ const defaultProps = {
 
 function DateRangePickerInput({
   children,
+  component,
   startDate,
   startDateId,
   startDatePlaceholderText,
@@ -220,6 +224,7 @@ function DateRangePickerInput({
       {inputIconPosition === ICON_BEFORE_POSITION && inputIcon}
 
       <DateInput
+        component={component}
         id={startDateId}
         placeholder={startDatePlaceholderText}
         ariaLabel={startDateAriaLabel}
@@ -255,6 +260,7 @@ function DateRangePickerInput({
       {isStartDateFocused && children}
 
       <DateInput
+        component={component}
         id={endDateId}
         placeholder={endDatePlaceholderText}
         ariaLabel={endDateAriaLabel}

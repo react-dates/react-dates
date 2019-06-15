@@ -5,6 +5,7 @@ import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 
 import { SingleDatePickerInputPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
+import componentPropType from '../utils/componentPropType';
 import noflip from '../utils/noflip';
 
 import DateInput from './DateInput';
@@ -18,6 +19,7 @@ import { ICON_BEFORE_POSITION, ICON_AFTER_POSITION, OPEN_DOWN } from '../constan
 
 const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
+  component: componentPropType,
   id: PropTypes.string.isRequired,
   children: PropTypes.node,
   placeholder: PropTypes.string,
@@ -57,6 +59,7 @@ const propTypes = forbidExtraProps({
 
 const defaultProps = {
   children: null,
+  component: 'input',
   placeholder: 'Select Date',
   ariaLabel: undefined,
   displayValue: '',
@@ -93,6 +96,7 @@ const defaultProps = {
 };
 
 function SingleDatePickerInput({
+  component,
   id,
   children,
   placeholder,
@@ -166,6 +170,7 @@ function SingleDatePickerInput({
       {inputIconPosition === ICON_BEFORE_POSITION && inputIcon}
 
       <DateInput
+        component={component}
         id={id}
         placeholder={placeholder}
         ariaLabel={ariaLabel}

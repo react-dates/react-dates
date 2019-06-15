@@ -4,6 +4,7 @@ import { mutuallyExclusiveProps, nonNegativeInteger } from 'airbnb-prop-types';
 
 import { DateRangePickerPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
+import componentPropType from '../utils/componentPropType';
 
 import FocusedInputShape from './FocusedInputShape';
 import IconPositionShape from './IconPositionShape';
@@ -26,6 +27,7 @@ export default {
   onClose: PropTypes.func,
 
   // input related props
+  component: componentPropType,
   startDateId: PropTypes.string.isRequired,
   startDatePlaceholderText: PropTypes.string,
   startDateOffset: PropTypes.func,

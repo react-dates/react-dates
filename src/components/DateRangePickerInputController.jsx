@@ -8,6 +8,7 @@ import openDirectionShape from '../shapes/OpenDirectionShape';
 
 import { DateRangePickerInputPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
+import componentPropType from '../utils/componentPropType';
 
 import DateRangePickerInput from './DateRangePickerInput';
 
@@ -29,6 +30,7 @@ import {
 
 const propTypes = forbidExtraProps({
   children: PropTypes.node,
+  component: componentPropType,
 
   startDate: momentPropTypes.momentObj,
   startDateId: PropTypes.string,
@@ -85,6 +87,7 @@ const propTypes = forbidExtraProps({
 
 const defaultProps = {
   children: null,
+  component: 'input',
 
   startDate: null,
   startDateId: START_DATE,
@@ -270,6 +273,7 @@ export default class DateRangePickerInputController extends React.PureComponent 
   render() {
     const {
       children,
+      component,
       startDate,
       startDateId,
       startDatePlaceholderText,
@@ -309,6 +313,7 @@ export default class DateRangePickerInputController extends React.PureComponent 
 
     return (
       <DateRangePickerInput
+        component={component}
         startDate={startDateString}
         startDateId={startDateId}
         startDatePlaceholderText={startDatePlaceholderText}
