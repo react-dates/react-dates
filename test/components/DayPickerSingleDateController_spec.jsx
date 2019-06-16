@@ -1233,6 +1233,17 @@ describe('DayPickerSingleDateController', () => {
       expect(Object.keys(modifiers[toISOMonthString(today)])).to.contain(toISODateString(today));
     });
 
+    it('is resilient when visibleDays is an empty object', () => {
+      const wrapper = shallow((
+        <DayPickerSingleDateController
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />
+      ));
+      wrapper.instance().setState({ visibleDays: {} });
+      expect(() => { wrapper.instance().deleteModifier({}, today); }).to.not.throw();
+    });
+
     it('return value no longer has modifier arg for day if was in first arg', () => {
       const modifierToDelete = 'foo';
       const monthISO = toISOMonthString(today);
