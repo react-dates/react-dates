@@ -1,58 +1,108 @@
 {
   "env": {
     "test": {
-      "presets": [["airbnb", { looseClasses: true }]],
+      "presets": [["airbnb", { "looseClasses": true }]],
       "plugins": [
         ["inline-react-svg", {
-          "svgo": false
+          "svgo": false,
         }],
         ["transform-replace-object-assign", { "moduleSpecifier": "object.assign" }],
         "./scripts/pure-component-fallback.js",
+        [
+          "@babel/plugin-transform-runtime",
+          {
+            "absoluteRuntime": false,
+            "corejs": false,
+            "helpers": true,
+            "regenerator": false,
+            "useESModules": false,
+          },
+        ],
         "istanbul",
       ]
     },
 
     "development": {
-      "presets": [["airbnb", { looseClasses: true }]],
+      "presets": [["airbnb", { "looseClasses": true }]],
       "plugins": [
         ["inline-react-svg", {
-          "svgo": false
+          "svgo": false,
         }],
         ["transform-replace-object-assign", { "moduleSpecifier": "object.assign" }],
         "./scripts/pure-component-fallback.js",
+        [
+          "@babel/plugin-transform-runtime",
+          {
+            "absoluteRuntime": false,
+            "corejs": false,
+            "helpers": true,
+            "regenerator": false,
+            "useESModules": false,
+          },
+        ],
       ],
     },
 
     "production": {
-      "presets": [["airbnb", { looseClasses: true, removePropTypes: true }]],
+      "presets": [["airbnb", { "looseClasses": true, "removePropTypes": true }]],
       "plugins": [
         ["inline-react-svg", {
-          "svgo": false
+          "svgo": false,
         }],
         ["transform-replace-object-assign", { "moduleSpecifier": "object.assign" }],
         "./scripts/pure-component-fallback.js",
+        [
+          "@babel/plugin-transform-runtime",
+          {
+            "absoluteRuntime": false,
+            "corejs": false,
+            "helpers": true,
+            "regenerator": false,
+            "useESModules": false,
+          },
+        ],
       ],
     },
 
     "cjs": {
-      "presets": [["airbnb", { looseClasses: true, removePropTypes: true }]],
+      "presets": [["airbnb", { "looseClasses": true, "removePropTypes": true }]],
       "plugins": [
         ["inline-react-svg", {
           "svgo": false
         }],
         ["transform-replace-object-assign", { "moduleSpecifier": "object.assign" }],
         "./scripts/pure-component-fallback.js",
+        [
+          "@babel/plugin-transform-runtime",
+          {
+            "absoluteRuntime": false,
+            "corejs": false,
+            "helpers": true,
+            "regenerator": false,
+            "useESModules": false,
+          },
+        ],
       ],
     },
 
     "esm": {
-      "presets": [["airbnb", { looseClasses: true, modules: false, removePropTypes: true }]],
+      "presets": [["airbnb", { "looseClasses": true, "modules": false, "removePropTypes": true }]],
       "plugins": [
         ["inline-react-svg", {
-          "svgo": false
+          "svgo": false,
         }],
         ["transform-replace-object-assign", { "moduleSpecifier": "object.assign" }],
         "./scripts/pure-component-fallback.js",
+        [
+          "@babel/plugin-transform-runtime",
+          {
+            "absoluteRuntime": false,
+            "corejs": false,
+            "helpers": true,
+            "regenerator": false,
+            "useESModules": true,
+          },
+        ],
       ],
     },
   },

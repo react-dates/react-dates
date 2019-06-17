@@ -53,6 +53,7 @@
   "devDependencies": {
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.5",
+    "@babel/plugin-transform-runtime": "^7.4.4",
     "@babel/register": "^7.4.4",
     "@storybook/addon-actions": "^5.1.1",
     "@storybook/addon-info": "^5.1.1",
@@ -110,6 +111,7 @@
     "why-did-you-update": "^1.0.6"
   },
   "dependencies": {
+    "@babel/runtime": "^7.4.5",
     "airbnb-prop-types": "^2.10.0",
     "consolidated-events": "^1.1.1 || ^2.0.0",
     "enzyme-shallow-equal": "^1.0.0",
