@@ -4,6 +4,11 @@
 - []  ([#](https://github.com/airbnb/react-dates/pull/))
 -->
 
+## 20.2.4
+- [fix] Replace react-addons-shallow-compare with enzyme-shallow-equal (bf7e3347702f)
+- [fix] Optimize SVG assets ([#1690](https://github.com/airbnb/react-dates/pull/1690))
+- [fix] Update babel-preset-airbnb 3.2.1 -> 4.0.0 ([#1692](https://github.com/airbnb/react-dates/pull/1692))
+
 ## 20.2.3
 - [fix] Add guard for undefined objects in deleteModifier ([#1687](https://github.com/airbnb/react-dates/pull/1687))
 - [dev] Update Storybook from v4 to v5 ([@trotzig](https://github.com/trotzig) [#1673](https://github.com/airbnb/react-dates/pull/1673))
