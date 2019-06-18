@@ -13,10 +13,9 @@ import isSameDay from '../utils/isSameDay';
 import isAfterDay from '../utils/isAfterDay';
 
 import getVisibleDays from '../utils/getVisibleDays';
-import isDayVisible from '../utils/isDayVisible';
 
 import toISODateString from '../utils/toISODateString';
-import toISOMonthString from '../utils/toISOMonthString';
+import { addModifier, deleteModifier } from '../utils/modifiers';
 
 import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
 import DayOfWeekShape from '../shapes/DayOfWeekShape';
@@ -30,7 +29,6 @@ import {
 } from '../constants';
 
 import DayPicker from './DayPicker';
-import getPreviousMonthMemoLast from '../utils/getPreviousMonthMemoLast';
 import getPooledMoment from '../utils/getPooledMoment';
 
 const propTypes = forbidExtraProps({
@@ -511,113 +509,11 @@ export default class DayPickerSingleDateController extends React.PureComponent {
   }
 
   addModifier(updatedDays, day, modifier) {
-    const { numberOfMonths: numberOfVisibleMonths, enableOutsideDays, orientation } = this.props;
-    const { currentMonth: firstVisibleMonth, visibleDays } = this.state;
-
-    let currentMonth = firstVisibleMonth;
-    let numberOfMonths = numberOfVisibleMonths;
-    if (orientation === VERTICAL_SCROLLABLE) {
-      numberOfMonths = Object.keys(visibleDays).length;
-    } else {
-      currentMonth = getPreviousMonthMemoLast(currentMonth);
-      numberOfMonths += 2;
-    }
-    if (!day || !isDayVisible(day, currentMonth, numberOfMonths, enableOutsideDays)) {
-      return updatedDays;
-    }
-
-    const iso = toISODateString(day);
-
-    let updatedDaysAfterAddition = { ...updatedDays };
-    if (enableOutsideDays) {
-      const monthsToUpdate = Object.keys(visibleDays).filter(monthKey => (
-        Object.keys(visibleDays[monthKey]).indexOf(iso) > -1
-      ));
-
-      updatedDaysAfterAddition = monthsToUpdate.reduce((acc, monthIso) => {
-        const month = updatedDays[monthIso] || visibleDays[monthIso];
-
-        if (!month[iso] || !month[iso].has(modifier)) {
-          const modifiers = new Set(month[iso]);
-          modifiers.add(modifier);
-          acc[monthIso] = {
-            ...month,
-            [iso]: modifiers,
-          };
-        }
-
-        return acc;
-      }, updatedDaysAfterAddition);
-    } else {
-      const monthIso = toISOMonthString(day);
-      const month = updatedDays[monthIso] || visibleDays[monthIso] || {};
-
-      if (!month[iso] || !month[iso].has(modifier)) {
-        const modifiers = new Set(month[iso]);
-        modifiers.add(modifier);
-        updatedDaysAfterAddition[monthIso] = {
-          ...month,
-          [iso]: modifiers,
-        };
-      }
-    }
-
-    return updatedDaysAfterAddition;
+    return addModifier(updatedDays, day, modifier, this.props, this.state);
   }
 
   deleteModifier(updatedDays, day, modifier) {
-    const { numberOfMonths: numberOfVisibleMonths, enableOutsideDays, orientation } = this.props;
-    const { currentMonth: firstVisibleMonth, visibleDays } = this.state;
-
-    let currentMonth = firstVisibleMonth;
-    let numberOfMonths = numberOfVisibleMonths;
-    if (orientation === VERTICAL_SCROLLABLE) {
-      numberOfMonths = Object.keys(visibleDays).length;
-    } else {
-      currentMonth = getPreviousMonthMemoLast(currentMonth);
-      numberOfMonths += 2;
-    }
-    if (!day || !isDayVisible(day, currentMonth, numberOfMonths, enableOutsideDays)) {
-      return updatedDays;
-    }
-
-    const iso = toISODateString(day);
-
-    let updatedDaysAfterDeletion = { ...updatedDays };
-    if (enableOutsideDays) {
-      const monthsToUpdate = Object.keys(visibleDays).filter(monthKey => (
-        Object.keys(visibleDays[monthKey]).indexOf(iso) > -1
-      ));
-
-      updatedDaysAfterDeletion = monthsToUpdate.reduce((acc, monthIso) => {
-        const month = updatedDays[monthIso] || visibleDays[monthIso];
-
-        if (month[iso] && month[iso].has(modifier)) {
-          const modifiers = new Set(month[iso]);
-          modifiers.delete(modifier);
-          acc[monthIso] = {
-            ...month,
-            [iso]: modifiers,
-          };
-        }
-
-        return acc;
-      }, updatedDaysAfterDeletion);
-    } else {
-      const monthIso = toISOMonthString(day);
-      const month = updatedDays[monthIso] || visibleDays[monthIso] || {};
-
-      if (month[iso] && month[iso].has(modifier)) {
-        const modifiers = new Set(month[iso]);
-        modifiers.delete(modifier);
-        updatedDaysAfterDeletion[monthIso] = {
-          ...month,
-          [iso]: modifiers,
-        };
-      }
-    }
-
-    return updatedDaysAfterDeletion;
+    return deleteModifier(updatedDays, day, modifier, this.props, this.state);
   }
 
   isBlocked(day) {
