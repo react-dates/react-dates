@@ -67,7 +67,7 @@
     "babel-plugin-inline-svg": "^1.0.0",
     "babel-plugin-istanbul": "^5.1.4",
     "babel-plugin-transform-replace-object-assign": "^2.0.0",
-    "babel-preset-airbnb": "^3.2.1",
+    "babel-preset-airbnb": "^4.0.0",
     "chai": "^4.2.0",
     "clean-css": "^4.2.1",
     "coveralls": "^3.0.3",
@@ -110,6 +110,7 @@
     "why-did-you-update": "^1.0.6"
   },
   "dependencies": {
+    "@babel/runtime": "^7.4.5",
     "airbnb-prop-types": "^2.10.0",
     "consolidated-events": "^1.1.1 || ^2.0.0",
     "enzyme-shallow-equal": "^1.0.0",
