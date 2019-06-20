@@ -2,26 +2,55 @@ import moment from 'moment';
 
 import isBeforeDay from './isBeforeDay';
 import isAfterDay from './isAfterDay';
+import toISOMonthString from './toISOMonthString';
+
+const startCacheOutsideDays = new Map();
+const endCacheOutsideDays = new Map();
+
+const startCacheInsideDays = new Map();
+const endCacheInsideDays = new Map();
 
 export default function isDayVisible(day, month, numberOfMonths, enableOutsideDays) {
   if (!moment.isMoment(day)) return false;
 
   // Cloning is a little expensive, so we want to do it as little as possible.
-  // Here we clone the month once and keep mutating that moment object.
-  const mutableMonth = month.clone();
 
-  const firstDayOfFirstMonth = enableOutsideDays
-    ? mutableMonth.startOf('month').startOf('week')
-    : mutableMonth.startOf('month');
+  const startKey = toISOMonthString(month);
+  // eslint-disable-next-line prefer-template
+  const endKey = startKey + '+' + numberOfMonths;
 
-  if (isBeforeDay(day, firstDayOfFirstMonth)) return false;
+  if (enableOutsideDays) {
+    if (!startCacheOutsideDays.has(startKey)) {
+      startCacheOutsideDays.set(startKey, month.clone().startOf('month').startOf('week'));
+    }
 
-  const lastDayOfLastMonth = enableOutsideDays
-    // We need to call endOf('week') when enableOutsideDays is true, because we
-    // are reusing the moment object, and our earlier mutation may have moved it
-    // to a previous month. This should snap us back to a good starting place.
-    ? mutableMonth.endOf('week').add(numberOfMonths - 1, 'months').endOf('month').endOf('week')
-    : mutableMonth.add(numberOfMonths - 1, 'months').endOf('month');
+    if (isBeforeDay(day, startCacheOutsideDays.get(startKey))) return false;
 
-  return !isAfterDay(day, lastDayOfLastMonth);
+    if (!endCacheOutsideDays.has(endKey)) {
+      endCacheOutsideDays.set(
+        endKey,
+        month.clone().endOf('week').add(numberOfMonths - 1, 'months').endOf('month')
+          .endOf('week'),
+      );
+    }
+
+    return !isAfterDay(day, endCacheOutsideDays.get(endKey));
+  }
+
+  // !enableOutsideDays
+
+  if (!startCacheInsideDays.has(startKey)) {
+    startCacheInsideDays.set(startKey, month.clone().startOf('month'));
+  }
+
+  if (isBeforeDay(day, startCacheInsideDays.get(startKey))) return false;
+
+  if (!endCacheInsideDays.has(endKey)) {
+    endCacheInsideDays.set(
+      endKey,
+      month.clone().add(numberOfMonths - 1, 'months').endOf('month'),
+    );
+  }
+
+  return !isAfterDay(day, endCacheInsideDays.get(endKey));
 }
