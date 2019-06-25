@@ -189,6 +189,24 @@ describe('CustomizableCalendarDay', () => {
     });
   });
 
+  describe('#componentDidUpdate', () => {
+    it('focuses buttonRef after a delay when isFocused, tabIndex is 0, and tabIndex was not 0', () => {
+      const clock = sinon.useFakeTimers();
+      const originalRAF = global.requestAnimationFrame;
+      global.requestAnimationFrame = global.setTimeout;
+
+      const wrapper = shallow(<CustomizableCalendarDay isFocused tabIndex={0} />).dive();
+      const focus = sinon.spy();
+      wrapper.instance().buttonRef = { focus };
+      wrapper.instance().componentDidUpdate({ isFocused: true, tabIndex: -1 });
+      expect(focus.callCount).to.eq(0);
+      clock.tick(16);
+      expect(focus.callCount).to.eq(1);
+      clock.restore();
+      global.requestAnimationFrame = originalRAF;
+    });
+  });
+
   describe('#onKeyDown', () => {
     const day = moment('10/10/2017');
 
