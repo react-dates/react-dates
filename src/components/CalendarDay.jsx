@@ -4,6 +4,7 @@ import momentPropTypes from 'react-moment-proptypes';
 import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 import moment from 'moment';
+import raf from 'raf';
 
 import { CalendarDayPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
@@ -58,7 +59,7 @@ class CalendarDay extends React.PureComponent {
     const { isFocused, tabIndex } = this.props;
     if (tabIndex === 0) {
       if (isFocused || tabIndex !== prevProps.tabIndex) {
-        requestAnimationFrame(() => {
+        raf(() => {
           if (this.buttonRef) {
             this.buttonRef.focus();
           }

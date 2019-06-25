@@ -119,6 +119,7 @@
     "object.assign": "^4.1.0",
     "object.values": "^1.0.4",
     "prop-types": "^15.6.1",
+    "raf": "^3.4.1",
     "react-moment-proptypes": "^1.6.0",
     "react-outside-click-handler": "^1.2.0",
     "react-portal": "^4.1.5",
