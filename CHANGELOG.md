@@ -4,6 +4,14 @@
 - []  ([#](https://github.com/airbnb/react-dates/pull/))
 -->
 
+## 20.2.5
+- [fix] Defer day focusing until next animation frame ([#1707](https://github.com/airbnb/react-dates/pull/1707))
+- [fix] Fix startDate style (@mmarkelov, [#1710](https://github.com/airbnb/react-dates/pull/1710))
+- [fix] Pass correct props to SingleDatePicker on close (@AlokTakshak, [#1678](https://github.com/airbnb/react-dates/pull/1678))
+- [dev] Update blocked navigation (min/maxDate) stories (@ianduvall, [#1598](https://github.com/airbnb/react-dates/pull/1598))
+- [dev] Add positioning to custom navigation in stories (@dougmacknz, [#1573](https://github.com/airbnb/react-dates/pull/1573))
+- [dev] Update karma 3 → 4, mocha 3 → 6, nyc 12 → 14, sinon 6 → 7, eslint 5 → 6 ([#1713](https://github.com/airbnb/react-dates/pull/1713), [#1712](https://github.com/airbnb/react-dates/pull/1713))
+
 ## 20.2.4
 - [fix] Replace react-addons-shallow-compare with enzyme-shallow-equal (bf7e3347702f)
 - [fix] Optimize SVG assets ([#1690](https://github.com/airbnb/react-dates/pull/1690))
