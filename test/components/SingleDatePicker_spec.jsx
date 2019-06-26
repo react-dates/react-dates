@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import { expect } from 'chai';
 import { shallow, mount } from 'enzyme';
 import sinon from 'sinon-sandbox';
@@ -655,6 +656,47 @@ describe('SingleDatePicker', () => {
       };
       ctrl.onFocusOut(event);
       expect(dpcContainsStub.getCall(0).args[0]).to.equal(event.target);
+    });
+  });
+  describe('minDate and maxDate', () => {
+    describe('minDate is passed in', () => {
+      it('Should pass minDate to DayPickerSingleDateController', () => {
+        const minDate = moment('2019-06-04');
+        const wrapper = shallow((
+          <SingleDatePicker
+            id="date"
+            focused
+            onDateChange={() => {}}
+            onFocusChange={() => {}}
+            minDate={minDate}
+          />
+        )).dive();
+
+        const dayPicker = wrapper.find(DayPickerSingleDateController);
+        const dayPickerMinDate = dayPicker.props().minDate;
+
+        expect(dayPickerMinDate.format()).to.equal(minDate.format());
+      });
+    });
+
+    describe('maxDate is passed in', () => {
+      it('Should pass maxDate to DayPickerSingleDateController', () => {
+        const maxDate = moment('2019-06-04').add(12, 'month');
+        const wrapper = shallow((
+          <SingleDatePicker
+            id="date"
+            focused
+            onDateChange={() => {}}
+            onFocusChange={() => {}}
+            maxDate={maxDate}
+          />
+        )).dive();
+
+        const dayPicker = wrapper.find(DayPickerSingleDateController);
+        const dayPickerMaxDate = dayPicker.props().maxDate;
+
+        expect(dayPickerMaxDate.format()).to.equal(maxDate.format());
+      });
     });
   });
 });

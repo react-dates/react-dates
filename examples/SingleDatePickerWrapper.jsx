@@ -15,6 +15,8 @@ const propTypes = {
   // example props for the demo
   autoFocus: PropTypes.bool,
   initialDate: momentPropTypes.momentObj,
+  minDate: momentPropTypes.momentObj,
+  maxDate: momentPropTypes.momentObj,
 
   ...omit(SingleDatePickerShape, [
     'date',
@@ -28,8 +30,11 @@ const defaultProps = {
   // example props for the demo
   autoFocus: false,
   initialDate: null,
+  minDate: null,
+  maxDate: null,
 
   // input related props
+  /* eslint-disable react/default-props-match-prop-types */
   id: 'date',
   placeholder: 'Date',
   disabled: false,
@@ -76,6 +81,7 @@ const defaultProps = {
   displayFormat: () => moment.localeData().longDateFormat('L'),
   monthFormat: 'MMMM YYYY',
   phrases: SingleDatePickerPhrases,
+  /* eslint-enable react/default-props-match-prop-types */
 };
 
 class SingleDatePickerWrapper extends React.Component {
