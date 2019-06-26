@@ -54,7 +54,7 @@ describe('DayPickerKeyboardShortcuts', () => {
     const openKeyboardShortcutsPanelStub = sinon.stub();
     const showButtonFocusStub = sinon.stub();
 
-    before(() => {
+    beforeEach(() => {
       const wrapper = shallow(<DayPickerKeyboardShortcuts
         openKeyboardShortcutsPanel={openKeyboardShortcutsPanelStub}
       />).dive();

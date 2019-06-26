@@ -3,6 +3,7 @@ import { expect } from 'chai';
 import sinon from 'sinon-sandbox';
 import { shallow } from 'enzyme';
 import moment from 'moment';
+import raf from 'raf';
 
 import { BLOCKED_MODIFIER } from '../../src/constants';
 import CustomizableCalendarDay, { PureCustomizableCalendarDay } from '../../src/components/CustomizableCalendarDay';
@@ -186,6 +187,23 @@ describe('CustomizableCalendarDay', () => {
       expect(wrapper.is('td')).to.equal(true);
       expect(wrapper.children()).to.have.lengthOf(0);
       expect(wrapper.props()).to.eql({});
+    });
+  });
+
+  describe('#componentDidUpdate', () => {
+    it('focuses buttonRef after a delay when isFocused, tabIndex is 0, and tabIndex was not 0', () => {
+      const wrapper = shallow(<CustomizableCalendarDay isFocused tabIndex={0} />).dive();
+      const focus = sinon.spy();
+      wrapper.instance().buttonRef = { focus };
+      wrapper.instance().componentDidUpdate({ isFocused: true, tabIndex: -1 });
+      expect(focus.callCount).to.eq(0);
+
+      return new Promise((resolve) => {
+        raf(() => {
+          expect(focus.callCount).to.eq(1);
+          resolve();
+        });
+      });
     });
   });
 
