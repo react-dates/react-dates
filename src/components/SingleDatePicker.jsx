@@ -53,6 +53,7 @@ const defaultProps = {
   required: false,
   readOnly: false,
   screenReaderInputMessage: '',
+  ariaLabelledBy: undefined,
   showClearDate: false,
   showDefaultInputIcon: false,
   inputIconPosition: ICON_BEFORE_POSITION,
@@ -539,6 +540,7 @@ class SingleDatePicker extends React.PureComponent {
       withPortal,
       withFullScreenPortal,
       screenReaderInputMessage,
+      ariaLabelledBy,
       isRTL,
       noBorder,
       block,
@@ -582,6 +584,7 @@ class SingleDatePicker extends React.PureComponent {
         onKeyDownArrowDown={this.onDayPickerFocus}
         onKeyDownQuestionMark={this.showKeyboardShortcutsPanel}
         screenReaderMessage={screenReaderInputMessage}
+        ariaLabelledBy={ariaLabelledBy}
         phrases={phrases}
         isRTL={isRTL}
         noBorder={noBorder}

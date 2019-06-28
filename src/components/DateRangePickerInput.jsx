@@ -7,6 +7,7 @@ import { DateRangePickerInputPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 import noflip from '../utils/noflip';
 import openDirectionShape from '../shapes/OpenDirectionShape';
+import validIDList from '../utils/validIDList';
 
 import DateInput from './DateInput';
 import IconPositionShape from '../shapes/IconPositionShape';
@@ -34,6 +35,8 @@ const propTypes = forbidExtraProps({
   startDatePlaceholderText: PropTypes.string,
   startDateAriaLabel: PropTypes.string,
   screenReaderMessage: PropTypes.string,
+  startDateAriaLabelledBy: validIDList,
+  endDateAriaLabelledBy: validIDList,
 
   endDateId: PropTypes.string,
   endDatePlaceholderText: PropTypes.string,
@@ -89,6 +92,8 @@ const defaultProps = {
   startDateAriaLabel: undefined,
   endDateAriaLabel: undefined,
   screenReaderMessage: '',
+  startDateAriaLabelledBy: undefined,
+  endDateAriaLabelledBy: undefined,
   onStartDateFocus() {},
   onEndDateFocus() {},
   onStartDateChange() {},
@@ -136,6 +141,8 @@ function DateRangePickerInput({
   startDateId,
   startDatePlaceholderText,
   screenReaderMessage,
+  startDateAriaLabelledBy,
+  endDateAriaLabelledBy,
   isStartDateFocused,
   onStartDateChange,
   onStartDateFocus,
@@ -225,6 +232,7 @@ function DateRangePickerInput({
         ariaLabel={startDateAriaLabel}
         displayValue={startDate}
         screenReaderMessage={screenReaderText}
+        ariaLabelledBy={startDateAriaLabelledBy}
         focused={isStartDateFocused}
         isFocused={isFocused}
         disabled={startDateDisabled}
@@ -260,6 +268,7 @@ function DateRangePickerInput({
         ariaLabel={endDateAriaLabel}
         displayValue={endDate}
         screenReaderMessage={screenReaderText}
+        ariaLabelledBy={endDateAriaLabelledBy}
         focused={isEndDateFocused}
         isFocused={isFocused}
         disabled={endDateDisabled}

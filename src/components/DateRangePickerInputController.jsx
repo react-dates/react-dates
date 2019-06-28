@@ -16,6 +16,7 @@ import DisabledShape from '../shapes/DisabledShape';
 
 import toMomentObject from '../utils/toMomentObject';
 import toLocalizedDateString from '../utils/toLocalizedDateString';
+import validIDList from '../utils/validIDList';
 
 import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
 import isBeforeDay from '../utils/isBeforeDay';
@@ -43,6 +44,8 @@ const propTypes = forbidExtraProps({
   endDateAriaLabel: PropTypes.string,
 
   screenReaderMessage: PropTypes.string,
+  startDateAriaLabelledBy: validIDList,
+  endDateAriaLabelledBy: validIDList,
   showClearDates: PropTypes.bool,
   showCaret: PropTypes.bool,
   showDefaultInputIcon: PropTypes.bool,
@@ -99,6 +102,8 @@ const defaultProps = {
   endDateAriaLabel: undefined,
 
   screenReaderMessage: '',
+  startDateAriaLabelledBy: undefined,
+  endDateAriaLabelledBy: undefined,
   showClearDates: false,
   showCaret: false,
   showDefaultInputIcon: false,
@@ -281,6 +286,8 @@ export default class DateRangePickerInputController extends React.PureComponent 
       endDateAriaLabel,
       isEndDateFocused,
       screenReaderMessage,
+      startDateAriaLabelledBy,
+      endDateAriaLabelledBy,
       showClearDates,
       showCaret,
       showDefaultInputIcon,
@@ -339,6 +346,8 @@ export default class DateRangePickerInputController extends React.PureComponent 
         showClearDates={showClearDates}
         onClearDates={this.clearDates}
         screenReaderMessage={screenReaderMessage}
+        startDateAriaLabelledBy={startDateAriaLabelledBy}
+        endDateAriaLabelledBy={endDateAriaLabelledBy}
         onKeyDownArrowDown={onKeyDownArrowDown}
         onKeyDownQuestionMark={onKeyDownQuestionMark}
         isRTL={isRTL}

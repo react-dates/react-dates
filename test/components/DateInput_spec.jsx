@@ -108,6 +108,35 @@ describe('DateInput', () => {
         });
       });
     });
+
+    describe('aria-labelledby', () => {
+      let wrapper;
+      const inputId = 'date';
+      const ariaLabelledBy = 'id1 id2';
+
+      describe('props.ariaLabelledBy is truthy', () => {
+        beforeEach(() => {
+          wrapper = shallow((
+            <DateInput id={inputId} ariaLabelledBy={ariaLabelledBy} />
+          )).dive();
+        });
+
+        it('has aria-labelledby attribute that starts with ariaLabelledBy value', () => {
+          expect(wrapper.find(`input[aria-labelledby="${ariaLabelledBy}"]`)).to.have.lengthOf(1);
+        });
+      });
+
+      describe('props.ariaLabelledBy is falsy', () => {
+        beforeEach(() => {
+          wrapper = shallow(<DateInput id={inputId} />).dive();
+        });
+
+        it('does not have aria-labelledby attribute value', () => {
+          expect(wrapper.find(`input[aria-labelledby="${ariaLabelledBy}"]`)).to.have.lengthOf(0);
+          expect(wrapper.find(`#${inputId}`).prop('aria-labelledby')).to.equal(undefined);
+        });
+      });
+    });
   });
 
   describe('#componentWillReceiveProps', () => {

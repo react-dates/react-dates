@@ -8,6 +8,7 @@ import isTouchDevice from 'is-touch-device';
 import noflip from '../utils/noflip';
 import getInputHeight from '../utils/getInputHeight';
 import openDirectionShape from '../shapes/OpenDirectionShape';
+import validIDList from '../utils/validIDList';
 
 import {
   OPEN_DOWN,
@@ -30,6 +31,7 @@ const propTypes = forbidExtraProps({
   displayValue: PropTypes.string,
   ariaLabel: PropTypes.string,
   screenReaderMessage: PropTypes.string,
+  ariaLabelledBy: validIDList,
   focused: PropTypes.bool,
   disabled: PropTypes.bool,
   required: PropTypes.bool,
@@ -58,6 +60,7 @@ const defaultProps = {
   displayValue: '',
   ariaLabel: undefined,
   screenReaderMessage: '',
+  ariaLabelledBy: undefined,
   focused: false,
   disabled: false,
   required: false,
@@ -177,6 +180,7 @@ class DateInput extends React.PureComponent {
       ariaLabel,
       displayValue,
       screenReaderMessage,
+      ariaLabelledBy,
       focused,
       showCaret,
       onFocus,
@@ -194,6 +198,9 @@ class DateInput extends React.PureComponent {
 
     const value = dateString || displayValue || '';
     const screenReaderMessageId = `DateInput__screen-reader-message-${id}`;
+    // if an aria-labelledby prop exists, then don't use
+    // the placeholder for the aria-label attribute
+    const placeholderAriaLabel = ariaLabelledBy ? undefined : placeholder;
 
     const withFang = showCaret && focused;
 
@@ -220,7 +227,7 @@ class DateInput extends React.PureComponent {
             focused && styles.DateInput_input__focused,
             disabled && styles.DateInput_input__disabled,
           )}
-          aria-label={ariaLabel === undefined ? placeholder : ariaLabel}
+          aria-label={ariaLabel === undefined ? placeholderAriaLabel : ariaLabel}
           type="text"
           id={id}
           name={id}
@@ -235,6 +242,7 @@ class DateInput extends React.PureComponent {
           readOnly={typeof readOnly === 'boolean' ? readOnly : isTouch}
           required={required}
           aria-describedby={screenReaderMessage && screenReaderMessageId}
+          aria-labelledby={ariaLabelledBy}
         />
 
         {withFang && (

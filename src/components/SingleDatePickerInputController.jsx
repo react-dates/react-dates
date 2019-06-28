@@ -8,6 +8,7 @@ import openDirectionShape from '../shapes/OpenDirectionShape';
 
 import { SingleDatePickerInputPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
+import validIDList from '../utils/validIDList';
 
 import SingleDatePickerInput from './SingleDatePickerInput';
 
@@ -37,6 +38,7 @@ const propTypes = forbidExtraProps({
   placeholder: PropTypes.string,
   ariaLabel: PropTypes.string,
   screenReaderMessage: PropTypes.string,
+  ariaLabelledBy: validIDList,
   showClearDate: PropTypes.bool,
   showCaret: PropTypes.bool,
   showDefaultInputIcon: PropTypes.bool,
@@ -81,6 +83,7 @@ const defaultProps = {
   placeholder: '',
   ariaLabel: undefined,
   screenReaderMessage: 'Date',
+  ariaLabelledBy: undefined,
   showClearDate: false,
   showCaret: false,
   showDefaultInputIcon: false,
@@ -217,6 +220,7 @@ export default class SingleDatePickerInputController extends React.PureComponent
       onKeyDownArrowDown,
       onKeyDownQuestionMark,
       screenReaderMessage,
+      ariaLabelledBy,
       isRTL,
       noBorder,
       block,
@@ -252,6 +256,7 @@ export default class SingleDatePickerInputController extends React.PureComponent
         onKeyDownArrowDown={onKeyDownArrowDown}
         onKeyDownQuestionMark={onKeyDownQuestionMark}
         screenReaderMessage={screenReaderMessage}
+        ariaLabelledBy={ariaLabelledBy}
         phrases={phrases}
         isRTL={isRTL}
         noBorder={noBorder}

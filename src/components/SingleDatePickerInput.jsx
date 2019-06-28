@@ -6,6 +6,7 @@ import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 import { SingleDatePickerInputPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 import noflip from '../utils/noflip';
+import validIDList from '../utils/validIDList';
 
 import DateInput from './DateInput';
 import IconPositionShape from '../shapes/IconPositionShape';
@@ -24,6 +25,7 @@ const propTypes = forbidExtraProps({
   ariaLabel: PropTypes.string,
   displayValue: PropTypes.string,
   screenReaderMessage: PropTypes.string,
+  ariaLabelledBy: validIDList,
   focused: PropTypes.bool,
   isFocused: PropTypes.bool, // describes actual DOM focus
   disabled: PropTypes.bool,
@@ -61,6 +63,7 @@ const defaultProps = {
   ariaLabel: undefined,
   displayValue: '',
   screenReaderMessage: '',
+  ariaLabelledBy: undefined,
   focused: false,
   isFocused: false,
   disabled: false,
@@ -116,6 +119,7 @@ function SingleDatePickerInput({
   onKeyDownArrowDown,
   onKeyDownQuestionMark,
   screenReaderMessage,
+  ariaLabelledBy,
   customCloseIcon,
   customInputIcon,
   openDirection,
@@ -171,6 +175,7 @@ function SingleDatePickerInput({
         ariaLabel={ariaLabel}
         displayValue={displayValue}
         screenReaderMessage={screenReaderText}
+        ariaLabelledBy={ariaLabelledBy}
         focused={focused}
         isFocused={isFocused}
         disabled={disabled}
