@@ -1169,7 +1169,7 @@ export default class DayPickerRangeController extends React.PureComponent {
 
   isInSelectedSpan(day) {
     const { startDate, endDate } = this.props;
-    return day.isBetween(startDate, endDate);
+    return day.isBetween(startDate, endDate, 'days');
   }
 
   isLastInRange(day) {
