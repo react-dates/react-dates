@@ -106,7 +106,7 @@ class CalendarMonth extends React.PureComponent {
   }
 
   componentDidMount() {
-    this.setMonthTitleHeightTimeout = setTimeout(this.setMonthTitleHeight, 0);
+    this.queueSetMonthTitleHeight();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -131,6 +131,14 @@ class CalendarMonth extends React.PureComponent {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    const { setMonthTitleHeight } = this.props;
+
+    if (prevProps.setMonthTitleHeight === null && setMonthTitleHeight !== null) {
+      this.queueSetMonthTitleHeight();
+    }
+  }
+
   componentWillUnmount() {
     if (this.setMonthTitleHeightTimeout) {
       clearTimeout(this.setMonthTitleHeightTimeout);
@@ -147,6 +155,10 @@ class CalendarMonth extends React.PureComponent {
 
   setCaptionRef(ref) {
     this.captionRef = ref;
+  }
+
+  queueSetMonthTitleHeight() {
+    this.setMonthTitleHeightTimeout = window.setTimeout(this.setMonthTitleHeight, 0);
   }
 
   render() {
