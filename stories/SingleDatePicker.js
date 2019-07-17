@@ -74,6 +74,12 @@ storiesOf('SingleDatePicker (SDP)', module)
       />
     </DirectionProvider>
   )))
+  .add('with custom month navigation and blocked navigation (minDate and maxDate)', withInfo()(() => (
+    <SingleDatePickerWrapper
+      minDate={moment().subtract(2, 'months').startOf('month')}
+      maxDate={moment().add(2, 'months').endOf('month')}
+    />
+  )))
   .add('vertical with custom height', withInfo()(() => (
     <SingleDatePickerWrapper
       orientation={VERTICAL_ORIENTATION}
