@@ -187,7 +187,6 @@ class DateInput extends React.PureComponent {
       verticalSpacing,
       small,
       regular,
-      block,
       styles,
       theme: { reactDates },
     } = this.props;
@@ -204,7 +203,6 @@ class DateInput extends React.PureComponent {
         {...css(
           styles.DateInput,
           small && styles.DateInput__small,
-          block && styles.DateInput__block,
           withFang && styles.DateInput__withFang,
           disabled && styles.DateInput__disabled,
           withFang && openDirection === OPEN_DOWN && styles.DateInput__openDown,
@@ -292,10 +290,6 @@ export default withStyles(({
 
   DateInput__small: {
     width: sizing.inputWidth_small,
-  },
-
-  DateInput__block: {
-    width: '100%',
   },
 
   DateInput__disabled: {
