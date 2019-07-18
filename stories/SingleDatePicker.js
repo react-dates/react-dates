@@ -4,6 +4,8 @@ import momentJalaali from 'moment-jalaali';
 import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
 import DirectionProvider, { DIRECTIONS } from 'react-with-direction/dist/DirectionProvider';
+import isInclusivelyBeforeDay from '../src/utils/isInclusivelyBeforeDay';
+import isInclusivelyAfterDay from '../src/utils/isInclusivelyAfterDay';
 
 import {
   VERTICAL_ORIENTATION,
@@ -74,6 +76,23 @@ storiesOf('SingleDatePicker (SDP)', module)
       />
     </DirectionProvider>
   )))
+  .add('with custom month navigation and blocked navigation (minDate and maxDate)', withInfo()(() => (
+    <SingleDatePickerWrapper
+      minDate={moment().subtract(2, 'months').startOf('month')}
+      maxDate={moment().add(2, 'months').endOf('month')}
+    />
+  )))
+  .add('with custom isOutsideRange and month navigation and blocked navigation (minDate and maxDate)', withInfo()(() => {
+    const minDate = moment().subtract(2, 'months').startOf('month')
+    const maxDate = moment().add(2, 'months').endOf('month')
+    const isOutsideRange = day => isInclusivelyBeforeDay(day, minDate) || isInclusivelyAfterDay(day, maxDate)
+    return (
+    <SingleDatePickerWrapper
+      minDate={minDate}
+      maxDate={maxDate}
+      isOutsideRange={isOutsideRange}
+    />
+  )}))
   .add('vertical with custom height', withInfo()(() => (
     <SingleDatePickerWrapper
       orientation={VERTICAL_ORIENTATION}
