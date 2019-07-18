@@ -772,7 +772,7 @@ describe('DayPickerSingleDateController', () => {
       ));
       shouldDisableMonthNavigationSpy.resetHistory();
       wrapper.instance().onPrevMonthClick();
-      expect(shouldDisableMonthNavigationSpy.callCount).to.equal(2);
+      expect(shouldDisableMonthNavigationSpy).to.have.property('callCount', 2);
     });
 
     it('sets disablePrev and disablePrev as false on onPrevMonthClick call withouth maxDate and minDate set', () => {
@@ -788,8 +788,8 @@ describe('DayPickerSingleDateController', () => {
         currentMonth: today,
       });
       wrapper.instance().onPrevMonthClick();
-      expect(wrapper.state().disablePrev).to.equal(false);
-      expect(wrapper.state().disableNext).to.equal(false);
+      expect(wrapper.state()).to.have.property('disablePrev', false);
+      expect(wrapper.state()).to.have.property('disableNext', false);
     });
 
     it('sets disableNext as true when maxDate is in visible month', () => {
@@ -806,8 +806,8 @@ describe('DayPickerSingleDateController', () => {
         currentMonth: today,
       });
       wrapper.instance().onPrevMonthClick();
-      expect(wrapper.state().disableNext).to.equal(true);
-      expect(wrapper.state().disablePrev).to.equal(false);
+      expect(wrapper.state()).to.have.property('disablePrev', false);
+      expect(wrapper.state()).to.have.property('disableNext', true);
     });
 
     it('sets disablePrev as true when minDate is in visible month', () => {
@@ -824,8 +824,8 @@ describe('DayPickerSingleDateController', () => {
         currentMonth: today,
       });
       wrapper.instance().onPrevMonthClick();
-      expect(wrapper.state().disableNext).to.equal(false);
-      expect(wrapper.state().disablePrev).to.equal(true);
+      expect(wrapper.state()).to.have.property('disablePrev', true);
+      expect(wrapper.state()).to.have.property('disableNext', false);
     });
   });
 
