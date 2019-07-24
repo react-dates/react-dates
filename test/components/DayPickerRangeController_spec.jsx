@@ -4249,6 +4249,26 @@ describe('DayPickerRangeController', () => {
         expect(wrapper.instance().isInSelectedSpan(testDate)).to.equal(true);
       });
 
+      it('returns false if arg = props.startDate && arg < 12', () => {
+        const endDate = moment(today).add(5, 'days');
+        const wrapper = shallow(<DayPickerRangeController
+          startDate={today}
+          endDate={endDate}
+        />);
+        const testDate = moment(today.hours(10));
+        expect(wrapper.instance().isInSelectedSpan(testDate)).to.equal(false);
+      });
+
+      it('returns false if arg = props.startDate && arg > 12', () => {
+        const endDate = moment(today).add(5, 'days');
+        const wrapper = shallow(<DayPickerRangeController
+          startDate={today}
+          endDate={endDate}
+        />);
+        const testDate = moment(today.hours(16));
+        expect(wrapper.instance().isInSelectedSpan(testDate)).to.equal(false);
+      });
+
       it('returns false if arg < props.startDate', () => {
         const endDate = moment(today).add(5, 'days');
         const wrapper = shallow(<DayPickerRangeController
