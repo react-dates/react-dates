@@ -22,8 +22,8 @@ const moveFocusByOneWeek = 'Move backward (up) and forward (down) by one week.';
 const moveFocusByOneMonth = 'Switch months.';
 const moveFocustoStartAndEndOfWeek = 'Go to the first or last day of a week.';
 const returnFocusToInput = 'Return to the date input field.';
-const keyboardNavigationInstructions = `Press the down arrow key to interact with the calendar and
-  select a date. Press the question mark key to get the keyboard shortcuts for changing dates.`;
+const keyboardForwardNavigationInstructions = 'Navigate forward to interact with the calendar and select a date. Press the question mark key to get the keyboard shortcuts for changing dates.';
+const keyboardBackwardNavigationInstructions = 'Navigate backward to interact with the calendar and select a date. Press the question mark key to get the keyboard shortcuts for changing dates.';
 
 const chooseAvailableStartDate = ({ date }) => `Choose ${date} as your check-in date. It’s available.`;
 const chooseAvailableEndDate = ({ date }) => `Choose ${date} as your check-out date. It’s available.`;
@@ -58,7 +58,8 @@ export default {
   moveFocusByOneMonth,
   moveFocustoStartAndEndOfWeek,
   returnFocusToInput,
-  keyboardNavigationInstructions,
+  keyboardForwardNavigationInstructions,
+  keyboardBackwardNavigationInstructions,
 
   chooseAvailableStartDate,
   chooseAvailableEndDate,
@@ -92,7 +93,8 @@ export const DateRangePickerPhrases = {
   moveFocusByOneMonth,
   moveFocustoStartAndEndOfWeek,
   returnFocusToInput,
-  keyboardNavigationInstructions,
+  keyboardForwardNavigationInstructions,
+  keyboardBackwardNavigationInstructions,
   chooseAvailableStartDate,
   chooseAvailableEndDate,
   dateIsUnavailable,
@@ -104,7 +106,8 @@ export const DateRangePickerPhrases = {
 export const DateRangePickerInputPhrases = {
   focusStartDate,
   clearDates,
-  keyboardNavigationInstructions,
+  keyboardForwardNavigationInstructions,
+  keyboardBackwardNavigationInstructions,
 };
 
 export const SingleDatePickerPhrases = {
@@ -130,7 +133,8 @@ export const SingleDatePickerPhrases = {
   moveFocusByOneMonth,
   moveFocustoStartAndEndOfWeek,
   returnFocusToInput,
-  keyboardNavigationInstructions,
+  keyboardForwardNavigationInstructions,
+  keyboardBackwardNavigationInstructions,
   chooseAvailableDate,
   dateIsUnavailable,
   dateIsSelected,
@@ -138,7 +142,8 @@ export const SingleDatePickerPhrases = {
 
 export const SingleDatePickerInputPhrases = {
   clearDate,
-  keyboardNavigationInstructions,
+  keyboardForwardNavigationInstructions,
+  keyboardBackwardNavigationInstructions,
 };
 
 export const DayPickerPhrases = {
