@@ -32,6 +32,7 @@ const propTypes = forbidExtraProps({
 
   focused: PropTypes.bool,
   onFocusChange: PropTypes.func.isRequired,
+  onBlur: PropTypes.func.isRequired,
 
   id: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
@@ -214,6 +215,7 @@ export default class SingleDatePickerInputController extends React.PureComponent
       customInputIcon,
       date,
       phrases,
+      onBlur,
       onKeyDownArrowDown,
       onKeyDownQuestionMark,
       screenReaderMessage,
@@ -248,6 +250,7 @@ export default class SingleDatePickerInputController extends React.PureComponent
         displayValue={displayValue}
         onChange={this.onChange}
         onFocus={this.onFocus}
+        onBlur={onBlur}
         onKeyDownShiftTab={this.onClearFocus}
         onKeyDownArrowDown={onKeyDownArrowDown}
         onKeyDownQuestionMark={onKeyDownQuestionMark}

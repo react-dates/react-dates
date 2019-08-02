@@ -46,6 +46,7 @@ const propTypes = forbidExtraProps({
   onChange: PropTypes.func,
   onClearDate: PropTypes.func,
   onFocus: PropTypes.func,
+  onBlur: PropTypes.func,
   onKeyDownShiftTab: PropTypes.func,
   onKeyDownTab: PropTypes.func,
   onKeyDownArrowDown: PropTypes.func,
@@ -83,6 +84,7 @@ const defaultProps = {
   onChange() {},
   onClearDate() {},
   onFocus() {},
+  onBlur() {},
   onKeyDownShiftTab() {},
   onKeyDownTab() {},
   onKeyDownArrowDown() {},
@@ -111,6 +113,7 @@ function SingleDatePickerInput({
   onClearDate,
   onChange,
   onFocus,
+  onBlur,
   onKeyDownShiftTab,
   onKeyDownTab,
   onKeyDownArrowDown,
@@ -179,6 +182,7 @@ function SingleDatePickerInput({
         showCaret={showCaret}
         onChange={onChange}
         onFocus={onFocus}
+        onBlur={onBlur}
         onKeyDownShiftTab={onKeyDownShiftTab}
         onKeyDownTab={onKeyDownTab}
         onKeyDownArrowDown={onKeyDownArrowDown}
