@@ -64,6 +64,7 @@ const propTypes = forbidExtraProps({
   isOutsideRange: PropTypes.func,
   displayFormat: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
 
+  onBlur: PropTypes.func,
   onFocusChange: PropTypes.func,
   onClose: PropTypes.func,
   onDatesChange: PropTypes.func,
@@ -120,6 +121,7 @@ const defaultProps = {
   isOutsideRange: day => !isInclusivelyAfterDay(day, moment()),
   displayFormat: () => moment.localeData().longDateFormat('L'),
 
+  onBlur() {},
   onFocusChange() {},
   onClose() {},
   onDatesChange() {},
@@ -294,6 +296,7 @@ export default class DateRangePickerInputController extends React.PureComponent 
       openDirection,
       isFocused,
       phrases,
+      onBlur,
       onKeyDownArrowDown,
       onKeyDownQuestionMark,
       isRTL,
@@ -339,6 +342,7 @@ export default class DateRangePickerInputController extends React.PureComponent 
         showClearDates={showClearDates}
         onClearDates={this.clearDates}
         screenReaderMessage={screenReaderMessage}
+        onBlur={onBlur}
         onKeyDownArrowDown={onKeyDownArrowDown}
         onKeyDownQuestionMark={onKeyDownQuestionMark}
         isRTL={isRTL}
