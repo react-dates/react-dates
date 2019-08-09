@@ -240,7 +240,7 @@ describe('CalendarDay', () => {
   });
 
   describe('#componentDidUpdate', () => {
-    it('focuses buttonRef after a delay when isFocused, tabIndex is 0, and tabIndex was not 0', () => {
+    it('focuses buttonRef after a delay when isFocused and tabIndex is 0', () => {
       const wrapper = shallow(<CalendarDay isFocused tabIndex={0} />).dive();
       const focus = sinon.spy();
       wrapper.instance().buttonRef = { focus };
@@ -250,6 +250,21 @@ describe('CalendarDay', () => {
       return new Promise((resolve) => {
         raf(() => {
           expect(focus.callCount).to.eq(1);
+          resolve();
+        });
+      });
+    });
+
+    it('does not focus buttonRef when isFocused is false and tabIndex has become 0', () => {
+      const wrapper = shallow(<CalendarDay tabIndex={0} />).dive();
+      const focus = sinon.spy();
+      wrapper.instance().buttonRef = { focus };
+      wrapper.instance().componentDidUpdate({ tabIndex: -1 });
+      expect(focus.callCount).to.eq(0);
+
+      return new Promise((resolve) => {
+        raf(() => {
+          expect(focus.callCount).to.eq(0);
           resolve();
         });
       });
