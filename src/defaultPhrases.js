@@ -1,4 +1,5 @@
 const calendarLabel = 'Calendar';
+const roleDescription = 'datepicker';
 const closeDatePicker = 'Close';
 const focusStartDate = 'Interact with the calendar and add the check-in date for your trip.';
 const clearDate = 'Clear Date';
@@ -35,6 +36,7 @@ const dateIsSelectedAsEndDate = ({ date }) => `Selected as end date. ${date}`;
 
 export default {
   calendarLabel,
+  roleDescription,
   closeDatePicker,
   focusStartDate,
   clearDate,
@@ -71,6 +73,7 @@ export default {
 
 export const DateRangePickerPhrases = {
   calendarLabel,
+  roleDescription,
   closeDatePicker,
   clearDates,
   focusStartDate,
@@ -112,6 +115,7 @@ export const DateRangePickerInputPhrases = {
 
 export const SingleDatePickerPhrases = {
   calendarLabel,
+  roleDescription,
   closeDatePicker,
   clearDate,
   jumpToPrevMonth,
@@ -148,6 +152,7 @@ export const SingleDatePickerInputPhrases = {
 
 export const DayPickerPhrases = {
   calendarLabel,
+  roleDescription,
   jumpToPrevMonth,
   jumpToNextMonth,
   keyboardShortcuts,
