@@ -172,7 +172,7 @@ export default {
     },
 
     sizing: {
-      inputWidth: 130,
+      inputWidth: 140,
       inputWidth_small: 97,
       arrowWidth: 24,
     },
