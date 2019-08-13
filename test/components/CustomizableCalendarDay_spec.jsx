@@ -28,7 +28,7 @@ describe('CustomizableCalendarDay', () => {
 
     it('contains arbitrary content if renderDay is provided', () => {
       const dayName = moment().format('dddd');
-      const renderDay = day => day.format('dddd');
+      const renderDay = (day) => day.format('dddd');
       const wrapper = shallow(<CustomizableCalendarDay renderDayContents={renderDay} />).dive();
       expect(wrapper.text()).to.equal(dayName);
     });

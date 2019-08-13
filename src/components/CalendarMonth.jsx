@@ -74,7 +74,7 @@ const defaultProps = {
   onMonthSelect() {},
   onYearSelect() {},
   renderMonthText: null,
-  renderCalendarDay: props => (<CalendarDay {...props} />),
+  renderCalendarDay: (props) => (<CalendarDay {...props} />),
   renderDayContents: null,
   renderMonthElement: null,
   firstDayOfWeek: null,

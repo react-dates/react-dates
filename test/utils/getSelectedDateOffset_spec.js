@@ -7,7 +7,7 @@ const today = moment();
 
 describe('#getSelectedDateOffset', () => {
   it('returns a function modified moment object', () => {
-    const fn = day => day.add(2, 'days');
+    const fn = (day) => day.add(2, 'days');
     const modifiedDay = getSelectedDateOffset(fn, today);
     expect(modifiedDay.format()).to.equal(today.clone().add(2, 'days').format());
   });
@@ -18,14 +18,14 @@ describe('#getSelectedDateOffset', () => {
   });
 
   it('modifies the returned day using the modifier callback', () => {
-    const fn = day => day.add(2, 'days');
-    const modifier = day => day.subtract(2, 'days');
+    const fn = (day) => day.add(2, 'days');
+    const modifier = (day) => day.subtract(2, 'days');
     const modifiedDay = getSelectedDateOffset(fn, today, modifier);
     expect(modifiedDay.format()).to.equal(today.clone().format());
   });
 
   it('does not apply the modifier if function is undefined', () => {
-    const modifier = day => day.subtract(2, 'days');
+    const modifier = (day) => day.subtract(2, 'days');
     const modifiedDay = getSelectedDateOffset(undefined, today, modifier);
     expect(modifiedDay.format()).to.equal(today.format());
   });
