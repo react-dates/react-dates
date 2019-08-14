@@ -72,8 +72,9 @@ function DayPickerNavigation({
   let isDefaultNavNext = false;
   let navPrevTabIndex = {};
   let navNextTabIndex = {};
+  
+  navPrevTabIndex = { tabIndex: '0' };
   if (!navPrevIcon) {
-    navPrevTabIndex = { tabIndex: '0' };
     isDefaultNavPrev = true;
     let Icon = isVertical ? ChevronUp : LeftArrow;
     if (isRTL && !isVertical) {
@@ -90,8 +91,8 @@ function DayPickerNavigation({
     );
   }
 
+  navNextTabIndex = { tabIndex: '0' };
   if (!navNextIcon) {
-    navNextTabIndex = { tabIndex: '0' };
     isDefaultNavNext = true;
     let Icon = isVertical ? ChevronDown : RightArrow;
     if (isRTL && !isVertical) {

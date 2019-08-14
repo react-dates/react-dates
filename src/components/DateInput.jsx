@@ -220,7 +220,7 @@ class DateInput extends React.PureComponent {
             focused && styles.DateInput_input__focused,
             disabled && styles.DateInput_input__disabled,
           )}
-          aria-label={ariaLabel === undefined ? placeholder : ariaLabel}
+          aria-label={ariaLabel}
           type="text"
           id={id}
           name={id}

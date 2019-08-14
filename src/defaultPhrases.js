@@ -1,6 +1,6 @@
 const calendarLabel = 'Calendar';
 const closeDatePicker = 'Close';
-const focusStartDate = 'Interact with the calendar and add the check-in date for your trip.';
+const focusStartDate = 'Interact with the calendar and add the start date.';
 const clearDate = 'Clear Date';
 const clearDates = 'Clear Dates';
 const jumpToPrevMonth = 'Move backward to switch to the previous month.';
@@ -22,11 +22,11 @@ const moveFocusByOneWeek = 'Move backward (up) and forward (down) by one week.';
 const moveFocusByOneMonth = 'Switch months.';
 const moveFocustoStartAndEndOfWeek = 'Go to the first or last day of a week.';
 const returnFocusToInput = 'Return to the date input field.';
-const keyboardForwardNavigationInstructions = 'Navigate forward to interact with the calendar and select a date. Press the question mark key to get the keyboard shortcuts for changing dates.';
-const keyboardBackwardNavigationInstructions = 'Navigate backward to interact with the calendar and select a date. Press the question mark key to get the keyboard shortcuts for changing dates.';
+const keyboardForwardNavigationInstructions = 'Navigate forward to interact with the calendar and select a date.';
+const keyboardBackwardNavigationInstructions = 'Navigate backward to interact with the calendar and select a date.';
 
-const chooseAvailableStartDate = ({ date }) => `Choose ${date} as your check-in date. It’s available.`;
-const chooseAvailableEndDate = ({ date }) => `Choose ${date} as your check-out date. It’s available.`;
+const chooseAvailableStartDate = ({ date }) => `Choose ${date} as your start date.`;
+const chooseAvailableEndDate = ({ date }) => `Choose ${date} as your end date.`;
 const chooseAvailableDate = ({ date }) => date;
 const dateIsUnavailable = ({ date }) => `Not available. ${date}`;
 const dateIsSelected = ({ date }) => `Selected. ${date}`;
