@@ -1027,6 +1027,7 @@ class DayPicker extends React.PureComponent {
     return (
       <div
         role="application"
+        aria-roledescription={phrases.roleDescription}
         aria-label={phrases.calendarLabel}
         {...css(
           styles.DayPicker,
