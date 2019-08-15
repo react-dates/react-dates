@@ -4,7 +4,7 @@ import momentPropTypes from 'react-moment-proptypes';
 import moment from 'moment';
 import omit from 'lodash/omit';
 
-import { withStyles, withStylesPropTypes, css } from 'react-with-styles';
+import { withStyles, withStylesPropTypes } from 'react-with-styles';
 
 import DateRangePicker from '../src/components/DateRangePicker';
 
@@ -123,7 +123,7 @@ class DateRangePickerWrapper extends React.Component {
   }
 
   renderDatePresets() {
-    const { presets, styles } = this.props;
+    const { presets, styles, css } = this.props;
     const { startDate, endDate } = this.state;
 
     return (
