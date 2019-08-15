@@ -4,6 +4,11 @@
 - []  ([#](https://github.com/airbnb/react-dates/pull/))
 -->
 
+## 20.3.0
+- [fix] Optimize setState dayPickerContainerStyles in responsivizePickerPosition ([#1735](https://github.com/airbnb/react-dates/pull/1735))
+- [fix] Stop calendar blinking on DateRangePickerInput focus switch (fixes #1523) ([#1553](https://github.com/airbnb/react-dates/pull/1553))
+- [new] [a11y] Add `aria-roledescription` ([#1746](https://github.com/airbnb/react-dates/pull/1746))
+
 ## 20.2.5
 - [fix] Defer day focusing until next animation frame ([#1707](https://github.com/airbnb/react-dates/pull/1707))
 - [fix] Fix startDate style (@mmarkelov, [#1710](https://github.com/airbnb/react-dates/pull/1710))
