@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
+import { withStyles, withStylesPropTypes } from 'react-with-styles';
 import { Portal } from 'react-portal';
 import { forbidExtraProps } from 'airbnb-prop-types';
 import { addEventListener } from 'consolidated-events';
@@ -384,6 +384,7 @@ class SingleDatePicker extends React.PureComponent {
   renderDayPicker() {
     const {
       anchorDirection,
+      css,
       openDirection,
       onDateChange,
       date,
@@ -519,6 +520,7 @@ class SingleDatePicker extends React.PureComponent {
 
   render() {
     const {
+      css,
       id,
       placeholder,
       ariaLabel,
