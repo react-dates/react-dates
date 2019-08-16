@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { forbidExtraProps, mutuallyExclusiveProps, nonNegativeInteger } from 'airbnb-prop-types';
-import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
+import { withStyles, withStylesPropTypes } from 'react-with-styles';
 
 import moment from 'moment';
 import throttle from 'lodash/throttle';
@@ -856,6 +856,7 @@ class DayPicker extends React.PureComponent {
       orientation,
       weekDayFormat,
       styles,
+      css,
     } = this.props;
     const { calendarMonthWidth } = this.state;
     const verticalScrollable = orientation === VERTICAL_SCROLLABLE;
@@ -918,6 +919,7 @@ class DayPicker extends React.PureComponent {
     } = this.state;
 
     const {
+      css,
       enableOutsideDays,
       numberOfMonths,
       orientation,
