@@ -2,8 +2,9 @@ import React from 'react';
 import moment from 'moment';
 import momentJalaali from 'moment-jalaali';
 import { storiesOf } from '@storybook/react';
-import { withInfo } from '@storybook/addon-info';
 import DirectionProvider, { DIRECTIONS } from 'react-with-direction/dist/DirectionProvider';
+
+import withInfo from './withInfo';
 
 import {
   VERTICAL_ORIENTATION,
