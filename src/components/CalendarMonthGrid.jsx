@@ -173,7 +173,7 @@ class CalendarMonthGrid extends React.PureComponent {
     const momentLocale = moment.locale();
     if (this.locale !== momentLocale) {
       this.locale = momentLocale;
-      newMonths = newMonths.map(m => m.locale(this.locale));
+      newMonths = newMonths.map((m) => m.locale(this.locale));
     }
 
     this.setState({
