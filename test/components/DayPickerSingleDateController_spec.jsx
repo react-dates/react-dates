@@ -1177,6 +1177,30 @@ describe('DayPickerSingleDateController', () => {
       const modifiers = wrapper.instance().addModifier(updatedDays, nextMonth, modifierToAdd);
       expect(Array.from(modifiers[nextMonthISO][nextMonthDayISO])).to.contain(modifierToAdd);
     });
+
+    it('return value now has modifier arg for day after multiplying number of months', () => {
+      const modifierToAdd = 'foo';
+      const numberOfMonths = 2;
+      const nextMonth = today.clone().add(numberOfMonths, 'month');
+      const nextMonthISO = toISOMonthString(nextMonth);
+      const nextMonthDayISO = toISODateString(nextMonth);
+      const updatedDays = {
+        [nextMonthISO]: { [nextMonthDayISO]: new Set(['bar', 'baz']) },
+      };
+      const wrapper = shallow((
+        <DayPickerSingleDateController
+          onDatesChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+          numberOfMonths={numberOfMonths}
+          orientation={VERTICAL_SCROLLABLE}
+        />
+      )).instance();
+      let modifiers = wrapper.addModifier(updatedDays, nextMonth, modifierToAdd);
+      expect(Array.from(modifiers[nextMonthISO][nextMonthDayISO])).to.not.contain(modifierToAdd);
+      wrapper.onMultiplyScrollableMonths();
+      modifiers = wrapper.addModifier(updatedDays, nextMonth, modifierToAdd);
+      expect(Array.from(modifiers[nextMonthISO][nextMonthDayISO])).to.contain(modifierToAdd);
+    });
   });
 
   describe('#deleteModifier', () => {

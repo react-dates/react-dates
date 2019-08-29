@@ -182,7 +182,7 @@ export default class DayPickerSingleDateController extends React.PureComponent {
     this.onNextMonthClick = this.onNextMonthClick.bind(this);
     this.onMonthChange = this.onMonthChange.bind(this);
     this.onYearChange = this.onYearChange.bind(this);
-
+    this.onMultiplyScrollableMonths = this.onMultiplyScrollableMonths.bind(this);
     this.getFirstFocusableDay = this.getFirstFocusableDay.bind(this);
   }
 
@@ -449,6 +449,22 @@ export default class DayPickerSingleDateController extends React.PureComponent {
     });
   }
 
+  onMultiplyScrollableMonths() {
+    const { numberOfMonths, enableOutsideDays } = this.props;
+    const { currentMonth, visibleDays } = this.state;
+
+    const numberOfVisibleMonths = Object.keys(visibleDays).length;
+    const nextMonth = currentMonth.clone().add(numberOfVisibleMonths, 'month');
+    const newVisibleDays = getVisibleDays(nextMonth, numberOfMonths, enableOutsideDays, true);
+
+    this.setState({
+      visibleDays: {
+        ...visibleDays,
+        ...this.getModifiers(newVisibleDays),
+      },
+    });
+  }
+
   getFirstFocusableDay(newMonth) {
     const { date, numberOfMonths } = this.props;
 
@@ -496,14 +512,17 @@ export default class DayPickerSingleDateController extends React.PureComponent {
       initialVisibleMonth,
       date,
       numberOfMonths,
+      orientation,
       enableOutsideDays,
     } = nextProps;
     const initialVisibleMonthThunk = initialVisibleMonth || (date ? () => date : () => this.today);
     const currentMonth = initialVisibleMonthThunk();
+    const withoutTransitionMonths = orientation === VERTICAL_SCROLLABLE;
     const visibleDays = this.getModifiers(getVisibleDays(
       currentMonth,
       numberOfMonths,
       enableOutsideDays,
+      withoutTransitionMonths,
     ));
     return { currentMonth, visibleDays };
   }
@@ -596,6 +615,7 @@ export default class DayPickerSingleDateController extends React.PureComponent {
         onNextMonthClick={this.onNextMonthClick}
         onMonthChange={this.onMonthChange}
         onYearChange={this.onYearChange}
+        onMultiplyScrollableMonths={this.onMultiplyScrollableMonths}
         monthFormat={monthFormat}
         withPortal={withPortal}
         hidden={!focused}
