@@ -57,7 +57,7 @@ describe('CustomizableCalendarDay', () => {
 
     describe('aria-label', () => {
       const phrases = {};
-      const day = moment('10/10/2017');
+      const day = moment('10/10/2017', 'MM/DD/YYYY');
 
       beforeEach(() => {
         phrases.chooseAvailableDate = sinon.stub().returns('chooseAvailableDate text');
@@ -153,7 +153,7 @@ describe('CustomizableCalendarDay', () => {
     });
 
     describe('event handlers', () => {
-      const day = moment('10/10/2017');
+      const day = moment('10/10/2017', 'MM/DD/YYYY');
 
       let wrapper;
       beforeEach(() => {
@@ -208,7 +208,7 @@ describe('CustomizableCalendarDay', () => {
   });
 
   describe('#onKeyDown', () => {
-    const day = moment('10/10/2017');
+    const day = moment('10/10/2017', 'MM/DD/YYYY');
 
     let onDayClick;
     let wrapper;
