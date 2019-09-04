@@ -125,7 +125,7 @@
     "react-outside-click-handler": "^1.2.4",
     "react-portal": "^4.2.0",
     "react-with-direction": "^1.3.0",
-    "react-with-styles": "^3.2.3",
+    "react-with-styles": "^4.0.0",
     "react-with-styles-interface-css": "^4.0.3"
   },
   "peerDependencies": {
