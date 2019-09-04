@@ -121,19 +121,19 @@ describe('getCalendarMonthWeeks', () => {
   describe('enableOutsideDays arg is false', () => {
     it('first non-null element is first of the month', () => {
       const firstOfMonth = today.clone().startOf('month');
-      const firstNonNullDay = weeks[0].filter(day => day)[0];
+      const firstNonNullDay = weeks[0].filter((day) => day)[0];
       expect(firstOfMonth.isSame(firstNonNullDay, 'day')).to.equal(true);
     });
 
     it('last non-null element is last of the month', () => {
       const lastOfMonth = today.clone().endOf('month');
-      const lastWeek = weeks[weeks.length - 1].filter(day => day);
+      const lastWeek = weeks[weeks.length - 1].filter((day) => day);
       const lastNonNullDay = lastWeek[lastWeek.length - 1];
       expect(lastOfMonth.isSame(lastNonNullDay, 'day')).to.equal(true);
     });
 
     it('number of non-null elements is equal to number of days in month', () => {
-      const daysInCalendarMonthWeeks = weeks.reduce((a, b) => a + b.filter(day => day).length, 0);
+      const daysInCalendarMonthWeeks = weeks.reduce((a, b) => a + b.filter((day) => day).length, 0);
       expect(daysInCalendarMonthWeeks).to.equal(today.daysInMonth());
     });
   });
@@ -142,14 +142,14 @@ describe('getCalendarMonthWeeks', () => {
     it('contains first of the month', () => {
       const firstOfMonth = today.clone().startOf('month');
       const containsFirstOfMonth = weeksWithOutsideDays[0]
-        .filter(day => firstOfMonth.isSame(day, 'day')).length > 0;
+        .filter((day) => firstOfMonth.isSame(day, 'day')).length > 0;
       expect(containsFirstOfMonth).to.equal(true);
     });
 
     it('last week contains last of the month', () => {
       const lastOfMonth = today.clone().endOf('month');
       const containsLastOfMonth = weeks[weeksWithOutsideDays.length - 1]
-        .filter(day => lastOfMonth.isSame(day, 'day')).length > 0;
+        .filter((day) => lastOfMonth.isSame(day, 'day')).length > 0;
       expect(containsLastOfMonth).to.equal(true);
     });
 
@@ -158,7 +158,7 @@ describe('getCalendarMonthWeeks', () => {
       const lastOfMonth = december2016.clone().endOf('month');
       const weeksInDecember = getCalendarMonthWeeks(december2016);
       const containsLastOfMonth = weeksInDecember[weeksInDecember.length - 1]
-        .filter(day => lastOfMonth.isSame(day, 'day')).length > 0;
+        .filter((day) => lastOfMonth.isSame(day, 'day')).length > 0;
       expect(containsLastOfMonth).to.equal(true);
     });
 
@@ -168,7 +168,7 @@ describe('getCalendarMonthWeeks', () => {
       const lastOfMonth = april2017.clone().endOf('month');
       const weeksInApril = getCalendarMonthWeeks(april2017);
       const containsLastOfMonth = weeksInApril[weeksInApril.length - 1]
-        .filter(day => lastOfMonth.isSame(day, 'day')).length > 0;
+        .filter((day) => lastOfMonth.isSame(day, 'day')).length > 0;
       expect(containsLastOfMonth).to.equal(true);
     });
 
@@ -177,7 +177,7 @@ describe('getCalendarMonthWeeks', () => {
       const lastOfMonth = september2016.clone().endOf('month');
       const weeksInSeptember = getCalendarMonthWeeks(september2016);
       const containsLastOfMonth = weeksInSeptember[weeksInSeptember.length - 1]
-        .filter(day => lastOfMonth.isSame(day, 'day')).length > 0;
+        .filter((day) => lastOfMonth.isSame(day, 'day')).length > 0;
       expect(containsLastOfMonth).to.equal(true);
     });
 

@@ -390,7 +390,7 @@ describe('DateRangePickerInputController', () => {
 
     describe('is outside range', () => {
       const futureDate = moment().add(7, 'day').toISOString();
-      const isOutsideRange = day => day >= moment().add(3, 'day');
+      const isOutsideRange = (day) => day >= moment().add(3, 'day');
 
       it('calls props.onDatesChange', () => {
         const onDatesChangeStub = sinon.stub();
@@ -721,7 +721,7 @@ describe('DateRangePickerInputController', () => {
 
     describe('is outside range', () => {
       const futureDate = moment().add(7, 'days').toISOString();
-      const isOutsideRange = day => day > moment().add(5, 'days');
+      const isOutsideRange = (day) => day > moment().add(5, 'days');
 
       it('calls props.onDatesChange', () => {
         const onDatesChangeStub = sinon.stub();
