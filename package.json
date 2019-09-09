@@ -126,7 +126,7 @@
     "react-portal": "^4.2.0",
     "react-with-direction": "^1.3.1",
     "react-with-styles": "^3.2.3",
-    "react-with-styles-interface-css": "^5.0.0"
+    "react-with-styles-interface-css": "^6.0.0"
   },
   "peerDependencies": {
     "moment": "^2.18.1",
