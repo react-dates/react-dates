@@ -64,6 +64,7 @@
     "@welldone-software/why-did-you-render": "^3.3.1",
     "airbnb-js-shims": "^2.2.0",
     "aphrodite": "^2.3.1",
+    "babel-eslint": "^10.0.3",
     "babel-loader": "^8.0.6",
     "babel-plugin-inline-react-svg": "^1.1.0",
     "babel-plugin-inline-svg": "^1.0.1",
