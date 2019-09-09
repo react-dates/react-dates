@@ -54,6 +54,7 @@
     "@babel/cli": "^7.5.5",
     "@babel/core": "^7.5.5",
     "@babel/register": "^7.5.5",
+    "@babel/runtime": "^7.0.0",
     "@storybook/addon-actions": "^5.1.11",
     "@storybook/addon-info": "^5.1.11",
     "@storybook/addon-links": "^5.1.11",
@@ -112,7 +113,6 @@
     "webpack": "^4.31.0"
   },
   "dependencies": {
-    "@babel/runtime": "^7.5.5",
     "airbnb-prop-types": "^2.15.0",
     "consolidated-events": "^1.1.1 || ^2.0.0",
     "enzyme-shallow-equal": "^1.0.0",
@@ -130,6 +130,7 @@
     "react-with-styles-interface-css": "^6.0.0"
   },
   "peerDependencies": {
+    "@babel/runtime": "^7.0.0",
     "moment": "^2.18.1",
     "react": "^0.14 || ^15.5.4 || ^16.1.1",
     "react-dom": "^0.14 || ^15.5.4 || ^16.1.1",
