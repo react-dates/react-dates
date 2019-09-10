@@ -4,6 +4,20 @@
 - []  ([#](https://github.com/airbnb/react-dates/pull/))
 -->
 
+## Unreleased
+
+## 21.0.0
+
+- [breaking] [deps] Update react-with-styles and other deps ([#1761](https://github.com/airbnb/react-dates/pull/1761)
+- [new] [deps] Update dependencies related to react-with-styles ([#1775](https://github.com/airbnb/react-dates/pull/1775))
+- [new] `DayPickerSingleDateController`: Add onMultiplyScrollableMonths ([#1770](https://github.com/airbnb/react-dates/pull/1770))
+- [dev] Fix moment date formats ([#1767](https://github.com/airbnb/react-dates/pull/1767))
+- [dev] Fix addons webpack loader, Fix tests ([#1764](https://github.com/airbnb/react-dates/pull/1764))
+- [dev] build: fix linting (refs eslint/eslint#12119)
+- [new] [deps] update `@babel/runtime`, `airbnb-prop-types`, `object.values`, `prop-types`, `react-outside-click-handler`, `react-portal`
+- [dev] [deps] update `@babel/*`, `@storybook/*`, `babel-plugin-inline-svg`, `babel-plugin-istanbul`, `babel-preset-airbnb`, `eslint-config-airbnb` to v18 (plus peer deps), `eslint` to v6; `eslint-plugin-react-with-styles`, `karma`, `karma-firefox-launcher`, `mocha`, `safe-publish-latest`, `sass-loader`, `sinon`, `sinon-sandbox`, `coveralls`, `enzyme-adapter-react-helper`
+- [fix] Remove all direct imports of css in favor of injected prop ([#1758](https://github.com/airbnb/react-dates/pull/1758))
+
 ## 20.3.0
 - [fix] Optimize setState dayPickerContainerStyles in responsivizePickerPosition ([#1735](https://github.com/airbnb/react-dates/pull/1735))
 - [fix] Stop calendar blinking on DateRangePickerInput focus switch (fixes #1523) ([#1553](https://github.com/airbnb/react-dates/pull/1553))
