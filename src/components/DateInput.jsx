@@ -51,6 +51,7 @@ const propTypes = forbidExtraProps({
 
   // accessibility
   isFocused: PropTypes.bool, // describes actual DOM focus
+  resetStatus: PropTypes.bool,
 });
 
 const defaultProps = {
@@ -79,6 +80,8 @@ const defaultProps = {
 
   // accessibility
   isFocused: false,
+  resetStatus: false,
+
 };
 
 class DateInput extends React.PureComponent {

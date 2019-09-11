@@ -79,6 +79,7 @@ const propTypes = forbidExtraProps({
   phrases: PropTypes.shape(getPhrasePropTypes(DateRangePickerInputPhrases)),
 
   isRTL: PropTypes.bool,
+  isOutsideRange: PropTypes.func,
 });
 
 const defaultProps = {
@@ -134,6 +135,8 @@ const defaultProps = {
   phrases: DateRangePickerInputPhrases,
 
   isRTL: false,
+  isOutsideRange() { },
+
 };
 
 export default class DateRangePickerInputController extends React.PureComponent {

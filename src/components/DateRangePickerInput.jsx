@@ -78,6 +78,7 @@ const propTypes = forbidExtraProps({
   phrases: PropTypes.shape(getPhrasePropTypes(DateRangePickerInputPhrases)),
 
   isRTL: PropTypes.bool,
+  resetStatus: PropTypes.bool,
 });
 
 const defaultProps = {
@@ -128,6 +129,7 @@ const defaultProps = {
   phrases: DateRangePickerInputPhrases,
 
   isRTL: false,
+  resetStatus: false,
 };
 
 function DateRangePickerInput({
