@@ -17,7 +17,6 @@ import DisabledShape from '../shapes/DisabledShape';
 import toMomentObject from '../utils/toMomentObject';
 import toLocalizedDateString from '../utils/toLocalizedDateString';
 
-import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
 import isBeforeDay from '../utils/isBeforeDay';
 
 import {
@@ -61,7 +60,6 @@ const propTypes = forbidExtraProps({
   reopenPickerOnClearDates: PropTypes.bool,
   withFullScreenPortal: PropTypes.bool,
   minimumNights: nonNegativeInteger,
-  isOutsideRange: PropTypes.func,
   displayFormat: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
 
   onFocusChange: PropTypes.func,
@@ -117,7 +115,6 @@ const defaultProps = {
   reopenPickerOnClearDates: false,
   withFullScreenPortal: false,
   minimumNights: 1,
-  isOutsideRange: (day) => !isInclusivelyAfterDay(day, moment()),
   displayFormat: () => moment.localeData().longDateFormat('L'),
 
   onFocusChange() { },
@@ -166,21 +163,16 @@ export default class DateRangePickerInputController extends React.PureComponent 
   onEndDateChange(endDateString) {
     const {
       startDate,
-      isOutsideRange,
-      minimumNights,
       keepOpenOnDateSelect,
       onDatesChange,
     } = this.props;
 
-    const endDate = toMomentObject(endDateString, this.getDisplayFormat());
-
-    const isEndDateValid = endDate
-      && !isOutsideRange(endDate)
-      && !(startDate && isBeforeDay(endDate, startDate.clone().add(minimumNights, 'days')));
-
     onDatesChange({ startDate, endDate: endDateString });
-    if (!keepOpenOnDateSelect) this.onClearFocus();
-
+    if (!keepOpenOnDateSelect) {
+      this.onClearFocus();
+    }
+    onDatesChange({ startDate, endDate: endDateString });
+    if (!keepOpenOnDateSelect) { this.onClearFocus(); }
   }
 
   onEndDateFocus() {
@@ -204,28 +196,24 @@ export default class DateRangePickerInputController extends React.PureComponent 
   onStartDateChange(startDateString) {
     let { endDate } = this.props;
     const {
-      isOutsideRange,
       minimumNights,
       onDatesChange,
-      onFocusChange,
-      disabled,
     } = this.props;
 
     const startDate = toMomentObject(startDateString, this.getDisplayFormat());
     const isEndDateBeforeStartDate = startDate
       && isBeforeDay(endDate, startDate.clone().add(minimumNights, 'days'));
-    const isStartDateValid = startDate
-      && !isOutsideRange(startDate)
-      && !(disabled === END_DATE && isEndDateBeforeStartDate);
-
 
     if (isEndDateBeforeStartDate) {
       endDate = null;
     }
 
     onDatesChange({ startDate: startDateString, endDate });
-    onFocusChange(END_DATE);
+    if (isEndDateBeforeStartDate) {
+      endDate = null;
+    }
 
+    onDatesChange({ startDate: startDateString, endDate });
   }
 
   onStartDateFocus() {
