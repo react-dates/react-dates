@@ -89,15 +89,15 @@ const defaultProps = {
   startDateAriaLabel: undefined,
   endDateAriaLabel: undefined,
   screenReaderMessage: '',
-  onStartDateFocus() {},
-  onEndDateFocus() {},
-  onStartDateChange() {},
-  onEndDateChange() {},
-  onStartDateShiftTab() {},
-  onEndDateTab() {},
-  onClearDates() {},
-  onKeyDownArrowDown() {},
-  onKeyDownQuestionMark() {},
+  onStartDateFocus() { },
+  onEndDateFocus() { },
+  onStartDateChange() { },
+  onEndDateChange() { },
+  onStartDateShiftTab() { },
+  onEndDateTab() { },
+  onClearDates() { },
+  onKeyDownArrowDown() { },
+  onKeyDownQuestionMark() { },
 
   startDate: '',
   endDate: '',
@@ -173,6 +173,7 @@ function DateRangePickerInput({
   small,
   regular,
   styles,
+  resetStatus,
 }) {
   const calendarIcon = customInputIcon || (
     <CalendarIcon {...css(styles.DateRangePickerInput_calendarIcon_svg)} />
@@ -225,6 +226,7 @@ function DateRangePickerInput({
       {inputIconPosition === ICON_BEFORE_POSITION && inputIcon}
 
       <DateInput
+        resetStatus={resetStatus}
         id={startDateId}
         placeholder={startDatePlaceholderText}
         ariaLabel={startDateAriaLabel}
@@ -280,6 +282,7 @@ function DateRangePickerInput({
         verticalSpacing={verticalSpacing}
         small={small}
         regular={regular}
+        resetStatus={resetStatus}
       />
 
 

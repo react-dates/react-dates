@@ -139,7 +139,9 @@ const defaultProps = {
 export default class DateRangePickerInputController extends React.PureComponent {
   constructor(props) {
     super(props);
-
+    this.state = {
+      resetStatus: false,
+    };
     this.onClearFocus = this.onClearFocus.bind(this);
     this.onStartDateChange = this.onStartDateChange.bind(this);
     this.onStartDateFocus = this.onStartDateFocus.bind(this);
@@ -243,6 +245,7 @@ export default class DateRangePickerInputController extends React.PureComponent 
     if (reopenPickerOnClearDates) {
       onFocusChange(START_DATE);
     }
+    this.setState(({ resetStatus }) => ({ resetStatus: !resetStatus }));
   }
 
   render() {
@@ -281,6 +284,7 @@ export default class DateRangePickerInputController extends React.PureComponent 
       regular,
       verticalSpacing,
     } = this.props;
+    const { resetStatus } = this.state;
 
     const startDateString = this.getDateString(startDate);
     const endDateString = this.getDateString(endDate);
@@ -325,6 +329,7 @@ export default class DateRangePickerInputController extends React.PureComponent 
         small={small}
         regular={regular}
         verticalSpacing={verticalSpacing}
+        resetStatus={resetStatus}
       >
         {children}
       </DateRangePickerInput>

@@ -69,13 +69,13 @@ const defaultProps = {
   block: false,
   regular: false,
 
-  onChange() {},
-  onFocus() {},
-  onKeyDownShiftTab() {},
-  onKeyDownTab() {},
+  onChange() { },
+  onFocus() { },
+  onKeyDownShiftTab() { },
+  onKeyDownTab() { },
 
-  onKeyDownArrowDown() {},
-  onKeyDownQuestionMark() {},
+  onKeyDownArrowDown() { },
+  onKeyDownQuestionMark() { },
 
   // accessibility
   isFocused: false,
@@ -102,7 +102,7 @@ class DateInput extends React.PureComponent {
 
   componentWillReceiveProps(nextProps) {
     const { dateString } = this.state;
-    if (dateString && nextProps.displayValue) {
+    if ((dateString && nextProps.displayValue) || (nextProps.resetStatus !== this.resetStatus)) {
       this.setState({
         dateString: '',
       });
