@@ -37,3 +37,6 @@ matrix:
       env: COVERAGE=true TEST=false
     - node_js: "lts/*"
       env: KARMA=true TEST=false
+  allow_failures:
+    - node_js: "10"
+      env: REACT=16
