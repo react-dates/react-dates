@@ -177,15 +177,9 @@ export default class DateRangePickerInputController extends React.PureComponent 
     const isEndDateValid = endDate
       && !isOutsideRange(endDate)
       && !(startDate && isBeforeDay(endDate, startDate.clone().add(minimumNights, 'days')));
-    if (isEndDateValid) {
-      onDatesChange({ startDate, endDate });
+      onDatesChange({ startDate, endDate: endDateString });
       if (!keepOpenOnDateSelect) this.onClearFocus();
-    } else {
-      onDatesChange({
-        startDate,
-        endDate: null,
-      });
-    }
+   
   }
 
   onEndDateFocus() {
@@ -223,19 +217,13 @@ export default class DateRangePickerInputController extends React.PureComponent 
       && !isOutsideRange(startDate)
       && !(disabled === END_DATE && isEndDateBeforeStartDate);
 
-    if (isStartDateValid) {
       if (isEndDateBeforeStartDate) {
         endDate = null;
       }
 
-      onDatesChange({ startDate, endDate });
+      onDatesChange({ startDate: startDateString, endDate });
       onFocusChange(END_DATE);
-    } else {
-      onDatesChange({
-        startDate: null,
-        endDate,
-      });
-    }
+   
   }
 
   onStartDateFocus() {
