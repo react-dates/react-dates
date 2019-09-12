@@ -6,6 +6,10 @@
 
 ## Unreleased
 
+## 21.0.1
+
+- [fix] [deps] Update react-with-styles ^4.0.0 -> ^4.0.1 ([#1781](https://github.com/airbnb/react-dates/pull/1781))
+
 ## 21.0.0
 
 - [breaking] [deps] Update react-with-styles and other deps ([#1761](https://github.com/airbnb/react-dates/pull/1761)
