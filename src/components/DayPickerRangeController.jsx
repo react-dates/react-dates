@@ -559,7 +559,7 @@ export default class DayPickerRangeController extends React.PureComponent {
       onDatesChange({ startDate, endDate });
 
       if (isEndDateDisabled && !isStartDateAfterEndDate) {
-        onFocusChange(null);
+        // onFocusChange(null);
         onClose({ startDate, endDate });
       } else if (!isEndDateDisabled) {
         // onFocusChange(END_DATE);
