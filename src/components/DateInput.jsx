@@ -111,13 +111,6 @@ class DateInput extends React.PureComponent {
         dateString: '',
       });
     }
-    console.log(
-      this.props,
-      nextProps,
-      dateString && nextProps.displayValue,
-      nextProps.resetStatus !== this.resetStatus,
-      '///////////',
-    );
   }
 
   componentDidUpdate(prevProps) {
