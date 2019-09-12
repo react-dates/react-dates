@@ -91,6 +91,7 @@ class DateInput extends React.PureComponent {
     this.state = {
       dateString: '',
       isTouchDevice: false,
+      forceChange: false,
     };
 
     this.onChange = this.onChange.bind(this);
@@ -105,8 +106,13 @@ class DateInput extends React.PureComponent {
 
   componentWillReceiveProps(nextProps) {
     const { dateString } = this.state;
-    const { resetStatus } = this.props;
-    if ((dateString && nextProps.displayValue) || (nextProps.resetStatus !== resetStatus)) {
+    const { resetStatus, displayValue } = this.props;
+    let localForceChange = true;
+    if (displayValue !== nextProps.displayValue) {
+      this.setState({ forceChange: false });
+      localForceChange = false;
+    }
+    if ((dateString && nextProps.displayValue && !localForceChange) || (nextProps.resetStatus !== resetStatus)) {
       this.setState({
         dateString: '',
       });
@@ -137,9 +143,13 @@ class DateInput extends React.PureComponent {
   }
 
   onKeyDown(e) {
+    const { displayValue } = this.props;
     e.stopPropagation();
     if (!MODIFIER_KEY_NAMES.has(e.key)) {
       this.throttledKeyDown(e);
+    }
+    if (displayValue) {
+      this.setState({ forceChange: true });
     }
   }
 
