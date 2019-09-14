@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
-import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
+import { withStyles, withStylesPropTypes } from 'react-with-styles';
 
 import { DateRangePickerInputPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
@@ -132,6 +132,7 @@ const defaultProps = {
 
 function DateRangePickerInput({
   children,
+  css,
   startDate,
   startDateId,
   startDatePlaceholderText,
@@ -190,7 +191,11 @@ function DateRangePickerInput({
     />
   );
 
-  const screenReaderText = screenReaderMessage || phrases.keyboardNavigationInstructions;
+  const screenReaderStartDateText = screenReaderMessage
+    || phrases.keyboardForwardNavigationInstructions;
+  const screenReaderEndDateText = screenReaderMessage
+    || phrases.keyboardBackwardNavigationInstructions;
+
   const inputIcon = (showDefaultInputIcon || customInputIcon !== null) && (
     <button
       {...css(styles.DateRangePickerInput_calendarIcon)}
@@ -224,7 +229,7 @@ function DateRangePickerInput({
         placeholder={startDatePlaceholderText}
         ariaLabel={startDateAriaLabel}
         displayValue={startDate}
-        screenReaderMessage={screenReaderText}
+        screenReaderMessage={screenReaderStartDateText}
         focused={isStartDateFocused}
         isFocused={isFocused}
         disabled={startDateDisabled}
@@ -242,6 +247,8 @@ function DateRangePickerInput({
         regular={regular}
       />
 
+      {children}
+
       {
         <div
           {...css(styles.DateRangePickerInput_arrow)}
@@ -252,14 +259,12 @@ function DateRangePickerInput({
         </div>
       }
 
-      {isStartDateFocused && children}
-
       <DateInput
         id={endDateId}
         placeholder={endDatePlaceholderText}
         ariaLabel={endDateAriaLabel}
         displayValue={endDate}
-        screenReaderMessage={screenReaderText}
+        screenReaderMessage={screenReaderEndDateText}
         focused={isEndDateFocused}
         isFocused={isFocused}
         disabled={endDateDisabled}
@@ -277,7 +282,6 @@ function DateRangePickerInput({
         regular={regular}
       />
 
-      {isEndDateFocused && children}
 
       {showClearDates && (
         <button

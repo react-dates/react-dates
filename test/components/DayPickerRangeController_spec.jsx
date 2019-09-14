@@ -22,7 +22,7 @@ import { START_DATE, END_DATE, VERTICAL_SCROLLABLE } from '../../src/constants';
 const today = moment().startOf('day').hours(12);
 
 function getCallsByModifier(stub, modifier) {
-  return stub.getCalls().filter(call => call.args[call.args.length - 1] === modifier);
+  return stub.getCalls().filter((call) => call.args[call.args.length - 1] === modifier);
 }
 
 describe('DayPickerRangeController', () => {
@@ -1221,7 +1221,7 @@ describe('DayPickerRangeController', () => {
                 <DayPickerRangeController
                   {...props}
                   getMinNightsForHoverDate={getMinNightsForHoverDateStub}
-                  isDayBlocked={day => isSameDay(day, today)}
+                  isDayBlocked={(day) => isSameDay(day, today)}
                 />,
               );
               wrapper.setState({ hoverDate: today });
@@ -1293,7 +1293,7 @@ describe('DayPickerRangeController', () => {
                 <DayPickerRangeController
                   {...props}
                   getMinNightsForHoverDate={getMinNightsForHoverDateStub}
-                  isDayBlocked={day => isSameDay(day, today)}
+                  isDayBlocked={(day) => isSameDay(day, today)}
                 />,
               );
               wrapper.setState({ hoverDate: today });
@@ -1412,7 +1412,7 @@ describe('DayPickerRangeController', () => {
                 <DayPickerRangeController
                   {...props}
                   getMinNightsForHoverDate={getMinNightsForHoverDateStub}
-                  isDayBlocked={day => isSameDay(day, today)}
+                  isDayBlocked={(day) => isSameDay(day, today)}
                 />,
               );
               wrapper.setState({ hoverDate: today });
@@ -1483,7 +1483,7 @@ describe('DayPickerRangeController', () => {
                 <DayPickerRangeController
                   {...props}
                   getMinNightsForHoverDate={getMinNightsForHoverDateStub}
-                  isDayBlocked={day => isSameDay(day, today)}
+                  isDayBlocked={(day) => isSameDay(day, today)}
                 />,
               );
               wrapper.setState({ hoverDate: today });
@@ -1935,8 +1935,8 @@ describe('DayPickerRangeController', () => {
         const wrapper = shallow((
           <DayPickerRangeController
             onDatesChange={onDatesChangeStub}
-            startDateOffset={day => day.subtract(2, 'days')}
-            endDateOffset={day => day.add(4, 'days')}
+            startDateOffset={(day) => day.subtract(2, 'days')}
+            endDateOffset={(day) => day.add(4, 'days')}
           />
         ));
         wrapper.instance().onDayClick(clickDate);
@@ -1951,9 +1951,9 @@ describe('DayPickerRangeController', () => {
         const wrapper = shallow((
           <DayPickerRangeController
             onDatesChange={onDatesChangeStub}
-            startDateOffset={day => day.subtract(2, 'days')}
-            endDateOffset={day => day.add(4, 'days')}
-            isOutsideRange={day => day.isAfter(moment(today))}
+            startDateOffset={(day) => day.subtract(2, 'days')}
+            endDateOffset={(day) => day.add(4, 'days')}
+            isOutsideRange={(day) => day.isAfter(moment(today))}
           />
         ));
         wrapper.instance().onDayClick(clickDate);
@@ -1966,8 +1966,8 @@ describe('DayPickerRangeController', () => {
         const wrapper = shallow((
           <DayPickerRangeController
             onDatesChange={onDatesChangeStub}
-            endDateOffset={day => day.add(5, 'days')}
-            isOutsideRange={day => day.isAfter(moment(today).clone().add(1, 'days'))}
+            endDateOffset={(day) => day.add(5, 'days')}
+            isOutsideRange={(day) => day.isAfter(moment(today).clone().add(1, 'days'))}
           />
         ));
         wrapper.instance().onDayClick(clickDate);
@@ -1980,7 +1980,7 @@ describe('DayPickerRangeController', () => {
         const wrapper = shallow((
           <DayPickerRangeController
             onDatesChange={onDatesChangeStub}
-            startDateOffset={day => day.subtract(5, 'days')}
+            startDateOffset={(day) => day.subtract(5, 'days')}
           />
         ));
         wrapper.instance().onDayClick(clickDate);
@@ -1995,7 +1995,7 @@ describe('DayPickerRangeController', () => {
         const wrapper = shallow((
           <DayPickerRangeController
             onDatesChange={onDatesChangeStub}
-            endDateOffset={day => day.add(12, 'days')}
+            endDateOffset={(day) => day.add(12, 'days')}
           />
         ));
         wrapper.instance().onDayClick(clickDate);
@@ -2105,7 +2105,7 @@ describe('DayPickerRangeController', () => {
         const wrapper = shallow((
           <DayPickerRangeController
             onDatesChange={onDatesChangeStub}
-            startDateOffset={day => day.subtract(2, 'days')}
+            startDateOffset={(day) => day.subtract(2, 'days')}
           />
         ));
         wrapper.instance().onDayClick(clickDate);
@@ -2121,7 +2121,7 @@ describe('DayPickerRangeController', () => {
         const wrapper = shallow((
           <DayPickerRangeController
             onDatesChange={onDatesChangeStub}
-            endDateOffset={day => day.add(4, 'days')}
+            endDateOffset={(day) => day.add(4, 'days')}
           />
         ));
         wrapper.instance().onDayClick(clickDate);
@@ -2193,7 +2193,7 @@ describe('DayPickerRangeController', () => {
       const wrapper = shallow((
         <DayPickerRangeController
           focusedInput={START_DATE}
-          endDateOffset={day => day.add(2, 'days')}
+          endDateOffset={(day) => day.add(2, 'days')}
         />
       ));
       wrapper.instance().onDayMouseEnter(today);
@@ -2449,7 +2449,7 @@ describe('DayPickerRangeController', () => {
               onFocusChange={sinon.stub()}
               focusedInput={START_DATE}
               getMinNightsForHoverDate={getMinNightsForHoverDateStub}
-              isDayBlocked={day => isSameDay(day, hoverDate)}
+              isDayBlocked={(day) => isSameDay(day, hoverDate)}
             />);
             wrapper.setState({ hoverDate });
             wrapper.instance().onDayMouseEnter(today);
@@ -2496,7 +2496,7 @@ describe('DayPickerRangeController', () => {
               onFocusChange={sinon.stub()}
               focusedInput={START_DATE}
               getMinNightsForHoverDate={getMinNightsForHoverDateStub}
-              isDayBlocked={day => isSameDay(day, today)}
+              isDayBlocked={(day) => isSameDay(day, today)}
             />);
             wrapper.setState({ hoverDate });
             wrapper.instance().onDayMouseEnter(today);
@@ -2606,7 +2606,7 @@ describe('DayPickerRangeController', () => {
               onFocusChange={sinon.stub()}
               focusedInput={START_DATE}
               getMinNightsForHoverDate={getMinNightsForHoverDateStub}
-              isDayBlocked={day => isSameDay(day, hoverDate)}
+              isDayBlocked={(day) => isSameDay(day, hoverDate)}
             />);
             wrapper.setState({ hoverDate });
             wrapper.instance().onDayMouseEnter(today);
@@ -2654,7 +2654,7 @@ describe('DayPickerRangeController', () => {
               onFocusChange={sinon.stub()}
               focusedInput={START_DATE}
               getMinNightsForHoverDate={getMinNightsForHoverDateStub}
-              isDayBlocked={day => isSameDay(day, today)}
+              isDayBlocked={(day) => isSameDay(day, today)}
             />);
             wrapper.setState({ hoverDate });
             wrapper.instance().onDayMouseEnter(today);
@@ -2893,7 +2893,7 @@ describe('DayPickerRangeController', () => {
               onFocusChange={sinon.stub()}
               focusedInput={START_DATE}
               getMinNightsForHoverDate={getMinNightsForHoverDateStub}
-              isDayBlocked={day => isSameDay(day, today)}
+              isDayBlocked={(day) => isSameDay(day, today)}
             />);
             wrapper.setState({ hoverDate: today });
             wrapper.instance().onDayMouseLeave(today);
@@ -2962,7 +2962,7 @@ describe('DayPickerRangeController', () => {
               onFocusChange={sinon.stub()}
               focusedInput={START_DATE}
               getMinNightsForHoverDate={getMinNightsForHoverDateStub}
-              isDayBlocked={day => isSameDay(day, today)}
+              isDayBlocked={(day) => isSameDay(day, today)}
             />);
             wrapper.setState({ hoverDate: today });
             wrapper.instance().onDayMouseLeave(today);
@@ -4006,7 +4006,7 @@ describe('DayPickerRangeController', () => {
       describe('props.startDate === null', () => {
         describe('props.focusedInput === END_DATE', () => {
           it('returns true if arg - props.minimumNights is outside allowed range', () => {
-            const isOutsideRange = day => !isInclusivelyAfterDay(day, today);
+            const isOutsideRange = (day) => !isInclusivelyAfterDay(day, today);
             const testDate = moment(today).add(MIN_NIGHTS - 1, 'days');
             const wrapper = shallow(<DayPickerRangeController
               focusedInput={END_DATE}
@@ -4018,7 +4018,7 @@ describe('DayPickerRangeController', () => {
           });
 
           it('returns false if arg - props.minimumNights is inside allowed range', () => {
-            const isOutsideRange = day => !isInclusivelyAfterDay(day, today);
+            const isOutsideRange = (day) => !isInclusivelyAfterDay(day, today);
             const testDate = moment(today).add(MIN_NIGHTS, 'days');
             const wrapper = shallow(<DayPickerRangeController
               focusedInput={END_DATE}

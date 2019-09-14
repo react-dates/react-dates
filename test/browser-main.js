@@ -1,4 +1,4 @@
-const requireAll = requireContext => requireContext.keys().forEach(requireContext);
+const requireAll = (requireContext) => requireContext.keys().forEach(requireContext);
 
 if (typeof window !== 'undefined') {
   requireAll(require.context('./_helpers', true, /.jsx?$/));

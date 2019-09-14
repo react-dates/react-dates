@@ -15,19 +15,38 @@
     "node": true
   },
 
+  "parser": "babel-eslint",
+
   "rules": {
     "react/forbid-foreign-prop-types": 2, // For babel-plugin-transform-react-remove-prop-types
 
     "jsx-a11y/click-events-have-key-events": 1, // TODO: enable
 
-    "react/no-did-mount-set-state": 0, // necessary for server-rendering
-
     "react-with-styles/no-unused-styles": 2,
 
     "no-restricted-imports": 0, // TODO: enable with full RTL support
 
-    "react/jsx-one-expression-per-line": 1, // TODO: enable once fixed upstream
+    "react/jsx-props-no-spreading": 0, // TODO: re-evaluate
   },
+
+  "overrides": [
+    {
+      "files": "test/**/*",
+      "env": {
+        "mocha": true,
+      },
+      "extends": "airbnb",
+      "rules": {
+        "react/jsx-props-no-spreading": 0,
+        //"import/no-extraneous-dependencies": [2, {
+          //"devDependencies": true
+        //}],
+        "indent": [2, 2, {
+          "MemberExpression": "off"
+        }],
+      },
+    },
+  ],
 
   "settings": {
     "propWrapperFunctions": ["forbidExtraProps", "exact", "Object.freeze"],

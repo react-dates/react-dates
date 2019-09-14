@@ -49,6 +49,15 @@ describe('DateRangePickerInput', () => {
         });
       });
     });
+
+    describe('props.children', () => {
+      it('should unconditionally render children when provided', () => {
+        const Child = () => <div>CHILD</div>;
+
+        const wrapper = shallow(<DateRangePickerInput><Child /></DateRangePickerInput>).dive();
+        expect(wrapper.find('Child')).to.have.lengthOf(1);
+      });
+    });
   });
 
   describe('props.customArrowIcon', () => {

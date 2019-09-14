@@ -708,7 +708,7 @@ describe('DateRangePicker', () => {
         const wrapper = shallow((
           <DateRangePicker
             {...requiredProps}
-            startDateOffset={date => date.subtract(5, 'days')}
+            startDateOffset={(date) => date.subtract(5, 'days')}
             onDatesChange={onDatesChangeStub}
             focusedInput={START_DATE}
           />
@@ -728,7 +728,7 @@ describe('DateRangePicker', () => {
         const wrapper = shallow((
           <DateRangePicker
             {...requiredProps}
-            endDateOffset={date => date.subtract(5, 'days')}
+            endDateOffset={(date) => date.subtract(5, 'days')}
             onDatesChange={onDatesChangeStub}
             focusedInput={START_DATE}
           />

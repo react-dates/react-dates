@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { forbidExtraProps, mutuallyExclusiveProps, nonNegativeInteger } from 'airbnb-prop-types';
-import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
+import { withStyles, withStylesPropTypes } from 'react-with-styles';
 
 import moment from 'moment';
 import throttle from 'lodash/throttle';
@@ -582,6 +582,19 @@ class DayPicker extends React.PureComponent {
     return firstDayOfWeek;
   }
 
+  getWeekHeaders() {
+    const { weekDayFormat } = this.props;
+    const { currentMonth } = this.state;
+    const firstDayOfWeek = this.getFirstDayOfWeek();
+
+    const weekHeaders = [];
+    for (let i = 0; i < 7; i += 1) {
+      weekHeaders.push(currentMonth.day((i + firstDayOfWeek) % 7).format(weekDayFormat));
+    }
+
+    return weekHeaders;
+  }
+
   getFirstVisibleIndex() {
     const { orientation } = this.props;
     const { monthTransition } = this.state;
@@ -854,8 +867,8 @@ class DayPicker extends React.PureComponent {
       daySize,
       horizontalMonthPadding,
       orientation,
-      weekDayFormat,
       styles,
+      css,
     } = this.props;
     const { calendarMonthWidth } = this.state;
     const verticalScrollable = orientation === VERTICAL_SCROLLABLE;
@@ -873,16 +886,12 @@ class DayPicker extends React.PureComponent {
       weekHeaderStyle = verticalStyle;
     }
 
-    const firstDayOfWeek = this.getFirstDayOfWeek();
-
-    const header = [];
-    for (let i = 0; i < 7; i += 1) {
-      header.push((
-        <li key={i} {...css(styles.DayPicker_weekHeader_li, { width: daySize })}>
-          <small>{moment().day((i + firstDayOfWeek) % 7).format(weekDayFormat)}</small>
-        </li>
-      ));
-    }
+    const weekHeaders = this.getWeekHeaders();
+    const header = weekHeaders.map((day) => (
+      <li key={day} {...css(styles.DayPicker_weekHeader_li, { width: daySize })}>
+        <small>{day}</small>
+      </li>
+    ));
 
     return (
       <div
@@ -918,6 +927,7 @@ class DayPicker extends React.PureComponent {
     } = this.state;
 
     const {
+      css,
       enableOutsideDays,
       numberOfMonths,
       orientation,
@@ -1027,6 +1037,7 @@ class DayPicker extends React.PureComponent {
     return (
       <div
         role="application"
+        aria-roledescription={phrases.roleDescription}
         aria-label={phrases.calendarLabel}
         {...css(
           styles.DayPicker,

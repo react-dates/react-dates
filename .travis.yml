@@ -1,5 +1,6 @@
 language: node_js
 node_js:
+  - "12"
   - "10"
   - "8"
   - "6"
@@ -15,6 +16,8 @@ script:
   - 'if [ "${TEST-}" = true ]; then npm run tests-only ; fi'
   - 'if [ -n "${KARMA-}" ]; then npm run tests-karma ; fi'
   - 'if [ -n "${COVERAGE-}" ] && [ "${TRAVIS_BRANCH-}" = "master" ]; then npm run cover; cat ./coverage/lcov.info | ./node_modules/.bin/coveralls ; fi'
+install:
+  - 'if [ -n "${LINT-}" ]; then npm install --legacy-bundling ; else npm install ; fi'
 env:
   global:
     - TEST=true
@@ -34,3 +37,6 @@ matrix:
       env: COVERAGE=true TEST=false
     - node_js: "lts/*"
       env: KARMA=true TEST=false
+  allow_failures:
+    - node_js: "10"
+      env: REACT=16
