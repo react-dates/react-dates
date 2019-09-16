@@ -246,7 +246,7 @@ export default class DateRangePickerInputController extends React.PureComponent 
     const { onDatesChange, reopenPickerOnClearDates, onFocusChange } = this.props;
     onDatesChange({ startDate: null, endDate: null });
     if (reopenPickerOnClearDates) {
-      onFocusChange(START_DATE);
+      onFocusChange(null);
     }
     this.setState(({ resetStatus }) => ({ resetStatus: !resetStatus }));
   }
