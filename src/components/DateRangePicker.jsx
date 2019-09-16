@@ -35,6 +35,7 @@ import {
   INFO_POSITION_BOTTOM,
   FANG_HEIGHT_PX,
   DEFAULT_VERTICAL_SPACING,
+  NAV_POSITION_TOP,
 } from '../constants';
 
 const propTypes = forbidExtraProps({
@@ -98,6 +99,7 @@ const defaultProps = {
   horizontalMonthPadding: undefined,
 
   // navigation related props
+  navPosition: NAV_POSITION_TOP,
   navPrev: null,
   navNext: null,
 

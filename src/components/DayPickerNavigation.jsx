@@ -11,10 +11,13 @@ import LeftArrow from './LeftArrow';
 import RightArrow from './RightArrow';
 import ChevronUp from './ChevronUp';
 import ChevronDown from './ChevronDown';
+import NavPositionShape from '../shapes/NavPositionShape';
 import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
 
 import {
   HORIZONTAL_ORIENTATION,
+  NAV_POSITION_BOTTOM,
+  NAV_POSITION_TOP,
   VERTICAL_SCROLLABLE,
 } from '../constants';
 
@@ -22,6 +25,7 @@ const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
   disablePrev: PropTypes.bool,
   disableNext: PropTypes.bool,
+  navPosition: NavPositionShape,
   navPrev: PropTypes.node,
   navNext: PropTypes.node,
   orientation: ScrollableOrientationShape,
@@ -38,6 +42,7 @@ const propTypes = forbidExtraProps({
 const defaultProps = {
   disablePrev: false,
   disableNext: false,
+  navPosition: NAV_POSITION_TOP,
   navPrev: null,
   navNext: null,
   orientation: HORIZONTAL_ORIENTATION,
@@ -54,6 +59,7 @@ function DayPickerNavigation({
   css,
   disablePrev,
   disableNext,
+  navPosition,
   navPrev,
   navNext,
   onPrevMonthClick,
@@ -66,6 +72,7 @@ function DayPickerNavigation({
   const isHorizontal = orientation === HORIZONTAL_ORIENTATION;
   const isVertical = orientation !== HORIZONTAL_ORIENTATION;
   const isVerticalScrollable = orientation === VERTICAL_SCROLLABLE;
+  const isBottomNavPosition = navPosition === NAV_POSITION_BOTTOM;
 
   let navPrevIcon = navPrev;
   let navNextIcon = navNext;
@@ -73,6 +80,7 @@ function DayPickerNavigation({
   let isDefaultNavNext = false;
   let navPrevTabIndex = {};
   let navNextTabIndex = {};
+
   if (!navPrevIcon) {
     navPrevTabIndex = { tabIndex: '0' };
     isDefaultNavPrev = true;
@@ -118,6 +126,7 @@ function DayPickerNavigation({
       {...css(
         styles.DayPickerNavigation,
         isHorizontal && styles.DayPickerNavigation__horizontal,
+        isBottomNavPosition && styles.DayPickerNavigation__bottom,
         ...(isVertical ? [
           styles.DayPickerNavigation__vertical,
           isDefaultNav && styles.DayPickerNavigation__verticalDefault,
@@ -140,6 +149,7 @@ function DayPickerNavigation({
               styles.DayPickerNavigation_button__horizontal,
               ...(isDefaultNavPrev ? [
                 styles.DayPickerNavigation_button__horizontalDefault,
+                isBottomNavPosition && styles.DayPickerNavigation_bottomButton__horizontalDefault,
                 !isRTL && styles.DayPickerNavigation_leftButton__horizontalDefault,
                 isRTL && styles.DayPickerNavigation_rightButton__horizontalDefault,
               ] : []),
@@ -178,6 +188,7 @@ function DayPickerNavigation({
             styles.DayPickerNavigation_button__horizontal,
             ...(isDefaultNavNext ? [
               styles.DayPickerNavigation_button__horizontalDefault,
+              isBottomNavPosition && styles.DayPickerNavigation_bottomButton__horizontalDefault,
               isRTL && styles.DayPickerNavigation_leftButton__horizontalDefault,
               !isRTL && styles.DayPickerNavigation_rightButton__horizontalDefault,
             ] : []),
@@ -217,6 +228,12 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
   DayPickerNavigation: {
     position: 'relative',
     zIndex: zIndex + 2,
+  },
+
+  DayPickerNavigation__bottom: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    height: 'auto',
   },
 
   DayPickerNavigation__horizontal: {
@@ -290,6 +307,14 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
     lineHeight: 0.78,
     borderRadius: 3,
     padding: '6px 9px',
+  },
+
+  DayPickerNavigation_bottomButton__horizontalDefault: {
+    position: 'static',
+    marginLeft: 22,
+    marginRight: 22,
+    marginBottom: 30,
+    marginTop: -10,
   },
 
   DayPickerNavigation_leftButton__horizontalDefault: {

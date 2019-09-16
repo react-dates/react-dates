@@ -33,6 +33,7 @@ import {
   INFO_POSITION_BOTTOM,
   FANG_HEIGHT_PX,
   DEFAULT_VERTICAL_SPACING,
+  NAV_POSITION_TOP,
 } from '../constants';
 
 const propTypes = forbidExtraProps({
@@ -89,6 +90,7 @@ const defaultProps = {
   horizontalMonthPadding: 13,
 
   // navigation related props
+  navPosition: NAV_POSITION_TOP,
   navPrev: null,
   navNext: null,
 
@@ -395,6 +397,7 @@ class SingleDatePicker extends React.PureComponent {
       numberOfMonths,
       orientation,
       monthFormat,
+      navPosition,
       navPrev,
       navNext,
       onPrevMonthClick,
@@ -476,6 +479,7 @@ class SingleDatePicker extends React.PureComponent {
           keepOpenOnDateSelect={keepOpenOnDateSelect}
           hideKeyboardShortcutsPanel={hideKeyboardShortcutsPanel}
           initialVisibleMonth={initialVisibleMonth}
+          navPosition={navPosition}
           navPrev={navPrev}
           navNext={navNext}
           onPrevMonthClick={onPrevMonthClick}

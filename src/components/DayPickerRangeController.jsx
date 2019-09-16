@@ -28,6 +28,7 @@ import FocusedInputShape from '../shapes/FocusedInputShape';
 import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
 import DayOfWeekShape from '../shapes/DayOfWeekShape';
 import CalendarInfoPositionShape from '../shapes/CalendarInfoPositionShape';
+import NavPositionShape from '../shapes/NavPositionShape';
 
 import {
   START_DATE,
@@ -36,6 +37,7 @@ import {
   VERTICAL_SCROLLABLE,
   DAY_SIZE,
   INFO_POSITION_BOTTOM,
+  NAV_POSITION_TOP,
 } from '../constants';
 
 import DayPicker from './DayPicker';
@@ -77,6 +79,7 @@ const propTypes = forbidExtraProps({
   verticalBorderSpacing: nonNegativeInteger,
   horizontalMonthPadding: nonNegativeInteger,
 
+  navPosition: NavPositionShape,
   navPrev: PropTypes.node,
   navNext: PropTypes.node,
   noNavButtons: PropTypes.bool,
@@ -142,6 +145,7 @@ const defaultProps = {
   initialVisibleMonth: null,
   daySize: DAY_SIZE,
 
+  navPosition: NAV_POSITION_TOP,
   navPrev: null,
   navNext: null,
   noNavButtons: false,
@@ -1136,6 +1140,7 @@ export default class DayPickerRangeController extends React.PureComponent {
       monthFormat,
       renderMonthText,
       renderWeekHeaderElement,
+      navPosition,
       navPrev,
       navNext,
       noNavButtons,
@@ -1202,6 +1207,7 @@ export default class DayPickerRangeController extends React.PureComponent {
         onOutsideClick={onOutsideClick}
         disablePrev={disablePrev}
         disableNext={disableNext}
+        navPosition={navPosition}
         navPrev={navPrev}
         navNext={navNext}
         noNavButtons={noNavButtons}
