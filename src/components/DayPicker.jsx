@@ -1036,9 +1036,6 @@ class DayPicker extends React.PureComponent {
 
     return (
       <div
-        role="application"
-        aria-roledescription={phrases.roleDescription}
-        aria-label={phrases.calendarLabel}
         {...css(
           styles.DayPicker,
           isHorizontal && styles.DayPicker__horizontal,
@@ -1077,8 +1074,10 @@ class DayPicker extends React.PureComponent {
               onClick={(e) => { e.stopPropagation(); }}
               onKeyDown={this.onKeyDown}
               onMouseUp={() => { this.setState({ withMouseInteractions: true }); }}
-              role="region"
               tabIndex={-1}
+              role="application"
+              aria-roledescription={phrases.roleDescription}
+              aria-label={phrases.calendarLabel}
             >
               {!verticalScrollable && this.renderNavigation()}
 
