@@ -3,7 +3,7 @@ import moment from 'moment';
 import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
 
-import { VERTICAL_ORIENTATION, ANCHOR_RIGHT, OPEN_UP } from '../src/constants';
+import { VERTICAL_ORIENTATION, ANCHOR_RIGHT, OPEN_UP, NAV_POSITION_BOTTOM } from '../src/constants';
 
 import DateRangePickerWrapper from '../examples/DateRangePickerWrapper';
 
@@ -141,6 +141,13 @@ storiesOf('DRP - Calendar Props', module)
       orientation={VERTICAL_ORIENTATION}
       navPrev={<CustomMonthNav>&#8249;</CustomMonthNav>}
       navNext={<CustomMonthNav style={{ left: 33 }}>&#8250;</CustomMonthNav>}
+      autoFocus
+    />
+  )))
+  .add('with month navigation positioned at the bottom', withInfo()(() => (
+    <DateRangePickerWrapper
+      navPosition={NAV_POSITION_BOTTOM}
+      numberOfMonths={1}
       autoFocus
     />
   )))
