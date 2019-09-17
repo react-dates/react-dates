@@ -39,6 +39,23 @@ describe('DayPicker', () => {
         });
       });
 
+      describe('props.renderWeekHeaderElement', () => {
+        it('there are 7 custom elements on each .DayPicker__week-header class', () => {
+          const testWeekHeaderClassName = 'test-week-header';
+          const wrapper = shallow(
+            <DayPicker
+              renderWeekHeaderElement={
+                (day) => (<strong className={testWeekHeaderClassName}>{day}</strong>)
+              }
+            />,
+          ).dive();
+          const weekHeaders = wrapper.find('.DayPicker__week-header');
+          weekHeaders.forEach((weekHeader) => {
+            expect(weekHeader.find(`.${testWeekHeaderClassName}`)).to.have.lengthOf(7);
+          });
+        });
+      });
+
       describe('props.orientation === HORIZONTAL_ORIENTATION', () => {
         it('props.numberOfMonths ul (week header) elements exists', () => {
           const NUM_OF_MONTHS = 3;

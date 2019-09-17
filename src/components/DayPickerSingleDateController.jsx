@@ -47,6 +47,7 @@ const propTypes = forbidExtraProps({
   // DayPicker props
   renderMonthText: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'),
   renderMonthElement: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'),
+  renderWeekHeaderElement: PropTypes.func,
   enableOutsideDays: PropTypes.bool,
   numberOfMonths: PropTypes.number,
   orientation: ScrollableOrientationShape,
@@ -103,6 +104,7 @@ const defaultProps = {
 
   // DayPicker props
   renderMonthText: null,
+  renderWeekHeaderElement: null,
   enableOutsideDays: false,
   numberOfMonths: 1,
   orientation: HORIZONTAL_ORIENTATION,
@@ -570,6 +572,7 @@ export default class DayPickerSingleDateController extends React.PureComponent {
       orientation,
       monthFormat,
       renderMonthText,
+      renderWeekHeaderElement,
       navPrev,
       navNext,
       onOutsideClick,
@@ -626,6 +629,7 @@ export default class DayPickerSingleDateController extends React.PureComponent {
         navPrev={navPrev}
         navNext={navNext}
         renderMonthText={renderMonthText}
+        renderWeekHeaderElement={renderWeekHeaderElement}
         renderCalendarDay={renderCalendarDay}
         renderDayContents={renderDayContents}
         renderCalendarInfo={renderCalendarInfo}

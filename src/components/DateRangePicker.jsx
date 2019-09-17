@@ -73,6 +73,7 @@ const defaultProps = {
 
   // calendar presentation and interaction related props
   renderMonthText: null,
+  renderWeekHeaderElement: null,
   orientation: HORIZONTAL_ORIENTATION,
   anchorDirection: ANCHOR_LEFT,
   openDirection: OPEN_DOWN,
@@ -401,6 +402,7 @@ class DateRangePicker extends React.PureComponent {
       orientation,
       monthFormat,
       renderMonthText,
+      renderWeekHeaderElement,
       navPrev,
       navNext,
       onPrevMonthClick,
@@ -497,6 +499,7 @@ class DateRangePicker extends React.PureComponent {
           endDateOffset={endDateOffset}
           monthFormat={monthFormat}
           renderMonthText={renderMonthText}
+          renderWeekHeaderElement={renderWeekHeaderElement}
           withPortal={withAnyPortal}
           daySize={daySize}
           initialVisibleMonth={initialVisibleMonthThunk}
