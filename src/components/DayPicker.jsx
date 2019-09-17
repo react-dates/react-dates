@@ -88,6 +88,7 @@ const propTypes = forbidExtraProps({
   // month props
   renderMonthText: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'),
   renderMonthElement: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'),
+  renderWeekHeaderElement: PropTypes.func,
 
   // day props
   modifiers: PropTypes.objectOf(PropTypes.objectOf(ModifiersShape)),
@@ -149,6 +150,7 @@ export const defaultProps = {
   // month props
   renderMonthText: null,
   renderMonthElement: null,
+  renderWeekHeaderElement: null,
 
   // day props
   modifiers: {},
@@ -867,11 +869,15 @@ class DayPicker extends React.PureComponent {
       daySize,
       horizontalMonthPadding,
       orientation,
+      renderWeekHeaderElement,
       styles,
       css,
     } = this.props;
+
     const { calendarMonthWidth } = this.state;
+
     const verticalScrollable = orientation === VERTICAL_SCROLLABLE;
+
     const horizontalStyle = {
       left: index * calendarMonthWidth,
     };
@@ -889,7 +895,7 @@ class DayPicker extends React.PureComponent {
     const weekHeaders = this.getWeekHeaders();
     const header = weekHeaders.map((day) => (
       <li key={day} {...css(styles.DayPicker_weekHeader_li, { width: daySize })}>
-        <small>{day}</small>
+        {renderWeekHeaderElement ? renderWeekHeaderElement(day) : <small>{day}</small>}
       </li>
     ));
 

@@ -153,6 +153,13 @@ storiesOf('DayPicker', module)
       )}
     />
   )))
+  .add('with custom week header text', withInfo()(() => (
+    <DayPicker
+      renderWeekHeaderElement={day => (
+        <strong style={{ color: '#FE01E5' }}><small>{day.toUpperCase()}</small></strong>
+      )}
+    />
+  )))
   .add('with custom week day format', withInfo()(() => (
     <DayPicker
       weekDayFormat="ddd"
