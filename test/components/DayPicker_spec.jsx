@@ -14,6 +14,7 @@ import {
   HORIZONTAL_ORIENTATION,
   VERTICAL_ORIENTATION,
   VERTICAL_SCROLLABLE,
+  NAV_POSITION_BOTTOM,
 } from '../../src/constants';
 
 
@@ -102,6 +103,32 @@ describe('DayPicker', () => {
           wrapper.setState({ monthTransition: null });
           const CalendarMonthGridComponent = wrapper.find(CalendarMonthGrid);
           expect(CalendarMonthGridComponent.prop('isAnimating')).to.equal(false);
+        });
+      });
+    });
+
+    describe('DayPickerNavigation', () => {
+      it('is rendered before CalendarMonthGrid in DayPicker_focusRegion', () => {
+        const wrapper = shallow(<DayPicker />).dive();
+        expect(wrapper.find(DayPickerNavigation)).to.have.lengthOf(1);
+        expect(
+          wrapper
+            .find('[className^="DayPicker_focusRegion"]')
+            .childAt(0)
+            .type(),
+        ).to.equal(DayPickerNavigation);
+      });
+
+      describe('navPosition === NAV_POSITION_BOTTOM', () => {
+        it('is rendered after CalendarMonthGrid in DayPicker_focusRegion', () => {
+          const wrapper = shallow(<DayPicker navPosition={NAV_POSITION_BOTTOM} />).dive();
+          expect(wrapper.find(DayPickerNavigation)).to.have.lengthOf(1);
+          expect(
+            wrapper
+              .find('[className^="DayPicker_focusRegion"]')
+              .childAt(1)
+              .type(),
+          ).to.equal(DayPickerNavigation);
         });
       });
     });

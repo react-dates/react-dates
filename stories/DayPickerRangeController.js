@@ -433,6 +433,10 @@ storiesOf('DayPickerRangeController', module)
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
       navPrev={<TestBottomPrevIcon />}
       navNext={<TestBottomNextIcon />}
+      customDayPickerNavigationStyles={{
+        display: 'flex',
+        justifyContent: 'space-between',
+      }}
     />
   )))
   .add('with outside days enabled', withInfo()(() => (

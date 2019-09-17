@@ -36,6 +36,7 @@ const propTypes = forbidExtraProps({
   // internationalization
   phrases: PropTypes.shape(getPhrasePropTypes(DayPickerNavigationPhrases)),
 
+  customStyles: PropTypes.object,
   isRTL: PropTypes.bool,
 });
 
@@ -52,11 +53,14 @@ const defaultProps = {
 
   // internationalization
   phrases: DayPickerNavigationPhrases,
+
+  customStyles: null,
   isRTL: false,
 };
 
 function DayPickerNavigation({
   css,
+  customStyles,
   disablePrev,
   disableNext,
   navPosition,
@@ -73,6 +77,7 @@ function DayPickerNavigation({
   const isVertical = orientation !== HORIZONTAL_ORIENTATION;
   const isVerticalScrollable = orientation === VERTICAL_SCROLLABLE;
   const isBottomNavPosition = navPosition === NAV_POSITION_BOTTOM;
+  const hasCustomStyles = !!customStyles;
 
   let navPrevIcon = navPrev;
   let navNextIcon = navNext;
@@ -126,7 +131,6 @@ function DayPickerNavigation({
       {...css(
         styles.DayPickerNavigation,
         isHorizontal && styles.DayPickerNavigation__horizontal,
-        isBottomNavPosition && styles.DayPickerNavigation__bottom,
         ...(isVertical ? [
           styles.DayPickerNavigation__vertical,
           isDefaultNav && styles.DayPickerNavigation__verticalDefault,
@@ -135,6 +139,11 @@ function DayPickerNavigation({
           styles.DayPickerNavigation__verticalScrollable,
           isDefaultNav && styles.DayPickerNavigation__verticalScrollableDefault,
         ] : []),
+        ...(isBottomNavPosition ? [
+          styles.DayPickerNavigation__bottom,
+          isDefaultNav && styles.DayPickerNavigation__bottomDefault,
+        ] : []),
+        hasCustomStyles && customStyles,
       )}
     >
       {!isVerticalScrollable && (
@@ -230,12 +239,6 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
     zIndex: zIndex + 2,
   },
 
-  DayPickerNavigation__bottom: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    height: 'auto',
-  },
-
   DayPickerNavigation__horizontal: {
     height: 0,
   },
@@ -253,6 +256,15 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
 
   DayPickerNavigation__verticalScrollableDefault: {
     position: 'relative',
+  },
+
+  DayPickerNavigation__bottom: {
+    height: 'auto',
+  },
+
+  DayPickerNavigation__bottomDefault: {
+    display: 'flex',
+    justifyContent: 'space-between',
   },
 
   DayPickerNavigation_button: {

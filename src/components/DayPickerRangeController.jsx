@@ -79,6 +79,7 @@ const propTypes = forbidExtraProps({
   verticalBorderSpacing: nonNegativeInteger,
   horizontalMonthPadding: nonNegativeInteger,
 
+  customDayPickerNavigationStyles: PropTypes.object,
   navPosition: NavPositionShape,
   navPrev: PropTypes.node,
   navNext: PropTypes.node,
@@ -145,6 +146,7 @@ const defaultProps = {
   initialVisibleMonth: null,
   daySize: DAY_SIZE,
 
+  customDayPickerNavigationStyles: null,
   navPosition: NAV_POSITION_TOP,
   navPrev: null,
   navNext: null,
@@ -1140,6 +1142,7 @@ export default class DayPickerRangeController extends React.PureComponent {
       monthFormat,
       renderMonthText,
       renderWeekHeaderElement,
+      customDayPickerNavigationStyles,
       navPosition,
       navPrev,
       navNext,
@@ -1207,6 +1210,7 @@ export default class DayPickerRangeController extends React.PureComponent {
         onOutsideClick={onOutsideClick}
         disablePrev={disablePrev}
         disableNext={disableNext}
+        customDayPickerNavigationStyles={customDayPickerNavigationStyles}
         navPosition={navPosition}
         navPrev={navPrev}
         navNext={navNext}
