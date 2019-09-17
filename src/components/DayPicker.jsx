@@ -72,6 +72,7 @@ const propTypes = forbidExtraProps({
   verticalBorderSpacing: nonNegativeInteger,
   horizontalMonthPadding: nonNegativeInteger,
   renderKeyboardShortcutsButton: PropTypes.func,
+  renderKeyboardShortcutsPanel: PropTypes.func,
 
   // navigation props
   disablePrev: PropTypes.bool,
@@ -134,6 +135,7 @@ export const defaultProps = {
   verticalBorderSpacing: undefined,
   horizontalMonthPadding: 13,
   renderKeyboardShortcutsButton: undefined,
+  renderKeyboardShortcutsPanel: undefined,
 
   // navigation props
   disablePrev: false,
@@ -949,6 +951,7 @@ class DayPicker extends React.PureComponent {
       renderCalendarInfo,
       renderMonthElement,
       renderKeyboardShortcutsButton,
+      renderKeyboardShortcutsPanel,
       calendarInfoPosition,
       hideKeyboardShortcutsPanel,
       onOutsideClick,
@@ -1141,6 +1144,7 @@ class DayPicker extends React.PureComponent {
                   closeKeyboardShortcutsPanel={this.closeKeyboardShortcutsPanel}
                   phrases={phrases}
                   renderKeyboardShortcutsButton={renderKeyboardShortcutsButton}
+                  renderKeyboardShortcutsPanel={renderKeyboardShortcutsPanel}
                 />
               )}
             </div>
