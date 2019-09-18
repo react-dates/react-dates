@@ -6,6 +6,12 @@
 
 ## Unreleased
 
+## 21.1.0
+
+- [fix] `DayPicker`: week headers: use the passed-in moment object’s instance, to support localy ([#1577](https://github.com/airbnb/react-dates/pull/1577))
+- [fix] Combine labelled DayPicker container elements ([#1783](https://github.com/airbnb/react-dates/pull/1783))
+- [new] Add a render function for customizable week header text ([#1787](https://github.com/airbnb/react-dates/pull/1787))
+
 ## 21.0.1
 
 - [fix] [deps] Update react-with-styles ^4.0.0 -> ^4.0.1 ([#1781](https://github.com/airbnb/react-dates/pull/1781))
