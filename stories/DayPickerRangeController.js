@@ -221,8 +221,8 @@ storiesOf('DayPickerRangeController', module)
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
-      startDateOffset={(day) => day.subtract(3, 'days')}
-      endDateOffset={(day) => day.add(3, 'days')}
+      startDateOffset={day => day.subtract(3, 'days')}
+      endDateOffset={day => day.add(3, 'days')}
     />
   )))
   .add('with 45 days range selection', withInfo()(() => (
@@ -230,8 +230,8 @@ storiesOf('DayPickerRangeController', module)
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
-      startDateOffset={(day) => day.subtract(22, 'days')}
-      endDateOffset={(day) => day.add(22, 'days')}
+      startDateOffset={day => day.subtract(22, 'days')}
+      endDateOffset={day => day.add(22, 'days')}
     />
   )))
   .add('with 4 days after today range selection', withInfo()(() => (
@@ -239,7 +239,7 @@ storiesOf('DayPickerRangeController', module)
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
-      endDateOffset={(day) => day.add(4, 'days')}
+      endDateOffset={day => day.add(4, 'days')}
     />
   )))
   .add('with current week range selection', withInfo()(() => (
@@ -247,8 +247,8 @@ storiesOf('DayPickerRangeController', module)
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
-      startDateOffset={(day) => day.startOf('week')}
-      endDateOffset={(day) => day.endOf('week')}
+      startDateOffset={day => day.startOf('week')}
+      endDateOffset={day => day.endOf('week')}
     />
   )))
   .add('with custom inputs', withInfo()(() => (
@@ -437,7 +437,7 @@ storiesOf('DayPickerRangeController', module)
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
-      isOutsideRange={(day) => !isInclusivelyAfterDay(day, moment())
+      isOutsideRange={day => !isInclusivelyAfterDay(day, moment())
         || isInclusivelyAfterDay(day, moment().add(2, 'weeks'))}
     />
   )))
@@ -462,7 +462,7 @@ storiesOf('DayPickerRangeController', module)
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
-      isDayBlocked={(day) => moment.weekdays(day.weekday()) === 'Friday'}
+      isDayBlocked={day => moment.weekdays(day.weekday()) === 'Friday'}
     />
   )))
   .add('with navigation blocked (minDate and maxDate)', withInfo()(() => (
@@ -479,7 +479,7 @@ storiesOf('DayPickerRangeController', module)
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
-      renderDayContents={(day) => day.format('ddd')}
+      renderDayContents={day => day.format('ddd')}
     />
   )))
   .add('with info panel', withInfo()(() => (

@@ -219,8 +219,8 @@ class DayPickerKeyboardShortcuts extends React.PureComponent {
             </span>
           </button>
         )}
-        {showKeyboardShortcutsPanel
-          && (renderKeyboardShortcutsPanel ? (
+        {showKeyboardShortcutsPanel && (
+          renderKeyboardShortcutsPanel ? (
             renderKeyboardShortcutsPanel({
               closeButtonAriaLabel: phrases.hideKeyboardShortcutsPanel,
               keyboardShortcuts: this.keyboardShortcuts,
@@ -272,7 +272,8 @@ class DayPickerKeyboardShortcuts extends React.PureComponent {
                 ))}
               </ul>
             </div>
-          ))}
+          )
+        )}
       </div>
     );
   }

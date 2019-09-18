@@ -4491,5 +4491,21 @@ describe('DayPickerRangeController', () => {
           .eql(testRenderKeyboardShortcutsButton);
       });
     });
+
+    describe.only('renderKeyboardShortcutsPanel prop', () => {
+      it('passes down custom panel render function', () => {
+        const testRenderKeyboardShortcutsPanel = () => {};
+        const wrapper = shallow(
+          <DayPickerRangeController
+            renderKeyboardShortcutsPanel={testRenderKeyboardShortcutsPanel}
+          />,
+        );
+        const dayPicker = wrapper.find(DayPicker);
+        expect(dayPicker).to.have.lengthOf(1);
+        expect(dayPicker.prop('renderKeyboardShortcutsPanel'))
+          .to
+          .eql(testRenderKeyboardShortcutsPanel);
+      });
+    });
   });
 });

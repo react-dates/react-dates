@@ -135,6 +135,18 @@ describe('DayPicker', () => {
           .to
           .eql(testRenderKeyboardShortcutsButton);
       });
+
+      it('component exists with custom panel render function if renderKeyboardShortcutsPanel is passed down', () => {
+        const testRenderKeyboardShortcutsPanel = () => {};
+        const wrapper = shallow(
+          <DayPicker renderKeyboardShortcutsPanel={testRenderKeyboardShortcutsPanel} />,
+        ).dive();
+        const dayPickerKeyboardShortcuts = wrapper.find(DayPickerKeyboardShortcuts);
+        expect(dayPickerKeyboardShortcuts).to.have.lengthOf(1);
+        expect(dayPickerKeyboardShortcuts.prop('renderKeyboardShortcutsPanel'))
+          .to
+          .eql(testRenderKeyboardShortcutsPanel);
+      });
     });
   });
 
