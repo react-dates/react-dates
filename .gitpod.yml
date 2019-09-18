@@ -1,0 +1,8 @@
+tasks:
+  - init: npm install
+    command: npm run storybook 
+
+# Ports to expose on workspace startup (optional)
+ports:
+  - port: 6006
+    onOpen: open-browser
