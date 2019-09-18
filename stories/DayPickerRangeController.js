@@ -438,7 +438,8 @@ storiesOf('DayPickerRangeController', module)
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
       isOutsideRange={day => !isInclusivelyAfterDay(day, moment())
-        || isInclusivelyAfterDay(day, moment().add(2, 'weeks'))}
+        || isInclusivelyAfterDay(day, moment().add(2, 'weeks'))
+      }
     />
   )))
   .add('with some blocked dates', withInfo()(() => (
@@ -446,7 +447,7 @@ storiesOf('DayPickerRangeController', module)
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
-      isDayBlocked={(day1) => datesList.some((day2) => isSameDay(day1, day2))}
+      isDayBlocked={day1 => datesList.some(day2 => isSameDay(day1, day2))}
     />
   )))
   .add('with some highlighted dates', withInfo()(() => (
@@ -454,7 +455,7 @@ storiesOf('DayPickerRangeController', module)
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
-      isDayHighlighted={(day1) => datesList.some((day2) => isSameDay(day1, day2))}
+      isDayHighlighted={day1 => datesList.some(day2 => isSameDay(day1, day2))}
     />
   )))
   .add('blocks fridays', withInfo()(() => (
@@ -541,7 +542,7 @@ storiesOf('DayPickerRangeController', module)
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
       getMinNightsForHoverDate={() => 2}
-      isDayBlocked={(day1) => datesList.some((day2) => isSameDay(day1, day2))}
+      isDayBlocked={day1 => datesList.some(day2 => isSameDay(day1, day2))}
     />
   )))
   .add('with custom keyboard shortcuts button', withInfo()(() => (
