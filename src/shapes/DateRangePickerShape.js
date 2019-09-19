@@ -87,6 +87,8 @@ export default {
   renderCalendarDay: PropTypes.func,
   renderDayContents: PropTypes.func,
   minimumNights: PropTypes.number,
+  minDate: momentPropTypes.momentObj,
+  maxDate: momentPropTypes.momentObj,
   enableOutsideDays: PropTypes.bool,
   isDayBlocked: PropTypes.func,
   isOutsideRange: PropTypes.func,
