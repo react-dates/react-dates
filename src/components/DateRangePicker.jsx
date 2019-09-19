@@ -115,6 +115,8 @@ const defaultProps = {
   isDayBlocked: () => false,
   isOutsideRange: (day) => !isInclusivelyAfterDay(day, moment()),
   isDayHighlighted: () => false,
+  minDate: undefined,
+  maxDate: undefined,
 
   // internationalization
   displayFormat: () => moment.localeData().longDateFormat('L'),
@@ -418,6 +420,8 @@ class DateRangePicker extends React.PureComponent {
       startDateOffset,
       endDate,
       endDateOffset,
+      minDate,
+      maxDate,
       minimumNights,
       keepOpenOnDateSelect,
       renderCalendarDay,
@@ -497,6 +501,8 @@ class DateRangePicker extends React.PureComponent {
           startDateOffset={startDateOffset}
           endDate={endDate}
           endDateOffset={endDateOffset}
+          minDate={minDate}
+          maxDate={maxDate}
           monthFormat={monthFormat}
           renderMonthText={renderMonthText}
           renderWeekHeaderElement={renderWeekHeaderElement}
