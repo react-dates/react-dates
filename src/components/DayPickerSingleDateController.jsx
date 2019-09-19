@@ -64,7 +64,7 @@ const propTypes = forbidExtraProps({
   transitionDuration: nonNegativeInteger,
   horizontalMonthPadding: nonNegativeInteger,
 
-  customDayPickerNavigationStyles: PropTypes.object,
+  dayPickerNavigationInlineStyles: PropTypes.object,
   navPosition: NavPositionShape,
   navPrev: PropTypes.node,
   navNext: PropTypes.node,
@@ -123,7 +123,7 @@ const defaultProps = {
   transitionDuration: undefined,
   horizontalMonthPadding: 13,
 
-  customDayPickerNavigationStyles: null,
+  dayPickerNavigationInlineStyles: null,
   navPosition: NAV_POSITION_TOP,
   navPrev: null,
   navNext: null,
@@ -579,7 +579,7 @@ export default class DayPickerSingleDateController extends React.PureComponent {
       monthFormat,
       renderMonthText,
       renderWeekHeaderElement,
-      customDayPickerNavigationStyles,
+      dayPickerNavigationInlineStyles,
       navPosition,
       navPrev,
       navNext,
@@ -634,7 +634,7 @@ export default class DayPickerSingleDateController extends React.PureComponent {
         initialVisibleMonth={() => currentMonth}
         firstDayOfWeek={firstDayOfWeek}
         onOutsideClick={onOutsideClick}
-        customDayPickerNavigationStyles={customDayPickerNavigationStyles}
+        dayPickerNavigationInlineStyles={dayPickerNavigationInlineStyles}
         navPosition={navPosition}
         navPrev={navPrev}
         navNext={navNext}

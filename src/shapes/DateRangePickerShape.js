@@ -79,7 +79,7 @@ export default {
   horizontalMonthPadding: nonNegativeInteger,
 
   // navigation related props
-  customDayPickerNavigationStyles: PropTypes.object,
+  dayPickerNavigationInlineStyles: PropTypes.object,
   navPosition: NavPositionShape,
   navPrev: PropTypes.node,
   navNext: PropTypes.node,

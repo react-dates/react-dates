@@ -36,7 +36,7 @@ const propTypes = forbidExtraProps({
   // internationalization
   phrases: PropTypes.shape(getPhrasePropTypes(DayPickerNavigationPhrases)),
 
-  customStyles: PropTypes.object,
+  inlineStyles: PropTypes.object,
   isRTL: PropTypes.bool,
 });
 
@@ -54,13 +54,13 @@ const defaultProps = {
   // internationalization
   phrases: DayPickerNavigationPhrases,
 
-  customStyles: null,
+  inlineStyles: null,
   isRTL: false,
 };
 
 function DayPickerNavigation({
   css,
-  customStyles,
+  inlineStyles,
   disablePrev,
   disableNext,
   navPosition,
@@ -77,7 +77,7 @@ function DayPickerNavigation({
   const isVertical = orientation !== HORIZONTAL_ORIENTATION;
   const isVerticalScrollable = orientation === VERTICAL_SCROLLABLE;
   const isBottomNavPosition = navPosition === NAV_POSITION_BOTTOM;
-  const hasCustomStyles = !!customStyles;
+  const hasInlineStyles = !!inlineStyles;
 
   let navPrevIcon = navPrev;
   let navNextIcon = navNext;
@@ -143,7 +143,7 @@ function DayPickerNavigation({
           styles.DayPickerNavigation__bottom,
           isDefaultNav && styles.DayPickerNavigation__bottomDefault,
         ] : []),
-        hasCustomStyles && customStyles,
+        hasInlineStyles && inlineStyles,
       )}
     >
       {!isVerticalScrollable && (

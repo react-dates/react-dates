@@ -90,7 +90,7 @@ const defaultProps = {
   horizontalMonthPadding: 13,
 
   // navigation related props
-  customDayPickerNavigationStyles: null,
+  dayPickerNavigationInlineStyles: null,
   navPosition: NAV_POSITION_TOP,
   navPrev: null,
   navNext: null,
@@ -398,7 +398,7 @@ class SingleDatePicker extends React.PureComponent {
       numberOfMonths,
       orientation,
       monthFormat,
-      customDayPickerNavigationStyles,
+      dayPickerNavigationInlineStyles,
       navPosition,
       navPrev,
       navNext,
@@ -481,7 +481,7 @@ class SingleDatePicker extends React.PureComponent {
           keepOpenOnDateSelect={keepOpenOnDateSelect}
           hideKeyboardShortcutsPanel={hideKeyboardShortcutsPanel}
           initialVisibleMonth={initialVisibleMonth}
-          customDayPickerNavigationStyles={customDayPickerNavigationStyles}
+          dayPickerNavigationInlineStyles={dayPickerNavigationInlineStyles}
           navPosition={navPosition}
           navPrev={navPrev}
           navNext={navNext}

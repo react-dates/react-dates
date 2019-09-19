@@ -78,7 +78,7 @@ const propTypes = forbidExtraProps({
   renderKeyboardShortcutsPanel: PropTypes.func,
 
   // navigation props
-  customDayPickerNavigationStyles: PropTypes.object,
+  dayPickerNavigationInlineStyles: PropTypes.object,
   disablePrev: PropTypes.bool,
   disableNext: PropTypes.bool,
   navPosition: NavPositionShape,
@@ -143,7 +143,7 @@ export const defaultProps = {
   renderKeyboardShortcutsPanel: undefined,
 
   // navigation props
-  customDayPickerNavigationStyles: null,
+  dayPickerNavigationInlineStyles: null,
   disablePrev: false,
   disableNext: false,
   navPosition: NAV_POSITION_TOP,
@@ -840,7 +840,7 @@ class DayPicker extends React.PureComponent {
 
   renderNavigation() {
     const {
-      customDayPickerNavigationStyles,
+      dayPickerNavigationInlineStyles,
       disablePrev,
       disableNext,
       navPosition,
@@ -862,9 +862,9 @@ class DayPicker extends React.PureComponent {
 
     return (
       <DayPickerNavigation
-        customStyles={customDayPickerNavigationStyles}
         disablePrev={disablePrev}
         disableNext={disableNext}
+        inlineStyles={dayPickerNavigationInlineStyles}
         onPrevMonthClick={this.onPrevMonthClick}
         onNextMonthClick={onNextMonthClick}
         navPosition={navPosition}
