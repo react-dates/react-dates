@@ -591,7 +591,7 @@ class DayPicker extends React.PureComponent {
 
     const weekHeaders = [];
     for (let i = 0; i < 7; i += 1) {
-      weekHeaders.push(currentMonth.day((i + firstDayOfWeek) % 7).format(weekDayFormat));
+      weekHeaders.push(currentMonth.clone().day((i + firstDayOfWeek) % 7).format(weekDayFormat));
     }
 
     return weekHeaders;
