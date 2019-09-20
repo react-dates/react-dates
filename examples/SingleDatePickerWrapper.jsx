@@ -15,6 +15,8 @@ const propTypes = {
   // example props for the demo
   autoFocus: PropTypes.bool,
   initialDate: momentPropTypes.momentObj,
+  minDate: momentPropTypes.momentObj,
+  maxDate: momentPropTypes.momentObj,
 
   ...omit(SingleDatePickerShape, [
     'date',
@@ -28,6 +30,8 @@ const defaultProps = {
   // example props for the demo
   autoFocus: false,
   initialDate: null,
+  minDate: null,
+  maxDate: null,
 
   // input related props
   id: 'date',

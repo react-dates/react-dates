@@ -18,6 +18,8 @@ const propTypes = forbidExtraProps({
   autoFocus: PropTypes.bool,
   initialDate: momentPropTypes.momentObj,
   showInput: PropTypes.bool,
+  minDate: momentPropTypes.momentObj,
+  maxDate: momentPropTypes.momentObj,
 
   keepOpenOnDateSelect: PropTypes.bool,
   isOutsideRange: PropTypes.func,
@@ -52,6 +54,8 @@ const defaultProps = {
   autoFocus: false,
   initialDate: null,
   showInput: false,
+  minDate: null,
+  maxDate: null,
 
   // day presentation and interaction related props
   renderCalendarDay: undefined,
