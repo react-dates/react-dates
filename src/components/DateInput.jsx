@@ -126,6 +126,10 @@ class DateInput extends React.PureComponent {
     if (focused && isFocused) {
       this.inputRef.focus();
     }
+
+    if (!focused) {
+      this.inputRef.blur();
+    }
   }
 
   onChange(e) {
