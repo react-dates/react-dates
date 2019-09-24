@@ -88,6 +88,7 @@ const propTypes = forbidExtraProps({
   // month props
   renderMonthText: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'),
   renderMonthElement: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'),
+  renderWeekHeaderElement: PropTypes.func,
 
   // day props
   modifiers: PropTypes.objectOf(PropTypes.objectOf(ModifiersShape)),
@@ -149,6 +150,7 @@ export const defaultProps = {
   // month props
   renderMonthText: null,
   renderMonthElement: null,
+  renderWeekHeaderElement: null,
 
   // day props
   modifiers: {},
@@ -582,6 +584,19 @@ class DayPicker extends React.PureComponent {
     return firstDayOfWeek;
   }
 
+  getWeekHeaders() {
+    const { weekDayFormat } = this.props;
+    const { currentMonth } = this.state;
+    const firstDayOfWeek = this.getFirstDayOfWeek();
+
+    const weekHeaders = [];
+    for (let i = 0; i < 7; i += 1) {
+      weekHeaders.push(currentMonth.clone().day((i + firstDayOfWeek) % 7).format(weekDayFormat));
+    }
+
+    return weekHeaders;
+  }
+
   getFirstVisibleIndex() {
     const { orientation } = this.props;
     const { monthTransition } = this.state;
@@ -854,12 +869,15 @@ class DayPicker extends React.PureComponent {
       daySize,
       horizontalMonthPadding,
       orientation,
-      weekDayFormat,
+      renderWeekHeaderElement,
       styles,
       css,
     } = this.props;
+
     const { calendarMonthWidth } = this.state;
+
     const verticalScrollable = orientation === VERTICAL_SCROLLABLE;
+
     const horizontalStyle = {
       left: index * calendarMonthWidth,
     };
@@ -874,16 +892,12 @@ class DayPicker extends React.PureComponent {
       weekHeaderStyle = verticalStyle;
     }
 
-    const firstDayOfWeek = this.getFirstDayOfWeek();
-
-    const header = [];
-    for (let i = 0; i < 7; i += 1) {
-      header.push((
-        <li key={i} {...css(styles.DayPicker_weekHeader_li, { width: daySize })}>
-          <small>{moment().day((i + firstDayOfWeek) % 7).format(weekDayFormat)}</small>
-        </li>
-      ));
-    }
+    const weekHeaders = this.getWeekHeaders();
+    const header = weekHeaders.map((day) => (
+      <li key={day} {...css(styles.DayPicker_weekHeader_li, { width: daySize })}>
+        {renderWeekHeaderElement ? renderWeekHeaderElement(day) : <small>{day}</small>}
+      </li>
+    ));
 
     return (
       <div
@@ -1028,9 +1042,6 @@ class DayPicker extends React.PureComponent {
 
     return (
       <div
-        role="application"
-        aria-roledescription={phrases.roleDescription}
-        aria-label={phrases.calendarLabel}
         {...css(
           styles.DayPicker,
           isHorizontal && styles.DayPicker__horizontal,
@@ -1069,8 +1080,10 @@ class DayPicker extends React.PureComponent {
               onClick={(e) => { e.stopPropagation(); }}
               onKeyDown={this.onKeyDown}
               onMouseUp={() => { this.setState({ withMouseInteractions: true }); }}
-              role="region"
               tabIndex={-1}
+              role="application"
+              aria-roledescription={phrases.roleDescription}
+              aria-label={phrases.calendarLabel}
             >
               {!verticalScrollable && this.renderNavigation()}
 

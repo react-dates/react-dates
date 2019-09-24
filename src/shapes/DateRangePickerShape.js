@@ -53,6 +53,7 @@ export default {
   // calendar presentation and interaction related props
   renderMonthText: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'),
   renderMonthElement: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'),
+  renderWeekHeaderElement: PropTypes.func,
   orientation: OrientationShape,
   anchorDirection: anchorDirectionShape,
   openDirection: openDirectionShape,
@@ -86,6 +87,8 @@ export default {
   renderCalendarDay: PropTypes.func,
   renderDayContents: PropTypes.func,
   minimumNights: PropTypes.number,
+  minDate: momentPropTypes.momentObj,
+  maxDate: momentPropTypes.momentObj,
   enableOutsideDays: PropTypes.bool,
   isDayBlocked: PropTypes.func,
   isOutsideRange: PropTypes.func,
