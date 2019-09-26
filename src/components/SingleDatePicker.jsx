@@ -328,9 +328,17 @@ class SingleDatePicker extends React.PureComponent {
     if (!withPortal && !withFullScreenPortal) {
       const containerRect = this.dayPickerContainer.getBoundingClientRect();
       const currentOffset = dayPickerContainerStyles[anchorDirection] || 0;
-      const containerEdge = isAnchoredLeft
+      let containerEdge = isAnchoredLeft
         ? containerRect[ANCHOR_RIGHT]
         : containerRect[ANCHOR_LEFT];
+
+      // When the responsive container styles are calculated for the first time they do not account
+      // for the transform of the detached container styles because it is not applied yet
+      if (appendToBody && !dayPickerContainerStyles.transform) {
+        containerEdge = isAnchoredLeft
+          ? this.container.getBoundingClientRect().left + containerRect.width
+          : this.container.getBoundingClientRect().left;
+      }
 
       this.setState({
         dayPickerContainerStyles: {
