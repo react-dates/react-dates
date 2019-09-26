@@ -5,6 +5,8 @@ import { shallow } from 'enzyme';
 
 import DayPickerNavigation from '../../src/components/DayPickerNavigation';
 import { VERTICAL_SCROLLABLE } from '../../src/constants';
+import RightArrow from '../../src/components/RightArrow';
+import LeftArrow from '../../src/components/LeftArrow';
 
 describe('DayPickerNavigation', () => {
   describe('#render', () => {
@@ -45,6 +47,16 @@ describe('DayPickerNavigation', () => {
       const nextMonthButton = wrapper.find('#navNext');
       expect(prevMonthButton.prop('tabIndex')).to.equal('0');
       expect(nextMonthButton.prop('tabIndex')).to.equal('0');
+    });
+
+    it('uses RightArrow as the default prev icon for RTL', () => {
+      const wrapper = shallow(<DayPickerNavigation isRTL />).dive();
+      expect(wrapper.childAt(0).find(RightArrow)).to.have.lengthOf(1);
+    });
+
+    it('uses LeftArrow as the default next icon for RTL', () => {
+      const wrapper = shallow(<DayPickerNavigation isRTL />).dive();
+      expect(wrapper.childAt(1).find(LeftArrow)).to.have.lengthOf(1);
     });
   });
 
