@@ -12,7 +12,7 @@ import isInclusivelyAfterDay from '../src/utils/isInclusivelyAfterDay';
 import CloseButton from '../src/components/CloseButton';
 import KeyboardShortcutRow from '../src/components/KeyboardShortcutRow';
 
-import { VERTICAL_ORIENTATION, VERTICAL_SCROLLABLE } from '../src/constants';
+import { NAV_POSITION_BOTTOM, VERTICAL_ORIENTATION, VERTICAL_SCROLLABLE } from '../src/constants';
 
 import DayPickerRangeControllerWrapper from '../examples/DayPickerRangeControllerWrapper';
 
@@ -60,6 +60,36 @@ const TestNextIcon = () => (
       position: 'absolute',
       right: '22px',
       top: '20px',
+    }}
+    tabIndex="0"
+  >
+    Next
+  </div>
+);
+
+const TestBottomPrevIcon = () => (
+  <div
+    style={{
+      border: '1px solid #dce0e0',
+      backgroundColor: '#fff',
+      color: '#484848',
+      padding: '3px',
+      margin: '-10px 22px 30px',
+    }}
+    tabIndex="0"
+  >
+    Prev
+  </div>
+);
+
+const TestBottomNextIcon = () => (
+  <div
+    style={{
+      border: '1px solid #dce0e0',
+      backgroundColor: '#fff',
+      color: '#484848',
+      padding: '3px',
+      margin: '-10px 22px 30px',
     }}
     tabIndex="0"
   >
@@ -385,6 +415,28 @@ storiesOf('DayPickerRangeController', module)
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
       navPrev={<TestPrevIcon />}
       navNext={<TestNextIcon />}
+    />
+  )))
+  .add('with month navigation positioned at the bottom', withInfo()(() => (
+    <DayPickerRangeControllerWrapper
+      navPosition={NAV_POSITION_BOTTOM}
+      onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
+      onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
+      onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
+    />
+  )))
+  .add('with custom month navigation positioned at the bottom', withInfo()(() => (
+    <DayPickerRangeControllerWrapper
+      navPosition={NAV_POSITION_BOTTOM}
+      onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
+      onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
+      onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
+      navPrev={<TestBottomPrevIcon />}
+      navNext={<TestBottomNextIcon />}
+      dayPickerNavigationInlineStyles={{
+        display: 'flex',
+        justifyContent: 'space-between',
+      }}
     />
   )))
   .add('with outside days enabled', withInfo()(() => (

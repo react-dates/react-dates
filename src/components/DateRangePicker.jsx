@@ -35,6 +35,7 @@ import {
   INFO_POSITION_BOTTOM,
   FANG_HEIGHT_PX,
   DEFAULT_VERTICAL_SPACING,
+  NAV_POSITION_TOP,
 } from '../constants';
 
 const propTypes = forbidExtraProps({
@@ -98,6 +99,8 @@ const defaultProps = {
   horizontalMonthPadding: undefined,
 
   // navigation related props
+  dayPickerNavigationInlineStyles: null,
+  navPosition: NAV_POSITION_TOP,
   navPrev: null,
   navNext: null,
 
@@ -405,6 +408,8 @@ class DateRangePicker extends React.PureComponent {
       monthFormat,
       renderMonthText,
       renderWeekHeaderElement,
+      dayPickerNavigationInlineStyles,
+      navPosition,
       navPrev,
       navNext,
       onPrevMonthClick,
@@ -510,6 +515,8 @@ class DateRangePicker extends React.PureComponent {
           daySize={daySize}
           initialVisibleMonth={initialVisibleMonthThunk}
           hideKeyboardShortcutsPanel={hideKeyboardShortcutsPanel}
+          dayPickerNavigationInlineStyles={dayPickerNavigationInlineStyles}
+          navPosition={navPosition}
           navPrev={navPrev}
           navNext={navNext}
           minimumNights={minimumNights}
