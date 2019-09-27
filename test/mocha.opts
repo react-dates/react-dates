@@ -1,5 +1,3 @@
---extension js
---extension jsx
 --require @babel/register
 --require airbnb-js-shims
---recursive
+test/**/*.{js,jsx}

@@ -4,6 +4,35 @@
 - []  ([#](https://github.com/airbnb/react-dates/pull/))
 -->
 
+## Unreleased
+
+## 21.1.0
+
+- [fix] `DayPicker`: week headers: use the passed-in moment object’s instance, to support localy ([#1577](https://github.com/airbnb/react-dates/pull/1577))
+- [fix] Combine labelled DayPicker container elements ([#1783](https://github.com/airbnb/react-dates/pull/1783))
+- [new] Add a render function for customizable week header text ([#1787](https://github.com/airbnb/react-dates/pull/1787))
+
+## 21.0.1
+
+- [fix] [deps] Update react-with-styles ^4.0.0 -> ^4.0.1 ([#1781](https://github.com/airbnb/react-dates/pull/1781))
+
+## 21.0.0
+
+- [breaking] [deps] Update react-with-styles and other deps ([#1761](https://github.com/airbnb/react-dates/pull/1761)
+- [new] [deps] Update dependencies related to react-with-styles ([#1775](https://github.com/airbnb/react-dates/pull/1775))
+- [new] `DayPickerSingleDateController`: Add onMultiplyScrollableMonths ([#1770](https://github.com/airbnb/react-dates/pull/1770))
+- [dev] Fix moment date formats ([#1767](https://github.com/airbnb/react-dates/pull/1767))
+- [dev] Fix addons webpack loader, Fix tests ([#1764](https://github.com/airbnb/react-dates/pull/1764))
+- [dev] build: fix linting (refs eslint/eslint#12119)
+- [new] [deps] update `@babel/runtime`, `airbnb-prop-types`, `object.values`, `prop-types`, `react-outside-click-handler`, `react-portal`
+- [dev] [deps] update `@babel/*`, `@storybook/*`, `babel-plugin-inline-svg`, `babel-plugin-istanbul`, `babel-preset-airbnb`, `eslint-config-airbnb` to v18 (plus peer deps), `eslint` to v6; `eslint-plugin-react-with-styles`, `karma`, `karma-firefox-launcher`, `mocha`, `safe-publish-latest`, `sass-loader`, `sinon`, `sinon-sandbox`, `coveralls`, `enzyme-adapter-react-helper`
+- [fix] Remove all direct imports of css in favor of injected prop ([#1758](https://github.com/airbnb/react-dates/pull/1758))
+
+## 20.3.0
+- [fix] Optimize setState dayPickerContainerStyles in responsivizePickerPosition ([#1735](https://github.com/airbnb/react-dates/pull/1735))
+- [fix] Stop calendar blinking on DateRangePickerInput focus switch (fixes #1523) ([#1553](https://github.com/airbnb/react-dates/pull/1553))
+- [new] [a11y] Add `aria-roledescription` ([#1746](https://github.com/airbnb/react-dates/pull/1746))
+
 ## 20.2.5
 - [fix] Defer day focusing until next animation frame ([#1707](https://github.com/airbnb/react-dates/pull/1707))
 - [fix] Fix startDate style (@mmarkelov, [#1710](https://github.com/airbnb/react-dates/pull/1710))
