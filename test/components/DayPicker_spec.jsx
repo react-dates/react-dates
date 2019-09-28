@@ -14,6 +14,7 @@ import {
   HORIZONTAL_ORIENTATION,
   VERTICAL_ORIENTATION,
   VERTICAL_SCROLLABLE,
+  NAV_POSITION_BOTTOM,
 } from '../../src/constants';
 
 
@@ -36,6 +37,23 @@ describe('DayPicker', () => {
         const weekHeaders = wrapper.find('.DayPicker__week-header');
         weekHeaders.forEach((weekHeader) => {
           expect(weekHeader.find('li')).to.have.lengthOf(7);
+        });
+      });
+
+      describe('props.renderWeekHeaderElement', () => {
+        it('there are 7 custom elements on each .DayPicker__week-header class', () => {
+          const testWeekHeaderClassName = 'test-week-header';
+          const wrapper = shallow(
+            <DayPicker
+              renderWeekHeaderElement={
+                (day) => (<strong className={testWeekHeaderClassName}>{day}</strong>)
+              }
+            />,
+          ).dive();
+          const weekHeaders = wrapper.find('.DayPicker__week-header');
+          weekHeaders.forEach((weekHeader) => {
+            expect(weekHeader.find(`.${testWeekHeaderClassName}`)).to.have.lengthOf(7);
+          });
         });
       });
 
@@ -89,6 +107,32 @@ describe('DayPicker', () => {
       });
     });
 
+    describe('DayPickerNavigation', () => {
+      it('is rendered before CalendarMonthGrid in DayPicker_focusRegion', () => {
+        const wrapper = shallow(<DayPicker />).dive();
+        expect(wrapper.find(DayPickerNavigation)).to.have.lengthOf(1);
+        expect(
+          wrapper
+            .find('[className^="DayPicker_focusRegion"]')
+            .childAt(0)
+            .type(),
+        ).to.equal(DayPickerNavigation);
+      });
+
+      describe('navPosition === NAV_POSITION_BOTTOM', () => {
+        it('is rendered after CalendarMonthGrid in DayPicker_focusRegion', () => {
+          const wrapper = shallow(<DayPicker navPosition={NAV_POSITION_BOTTOM} />).dive();
+          expect(wrapper.find(DayPickerNavigation)).to.have.lengthOf(1);
+          expect(
+            wrapper
+              .find('[className^="DayPicker_focusRegion"]')
+              .childAt(1)
+              .type(),
+          ).to.equal(DayPickerNavigation);
+        });
+      });
+    });
+
     describe('DayPickerKeyboardShortcuts', () => {
       it('component exists if state.isTouchDevice is false and hideKeyboardShortcutsPanel is false', () => {
         const wrapper = shallow(<DayPicker hideKeyboardShortcutsPanel={false} />).dive();
@@ -117,6 +161,18 @@ describe('DayPicker', () => {
         expect(dayPickerKeyboardShortcuts.prop('renderKeyboardShortcutsButton'))
           .to
           .eql(testRenderKeyboardShortcutsButton);
+      });
+
+      it('component exists with custom panel render function if renderKeyboardShortcutsPanel is passed down', () => {
+        const testRenderKeyboardShortcutsPanel = () => {};
+        const wrapper = shallow(
+          <DayPicker renderKeyboardShortcutsPanel={testRenderKeyboardShortcutsPanel} />,
+        ).dive();
+        const dayPickerKeyboardShortcuts = wrapper.find(DayPickerKeyboardShortcuts);
+        expect(dayPickerKeyboardShortcuts).to.have.lengthOf(1);
+        expect(dayPickerKeyboardShortcuts.prop('renderKeyboardShortcutsPanel'))
+          .to
+          .eql(testRenderKeyboardShortcutsPanel);
       });
     });
   });
