@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
-import { withStyles, withStylesPropTypes } from 'react-with-styles';
+import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 
 import { SingleDatePickerInputPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
@@ -95,7 +95,6 @@ const defaultProps = {
 function SingleDatePickerInput({
   id,
   children,
-  css,
   placeholder,
   ariaLabel,
   displayValue,

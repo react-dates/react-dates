@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { withStyles, withStylesPropTypes } from 'react-with-styles';
+import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 import { Portal } from 'react-portal';
 import { forbidExtraProps } from 'airbnb-prop-types';
 import { addEventListener } from 'consolidated-events';
@@ -398,7 +398,6 @@ class DateRangePicker extends React.PureComponent {
   renderDayPicker() {
     const {
       anchorDirection,
-      css,
       openDirection,
       isDayBlocked,
       isDayHighlighted,
@@ -559,7 +558,6 @@ class DateRangePicker extends React.PureComponent {
 
   render() {
     const {
-      css,
       startDate,
       startDateId,
       startDatePlaceholderText,
