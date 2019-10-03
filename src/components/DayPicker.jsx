@@ -1145,6 +1145,11 @@ class DayPicker extends React.PureComponent {
                 {verticalScrollable && this.renderNavigation()}
               </div>
 
+              <div {...css(styles.DayPicker_CalendarFooter)}>
+                <p {...css(styles.DayPicker_CalendarFooterText)} onClick={() => this.props.onDatesChange({ startDate: moment().subtract(13, 'days'), endDate: moment() })}>Last 14 days</p>
+                <p {...css(styles.DayPicker_CalendarFooterText)} onClick={() => this.props.onDatesChange({ startDate: moment().subtract(29, 'days'), endDate: moment() })} >Last 30 days</p>
+                <p {...css(styles.DayPicker_CalendarFooterText)} onClick={() => this.props.onDatesChange({ startDate: moment().subtract(59, 'days'), endDate: moment() })}>Last 60 days</p>
+              </div>
               {!verticalScrollable
                 && navPosition === NAV_POSITION_BOTTOM
                 && this.renderNavigation()}
@@ -1223,6 +1228,15 @@ export default withStyles(({
     outline: 'none',
   },
 
+  DayPicker_CalendarFooter: {
+    display: 'flex',
+    margin: '25px',
+    borderTop: '1px solid rgba(0, 0, 0, 0.1)',
+  },
+  DayPicker_CalendarFooterText: {
+    cursor: 'pointer',
+    marginRight: '30px',
+  },
   DayPicker_calendarInfo__horizontal: {
     display: 'inline-block',
     verticalAlign: 'top',

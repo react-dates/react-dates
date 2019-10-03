@@ -248,16 +248,6 @@ function DateRangePickerInput({
 
       {children}
 
-      {
-        <div
-          {...css(styles.DateRangePickerInput_arrow)}
-          aria-hidden="true"
-          role="presentation"
-        >
-          {arrowIcon}
-        </div>
-      }
-
       <DateInput
         id={endDateId}
         placeholder={endDatePlaceholderText}
@@ -321,7 +311,7 @@ export default withStyles(({ reactDates: { border, color, sizing } }) => ({
     borderColor: color.border,
     borderWidth: border.pickerInput.borderWidth,
     borderStyle: border.pickerInput.borderStyle,
-    borderRadius: border.pickerInput.borderRadius,
+    borderRadius: '20px',
   },
 
   DateRangePickerInput__rtl: {
