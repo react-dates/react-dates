@@ -189,10 +189,7 @@ function DateRangePickerInput(_ref) {
     verticalSpacing: verticalSpacing,
     small: small,
     regular: regular
-  }), children, React.createElement("div", _extends({}, css(styles.DateRangePickerInput_arrow), {
-    "aria-hidden": "true",
-    role: "presentation"
-  }), arrowIcon), React.createElement(DateInput, {
+  }), children, React.createElement(DateInput, {
     id: endDateId,
     placeholder: endDatePlaceholderText,
     ariaLabel: endDateAriaLabel,
@@ -241,7 +238,7 @@ export default withStyles(function (_ref2) {
       borderColor: color.border,
       borderWidth: border.pickerInput.borderWidth,
       borderStyle: border.pickerInput.borderStyle,
-      borderRadius: border.pickerInput.borderRadius
+      borderRadius: '20px'
     },
     DateRangePickerInput__rtl: {
       direction: noflip('rtl')

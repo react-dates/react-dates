@@ -57,6 +57,7 @@ const propTypes = forbidExtraProps({
 
   // calendar presentation props
   enableOutsideDays: PropTypes.bool,
+  onDatesChange: PropTypes.func,
   numberOfMonths: PropTypes.number,
   orientation: ScrollableOrientationShape,
   withPortal: PropTypes.bool,
@@ -123,6 +124,7 @@ export const defaultProps = {
   // calendar presentation props
   enableOutsideDays: false,
   numberOfMonths: 2,
+  onDatesChange: () => {},
   orientation: HORIZONTAL_ORIENTATION,
   withPortal: false,
   onOutsideClick() {},

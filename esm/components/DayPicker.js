@@ -42,6 +42,7 @@ var YEAR_SELECTION_TRANSITION = 'year_selection';
 var propTypes = process.env.NODE_ENV !== "production" ? forbidExtraProps(_objectSpread({}, withStylesPropTypes, {
   // calendar presentation props
   enableOutsideDays: PropTypes.bool,
+  onDatesChange: PropTypes.func,
   numberOfMonths: PropTypes.number,
   orientation: ScrollableOrientationShape,
   withPortal: PropTypes.bool,
@@ -103,6 +104,7 @@ export var defaultProps = {
   // calendar presentation props
   enableOutsideDays: false,
   numberOfMonths: 2,
+  onDatesChange: function onDatesChange() {},
   orientation: HORIZONTAL_ORIENTATION,
   withPortal: false,
   onOutsideClick: function onOutsideClick() {},
@@ -1091,7 +1093,28 @@ function (_ref) {
       transitionDuration: transitionDuration,
       verticalBorderSpacing: verticalBorderSpacing,
       horizontalMonthPadding: horizontalMonthPadding
-    }), verticalScrollable && this.renderNavigation()), !verticalScrollable && navPosition === NAV_POSITION_BOTTOM && this.renderNavigation(), !isTouch && !hideKeyboardShortcutsPanel && React.createElement(DayPickerKeyboardShortcuts, {
+    }), verticalScrollable && this.renderNavigation()), React.createElement("div", css(styles.DayPicker_CalendarFooter), React.createElement("p", _extends({}, css(styles.DayPicker_CalendarFooterText), {
+      onClick: function onClick() {
+        return _this6.props.onDatesChange({
+          startDate: moment().subtract(13, 'days'),
+          endDate: moment()
+        });
+      }
+    }), "Last 14 days"), React.createElement("p", _extends({}, css(styles.DayPicker_CalendarFooterText), {
+      onClick: function onClick() {
+        return _this6.props.onDatesChange({
+          startDate: moment().subtract(29, 'days'),
+          endDate: moment()
+        });
+      }
+    }), "Last 30 days"), React.createElement("p", _extends({}, css(styles.DayPicker_CalendarFooterText), {
+      onClick: function onClick() {
+        return _this6.props.onDatesChange({
+          startDate: moment().subtract(59, 'days'),
+          endDate: moment()
+        });
+      }
+    }), "Last 60 days")), !verticalScrollable && navPosition === NAV_POSITION_BOTTOM && this.renderNavigation(), !isTouch && !hideKeyboardShortcutsPanel && React.createElement(DayPickerKeyboardShortcuts, {
       block: this.isVertical() && !withPortal,
       buttonLocation: keyboardShortcutButtonLocation,
       showKeyboardShortcutsPanel: showKeyboardShortcuts,
@@ -1146,6 +1169,15 @@ export default withStyles(function (_ref3) {
     },
     DayPicker_focusRegion: {
       outline: 'none'
+    },
+    DayPicker_CalendarFooter: {
+      display: 'flex',
+      margin: '25px',
+      borderTop: '1px solid rgba(0, 0, 0, 0.1)'
+    },
+    DayPicker_CalendarFooterText: {
+      cursor: 'pointer',
+      marginRight: '30px'
     },
     DayPicker_calendarInfo__horizontal: {
       display: 'inline-block',

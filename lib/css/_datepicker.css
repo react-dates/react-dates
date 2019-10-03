@@ -589,6 +589,19 @@
 .DayPicker_focusRegion {
   outline: 0
 }
+.DayPicker_CalendarFooter {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  margin: 25px;
+  border-top: 1px solid rgba(0,0,0,.1)
+}
+.DayPicker_CalendarFooterText {
+  cursor: pointer;
+  margin-right: 30px
+}
 .DayPicker_calendarInfo__horizontal,
 .DayPicker_wrapper__horizontal {
   display: inline-block;
@@ -748,7 +761,7 @@
   background: #f2f2f2
 }
 .DateRangePickerInput__withBorder {
-  border-radius: 2px;
+  border-radius: 20px;
   border: 1px solid #dbdbdb
 }
 .DateRangePickerInput__rtl {
