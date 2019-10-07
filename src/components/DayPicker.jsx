@@ -54,7 +54,9 @@ const YEAR_SELECTION_TRANSITION = 'year_selection';
 
 const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
-
+  // forked additional props
+  forceRender: PropTypes.bool,
+  
   // calendar presentation props
   enableOutsideDays: PropTypes.bool,
   numberOfMonths: PropTypes.number,
@@ -120,6 +122,7 @@ const propTypes = forbidExtraProps({
 });
 
 export const defaultProps = {
+  forceRender: false,
   // calendar presentation props
   enableOutsideDays: false,
   numberOfMonths: 2,
@@ -344,7 +347,7 @@ class DayPicker extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
     const {
-      orientation, daySize, isFocused, numberOfMonths,
+      orientation, daySize, isFocused, numberOfMonths, forceRender
     } = this.props;
     const { focusedDate, monthTitleHeight } = this.state;
 
@@ -360,6 +363,10 @@ class DayPicker extends React.PureComponent {
 
     if (!prevProps.isFocused && isFocused && !focusedDate) {
       this.container.focus();
+    }
+    
+    if (prevProps.forceRender !== forceRender) {
+      this.calculateAndSetDayPickerHeight();
     }
   }
 
