@@ -366,7 +366,7 @@ class DayPicker extends React.PureComponent {
     }
     
     if (prevProps.forceRender !== forceRender) {
-      this.calculateAndSetDayPickerHeight();
+      this.onMonthChange(this.state.currentMonth);
     }
   }
 
