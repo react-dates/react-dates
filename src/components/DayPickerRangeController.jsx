@@ -44,6 +44,7 @@ import DayPicker from './DayPicker';
 import getPooledMoment from '../utils/getPooledMoment';
 
 const propTypes = forbidExtraProps({
+  forceRender: PropTypes.bool,
   startDate: momentPropTypes.momentObj,
   endDate: momentPropTypes.momentObj,
   onDatesChange: PropTypes.func,
@@ -115,6 +116,7 @@ const propTypes = forbidExtraProps({
 });
 
 const defaultProps = {
+  forceRender: false,
   startDate: undefined, // TODO: use null
   endDate: undefined, // TODO: use null
   minDate: null,
