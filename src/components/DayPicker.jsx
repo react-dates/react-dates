@@ -1,7 +1,9 @@
+/* eslint-disable no-underscore-dangle */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { forbidExtraProps, mutuallyExclusiveProps, nonNegativeInteger } from 'airbnb-prop-types';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
+import momentPropTypes from 'react-moment-proptypes';
 
 import moment from 'moment';
 import throttle from 'lodash/throttle';
@@ -58,6 +60,8 @@ const propTypes = forbidExtraProps({
   // calendar presentation props
   enableOutsideDays: PropTypes.bool,
   onDatesChange: PropTypes.func,
+  startDate: momentPropTypes.momentObj,
+  endDate: momentPropTypes.momentObj,
   numberOfMonths: PropTypes.number,
   orientation: ScrollableOrientationShape,
   withPortal: PropTypes.bool,
@@ -125,6 +129,8 @@ export const defaultProps = {
   enableOutsideDays: false,
   numberOfMonths: 2,
   onDatesChange: () => {},
+  startDate: moment(),
+  endDate: moment(),
   orientation: HORIZONTAL_ORIENTATION,
   withPortal: false,
   onOutsideClick() {},
@@ -1054,7 +1060,6 @@ class DayPicker extends React.PureComponent {
       marginLeft: isHorizontal && withPortal ? -fullHorizontalWidth / 2 : null,
       marginTop: isHorizontal && withPortal ? -calendarMonthWidth / 2 : null,
     };
-
     return (
       <div
         {...css(
@@ -1148,9 +1153,9 @@ class DayPicker extends React.PureComponent {
               </div>
 
               <div {...css(styles.DayPicker_CalendarFooter)}>
-                <p {...css(styles.DayPicker_CalendarFooterText)} onClick={() => this.props.onDatesChange({ startDate: moment().subtract(13, 'days'), endDate: moment() })}>Last 14 days</p>
-                <p {...css(styles.DayPicker_CalendarFooterText)} onClick={() => this.props.onDatesChange({ startDate: moment().subtract(29, 'days'), endDate: moment() })} >Last 30 days</p>
-                <p {...css(styles.DayPicker_CalendarFooterText)} onClick={() => this.props.onDatesChange({ startDate: moment().subtract(59, 'days'), endDate: moment() })}>Last 60 days</p>
+                <p {...this.props.startDate && moment(this.props.startDate._d).format('YYYY MM DD')===moment(moment().subtract(13, 'days')._d).format('YYYY MM DD') && moment(this.props.endDate._d).format('YYYY MM DD')===moment().format('YYYY MM DD') ? {...css(styles.DayPicker_CalendarFooterTextActive)} : {...css(styles.DayPicker_CalendarFooterText)}} onClick={() => this.props.onDatesChange({ startDate: moment().subtract(13, 'days'), endDate: moment() })}>Last 14 days</p>
+                <p {...this.props.startDate && moment(this.props.startDate._d).format('YYYY MM DD')===moment(moment().subtract(29, 'days')._d).format('YYYY MM DD') && moment(this.props.endDate._d).format('YYYY MM DD')===moment().format('YYYY MM DD') ? {...css(styles.DayPicker_CalendarFooterTextActive)} : {...css(styles.DayPicker_CalendarFooterText)}} onClick={() => this.props.onDatesChange({ startDate: moment().subtract(29, 'days'), endDate: moment() })} >Last 30 days</p>
+                <p {...this.props.startDate && moment(this.props.startDate._d).format('YYYY MM DD')===moment(moment().subtract(59, 'days')._d).format('YYYY MM DD') && moment(this.props.endDate._d).format('YYYY MM DD')===moment().format('YYYY MM DD') ? {...css(styles.DayPicker_CalendarFooterTextActive)} : {...css(styles.DayPicker_CalendarFooterText)}} onClick={() => this.props.onDatesChange({ startDate: moment().subtract(59, 'days'), endDate: moment() })}>Last 60 days</p>
               </div>
               {!verticalScrollable
                 && navPosition === NAV_POSITION_BOTTOM
@@ -1239,11 +1244,15 @@ export default withStyles(({
     cursor: 'pointer',
     marginRight: '30px',
   },
+  DayPicker_CalendarFooterTextActive: {
+    cursor: 'pointer',
+    marginRight: '30px',
+    color: '#eb5929',
+  },
   DayPicker_calendarInfo__horizontal: {
     display: 'inline-block',
     verticalAlign: 'top',
   },
-
   DayPicker_wrapper__horizontal: {
     display: 'inline-block',
     verticalAlign: 'top',
