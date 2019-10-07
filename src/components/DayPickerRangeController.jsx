@@ -1174,6 +1174,7 @@ export default class DayPickerRangeController extends React.PureComponent {
       transitionDuration,
       verticalBorderSpacing,
       horizontalMonthPadding,
+      forceRender
     } = this.props;
 
     const {
@@ -1186,6 +1187,7 @@ export default class DayPickerRangeController extends React.PureComponent {
 
     return (
       <DayPicker
+        forceRender={forceRender}
         orientation={orientation}
         enableOutsideDays={enableOutsideDays}
         modifiers={visibleDays}
