@@ -126,16 +126,6 @@ describe('DayPickerKeyboardShortcuts', () => {
         });
       });
 
-      describe('when Mouse Up', () => {
-        it('blurs the current target', () => {
-          const mockEvent = { currentTarget: { blur: sinon.stub() } };
-          const wrapper = shallow(<DayPickerKeyboardShortcuts />).dive();
-          const buttonWrapper = wrapper.children().find('button');
-          buttonWrapper.prop('onMouseUp')(mockEvent);
-          expect(mockEvent.currentTarget.blur.callCount).to.equal(1);
-        });
-      });
-
       describe('renderKeyboardShortcutsButton', () => {
         it('renders the provided button', () => {
           function Button() {
