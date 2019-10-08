@@ -4,7 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import momentPropTypes from 'react-moment-proptypes';
 import { forbidExtraProps, mutuallyExclusiveProps, nonNegativeInteger } from 'airbnb-prop-types';
-import { withStyles, withStylesPropTypes } from 'react-with-styles';
+import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 import moment from 'moment';
 
 import { CalendarDayPhrases } from '../defaultPhrases';
@@ -152,7 +152,6 @@ class CalendarMonth extends React.PureComponent {
 
   render() {
     const {
-      css,
       dayAriaLabelFormat,
       daySize,
       focusedDate,

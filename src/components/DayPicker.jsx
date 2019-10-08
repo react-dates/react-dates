@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { forbidExtraProps, mutuallyExclusiveProps, nonNegativeInteger } from 'airbnb-prop-types';
-import { withStyles, withStylesPropTypes } from 'react-with-styles';
+import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 
 import moment from 'moment';
 import throttle from 'lodash/throttle';
@@ -884,7 +884,6 @@ class DayPicker extends React.PureComponent {
       orientation,
       renderWeekHeaderElement,
       styles,
-      css,
     } = this.props;
 
     const { calendarMonthWidth } = this.state;
@@ -946,7 +945,6 @@ class DayPicker extends React.PureComponent {
     } = this.state;
 
     const {
-      css,
       enableOutsideDays,
       numberOfMonths,
       orientation,
