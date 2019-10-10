@@ -54,7 +54,7 @@
     "@babel/cli": "^7.6.4",
     "@babel/core": "^7.6.4",
     "@babel/register": "^7.6.2",
-    "@babel/runtime": "^7.0.0",
+    "@babel/runtime": "^7.6.3",
     "@storybook/addon-actions": "^5.1.11",
     "@storybook/addon-info": "^5.1.11",
     "@storybook/addon-links": "^5.1.11",
