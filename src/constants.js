@@ -32,3 +32,6 @@ export const FANG_HEIGHT_PX = 10;
 export const DEFAULT_VERTICAL_SPACING = 22;
 
 export const MODIFIER_KEY_NAMES = new Set(['Shift', 'Control', 'Alt', 'Meta']);
+
+export const KEY_BACKSPACE = 46;
+export const KEY_DELETE = 8;
