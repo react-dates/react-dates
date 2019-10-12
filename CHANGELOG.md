@@ -4,6 +4,10 @@
 - []  ([#](https://github.com/airbnb/react-dates/pull/))
 -->
 
+## 21.2.1
+
+- [fix] Call getStateForNewMonth when date/startDate/endDate is set to a date that is not visible ([#1834](https://github.com/airbnb/react-dates/pull/1834))
+
 ## 21.2.0
 
 - [fix] Revert "Merge pull request [#1758](https://github.com/airbnb/react-dates/pull/1758): Remove all direct imports of css in favor of injected prop" ([#1818](https://github.com/airbnb/react-dates/pull/1818))
