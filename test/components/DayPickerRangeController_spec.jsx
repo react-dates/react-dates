@@ -4492,7 +4492,7 @@ describe('DayPickerRangeController', () => {
       });
     });
 
-    describe.only('renderKeyboardShortcutsPanel prop', () => {
+    describe('renderKeyboardShortcutsPanel prop', () => {
       it('passes down custom panel render function', () => {
         const testRenderKeyboardShortcutsPanel = () => {};
         const wrapper = shallow(

@@ -27,6 +27,8 @@
     "no-restricted-imports": 0, // TODO: enable with full RTL support
 
     "react/jsx-props-no-spreading": 0, // TODO: re-evaluate
+
+    "react/no-deprecated": 1, // TODO: update to UNSAFE_componentWillReceiveProps
   },
 
   "overrides": [
