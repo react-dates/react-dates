@@ -3,7 +3,6 @@ import moment from 'moment/min/moment-with-locales';
 import { expect } from 'chai';
 import sinon from 'sinon-sandbox';
 import { mount, shallow } from 'enzyme';
-import { cloneDeep } from 'lodash';
 
 import * as isDayVisible from '../../src/utils/isDayVisible';
 
@@ -869,23 +868,6 @@ describe('DayPicker', () => {
       const wrapper = shallow(<DayPicker initialVisibleMonth={() => INITIAL_MONTH} />).dive();
       const instance = wrapper.instance();
       expect(instance.getWeekHeaders()).to.be.eql(INITIAL_MONTH.localeData().weekdaysMin());
-    });
-  });
-
-  describe('#getWeekHeaders', () => {
-    it('returns unmutated weekday headers for currentMonth in a future', () => {
-      sinon.stub(PureDayPicker.prototype, 'render');
-
-      const getWeekHeadersSpy = sinon.spy(PureDayPicker.prototype, 'getWeekHeaders');
-      const INITIAL_MONTH = moment().add(2, 'Months').week(3).weekday(3);
-      const wrapper = shallow(<DayPicker initialVisibleMonth={() => INITIAL_MONTH} />).dive();
-      const instance = wrapper.instance();
-      const state = cloneDeep(wrapper.state());
-
-      expect(instance.getWeekHeaders()).to.be.eql(INITIAL_MONTH.localeData().weekdaysMin());
-      expect(instance.state).not.to.equal(state);
-      expect(instance.state).to.eql(state);
-      expect(getWeekHeadersSpy).to.have.property('callCount', 1);
     });
   });
 
