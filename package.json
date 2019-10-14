@@ -58,7 +58,7 @@
     "@storybook/addon-actions": "^5.2.4",
     "@storybook/addon-info": "^5.2.4",
     "@storybook/addon-links": "^5.2.4",
-    "@storybook/addon-options": "^5.1.11",
+    "@storybook/addon-options": "^5.2.4",
     "@storybook/addons": "^5.1.11",
     "@storybook/react": "^5.1.11",
     "@welldone-software/why-did-you-render": "^3.3.1",
