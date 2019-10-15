@@ -7,7 +7,7 @@
     "src"
   ],
   "require": [
-    "babel-register"
+    "@babel/register"
   ],
   "reporter": [
     "text",
