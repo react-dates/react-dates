@@ -137,6 +137,12 @@ class DateInput extends React.PureComponent {
     const { onChange, onKeyDownQuestionMark } = this.props;
     const dateString = e.target.value;
 
+    if (dateString.length > 8) {
+      e.stopPropagation();
+      e.preventDefault();
+      return false;
+    }
+
     // In Safari, onKeyDown does not consistently fire ahead of onChange. As a result, we need to
     // special case the `?` key so that it always triggers the appropriate callback, instead of
     // modifying the input value
@@ -149,6 +155,7 @@ class DateInput extends React.PureComponent {
 
   onKeyDown(e) {
     const { displayValue } = this.props;
+
     const allowedSymbolsRegex = new RegExp('^[0-9/]$');
     const allowedSpecialKeys = [KEY_BACKSPACE, KEY_DELETE];
 
@@ -165,6 +172,7 @@ class DateInput extends React.PureComponent {
     if (!MODIFIER_KEY_NAMES.has(e.key)) {
       this.throttledKeyDown(e);
     }
+
     if (displayValue) {
       this.setState({ forceChange: true });
     }
