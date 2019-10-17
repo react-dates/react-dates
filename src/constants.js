@@ -1,6 +1,6 @@
 export const DISPLAY_FORMAT = 'L';
 export const ISO_FORMAT = 'YYYY-MM-DD';
-export const ISO_MONTH_FORMAT = 'YYYY-MM';
+export const ISO_MONTH_FORMAT = 'YYYY-MM'; // TODO delete this line of dead code on next breaking change
 
 export const START_DATE = 'startDate';
 export const END_DATE = 'endDate';
@@ -8,6 +8,9 @@ export const END_DATE = 'endDate';
 export const HORIZONTAL_ORIENTATION = 'horizontal';
 export const VERTICAL_ORIENTATION = 'vertical';
 export const VERTICAL_SCROLLABLE = 'verticalScrollable';
+
+export const NAV_POSITION_BOTTOM = 'navPositionBottom';
+export const NAV_POSITION_TOP = 'navPositionTop';
 
 export const ICON_BEFORE_POSITION = 'before';
 export const ICON_AFTER_POSITION = 'after';

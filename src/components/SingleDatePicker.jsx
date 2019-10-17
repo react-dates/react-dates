@@ -33,6 +33,7 @@ import {
   INFO_POSITION_BOTTOM,
   FANG_HEIGHT_PX,
   DEFAULT_VERTICAL_SPACING,
+  NAV_POSITION_TOP,
 } from '../constants';
 
 const propTypes = forbidExtraProps({
@@ -89,6 +90,8 @@ const defaultProps = {
   horizontalMonthPadding: 13,
 
   // navigation related props
+  dayPickerNavigationInlineStyles: null,
+  navPosition: NAV_POSITION_TOP,
   navPrev: null,
   navNext: null,
 
@@ -98,6 +101,7 @@ const defaultProps = {
 
   // month presentation and interaction related props
   renderMonthText: null,
+  renderWeekHeaderElement: null,
 
   // day presentation and interaction related props
   renderCalendarDay: undefined,
@@ -105,7 +109,7 @@ const defaultProps = {
   renderMonthElement: null,
   enableOutsideDays: false,
   isDayBlocked: () => false,
-  isOutsideRange: day => !isInclusivelyAfterDay(day, moment()),
+  isOutsideRange: (day) => !isInclusivelyAfterDay(day, moment()),
   isDayHighlighted: () => {},
 
   // internationalization props
@@ -188,8 +192,7 @@ class SingleDatePicker extends React.PureComponent {
       focused,
       onFocusChange,
       onClose,
-      startDate,
-      endDate,
+      date,
       appendToBody,
     } = this.props;
 
@@ -203,7 +206,7 @@ class SingleDatePicker extends React.PureComponent {
     });
 
     onFocusChange({ focused: false });
-    onClose({ startDate, endDate });
+    onClose({ date });
   }
 
   onInputFocus({ focused }) {
@@ -394,6 +397,8 @@ class SingleDatePicker extends React.PureComponent {
       numberOfMonths,
       orientation,
       monthFormat,
+      dayPickerNavigationInlineStyles,
+      navPosition,
       navPrev,
       navNext,
       onPrevMonthClick,
@@ -404,6 +409,7 @@ class SingleDatePicker extends React.PureComponent {
       keepOpenOnDateSelect,
       initialVisibleMonth,
       renderMonthText,
+      renderWeekHeaderElement,
       renderCalendarDay,
       renderDayContents,
       renderCalendarInfo,
@@ -474,12 +480,15 @@ class SingleDatePicker extends React.PureComponent {
           keepOpenOnDateSelect={keepOpenOnDateSelect}
           hideKeyboardShortcutsPanel={hideKeyboardShortcutsPanel}
           initialVisibleMonth={initialVisibleMonth}
+          dayPickerNavigationInlineStyles={dayPickerNavigationInlineStyles}
+          navPosition={navPosition}
           navPrev={navPrev}
           navNext={navNext}
           onPrevMonthClick={onPrevMonthClick}
           onNextMonthClick={onNextMonthClick}
           onClose={onClose}
           renderMonthText={renderMonthText}
+          renderWeekHeaderElement={renderWeekHeaderElement}
           renderCalendarDay={renderCalendarDay}
           renderDayContents={renderDayContents}
           renderCalendarInfo={renderCalendarInfo}

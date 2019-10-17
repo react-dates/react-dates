@@ -1,20 +1,23 @@
 language: node_js
 node_js:
+  - "12"
   - "10"
   - "8"
   - "6"
 before_install:
   - 'nvm install-latest-npm'
+services:
+  - xvfb
 before_script:
   - 'if [ -n "${KARMA-}" ]; then export DISPLAY=:99.0; fi'
-  - 'if [ -n "${KARMA-}" ]; then sh -e /etc/init.d/xvfb start; fi'
-  - 'if [ -n "${KARMA-}" ]; then sleep 3; fi'
 script:
   - 'if [ -n "${LINT-}" ]; then npm run lint ; fi'
   - 'if [ -n "${BUILD-}" ]; then npm run build ; fi'
   - 'if [ "${TEST-}" = true ]; then npm run tests-only ; fi'
   - 'if [ -n "${KARMA-}" ]; then npm run tests-karma ; fi'
   - 'if [ -n "${COVERAGE-}" ] && [ "${TRAVIS_BRANCH-}" = "master" ]; then npm run cover; cat ./coverage/lcov.info | ./node_modules/.bin/coveralls ; fi'
+install:
+  - 'if [ -n "${LINT-}" ]; then npm install --legacy-bundling ; else npm install ; fi'
 env:
   global:
     - TEST=true
@@ -35,5 +38,5 @@ matrix:
     - node_js: "lts/*"
       env: KARMA=true TEST=false
   allow_failures:
-    - node_js: "9"
-    - env: KARMA=true TEST=false # temporary
+    - node_js: "10"
+      env: REACT=16

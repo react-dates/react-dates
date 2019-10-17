@@ -3,6 +3,7 @@ import { expect } from 'chai';
 import sinon from 'sinon-sandbox';
 import { shallow } from 'enzyme';
 import moment from 'moment';
+import raf from 'raf';
 
 import { BLOCKED_MODIFIER } from '../../src/constants';
 import CustomizableCalendarDay, { PureCustomizableCalendarDay } from '../../src/components/CustomizableCalendarDay';
@@ -27,7 +28,7 @@ describe('CustomizableCalendarDay', () => {
 
     it('contains arbitrary content if renderDay is provided', () => {
       const dayName = moment().format('dddd');
-      const renderDay = day => day.format('dddd');
+      const renderDay = (day) => day.format('dddd');
       const wrapper = shallow(<CustomizableCalendarDay renderDayContents={renderDay} />).dive();
       expect(wrapper.text()).to.equal(dayName);
     });
@@ -56,7 +57,7 @@ describe('CustomizableCalendarDay', () => {
 
     describe('aria-label', () => {
       const phrases = {};
-      const day = moment('10/10/2017');
+      const day = moment('10/10/2017', 'MM/DD/YYYY');
 
       beforeEach(() => {
         phrases.chooseAvailableDate = sinon.stub().returns('chooseAvailableDate text');
@@ -152,7 +153,7 @@ describe('CustomizableCalendarDay', () => {
     });
 
     describe('event handlers', () => {
-      const day = moment('10/10/2017');
+      const day = moment('10/10/2017', 'MM/DD/YYYY');
 
       let wrapper;
       beforeEach(() => {
@@ -189,8 +190,25 @@ describe('CustomizableCalendarDay', () => {
     });
   });
 
+  describe('#componentDidUpdate', () => {
+    it('focuses buttonRef after a delay when isFocused, tabIndex is 0, and tabIndex was not 0', () => {
+      const wrapper = shallow(<CustomizableCalendarDay isFocused tabIndex={0} />).dive();
+      const focus = sinon.spy();
+      wrapper.instance().buttonRef = { focus };
+      wrapper.instance().componentDidUpdate({ isFocused: true, tabIndex: -1 });
+      expect(focus.callCount).to.eq(0);
+
+      return new Promise((resolve) => {
+        raf(() => {
+          expect(focus.callCount).to.eq(1);
+          resolve();
+        });
+      });
+    });
+  });
+
   describe('#onKeyDown', () => {
-    const day = moment('10/10/2017');
+    const day = moment('10/10/2017', 'MM/DD/YYYY');
 
     let onDayClick;
     let wrapper;

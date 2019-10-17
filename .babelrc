@@ -1,7 +1,7 @@
 {
   "env": {
     "test": {
-      "presets": ["airbnb"],
+      "presets": [["airbnb", { looseClasses: true }]],
       "plugins": [
         ["inline-react-svg", {
           "svgo": false
@@ -13,7 +13,7 @@
     },
 
     "development": {
-      "presets": ["airbnb"],
+      "presets": [["airbnb", { looseClasses: true }]],
       "plugins": [
         ["inline-react-svg", {
           "svgo": false
@@ -24,7 +24,7 @@
     },
 
     "production": {
-      "presets": [["airbnb", { removePropTypes: true }]],
+      "presets": [["airbnb", { looseClasses: true, removePropTypes: true }]],
       "plugins": [
         ["inline-react-svg", {
           "svgo": false
@@ -35,7 +35,7 @@
     },
 
     "cjs": {
-      "presets": [["airbnb", { removePropTypes: true }]],
+      "presets": [["airbnb", { looseClasses: true, removePropTypes: true }]],
       "plugins": [
         ["inline-react-svg", {
           "svgo": false
@@ -46,7 +46,7 @@
     },
 
     "esm": {
-      "presets": [["airbnb", { modules: false, removePropTypes: true }]],
+      "presets": [["airbnb", { looseClasses: true, modules: false, removePropTypes: true }]],
       "plugins": [
         ["inline-react-svg", {
           "svgo": false
