@@ -8,7 +8,13 @@ import DateRangePicker from '../src/components/DateRangePicker';
 
 import { DateRangePickerPhrases } from '../src/defaultPhrases';
 import DateRangePickerShape from '../src/shapes/DateRangePickerShape';
-import { START_DATE, END_DATE, HORIZONTAL_ORIENTATION, ANCHOR_LEFT } from '../src/constants';
+import {
+  START_DATE,
+  END_DATE,
+  HORIZONTAL_ORIENTATION,
+  ANCHOR_LEFT,
+  NAV_POSITION_TOP,
+} from '../src/constants';
 import isInclusivelyAfterDay from '../src/utils/isInclusivelyAfterDay';
 
 const propTypes = {
@@ -66,6 +72,7 @@ const defaultProps = {
   isRTL: false,
 
   // navigation related props
+  navPosition: NAV_POSITION_TOP,
   navPrev: null,
   navNext: null,
   onPrevMonthClick() {},

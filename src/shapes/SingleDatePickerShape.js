@@ -11,6 +11,7 @@ import anchorDirectionShape from './AnchorDirectionShape';
 import openDirectionShape from './OpenDirectionShape';
 import DayOfWeekShape from './DayOfWeekShape';
 import CalendarInfoPositionShape from './CalendarInfoPositionShape';
+import NavPositionShape from './NavPositionShape';
 
 export default {
   // required props for a functional interactive SingleDatePicker
@@ -43,6 +44,7 @@ export default {
   // calendar presentation and interaction related props
   renderMonthText: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'),
   renderMonthElement: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'),
+  renderWeekHeaderElement: PropTypes.func,
   orientation: OrientationShape,
   anchorDirection: anchorDirectionShape,
   openDirection: openDirectionShape,
@@ -66,6 +68,8 @@ export default {
   horizontalMonthPadding: nonNegativeInteger,
 
   // navigation related props
+  dayPickerNavigationInlineStyles: PropTypes.object,
+  navPosition: NavPositionShape,
   navPrev: PropTypes.node,
   navNext: PropTypes.node,
 

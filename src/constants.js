@@ -9,6 +9,9 @@ export const HORIZONTAL_ORIENTATION = 'horizontal';
 export const VERTICAL_ORIENTATION = 'vertical';
 export const VERTICAL_SCROLLABLE = 'verticalScrollable';
 
+export const NAV_POSITION_BOTTOM = 'navPositionBottom';
+export const NAV_POSITION_TOP = 'navPositionTop';
+
 export const ICON_BEFORE_POSITION = 'before';
 export const ICON_AFTER_POSITION = 'after';
 

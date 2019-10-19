@@ -4,7 +4,26 @@
 - []  ([#](https://github.com/airbnb/react-dates/pull/))
 -->
 
-## Unreleased
+## 21.2.1
+
+- [fix] Call getStateForNewMonth when date/startDate/endDate is set to a date that is not visible ([#1834](https://github.com/airbnb/react-dates/pull/1834))
+
+## 21.2.0
+
+- [fix] Revert "Merge pull request [#1758](https://github.com/airbnb/react-dates/pull/1758): Remove all direct imports of css in favor of injected prop" ([#1818](https://github.com/airbnb/react-dates/pull/1818))
+- [fix] Fix for getWeekHeaders(), prevents it from changing state.currentMonth ([#1796](https://github.com/airbnb/react-dates/pull/1796))
+- [new] Add support for positioning month navigation under the calendar ([#1784](https://github.com/airbnb/react-dates/pull/1784))
+- [new] Add minDate and maxDate props to DateRangePicker ([#1793](https://github.com/airbnb/react-dates/pull/1793), [#1794](https://github.com/airbnb/react-dates/pull/1794))
+
+## 21.1.0
+
+- [fix] `DayPicker`: week headers: use the passed-in moment object’s instance, to support localy ([#1577](https://github.com/airbnb/react-dates/pull/1577))
+- [fix] Combine labelled DayPicker container elements ([#1783](https://github.com/airbnb/react-dates/pull/1783))
+- [new] Add a render function for customizable week header text ([#1787](https://github.com/airbnb/react-dates/pull/1787))
+
+## 21.0.1
+
+- [fix] [deps] Update react-with-styles ^4.0.0 -> ^4.0.1 ([#1781](https://github.com/airbnb/react-dates/pull/1781))
 
 ## 21.0.0
 
