@@ -33,8 +33,13 @@ module.exports = (config) => {
               path.join(__dirname, 'test'),
               require.resolve('airbnb-js-shims'),
             ],
-            query: {
-              presets: ['airbnb'],
+            options: {
+              presets: [
+                // setting modules to false so it does not transform twice
+                ['airbnb', { modules: false }],
+                // transform to cjs so sinon can stub properly
+                ['@babel/preset-env', { modules: 'cjs' }],
+              ],
             },
           },
 

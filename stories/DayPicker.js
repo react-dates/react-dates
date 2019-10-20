@@ -15,9 +15,10 @@ const TestPrevIcon = () => (
       border: '1px solid #dce0e0',
       backgroundColor: '#fff',
       color: '#484848',
-      left: '24px',
+      left: '22px',
       padding: '3px',
       position: 'absolute',
+      top: '20px',
       width: '40px',
     }}
     tabindex="0"
@@ -34,7 +35,8 @@ const TestNextIcon = () => (
       color: '#484848',
       padding: '3px',
       position: 'absolute',
-      right: '24px',
+      right: '22px',
+      top: '20px',
       width: '40px',
     }}
     tabindex="0"
@@ -148,6 +150,13 @@ storiesOf('DayPicker', module)
     <DayPicker
       renderCalendarInfo={() => (
         <TestCustomInfoPanel />
+      )}
+    />
+  )))
+  .add('with custom week header text', withInfo()(() => (
+    <DayPicker
+      renderWeekHeaderElement={day => (
+        <strong style={{ color: '#FE01E5' }}><small>{day.toUpperCase()}</small></strong>
       )}
     />
   )))

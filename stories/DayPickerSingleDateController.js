@@ -10,7 +10,7 @@ import isSameDay from '../src/utils/isSameDay';
 import isInclusivelyAfterDay from '../src/utils/isInclusivelyAfterDay';
 import CustomizableCalendarDay, { defaultStyles, selectedStyles } from '../src/components/CustomizableCalendarDay';
 
-import { VERTICAL_ORIENTATION } from '../src/constants';
+import { NAV_POSITION_BOTTOM, VERTICAL_ORIENTATION } from '../src/constants';
 
 import DayPickerSingleDateControllerWrapper from '../examples/DayPickerSingleDateControllerWrapper';
 
@@ -32,29 +32,37 @@ const dayPickerSingleDateControllerInfo = `The ${monospace('DayPickerSingleDateC
   implement your own input.`;
 
 const TestPrevIcon = () => (
-  <span
+  <div
     style={{
       border: '1px solid #dce0e0',
       backgroundColor: '#fff',
       color: '#484848',
+      left: '22px',
       padding: '3px',
+      position: 'absolute',
+      top: '20px',
     }}
+    tabindex="0"
   >
     Prev
-  </span>
+  </div>
 );
 
 const TestNextIcon = () => (
-  <span
+  <div
     style={{
       border: '1px solid #dce0e0',
       backgroundColor: '#fff',
       color: '#484848',
       padding: '3px',
+      position: 'absolute',
+      right: '22px',
+      top: '20px',
     }}
+    tabindex="0"
   >
     Next
-  </span>
+  </div>
 );
 
 const TestCustomInfoPanel = () => (
@@ -171,6 +179,14 @@ storiesOf('DayPickerSingleDateController', module)
       onNextMonthClick={action('DayPickerSingleDateController::onNextMonthClick')}
       navPrev={<TestPrevIcon />}
       navNext={<TestNextIcon />}
+    />
+  )))
+  .add('with month navigation positioned at the bottom', withInfo()(() => (
+    <DayPickerSingleDateControllerWrapper
+      navPosition={NAV_POSITION_BOTTOM}
+      onOutsideClick={action('DayPickerSingleDateController::onOutsideClick')}
+      onPrevMonthClick={action('DayPickerSingleDateController::onPrevMonthClick')}
+      onNextMonthClick={action('DayPickerSingleDateController::onNextMonthClick')}
     />
   )))
   .add('with outside days enabled', withInfo()(() => (

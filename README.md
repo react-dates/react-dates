@@ -188,6 +188,8 @@ transitionDuration: nonNegativeInteger, // milliseconds
 renderCalendarDay: PropTypes.func,
 renderDayContents: PropTypes.func,
 minimumNights: PropTypes.number,
+minDate: momentPropTypes.momentObj,
+maxDate: momentPropTypes.momentObj,
 enableOutsideDays: PropTypes.bool,
 isDayBlocked: PropTypes.func,
 isOutsideRange: PropTypes.func,
@@ -296,6 +298,7 @@ Here is the minimum *REQUIRED* setup you need to get the `DayPickerRangeControll
   onDatesChange={({ startDate, endDate }) => this.setState({ startDate, endDate })} // PropTypes.func.isRequired,
   focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
   onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
+  initialVisibleMonth={() => moment().add(2, "M")} // PropTypes.func or null,
 />
 ```
 

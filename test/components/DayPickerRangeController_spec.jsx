@@ -22,7 +22,7 @@ import { START_DATE, END_DATE, VERTICAL_SCROLLABLE } from '../../src/constants';
 const today = moment().startOf('day').hours(12);
 
 function getCallsByModifier(stub, modifier) {
-  return stub.getCalls().filter(call => call.args[call.args.length - 1] === modifier);
+  return stub.getCalls().filter((call) => call.args[call.args.length - 1] === modifier);
 }
 
 describe('DayPickerRangeController', () => {
@@ -297,33 +297,80 @@ describe('DayPickerRangeController', () => {
           });
           expect(wrapper.instance().state.visibleDays).to.equal(visibleDays);
         });
-        describe('startDate changed from one date to another', () => {
-          it('removes previous `after-hovered-start` range', () => {
-            const minimumNights = 5;
-            const startDate = moment().add(7, 'days');
-            const dayAfterStartDate = startDate.clone().add(1, 'day');
-            const firstAvailableDate = startDate.clone().add(minimumNights + 1, 'days');
-            const deleteModifierFromRangeSpy = sinon.spy(DayPickerRangeController.prototype, 'deleteModifierFromRange');
-            const nextStartDate = moment().add(4, 'days');
-            const wrapper = shallow((
-              <DayPickerRangeController
-                onDatesChange={sinon.stub()}
-                onFocusChange={sinon.stub()}
-                startDate={startDate}
-                focusedInput={START_DATE}
-                minimumNights={minimumNights}
-              />
-            ));
-            deleteModifierFromRangeSpy.resetHistory();
-            wrapper.instance().componentWillReceiveProps({
-              ...props,
-              startDate: nextStartDate,
-            });
-            const afterHoverStartCalls = getCallsByModifier(deleteModifierFromRangeSpy, 'after-hovered-start');
-            expect(afterHoverStartCalls.length).to.equal(1);
-            expect(isSameDay(afterHoverStartCalls[0].args[1], dayAfterStartDate)).to.equal(true);
-            expect(isSameDay(afterHoverStartCalls[0].args[2], firstAvailableDate)).to.equal(true);
+      });
+
+      describe('startDate changed from one date to another', () => {
+        it('removes previous `after-hovered-start` range', () => {
+          const minimumNights = 5;
+          const startDate = moment().add(7, 'days');
+          const dayAfterStartDate = startDate.clone().add(1, 'day');
+          const firstAvailableDate = startDate.clone().add(minimumNights + 1, 'days');
+          const deleteModifierFromRangeSpy = sinon.spy(DayPickerRangeController.prototype, 'deleteModifierFromRange');
+          const nextStartDate = moment().add(4, 'days');
+          const wrapper = shallow((
+            <DayPickerRangeController
+              onDatesChange={sinon.stub()}
+              onFocusChange={sinon.stub()}
+              startDate={startDate}
+              focusedInput={START_DATE}
+              minimumNights={minimumNights}
+            />
+          ));
+          deleteModifierFromRangeSpy.resetHistory();
+          wrapper.instance().componentWillReceiveProps({
+            ...props,
+            startDate: nextStartDate,
           });
+          const afterHoverStartCalls = getCallsByModifier(deleteModifierFromRangeSpy, 'after-hovered-start');
+          expect(afterHoverStartCalls.length).to.equal(1);
+          expect(isSameDay(afterHoverStartCalls[0].args[1], dayAfterStartDate)).to.equal(true);
+          expect(isSameDay(afterHoverStartCalls[0].args[2], firstAvailableDate)).to.equal(true);
+        });
+
+        it('calls getStateForNewMonth with nextProps when date is not visible', () => {
+          const getStateForNewMonthSpy = sinon.spy(
+            DayPickerRangeController.prototype,
+            'getStateForNewMonth',
+          );
+          const startDate = moment();
+          const nextStartDate = startDate.clone().add(2, 'months');
+
+          const wrapper = shallow((
+            <DayPickerRangeController {...props} startDate={startDate} />
+          ));
+
+          getStateForNewMonthSpy.resetHistory();
+
+          wrapper.instance().componentWillReceiveProps({
+            ...props,
+            startDate: nextStartDate,
+          });
+
+          expect(getStateForNewMonthSpy.callCount).to.equal(1);
+        });
+      });
+
+      describe('endDate changed from one date to another', () => {
+        it('calls getStateForNewMonth with nextProps when date is not visible', () => {
+          const getStateForNewMonthSpy = sinon.spy(
+            DayPickerRangeController.prototype,
+            'getStateForNewMonth',
+          );
+          const endDate = moment();
+          const nextEndDate = endDate.clone().add(2, 'months');
+
+          const wrapper = shallow((
+            <DayPickerRangeController {...props} endDate={endDate} />
+          ));
+
+          getStateForNewMonthSpy.resetHistory();
+
+          wrapper.instance().componentWillReceiveProps({
+            ...props,
+            endDate: nextEndDate,
+          });
+
+          expect(getStateForNewMonthSpy.callCount).to.equal(1);
         });
       });
     });
@@ -891,9 +938,9 @@ describe('DayPickerRangeController', () => {
             const startOfMonth = today.clone().startOf('month');
             visibleDays = {
               [toISOMonthString(startOfMonth)]: {
-                [toISODateString(startOfMonth)]: [],
-                [toISODateString(startOfMonth.clone().add(1, 'day'))]: [],
-                [toISODateString(startOfMonth.clone().add(2, 'days'))]: [],
+                [toISODateString(startOfMonth)]: new Set(),
+                [toISODateString(startOfMonth.clone().add(1, 'day'))]: new Set(),
+                [toISODateString(startOfMonth.clone().add(2, 'days'))]: new Set(),
               },
             };
           });
@@ -974,9 +1021,9 @@ describe('DayPickerRangeController', () => {
             const startOfMonth = today.clone().startOf('month');
             visibleDays = {
               [toISOMonthString(startOfMonth)]: {
-                [toISODateString(startOfMonth)]: [],
-                [toISODateString(startOfMonth.clone().add(1, 'day'))]: [],
-                [toISODateString(startOfMonth.clone().add(2, 'days'))]: [],
+                [toISODateString(startOfMonth)]: new Set(),
+                [toISODateString(startOfMonth.clone().add(1, 'day'))]: new Set(),
+                [toISODateString(startOfMonth.clone().add(2, 'days'))]: new Set(),
               },
             };
           });
@@ -1057,9 +1104,9 @@ describe('DayPickerRangeController', () => {
             const startOfMonth = today.clone().startOf('month');
             visibleDays = {
               [toISOMonthString(startOfMonth)]: {
-                [toISODateString(startOfMonth)]: [],
-                [toISODateString(startOfMonth.clone().add(1, 'day'))]: [],
-                [toISODateString(startOfMonth.clone().add(2, 'days'))]: [],
+                [toISODateString(startOfMonth)]: new Set(),
+                [toISODateString(startOfMonth.clone().add(1, 'day'))]: new Set(),
+                [toISODateString(startOfMonth.clone().add(2, 'days'))]: new Set(),
               },
             };
           });
@@ -1221,7 +1268,7 @@ describe('DayPickerRangeController', () => {
                 <DayPickerRangeController
                   {...props}
                   getMinNightsForHoverDate={getMinNightsForHoverDateStub}
-                  isDayBlocked={day => isSameDay(day, today)}
+                  isDayBlocked={(day) => isSameDay(day, today)}
                 />,
               );
               wrapper.setState({ hoverDate: today });
@@ -1293,7 +1340,7 @@ describe('DayPickerRangeController', () => {
                 <DayPickerRangeController
                   {...props}
                   getMinNightsForHoverDate={getMinNightsForHoverDateStub}
-                  isDayBlocked={day => isSameDay(day, today)}
+                  isDayBlocked={(day) => isSameDay(day, today)}
                 />,
               );
               wrapper.setState({ hoverDate: today });
@@ -1412,7 +1459,7 @@ describe('DayPickerRangeController', () => {
                 <DayPickerRangeController
                   {...props}
                   getMinNightsForHoverDate={getMinNightsForHoverDateStub}
-                  isDayBlocked={day => isSameDay(day, today)}
+                  isDayBlocked={(day) => isSameDay(day, today)}
                 />,
               );
               wrapper.setState({ hoverDate: today });
@@ -1483,7 +1530,7 @@ describe('DayPickerRangeController', () => {
                 <DayPickerRangeController
                   {...props}
                   getMinNightsForHoverDate={getMinNightsForHoverDateStub}
-                  isDayBlocked={day => isSameDay(day, today)}
+                  isDayBlocked={(day) => isSameDay(day, today)}
                 />,
               );
               wrapper.setState({ hoverDate: today });
@@ -1935,8 +1982,8 @@ describe('DayPickerRangeController', () => {
         const wrapper = shallow((
           <DayPickerRangeController
             onDatesChange={onDatesChangeStub}
-            startDateOffset={day => day.subtract(2, 'days')}
-            endDateOffset={day => day.add(4, 'days')}
+            startDateOffset={(day) => day.subtract(2, 'days')}
+            endDateOffset={(day) => day.add(4, 'days')}
           />
         ));
         wrapper.instance().onDayClick(clickDate);
@@ -1951,9 +1998,9 @@ describe('DayPickerRangeController', () => {
         const wrapper = shallow((
           <DayPickerRangeController
             onDatesChange={onDatesChangeStub}
-            startDateOffset={day => day.subtract(2, 'days')}
-            endDateOffset={day => day.add(4, 'days')}
-            isOutsideRange={day => day.isAfter(moment(today))}
+            startDateOffset={(day) => day.subtract(2, 'days')}
+            endDateOffset={(day) => day.add(4, 'days')}
+            isOutsideRange={(day) => day.isAfter(moment(today))}
           />
         ));
         wrapper.instance().onDayClick(clickDate);
@@ -1966,8 +2013,8 @@ describe('DayPickerRangeController', () => {
         const wrapper = shallow((
           <DayPickerRangeController
             onDatesChange={onDatesChangeStub}
-            endDateOffset={day => day.add(5, 'days')}
-            isOutsideRange={day => day.isAfter(moment(today).clone().add(1, 'days'))}
+            endDateOffset={(day) => day.add(5, 'days')}
+            isOutsideRange={(day) => day.isAfter(moment(today).clone().add(1, 'days'))}
           />
         ));
         wrapper.instance().onDayClick(clickDate);
@@ -1980,7 +2027,7 @@ describe('DayPickerRangeController', () => {
         const wrapper = shallow((
           <DayPickerRangeController
             onDatesChange={onDatesChangeStub}
-            startDateOffset={day => day.subtract(5, 'days')}
+            startDateOffset={(day) => day.subtract(5, 'days')}
           />
         ));
         wrapper.instance().onDayClick(clickDate);
@@ -1995,7 +2042,7 @@ describe('DayPickerRangeController', () => {
         const wrapper = shallow((
           <DayPickerRangeController
             onDatesChange={onDatesChangeStub}
-            endDateOffset={day => day.add(12, 'days')}
+            endDateOffset={(day) => day.add(12, 'days')}
           />
         ));
         wrapper.instance().onDayClick(clickDate);
@@ -2105,7 +2152,7 @@ describe('DayPickerRangeController', () => {
         const wrapper = shallow((
           <DayPickerRangeController
             onDatesChange={onDatesChangeStub}
-            startDateOffset={day => day.subtract(2, 'days')}
+            startDateOffset={(day) => day.subtract(2, 'days')}
           />
         ));
         wrapper.instance().onDayClick(clickDate);
@@ -2121,7 +2168,7 @@ describe('DayPickerRangeController', () => {
         const wrapper = shallow((
           <DayPickerRangeController
             onDatesChange={onDatesChangeStub}
-            endDateOffset={day => day.add(4, 'days')}
+            endDateOffset={(day) => day.add(4, 'days')}
           />
         ));
         wrapper.instance().onDayClick(clickDate);
@@ -2193,7 +2240,7 @@ describe('DayPickerRangeController', () => {
       const wrapper = shallow((
         <DayPickerRangeController
           focusedInput={START_DATE}
-          endDateOffset={day => day.add(2, 'days')}
+          endDateOffset={(day) => day.add(2, 'days')}
         />
       ));
       wrapper.instance().onDayMouseEnter(today);
@@ -2449,7 +2496,7 @@ describe('DayPickerRangeController', () => {
               onFocusChange={sinon.stub()}
               focusedInput={START_DATE}
               getMinNightsForHoverDate={getMinNightsForHoverDateStub}
-              isDayBlocked={day => isSameDay(day, hoverDate)}
+              isDayBlocked={(day) => isSameDay(day, hoverDate)}
             />);
             wrapper.setState({ hoverDate });
             wrapper.instance().onDayMouseEnter(today);
@@ -2496,7 +2543,7 @@ describe('DayPickerRangeController', () => {
               onFocusChange={sinon.stub()}
               focusedInput={START_DATE}
               getMinNightsForHoverDate={getMinNightsForHoverDateStub}
-              isDayBlocked={day => isSameDay(day, today)}
+              isDayBlocked={(day) => isSameDay(day, today)}
             />);
             wrapper.setState({ hoverDate });
             wrapper.instance().onDayMouseEnter(today);
@@ -2606,7 +2653,7 @@ describe('DayPickerRangeController', () => {
               onFocusChange={sinon.stub()}
               focusedInput={START_DATE}
               getMinNightsForHoverDate={getMinNightsForHoverDateStub}
-              isDayBlocked={day => isSameDay(day, hoverDate)}
+              isDayBlocked={(day) => isSameDay(day, hoverDate)}
             />);
             wrapper.setState({ hoverDate });
             wrapper.instance().onDayMouseEnter(today);
@@ -2654,7 +2701,7 @@ describe('DayPickerRangeController', () => {
               onFocusChange={sinon.stub()}
               focusedInput={START_DATE}
               getMinNightsForHoverDate={getMinNightsForHoverDateStub}
-              isDayBlocked={day => isSameDay(day, today)}
+              isDayBlocked={(day) => isSameDay(day, today)}
             />);
             wrapper.setState({ hoverDate });
             wrapper.instance().onDayMouseEnter(today);
@@ -2893,7 +2940,7 @@ describe('DayPickerRangeController', () => {
               onFocusChange={sinon.stub()}
               focusedInput={START_DATE}
               getMinNightsForHoverDate={getMinNightsForHoverDateStub}
-              isDayBlocked={day => isSameDay(day, today)}
+              isDayBlocked={(day) => isSameDay(day, today)}
             />);
             wrapper.setState({ hoverDate: today });
             wrapper.instance().onDayMouseLeave(today);
@@ -2962,7 +3009,7 @@ describe('DayPickerRangeController', () => {
               onFocusChange={sinon.stub()}
               focusedInput={START_DATE}
               getMinNightsForHoverDate={getMinNightsForHoverDateStub}
-              isDayBlocked={day => isSameDay(day, today)}
+              isDayBlocked={(day) => isSameDay(day, today)}
             />);
             wrapper.setState({ hoverDate: today });
             wrapper.instance().onDayMouseLeave(today);
@@ -3615,6 +3662,18 @@ describe('DayPickerRangeController', () => {
       expect(Object.keys(modifiers)).to.contain(toISOMonthString(today));
     });
 
+    it('is resilient when visibleDays is an empty object', () => {
+      const wrapper = shallow((
+        <DayPickerRangeController
+          onDatesChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />
+      ));
+      wrapper.instance().setState({ visibleDays: {} });
+      const modifiers = wrapper.instance().addModifier({}, today);
+      expect(Object.keys(modifiers[toISOMonthString(today)])).to.contain(toISODateString(today));
+    });
+
     it('has day ISO as key one layer down', () => {
       const wrapper = shallow((
         <DayPickerRangeController
@@ -3798,8 +3857,14 @@ describe('DayPickerRangeController', () => {
           onFocusChange={sinon.stub()}
         />
       ));
-      const modifiers = wrapper.instance().deleteModifier({}, today);
-      expect(Object.keys(modifiers)).to.contain(toISOMonthString(today));
+
+      const isoMonth = toISOMonthString(today);
+      const isoDate = toISODateString(today);
+      const modifiers = wrapper.instance()
+        .deleteModifier({ [isoMonth]: { [isoDate]: new Set(['foo']) } }, today, 'foo');
+
+      expect(Object.keys(modifiers)).to.contain(isoMonth);
+      expect(modifiers[isoMonth][isoDate].size).to.equal(0);
     });
 
     it('has day ISO as key one layer down', () => {
@@ -3811,6 +3876,17 @@ describe('DayPickerRangeController', () => {
       ));
       const modifiers = wrapper.instance().addModifier({}, today);
       expect(Object.keys(modifiers[toISOMonthString(today)])).to.contain(toISODateString(today));
+    });
+
+    it('is resilient when visibleDays is an empty object', () => {
+      const wrapper = shallow((
+        <DayPickerRangeController
+          onDatesChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />
+      ));
+      wrapper.instance().setState({ visibleDays: {} });
+      expect(() => { wrapper.instance().deleteModifier({}, today); }).to.not.throw();
     });
 
     it('return value no longer has modifier arg for day if was in first arg', () => {
@@ -3977,7 +4053,7 @@ describe('DayPickerRangeController', () => {
       describe('props.startDate === null', () => {
         describe('props.focusedInput === END_DATE', () => {
           it('returns true if arg - props.minimumNights is outside allowed range', () => {
-            const isOutsideRange = day => !isInclusivelyAfterDay(day, today);
+            const isOutsideRange = (day) => !isInclusivelyAfterDay(day, today);
             const testDate = moment(today).add(MIN_NIGHTS - 1, 'days');
             const wrapper = shallow(<DayPickerRangeController
               focusedInput={END_DATE}
@@ -3989,7 +4065,7 @@ describe('DayPickerRangeController', () => {
           });
 
           it('returns false if arg - props.minimumNights is inside allowed range', () => {
-            const isOutsideRange = day => !isInclusivelyAfterDay(day, today);
+            const isOutsideRange = (day) => !isInclusivelyAfterDay(day, today);
             const testDate = moment(today).add(MIN_NIGHTS, 'days');
             const wrapper = shallow(<DayPickerRangeController
               focusedInput={END_DATE}
@@ -4220,6 +4296,26 @@ describe('DayPickerRangeController', () => {
         expect(wrapper.instance().isInSelectedSpan(testDate)).to.equal(true);
       });
 
+      it('returns false if arg = props.startDate && arg < 12', () => {
+        const endDate = moment(today).add(5, 'days');
+        const wrapper = shallow(<DayPickerRangeController
+          startDate={today}
+          endDate={endDate}
+        />);
+        const testDate = moment(today.hours(10));
+        expect(wrapper.instance().isInSelectedSpan(testDate)).to.equal(false);
+      });
+
+      it('returns false if arg = props.startDate && arg > 12', () => {
+        const endDate = moment(today).add(5, 'days');
+        const wrapper = shallow(<DayPickerRangeController
+          startDate={today}
+          endDate={endDate}
+        />);
+        const testDate = moment(today.hours(16));
+        expect(wrapper.instance().isInSelectedSpan(testDate)).to.equal(false);
+      });
+
       it('returns false if arg < props.startDate', () => {
         const endDate = moment(today).add(5, 'days');
         const wrapper = shallow(<DayPickerRangeController
@@ -4440,6 +4536,22 @@ describe('DayPickerRangeController', () => {
         expect(dayPicker.prop('renderKeyboardShortcutsButton'))
           .to
           .eql(testRenderKeyboardShortcutsButton);
+      });
+    });
+
+    describe('renderKeyboardShortcutsPanel prop', () => {
+      it('passes down custom panel render function', () => {
+        const testRenderKeyboardShortcutsPanel = () => {};
+        const wrapper = shallow(
+          <DayPickerRangeController
+            renderKeyboardShortcutsPanel={testRenderKeyboardShortcutsPanel}
+          />,
+        );
+        const dayPicker = wrapper.find(DayPicker);
+        expect(dayPicker).to.have.lengthOf(1);
+        expect(dayPicker.prop('renderKeyboardShortcutsPanel'))
+          .to
+          .eql(testRenderKeyboardShortcutsPanel);
       });
     });
   });

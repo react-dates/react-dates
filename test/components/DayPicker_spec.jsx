@@ -1,5 +1,5 @@
 import React from 'react';
-import moment from 'moment';
+import moment from 'moment/min/moment-with-locales';
 import { expect } from 'chai';
 import sinon from 'sinon-sandbox';
 import { mount, shallow } from 'enzyme';
@@ -14,9 +14,11 @@ import {
   HORIZONTAL_ORIENTATION,
   VERTICAL_ORIENTATION,
   VERTICAL_SCROLLABLE,
+  NAV_POSITION_BOTTOM,
 } from '../../src/constants';
 
-const today = moment();
+
+const today = moment().locale('en');
 const event = { preventDefault() {}, stopPropagation() {} };
 
 describe('DayPicker', () => {
@@ -35,6 +37,23 @@ describe('DayPicker', () => {
         const weekHeaders = wrapper.find('.DayPicker__week-header');
         weekHeaders.forEach((weekHeader) => {
           expect(weekHeader.find('li')).to.have.lengthOf(7);
+        });
+      });
+
+      describe('props.renderWeekHeaderElement', () => {
+        it('there are 7 custom elements on each .DayPicker__week-header class', () => {
+          const testWeekHeaderClassName = 'test-week-header';
+          const wrapper = shallow(
+            <DayPicker
+              renderWeekHeaderElement={
+                (day) => (<strong className={testWeekHeaderClassName}>{day}</strong>)
+              }
+            />,
+          ).dive();
+          const weekHeaders = wrapper.find('.DayPicker__week-header');
+          weekHeaders.forEach((weekHeader) => {
+            expect(weekHeader.find(`.${testWeekHeaderClassName}`)).to.have.lengthOf(7);
+          });
         });
       });
 
@@ -88,6 +107,32 @@ describe('DayPicker', () => {
       });
     });
 
+    describe('DayPickerNavigation', () => {
+      it('is rendered before CalendarMonthGrid in DayPicker_focusRegion', () => {
+        const wrapper = shallow(<DayPicker />).dive();
+        expect(wrapper.find(DayPickerNavigation)).to.have.lengthOf(1);
+        expect(
+          wrapper
+            .find('[className^="DayPicker_focusRegion"]')
+            .childAt(0)
+            .type(),
+        ).to.equal(DayPickerNavigation);
+      });
+
+      describe('navPosition === NAV_POSITION_BOTTOM', () => {
+        it('is rendered after CalendarMonthGrid in DayPicker_focusRegion', () => {
+          const wrapper = shallow(<DayPicker navPosition={NAV_POSITION_BOTTOM} />).dive();
+          expect(wrapper.find(DayPickerNavigation)).to.have.lengthOf(1);
+          expect(
+            wrapper
+              .find('[className^="DayPicker_focusRegion"]')
+              .childAt(1)
+              .type(),
+          ).to.equal(DayPickerNavigation);
+        });
+      });
+    });
+
     describe('DayPickerKeyboardShortcuts', () => {
       it('component exists if state.isTouchDevice is false and hideKeyboardShortcutsPanel is false', () => {
         const wrapper = shallow(<DayPicker hideKeyboardShortcutsPanel={false} />).dive();
@@ -116,6 +161,18 @@ describe('DayPicker', () => {
         expect(dayPickerKeyboardShortcuts.prop('renderKeyboardShortcutsButton'))
           .to
           .eql(testRenderKeyboardShortcutsButton);
+      });
+
+      it('component exists with custom panel render function if renderKeyboardShortcutsPanel is passed down', () => {
+        const testRenderKeyboardShortcutsPanel = () => {};
+        const wrapper = shallow(
+          <DayPicker renderKeyboardShortcutsPanel={testRenderKeyboardShortcutsPanel} />,
+        ).dive();
+        const dayPickerKeyboardShortcuts = wrapper.find(DayPickerKeyboardShortcuts);
+        expect(dayPickerKeyboardShortcuts).to.have.lengthOf(1);
+        expect(dayPickerKeyboardShortcuts.prop('renderKeyboardShortcutsPanel'))
+          .to
+          .eql(testRenderKeyboardShortcutsPanel);
       });
     });
   });
@@ -802,6 +859,15 @@ describe('DayPicker', () => {
       });
       wrapper.instance().closeKeyboardShortcutsPanel();
       expect(onKeyboardShortcutsPanelCloseStub.callCount).to.equal(1);
+    });
+  });
+
+  describe('#weekHeaderNames', () => {
+    it('returns weekheaders in fr', () => {
+      const INITIAL_MONTH = moment().locale('fr');
+      const wrapper = shallow(<DayPicker initialVisibleMonth={() => INITIAL_MONTH} />).dive();
+      const instance = wrapper.instance();
+      expect(instance.getWeekHeaders()).to.be.eql(INITIAL_MONTH.localeData().weekdaysMin());
     });
   });
 
