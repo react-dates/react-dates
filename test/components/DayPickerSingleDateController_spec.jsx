@@ -785,6 +785,19 @@ describe('DayPickerSingleDateController', () => {
       expect(onPrevMonthClickStub.firstCall.args[0].year()).to.equal(newMonth.year());
       expect(onPrevMonthClickStub.firstCall.args[0].month()).to.equal(newMonth.month());
     });
+    it('disables PrevMonthClick', () => {
+      const wrapper = shallow((
+        <DayPickerSingleDateController
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+          disablePrev
+        />
+      ));
+      wrapper.setState({
+        currentMonth: today,
+      });
+      expect(wrapper.instance().onPrevMonthClick()).to.equal(undefined);
+    });
   });
 
   describe('#onNextMonthClick', () => {
@@ -866,6 +879,19 @@ describe('DayPickerSingleDateController', () => {
       expect(onNextMonthClickStub.callCount).to.equal(1);
       expect(onNextMonthClickStub.firstCall.args[0].year()).to.equal(newMonth.year());
       expect(onNextMonthClickStub.firstCall.args[0].month()).to.equal(newMonth.month());
+    });
+    it('disables NextMonthClick', () => {
+      const wrapper = shallow((
+        <DayPickerSingleDateController
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+          disableNext
+        />
+      ));
+      wrapper.setState({
+        currentMonth: today,
+      });
+      expect(wrapper.instance().onNextMonthClick()).to.equal(undefined);
     });
   });
 

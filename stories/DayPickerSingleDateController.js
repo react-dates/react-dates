@@ -308,4 +308,14 @@ storiesOf('DayPickerSingleDateController', module)
       onNextMonthClick={action('DayPickerSingleDateController::onNextMonthClick')}
       verticalBorderSpacing={16}
     />
+  )))
+  .add('with previous and next buttons disabled', withInfo()(() => (
+    <DayPickerSingleDateControllerWrapper
+      onOutsideClick={action('DayPickerSingleDateController::onOutsideClick')}
+      onPrevMonthClick={action('DayPickerSingleDateController::onPrevMonthClick')}
+      onNextMonthClick={action('DayPickerSingleDateController::onNextMonthClick')}
+      verticalBorderSpacing={16}
+      disablePrev
+      disableNext
+    />
   )));
