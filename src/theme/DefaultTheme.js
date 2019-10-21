@@ -154,6 +154,7 @@ export default {
 
     spacing: {
       dayPickerHorizontalPadding: 9,
+      monthHorizontalPadding: 16,
       captionPaddingTop: 22,
       captionPaddingBottom: 37,
       inputPadding: 0,

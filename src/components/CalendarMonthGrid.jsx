@@ -316,7 +316,7 @@ class CalendarMonthGrid extends React.PureComponent {
 				  if (i === firstVisibleMonthIndex) {
 				    visiblePosition = 'first';
 				  }
-				  if (i === firstVisibleMonthIndex + numberOfMonths) {
+				  if (i === firstVisibleMonthIndex + numberOfMonths - 1) {
 				    visiblePosition = 'last';
 				  }
 				  const hideForAnimation = i === 0 && !isVisible;
@@ -346,7 +346,7 @@ class CalendarMonthGrid extends React.PureComponent {
     <CalendarMonth
       month={month}
       isVisible={isVisible}
-	  visiblePosition={visiblePosition}
+	    visiblePosition={visiblePosition}
       enableOutsideDays={enableOutsideDays}
       modifiers={modifiers[monthString]}
       monthFormat={monthFormat}
