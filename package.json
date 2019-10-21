@@ -1,6 +1,6 @@
 {
   "name": "@copper/copper-datepicker",
-  "version": "21.2.5",
+  "version": "21.2.4",
   "description": "A responsive and accessible date range picker component built with React",
   "main": "index.js",
   "scripts": {
