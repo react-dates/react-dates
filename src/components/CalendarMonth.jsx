@@ -68,11 +68,16 @@ const defaultProps = {
   modifiers: {},
   orientation: HORIZONTAL_ORIENTATION,
   daySize: DAY_SIZE,
-  onDayClick() {},
-  onDayMouseEnter() {},
-  onDayMouseLeave() {},
-  onMonthSelect() {},
-  onYearSelect() {},
+  onDayClick() {
+  },
+  onDayMouseEnter() {
+  },
+  onDayMouseLeave() {
+  },
+  onMonthSelect() {
+  },
+  onYearSelect() {
+  },
   renderMonthText: null,
   renderCalendarDay: (props) => (<CalendarDay {...props} />),
   renderDayContents: null,
@@ -119,8 +124,8 @@ class CalendarMonth extends React.PureComponent {
     } = this.props;
     if (
       !month.isSame(prevMonth)
-      || enableOutsideDays !== prevEnableOutsideDays
-      || firstDayOfWeek !== prevFirstDayOfWeek
+			|| enableOutsideDays !== prevEnableOutsideDays
+			|| firstDayOfWeek !== prevFirstDayOfWeek
     ) {
       this.setState({
         weeks: getCalendarMonthWeeks(
@@ -158,6 +163,7 @@ class CalendarMonth extends React.PureComponent {
       horizontalMonthPadding,
       isFocused,
       isVisible,
+      visiblePosition,
       modifiers,
       month,
       monthFormat,
@@ -184,62 +190,65 @@ class CalendarMonth extends React.PureComponent {
     return (
       <div
         {...css(
-          styles.CalendarMonth,
-          { padding: `0 ${horizontalMonthPadding}px` },
+				  styles.CalendarMonth,
+				  { padding: `0 ${horizontalMonthPadding}px` },
         )}
         data-visible={isVisible}
       >
-        <div
-          ref={this.setCaptionRef}
-          {...css(
-            styles.CalendarMonth_caption,
-            verticalScrollable && styles.CalendarMonth_caption__verticalScrollable,
-          )}
-        >
-          {renderMonthElement ? (
-            renderMonthElement({
-              month,
-              onMonthSelect,
-              onYearSelect,
-              isVisible,
-            })
-          ) : (
-            <strong>
-              {monthTitle}
-            </strong>
-          )}
-        </div>
+        <div {...css(styles.CalendarMonth_inner)}>
+          <div
+            ref={this.setCaptionRef}
+            {...css(
+						  styles.CalendarMonth_caption,
+						  verticalScrollable && styles.CalendarMonth_caption__verticalScrollable,
+            )}
+          >
+            {renderMonthElement ? (
+						  renderMonthElement({
+						    month,
+						    onMonthSelect,
+						    onYearSelect,
+						    isVisible,
+						    visiblePosition,
+						  })
+            ) : (
+              <strong>
+                {monthTitle}
+              </strong>
+            )}
+          </div>
 
-        <table
-          {...css(
-            !verticalBorderSpacing && styles.CalendarMonth_table,
-            verticalBorderSpacing && styles.CalendarMonth_verticalSpacing,
-            verticalBorderSpacing && { borderSpacing: `0px ${verticalBorderSpacing}px` },
-          )}
-          role="presentation"
-        >
-          <tbody>
-            {weeks.map((week, i) => (
-              <CalendarWeek key={i}>
-                {week.map((day, dayOfWeek) => renderCalendarDay({
-                  key: dayOfWeek,
-                  day,
-                  daySize,
-                  isOutsideDay: !day || day.month() !== month.month(),
-                  tabIndex: isVisible && isSameDay(day, focusedDate) ? 0 : -1,
-                  isFocused,
-                  onDayMouseEnter,
-                  onDayMouseLeave,
-                  onDayClick,
-                  renderDayContents,
-                  phrases,
-                  modifiers: modifiers[toISODateString(day)],
-                  ariaLabelFormat: dayAriaLabelFormat,
-                }))}
-              </CalendarWeek>
-            ))}
-          </tbody>
-        </table>
+          <table
+            {...css(
+						  !verticalBorderSpacing && styles.CalendarMonth_table,
+						  verticalBorderSpacing && styles.CalendarMonth_verticalSpacing,
+						  verticalBorderSpacing && { borderSpacing: `0px ${verticalBorderSpacing}px` },
+            )}
+            role="presentation"
+          >
+            <tbody>
+              {weeks.map((week, i) => (
+                <CalendarWeek key={i}>
+                  {week.map((day, dayOfWeek) => renderCalendarDay({
+								  key: dayOfWeek,
+								  day,
+								  daySize,
+								  isOutsideDay: !day || day.month() !== month.month(),
+								  tabIndex: isVisible && isSameDay(day, focusedDate) ? 0 : -1,
+								  isFocused,
+								  onDayMouseEnter,
+								  onDayMouseLeave,
+								  onDayClick,
+								  renderDayContents,
+								  phrases,
+								  modifiers: modifiers[toISODateString(day)],
+								  ariaLabelFormat: dayAriaLabelFormat,
+                  }))}
+                </CalendarWeek>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     );
   }
@@ -255,6 +264,8 @@ export default withStyles(({ reactDates: { color, font, spacing } }) => ({
     verticalAlign: 'top',
     userSelect: 'none',
   },
+
+  CalendarMonth_inner: {},
 
   CalendarMonth_table: {
     borderCollapse: 'collapse',

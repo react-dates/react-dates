@@ -76,12 +76,18 @@ const defaultProps = {
   numberOfMonths: 1,
   modifiers: {},
   orientation: HORIZONTAL_ORIENTATION,
-  onDayClick() {},
-  onDayMouseEnter() {},
-  onDayMouseLeave() {},
-  onMonthChange() {},
-  onYearChange() {},
-  onMonthTransitionEnd() {},
+  onDayClick() {
+  },
+  onDayMouseEnter() {
+  },
+  onDayMouseLeave() {
+  },
+  onMonthChange() {
+  },
+  onYearChange() {
+  },
+  onMonthTransitionEnd() {
+  },
   renderMonthText: null,
   renderCalendarDay: undefined,
   renderDayContents: null,
@@ -287,77 +293,85 @@ class CalendarMonthGrid extends React.PureComponent {
     return (
       <div
         {...css(
-          styles.CalendarMonthGrid,
-          isHorizontal && styles.CalendarMonthGrid__horizontal,
-          isVertical && styles.CalendarMonthGrid__vertical,
-          isVerticalScrollable && styles.CalendarMonthGrid__vertical_scrollable,
-          isAnimating && styles.CalendarMonthGrid__animating,
-          isAnimating && transitionDuration && {
-            transition: `transform ${transitionDuration}ms ease-in-out`,
-          },
-          {
-            ...getTransformStyles(transformValue),
-            width,
-          },
+				  styles.CalendarMonthGrid,
+				  isHorizontal && styles.CalendarMonthGrid__horizontal,
+				  isVertical && styles.CalendarMonthGrid__vertical,
+				  isVerticalScrollable && styles.CalendarMonthGrid__vertical_scrollable,
+				  isAnimating && styles.CalendarMonthGrid__animating,
+				  isAnimating && transitionDuration && {
+				    transition: `transform ${transitionDuration}ms ease-in-out`,
+				  },
+				  {
+				    ...getTransformStyles(transformValue),
+				    width,
+				  },
         )}
         ref={this.setContainerRef}
         onTransitionEnd={onMonthTransitionEnd}
       >
         {months.map((month, i) => {
-          const isVisible = (i >= firstVisibleMonthIndex)
-            && (i < firstVisibleMonthIndex + numberOfMonths);
-          const hideForAnimation = i === 0 && !isVisible;
-          const showForAnimation = i === 0 && isAnimating && isVisible;
-          const monthString = toISOMonthString(month);
-          return (
-            <div
-              key={monthString}
-              {...css(
-                isHorizontal && styles.CalendarMonthGrid_month__horizontal,
-                hideForAnimation && styles.CalendarMonthGrid_month__hideForAnimation,
-                showForAnimation && !isVertical && !isRTL && {
-                  position: 'absolute',
-                  left: -calendarMonthWidth,
-                },
-                showForAnimation && !isVertical && isRTL && {
-                  position: 'absolute',
-                  right: 0,
-                },
-                showForAnimation && isVertical && {
-                  position: 'absolute',
-                  top: -translationValue,
-                },
-                !isVisible && !isAnimating && styles.CalendarMonthGrid_month__hidden,
-              )}
-            >
-              <CalendarMonth
-                month={month}
-                isVisible={isVisible}
-                enableOutsideDays={enableOutsideDays}
-                modifiers={modifiers[monthString]}
-                monthFormat={monthFormat}
-                orientation={orientation}
-                onDayMouseEnter={onDayMouseEnter}
-                onDayMouseLeave={onDayMouseLeave}
-                onDayClick={onDayClick}
-                onMonthSelect={this.onMonthSelect}
-                onYearSelect={this.onYearSelect}
-                renderMonthText={renderMonthText}
-                renderCalendarDay={renderCalendarDay}
-                renderDayContents={renderDayContents}
-                renderMonthElement={renderMonthElement}
-                firstDayOfWeek={firstDayOfWeek}
-                daySize={daySize}
-                focusedDate={isVisible ? focusedDate : null}
-                isFocused={isFocused}
-                phrases={phrases}
-                setMonthTitleHeight={setMonthTitleHeight}
-                dayAriaLabelFormat={dayAriaLabelFormat}
-                verticalBorderSpacing={verticalBorderSpacing}
-                horizontalMonthPadding={horizontalMonthPadding}
-              />
-            </div>
-          );
+				  const isVisible = (i >= firstVisibleMonthIndex)
+						&& (i < firstVisibleMonthIndex + numberOfMonths);
+				  let visiblePosition = 'between';
+				  if (i === firstVisibleMonthIndex) {
+				    visiblePosition = 'first';
+				  }
+				  if (i === firstVisibleMonthIndex + numberOfMonths + 1) {
+				    visiblePosition = 'last';
+				  }
+				  const hideForAnimation = i === 0 && !isVisible;
+				  const showForAnimation = i === 0 && isAnimating && isVisible;
+				  const monthString = toISOMonthString(month);
+				  return (
+  <div
+    key={monthString}
+    {...css(
+							  isHorizontal && styles.CalendarMonthGrid_month__horizontal,
+							  hideForAnimation && styles.CalendarMonthGrid_month__hideForAnimation,
+							  showForAnimation && !isVertical && !isRTL && {
+							    position: 'absolute',
+							    left: -calendarMonthWidth,
+							  },
+							  showForAnimation && !isVertical && isRTL && {
+							    position: 'absolute',
+							    right: 0,
+							  },
+							  showForAnimation && isVertical && {
+							    position: 'absolute',
+							    top: -translationValue,
+							  },
+							  !isVisible && !isAnimating && styles.CalendarMonthGrid_month__hidden,
+    )}
+  >
+    <CalendarMonth
+      month={month}
+      isVisible={isVisible}
+	  visiblePosition={visiblePosition}
+      enableOutsideDays={enableOutsideDays}
+      modifiers={modifiers[monthString]}
+      monthFormat={monthFormat}
+      orientation={orientation}
+      onDayMouseEnter={onDayMouseEnter}
+      onDayMouseLeave={onDayMouseLeave}
+      onDayClick={onDayClick}
+      onMonthSelect={this.onMonthSelect}
+      onYearSelect={this.onYearSelect}
+      renderMonthText={renderMonthText}
+      renderCalendarDay={renderCalendarDay}
+      renderDayContents={renderDayContents}
+      renderMonthElement={renderMonthElement}
+      firstDayOfWeek={firstDayOfWeek}
+      daySize={daySize}
+      focusedDate={isVisible ? focusedDate : null}
+      isFocused={isFocused}
+      phrases={phrases}
+      setMonthTitleHeight={setMonthTitleHeight}
+      dayAriaLabelFormat={dayAriaLabelFormat}
+      verticalBorderSpacing={verticalBorderSpacing}
+      horizontalMonthPadding={horizontalMonthPadding}
+    />
+  </div>
+				  );
         })}
       </div>
     );
@@ -368,13 +382,13 @@ CalendarMonthGrid.propTypes = propTypes;
 CalendarMonthGrid.defaultProps = defaultProps;
 
 export default withStyles(({
-  reactDates: {
-    color,
-    noScrollBarOnVerticalScrollable,
-    spacing,
-    zIndex,
-  },
-}) => ({
+							   reactDates: {
+								   color,
+								   noScrollBarOnVerticalScrollable,
+								   spacing,
+								   zIndex,
+							   },
+						   }) => ({
   CalendarMonthGrid: {
     background: color.background,
     textAlign: noflip('left'),
