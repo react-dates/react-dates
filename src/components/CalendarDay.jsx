@@ -196,7 +196,9 @@ export default withStyles(({ reactDates: { color, font } }) => ({
 		cursor: 'default',
 	},
 
-	CalendarDay__inner: {},
+	CalendarDay__inner: {
+		display: 'block',
+	},
 
 	CalendarDay__default: {
 		border: `1px solid ${color.core.borderLight}`,

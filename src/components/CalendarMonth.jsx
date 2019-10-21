@@ -34,6 +34,7 @@ const propTypes = forbidExtraProps({
   month: momentPropTypes.momentObj,
   horizontalMonthPadding: nonNegativeInteger,
   isVisible: PropTypes.bool,
+  visiblePosition: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   enableOutsideDays: PropTypes.bool,
   modifiers: PropTypes.objectOf(ModifiersShape),
   orientation: ScrollableOrientationShape,
@@ -64,6 +65,7 @@ const defaultProps = {
   month: moment(),
   horizontalMonthPadding: 13,
   isVisible: true,
+  visiblePosition: false,
   enableOutsideDays: false,
   modifiers: {},
   orientation: HORIZONTAL_ORIENTATION,
@@ -265,7 +267,9 @@ export default withStyles(({ reactDates: { color, font, spacing } }) => ({
     userSelect: 'none',
   },
 
-  CalendarMonth_inner: {},
+  CalendarMonth_inner: {
+    display: 'block',
+  },
 
   CalendarMonth_table: {
     borderCollapse: 'collapse',
