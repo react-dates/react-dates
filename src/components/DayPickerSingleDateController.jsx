@@ -13,6 +13,7 @@ import isSameDay from '../utils/isSameDay';
 import isAfterDay from '../utils/isAfterDay';
 
 import getVisibleDays from '../utils/getVisibleDays';
+import isDayVisible from '../utils/isDayVisible';
 
 import toISODateString from '../utils/toISODateString';
 import { addModifier, deleteModifier } from '../utils/modifiers';
@@ -20,12 +21,14 @@ import { addModifier, deleteModifier } from '../utils/modifiers';
 import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
 import DayOfWeekShape from '../shapes/DayOfWeekShape';
 import CalendarInfoPositionShape from '../shapes/CalendarInfoPositionShape';
+import NavPositionShape from '../shapes/NavPositionShape';
 
 import {
   HORIZONTAL_ORIENTATION,
   VERTICAL_SCROLLABLE,
   DAY_SIZE,
   INFO_POSITION_BOTTOM,
+  NAV_POSITION_TOP,
 } from '../constants';
 
 import DayPicker from './DayPicker';
@@ -62,6 +65,8 @@ const propTypes = forbidExtraProps({
   transitionDuration: nonNegativeInteger,
   horizontalMonthPadding: nonNegativeInteger,
 
+  dayPickerNavigationInlineStyles: PropTypes.object,
+  navPosition: NavPositionShape,
   navPrev: PropTypes.node,
   navNext: PropTypes.node,
 
@@ -119,6 +124,8 @@ const defaultProps = {
   transitionDuration: undefined,
   horizontalMonthPadding: 13,
 
+  dayPickerNavigationInlineStyles: null,
+  navPosition: NAV_POSITION_TOP,
   navPrev: null,
   navNext: null,
 
@@ -213,6 +220,7 @@ export default class DayPickerSingleDateController extends React.PureComponent {
       focused: prevFocused,
       date: prevDate,
     } = this.props;
+    let { currentMonth } = this.state;
     let { visibleDays } = this.state;
 
     let recomputeOutsideRange = false;
@@ -238,6 +246,15 @@ export default class DayPickerSingleDateController extends React.PureComponent {
       recomputeOutsideRange || recomputeDayBlocked || recomputeDayHighlighted
     );
 
+    const didDateChange = date !== prevDate;
+    const didFocusChange = focused !== prevFocused;
+
+    let isDateVisible = true;
+
+    if (didDateChange) {
+      isDateVisible = isDayVisible(date, currentMonth, numberOfMonths, enableOutsideDays);
+    }
+
     if (
       numberOfMonths !== prevNumberOfMonths
       || enableOutsideDays !== prevEnableOutsideDays
@@ -245,19 +262,15 @@ export default class DayPickerSingleDateController extends React.PureComponent {
         initialVisibleMonth !== prevInitialVisibleMonth
         && !prevFocused
         && focused
-      )
+      ) || !isDateVisible
     ) {
       const newMonthState = this.getStateForNewMonth(nextProps);
-      const { currentMonth } = newMonthState;
-      ({ visibleDays } = newMonthState);
+      ({ currentMonth, visibleDays } = newMonthState);
       this.setState({
         currentMonth,
         visibleDays,
       });
     }
-
-    const didDateChange = date !== prevDate;
-    const didFocusChange = focused !== prevFocused;
 
     let modifiers = {};
 
@@ -573,6 +586,8 @@ export default class DayPickerSingleDateController extends React.PureComponent {
       monthFormat,
       renderMonthText,
       renderWeekHeaderElement,
+      dayPickerNavigationInlineStyles,
+      navPosition,
       navPrev,
       navNext,
       onOutsideClick,
@@ -626,6 +641,8 @@ export default class DayPickerSingleDateController extends React.PureComponent {
         initialVisibleMonth={() => currentMonth}
         firstDayOfWeek={firstDayOfWeek}
         onOutsideClick={onOutsideClick}
+        dayPickerNavigationInlineStyles={dayPickerNavigationInlineStyles}
+        navPosition={navPosition}
         navPrev={navPrev}
         navNext={navNext}
         renderMonthText={renderMonthText}

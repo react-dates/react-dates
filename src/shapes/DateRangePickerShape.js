@@ -13,6 +13,7 @@ import anchorDirectionShape from './AnchorDirectionShape';
 import openDirectionShape from './OpenDirectionShape';
 import DayOfWeekShape from './DayOfWeekShape';
 import CalendarInfoPositionShape from './CalendarInfoPositionShape';
+import NavPositionShape from './NavPositionShape';
 
 export default {
   // required props for a functional interactive DateRangePicker
@@ -78,6 +79,8 @@ export default {
   horizontalMonthPadding: nonNegativeInteger,
 
   // navigation related props
+  dayPickerNavigationInlineStyles: PropTypes.object,
+  navPosition: NavPositionShape,
   navPrev: PropTypes.node,
   navNext: PropTypes.node,
   onPrevMonthClick: PropTypes.func,

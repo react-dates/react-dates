@@ -19,6 +19,7 @@ import isPreviousDay from '../utils/isPreviousDay';
 import getVisibleDays from '../utils/getVisibleDays';
 import isDayVisible from '../utils/isDayVisible';
 
+import getPooledMoment from '../utils/getPooledMoment';
 import getSelectedDateOffset from '../utils/getSelectedDateOffset';
 
 import toISODateString from '../utils/toISODateString';
@@ -29,6 +30,7 @@ import FocusedInputShape from '../shapes/FocusedInputShape';
 import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
 import DayOfWeekShape from '../shapes/DayOfWeekShape';
 import CalendarInfoPositionShape from '../shapes/CalendarInfoPositionShape';
+import NavPositionShape from '../shapes/NavPositionShape';
 
 import {
   START_DATE,
@@ -37,10 +39,10 @@ import {
   VERTICAL_SCROLLABLE,
   DAY_SIZE,
   INFO_POSITION_BOTTOM,
+  NAV_POSITION_TOP,
 } from '../constants';
 
 import DayPicker from './DayPicker';
-import getPooledMoment from '../utils/getPooledMoment';
 
 const propTypes = forbidExtraProps({
   startDate: momentPropTypes.momentObj,
@@ -78,6 +80,8 @@ const propTypes = forbidExtraProps({
   verticalBorderSpacing: nonNegativeInteger,
   horizontalMonthPadding: nonNegativeInteger,
 
+  dayPickerNavigationInlineStyles: PropTypes.object,
+  navPosition: NavPositionShape,
   navPrev: PropTypes.node,
   navNext: PropTypes.node,
   noNavButtons: PropTypes.bool,
@@ -89,6 +93,7 @@ const propTypes = forbidExtraProps({
   renderDayContents: PropTypes.func,
   renderCalendarInfo: PropTypes.func,
   renderKeyboardShortcutsButton: PropTypes.func,
+  renderKeyboardShortcutsPanel: PropTypes.func,
   calendarInfoPosition: CalendarInfoPositionShape,
   firstDayOfWeek: DayOfWeekShape,
   verticalHeight: nonNegativeInteger,
@@ -142,6 +147,8 @@ const defaultProps = {
   initialVisibleMonth: null,
   daySize: DAY_SIZE,
 
+  dayPickerNavigationInlineStyles: null,
+  navPosition: NAV_POSITION_TOP,
   navPrev: null,
   navNext: null,
   noNavButtons: false,
@@ -155,6 +162,7 @@ const defaultProps = {
   renderCalendarInfo: null,
   renderMonthElement: null,
   renderKeyboardShortcutsButton: undefined,
+  renderKeyboardShortcutsPanel: undefined,
   calendarInfoPosition: INFO_POSITION_BOTTOM,
   firstDayOfWeek: null,
   verticalHeight: null,
@@ -282,6 +290,8 @@ export default class DayPickerRangeController extends React.PureComponent {
     } = this.props;
 
     const { hoverDate } = this.state;
+
+    let { currentMonth } = this.state;
     let { visibleDays } = this.state;
 
     let recomputeOutsideRange = false;
@@ -311,6 +321,18 @@ export default class DayPickerRangeController extends React.PureComponent {
     const didEndDateChange = endDate !== prevEndDate;
     const didFocusChange = focusedInput !== prevFocusedInput;
 
+    let isDateVisible = true;
+
+    if (didStartDateChange || didEndDateChange) {
+      if (didStartDateChange) {
+        isDateVisible = isDayVisible(startDate, currentMonth, numberOfMonths, enableOutsideDays);
+      }
+
+      if (didEndDateChange) {
+        isDateVisible = isDayVisible(endDate, currentMonth, numberOfMonths, enableOutsideDays);
+      }
+    }
+
     if (
       numberOfMonths !== prevNumberOfMonths
       || enableOutsideDays !== prevEnableOutsideDays
@@ -319,10 +341,10 @@ export default class DayPickerRangeController extends React.PureComponent {
         && !prevFocusedInput
         && didFocusChange
       )
+      || !isDateVisible
     ) {
       const newMonthState = this.getStateForNewMonth(nextProps);
-      const { currentMonth } = newMonthState;
-      ({ visibleDays } = newMonthState);
+      ({ currentMonth, visibleDays } = newMonthState);
       this.setState({
         currentMonth,
         visibleDays,
@@ -1235,6 +1257,8 @@ export default class DayPickerRangeController extends React.PureComponent {
       monthFormat,
       renderMonthText,
       renderWeekHeaderElement,
+      dayPickerNavigationInlineStyles,
+      navPosition,
       navPrev,
       navNext,
       noNavButtons,
@@ -1243,6 +1267,7 @@ export default class DayPickerRangeController extends React.PureComponent {
       enableOutsideDays,
       firstDayOfWeek,
       renderKeyboardShortcutsButton,
+      renderKeyboardShortcutsPanel,
       hideKeyboardShortcutsPanel,
       daySize,
       focusedInput,
@@ -1300,6 +1325,8 @@ export default class DayPickerRangeController extends React.PureComponent {
         onOutsideClick={onOutsideClick}
         disablePrev={disablePrev}
         disableNext={disableNext}
+        dayPickerNavigationInlineStyles={dayPickerNavigationInlineStyles}
+        navPosition={navPosition}
         navPrev={navPrev}
         navNext={navNext}
         noNavButtons={noNavButtons}
@@ -1308,6 +1335,7 @@ export default class DayPickerRangeController extends React.PureComponent {
         renderCalendarInfo={renderCalendarInfo}
         renderMonthElement={renderMonthElement}
         renderKeyboardShortcutsButton={renderKeyboardShortcutsButton}
+        renderKeyboardShortcutsPanel={renderKeyboardShortcutsPanel}
         calendarInfoPosition={calendarInfoPosition}
         firstDayOfWeek={firstDayOfWeek}
         hideKeyboardShortcutsPanel={hideKeyboardShortcutsPanel}

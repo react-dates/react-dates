@@ -46,6 +46,30 @@ describe('DayPickerSingleDateController', () => {
       onFocusChange() {},
     };
 
+    describe('date changed from one date to another', () => {
+      it('calls getStateForNewMonth with nextProps when date is not visible', () => {
+        const getStateForNewMonthSpy = sinon.spy(
+          DayPickerSingleDateController.prototype,
+          'getStateForNewMonth',
+        );
+        const date = moment();
+        const nextDate = date.clone().add(2, 'months');
+
+        const wrapper = shallow((
+          <DayPickerSingleDateController {...props} date={date} />
+        ));
+
+        getStateForNewMonthSpy.resetHistory();
+
+        wrapper.instance().componentWillReceiveProps({
+          ...props,
+          date: nextDate,
+        });
+
+        expect(getStateForNewMonthSpy.callCount).to.equal(1);
+      });
+    });
+
     describe('modifiers', () => {
       describe('selected modifier', () => {
         describe('props.date did not change', () => {

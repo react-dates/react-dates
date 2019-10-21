@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { withStyles, withStylesPropTypes } from 'react-with-styles';
+import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 import { Portal } from 'react-portal';
 import { forbidExtraProps } from 'airbnb-prop-types';
 import { addEventListener } from 'consolidated-events';
@@ -35,6 +35,7 @@ import {
   INFO_POSITION_BOTTOM,
   FANG_HEIGHT_PX,
   DEFAULT_VERTICAL_SPACING,
+  NAV_POSITION_TOP,
 } from '../constants';
 
 const propTypes = forbidExtraProps({
@@ -98,6 +99,8 @@ const defaultProps = {
   horizontalMonthPadding: undefined,
 
   // navigation related props
+  dayPickerNavigationInlineStyles: null,
+  navPosition: NAV_POSITION_TOP,
   navPrev: null,
   navNext: null,
 
@@ -395,7 +398,6 @@ class DateRangePicker extends React.PureComponent {
   renderDayPicker() {
     const {
       anchorDirection,
-      css,
       openDirection,
       isDayBlocked,
       isDayHighlighted,
@@ -405,6 +407,8 @@ class DateRangePicker extends React.PureComponent {
       monthFormat,
       renderMonthText,
       renderWeekHeaderElement,
+      dayPickerNavigationInlineStyles,
+      navPosition,
       navPrev,
       navNext,
       onPrevMonthClick,
@@ -510,6 +514,8 @@ class DateRangePicker extends React.PureComponent {
           daySize={daySize}
           initialVisibleMonth={initialVisibleMonthThunk}
           hideKeyboardShortcutsPanel={hideKeyboardShortcutsPanel}
+          dayPickerNavigationInlineStyles={dayPickerNavigationInlineStyles}
+          navPosition={navPosition}
           navPrev={navPrev}
           navNext={navNext}
           minimumNights={minimumNights}
@@ -552,7 +558,6 @@ class DateRangePicker extends React.PureComponent {
 
   render() {
     const {
-      css,
       startDate,
       startDateId,
       startDatePlaceholderText,

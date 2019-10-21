@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import momentPropTypes from 'react-moment-proptypes';
 import { forbidExtraProps, mutuallyExclusiveProps, nonNegativeInteger } from 'airbnb-prop-types';
-import { withStyles, withStylesPropTypes } from 'react-with-styles';
+import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 import moment from 'moment';
 import { addEventListener } from 'consolidated-events';
 
@@ -265,7 +265,6 @@ class CalendarMonthGrid extends React.PureComponent {
       transitionDuration,
       verticalBorderSpacing,
       setMonthTitleHeight,
-      css,
     } = this.props;
 
     const { months } = this.state;

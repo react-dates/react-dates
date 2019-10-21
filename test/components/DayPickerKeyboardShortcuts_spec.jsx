@@ -146,6 +146,17 @@ describe('DayPickerKeyboardShortcuts', () => {
           expect(wrapper.children().find(Button)).to.have.lengthOf(1);
         });
       });
+
+      describe('renderKeyboardShortcutsPanel', () => {
+        it('renders the provided keyboard shortcuts panel', () => {
+          const props = {
+            renderKeyboardShortcutsPanel: () => (<div>Keyboard shortcuts here!</div>),
+            showKeyboardShortcutsPanel: true,
+          };
+          const wrapper = shallow(<DayPickerKeyboardShortcuts {...props} />).dive();
+          expect(wrapper.children().contains('Keyboard shortcuts here!'));
+        });
+      });
     });
 
     describe('#DayPickerKeyboardShortcuts_panel', () => {

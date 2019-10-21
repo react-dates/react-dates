@@ -9,7 +9,10 @@ import InfoPanelDecorator, { monospace } from './InfoPanelDecorator';
 import isSameDay from '../src/utils/isSameDay';
 import isInclusivelyAfterDay from '../src/utils/isInclusivelyAfterDay';
 
-import { VERTICAL_ORIENTATION, VERTICAL_SCROLLABLE } from '../src/constants';
+import CloseButton from '../src/components/CloseButton';
+import KeyboardShortcutRow from '../src/components/KeyboardShortcutRow';
+
+import { NAV_POSITION_BOTTOM, VERTICAL_ORIENTATION, VERTICAL_SCROLLABLE } from '../src/constants';
 
 import DayPickerRangeControllerWrapper from '../examples/DayPickerRangeControllerWrapper';
 
@@ -41,7 +44,7 @@ const TestPrevIcon = () => (
       position: 'absolute',
       top: '20px',
     }}
-    tabindex="0"
+    tabIndex="0"
   >
     Prev
   </div>
@@ -58,7 +61,37 @@ const TestNextIcon = () => (
       right: '22px',
       top: '20px',
     }}
-    tabindex="0"
+    tabIndex="0"
+  >
+    Next
+  </div>
+);
+
+const TestBottomPrevIcon = () => (
+  <div
+    style={{
+      border: '1px solid #dce0e0',
+      backgroundColor: '#fff',
+      color: '#484848',
+      padding: '3px',
+      margin: '-10px 22px 30px',
+    }}
+    tabIndex="0"
+  >
+    Prev
+  </div>
+);
+
+const TestBottomNextIcon = () => (
+  <div
+    style={{
+      border: '1px solid #dce0e0',
+      backgroundColor: '#fff',
+      color: '#484848',
+      padding: '3px',
+      margin: '-10px 22px 30px',
+    }}
+    tabIndex="0"
   >
     Next
   </div>
@@ -116,6 +149,80 @@ function renderKeyboardShortcutsButton(buttonProps) {
     >
       <span style={spanStyle}>?</span>
     </button>
+  );
+}
+
+function renderKeyboardShortcutsPanel(panelProps) {
+  const {
+    closeButtonAriaLabel,
+    keyboardShortcuts,
+    onCloseButtonClick,
+    onKeyDown,
+    title,
+  } = panelProps;
+
+  const PANEL_PADDING_PX = 50;
+
+  return (
+    <div style={{
+      position: 'fixed',
+      width: '100%',
+      height: '100%',
+      top: 0,
+      left: 0,
+      zIndex: 2,
+    }}
+    >
+      <div style={{
+        backgroundColor: '#000000',
+        opacity: 0.5,
+        width: '100%',
+        height: '100%',
+      }}
+      />
+      <div style={{
+        backgroundColor: '#ffffff',
+        padding: PANEL_PADDING_PX,
+        width: '50%',
+        height: '50%',
+        position: 'absolute',
+        top: '25%',
+        left: '25%',
+      }}
+      >
+        <button
+          aria-label={closeButtonAriaLabel}
+          onClick={onCloseButtonClick}
+          onKeyDown={onKeyDown}
+          style={{
+            height: 25,
+            width: 25,
+            position: 'absolute',
+            top: PANEL_PADDING_PX,
+            right: PANEL_PADDING_PX,
+          }}
+          type="button"
+        >
+          <CloseButton />
+        </button>
+        <div style={{
+          fontSize: 16,
+          fontWeight: 'bold',
+          marginBottom: 16,
+        }}
+        >
+          {title}
+        </div>
+        {keyboardShortcuts.map(({ action: keyboardShortcutAction, label, unicode }) => (
+          <KeyboardShortcutRow
+            action={keyboardShortcutAction}
+            key={label}
+            label={label}
+            unicode={unicode}
+          />
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -310,6 +417,28 @@ storiesOf('DayPickerRangeController', module)
       navNext={<TestNextIcon />}
     />
   )))
+  .add('with month navigation positioned at the bottom', withInfo()(() => (
+    <DayPickerRangeControllerWrapper
+      navPosition={NAV_POSITION_BOTTOM}
+      onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
+      onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
+      onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
+    />
+  )))
+  .add('with custom month navigation positioned at the bottom', withInfo()(() => (
+    <DayPickerRangeControllerWrapper
+      navPosition={NAV_POSITION_BOTTOM}
+      onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
+      onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
+      onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
+      navPrev={<TestBottomPrevIcon />}
+      navNext={<TestBottomNextIcon />}
+      dayPickerNavigationInlineStyles={{
+        display: 'flex',
+        justifyContent: 'space-between',
+      }}
+    />
+  )))
   .add('with outside days enabled', withInfo()(() => (
     <DayPickerRangeControllerWrapper
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
@@ -474,5 +603,13 @@ storiesOf('DayPickerRangeController', module)
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
       renderKeyboardShortcutsButton={renderKeyboardShortcutsButton}
+    />
+  )))
+  .add('with custom keyboard shortcuts panel', withInfo()(() => (
+    <DayPickerRangeControllerWrapper
+      onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
+      onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
+      onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
+      renderKeyboardShortcutsPanel={renderKeyboardShortcutsPanel}
     />
   )));

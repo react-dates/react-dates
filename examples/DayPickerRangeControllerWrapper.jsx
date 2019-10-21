@@ -50,6 +50,7 @@ const propTypes = forbidExtraProps({
   renderCalendarDay: PropTypes.func,
   renderDayContents: PropTypes.func,
   renderKeyboardShortcutsButton: PropTypes.func,
+  renderKeyboardShortcutsPanel: PropTypes.func,
 
   // i18n
   monthFormat: PropTypes.string,
@@ -90,6 +91,7 @@ const defaultProps = {
   renderMonthText: null,
   renderMonthElement: null,
   renderKeyboardShortcutsButton: undefined,
+  renderKeyboardShortcutsPanel: undefined,
 
   // navigation related props
   navPrev: null,
@@ -143,12 +145,12 @@ class DayPickerRangeControllerWrapper extends React.Component {
 
     return (
       <div style={{ height: '100%' }}>
-        {showInputs &&
+        {showInputs && (
           <div style={{ marginBottom: 16 }}>
             <input type="text" name="start date" value={startDateString} readOnly />
             <input type="text" name="end date" value={endDateString} readOnly />
           </div>
-        }
+        )}
 
         <DayPickerRangeController
           {...props}
