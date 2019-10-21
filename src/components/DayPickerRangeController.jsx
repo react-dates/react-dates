@@ -223,11 +223,11 @@ export default class DayPickerRangeController extends React.PureComponent {
       'last-day-of-week': (day) => this.isLastDayOfWeek(day),
       'hovered-start-first-possible-end': (day, hoverDate) => this.isFirstPossibleEndDateForHoveredStartDate(day, hoverDate),
       'hovered-start-blocked-minimum-nights': (day, hoverDate) => this.doesNotMeetMinNightsForHoveredStartDate(day, hoverDate),
-      'before-hovered-end': day => this.isDayBeforeHoveredEndDate(day),
-      'no-selected-start-before-selected-end': day => this.beforeSelectedEnd(day) && !props.startDate,
+      'before-hovered-end': (day) => this.isDayBeforeHoveredEndDate(day),
+      'no-selected-start-before-selected-end': (day) => this.beforeSelectedEnd(day) && !props.startDate,
       'selected-start-in-hovered-span': (day, hoverDate) => this.isStartDate(day) && isAfterDay(hoverDate, day),
-      'selected-start-no-selected-end': day => this.isStartDate(day) && !props.endDate,
-      'selected-end-no-selected-start': day => this.isEndDate(day) && !props.startDate,
+      'selected-start-no-selected-end': (day) => this.isStartDate(day) && !props.endDate,
+      'selected-end-no-selected-start': (day) => this.isEndDate(day) && !props.startDate,
     };
 
     const { currentMonth, visibleDays } = this.getStateForNewMonth(props);
