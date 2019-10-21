@@ -385,7 +385,7 @@ export default class DayPickerRangeController extends React.PureComponent {
       modifiers = this.addModifier(modifiers, endDate, 'selected-end');
 
       if (prevEndDate && (!startDate || !prevStartDate)) {
-        modifiers = this.deleteModifier(modifiers, prevEndDate, 'selected-end-no-start-date');
+        modifiers = this.deleteModifier(modifiers, prevEndDate, 'selected-end-no-selected-start');
       }
     }
 
@@ -756,11 +756,10 @@ export default class DayPickerRangeController extends React.PureComponent {
 
           if (isSameDay(day, endDate)) {
             const newStartSpan = endDate.clone().subtract(minimumNights, 'days');
-            const newEndSpan = endDate.clone();
             modifiers = this.addModifierToRange(
               modifiers,
               newStartSpan,
-              newEndSpan,
+              endDate,
               'before-hovered-end',
             );
           }
@@ -823,6 +822,7 @@ export default class DayPickerRangeController extends React.PureComponent {
       minimumNights,
     } = this.props;
     const { hoverDate, visibleDays, dateOffset } = this.state;
+
     if (this.isTouchDevice || !hoverDate) return;
 
     let modifiers = {};
@@ -861,8 +861,7 @@ export default class DayPickerRangeController extends React.PureComponent {
 
     if (endDate && isSameDay(day, endDate)) {
       const startSpan = endDate.clone().subtract(minimumNights, 'days');
-      const endSpan = endDate.clone();
-      modifiers = this.deleteModifierFromRange(modifiers, startSpan, endSpan, 'before-hovered-end');
+      modifiers = this.deleteModifierFromRange(modifiers, startSpan, endDate, 'before-hovered-end');
     }
 
     if (!this.isBlocked(hoverDate)) {
