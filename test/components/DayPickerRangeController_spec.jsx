@@ -352,7 +352,7 @@ describe('DayPickerRangeController', () => {
       });
 
       describe('endDate changed from one date to another', () => {
-        it('removes previous `selected-end-no-start-date` when no start date selected', () => {
+        it('removes previous `selected-end-no-selected-start` when no start date selected', () => {
           const minimumNights = 5;
           const endDate = moment().add(7, 'days');
           const deleteModifierSpy = sinon.spy(DayPickerRangeController.prototype, 'deleteModifier');
@@ -1614,9 +1614,19 @@ describe('DayPickerRangeController', () => {
             const addModifierSpy = sinon.spy(DayPickerRangeController.prototype, 'addModifier');
             const startDate = moment().add(1, 'days');
             const endDate = startDate.clone().add(1, 'days');
-            const wrapper = shallow(<DayPickerRangeController {...props} startDate={startDate} endDate={endDate} />);
+            const wrapper = shallow(
+              <DayPickerRangeController
+                {...props}
+                startDate={startDate}
+                endDate={endDate}
+              />,
+            );
             const newEndDate = endDate.clone().add(1, 'days');
-            wrapper.instance().componentWillReceiveProps({ ...props, startDate: null, endDate: newEndDate });
+            wrapper.instance().componentWillReceiveProps({
+              ...props,
+              startDate: null,
+              endDate: newEndDate,
+            });
             const noSelectedStartBeforeSelectedEndCalls = getCallsByModifier(addModifierSpy, 'no-selected-start-before-selected-end');
             noSelectedStartBeforeSelectedEndCalls.forEach((eachCall) => {
               const day = eachCall.args[1];
@@ -1668,16 +1678,16 @@ describe('DayPickerRangeController', () => {
           });
         });
 
-        describe('end date has changed, and start date and previous start date are falsey', () => {
+        describe('end date has changed, and start date or previous start date are falsey', () => {
           it('calls deleteModifier with `selected-end-no-selected-start`', () => {
             const deleteModifierSpy = sinon.spy(DayPickerRangeController.prototype, 'deleteModifier');
-            const startDate = moment();
-            const wrapper = shallow(<DayPickerRangeController {...props} startDate={startDate} />);
-            const newStartDate = startDate.clone().add(1, 'days');
-            wrapper.instance().componentWillReceiveProps({ ...props, startDate: newStartDate });
+            const endDate = moment();
+            const wrapper = shallow(<DayPickerRangeController {...props} endDate={endDate} />);
+            const newEndDate = endDate.clone().add(1, 'days');
+            wrapper.instance().componentWillReceiveProps({ ...props, endDate: newEndDate });
             const selectedStartNoSelectedEndCalls = getCallsByModifier(deleteModifierSpy, 'selected-end-no-selected-start');
             expect(selectedStartNoSelectedEndCalls.length).to.equal(1);
-            expect(selectedStartNoSelectedEndCalls[0].args[1]).to.equal(startDate);
+            expect(selectedStartNoSelectedEndCalls[0].args[1]).to.equal(endDate);
           });
         });
       });
@@ -1688,19 +1698,27 @@ describe('DayPickerRangeController', () => {
             const minimumNights = 1;
             const addModifierToRangeSpy = sinon.spy(DayPickerRangeController.prototype, 'addModifierToRange');
             const endDate = moment();
-            const wrapper = shallow(<DayPickerRangeController {...props} minimumNights={minimumNights} endDate={endDate} />);
+            const wrapper = shallow(
+              <DayPickerRangeController
+                {...props}
+                minimumNights={minimumNights}
+                endDate={endDate}
+              />,
+            );
             const newEndDate = endDate.clone().add(1, 'days');
             addModifierToRangeSpy.resetHistory();
             wrapper.instance().componentWillReceiveProps({ ...props, endDate: newEndDate });
             const beforeHoveredEndCalls = getCallsByModifier(addModifierToRangeSpy, 'before-hovered-end');
             expect(beforeHoveredEndCalls.length).to.equal(1);
-            expect(toISODateString(beforeHoveredEndCalls[0].args[1])).to.equal(toISODateString(newEndDate.clone().subtract(minimumNights, 'days')));
-            expect(toISODateString(beforeHoveredEndCalls[0].args[2])).to.equal(toISODateString(newEndDate));
+            expect(toISODateString(beforeHoveredEndCalls[0].args[1])).to.equal(
+              toISODateString(newEndDate.clone().subtract(minimumNights, 'days')),
+            );
+            expect(toISODateString(beforeHoveredEndCalls[0].args[2])).to.equal(
+              toISODateString(newEndDate),
+            );
           });
         });
       });
-
-
     });
 
     describe('phrases', () => {
@@ -2986,9 +3004,14 @@ describe('DayPickerRangeController', () => {
             const minimumNightStartSpan = endDate.clone().subtract(minimumNights, 'days');
             deleteModifierFromRangeSpy.resetHistory();
             wrapper.instance().onDayMouseEnter(today);
-            const deleteModifierFromRangeCalls = getCallsByModifier(deleteModifierFromRangeSpy, 'before-hovered-end');
+            const deleteModifierFromRangeCalls = getCallsByModifier(
+              deleteModifierFromRangeSpy,
+              'before-hovered-end',
+            );
             expect(deleteModifierFromRangeCalls.length).to.equal(1);
-            expect(toISODateString(deleteModifierFromRangeCalls[0].args[1])).to.equal(toISODateString(minimumNightStartSpan));
+            expect(toISODateString(deleteModifierFromRangeCalls[0].args[1])).to.equal(
+              toISODateString(minimumNightStartSpan),
+            );
             expect(deleteModifierFromRangeCalls[0].args[2]).to.equal(endDate);
           });
         });
@@ -3008,7 +3031,9 @@ describe('DayPickerRangeController', () => {
             wrapper.instance().onDayMouseEnter(today);
             const addModifierFromRangeCalls = getCallsByModifier(addModifierFromRangeSpy, 'before-hovered-end');
             expect(addModifierFromRangeCalls.length).to.equal(1);
-            expect(toISODateString(addModifierFromRangeCalls[0].args[1])).to.equal(toISODateString(minimumNightStartSpan));
+            expect(toISODateString(addModifierFromRangeCalls[0].args[1])).to.equal(
+              toISODateString(minimumNightStartSpan),
+            );
             expect(addModifierFromRangeCalls[0].args[2]).to.equal(endDate);
           });
         });
@@ -3319,7 +3344,7 @@ describe('DayPickerRangeController', () => {
             expect(deleteModifierCalls.length).to.equal(1);
             expect(deleteModifierCalls[0].args[1]).to.equal(startDate);
           });
-        })
+        });
       });
 
       describe('selected-end-in-hovered-span modifier', () => {
@@ -3344,7 +3369,7 @@ describe('DayPickerRangeController', () => {
             expect(deleteModifierCalls.length).to.equal(1);
             expect(deleteModifierCalls[0].args[1]).to.equal(endDate);
           });
-        })
+        });
       });
 
       describe('before-hovered-end modifier', () => {
@@ -3369,10 +3394,12 @@ describe('DayPickerRangeController', () => {
             wrapper.instance().onDayMouseLeave(endDate);
             const deleteModifierFromRangeCalls = getCallsByModifier(deleteModifierFromRangeSpy, 'before-hovered-end');
             expect(deleteModifierFromRangeCalls.length).to.equal(1);
-            expect(toISODateString(deleteModifierFromRangeCalls[0].args[1])).to.equal(toISODateString(minimumNightStartSpan));
+            expect(toISODateString(deleteModifierFromRangeCalls[0].args[1])).to.equal(
+              toISODateString(minimumNightStartSpan),
+            );
             expect(deleteModifierFromRangeCalls[0].args[2]).to.equal(endDate);
           });
-        })
+        });
       });
     });
   });
