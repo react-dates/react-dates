@@ -46,7 +46,7 @@ import {
   NAV_POSITION_BOTTOM,
 } from '../constants';
 
-const MONTH_PADDING = 23;
+const MONTH_PADDING = 38;
 const PREV_TRANSITION = 'prev';
 const NEXT_TRANSITION = 'next';
 const MONTH_SELECTION_TRANSITION = 'month_selection';
