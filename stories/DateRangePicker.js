@@ -124,4 +124,7 @@ storiesOf('DateRangePicker (DRP)', module)
       maxDate={moment().add(2, 'months').endOf('month')}
       numberOfMonths={2}
     />
-  )));
+  )))
+  .add('Copper', withInfo()(() => (
+    <DateRangePickerWrapper />
+  )))

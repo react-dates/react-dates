@@ -269,6 +269,8 @@ export default withStyles(({ reactDates: { color, font, spacing } }) => ({
 
   CalendarMonth_inner: {
     display: 'block',
+    padding: `0 ${spacing.dayPickerHorizontalPadding}px`,
+    backgroundColor: '#F8FAFA',
   },
 
   CalendarMonth_table: {
