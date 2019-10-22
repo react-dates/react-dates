@@ -4,6 +4,10 @@
 - []  ([#](https://github.com/airbnb/react-dates/pull/))
 -->
 
+## 21.3.1
+
+- [fix] Update react-with-styles 4.1.0-alpha.1 -> 4.1.0
+
 ## 21.3.0
 
 - [new] Update react-with-styles 4.0.1 -> 4.1.0 ([#1843](https://github.com/airbnb/react-dates/pull/1843))
