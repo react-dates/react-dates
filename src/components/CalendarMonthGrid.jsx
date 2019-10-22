@@ -316,7 +316,7 @@ class CalendarMonthGrid extends React.PureComponent {
 				  if (i === firstVisibleMonthIndex) {
 				    visiblePosition = 'first';
 				  }
-				  if (i === firstVisibleMonthIndex + numberOfMonths + 1) {
+				  if (i === firstVisibleMonthIndex + numberOfMonths - 1) {
 				    visiblePosition = 'last';
 				  }
 				  const hideForAnimation = i === 0 && !isVisible;
