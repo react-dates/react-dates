@@ -153,7 +153,7 @@ export default {
     },
 
     spacing: {
-      dayPickerHorizontalPadding: 9,
+      dayPickerHorizontalPadding: 0,
       dayPickerInnerPadding: 16,
       captionPaddingTop: 22,
       captionPaddingBottom: 37,
