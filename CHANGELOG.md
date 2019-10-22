@@ -4,6 +4,11 @@
 - []  ([#](https://github.com/airbnb/react-dates/pull/))
 -->
 
+## 21.3.0
+
+- [new] Update react-with-styles 4.0.1 -> 4.1.0 ([#1843](https://github.com/airbnb/react-dates/pull/1843))
+- [new] Add Input Font-Weight to Default Theme ([#1765](https://github.com/airbnb/react-dates/pull/#1765))
+
 ## 21.2.1
 
 - [fix] Call getStateForNewMonth when date/startDate/endDate is set to a date that is not visible ([#1834](https://github.com/airbnb/react-dates/pull/1834))
