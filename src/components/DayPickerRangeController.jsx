@@ -365,18 +365,18 @@ export default class DayPickerRangeController extends React.PureComponent {
         if (!endDate || !prevEndDate) {
           modifiers = this.deleteModifier(modifiers, prevStartDate, 'selected-start-no-selected-end');
         }
+      }
 
-        if (!startDate && endDate) {
-          values(visibleDays).forEach((days) => {
-            Object.keys(days).forEach((day) => {
-              const momentObj = moment(day);
+      if (!prevStartDate && endDate && startDate) {
+        modifiers = this.deleteModifier(modifiers, endDate, 'selected-end-no-selected-start');
+        modifiers = this.deleteModifier(modifiers, endDate, 'selected-end-in-hovered-span');
 
-              if (isBeforeDay(momentObj, endDate)) {
-                modifiers = this.addModifier(modifiers, momentObj, 'no-selected-start-before-selected-end');
-              }
-            });
+        values(visibleDays).forEach((days) => {
+          Object.keys(days).forEach((day) => {
+            const momentObj = moment(day);
+            modifiers = this.deleteModifier(modifiers, momentObj, 'no-selected-start-before-selected-end');
           });
-        }
+        });
       }
     }
 
@@ -421,6 +421,18 @@ export default class DayPickerRangeController extends React.PureComponent {
 
       if (endDate && !startDate) {
         modifiers = this.addModifier(modifiers, endDate, 'selected-end-no-selected-start');
+      }
+
+      if (!startDate && endDate) {
+        values(visibleDays).forEach((days) => {
+          Object.keys(days).forEach((day) => {
+            const momentObj = moment(day);
+
+            if (isBeforeDay(momentObj, endDate)) {
+              modifiers = this.addModifier(modifiers, momentObj, 'no-selected-start-before-selected-end');
+            }
+          });
+        });
       }
     }
 
