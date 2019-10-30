@@ -1760,7 +1760,6 @@ describe('DayPickerRangeController', () => {
             it('calls deleteModifier with `selected-end-in-hovered-span`', () => {
               const deleteModifierSpy = sinon.spy(DayPickerRangeController.prototype, 'deleteModifier');
               const endDate = today;
-              const startDate = endDate.clone().subtract(1, 'days');
               const wrapper = shallow(
                 <DayPickerRangeController
                   {...props}
