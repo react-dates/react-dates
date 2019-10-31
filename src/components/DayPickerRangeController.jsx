@@ -19,7 +19,6 @@ import isPreviousDay from '../utils/isPreviousDay';
 import getVisibleDays from '../utils/getVisibleDays';
 import isDayVisible from '../utils/isDayVisible';
 
-import getPooledMoment from '../utils/getPooledMoment';
 import getSelectedDateOffset from '../utils/getSelectedDateOffset';
 
 import toISODateString from '../utils/toISODateString';
@@ -43,6 +42,7 @@ import {
 } from '../constants';
 
 import DayPicker from './DayPicker';
+import getPooledMoment from '../utils/getPooledMoment';
 
 const propTypes = forbidExtraProps({
   startDate: momentPropTypes.momentObj,
@@ -290,8 +290,6 @@ export default class DayPickerRangeController extends React.PureComponent {
     } = this.props;
 
     const { hoverDate } = this.state;
-
-    let { currentMonth } = this.state;
     let { visibleDays } = this.state;
 
     let recomputeOutsideRange = false;
@@ -321,18 +319,6 @@ export default class DayPickerRangeController extends React.PureComponent {
     const didEndDateChange = endDate !== prevEndDate;
     const didFocusChange = focusedInput !== prevFocusedInput;
 
-    let isDateVisible = true;
-
-    if (didStartDateChange || didEndDateChange) {
-      if (didStartDateChange) {
-        isDateVisible = isDayVisible(startDate, currentMonth, numberOfMonths, enableOutsideDays);
-      }
-
-      if (didEndDateChange) {
-        isDateVisible = isDayVisible(endDate, currentMonth, numberOfMonths, enableOutsideDays);
-      }
-    }
-
     if (
       numberOfMonths !== prevNumberOfMonths
       || enableOutsideDays !== prevEnableOutsideDays
@@ -341,10 +327,10 @@ export default class DayPickerRangeController extends React.PureComponent {
         && !prevFocusedInput
         && didFocusChange
       )
-      || !isDateVisible
     ) {
       const newMonthState = this.getStateForNewMonth(nextProps);
-      ({ currentMonth, visibleDays } = newMonthState);
+      const { currentMonth } = newMonthState;
+      ({ visibleDays } = newMonthState);
       this.setState({
         currentMonth,
         visibleDays,

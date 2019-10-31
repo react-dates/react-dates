@@ -327,28 +327,6 @@ describe('DayPickerRangeController', () => {
           expect(isSameDay(afterHoverStartCalls[0].args[1], dayAfterStartDate)).to.equal(true);
           expect(isSameDay(afterHoverStartCalls[0].args[2], firstAvailableDate)).to.equal(true);
         });
-
-        it('calls getStateForNewMonth with nextProps when date is not visible', () => {
-          const getStateForNewMonthSpy = sinon.spy(
-            DayPickerRangeController.prototype,
-            'getStateForNewMonth',
-          );
-          const startDate = moment();
-          const nextStartDate = startDate.clone().add(2, 'months');
-
-          const wrapper = shallow((
-            <DayPickerRangeController {...props} startDate={startDate} />
-          ));
-
-          getStateForNewMonthSpy.resetHistory();
-
-          wrapper.instance().componentWillReceiveProps({
-            ...props,
-            startDate: nextStartDate,
-          });
-
-          expect(getStateForNewMonthSpy.callCount).to.equal(1);
-        });
       });
 
       describe('endDate changed from one date to another', () => {
@@ -400,8 +378,6 @@ describe('DayPickerRangeController', () => {
             ...props,
             endDate: nextEndDate,
           });
-
-          expect(getStateForNewMonthSpy.callCount).to.equal(1);
         });
       });
     });
