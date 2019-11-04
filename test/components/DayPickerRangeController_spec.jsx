@@ -1622,10 +1622,11 @@ describe('DayPickerRangeController', () => {
               />,
             );
             const newStartDate = today;
-            const visibleDays = wrapper.instance().state.visibleDays;
-            const numberOfVisibleDays = Object.values(visibleDays).reduce((total, visibleDayArray) => {
-              return total + Object.keys(visibleDayArray).length;
-            }, 0);
+            const { visibleDays } = wrapper.instance().state;
+            const numberOfVisibleDays = Object.values(visibleDays).reduce(
+              (total, visibleDayArray) => total + Object.keys(visibleDayArray).length,
+              0,
+            );
             wrapper.instance().componentWillReceiveProps({
               ...props,
               endDate,
