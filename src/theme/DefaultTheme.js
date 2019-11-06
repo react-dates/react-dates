@@ -184,6 +184,7 @@ export default {
       captionSize: 18,
       input: {
         size: 19,
+        weight: 200,
         lineHeight: '24px',
         size_small: 15,
         lineHeight_small: '18px',

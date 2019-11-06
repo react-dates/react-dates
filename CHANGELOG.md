@@ -4,6 +4,23 @@
 - []  ([#](https://github.com/airbnb/react-dates/pull/))
 -->
 
+## 21.3.2
+
+- [fix] Revert "Call getStateForNewMonth when date/startDate/endDate is set to a date that is not visible" ([#1851](https://github.com/airbnb/react-dates/pull/1851))
+
+## 21.3.1
+
+- [fix] Update react-with-styles 4.1.0-alpha.1 -> 4.1.0
+
+## 21.3.0
+
+- [new] Update react-with-styles 4.0.1 -> 4.1.0 ([#1843](https://github.com/airbnb/react-dates/pull/1843))
+- [new] Add Input Font-Weight to Default Theme ([#1765](https://github.com/airbnb/react-dates/pull/#1765))
+
+## 21.2.1
+
+- [fix] Call getStateForNewMonth when date/startDate/endDate is set to a date that is not visible ([#1834](https://github.com/airbnb/react-dates/pull/1834))
+
 ## 21.2.0
 
 - [fix] Revert "Merge pull request [#1758](https://github.com/airbnb/react-dates/pull/1758): Remove all direct imports of css in favor of injected prop" ([#1818](https://github.com/airbnb/react-dates/pull/1818))
