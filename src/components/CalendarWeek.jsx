@@ -1,11 +1,9 @@
 import React from 'react';
-import { forbidExtraProps, or, childrenOfType } from 'airbnb-prop-types';
-
-import CalendarDay from './CalendarDay';
-import CustomizableCalendarDay from './CustomizableCalendarDay';
+import PropTypes from 'prop-types';
+import { forbidExtraProps } from 'airbnb-prop-types';
 
 const propTypes = forbidExtraProps({
-  children: or([childrenOfType(CalendarDay), childrenOfType(CustomizableCalendarDay)]).isRequired,
+  children: PropTypes.node.isRequired,
 });
 
 export default function CalendarWeek({ children }) {
