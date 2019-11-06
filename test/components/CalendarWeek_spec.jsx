@@ -15,10 +15,10 @@ describe('CalendarWeek', () => {
     ));
     expect(wrapper.is('tr')).to.equal(true);
   });
-  it('accepts a React node', () => {
+  it('accepts a node', () => {
     const wrapper = shallow((
       <CalendarWeek>
-        <></>
+        <div />
       </CalendarWeek>
     ));
     expect(wrapper.is('tr')).to.equal(true);
