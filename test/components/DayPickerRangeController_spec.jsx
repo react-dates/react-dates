@@ -1613,7 +1613,7 @@ describe('DayPickerRangeController', () => {
         describe('start date has changed, previous start date is falsey, start and end date is truthy', () => {
           it('calls deleteModifier with `no-selected-start-before-selected-end` if day is before selected end date', () => {
             const deleteModifierSpy = sinon.spy(DayPickerRangeController.prototype, 'deleteModifier');
-            const endDate = moment('1993-10-27');
+            const endDate = today.clone().add(10, 'days');
             const wrapper = shallow(
               <DayPickerRangeController
                 {...props}
@@ -1621,15 +1621,19 @@ describe('DayPickerRangeController', () => {
                 endDate={endDate}
               />,
             );
-            const newStartDate = endDate.clone().subtract(10, 'days');
-            const numberVisibleDays = 91;
+            const newStartDate = today;
+            const { visibleDays } = wrapper.instance().state;
+            const numberOfVisibleDays = Object.values(visibleDays).reduce(
+              (total, visibleDayArray) => total + Object.keys(visibleDayArray).length,
+              0,
+            );
             wrapper.instance().componentWillReceiveProps({
               ...props,
               endDate,
               startDate: newStartDate,
             });
             const noSelectedStartBeforeSelectedEndCalls = getCallsByModifier(deleteModifierSpy, 'no-selected-start-before-selected-end');
-            expect(noSelectedStartBeforeSelectedEndCalls.length).to.equal(numberVisibleDays);
+            expect(noSelectedStartBeforeSelectedEndCalls.length).to.equal(numberOfVisibleDays);
           });
         });
       });
