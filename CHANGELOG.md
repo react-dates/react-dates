@@ -4,6 +4,11 @@
 - []  ([#](https://github.com/airbnb/react-dates/pull/))
 -->
 
+## 21.4.0
+
+- [new] Expose 'after-hovered-start' modifier and add 'before-hovered-end', 'no-selected-start-before-selected-end', 'selected-start-in-hovered-span', 'selected-end-in-hovered-span', 'selected-start-no-selected-end', and 'selected-end-no-selected-start' modifiers [#1608](https://github.com/airbnb/react-dates/pull/1608)
+- [fix] Loosen up CustomizeableCalendarDay restriction on children  ([#1857](https://github.com/airbnb/react-dates/pull/1857))
+
 ## 21.3.2
 
 - [fix] Revert "Call getStateForNewMonth when date/startDate/endDate is set to a date that is not visible" ([#1851](https://github.com/airbnb/react-dates/pull/1851))
