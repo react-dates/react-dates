@@ -34,6 +34,8 @@ const propTypes = forbidExtraProps({
 
   navPrev: PropTypes.node,
   navNext: PropTypes.node,
+  renderNavPrevButton: PropTypes.func,
+  renderNavNextButton: PropTypes.func,
 
   onPrevMonthClick: PropTypes.func,
   onNextMonthClick: PropTypes.func,
@@ -74,6 +76,8 @@ const defaultProps = {
   // navigation related props
   navPrev: null,
   navNext: null,
+  renderNavPrevButton: null,
+  renderNavNextButton: null,
   onPrevMonthClick() {},
   onNextMonthClick() {},
 
@@ -117,11 +121,11 @@ class DayPickerSingleDateControllerWrapper extends React.Component {
 
     return (
       <div>
-        {showInput &&
+        {showInput && (
           <div style={{ marginBottom: 16 }}>
             <input type="text" name="start date" value={dateString || ''} readOnly />
           </div>
-        }
+        )}
 
         <DayPickerSingleDateController
           {...props}

@@ -58,6 +58,28 @@ describe('DayPickerNavigation', () => {
       const wrapper = shallow(<DayPickerNavigation isRTL />).dive();
       expect(wrapper.childAt(1).find(LeftArrow)).to.have.lengthOf(1);
     });
+
+    it('calls renderNavPrevButton when custom prev button is used', () => {
+      const renderNavPrevButtonStub = sinon.stub().returns(<button type="button">Prev</button>);
+      const wrapper = shallow(
+        <DayPickerNavigation
+          renderNavPrevButton={renderNavPrevButtonStub}
+        />,
+      ).dive();
+      expect(wrapper.childAt(0).find('div[role="button"]')).to.have.lengthOf(0);
+      expect(renderNavPrevButtonStub).to.have.property('callCount', 1);
+    });
+
+    it('calls renderNavNextButton when custom next button is used', () => {
+      const renderNavNextButtonStub = sinon.stub().returns(<button type="button">Next</button>);
+      const wrapper = shallow(
+        <DayPickerNavigation
+          renderNavNextButton={renderNavNextButtonStub}
+        />,
+      ).dive();
+      expect(wrapper.childAt(1).find('div[role="button"]')).to.have.lengthOf(0);
+      expect(renderNavNextButtonStub).to.have.property('callCount', 1);
+    });
   });
 
   describe('interactions', () => {
@@ -95,6 +117,74 @@ describe('DayPickerNavigation', () => {
         onNextMonthClick={onNextMonthStub}
         disableNext
       />).dive().find('[role="button"]').at(1);
+      nextMonthButton.simulate('click');
+      expect(onNextMonthStub).to.have.property('callCount', 0);
+    });
+
+    it('props.onPrevMonthClick is triggered by prev month button key up', () => {
+      const onPrevMonthStub = sinon.stub();
+      const prevMonthButton = shallow(<DayPickerNavigation
+        onPrevMonthClick={onPrevMonthStub}
+      />).dive().find('[role="button"]').at(0);
+      prevMonthButton.simulate('keyup', { key: 'Enter' });
+      expect(onPrevMonthStub).to.have.property('callCount', 1);
+      prevMonthButton.simulate('keyup', { key: ' ' });
+      expect(onPrevMonthStub).to.have.property('callCount', 2);
+    });
+
+    it('props.onNextMonthClick is triggered by next month button key up', () => {
+      const onNextMonthStub = sinon.stub();
+      const nextMonthButton = shallow(<DayPickerNavigation
+        onNextMonthClick={onNextMonthStub}
+      />).dive().find('[role="button"]').at(1);
+      nextMonthButton.simulate('keyup', { key: 'Enter' });
+      expect(onNextMonthStub).to.have.property('callCount', 1);
+      nextMonthButton.simulate('keyup', { key: ' ' });
+      expect(onNextMonthStub).to.have.property('callCount', 2);
+    });
+
+    it('props.onPrevMonthClick is triggered by custom prev month button click', () => {
+      const onPrevMonthStub = sinon.stub();
+      const renderNavPrevButtonStub = sinon.stub().onCall(0).callsFake(({ onClick }) => <button onClick={onClick} type="button">Prev</button>);
+      const prevMonthButton = shallow(<DayPickerNavigation
+        onPrevMonthClick={onPrevMonthStub}
+        renderNavPrevButton={renderNavPrevButtonStub}
+      />).dive().find('button').at(0);
+      prevMonthButton.simulate('click');
+      expect(onPrevMonthStub).to.have.property('callCount', 1);
+    });
+
+    it('props.onNextMonthClick is triggered by custom next month button click', () => {
+      const onNextMonthStub = sinon.stub();
+      const renderNavNextButtonStub = sinon.stub().onCall(0).callsFake(({ onClick }) => <button onClick={onClick} type="button">Next</button>);
+      const nextMonthButton = shallow(<DayPickerNavigation
+        onNextMonthClick={onNextMonthStub}
+        renderNavNextButton={renderNavNextButtonStub}
+      />).dive().find('button').at(0);
+      nextMonthButton.simulate('click');
+      expect(onNextMonthStub).to.have.property('callCount', 1);
+    });
+
+    it('props.onPrevMonthClick is not triggered by custom prev month disabled click', () => {
+      const onPrevMonthStub = sinon.stub();
+      const renderNavPrevButtonStub = sinon.stub().onCall(0).callsFake(({ disabled, onClick }) => <button disabled={disabled} onClick={onClick} type="button">Prev</button>);
+      const prevMonthButton = shallow(<DayPickerNavigation
+        disablePrev
+        onPrevMonthClick={onPrevMonthStub}
+        renderNavPrevButton={renderNavPrevButtonStub}
+      />).dive().find('button').at(0);
+      prevMonthButton.simulate('click');
+      expect(onPrevMonthStub).to.have.property('callCount', 0);
+    });
+
+    it('props.onNextMonthClick is not triggered by custom next month disabled click', () => {
+      const onNextMonthStub = sinon.stub();
+      const renderNavNextButtonStub = sinon.stub().onCall(0).callsFake(({ disabled, onClick }) => <button disabled={disabled} onClick={onClick} type="button">Next</button>);
+      const nextMonthButton = shallow(<DayPickerNavigation
+        disableNext
+        onNextMonthClick={onNextMonthStub}
+        renderNavNextButton={renderNavNextButtonStub}
+      />).dive().find('button').at(0);
       nextMonthButton.simulate('click');
       expect(onNextMonthStub).to.have.property('callCount', 0);
     });
