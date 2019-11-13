@@ -27,6 +27,17 @@ describe('DateInput', () => {
         expect(wrapper.find('input').props()['aria-label']).to.equal(placeholder);
       });
 
+      it('has props.titleText as a title attribute if titleText is passed in', () => {
+        const titleText = 'titleTextExample';
+        const wrapper = shallow(<DateInput id="date" titleText={titleText} />).dive();
+        expect(wrapper.find('input').props().title).to.equal(titleText);
+      });
+
+      it('has no title attribute if props.titleText is null', () => {
+        const wrapper = shallow(<DateInput id="date" titleText={null} />).dive();
+        expect(wrapper.find('input').props().title).to.equal(null);
+      });
+
       it('has value === props.displayValue', () => {
         const DISPLAY_VALUE = 'foobar';
         const wrapper = shallow(<DateInput id="date" displayValue={DISPLAY_VALUE} />).dive();

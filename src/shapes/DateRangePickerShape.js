@@ -35,6 +35,8 @@ export default {
   endDatePlaceholderText: PropTypes.string,
   startDateAriaLabel: PropTypes.string,
   endDateAriaLabel: PropTypes.string,
+  startDateTitleText: PropTypes.string,
+  endDateTitleText: PropTypes.string,
   disabled: DisabledShape,
   required: PropTypes.bool,
   readOnly: PropTypes.bool,
