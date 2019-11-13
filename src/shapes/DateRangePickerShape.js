@@ -83,6 +83,8 @@ export default {
   navPosition: NavPositionShape,
   navPrev: PropTypes.node,
   navNext: PropTypes.node,
+  renderNavPrevButton: PropTypes.func,
+  renderNavNextButton: PropTypes.func,
   onPrevMonthClick: PropTypes.func,
   onNextMonthClick: PropTypes.func,
 

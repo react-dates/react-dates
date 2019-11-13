@@ -21,7 +21,7 @@ const TestPrevIcon = () => (
       top: '20px',
       width: '40px',
     }}
-    tabindex="0"
+    tabIndex="0"
   >
     Prev
   </div>
@@ -39,7 +39,7 @@ const TestNextIcon = () => (
       top: '20px',
       width: '40px',
     }}
-    tabindex="0"
+    tabIndex="0"
   >
     Next
   </div>
@@ -56,6 +56,54 @@ const TestCustomInfoPanel = () => (
     &#x2755; Some useful info here
   </div>
 );
+
+function renderNavPrevButton(buttonProps) {
+  const {
+    ariaLabel,
+    disabled,
+    onClick,
+    onKeyUp,
+    onMouseUp,
+  } = buttonProps;
+
+  return (
+    <button
+      aria-label={ariaLabel}
+      disabled={disabled}
+      onClick={onClick}
+      onKeyUp={onKeyUp}
+      onMouseUp={onMouseUp}
+      style={{ position: 'absolute', top: 23, left: 22 }}
+      type="button"
+    >
+    &lsaquo; Prev
+    </button>
+  );
+}
+
+function renderNavNextButton(buttonProps) {
+  const {
+    ariaLabel,
+    disabled,
+    onClick,
+    onKeyUp,
+    onMouseUp,
+  } = buttonProps;
+
+  return (
+    <button
+      aria-label={ariaLabel}
+      disabled={disabled}
+      onClick={onClick}
+      onKeyUp={onKeyUp}
+      onMouseUp={onMouseUp}
+      style={{ position: 'absolute', top: 23, right: 22 }}
+      type="button"
+    >
+          Next &rsaquo;
+    </button>
+  );
+}
 
 storiesOf('DayPicker', module)
   .add('default', withInfo()(() => (
@@ -133,9 +181,15 @@ storiesOf('DayPicker', module)
       navNext={<TestNextIcon />}
     />
   )))
+  .add('with custom navigation buttons', withInfo()(() => (
+    <DayPicker
+      renderNavPrevButton={renderNavPrevButton}
+      renderNavNextButton={renderNavNextButton}
+    />
+  )))
   .add('with custom details', withInfo()(() => (
     <DayPicker
-      renderDayContents={day => (day.day() % 6 === 5 ? '😻' : day.format('D'))}
+      renderDayContents={(day) => (day.day() % 6 === 5 ? '😻' : day.format('D'))}
     />
   )))
   .add('vertical with fixed-width container', withInfo()(() => (
@@ -155,7 +209,7 @@ storiesOf('DayPicker', module)
   )))
   .add('with custom week header text', withInfo()(() => (
     <DayPicker
-      renderWeekHeaderElement={day => (
+      renderWeekHeaderElement={(day) => (
         <strong style={{ color: '#FE01E5' }}><small>{day.toUpperCase()}</small></strong>
       )}
     />
