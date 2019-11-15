@@ -70,7 +70,7 @@
     "babel-plugin-inline-svg": "^1.0.1",
     "babel-plugin-istanbul": "^5.2.0",
     "babel-plugin-transform-replace-object-assign": "^2.0.0",
-    "babel-preset-airbnb": "^4.0.1",
+    "babel-preset-airbnb": "^4.3.0",
     "chai": "^4.2.0",
     "clean-css": "^4.2.1",
     "coveralls": "^3.0.6",
