@@ -102,7 +102,7 @@ class DateInput extends React.PureComponent {
 
   componentWillReceiveProps(nextProps) {
     const { dateString } = this.state;
-    if (dateString && nextProps.displayValue) {
+    if (dateString) {
       this.setState({
         dateString: '',
       });
