@@ -797,7 +797,7 @@ describe('DayPicker', () => {
         it('does not call `onPrevMonthTransition` when minDate month is defined', () => {
           const onPrevMonthTransitionSpy = sinon.spy(PureDayPicker.prototype, 'onPrevMonthTransition');
           sinon.stub(isDayVisible, 'default').returns(false);
-          const prevMonth = moment().substract(2, 'month');
+          const prevMonth = moment().subtract(2, 'month');
           const nextMonth = moment().add(1, 'month');
           const wrapper = shallow(<DayPicker minDate={prevMonth} />).dive();
           wrapper.state().focusedDate = nextMonth;
