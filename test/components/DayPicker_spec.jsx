@@ -349,7 +349,7 @@ describe('DayPicker', () => {
 
         it('does not call maybeTransitionNextMonth when today >= maxDate', () => {
           const maybeTransitionNextMonthSpy = sinon.spy(PureDayPicker.prototype, 'maybeTransitionNextMonth');
-          const maxDate = today.clone();
+          const maxDate = today.clone().subtract(1, 'month');
           const wrapper = shallow(<DayPicker maxDate={maxDate} />).dive();
           wrapper.setState({
             focusedDate: today,
