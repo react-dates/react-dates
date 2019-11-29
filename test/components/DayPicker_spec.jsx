@@ -241,14 +241,14 @@ describe('DayPicker', () => {
         });
 
         it('does not call maybeTransitionPrevMonth when today <= minDate', () => {
-          const maybeTransitionNextMonthSpy = sinon.spy(PureDayPicker.prototype, 'maybeTransitionNextMonth');
-          const oneDayBefore = today.clone().subtract(1, 'day');
+          const maybeTransitionPrevMonthSpy = sinon.spy(PureDayPicker.prototype, 'maybeTransitionPrevMonth');
+          const oneDayBefore = today.clone().subtract(2, 'day');
           const wrapper = shallow(<DayPicker minDate={oneDayBefore} />).dive();
           wrapper.setState({
             focusedDate: today,
           });
           wrapper.instance().onKeyDown({ ...event, key: 'ArrowDown' });
-          expect(maybeTransitionNextMonthSpy.callCount).to.equal(0);
+          expect(maybeTransitionPrevMonthSpy.callCount).to.equal(0);
         });
 
         it('arg is 1 week before focusedDate', () => {
@@ -349,7 +349,7 @@ describe('DayPicker', () => {
 
         it('does not call maybeTransitionNextMonth when today >= maxDate', () => {
           const maybeTransitionNextMonthSpy = sinon.spy(PureDayPicker.prototype, 'maybeTransitionNextMonth');
-          const oneDayAfter = today.clone().add(1, 'day');
+          const oneDayAfter = today.clone().add(2, 'day');
           const wrapper = shallow(<DayPicker maxDate={oneDayAfter} />).dive();
           wrapper.setState({
             focusedDate: today,
