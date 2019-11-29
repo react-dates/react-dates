@@ -723,13 +723,13 @@ describe('DayPicker', () => {
         });
 
         it('does not call `onNextMonthTransition` when maxDate month is defined', () => {
-          const onPrevMonthTransitionSpy = sinon.spy(PureDayPicker.prototype, 'onNextMonthTransition');
+          const onNextMonthTransition = sinon.spy(PureDayPicker.prototype, 'onNextMonthTransition');
           sinon.stub(isDayVisible, 'default').returns(false);
           const nextMonth = moment().add(2, 'month');
           const wrapper = shallow(<DayPicker maxDate={nextMonth} />).dive();
-          wrapper.state().focusedDate = nextMonth;
+          wrapper.state().focusedDate = today;
           wrapper.instance().maybeTransitionNextMonth(today);
-          expect(onPrevMonthTransitionSpy.callCount).to.equal(0);
+          expect(onNextMonthTransition.callCount).to.equal(0);
         });
 
         it('returns true', () => {
@@ -798,9 +798,8 @@ describe('DayPicker', () => {
           const onPrevMonthTransitionSpy = sinon.spy(PureDayPicker.prototype, 'onPrevMonthTransition');
           sinon.stub(isDayVisible, 'default').returns(false);
           const prevMonth = moment().subtract(2, 'month');
-          const nextMonth = moment().add(1, 'month');
           const wrapper = shallow(<DayPicker minDate={prevMonth} />).dive();
-          wrapper.state().focusedDate = nextMonth;
+          wrapper.state().focusedDate = today;
           wrapper.instance().maybeTransitionPrevMonth(today);
           expect(onPrevMonthTransitionSpy.callCount).to.equal(0);
         });
