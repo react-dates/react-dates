@@ -715,7 +715,7 @@ describe('DayPicker', () => {
         it('calls `onNextMonthTransition`', () => {
           const onNextMonthTransitionSpy = sinon.spy(PureDayPicker.prototype, 'onNextMonthTransition');
           sinon.stub(isDayVisible, 'default').returns(false);
-          const nextMonth = moment().add(1, 'month');
+          const nextMonth = moment().add(2, 'month');
           const wrapper = shallow(<DayPicker />).dive();
           wrapper.state().focusedDate = nextMonth;
           wrapper.instance().maybeTransitionNextMonth(today);
@@ -777,7 +777,7 @@ describe('DayPicker', () => {
         it('calls `onPrevMonthTransition`', () => {
           const onPrevMonthTransitionSpy = sinon.spy(PureDayPicker.prototype, 'onPrevMonthTransition');
           sinon.stub(isDayVisible, 'default').returns(false);
-          const nextMonth = moment().add(1, 'month');
+          const nextMonth = moment().add(2, 'month');
           const wrapper = shallow(<DayPicker />).dive();
           wrapper.state().focusedDate = nextMonth;
           wrapper.instance().maybeTransitionPrevMonth(today);
