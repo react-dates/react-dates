@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import momentPropTypes from "react-moment-proptypes";
+import momentPropTypes from 'react-moment-proptypes';
 import { forbidExtraProps, mutuallyExclusiveProps, nonNegativeInteger } from 'airbnb-prop-types';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 
@@ -26,7 +26,7 @@ import getCalendarMonthWidth from '../utils/getCalendarMonthWidth';
 import calculateDimension from '../utils/calculateDimension';
 import getActiveElement from '../utils/getActiveElement';
 import isDayVisible from '../utils/isDayVisible';
-import isBeforeDay from "../utils/isBeforeDay";
+import isBeforeDay from '../utils/isBeforeDay';
 
 import ModifiersShape from '../shapes/ModifiersShape';
 import NavPositionShape from '../shapes/NavPositionShape';
@@ -688,7 +688,7 @@ class DayPicker extends React.PureComponent {
     const focusedDateMonth = focusedDate.month();
     const isNewFocusedDateVisible = isDayVisible(newFocusedDate, currentMonth, numberOfMonths);
     if (newFocusedDateMonth !== focusedDateMonth && !isNewFocusedDateVisible) {
-      if (isBeforeDay(newFocusedDate, maxDate)) {
+      if (!maxDate || (maxDate && isBeforeDay(newFocusedDate, maxDate))) {
         this.onNextMonthTransition(newFocusedDate);
       }
       return true;
@@ -705,7 +705,7 @@ class DayPicker extends React.PureComponent {
     const focusedDateMonth = focusedDate.month();
     const isNewFocusedDateVisible = isDayVisible(newFocusedDate, currentMonth, numberOfMonths);
     if (newFocusedDateMonth !== focusedDateMonth && !isNewFocusedDateVisible) {
-      if (isBeforeDay(minDate, newFocusedDate)) {
+      if (!minDate || (minDate && isBeforeDay(minDate, newFocusedDate))) {
         this.onPrevMonthTransition(newFocusedDate);
       }
       return true;

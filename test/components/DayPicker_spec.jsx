@@ -715,11 +715,21 @@ describe('DayPicker', () => {
         it('calls `onNextMonthTransition`', () => {
           const onNextMonthTransitionSpy = sinon.spy(PureDayPicker.prototype, 'onNextMonthTransition');
           sinon.stub(isDayVisible, 'default').returns(false);
-          const nextMonth = moment().add(2, 'month');
+          const nextMonth = moment().add(1, 'month');
           const wrapper = shallow(<DayPicker />).dive();
           wrapper.state().focusedDate = nextMonth;
           wrapper.instance().maybeTransitionNextMonth(today);
           expect(onNextMonthTransitionSpy.callCount).to.equal(1);
+        });
+
+        it('does not call `onNextMonthTransition` when minDate month is equal to today', () => {
+          const onPrevMonthTransitionSpy = sinon.spy(PureDayPicker.prototype, 'onPrevMonthTransition');
+          sinon.stub(isDayVisible, 'default').returns(false);
+          const nextMonth = moment().add(1, 'month');
+          const wrapper = shallow(<DayPicker maxDate={nextMonth} />).dive();
+          wrapper.state().focusedDate = nextMonth;
+          wrapper.instance().maybeTransitionPrevMonth(today);
+          expect(onPrevMonthTransitionSpy.callCount).to.equal(0);
         });
 
         it('returns true', () => {
@@ -777,11 +787,22 @@ describe('DayPicker', () => {
         it('calls `onPrevMonthTransition`', () => {
           const onPrevMonthTransitionSpy = sinon.spy(PureDayPicker.prototype, 'onPrevMonthTransition');
           sinon.stub(isDayVisible, 'default').returns(false);
-          const nextMonth = moment().add(2, 'month');
+          const nextMonth = moment().add(1, 'month');
           const wrapper = shallow(<DayPicker />).dive();
           wrapper.state().focusedDate = nextMonth;
           wrapper.instance().maybeTransitionPrevMonth(today);
           expect(onPrevMonthTransitionSpy.callCount).to.equal(1);
+        });
+
+        it('does not call `onPrevMonthTransition` when minDate month is equal to today', () => {
+          const onPrevMonthTransitionSpy = sinon.spy(PureDayPicker.prototype, 'onPrevMonthTransition');
+          sinon.stub(isDayVisible, 'default').returns(false);
+          const prevMonth = moment().substract(1, 'month');
+          const nextMonth = moment().add(1, 'month');
+          const wrapper = shallow(<DayPicker minDate={prevMonth} />).dive();
+          wrapper.state().focusedDate = nextMonth;
+          wrapper.instance().maybeTransitionPrevMonth(today);
+          expect(onPrevMonthTransitionSpy.callCount).to.equal(0);
         });
 
         it('returns true', () => {
