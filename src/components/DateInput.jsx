@@ -85,8 +85,10 @@ class DateInput extends React.PureComponent {
   constructor(props) {
     super(props);
 
+    const { displayValue } = props;
+
     this.state = {
-      dateString: this.props.displayValue || '',
+      dateString: displayValue || '',
       isTouchDevice: false,
     };
 
