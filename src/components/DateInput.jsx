@@ -101,15 +101,15 @@ class DateInput extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    const props = this.props;
-    /** 
+    const { props } = this;
+    /**
      * Only set this.state.dateString to displayValue
      * When date picker is turned on or off (plus displayValue is not null)
     */
-    if(props.focused !== nextProps.focused && nextProps.displayValue) {
-        this.setState({
-            dateString: nextProps.displayValue
-        });
+    if (props.focused !== nextProps.focused && nextProps.displayValue) {
+      this.setState({
+        dateString: nextProps.displayValue,
+      });
     }
   }
 
