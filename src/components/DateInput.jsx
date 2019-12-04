@@ -86,7 +86,7 @@ class DateInput extends React.PureComponent {
     super(props);
 
     this.state = {
-      dateString: '',
+      dateString: this.props.displayValue || '',
       isTouchDevice: false,
     };
 
@@ -101,11 +101,15 @@ class DateInput extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { dateString } = this.state;
-    if (dateString && nextProps.displayValue) {
-      this.setState({
-        dateString: '',
-      });
+    const props = this.props;
+    /** 
+     * Only set this.state.dateString to displayValue
+     * When date picker is turned on or off (plus displayValue is not null)
+    */
+    if(props.focused !== nextProps.focused && nextProps.displayValue) {
+        this.setState({
+            dateString: nextProps.displayValue
+        });
     }
   }
 
@@ -175,7 +179,6 @@ class DateInput extends React.PureComponent {
       id,
       placeholder,
       ariaLabel,
-      displayValue,
       screenReaderMessage,
       focused,
       showCaret,
@@ -192,7 +195,7 @@ class DateInput extends React.PureComponent {
       theme: { reactDates },
     } = this.props;
 
-    const value = dateString || displayValue || '';
+    const value = dateString || '';
     const screenReaderMessageId = `DateInput__screen-reader-message-${id}`;
 
     const withFang = showCaret && focused;
