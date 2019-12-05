@@ -260,6 +260,17 @@ describe('DayPicker', () => {
           expect(maybeTransitionPrevMonthSpy.callCount).to.equal(1);
         });
 
+        it('does not call onPrevMonthTransition when today <= minDate', () => {
+          const onPrevMonthTransitionSpy = sinon.spy(PureDayPicker.prototype, 'onPrevMonthTransition');
+          const minDate = today.clone().subtract(1, 'day');
+          const wrapper = shallow(<DayPicker minDate={minDate} />).dive();
+          wrapper.setState({
+            focusedDate: today,
+          });
+          wrapper.instance().onKeyDown({ ...event, key: 'ArrowDown' });
+          expect(onPrevMonthTransitionSpy.callCount).to.equal(0);
+        });
+
         it('arg is 1 week before focusedDate', () => {
           const oneWeekBefore = today.clone().subtract(1, 'week');
           const maybeTransitionPrevMonthSpy = sinon.spy(PureDayPicker.prototype, 'maybeTransitionPrevMonth');
@@ -354,6 +365,17 @@ describe('DayPicker', () => {
           });
           wrapper.instance().onKeyDown({ ...event, key: 'ArrowDown' });
           expect(maybeTransitionNextMonthSpy.callCount).to.equal(1);
+        });
+
+        it('does not call onPrevMonthTransition when today >= maxDate', () => {
+          const onPrevMonthTransitionSpy = sinon.spy(PureDayPicker.prototype, 'onPrevMonthTransition');
+          const maxDate = today.clone().add(1, 'month');
+          const wrapper = shallow(<DayPicker maxDate={maxDate} />).dive();
+          wrapper.setState({
+            focusedDate: today,
+          });
+          wrapper.instance().onKeyDown({ ...event, key: 'ArrowDown' });
+          expect(onPrevMonthTransitionSpy.callCount).to.equal(0);
         });
 
         it('arg is 1 week after focusedDate', () => {
