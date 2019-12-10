@@ -370,7 +370,6 @@ CalendarMonthGrid.defaultProps = defaultProps;
 export default withStyles(({
   reactDates: {
     color,
-    noScrollBarOnVerticalScrollable,
     spacing,
     zIndex,
   },
@@ -396,14 +395,6 @@ export default withStyles(({
 
   CalendarMonthGrid__vertical_scrollable: {
     margin: '0 auto',
-    overflowY: 'scroll',
-    ...(noScrollBarOnVerticalScrollable && {
-      '-webkitOverflowScrolling': 'touch',
-      '::-webkit-scrollbar': {
-        '-webkit-appearance': 'none',
-        display: 'none',
-      },
-    }),
   },
 
   CalendarMonthGrid_month__horizontal: {
