@@ -370,7 +370,6 @@ CalendarMonthGrid.defaultProps = defaultProps;
 export default withStyles(({
   reactDates: {
     color,
-    noScrollBarOnVerticalScrollable,
     spacing,
     zIndex,
   },
