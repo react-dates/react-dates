@@ -3,6 +3,9 @@
 <!--
 - []  ([#](https://github.com/airbnb/react-dates/pull/))
 -->
+## 21.5.1
+
+- [fix] Remove redundant overflowY:scroll on CalendarMonthGrid ([#1881](https://github.com/airbnb/react-dates/pull/1881))
 
 ## 21.5.0
 
