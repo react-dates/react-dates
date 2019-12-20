@@ -7,7 +7,7 @@ import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 
 import FocusedInputShape from './FocusedInputShape';
 import IconPositionShape from './IconPositionShape';
-import OrientationShape from './OrientationShape';
+import ScrollableOrientationShape from './ScrollableOrientationShape';
 import DisabledShape from './DisabledShape';
 import anchorDirectionShape from './AnchorDirectionShape';
 import openDirectionShape from './OpenDirectionShape';
@@ -55,7 +55,7 @@ export default {
   renderMonthText: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'),
   renderMonthElement: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'),
   renderWeekHeaderElement: PropTypes.func,
-  orientation: OrientationShape,
+  orientation: ScrollableOrientationShape,
   anchorDirection: anchorDirectionShape,
   openDirection: openDirectionShape,
   horizontalMargin: PropTypes.number,
