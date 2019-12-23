@@ -68,7 +68,7 @@
     "babel-loader": "^8.0.6",
     "babel-plugin-inline-react-svg": "^1.1.0",
     "babel-plugin-inline-svg": "^1.0.1",
-    "babel-plugin-istanbul": "^5.2.0",
+    "babel-plugin-istanbul": "^6.0.0",
     "babel-plugin-transform-replace-object-assign": "^2.0.0",
     "babel-preset-airbnb": "^4.0.1",
     "chai": "^4.2.0",
