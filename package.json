@@ -109,7 +109,7 @@
     "sass-loader": "^7.2.0",
     "sinon": "^7.4.1",
     "sinon-sandbox": "^2.0.5",
-    "style-loader": "^0.20.3",
+    "style-loader": "^1.1.2",
     "typescript": "*",
     "webpack": "^4.31.0"
   },
