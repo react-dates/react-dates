@@ -137,7 +137,7 @@ class DateInput extends React.PureComponent {
     const { onChange, onKeyDownQuestionMark } = this.props;
     const dateString = e.target.value;
 
-    if (dateString.length > 8) {
+    if (dateString.length > 10) {
       e.stopPropagation();
       e.preventDefault();
       return false;
