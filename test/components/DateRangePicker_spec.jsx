@@ -14,6 +14,7 @@ import DayPicker from '../../src/components/DayPicker';
 import {
   HORIZONTAL_ORIENTATION,
   START_DATE,
+  VERTICAL_ORIENTATION,
 } from '../../src/constants';
 
 const describeIfWindow = typeof document === 'undefined' ? describe.skip : describe;
@@ -90,6 +91,19 @@ describe('DateRangePicker', () => {
           <DateRangePicker
             {...requiredProps}
             orientation={HORIZONTAL_ORIENTATION}
+            focusedInput={START_DATE}
+          />
+        )).dive();
+        expect(wrapper.find(DayPickerRangeController).props().numberOfMonths).to.equal(2);
+      });
+    });
+
+    describe('props.orientation === VERTICAL_ORIENTATION', () => {
+      it('renders <DayPickerRangeController /> with props.numberOfMonths === 2', () => {
+        const wrapper = shallow((
+          <DateRangePicker
+            {...requiredProps}
+            orientation={VERTICAL_ORIENTATION}
             focusedInput={START_DATE}
           />
         )).dive();
