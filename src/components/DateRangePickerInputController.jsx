@@ -179,6 +179,8 @@ export default class DateRangePickerInputController extends React.PureComponent 
       minimumNights,
       keepOpenOnDateSelect,
       onDatesChange,
+      onClose,
+      onFocusChange,
     } = this.props;
 
     const endDate = toMomentObject(endDateString, this.getDisplayFormat());
@@ -188,7 +190,10 @@ export default class DateRangePickerInputController extends React.PureComponent 
       && !(startDate && isBeforeDay(endDate, startDate.clone().add(minimumNights, 'days')));
     if (isEndDateValid) {
       onDatesChange({ startDate, endDate });
-      if (!keepOpenOnDateSelect) this.onClearFocus();
+      if (!keepOpenOnDateSelect) {
+        onFocusChange(null);
+        onClose({ startDate, endDate });
+      }
     } else {
       onDatesChange({
         startDate,
