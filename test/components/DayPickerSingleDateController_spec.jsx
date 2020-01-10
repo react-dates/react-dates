@@ -6,6 +6,7 @@ import moment from 'moment';
 
 import DayPicker from '../../src/components/DayPicker';
 import DayPickerSingleDateController from '../../src/components/DayPickerSingleDateController';
+import DayPickerNavigation from '../../src/components/DayPickerNavigation';
 
 import toISODateString from '../../src/utils/toISODateString';
 import toISOMonthString from '../../src/utils/toISOMonthString';
@@ -1538,6 +1539,18 @@ describe('DayPickerSingleDateController', () => {
         ));
         const dayPicker = wrapper.find(DayPicker);
         expect(dayPicker.props().initialVisibleMonth().isSame(today, 'day')).to.equal(true);
+      });
+    });
+
+    describe('noNavButtons prop', () => {
+      it('renders navigation button', () => {
+        const wrapper = shallow(<DayPickerSingleDateController />).dive().dive();
+        expect(wrapper.find(DayPickerNavigation)).to.have.lengthOf(1);
+      });
+
+      it('does not render navigation button when noNavButtons prop applied', () => {
+        const wrapper = shallow(<DayPickerSingleDateController noNavButtons />).dive().dive();
+        expect(wrapper.find(DayPickerNavigation)).to.have.lengthOf(0);
       });
     });
   });
