@@ -228,7 +228,7 @@ function DayPickerNavigation({
                 onNextMonthClick(e)
               };
             },
-            onMouseUp: disableNext ? undefined : e => {
+            onMouseUp: disableNext ? undefined : (e) => {
               e.currentTarget.blur();
             },
           })

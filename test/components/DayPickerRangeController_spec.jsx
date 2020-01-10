@@ -4167,11 +4167,11 @@ describe('DayPickerRangeController', () => {
 
   it('return value now has modifier arg for day after getting previous scrollable months', () => {
     const modifierToAdd = 'foo';
-    const pastDateAfterMultiply = today.clone().subtract(4, 'months');
+    const pastDateAfterMultiply = today.clone().subtract(3, 'months');
     const monthISO = toISOMonthString(pastDateAfterMultiply);
-    const todayISO = toISODateString(pastDateAfterMultiply);
+    const dayISO = toISODateString(pastDateAfterMultiply);
     const updatedDays = {
-      [monthISO]: { [todayISO]: new Set(['bar', 'baz']) },
+      [monthISO]: { [dayISO]: new Set(['bar', 'baz']) },
     };
     const wrapper = shallow((
       <DayPickerRangeController
@@ -4182,10 +4182,10 @@ describe('DayPickerRangeController', () => {
       />
     )).instance();
     let modifiers = wrapper.addModifier(updatedDays, pastDateAfterMultiply, modifierToAdd);
-    expect(Array.from(modifiers[monthISO][todayISO])).to.not.contain(modifierToAdd);
-    wrapper.onGetPreviousScrollableMonths();
+    expect(Array.from(modifiers[monthISO][dayISO])).to.not.contain(modifierToAdd);
+    wrapper.onGetPrevScrollableMonths();
     modifiers = wrapper.addModifier(updatedDays, pastDateAfterMultiply, modifierToAdd);
-    expect(Array.from(modifiers[monthISO][todayISO])).to.contain(modifierToAdd);
+    expect(Array.from(modifiers[monthISO][dayISO])).to.contain(modifierToAdd);
   });
 
   describe('#addModifierToRange', () => {
