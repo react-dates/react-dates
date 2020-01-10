@@ -165,7 +165,9 @@ function DayPickerNavigation({
             onClick: disablePrev ? undefined : onPrevMonthClick,
             onKeyUp: disablePrev ? undefined : (e) => {
               const { key } = e;
-              if (key === 'Enter' || key === ' ') onPrevMonthClick(e);
+              if (key === 'Enter' || key === ' ') {
+                onPrevMonthClick(e);
+              }
             },
             onMouseUp: disablePrev ? undefined : (e) => {
               e.currentTarget.blur();
@@ -202,7 +204,9 @@ function DayPickerNavigation({
             onClick={disablePrev ? undefined : onPrevMonthClick}
             onKeyUp={disablePrev ? undefined : (e) => {
               const { key } = e;
-              if (key === 'Enter' || key === ' ') onPrevMonthClick(e);
+              if (key === 'Enter' || key === ' ') {
+                onPrevMonthClick(e);
+              }
             }}
             onMouseUp={disablePrev ? undefined : (e) => {
               e.currentTarget.blur();
@@ -220,7 +224,9 @@ function DayPickerNavigation({
             onClick: disableNext ? undefined : onNextMonthClick,
             onKeyUp: disableNext ? undefined : (e) => {
               const { key } = e;
-              if (key === 'Enter' || key === ' ') onNextMonthClick(e);
+              if (key === 'Enter' || key === ' ') {
+                onNextMonthClick(e)
+              };
             },
             onMouseUp: disableNext ? undefined : e => {
               e.currentTarget.blur();
@@ -258,7 +264,9 @@ function DayPickerNavigation({
             onClick={disableNext ? undefined : onNextMonthClick}
             onKeyUp={ disableNext ? undefined : (e) => {
               const { key } = e;
-              if (key === 'Enter' || key === ' ') onNextMonthClick(e);
+              if (key === 'Enter' || key === ' ') {
+                onNextMonthClick(e);
+              }
             }}
             onMouseUp={disableNext ? undefined : (e) => {
               e.currentTarget.blur();

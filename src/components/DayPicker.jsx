@@ -859,7 +859,7 @@ class DayPicker extends React.PureComponent {
     });
   }
 
-  renderNavigation(navDirection = null) {
+  renderNavigation(navDirection) {
     const {
       dayPickerNavigationInlineStyles,
       disablePrev,
