@@ -208,13 +208,30 @@ describe('DayPicker', () => {
   });
 
   describe('props.orientation === VERTICAL_SCROLLABLE', () => {
-    it('uses multiplyScrollableMonths instead of onNextMonthClick', () => {
+    it('renders two DayPickerNavigations', () => {
       const wrapper = shallow(
         <DayPicker orientation={VERTICAL_SCROLLABLE} />,
         { disableLifecycleMethods: false },
       ).dive();
-      const nav = wrapper.find(DayPickerNavigation);
-      expect(nav.prop('onNextMonthClick')).to.equal(wrapper.instance().multiplyScrollableMonths);
+      expect(wrapper.find(DayPickerNavigation)).to.have.length(2);
+    });
+
+    it('uses getNextScrollableMonths instead of onNextMonthClick', () => {
+      const wrapper = shallow(
+        <DayPicker orientation={VERTICAL_SCROLLABLE} />,
+        { disableLifecycleMethods: false },
+      ).dive();
+      const nav = wrapper.find(DayPickerNavigation)[1];
+      expect(nav.prop('onNextMonthClick')).to.equal(wrapper.instance().getNextScrollableMonths);
+    });
+
+    it('uses getPrevScrollableMonths instead of onNextMonthClick', () => {
+      const wrapper = shallow(
+        <DayPicker orientation={VERTICAL_SCROLLABLE} />,
+        { disableLifecycleMethods: false },
+      ).dive();
+      const nav = wrapper.find(DayPickerNavigation)[0];
+      expect(nav.prop('onPrevMonthClick')).to.equal(wrapper.instance().getPrevScrollableMonths);
     });
   });
 
@@ -795,17 +812,32 @@ describe('DayPicker', () => {
     });
   });
 
-  describe('#multiplyScrollableMonths', () => {
+  describe('#getNextScrollableMonths', () => {
     it('increments scrollableMonthMultiple', () => {
       const wrapper = shallow(<DayPicker />).dive();
-      wrapper.instance().multiplyScrollableMonths(event);
+      wrapper.instance().getNextScrollableMonths(event);
       expect(wrapper.state().scrollableMonthMultiple).to.equal(2);
     });
 
     it('increments scrollableMonthMultiple without an event', () => {
       const wrapper = shallow(<DayPicker />).dive();
-      wrapper.instance().multiplyScrollableMonths();
+      wrapper.instance().getNextScrollableMonths();
       expect(wrapper.state().scrollableMonthMultiple).to.equal(2);
+    });
+  });
+
+  describe('#getPrevScrollableMonths', () => {
+    it('increments scrollableMonthMultiple', () => {
+      const wrapper = shallow(<DayPicker />).dive();
+      wrapper.instance().getPrevScrollableMonths(event);
+      expect(wrapper.state().scrollableMonthMultiple).to.equal(2);
+    });
+
+    it('increments scrollableMonthMultiple without an event', () => {
+      const wrapper = shallow(<DayPicker />).dive();
+      wrapper.instance().getPrevScrollableMonths();
+      expect(wrapper.state().scrollableMonthMultiple).to.equal(2);
+      expect(wrapper.state().currentMonth).to.equal(moment().subtract(1, 'month'));
     });
   });
 

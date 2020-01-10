@@ -4,7 +4,6 @@ import sinon from 'sinon-sandbox';
 import { shallow } from 'enzyme';
 
 import DayPickerNavigation from '../../src/components/DayPickerNavigation';
-import { VERTICAL_SCROLLABLE } from '../../src/constants';
 import RightArrow from '../../src/components/RightArrow';
 import LeftArrow from '../../src/components/LeftArrow';
 
@@ -15,8 +14,13 @@ describe('DayPickerNavigation', () => {
       expect(wrapper.find('[role="button"]')).to.have.lengthOf(2);
     });
 
-    it('renders one button when vertically scrollable', () => {
-      const wrapper = shallow(<DayPickerNavigation orientation={VERTICAL_SCROLLABLE} />).dive();
+    it('renders one button when showNavNextButton is false', () => {
+      const wrapper = shallow(<DayPickerNavigation showNavNextButton={false} />).dive();
+      expect(wrapper.find('[role="button"]')).to.have.lengthOf(1);
+    });
+
+    it('renders one button when showNavNextButton is false', () => {
+      const wrapper = shallow(<DayPickerNavigation showNavPrevButton={false} />).dive();
       expect(wrapper.find('[role="button"]')).to.have.lengthOf(1);
     });
 
