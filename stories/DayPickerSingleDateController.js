@@ -10,7 +10,7 @@ import isSameDay from '../src/utils/isSameDay';
 import isInclusivelyAfterDay from '../src/utils/isInclusivelyAfterDay';
 import CustomizableCalendarDay, { defaultStyles, selectedStyles } from '../src/components/CustomizableCalendarDay';
 
-import { NAV_POSITION_BOTTOM, VERTICAL_ORIENTATION } from '../src/constants';
+import { NAV_POSITION_BOTTOM, VERTICAL_ORIENTATION, VERTICAL_SCROLLABLE } from '../src/constants';
 
 import DayPickerSingleDateControllerWrapper from '../examples/DayPickerSingleDateControllerWrapper';
 
@@ -218,6 +218,15 @@ storiesOf('DayPickerSingleDateController', module)
       onPrevMonthClick={action('DayPickerSingleDateController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerSingleDateController::onNextMonthClick')}
       orientation={VERTICAL_ORIENTATION}
+    />
+  )))
+  .add('verticalScrollable', withInfo()(() => (
+    <DayPickerSingleDateControllerWrapper
+      numberOfMonths={3}
+      onOutsideClick={action('DayPickerSingleDateController::onOutsideClick')}
+      onPrevMonthClick={action('DayPickerSingleDateController::onPrevMonthClick')}
+      onNextMonthClick={action('DayPickerSingleDateController::onNextMonthClick')}
+      orientation={VERTICAL_SCROLLABLE}
     />
   )))
   .add('with custom month navigation icons', withInfo()(() => (

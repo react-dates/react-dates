@@ -442,6 +442,23 @@ storiesOf('DayPickerRangeController', module)
             </span>
           </div>
         )}
+        navPrev={(
+          <div style={{ position: 'relative' }}>
+            <span
+              style={{
+                position: 'absolute',
+                top: 20,
+                left: 50,
+                fontSize: 24,
+                border: '1px solid gray',
+                width: 200,
+                padding: 10,
+              }}
+            >
+              Show More Months
+            </span>
+          </div>
+        )}
       />
     </div>
   )))

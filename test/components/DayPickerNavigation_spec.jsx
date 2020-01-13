@@ -4,7 +4,6 @@ import sinon from 'sinon-sandbox';
 import { shallow } from 'enzyme';
 
 import DayPickerNavigation from '../../src/components/DayPickerNavigation';
-import { VERTICAL_SCROLLABLE } from '../../src/constants';
 import RightArrow from '../../src/components/RightArrow';
 import LeftArrow from '../../src/components/LeftArrow';
 
@@ -15,8 +14,13 @@ describe('DayPickerNavigation', () => {
       expect(wrapper.find('[role="button"]')).to.have.lengthOf(2);
     });
 
-    it('renders one button when vertically scrollable', () => {
-      const wrapper = shallow(<DayPickerNavigation orientation={VERTICAL_SCROLLABLE} />).dive();
+    it('renders one button when showNavNextButton is false', () => {
+      const wrapper = shallow(<DayPickerNavigation showNavNextButton={false} />).dive();
+      expect(wrapper.find('[role="button"]')).to.have.lengthOf(1);
+    });
+
+    it('renders one button when showNavNextButton is false', () => {
+      const wrapper = shallow(<DayPickerNavigation showNavPrevButton={false} />).dive();
       expect(wrapper.find('[role="button"]')).to.have.lengthOf(1);
     });
 
@@ -130,6 +134,8 @@ describe('DayPickerNavigation', () => {
       expect(onPrevMonthStub).to.have.property('callCount', 1);
       prevMonthButton.simulate('keyup', { key: ' ' });
       expect(onPrevMonthStub).to.have.property('callCount', 2);
+      prevMonthButton.simulate('keyup', { key: 'k' });
+      expect(onPrevMonthStub).to.have.property('callCount', 2);
     });
 
     it('props.onNextMonthClick is triggered by next month button key up', () => {
@@ -140,6 +146,8 @@ describe('DayPickerNavigation', () => {
       nextMonthButton.simulate('keyup', { key: 'Enter' });
       expect(onNextMonthStub).to.have.property('callCount', 1);
       nextMonthButton.simulate('keyup', { key: ' ' });
+      expect(onNextMonthStub).to.have.property('callCount', 2);
+      nextMonthButton.simulate('keyup', { key: 'k' });
       expect(onNextMonthStub).to.have.property('callCount', 2);
     });
 
@@ -187,6 +195,36 @@ describe('DayPickerNavigation', () => {
       />).dive().find('button').at(0);
       nextMonthButton.simulate('click');
       expect(onNextMonthStub).to.have.property('callCount', 0);
+    });
+
+    it('props.onPrevMonthClick is triggered by custom prev month button key up', () => {
+      const onPrevMonthStub = sinon.stub();
+      const renderNavPrevButtonStub = sinon.stub().onCall(0).callsFake(({ onKeyUp }) => <button onKeyUp={onKeyUp} type="button">Prev</button>);
+      const prevMonthButton = shallow(<DayPickerNavigation
+        onPrevMonthClick={onPrevMonthStub}
+        renderNavPrevButton={renderNavPrevButtonStub}
+      />).dive().find('button').at(0);
+      prevMonthButton.simulate('keyup', { key: 'Enter' });
+      expect(onPrevMonthStub).to.have.property('callCount', 1);
+      prevMonthButton.simulate('keyup', { key: ' ' });
+      expect(onPrevMonthStub).to.have.property('callCount', 2);
+      prevMonthButton.simulate('keyup', { key: 'k' });
+      expect(onPrevMonthStub).to.have.property('callCount', 2);
+    });
+
+    it('props.onNextMonthClick is triggered by custom next month button key up', () => {
+      const onNextMonthStub = sinon.stub();
+      const renderNavNextButtonStub = sinon.stub().onCall(0).callsFake(({ onKeyUp }) => <button onKeyUp={onKeyUp} type="button">Next</button>);
+      const nextMonthButton = shallow(<DayPickerNavigation
+        onNextMonthClick={onNextMonthStub}
+        renderNavNextButton={renderNavNextButtonStub}
+      />).dive().find('button').at(0);
+      nextMonthButton.simulate('keyup', { key: 'Enter' });
+      expect(onNextMonthStub).to.have.property('callCount', 1);
+      nextMonthButton.simulate('keyup', { key: ' ' });
+      expect(onNextMonthStub).to.have.property('callCount', 2);
+      nextMonthButton.simulate('keyup', { key: 'k' });
+      expect(onNextMonthStub).to.have.property('callCount', 2);
     });
   });
 });

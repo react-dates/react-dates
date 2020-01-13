@@ -4142,7 +4142,7 @@ describe('DayPickerRangeController', () => {
     });
   });
 
-  it('return value now has modifier arg for day after multiplying number of months', () => {
+  it('return value now has modifier arg for day after getting next scrollable months', () => {
     const modifierToAdd = 'foo';
     const futureDateAfterMultiply = today.clone().add(4, 'months');
     const monthISO = toISOMonthString(futureDateAfterMultiply);
@@ -4160,9 +4160,32 @@ describe('DayPickerRangeController', () => {
     )).instance();
     let modifiers = wrapper.addModifier(updatedDays, futureDateAfterMultiply, modifierToAdd);
     expect(Array.from(modifiers[monthISO][todayISO])).to.not.contain(modifierToAdd);
-    wrapper.onMultiplyScrollableMonths();
+    wrapper.onGetNextScrollableMonths();
     modifiers = wrapper.addModifier(updatedDays, futureDateAfterMultiply, modifierToAdd);
     expect(Array.from(modifiers[monthISO][todayISO])).to.contain(modifierToAdd);
+  });
+
+  it('return value now has modifier arg for day after getting previous scrollable months', () => {
+    const modifierToAdd = 'foo';
+    const pastDateAfterMultiply = today.clone().subtract(3, 'months');
+    const monthISO = toISOMonthString(pastDateAfterMultiply);
+    const dayISO = toISODateString(pastDateAfterMultiply);
+    const updatedDays = {
+      [monthISO]: { [dayISO]: new Set(['bar', 'baz']) },
+    };
+    const wrapper = shallow((
+      <DayPickerRangeController
+        onDatesChange={sinon.stub()}
+        onFocusChange={sinon.stub()}
+        orientation={VERTICAL_SCROLLABLE}
+        numberOfMonths={3}
+      />
+    )).instance();
+    let modifiers = wrapper.addModifier(updatedDays, pastDateAfterMultiply, modifierToAdd);
+    expect(Array.from(modifiers[monthISO][dayISO])).to.not.contain(modifierToAdd);
+    wrapper.onGetPrevScrollableMonths();
+    modifiers = wrapper.addModifier(updatedDays, pastDateAfterMultiply, modifierToAdd);
+    expect(Array.from(modifiers[monthISO][dayISO])).to.contain(modifierToAdd);
   });
 
   describe('#addModifierToRange', () => {
