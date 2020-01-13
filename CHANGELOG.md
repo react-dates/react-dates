@@ -3,6 +3,11 @@
 <!--
 - []  ([#](https://github.com/airbnb/react-dates/pull/))
 -->
+## 21.6.0
+
+- [new] Add functionality to see previous months for vertical scrollable calendar ([#1894](https://github.com/airbnb/react-dates/pull/1894))
+- [new] Add support for noNavButtons in DayPickerSingleDateController (match DayPickerRangeController support) ([#1895](https://github.com/airbnb/react-dates/pull/1895))
+
 ## 21.5.1
 
 - [fix] Remove redundant overflowY:scroll on CalendarMonthGrid ([#1881](https://github.com/airbnb/react-dates/pull/1881))
