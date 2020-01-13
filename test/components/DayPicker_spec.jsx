@@ -5,6 +5,7 @@ import sinon from 'sinon-sandbox';
 import { mount, shallow } from 'enzyme';
 
 import * as isDayVisible from '../../src/utils/isDayVisible';
+import isSameMonth from '../../src/utils/isSameMonth';
 
 import DayPicker, { PureDayPicker } from '../../src/components/DayPicker';
 import CalendarMonthGrid from '../../src/components/CalendarMonthGrid';
@@ -208,13 +209,32 @@ describe('DayPicker', () => {
   });
 
   describe('props.orientation === VERTICAL_SCROLLABLE', () => {
-    it('uses multiplyScrollableMonths instead of onNextMonthClick', () => {
+    it('renders two DayPickerNavigations', () => {
       const wrapper = shallow(
         <DayPicker orientation={VERTICAL_SCROLLABLE} />,
         { disableLifecycleMethods: false },
       ).dive();
-      const nav = wrapper.find(DayPickerNavigation);
-      expect(nav.prop('onNextMonthClick')).to.equal(wrapper.instance().multiplyScrollableMonths);
+      expect(wrapper.find(DayPickerNavigation)).to.have.length(2);
+    });
+
+    it('uses getNextScrollableMonths instead of onNextMonthClick', () => {
+      const wrapper = shallow(
+        <DayPicker orientation={VERTICAL_SCROLLABLE} />,
+        { disableLifecycleMethods: false },
+      ).dive();
+      expect(wrapper.find(DayPickerNavigation)).to.have.length(2);
+      const nav = wrapper.find(DayPickerNavigation).get(1);
+      expect(nav.props.onNextMonthClick).to.equal(wrapper.instance().getNextScrollableMonths);
+    });
+
+    it('uses getPrevScrollableMonths instead of onNextMonthClick', () => {
+      const wrapper = shallow(
+        <DayPicker orientation={VERTICAL_SCROLLABLE} />,
+        { disableLifecycleMethods: false },
+      ).dive();
+      expect(wrapper.find(DayPickerNavigation)).to.have.length(2);
+      const nav = wrapper.find(DayPickerNavigation).get(0);
+      expect(nav.props.onPrevMonthClick).to.equal(wrapper.instance().getPrevScrollableMonths);
     });
   });
 
@@ -795,17 +815,20 @@ describe('DayPicker', () => {
     });
   });
 
-  describe('#multiplyScrollableMonths', () => {
+  describe('#getNextScrollableMonths', () => {
     it('increments scrollableMonthMultiple', () => {
       const wrapper = shallow(<DayPicker />).dive();
-      wrapper.instance().multiplyScrollableMonths(event);
+      wrapper.instance().getNextScrollableMonths(event);
       expect(wrapper.state().scrollableMonthMultiple).to.equal(2);
     });
+  });
 
-    it('increments scrollableMonthMultiple without an event', () => {
+  describe('#getPrevScrollableMonths', () => {
+    it('increments scrollableMonthMultiple and updates currentMonth', () => {
       const wrapper = shallow(<DayPicker />).dive();
-      wrapper.instance().multiplyScrollableMonths();
+      wrapper.instance().getPrevScrollableMonths();
       expect(wrapper.state().scrollableMonthMultiple).to.equal(2);
+      expect(isSameMonth(wrapper.state().currentMonth, moment().subtract(2, 'month'))).to.equal(true);
     });
   });
 
