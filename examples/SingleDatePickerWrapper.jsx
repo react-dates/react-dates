@@ -34,7 +34,7 @@ const defaultProps = {
   placeholder: 'Date',
   disabled: false,
   required: false,
-  screenReaderInputMessage: '',
+  screenReaderInputMessage: undefined,
   showClearDate: false,
   showDefaultInputIcon: false,
   customInputIcon: null,
@@ -69,7 +69,7 @@ const defaultProps = {
   renderDayContents: null,
   enableOutsideDays: false,
   isDayBlocked: () => false,
-  isOutsideRange: day => !isInclusivelyAfterDay(day, moment()),
+  isOutsideRange: (day) => !isInclusivelyAfterDay(day, moment()),
   isDayHighlighted: () => {},
 
   // internationalization props

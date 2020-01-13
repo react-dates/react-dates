@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
+import { forbidExtraProps, nonNegativeInteger, mutuallyExclusiveProps } from 'airbnb-prop-types';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 import throttle from 'lodash/throttle';
 import isTouchDevice from 'is-touch-device';
@@ -8,6 +8,7 @@ import isTouchDevice from 'is-touch-device';
 import noflip from '../utils/noflip';
 import getInputHeight from '../utils/getInputHeight';
 import openDirectionShape from '../shapes/OpenDirectionShape';
+import AriaInvalidShape from '../shapes/AriaInvalidShape';
 
 import {
   OPEN_DOWN,
@@ -28,8 +29,6 @@ const propTypes = forbidExtraProps({
   id: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   displayValue: PropTypes.string,
-  ariaLabel: PropTypes.string,
-  screenReaderMessage: PropTypes.string,
   focused: PropTypes.bool,
   disabled: PropTypes.bool,
   required: PropTypes.bool,
@@ -51,13 +50,15 @@ const propTypes = forbidExtraProps({
 
   // accessibility
   isFocused: PropTypes.bool, // describes actual DOM focus
+  ariaLabel: PropTypes.string,
+  ariaInvalid: AriaInvalidShape,
+  ariaDescribedby: mutuallyExclusiveProps(PropTypes.string, 'ariaDescribedby', 'screenReaderMessage'),
+  screenReaderMessage: mutuallyExclusiveProps(PropTypes.string, 'ariaDescribedby', 'screenReaderMessage'),
 });
 
 const defaultProps = {
   placeholder: 'Select Date',
   displayValue: '',
-  ariaLabel: undefined,
-  screenReaderMessage: '',
   focused: false,
   disabled: false,
   required: false,
@@ -79,6 +80,10 @@ const defaultProps = {
 
   // accessibility
   isFocused: false,
+  ariaLabel: undefined,
+  ariaInvalid: undefined,
+  ariaDescribedby: undefined,
+  screenReaderMessage: undefined,
 };
 
 class DateInput extends React.PureComponent {
@@ -175,6 +180,8 @@ class DateInput extends React.PureComponent {
       id,
       placeholder,
       ariaLabel,
+      ariaInvalid,
+      ariaDescribedby,
       displayValue,
       screenReaderMessage,
       focused,
@@ -234,7 +241,8 @@ class DateInput extends React.PureComponent {
           disabled={disabled}
           readOnly={typeof readOnly === 'boolean' ? readOnly : isTouch}
           required={required}
-          aria-describedby={screenReaderMessage && screenReaderMessageId}
+          aria-describedby={ariaDescribedby || (screenReaderMessage && screenReaderMessageId)}
+          aria-invalid={ariaInvalid}
         />
 
         {withFang && (

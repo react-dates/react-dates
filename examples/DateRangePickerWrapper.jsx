@@ -48,7 +48,7 @@ const defaultProps = {
   endDatePlaceholderText: 'End Date',
   disabled: false,
   required: false,
-  screenReaderInputMessage: '',
+  screenReaderInputMessage: undefined,
   showClearDates: false,
   showDefaultInputIcon: false,
   customInputIcon: null,
@@ -85,7 +85,7 @@ const defaultProps = {
   minimumNights: 1,
   enableOutsideDays: false,
   isDayBlocked: () => false,
-  isOutsideRange: day => !isInclusivelyAfterDay(day, moment()),
+  isOutsideRange: (day) => !isInclusivelyAfterDay(day, moment()),
   isDayHighlighted: () => false,
 
   // internationalization
@@ -93,7 +93,7 @@ const defaultProps = {
   monthFormat: 'MMMM YYYY',
   phrases: DateRangePickerPhrases,
 
-  stateDateWrapper: date => date,
+  stateDateWrapper: (date) => date,
 };
 
 class DateRangePickerWrapper extends React.Component {

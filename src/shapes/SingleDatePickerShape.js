@@ -12,6 +12,7 @@ import openDirectionShape from './OpenDirectionShape';
 import DayOfWeekShape from './DayOfWeekShape';
 import CalendarInfoPositionShape from './CalendarInfoPositionShape';
 import NavPositionShape from './NavPositionShape';
+import AriaInvalidShape from './AriaInvalidShape';
 
 export default {
   // required props for a functional interactive SingleDatePicker
@@ -25,10 +26,12 @@ export default {
   id: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   ariaLabel: PropTypes.string,
+  ariaInvalid: AriaInvalidShape,
+  ariaDescribedby: mutuallyExclusiveProps(PropTypes.string, 'ariaDescribedby', 'screenReaderInputMessage'),
+  screenReaderInputMessage: mutuallyExclusiveProps(PropTypes.string, 'ariaDescribedby', 'screenReaderInputMessage'),
   disabled: PropTypes.bool,
   required: PropTypes.bool,
   readOnly: PropTypes.bool,
-  screenReaderInputMessage: PropTypes.string,
   showClearDate: PropTypes.bool,
   customCloseIcon: PropTypes.node,
   showDefaultInputIcon: PropTypes.bool,

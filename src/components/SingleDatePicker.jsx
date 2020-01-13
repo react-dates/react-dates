@@ -50,10 +50,12 @@ const defaultProps = {
   id: 'date',
   placeholder: 'Date',
   ariaLabel: undefined,
+  ariaInvalid: undefined,
+  ariaDescribedby: undefined,
   disabled: false,
   required: false,
   readOnly: false,
-  screenReaderInputMessage: '',
+  screenReaderInputMessage: undefined,
   showClearDate: false,
   showDefaultInputIcon: false,
   inputIconPosition: ICON_BEFORE_POSITION,
@@ -542,6 +544,8 @@ class SingleDatePicker extends React.PureComponent {
       id,
       placeholder,
       ariaLabel,
+      ariaInvalid,
+      ariaDescribedby,
       disabled,
       focused,
       required,
@@ -582,6 +586,8 @@ class SingleDatePicker extends React.PureComponent {
         id={id}
         placeholder={placeholder}
         ariaLabel={ariaLabel}
+        ariaInvalid={ariaInvalid}
+        ariaDescribedby={ariaDescribedby}
         focused={focused}
         isFocused={isInputFocused}
         disabled={disabled}
