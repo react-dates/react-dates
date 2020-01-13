@@ -1178,7 +1178,7 @@ describe('DayPickerSingleDateController', () => {
       expect(Array.from(modifiers[nextMonthISO][nextMonthDayISO])).to.contain(modifierToAdd);
     });
 
-    it('return value now has modifier arg for day after multiplying number of months', () => {
+    it('return value now has modifier arg for day after getting next scrollable months', () => {
       const modifierToAdd = 'foo';
       const numberOfMonths = 2;
       const nextMonth = today.clone().add(numberOfMonths, 'month');
@@ -1197,9 +1197,33 @@ describe('DayPickerSingleDateController', () => {
       )).instance();
       let modifiers = wrapper.addModifier(updatedDays, nextMonth, modifierToAdd);
       expect(Array.from(modifiers[nextMonthISO][nextMonthDayISO])).to.not.contain(modifierToAdd);
-      wrapper.onMultiplyScrollableMonths();
+      wrapper.onGetNextScrollableMonths();
       modifiers = wrapper.addModifier(updatedDays, nextMonth, modifierToAdd);
       expect(Array.from(modifiers[nextMonthISO][nextMonthDayISO])).to.contain(modifierToAdd);
+    });
+
+    it('return value now has modifier arg for day after getting previous scrollable months', () => {
+      const modifierToAdd = 'foo';
+      const numberOfMonths = 2;
+      const pastDateAfterMultiply = today.clone().subtract(numberOfMonths, 'months');
+      const monthISO = toISOMonthString(pastDateAfterMultiply);
+      const dayISO = toISODateString(pastDateAfterMultiply);
+      const updatedDays = {
+        [monthISO]: { [dayISO]: new Set(['bar', 'baz']) },
+      };
+      const wrapper = shallow((
+        <DayPickerSingleDateController
+          onDatesChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+          numberOfMonths={numberOfMonths}
+          orientation={VERTICAL_SCROLLABLE}
+        />
+      )).instance();
+      let modifiers = wrapper.addModifier(updatedDays, pastDateAfterMultiply, modifierToAdd);
+      expect(Array.from(modifiers[monthISO][dayISO])).to.not.contain(modifierToAdd);
+      wrapper.onGetPrevScrollableMonths();
+      modifiers = wrapper.addModifier(updatedDays, pastDateAfterMultiply, modifierToAdd);
+      expect(Array.from(modifiers[monthISO][dayISO])).to.contain(modifierToAdd);
     });
   });
 

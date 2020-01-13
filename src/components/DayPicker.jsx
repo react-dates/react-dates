@@ -679,6 +679,29 @@ class DayPicker extends React.PureComponent {
     this.transitionContainer = ref;
   }
 
+  getNextScrollableMonths(e) {
+    const { onGetNextScrollableMonths } = this.props;
+    if (e) e.preventDefault();
+
+    if (onGetNextScrollableMonths) onGetNextScrollableMonths(e);
+
+    this.setState(({ scrollableMonthMultiple }) => ({
+      scrollableMonthMultiple: scrollableMonthMultiple + 1,
+    }));
+  }
+
+  getPrevScrollableMonths(e) {
+    const { numberOfMonths, onGetPrevScrollableMonths } = this.props;
+    if (e) e.preventDefault();
+
+    if (onGetPrevScrollableMonths) onGetPrevScrollableMonths(e);
+
+    this.setState(({ currentMonth, scrollableMonthMultiple }) => ({
+      currentMonth: currentMonth.clone().subtract(numberOfMonths, 'month'),
+      scrollableMonthMultiple: scrollableMonthMultiple + 1,
+    }));
+  }
+
   maybeTransitionNextMonth(newFocusedDate) {
     const { numberOfMonths } = this.props;
     const { currentMonth, focusedDate } = this.state;
@@ -707,29 +730,6 @@ class DayPicker extends React.PureComponent {
     }
 
     return false;
-  }
-
-  getNextScrollableMonths(e) {
-    const { onGetNextScrollableMonths } = this.props;
-    if (e) e.preventDefault();
-
-    if (onGetNextScrollableMonths) onGetNextScrollableMonths(e);
-
-    this.setState(({ scrollableMonthMultiple }) => ({
-      scrollableMonthMultiple: scrollableMonthMultiple + 1,
-    }));
-  }
-
-  getPrevScrollableMonths(e) {
-    const { numberOfMonths, onGetPrevScrollableMonths } = this.props;
-    if (e) e.preventDefault();
-
-    if (onGetPrevScrollableMonths) onGetPrevScrollableMonths(e);
-
-    this.setState(({ currentMonth, scrollableMonthMultiple }) => ({
-      currentMonth: currentMonth.clone().subtract(numberOfMonths, 'month'),
-      scrollableMonthMultiple: scrollableMonthMultiple + 1,
-    }));
   }
 
   isHorizontal() {
@@ -879,15 +879,13 @@ class DayPicker extends React.PureComponent {
       return null;
     }
 
-    const onPrevMonthClick =
-      orientation === VERTICAL_SCROLLABLE
-        ? this.getPrevScrollableMonths
-        : this.onPrevMonthClick;
+    const onPrevMonthClick = orientation === VERTICAL_SCROLLABLE
+      ? this.getPrevScrollableMonths
+      : this.onPrevMonthClick;
 
-    const onNextMonthClick =
-      orientation === VERTICAL_SCROLLABLE
-        ? this.getNextScrollableMonths
-        : this.onNextMonthClick;
+    const onNextMonthClick = orientation === VERTICAL_SCROLLABLE
+      ? this.getNextScrollableMonths
+      : this.onNextMonthClick;
 
     return (
       <DayPickerNavigation

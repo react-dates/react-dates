@@ -224,7 +224,6 @@ describe('DayPicker', () => {
       ).dive();
       expect(wrapper.find(DayPickerNavigation)).to.have.length(2);
       const nav = wrapper.find(DayPickerNavigation).get(1);
-      console.log(nav);
       expect(nav.props.onNextMonthClick).to.equal(wrapper.instance().getNextScrollableMonths);
     });
 
@@ -235,7 +234,6 @@ describe('DayPicker', () => {
       ).dive();
       expect(wrapper.find(DayPickerNavigation)).to.have.length(2);
       const nav = wrapper.find(DayPickerNavigation).get(0);
-      console.log(nav);
       expect(nav.props.onPrevMonthClick).to.equal(wrapper.instance().getPrevScrollableMonths);
     });
   });
