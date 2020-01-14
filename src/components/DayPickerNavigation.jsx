@@ -104,7 +104,7 @@ class DayPickerNavigation extends React.PureComponent {
     let navPrevTabIndex = {};
     let navNextTabIndex = {};
 
-    if (!navPrevIcon) {
+    if (!navPrevIcon && !renderNavPrevButton) {
       navPrevTabIndex = { tabIndex: '0' };
       isDefaultNavPrev = true;
       let Icon = isVertical ? ChevronUp : LeftArrow;
@@ -122,7 +122,7 @@ class DayPickerNavigation extends React.PureComponent {
       );
     }
 
-    if (!navNextIcon) {
+    if (!navNextIcon && !renderNavNextButton) {
       navNextTabIndex = { tabIndex: '0' };
       isDefaultNavNext = true;
       let Icon = isVertical ? ChevronDown : RightArrow;
