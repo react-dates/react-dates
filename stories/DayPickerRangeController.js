@@ -152,7 +152,7 @@ function renderNavNextButton(buttonProps) {
       style={{ position: 'absolute', top: 23, right: 22 }}
       type="button"
     >
-      Next &rsaquo;
+      Next
     </button>
   );
 }
@@ -176,7 +176,7 @@ function renderNavPrevButtonForVerticalScrollable(buttonProps) {
       style={{ width: '100%', textAlign: 'center' }}
       type="button"
     >
-      &lsaquo; Prev
+      Prev
     </button>
   );
 }

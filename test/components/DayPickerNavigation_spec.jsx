@@ -6,6 +6,7 @@ import { shallow } from 'enzyme';
 import DayPickerNavigation from '../../src/components/DayPickerNavigation';
 import RightArrow from '../../src/components/RightArrow';
 import LeftArrow from '../../src/components/LeftArrow';
+import { VERTICAL_ORIENTATION } from '../../src/constants';
 
 describe('DayPickerNavigation', () => {
   describe('#render', () => {
@@ -90,6 +91,67 @@ describe('DayPickerNavigation', () => {
       ).dive();
       expect(wrapper.childAt(1).find('div[role="button"]')).to.have.lengthOf(0);
       expect(renderNavNextButtonStub).to.have.property('callCount', 1);
+    });
+
+    it('does not render default styles when custom navigation is used', () => {
+      const renderNavPrevButtonStub = sinon.stub().returns(<button type="button">Prev</button>);
+      const renderNavNextButtonStub = sinon.stub().returns(<button type="button">Next</button>);
+      const wrapper = shallow(
+        <DayPickerNavigation
+          renderNavNextButton={renderNavNextButtonStub}
+          renderNavPrevButton={renderNavPrevButtonStub}
+          orientation={VERTICAL_ORIENTATION}
+        />,
+      ).dive();
+      const wrapperDiv = wrapper.find('div').filterWhere((div) => {
+        const className = div.prop('className') || '';
+        return className.includes('DayPickerNavigation__verticalDefault');
+      });
+      expect(wrapperDiv).to.have.lengthOf(0);
+    });
+
+    it('does render default styles when custom navigation is used for only one nav button', () => {
+      const renderNavPrevButtonStub = sinon.stub().returns(<button type="button">Prev</button>);
+      const wrapper = shallow(
+        <DayPickerNavigation
+          renderNavPrevButton={renderNavPrevButtonStub}
+          orientation={VERTICAL_ORIENTATION}
+        />,
+      ).dive();
+      const wrapperDiv = wrapper.find('div').filterWhere((div) => {
+        const className = div.prop('className') || '';
+        return className.includes('DayPickerNavigation__verticalDefault');
+      });
+      expect(wrapperDiv).to.have.lengthOf(1);
+    });
+
+    it('does not render default styles when custom navigation is used for only button but the other nav button is not shown', () => {
+      const renderNavPrevButtonStub = sinon.stub().returns(<button type="button">Prev</button>);
+      const wrapper = shallow(
+        <DayPickerNavigation
+          showNavNextButton={false}
+          renderNavPrevButton={renderNavPrevButtonStub}
+          orientation={VERTICAL_ORIENTATION}
+        />,
+      ).dive();
+      const wrapperDiv = wrapper.find('div').filterWhere((div) => {
+        const className = div.prop('className') || '';
+        return className.includes('DayPickerNavigation__verticalDefault');
+      });
+      expect(wrapperDiv).to.have.lengthOf(0);
+    });
+
+    it('renders default styles when default navigation is used', () => {
+      const wrapper = shallow(
+        <DayPickerNavigation
+          orientation={VERTICAL_ORIENTATION}
+        />,
+      ).dive();
+      const wrapperDiv = wrapper.find('div').filterWhere((div) => {
+        const className = div.prop('className') || '';
+        return className.includes('DayPickerNavigation__verticalDefault');
+      });
+      expect(wrapperDiv).to.have.lengthOf(1);
     });
   });
 
