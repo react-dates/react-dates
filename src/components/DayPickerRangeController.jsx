@@ -45,6 +45,7 @@ import DayPicker from './DayPicker';
 import getPooledMoment from '../utils/getPooledMoment';
 
 const propTypes = forbidExtraProps({
+  forceRender: PropTypes.bool,
   startDate: momentPropTypes.momentObj,
   endDate: momentPropTypes.momentObj,
   onDatesChange: PropTypes.func,
@@ -118,6 +119,7 @@ const propTypes = forbidExtraProps({
 });
 
 const defaultProps = {
+  forceRender: false,
   startDate: undefined, // TODO: use null
   endDate: undefined, // TODO: use null
   minDate: null,
@@ -1311,6 +1313,7 @@ export default class DayPickerRangeController extends React.PureComponent {
       transitionDuration,
       verticalBorderSpacing,
       horizontalMonthPadding,
+      forceRender
     } = this.props;
 
     const {
@@ -1323,6 +1326,7 @@ export default class DayPickerRangeController extends React.PureComponent {
 
     return (
       <DayPicker
+        forceRender={forceRender}
         orientation={orientation}
         enableOutsideDays={enableOutsideDays}
         modifiers={visibleDays}
