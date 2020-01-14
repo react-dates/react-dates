@@ -221,13 +221,15 @@ storiesOf('DayPickerSingleDateController', module)
     />
   )))
   .add('verticalScrollable', withInfo()(() => (
-    <DayPickerSingleDateControllerWrapper
-      numberOfMonths={3}
-      onOutsideClick={action('DayPickerSingleDateController::onOutsideClick')}
-      onPrevMonthClick={action('DayPickerSingleDateController::onPrevMonthClick')}
-      onNextMonthClick={action('DayPickerSingleDateController::onNextMonthClick')}
-      orientation={VERTICAL_SCROLLABLE}
-    />
+    <div style={{ height: 500 }}>
+      <DayPickerSingleDateControllerWrapper
+        numberOfMonths={3}
+        onOutsideClick={action('DayPickerSingleDateController::onOutsideClick')}
+        onPrevMonthClick={action('DayPickerSingleDateController::onPrevMonthClick')}
+        onNextMonthClick={action('DayPickerSingleDateController::onNextMonthClick')}
+        orientation={VERTICAL_SCROLLABLE}
+      />
+    </div>
   )))
   .add('with custom month navigation icons', withInfo()(() => (
     <DayPickerSingleDateControllerWrapper
@@ -380,14 +382,26 @@ storiesOf('DayPickerSingleDateController', module)
     />
   )))
   .add('with no nav prev button', withInfo()(() => (
-    <DayPickerSingleDateControllerWrapper
-      onOutsideClick={action('DayPickerSingleDateController::onOutsideClick')}
-      noNavPrevButton
-    />
+    <div style={{ height: 500 }}>
+      <DayPickerSingleDateControllerWrapper
+        numberOfMonths={3}
+        onOutsideClick={action('DayPickerSingleDateController::onOutsideClick')}
+        onPrevMonthClick={action('DayPickerSingleDateController::onPrevMonthClick')}
+        onNextMonthClick={action('DayPickerSingleDateController::onNextMonthClick')}
+        orientation={VERTICAL_SCROLLABLE}
+        noNavPrevButton
+      />
+    </div>
   )))
   .add('with no nav next button', withInfo()(() => (
-    <DayPickerSingleDateControllerWrapper
-      onOutsideClick={action('DayPickerSingleDateController::onOutsideClick')}
-      noNavNextButton
-    />
+    <div style={{ height: 500 }}>
+      <DayPickerSingleDateControllerWrapper
+        numberOfMonths={3}
+        onOutsideClick={action('DayPickerSingleDateController::onOutsideClick')}
+        onPrevMonthClick={action('DayPickerSingleDateController::onPrevMonthClick')}
+        onNextMonthClick={action('DayPickerSingleDateController::onNextMonthClick')}
+        orientation={VERTICAL_SCROLLABLE}
+        noNavNextButton
+      />
+    </div>
   )));

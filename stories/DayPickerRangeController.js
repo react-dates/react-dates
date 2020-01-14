@@ -654,16 +654,30 @@ storiesOf('DayPickerRangeController', module)
     />
   )))
   .add('with no nav prev button', withInfo()(() => (
-    <DayPickerRangeControllerWrapper
-      onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
-      noNavPrevButton
-    />
+    <div style={{ height: 500 }}>
+      <DayPickerRangeControllerWrapper
+        onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
+        onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
+        onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
+        orientation={VERTICAL_SCROLLABLE}
+        numberOfMonths={6}
+        verticalHeight={800}
+        noNavPrevButton
+      />
+    </div>
   )))
   .add('with no nav next button', withInfo()(() => (
-    <DayPickerRangeControllerWrapper
-      onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
-      noNavNextButton
-    />
+    <div style={{ height: 500 }}>
+      <DayPickerRangeControllerWrapper
+        onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
+        onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
+        onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
+        orientation={VERTICAL_SCROLLABLE}
+        numberOfMonths={6}
+        verticalHeight={800}
+        noNavNextButton
+      />
+    </div>
   )))
   .add('with minimum nights for the hovered date', withInfo()(() => (
     <DayPickerRangeControllerWrapper

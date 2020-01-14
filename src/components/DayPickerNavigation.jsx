@@ -84,6 +84,10 @@ function DayPickerNavigation({
   showNavNextButton,
   styles,
 }) {
+  if (!showNavNextButton && !showNavPrevButton) {
+    return null;
+  }
+
   const isHorizontal = orientation === HORIZONTAL_ORIENTATION;
   const isVertical = orientation !== HORIZONTAL_ORIENTATION;
   const isVerticalScrollable = orientation === VERTICAL_SCROLLABLE;

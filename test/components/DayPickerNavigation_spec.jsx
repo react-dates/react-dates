@@ -24,6 +24,13 @@ describe('DayPickerNavigation', () => {
       expect(wrapper.find('[role="button"]')).to.have.lengthOf(1);
     });
 
+    it('is null when showNavNextButton and showNavPrevButton are both false', () => {
+      const wrapper = shallow(
+        <DayPickerNavigation showNavPrevButton={false} showNavNextButton={false} />,
+      ).dive();
+      expect(wrapper.type()).to.equal(null);
+    });
+
     it('tabindex is present when the default buttons are used', () => {
       const wrapper = shallow(<DayPickerNavigation />).dive();
       const prevMonthButton = wrapper.find('[role="button"]').at(0);
