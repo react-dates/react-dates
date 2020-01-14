@@ -89,6 +89,8 @@ const propTypes = forbidExtraProps({
   renderNavPrevButton: PropTypes.func,
   renderNavNextButton: PropTypes.func,
   noNavButtons: PropTypes.bool,
+  noNavNextButton: PropTypes.bool,
+  noNavPrevButton: PropTypes.bool,
   onPrevMonthClick: PropTypes.func,
   onNextMonthClick: PropTypes.func,
   onMonthChange: PropTypes.func,
@@ -157,6 +159,8 @@ export const defaultProps = {
   renderNavPrevButton: null,
   renderNavNextButton: null,
   noNavButtons: false,
+  noNavNextButton: false,
+  noNavPrevButton: false,
   onPrevMonthClick() {},
   onNextMonthClick() {},
   onMonthChange() {},
@@ -868,6 +872,8 @@ class DayPicker extends React.PureComponent {
       navPrev,
       navNext,
       noNavButtons,
+      noNavNextButton,
+      noNavPrevButton,
       orientation,
       phrases,
       renderNavPrevButton,
@@ -903,10 +909,10 @@ class DayPicker extends React.PureComponent {
         phrases={phrases}
         isRTL={isRTL}
         showNavNextButton={
-          !(orientation === VERTICAL_SCROLLABLE && navDirection === PREV_NAV)
+          !(noNavNextButton || (orientation === VERTICAL_SCROLLABLE && navDirection === PREV_NAV))
         }
         showNavPrevButton={
-          !(orientation === VERTICAL_SCROLLABLE && navDirection === NEXT_NAV)
+          !(noNavPrevButton || (orientation === VERTICAL_SCROLLABLE && navDirection === NEXT_NAV))
         }
       />
     );
