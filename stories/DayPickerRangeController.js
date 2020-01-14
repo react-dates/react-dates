@@ -653,6 +653,18 @@ storiesOf('DayPickerRangeController', module)
       noNavButtons
     />
   )))
+  .add('with no nav prev button', withInfo()(() => (
+    <DayPickerRangeControllerWrapper
+      onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
+      noNavPrevButton
+    />
+  )))
+  .add('with no nav next button', withInfo()(() => (
+    <DayPickerRangeControllerWrapper
+      onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
+      noNavNextButton
+    />
+  )))
   .add('with minimum nights for the hovered date', withInfo()(() => (
     <DayPickerRangeControllerWrapper
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}

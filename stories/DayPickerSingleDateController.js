@@ -378,4 +378,16 @@ storiesOf('DayPickerSingleDateController', module)
       onOutsideClick={action('DayPickerSingleDateController::onOutsideClick')}
       noNavButtons
     />
+  )))
+  .add('with no nav prev button', withInfo()(() => (
+    <DayPickerSingleDateControllerWrapper
+      onOutsideClick={action('DayPickerSingleDateController::onOutsideClick')}
+      noNavPrevButton
+    />
+  )))
+  .add('with no nav next button', withInfo()(() => (
+    <DayPickerSingleDateControllerWrapper
+      onOutsideClick={action('DayPickerSingleDateController::onOutsideClick')}
+      noNavNextButton
+    />
   )));
