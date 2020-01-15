@@ -5,6 +5,7 @@ export default function getVisibleDays(
   month,
   numberOfMonths,
   enableOutsideDays,
+  firstDayOfWeek = moment.localeData().firstDayOfWeek(),
   withoutTransitionMonths,
 ) {
   if (!moment.isMoment(month)) return {};
@@ -21,10 +22,19 @@ export default function getVisibleDays(
 
     const currentDay = firstOfMonth.clone();
 
+    // create an array of week days based on the firstDayOfWeek
+    const mappedWeekDays = [];
+    for (let j = firstDayOfWeek; j < 7; j += 1) {
+      mappedWeekDays.push(j);
+    }
+    for (let k = 0; mappedWeekDays.length < 7; k += 1) {
+      mappedWeekDays.push(k);
+    }
+
     // days belonging to the previous month
     if (enableOutsideDays) {
-      for (let j = 0; j < currentDay.weekday(); j += 1) {
-        const prevDay = currentDay.clone().subtract(j + 1, 'day');
+      for (let l = 0; l < mappedWeekDays.indexOf(currentDay.weekday()); l += 1) {
+        const prevDay = currentDay.clone().subtract(l + 1, 'day');
         visibleDays.unshift(prevDay);
       }
     }
@@ -37,12 +47,14 @@ export default function getVisibleDays(
     if (enableOutsideDays) {
       // weekday() returns the index of the day of the week according to the locale
       // this means if the week starts on Monday, weekday() will return 0 for a Monday date, not 1
-      if (currentDay.weekday() !== 0) {
-        // days belonging to the next month
-        for (let k = currentDay.weekday(), count = 0; k < 7; k += 1, count += 1) {
-          const nextDay = currentDay.clone().add(count, 'day');
-          visibleDays.push(nextDay);
-        }
+      // days belonging to the next month
+      for (
+        let m = mappedWeekDays.indexOf(currentDay.weekday()), count = 0;
+        m < 7;
+        m += 1, count += 1
+      ) {
+        const nextDay = currentDay.clone().add(count, 'day');
+        visibleDays.push(nextDay);
       }
     }
 
