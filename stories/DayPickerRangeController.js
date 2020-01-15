@@ -152,6 +152,54 @@ function renderNavNextButton(buttonProps) {
       style={{ position: 'absolute', top: 23, right: 22 }}
       type="button"
     >
+      Next
+    </button>
+  );
+}
+
+function renderNavPrevButtonForVerticalScrollable(buttonProps) {
+  const {
+    ariaLabel,
+    disabled,
+    onClick,
+    onKeyUp,
+    onMouseUp,
+  } = buttonProps;
+
+  return (
+    <button
+      aria-label={ariaLabel}
+      disabled={disabled}
+      onClick={onClick}
+      onKeyUp={onKeyUp}
+      onMouseUp={onMouseUp}
+      style={{ width: '100%', textAlign: 'center' }}
+      type="button"
+    >
+      Prev
+    </button>
+  );
+}
+
+function renderNavNextButtonForVerticalScrollable(buttonProps) {
+  const {
+    ariaLabel,
+    disabled,
+    onClick,
+    onKeyUp,
+    onMouseUp,
+  } = buttonProps;
+
+  return (
+    <button
+      aria-label={ariaLabel}
+      disabled={disabled}
+      onClick={onClick}
+      onKeyUp={onKeyUp}
+      onMouseUp={onMouseUp}
+      style={{ width: '100%', textAlign: 'center' }}
+      type="button"
+    >
       Next &rsaquo;
     </button>
   );
@@ -462,6 +510,20 @@ storiesOf('DayPickerRangeController', module)
       />
     </div>
   )))
+  .add('vertical scrollable with custom rendered month navigation', withInfo()(() => (
+    <div style={{ height: 500 }}>
+      <DayPickerRangeControllerWrapper
+        onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
+        onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
+        onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
+        orientation={VERTICAL_SCROLLABLE}
+        numberOfMonths={3}
+        verticalHeight={300}
+        renderNavPrevButton={renderNavPrevButtonForVerticalScrollable}
+        renderNavNextButton={renderNavNextButtonForVerticalScrollable}
+      />
+    </div>
+  )))
   .add('with custom month navigation icons', withInfo()(() => (
     <DayPickerRangeControllerWrapper
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
@@ -652,6 +714,32 @@ storiesOf('DayPickerRangeController', module)
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       noNavButtons
     />
+  )))
+  .add('with no nav prev button', withInfo()(() => (
+    <div style={{ height: 500 }}>
+      <DayPickerRangeControllerWrapper
+        onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
+        onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
+        onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
+        orientation={VERTICAL_SCROLLABLE}
+        numberOfMonths={6}
+        verticalHeight={800}
+        noNavPrevButton
+      />
+    </div>
+  )))
+  .add('with no nav next button', withInfo()(() => (
+    <div style={{ height: 500 }}>
+      <DayPickerRangeControllerWrapper
+        onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
+        onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
+        onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
+        orientation={VERTICAL_SCROLLABLE}
+        numberOfMonths={6}
+        verticalHeight={800}
+        noNavNextButton
+      />
+    </div>
   )))
   .add('with minimum nights for the hovered date', withInfo()(() => (
     <DayPickerRangeControllerWrapper
