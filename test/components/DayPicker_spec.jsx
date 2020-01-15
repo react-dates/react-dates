@@ -906,12 +906,47 @@ describe('DayPicker', () => {
           mount(<DayPicker orientation={HORIZONTAL_ORIENTATION} />);
           expect(adjustDayPickerHeightSpy).to.have.property('callCount', 1);
         });
+
+        it('does not update state.currentMonthScrollTop', () => {
+          sinon.spy(DayPicker.prototype, 'setTransitionContainerRef');
+          const wrapper = mount(<DayPicker orientation={HORIZONTAL_ORIENTATION} />);
+          expect(wrapper.state().currentMonthScrollTop).to.equal(null);
+        });
       });
 
       describe('props.orientation === VERTICAL_ORIENTATION', () => {
         it('does not call adjustDayPickerHeight', () => {
           mount(<DayPicker orientation={VERTICAL_ORIENTATION} />);
           expect(adjustDayPickerHeightSpy.called).to.equal(false);
+        });
+
+        it('does not update state.currentMonthScrollTop', () => {
+          sinon.spy(DayPicker.prototype, 'setTransitionContainerRef');
+          const wrapper = mount(<DayPicker orientation={VERTICAL_ORIENTATION} />);
+          expect(wrapper.state().currentMonthScrollTop).to.equal(null);
+        });
+      });
+
+      describe('props.orientation === VERTICAL_SCROLLABLE', () => {
+        it('updates state.currentMonthScrollTop', () => {
+          sinon.spy(DayPicker.prototype, 'setTransitionContainerRef');
+          const wrapper = mount(<DayPicker orientation={VERTICAL_SCROLLABLE} />);
+          expect(wrapper.state().currentMonthScrollTop).to.not.equal(null);
+        });
+      });
+    });
+
+    describe('#componentWillReceiveProps', () => {
+      describe('props.orientation === VERTICAL_SCROLLABLE', () => {
+        it('updates state.currentMonthScrollTop', () => {
+          sinon.spy(DayPicker.prototype, 'setTransitionContainerRef');
+          const wrapper = mount(<DayPicker orientation={VERTICAL_SCROLLABLE} />);
+          const prevCurrentMonthScrollTop = wrapper.state().currentMonthScrollTop;
+          wrapper.setState({
+            currentMonth: moment().subtract(1, 'months'),
+          });
+          wrapper.setProps({ initialVisibleMonth: () => moment().subtract(1, 'month') });
+          expect(wrapper.state().currentMonthScrollTop).to.not.equal(prevCurrentMonthScrollTop);
         });
       });
     });
@@ -1024,6 +1059,28 @@ describe('DayPicker', () => {
             monthTransition: null,
           });
           expect(updateStateAfterMonthTransitionSpy.calledOnce).to.equal(false);
+        });
+      });
+
+      describe('props.orientation === VERTICAL_SCROLLABLE', () => {
+        it('does not update transitionContainer ref`s scrollTop currentMonth stays the same', () => {
+          sinon.spy(DayPicker.prototype, 'setTransitionContainerRef');
+          const wrapper = mount(<DayPicker orientation={VERTICAL_SCROLLABLE} />);
+          const prevScrollTop = wrapper.transitionContainer.scrollTop;
+          wrapper.setState({
+            currentMonth: moment(),
+          });
+          expect(wrapper.transitionContainer).to.have.property('scrollTop', prevScrollTop);
+        });
+
+        it('updates transitionContainer ref`s scrollTop currentMonth changes', () => {
+          sinon.spy(DayPicker.prototype, 'setTransitionContainerRef');
+          const wrapper = mount(<DayPicker orientation={VERTICAL_SCROLLABLE} />);
+          const prevScrollTop = wrapper.transitionContainer.scrollTop;
+          wrapper.setState({
+            currentMonth: moment().subtract(1, 'months'),
+          });
+          expect(wrapper.transitionContainer).to.not.have.property('scrollTop', prevScrollTop);
         });
       });
 
