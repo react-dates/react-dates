@@ -45,12 +45,9 @@ export default function getVisibleDays(
       // weekday() returns the index of the day of the week according to the locale
       // this means if the week starts on Monday, weekday() will return 0 for a Monday date, not 1
       // days belonging to the next month
-      for (
-        let m = mappedWeekDays.indexOf(currentDay.weekday()), count = 0;
-        m < 7;
-        m += 1, count += 1
-      ) {
-        const nextDay = currentDay.clone().add(count, 'day');
+      const nextDays = 6 - ((7 - firstDayOfWeek + lastOfMonth.weekday()) % 7);
+      for (let m = 0; m < nextDays; m += 1) {
+        const nextDay = currentDay.clone().add(m, 'day');
         visibleDays.push(nextDay);
       }
     }
