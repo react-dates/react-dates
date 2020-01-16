@@ -4990,3 +4990,26 @@ describe('DayPickerRangeController', () => {
     });
   });
 });
+
+describe('firstDayOfWeek', () => {
+  it('Last day of matrix should take firstDayOfWeek into account', () => {
+    for (let firstDayOfWeek = 0; firstDayOfWeek < 7; firstDayOfWeek += 1) {
+      const wrapper = shallow((
+        <DayPickerRangeController
+          onDateChange={() => {}}
+          onFocusChange={() => {}}
+          enableOutsideDays
+          firstDayOfWeek={firstDayOfWeek}
+          focused
+        />
+      ));
+      const currentMoment = moment();
+      const lastOfMonth = currentMoment.endOf('month').hour(12);
+      const nextDays = 6 - ((7 - firstDayOfWeek + lastOfMonth.weekday()) % 7);
+      const lastOfMatrix = lastOfMonth.clone().add(nextDays, 'day');
+      const month = wrapper.state().visibleDays[toISOMonthString(currentMoment)];
+      expect(Boolean(Object.keys(month).find((day) => lastOfMatrix.isSame(day, 'day')))).to.equal(true);
+      expect(Boolean(Object.keys(month).find((day) => lastOfMatrix.isBefore(day, 'day')))).to.equal(false);
+    }
+  });
+});
