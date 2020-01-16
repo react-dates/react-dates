@@ -29,4 +29,14 @@ describe('getVisibleDays', () => {
       .filter((days) => days.filter((day) => isSameDay(day, today)).length > 0);
     expect(containsToday.length > 0).to.equal(true);
   });
+
+  it('has same amount of days regardless of firstDayOfWeek', () => {
+    const visibleDaysStart0 = getVisibleDays(today, 3, true, false, 0);
+    const visibleDaysStart1 = getVisibleDays(today, 3, true, false, 1);
+    expect(
+      Object.values(visibleDaysStart0).map((month) => month.length).length,
+    ).to.equal(
+      Object.values(visibleDaysStart1).map((month) => month.length).length,
+    );
+  });
 });
