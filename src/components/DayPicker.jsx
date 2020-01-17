@@ -25,6 +25,7 @@ import getCalendarMonthWidth from '../utils/getCalendarMonthWidth';
 import calculateDimension from '../utils/calculateDimension';
 import getActiveElement from '../utils/getActiveElement';
 import isDayVisible from '../utils/isDayVisible';
+import isSameMonth from '../utils/isSameMonth';
 
 import ModifiersShape from '../shapes/ModifiersShape';
 import NavPositionShape from '../shapes/NavPositionShape';
@@ -215,6 +216,7 @@ class DayPicker extends React.PureComponent {
 
     this.hasSetInitialVisibleMonth = !props.hidden;
     this.state = {
+      currentMonthScrollTop: null,
       currentMonth,
       monthTransition: null,
       translationValue,
@@ -260,29 +262,37 @@ class DayPicker extends React.PureComponent {
   }
 
   componentDidMount() {
+    const { orientation } = this.props;
     const { currentMonth } = this.state;
-    if (this.calendarInfo) {
-      this.setState({
-        isTouchDevice: isTouchDevice(),
-        calendarInfoWidth: calculateDimension(this.calendarInfo, 'width', true, true),
-      });
-    } else {
-      this.setState({ isTouchDevice: isTouchDevice() });
-    }
+
+    const calendarInfoWidth = this.calendarInfo
+      ? calculateDimension(this.calendarInfo, 'width', true, true)
+      : 0;
+    const currentMonthScrollTop = this.transitionContainer && orientation === VERTICAL_SCROLLABLE
+      ? this.transitionContainer.scrollHeight - this.transitionContainer.scrollTop
+      : null;
+
+    this.setState({
+      isTouchDevice: isTouchDevice(),
+      calendarInfoWidth,
+      currentMonthScrollTop,
+    });
 
     this.setCalendarMonthWeeks(currentMonth);
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps, nextState) {
     const {
       hidden,
       isFocused,
       showKeyboardShortcuts,
       onBlur,
+      orientation,
       renderMonthText,
       horizontalMonthPadding,
     } = nextProps;
     const { currentMonth } = this.state;
+    const { currentMonth: nextCurrentMonth } = nextState;
 
     if (!hidden) {
       if (!this.hasSetInitialVisibleMonth) {
@@ -334,6 +344,20 @@ class DayPicker extends React.PureComponent {
         monthTitleHeight: null,
       });
     }
+
+    // Capture the scroll position so when previous months are rendered above the current month
+    // we can adjust scroll after the component has updated and the previous current month
+    // stays in view.
+    if (
+      orientation === VERTICAL_SCROLLABLE
+      && this.transitionContainer
+      && !isSameMonth(currentMonth, nextCurrentMonth)
+    ) {
+      this.setState({
+        currentMonthScrollTop:
+          this.transitionContainer.scrollHeight - this.transitionContainer.scrollTop,
+      });
+    }
   }
 
   componentWillUpdate() {
@@ -355,11 +379,16 @@ class DayPicker extends React.PureComponent {
     }
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     const {
       orientation, daySize, isFocused, numberOfMonths,
     } = this.props;
-    const { focusedDate, monthTitleHeight } = this.state;
+    const {
+      currentMonth,
+      currentMonthScrollTop,
+      focusedDate,
+      monthTitleHeight,
+    } = this.state;
 
     if (
       this.isHorizontal()
@@ -373,6 +402,18 @@ class DayPicker extends React.PureComponent {
 
     if (!prevProps.isFocused && isFocused && !focusedDate) {
       this.container.focus();
+    }
+
+    // If orientation is VERTICAL_SCROLLABLE and currentMonth has changed adjust scrollTop so the
+    // new months rendered above the current month don't push the current month out of view.
+    if (
+      orientation === VERTICAL_SCROLLABLE
+      && !isSameMonth(prevState.currentMonth, currentMonth)
+      && currentMonthScrollTop
+      && this.transitionContainer
+    ) {
+      this.transitionContainer.scrollTop = this.transitionContainer.scrollHeight
+        - currentMonthScrollTop;
     }
   }
 
