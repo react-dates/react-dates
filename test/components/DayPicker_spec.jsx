@@ -1090,6 +1090,7 @@ describe('DayPicker', () => {
           initialVisibleMonth() { return today; },
           theme: { reactDates: { spacing: {} } },
           styles: {},
+          css() {},
         };
 
         describe('date is not visible', () => {

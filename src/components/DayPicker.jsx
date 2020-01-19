@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { forbidExtraProps, mutuallyExclusiveProps, nonNegativeInteger } from 'airbnb-prop-types';
-import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
+import { withStyles, withStylesPropTypes } from 'react-with-styles';
 
 import moment from 'moment';
 import throttle from 'lodash/throttle';
@@ -983,6 +983,7 @@ class DayPicker extends React.PureComponent {
       horizontalMonthPadding,
       orientation,
       renderWeekHeaderElement,
+      css,
       styles,
     } = this.props;
 
@@ -1068,6 +1069,7 @@ class DayPicker extends React.PureComponent {
       daySize,
       isFocused,
       isRTL,
+      css,
       styles,
       theme,
       phrases,
