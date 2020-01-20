@@ -5008,8 +5008,8 @@ describe('firstDayOfWeek', () => {
       const nextDays = 6 - ((7 - firstDayOfWeek + lastOfMonth.weekday()) % 7);
       const lastOfMatrix = lastOfMonth.clone().add(nextDays, 'day');
       const month = wrapper.state().visibleDays[toISOMonthString(currentMoment)];
-      expect(Object.keys(month).filter((day) => lastOfMatrix.isSame(day, 'day')).length).to.equal(1);
-      expect(Object.keys(month).filter((day) => lastOfMatrix.isBefore(day, 'day')).length).to.equal(0);
+      expect(Object.keys(month).filter((day) => lastOfMatrix.isSame(day, 'day'))).to.have.lengthOf(1);
+      expect(Object.keys(month).filter((day) => lastOfMatrix.isBefore(day, 'day'))).to.have.lengthOf(0);
     }
   });
 });
