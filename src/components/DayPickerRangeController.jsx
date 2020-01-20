@@ -595,7 +595,10 @@ export default class DayPickerRangeController extends React.PureComponent {
       disabled,
     } = this.props;
 
-    if (e) e.preventDefault();
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
     if (this.isBlocked(day)) return;
 
     let { startDate, endDate } = this.props;
