@@ -382,7 +382,11 @@ class DayPicker extends React.PureComponent {
 
   componentDidUpdate(prevProps, prevState) {
     const {
-      orientation, daySize, isFocused, numberOfMonths, monthPadding,
+      orientation,
+      daySize,
+      isFocused,
+      numberOfMonths,
+      monthPadding,
     } = this.props;
     const {
       currentMonth,
@@ -546,7 +550,10 @@ class DayPicker extends React.PureComponent {
 
   onPrevMonthTransition(nextFocusedDate) {
     const {
-      daySize, isRTL, numberOfMonths, monthPadding,
+      daySize,
+      isRTL,
+      numberOfMonths,
+      monthPadding,
     } = this.props;
     const { calendarMonthWidth, monthTitleHeight } = this.state;
 
@@ -611,7 +618,10 @@ class DayPicker extends React.PureComponent {
 
   onNextMonthTransition(nextFocusedDate) {
     const {
-      isRTL, numberOfMonths, daySize, monthPadding,
+      isRTL,
+      numberOfMonths,
+      daySize,
+      monthPadding,
     } = this.props;
     const { calendarMonthWidth, monthTitleHeight } = this.state;
 
