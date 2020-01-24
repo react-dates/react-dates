@@ -88,6 +88,7 @@ const defaultProps = {
   verticalHeight: null,
   transitionDuration: undefined,
   horizontalMonthPadding: 13,
+  monthPadding: 23,
 
   // navigation related props
   dayPickerNavigationInlineStyles: null,
@@ -435,6 +436,7 @@ class SingleDatePicker extends React.PureComponent {
       transitionDuration,
       verticalSpacing,
       horizontalMonthPadding,
+      monthPadding,
       small,
       theme: { reactDates },
     } = this.props;
@@ -517,6 +519,7 @@ class SingleDatePicker extends React.PureComponent {
           verticalHeight={verticalHeight}
           transitionDuration={transitionDuration}
           horizontalMonthPadding={horizontalMonthPadding}
+          monthPadding={monthPadding}
         />
 
         {withFullScreenPortal && (

@@ -47,7 +47,6 @@ import {
   NAV_POSITION_BOTTOM,
 } from '../constants';
 
-const MONTH_PADDING = 23;
 const PREV_TRANSITION = 'prev';
 const NEXT_TRANSITION = 'next';
 const MONTH_SELECTION_TRANSITION = 'month_selection';
@@ -77,6 +76,7 @@ const propTypes = forbidExtraProps({
   transitionDuration: nonNegativeInteger,
   verticalBorderSpacing: nonNegativeInteger,
   horizontalMonthPadding: nonNegativeInteger,
+  monthPadding: nonNegativeInteger,
   renderKeyboardShortcutsButton: PropTypes.func,
   renderKeyboardShortcutsPanel: PropTypes.func,
 
@@ -147,6 +147,7 @@ export const defaultProps = {
   transitionDuration: undefined,
   verticalBorderSpacing: undefined,
   horizontalMonthPadding: 13,
+  monthPadding: 23,
   renderKeyboardShortcutsButton: undefined,
   renderKeyboardShortcutsPanel: undefined,
 
@@ -381,7 +382,7 @@ class DayPicker extends React.PureComponent {
 
   componentDidUpdate(prevProps, prevState) {
     const {
-      orientation, daySize, isFocused, numberOfMonths,
+      orientation, daySize, isFocused, numberOfMonths, monthPadding,
     } = this.props;
     const {
       currentMonth,
@@ -397,7 +398,7 @@ class DayPicker extends React.PureComponent {
       const visibleCalendarWeeks = this.calendarMonthWeeks.slice(1, numberOfMonths + 1);
       const calendarMonthWeeksHeight = Math.max(0, ...visibleCalendarWeeks) * (daySize - 1);
       const newMonthHeight = monthTitleHeight + calendarMonthWeeksHeight + 1;
-      this.adjustDayPickerHeight(newMonthHeight);
+      this.adjustDayPickerHeight(newMonthHeight + monthPadding);
     }
 
     if (!prevProps.isFocused && isFocused && !focusedDate) {
@@ -544,7 +545,9 @@ class DayPicker extends React.PureComponent {
   }
 
   onPrevMonthTransition(nextFocusedDate) {
-    const { daySize, isRTL, numberOfMonths } = this.props;
+    const {
+      daySize, isRTL, numberOfMonths, monthPadding,
+    } = this.props;
     const { calendarMonthWidth, monthTitleHeight } = this.state;
 
     let translationValue;
@@ -560,7 +563,7 @@ class DayPicker extends React.PureComponent {
       const visibleCalendarWeeks = this.calendarMonthWeeks.slice(0, numberOfMonths);
       const calendarMonthWeeksHeight = Math.max(0, ...visibleCalendarWeeks) * (daySize - 1);
       const newMonthHeight = monthTitleHeight + calendarMonthWeeksHeight + 1;
-      this.adjustDayPickerHeight(newMonthHeight);
+      this.adjustDayPickerHeight(newMonthHeight + monthPadding);
     }
 
     this.setState({
@@ -607,7 +610,9 @@ class DayPicker extends React.PureComponent {
   }
 
   onNextMonthTransition(nextFocusedDate) {
-    const { isRTL, numberOfMonths, daySize } = this.props;
+    const {
+      isRTL, numberOfMonths, daySize, monthPadding,
+    } = this.props;
     const { calendarMonthWidth, monthTitleHeight } = this.state;
 
     let translationValue;
@@ -627,7 +632,7 @@ class DayPicker extends React.PureComponent {
       const visibleCalendarWeeks = this.calendarMonthWeeks.slice(2, numberOfMonths + 2);
       const calendarMonthWeeksHeight = Math.max(0, ...visibleCalendarWeeks) * (daySize - 1);
       const newMonthHeight = monthTitleHeight + calendarMonthWeeksHeight + 1;
-      this.adjustDayPickerHeight(newMonthHeight);
+      this.adjustDayPickerHeight(newMonthHeight + monthPadding);
     }
 
     this.setState({
@@ -858,8 +863,7 @@ class DayPicker extends React.PureComponent {
     });
   }
 
-  adjustDayPickerHeight(newMonthHeight) {
-    const monthHeight = newMonthHeight + MONTH_PADDING;
+  adjustDayPickerHeight(monthHeight) {
     if (monthHeight !== this.calendarMonthGridHeight) {
       this.transitionContainer.style.height = `${monthHeight}px`;
       if (!this.calendarMonthGridHeight) {
@@ -872,7 +876,7 @@ class DayPicker extends React.PureComponent {
   }
 
   calculateAndSetDayPickerHeight() {
-    const { daySize, numberOfMonths } = this.props;
+    const { daySize, numberOfMonths, monthPadding } = this.props;
     const { monthTitleHeight } = this.state;
 
     const visibleCalendarWeeks = this.calendarMonthWeeks.slice(1, numberOfMonths + 1);
@@ -880,7 +884,7 @@ class DayPicker extends React.PureComponent {
     const newMonthHeight = monthTitleHeight + calendarMonthWeeksHeight + 1;
 
     if (this.isHorizontal()) {
-      this.adjustDayPickerHeight(newMonthHeight);
+      this.adjustDayPickerHeight(newMonthHeight + monthPadding);
     }
   }
 
