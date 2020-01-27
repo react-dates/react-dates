@@ -1009,7 +1009,7 @@ class DayPicker extends React.PureComponent {
 
     const isCalendarMonthGridAnimating = monthTransition !== null;
 
-    const shouldFocusDate = false;
+    const shouldFocusDate = !isCalendarMonthGridAnimating && isFocused;
 
     let keyboardShortcutButtonLocation = BOTTOM_RIGHT;
     if (this.isVertical()) {
