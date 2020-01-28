@@ -4,6 +4,9 @@
 - []  ([#](https://github.com/airbnb/react-dates/pull/))
 -->
 
+## 21.7.2
+- [fix] Add tests for previous fix ([#1912](https://github.com/airbnb/react-dates/pull/1912))
+
 ## 21.7.1
 - [fix] Fix render conditional in DayPickerKeyboardShortcuts ([#1911](https://github.com/airbnb/react-dates/pull/1911))
 
