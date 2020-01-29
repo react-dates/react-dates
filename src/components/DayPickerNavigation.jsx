@@ -154,6 +154,7 @@ class DayPickerNavigation extends React.PureComponent {
           ...(isVerticalScrollable ? [
             styles.DayPickerNavigation__verticalScrollable,
             isDefaultNav && styles.DayPickerNavigation__verticalScrollableDefault,
+            showNavPrevButton && styles.DayPickerNavigation__verticalScrollable_prevNav,
           ] : []),
           ...(isBottomNavPosition ? [
             styles.DayPickerNavigation__bottom,
@@ -303,6 +304,9 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
 
   DayPickerNavigation__vertical: {},
   DayPickerNavigation__verticalScrollable: {},
+  DayPickerNavigation__verticalScrollable_prevNav: {
+    zIndex: zIndex + 1, // zIndex + 2 causes the button to show on top of the day of week headers
+  },
 
   DayPickerNavigation__verticalDefault: {
     position: 'absolute',
