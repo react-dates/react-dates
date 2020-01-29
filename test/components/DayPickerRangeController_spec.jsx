@@ -1911,6 +1911,24 @@ describe('DayPickerRangeController', () => {
       });
     });
 
+    describe('daysViolatingMinNightsCanBeClicked is true', () => {
+      it('props.onDatesChange is called and props.onFocusChange is not called when the day does not meet min nights', () => {
+        const onFocusChangeStub = sinon.stub();
+        const onDatesChangeStub = sinon.stub();
+        const wrapper = shallow(<DayPickerRangeController
+          daysViolatingMinNightsCanBeClicked
+          focusedInput={END_DATE}
+          minimumNights={3}
+          onFocusChange={onFocusChangeStub}
+          onDatesChange={onDatesChangeStub}
+          startDate={today}
+        />);
+        wrapper.instance().onDayClick(today.clone().add(1, 'days'));
+        expect(onFocusChangeStub.callCount).to.equal(0);
+        expect(onDatesChangeStub.callCount).to.equal(1);
+      });
+    });
+
     describe('props.focusedInput === START_DATE', () => {
       describe('props.onFocusChange', () => {
         it('is called once', () => {
@@ -4870,6 +4888,18 @@ describe('DayPickerRangeController', () => {
           isOutsideRange={isOutsideRangeStub}
         />);
         expect(wrapper.instance().isBlocked(today)).to.equal(false);
+      });
+
+      it('returns false if arg does not meet minimum nights but blockDaysViolatingMinNights is false', () => {
+        isDayBlockedStub.returns(false);
+        isOutsideRangeStub.returns(false);
+        doesNotMeetMinimumNightsStub.returns(true);
+
+        const wrapper = shallow(<DayPickerRangeController
+          isDayBlocked={isDayBlockedStub}
+          isOutsideRange={isOutsideRangeStub}
+        />);
+        expect(wrapper.instance().isBlocked(today, false)).to.equal(false);
       });
     });
 
