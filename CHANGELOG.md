@@ -4,6 +4,11 @@
 - []  ([#](https://github.com/airbnb/react-dates/pull/))
 -->
 
+## 21.8.0
+
+- [new] Add option to allow days violating min nights to be clicked ([#1913](https://github.com/airbnb/react-dates/pull/1913))
+- [fix] Prevent vertical scrollable prev nav button from overlapping weekday headers ([#1914](https://github.com/airbnb/react-dates/pull/1914))
+
 ## 21.7.2
 - [fix] Add tests for previous fix ([#1912](https://github.com/airbnb/react-dates/pull/1912))
 
