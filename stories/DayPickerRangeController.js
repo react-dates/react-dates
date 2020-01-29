@@ -773,4 +773,15 @@ storiesOf('DayPickerRangeController', module)
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
       renderKeyboardShortcutsPanel={renderKeyboardShortcutsPanel}
     />
+  )))
+  .add('with minimum nights set and daysViolatingMinNightsCanBeClicked set to true', withInfo()(() => (
+    <DayPickerRangeControllerWrapper
+      daysViolatingMinNightsCanBeClicked
+      minimumNights={3}
+      onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
+      onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
+      onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
+      initialStartDate={moment().add(3, 'days')}
+      autoFocusEndDate
+    />
   )));
