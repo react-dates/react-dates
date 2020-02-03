@@ -214,7 +214,7 @@ class DayPickerKeyboardShortcuts extends React.PureComponent {
                 topLeft && styles.DayPickerKeyboardShortcuts_showSpan__topLeft,
               )}
             >
-            ?
+              ?
             </span>
           </button>
         )}
