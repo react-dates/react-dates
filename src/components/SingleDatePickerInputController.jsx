@@ -54,7 +54,7 @@ const propTypes = forbidExtraProps({
   keepOpenOnDateSelect: PropTypes.bool,
   reopenPickerOnClearDate: PropTypes.bool,
   isOutsideRange: PropTypes.func,
-  displayFormat: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+  displayFormat: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.arrayOf(PropTypes.string)]),
 
   onClose: PropTypes.func,
   onKeyDownArrowDown: PropTypes.func,
@@ -134,7 +134,7 @@ export default class SingleDatePickerInputController extends React.PureComponent
       onFocusChange,
       onClose,
     } = this.props;
-    const newDate = toMomentObject(dateString, this.getDisplayFormat());
+    const newDate = toMomentObject(dateString, this.getValidationDisplayFormats());
 
     const isValid = newDate && !isOutsideRange(newDate);
     if (isValid) {
@@ -175,7 +175,24 @@ export default class SingleDatePickerInputController extends React.PureComponent
 
   getDisplayFormat() {
     const { displayFormat } = this.props;
-    return typeof displayFormat === 'string' ? displayFormat : displayFormat();
+    
+    if (typeof displayFormat === 'string') {
+      return displayFormat;
+    } else if (Array.isArray(displayFormat)) {
+      return displayFormat[0];
+    }
+    
+    return displayFormat();
+  }
+  
+  getValidationDisplayFormats() {
+    const { displayFormat } = this.props;
+
+    if (typeof displayFormat === 'function') {
+      return displayFormat();
+    }
+    
+    return displayFormat;
   }
 
   getDateString(date) {
