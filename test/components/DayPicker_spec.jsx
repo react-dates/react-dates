@@ -31,14 +31,6 @@ describe('DayPicker', () => {
     sinon.restore();
   });
 
-  it('should pass onBlur to <DayPicker />', () => {
-    const onBlurStub = sinon.stub();
-    const wrapper = shallow(<DayPicker onBlur={onBlurStub} />);
-    expect(wrapper.prop('onBlur')).to.equal(onBlurStub);
-    wrapper.prop('onBlur')();
-    expect(onBlurStub.callCount).to.equal(1);
-  });
-
   describe('#render', () => {
     describe('renderWeekHeader', () => {
       it('there are 7 elements on each .DayPicker__week-header class', () => {

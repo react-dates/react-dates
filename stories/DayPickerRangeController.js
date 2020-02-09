@@ -340,6 +340,7 @@ storiesOf('DayPickerRangeController', module)
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
+      onBlur={action('DayPickerRangeController::onBlur')}
     />
   )))
   .add('with 7 days range selection', withInfo()(() => (

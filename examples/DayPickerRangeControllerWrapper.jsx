@@ -58,6 +58,9 @@ const propTypes = forbidExtraProps({
   // i18n
   monthFormat: PropTypes.string,
 
+  // accessibility
+  onBlur: PropTypes.func,
+
   isRTL: PropTypes.bool,
 });
 
@@ -107,6 +110,9 @@ const defaultProps = {
 
   // internationalization
   monthFormat: 'MMMM YYYY',
+
+  // accessibility
+  onBlur() {},
 };
 
 class DayPickerRangeControllerWrapper extends React.Component {

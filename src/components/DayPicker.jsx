@@ -240,7 +240,6 @@ class DayPicker extends React.PureComponent {
     this.setCalendarMonthGridHeightTimeout = null;
 
     this.onKeyDown = this.onKeyDown.bind(this);
-    this.onBlur = this.onBlur.bind(this);
     this.throttledKeyDown = throttle(this.onFinalKeyDown, 200, { trailing: false });
     this.onPrevMonthClick = this.onPrevMonthClick.bind(this);
     this.onPrevMonthTransition = this.onPrevMonthTransition.bind(this);
@@ -429,12 +428,6 @@ class DayPicker extends React.PureComponent {
     if (!MODIFIER_KEY_NAMES.has(e.key)) {
       this.throttledKeyDown(e);
     }
-  }
-
-  onBlur(e) {
-    const { onBlur } = this.props;
-
-    onBlur(e);
   }
 
   onFinalKeyDown(e) {
@@ -1186,7 +1179,6 @@ class DayPicker extends React.PureComponent {
               role="application"
               aria-roledescription={phrases.roleDescription}
               aria-label={phrases.calendarLabel}
-              onBlur={this.onBlur}
             >
               {!verticalScrollable && navPosition === NAV_POSITION_TOP && this.renderNavigation()}
 
