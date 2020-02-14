@@ -4,6 +4,17 @@
 - []  ([#](https://github.com/airbnb/react-dates/pull/))
 -->
 
+## 21.8.0
+
+- [new] Add option to allow days violating min nights to be clicked ([#1913](https://github.com/airbnb/react-dates/pull/1913))
+- [fix] Prevent vertical scrollable prev nav button from overlapping weekday headers ([#1914](https://github.com/airbnb/react-dates/pull/1914))
+
+## 21.7.2
+- [fix] Add tests for previous fix ([#1912](https://github.com/airbnb/react-dates/pull/1912))
+
+## 21.7.1
+- [fix] Fix render conditional in DayPickerKeyboardShortcuts ([#1911](https://github.com/airbnb/react-dates/pull/1911))
+
 ## 21.7.0
 - [fix] Keep scroll position when prev months rendered on vertical scrollable calendar ([#1902](https://github.com/airbnb/react-dates/pull/1902))
 - [new] Add ability to not show prev or next navigation buttons ([#1900](https://github.com/airbnb/react-dates/pull/1900))

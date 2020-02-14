@@ -590,6 +590,7 @@ class DateRangePicker extends React.PureComponent {
       openDirection,
       phrases,
       isOutsideRange,
+      isDayBlocked,
       minimumNights,
       withPortal,
       withFullScreenPortal,
@@ -640,6 +641,7 @@ class DateRangePicker extends React.PureComponent {
         reopenPickerOnClearDates={reopenPickerOnClearDates}
         keepOpenOnDateSelect={keepOpenOnDateSelect}
         isOutsideRange={isOutsideRange}
+        isDayBlocked={isDayBlocked}
         minimumNights={minimumNights}
         withFullScreenPortal={withFullScreenPortal}
         onDatesChange={onDatesChange}

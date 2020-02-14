@@ -64,6 +64,7 @@ const propTypes = forbidExtraProps({
   isDayBlocked: PropTypes.func,
   isDayHighlighted: PropTypes.func,
   getMinNightsForHoverDate: PropTypes.func,
+  daysViolatingMinNightsCanBeClicked: PropTypes.bool,
 
   // DayPicker props
   renderMonthText: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'),
@@ -139,6 +140,7 @@ const defaultProps = {
   isDayBlocked() {},
   isDayHighlighted() {},
   getMinNightsForHoverDate() {},
+  daysViolatingMinNightsCanBeClicked: false,
 
   // DayPicker props
   renderMonthText: null,
@@ -593,10 +595,11 @@ export default class DayPickerRangeController extends React.PureComponent {
       startDateOffset,
       endDateOffset,
       disabled,
+      daysViolatingMinNightsCanBeClicked,
     } = this.props;
 
     if (e) e.preventDefault();
-    if (this.isBlocked(day)) return;
+    if (this.isBlocked(day, !daysViolatingMinNightsCanBeClicked)) return;
 
     let { startDate, endDate } = this.props;
 
@@ -649,6 +652,12 @@ export default class DayPickerRangeController extends React.PureComponent {
           onFocusChange(null);
           onClose({ startDate, endDate });
         }
+      } else if (
+        daysViolatingMinNightsCanBeClicked
+        && this.doesNotMeetMinimumNights(day)
+      ) {
+        endDate = day;
+        onDatesChange({ startDate, endDate });
       } else if (disabled !== START_DATE) {
         startDate = day;
         endDate = null;
@@ -1230,9 +1239,11 @@ export default class DayPickerRangeController extends React.PureComponent {
     return isSameDay(day, startDate);
   }
 
-  isBlocked(day) {
+  isBlocked(day, blockDaysViolatingMinNights = true) {
     const { isDayBlocked, isOutsideRange } = this.props;
-    return isDayBlocked(day) || isOutsideRange(day) || this.doesNotMeetMinimumNights(day);
+    return isDayBlocked(day)
+      || isOutsideRange(day)
+      || (blockDaysViolatingMinNights && this.doesNotMeetMinimumNights(day));
   }
 
   isToday(day) {

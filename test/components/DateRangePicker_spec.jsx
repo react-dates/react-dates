@@ -110,6 +110,16 @@ describe('DateRangePicker', () => {
       });
     });
 
+    describe('props.isDayBlocked is defined', () => {
+      it('should pass props.isDayBlocked to <DateRangePickerInputController>', () => {
+        const isDayBlocked = sinon.stub();
+        const wrapper = shallow((
+          <DateRangePicker {...requiredProps} isDayBlocked={isDayBlocked} />
+        )).dive();
+        expect(wrapper.find(DateRangePickerInputController).prop('isDayBlocked')).to.equal(isDayBlocked);
+      });
+    });
+
     describe('props.appendToBody', () => {
       it('renders <DayPickerRangeController> inside <Portal>', () => {
         const wrapper = shallow((

@@ -53,6 +53,7 @@ const propTypes = forbidExtraProps({
   keepOpenOnDateSelect: PropTypes.bool,
   reopenPickerOnClearDate: PropTypes.bool,
   isOutsideRange: PropTypes.func,
+  isDayBlocked: PropTypes.func,
   displayFormat: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
 
   onClose: PropTypes.func,
@@ -99,6 +100,7 @@ const defaultProps = {
   keepOpenOnDateSelect: false,
   reopenPickerOnClearDate: false,
   isOutsideRange: (day) => !isInclusivelyAfterDay(day, moment()),
+  isDayBlocked: () => false,
   displayFormat: () => moment.localeData().longDateFormat('L'),
 
   onClose() {},
@@ -134,6 +136,7 @@ export default class SingleDatePickerInputController extends React.PureComponent
   onChange(dateString) {
     const {
       isOutsideRange,
+      isDayBlocked,
       keepOpenOnDateSelect,
       onDateChange,
       onFocusChange,
@@ -141,7 +144,7 @@ export default class SingleDatePickerInputController extends React.PureComponent
     } = this.props;
     const newDate = toMomentObject(dateString, this.getDisplayFormat());
 
-    const isValid = newDate && !isOutsideRange(newDate);
+    const isValid = newDate && !isOutsideRange(newDate) && !isDayBlocked(newDate);
     if (isValid) {
       onDateChange(newDate);
       if (!keepOpenOnDateSelect) {

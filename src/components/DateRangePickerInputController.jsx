@@ -62,6 +62,7 @@ const propTypes = forbidExtraProps({
   withFullScreenPortal: PropTypes.bool,
   minimumNights: nonNegativeInteger,
   isOutsideRange: PropTypes.func,
+  isDayBlocked: PropTypes.func,
   displayFormat: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
 
   onFocusChange: PropTypes.func,
@@ -118,6 +119,7 @@ const defaultProps = {
   withFullScreenPortal: false,
   minimumNights: 1,
   isOutsideRange: (day) => !isInclusivelyAfterDay(day, moment()),
+  isDayBlocked: () => false,
   displayFormat: () => moment.localeData().longDateFormat('L'),
 
   onFocusChange() {},
@@ -167,6 +169,7 @@ export default class DateRangePickerInputController extends React.PureComponent 
     const {
       startDate,
       isOutsideRange,
+      isDayBlocked,
       minimumNights,
       keepOpenOnDateSelect,
       onDatesChange,
@@ -175,7 +178,7 @@ export default class DateRangePickerInputController extends React.PureComponent 
     const endDate = toMomentObject(endDateString, this.getDisplayFormat());
 
     const isEndDateValid = endDate
-      && !isOutsideRange(endDate)
+      && !isOutsideRange(endDate) && !isDayBlocked(endDate)
       && !(startDate && isBeforeDay(endDate, startDate.clone().add(minimumNights, 'days')));
     if (isEndDateValid) {
       onDatesChange({ startDate, endDate });
@@ -210,6 +213,7 @@ export default class DateRangePickerInputController extends React.PureComponent 
     let { endDate } = this.props;
     const {
       isOutsideRange,
+      isDayBlocked,
       minimumNights,
       onDatesChange,
       onFocusChange,
@@ -220,7 +224,7 @@ export default class DateRangePickerInputController extends React.PureComponent 
     const isEndDateBeforeStartDate = startDate
       && isBeforeDay(endDate, startDate.clone().add(minimumNights, 'days'));
     const isStartDateValid = startDate
-      && !isOutsideRange(startDate)
+      && !isOutsideRange(startDate) && !isDayBlocked(startDate)
       && !(disabled === END_DATE && isEndDateBeforeStartDate);
 
     if (isStartDateValid) {
