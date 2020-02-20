@@ -201,7 +201,8 @@ export default class DateRangePickerInputController extends React.PureComponent 
   }
 
   onEndDateTab() {
-    this.onClearFocus();
+    const { onFocusChange } = this.props;
+    onFocusChange('CLOSE');
   }
 
   onStartDateChange(startDateString) {
