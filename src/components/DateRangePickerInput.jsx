@@ -293,8 +293,8 @@ function DateRangePickerInput({
 
 
       {showClearDates && (
-        <div
-          role="button"
+        <button
+          type="button"
           aria-label={phrases.clearDates}
           {...css(
             styles.DateRangePickerInput_clearDates,
@@ -306,7 +306,7 @@ function DateRangePickerInput({
           disabled={disabled}
         >
           {closeIcon}
-        </div>
+        </button>
       )}
 
       {inputIconPosition === ICON_AFTER_POSITION && inputIcon}
