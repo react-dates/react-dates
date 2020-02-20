@@ -39,7 +39,7 @@ const propTypes = forbidExtraProps({
   endDatePlaceholderText: PropTypes.string,
   endDateAriaLabel: PropTypes.string,
 
-  onStartDateTabKeyDown: PropTypes.func,
+  onStartDateTab: PropTypes.func,
   onStartDateFocus: PropTypes.func,
   onEndDateFocus: PropTypes.func,
   onStartDateChange: PropTypes.func,
@@ -91,7 +91,7 @@ const defaultProps = {
   startDateAriaLabel: undefined,
   endDateAriaLabel: undefined,
   screenReaderMessage: '',
-  onStartDateTabKeyDown() { },
+  onStartDateTab() { },
   onStartDateFocus() { },
   onEndDateFocus() { },
   onStartDateChange() { },
@@ -144,7 +144,7 @@ function DateRangePickerInput({
   isStartDateFocused,
   onStartDateChange,
   onStartDateFocus,
-  onStartDateTabKeyDown,
+  onStartDateTab,
   onStartDateShiftTab,
   startDateAriaLabel,
   endDate,
@@ -246,7 +246,7 @@ function DateRangePickerInput({
         openDirection={openDirection}
         onChange={onStartDateChange}
         onFocus={onStartDateFocus}
-        onKeyDownTab={onStartDateTabKeyDown}
+        onKeyDownTab={onStartDateTab}
         onKeyDownShiftTab={onStartDateShiftTab}
         onKeyDownArrowDown={onKeyDownArrowDown}
         onKeyDownQuestionMark={onKeyDownQuestionMark}
