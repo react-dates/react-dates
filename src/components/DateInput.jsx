@@ -5,7 +5,7 @@ import { withStyles, withStylesPropTypes } from 'react-with-styles';
 import throttle from 'lodash/throttle';
 import isTouchDevice from 'is-touch-device';
 
-import { KEY_BACKSPACE, KEY_DELETE } from '../constants';
+import { KEY_BACKSPACE, KEY_DELETE, KEY_TAB } from '../constants';
 import noflip from '../utils/noflip';
 import getInputHeight from '../utils/getInputHeight';
 import openDirectionShape from '../shapes/OpenDirectionShape';
@@ -157,7 +157,7 @@ class DateInput extends React.PureComponent {
     const { displayValue } = this.props;
 
     const allowedSymbolsRegex = new RegExp('^[0-9/]$');
-    const allowedSpecialKeys = [KEY_BACKSPACE, KEY_DELETE];
+    const allowedSpecialKeys = [KEY_BACKSPACE, KEY_DELETE, KEY_TAB];
 
     const isKeyAllowed = allowedSymbolsRegex.test(e.key);
     const isSpecialKeyAllowed = allowedSpecialKeys.includes(e.keyCode);
