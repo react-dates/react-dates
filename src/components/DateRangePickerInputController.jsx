@@ -148,6 +148,7 @@ export default class DateRangePickerInputController extends React.PureComponent 
     this.onClearFocus = this.onClearFocus.bind(this);
     this.onStartDateChange = this.onStartDateChange.bind(this);
     this.onStartDateFocus = this.onStartDateFocus.bind(this);
+    this.onStartDateTabKeyDown = this.onStartDateTabKeyDown.bind(this);
     this.onEndDateChange = this.onEndDateChange.bind(this);
     this.onEndDateFocus = this.onEndDateFocus.bind(this);
     this.clearDates = this.clearDates.bind(this);
@@ -227,6 +228,12 @@ export default class DateRangePickerInputController extends React.PureComponent 
     if (!disabled || disabled === END_DATE) {
       onFocusChange(START_DATE);
     }
+  }
+
+  onStartDateTabKeyDown() {
+    const { onFocusChange } = this.props;
+
+    onFocusChange(END_DATE);
   }
 
   getDisplayFormat() {
@@ -319,6 +326,7 @@ export default class DateRangePickerInputController extends React.PureComponent 
         onStartDateChange={this.onStartDateChange}
         onStartDateFocus={this.onStartDateFocus}
         onStartDateShiftTab={this.onClearFocus}
+        onStartDateTabKeyDown={this.onStartDateTabKeyDown}
         onEndDateChange={this.onEndDateChange}
         onEndDateFocus={this.onEndDateFocus}
         showClearDates={showClearDates}
