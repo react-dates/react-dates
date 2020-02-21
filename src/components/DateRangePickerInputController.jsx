@@ -183,7 +183,7 @@ export default class DateRangePickerInputController extends React.PureComponent 
       endDate,
     } = this.props;
 
-    onFocusChange('CLOSE');
+    onFocusChange(null);
     onClose({ startDate, endDate });
   }
 
