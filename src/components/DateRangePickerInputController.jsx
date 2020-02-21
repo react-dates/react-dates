@@ -167,19 +167,47 @@ export default class DateRangePickerInputController extends React.PureComponent 
     onClose({ startDate, endDate });
   }
 
-  onEndDateChange(endDateString) {
+  onStartDateFocus() {
+    const { disabled, onFocusChange } = this.props;
+
+    if (!disabled || disabled === END_DATE) {
+      onFocusChange(START_DATE);
+    }
+  }
+
+  onStartDateTab() {
     const {
+      onFocusChange,
+      onClose,
       startDate,
-      keepOpenOnDateSelect,
+      endDate,
+    } = this.props;
+
+    onFocusChange('CLOSE');
+    onClose({ startDate, endDate });
+  }
+
+  onStartDateChange(startDateString) {
+    let { endDate } = this.props;
+    const {
+      minimumNights,
       onDatesChange,
     } = this.props;
 
-    onDatesChange({ startDate, endDate: endDateString });
-    if (!keepOpenOnDateSelect) {
-      this.onClearFocus();
+    const startDate = toMomentObject(startDateString, this.getDisplayFormat());
+    const isEndDateBeforeStartDate = startDate
+      && isBeforeDay(endDate, startDate.clone().add(minimumNights, 'days'));
+
+    if (isEndDateBeforeStartDate) {
+      endDate = null;
     }
-    onDatesChange({ startDate, endDate: endDateString });
-    if (!keepOpenOnDateSelect) { this.onClearFocus(); }
+
+    onDatesChange({ startDate: startDateString, endDate });
+    if (isEndDateBeforeStartDate) {
+      endDate = null;
+    }
+
+    onDatesChange({ startDate: startDateString, endDate });
   }
 
   onEndDateFocus() {
@@ -212,41 +240,19 @@ export default class DateRangePickerInputController extends React.PureComponent 
     onClose({ startDate, endDate });
   }
 
-  onStartDateChange(startDateString) {
-    let { endDate } = this.props;
+  onEndDateChange(endDateString) {
     const {
-      minimumNights,
+      startDate,
+      keepOpenOnDateSelect,
       onDatesChange,
     } = this.props;
 
-    const startDate = toMomentObject(startDateString, this.getDisplayFormat());
-    const isEndDateBeforeStartDate = startDate
-      && isBeforeDay(endDate, startDate.clone().add(minimumNights, 'days'));
-
-    if (isEndDateBeforeStartDate) {
-      endDate = null;
+    onDatesChange({ startDate, endDate: endDateString });
+    if (!keepOpenOnDateSelect) {
+      this.onClearFocus();
     }
-
-    onDatesChange({ startDate: startDateString, endDate });
-    if (isEndDateBeforeStartDate) {
-      endDate = null;
-    }
-
-    onDatesChange({ startDate: startDateString, endDate });
-  }
-
-  onStartDateFocus() {
-    const { disabled, onFocusChange } = this.props;
-
-    if (!disabled || disabled === END_DATE) {
-      onFocusChange(START_DATE);
-    }
-  }
-
-  onStartDateTab() {
-    const { onFocusChange } = this.props;
-
-    onFocusChange('CLOSE');
+    onDatesChange({ startDate, endDate: endDateString });
+    if (!keepOpenOnDateSelect) { this.onClearFocus(); }
   }
 
   getDisplayFormat() {
