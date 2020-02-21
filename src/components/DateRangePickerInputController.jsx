@@ -339,7 +339,7 @@ export default class DateRangePickerInputController extends React.PureComponent 
         onStartDateChange={this.onStartDateChange}
         onStartDateFocus={this.onStartDateFocus}
         onStartDateShiftTab={this.onClearFocus}
-        // onStartDateTab={this.onStartDateTab}
+        onStartDateTab={this.onStartDateTab}
         onEndDateChange={this.onEndDateChange}
         onEndDateFocus={this.onEndDateFocus}
         onEndDateTab={this.onEndDateTab}
