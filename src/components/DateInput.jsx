@@ -5,12 +5,8 @@ import { withStyles, withStylesPropTypes } from 'react-with-styles';
 import throttle from 'lodash/throttle';
 import isTouchDevice from 'is-touch-device';
 
-import { KEY_BACKSPACE, KEY_DELETE, KEY_TAB } from '../constants';
-import noflip from '../utils/noflip';
-import getInputHeight from '../utils/getInputHeight';
-import openDirectionShape from '../shapes/OpenDirectionShape';
-
 import {
+  KEY_BACKSPACE, KEY_DELETE,
   OPEN_DOWN,
   OPEN_UP,
   FANG_HEIGHT_PX,
@@ -18,6 +14,10 @@ import {
   DEFAULT_VERTICAL_SPACING,
   MODIFIER_KEY_NAMES,
 } from '../constants';
+import noflip from '../utils/noflip';
+import getInputHeight from '../utils/getInputHeight';
+import openDirectionShape from '../shapes/OpenDirectionShape';
+
 
 const FANG_PATH_TOP = `M0,${FANG_HEIGHT_PX} ${FANG_WIDTH_PX},${FANG_HEIGHT_PX} ${FANG_WIDTH_PX / 2},0z`;
 const FANG_STROKE_TOP = `M0,${FANG_HEIGHT_PX} ${FANG_WIDTH_PX / 2},0 ${FANG_WIDTH_PX},${FANG_HEIGHT_PX}`;
@@ -157,7 +157,7 @@ class DateInput extends React.PureComponent {
     const { displayValue } = this.props;
 
     const allowedSymbolsRegex = new RegExp('^[0-9/]$');
-    const allowedSpecialKeys = [KEY_BACKSPACE, KEY_DELETE, KEY_TAB];
+    const allowedSpecialKeys = [KEY_BACKSPACE, KEY_DELETE];
 
     const isKeyAllowed = allowedSymbolsRegex.test(e.key);
     const isSpecialKeyAllowed = allowedSpecialKeys.includes(e.keyCode);

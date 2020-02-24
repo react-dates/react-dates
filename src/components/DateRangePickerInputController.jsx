@@ -148,10 +148,8 @@ export default class DateRangePickerInputController extends React.PureComponent 
     this.onClearFocus = this.onClearFocus.bind(this);
     this.onStartDateChange = this.onStartDateChange.bind(this);
     this.onStartDateFocus = this.onStartDateFocus.bind(this);
-    this.onStartDateTab = this.onStartDateTab.bind(this);
     this.onEndDateChange = this.onEndDateChange.bind(this);
     this.onEndDateFocus = this.onEndDateFocus.bind(this);
-    this.onEndDateTab = this.onEndDateTab.bind(this);
     this.clearDates = this.clearDates.bind(this);
   }
 
@@ -167,24 +165,37 @@ export default class DateRangePickerInputController extends React.PureComponent 
     onClose({ startDate, endDate });
   }
 
-  onStartDateFocus() {
-    const { disabled, onFocusChange } = this.props;
-
-    if (!disabled || disabled === END_DATE) {
-      onFocusChange(START_DATE);
-    }
-  }
-
-  onStartDateTab() {
+  onEndDateChange(endDateString) {
     const {
-      onFocusChange,
-      onClose,
       startDate,
-      endDate,
+      keepOpenOnDateSelect,
+      onDatesChange,
     } = this.props;
 
-    onFocusChange(null);
-    onClose({ startDate, endDate });
+    onDatesChange({ startDate, endDate: endDateString });
+    if (!keepOpenOnDateSelect) {
+      this.onClearFocus();
+    }
+    onDatesChange({ startDate, endDate: endDateString });
+    if (!keepOpenOnDateSelect) { this.onClearFocus(); }
+  }
+
+  onEndDateFocus() {
+    const {
+      startDate,
+      onFocusChange,
+      withFullScreenPortal,
+      disabled,
+    } = this.props;
+
+    if (!startDate && withFullScreenPortal && (!disabled || disabled === END_DATE)) {
+      // When the datepicker is full screen, we never want to focus the end date first
+      // because there's no indication that that is the case once the datepicker is open and it
+      // might confuse the user
+      onFocusChange(START_DATE);
+    } else if (!disabled || disabled === START_DATE) {
+      onFocusChange(END_DATE);
+    }
   }
 
   onStartDateChange(startDateString) {
@@ -210,49 +221,12 @@ export default class DateRangePickerInputController extends React.PureComponent 
     onDatesChange({ startDate: startDateString, endDate });
   }
 
-  onEndDateFocus() {
-    const {
-      startDate,
-      onFocusChange,
-      withFullScreenPortal,
-      disabled,
-    } = this.props;
+  onStartDateFocus() {
+    const { disabled, onFocusChange } = this.props;
 
-    if (!startDate && withFullScreenPortal && (!disabled || disabled === END_DATE)) {
-      // When the datepicker is full screen, we never want to focus the end date first
-      // because there's no indication that that is the case once the datepicker is open and it
-      // might confuse the user
+    if (!disabled || disabled === END_DATE) {
       onFocusChange(START_DATE);
-    } else if (!disabled || disabled === START_DATE) {
-      onFocusChange(END_DATE);
     }
-  }
-
-  onEndDateTab() {
-    const {
-      onFocusChange,
-      onClose,
-      startDate,
-      endDate,
-    } = this.props;
-
-    onFocusChange(null);
-    onClose({ startDate, endDate });
-  }
-
-  onEndDateChange(endDateString) {
-    const {
-      startDate,
-      keepOpenOnDateSelect,
-      onDatesChange,
-    } = this.props;
-
-    onDatesChange({ startDate, endDate: endDateString });
-    if (!keepOpenOnDateSelect) {
-      this.onClearFocus();
-    }
-    onDatesChange({ startDate, endDate: endDateString });
-    if (!keepOpenOnDateSelect) { this.onClearFocus(); }
   }
 
   getDisplayFormat() {
@@ -345,10 +319,8 @@ export default class DateRangePickerInputController extends React.PureComponent 
         onStartDateChange={this.onStartDateChange}
         onStartDateFocus={this.onStartDateFocus}
         onStartDateShiftTab={this.onClearFocus}
-        onStartDateTab={this.onStartDateTab}
         onEndDateChange={this.onEndDateChange}
         onEndDateFocus={this.onEndDateFocus}
-        onEndDateTab={this.onEndDateTab}
         showClearDates={showClearDates}
         onClearDates={this.clearDates}
         screenReaderMessage={screenReaderMessage}
