@@ -59,7 +59,7 @@
     "@storybook/addon-info": "^5.3.14",
     "@storybook/addon-links": "^5.3.14",
     "@storybook/addon-options": "^5.3.14",
-    "@storybook/addons": "^5.1.11",
+    "@storybook/addons": "^5.3.14",
     "@storybook/react": "^5.1.11",
     "@welldone-software/why-did-you-render": "^3.3.1",
     "airbnb-js-shims": "^2.2.0",
