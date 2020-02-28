@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import jsdom from 'mocha-jsdom';
 import calculateDimension from '../../src/utils/calculateDimension';
 
-describe.only('#calculateDimension', () => {
+describe('#calculateDimension', () => {
   it('returns 0 for an empty element', () => {
     expect(calculateDimension(null, 'width')).to.equal(0);
     expect(calculateDimension(null, 'width', false)).to.equal(0);
@@ -84,19 +84,19 @@ describe.only('#calculateDimension', () => {
       testElement = document.createElement('div');
     });
 
-    it.only('does not return NaN', () => {
+    it('does not return NaN', () => {
       expect(calculateDimension(testElement, 'height')).not.NaN;
     });
 
-    it.only('does not return NaN with border box and no margin', () => {
+    it('does not return NaN with border box and no margin', () => {
       expect(calculateDimension(testElement, 'height', true)).not.NaN;
     });
 
-    it.only('does not return NaN with border box and margin', () => {
+    it('does not return NaN with border box and margin', () => {
       expect(calculateDimension(testElement, 'height', true, true)).not.NaN;
     });
 
-    it.only('does not return NaN with margin and no border box', () => {
+    it('does not return NaN with margin and no border box', () => {
       expect(calculateDimension(testElement, 'height', false, true)).not.NaN;
     });
   });
