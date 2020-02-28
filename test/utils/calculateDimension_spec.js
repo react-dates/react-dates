@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import jsdom from 'mocha-jsdom';
+import { JSDOM } from 'jsdom';
 import calculateDimension from '../../src/utils/calculateDimension';
 
 describe('#calculateDimension', () => {
@@ -76,12 +76,14 @@ describe('#calculateDimension', () => {
   describe('withMargin false and borderBox true when style properties are absent', () => {
     let testElement = null;
 
-    jsdom({
-      url: 'http://localhost',
+    beforeEach(() => {
+      const { window } = new JSDOM('<div />');
+      global.window = window;
+      testElement = window.document.querySelector('div');
     });
 
-    beforeEach(() => {
-      testElement = document.createElement('div');
+    afterEach(() => {
+      delete global.window;
     });
 
     it('does not return NaN', () => {
