@@ -1,5 +1,5 @@
 function getStyleOrDefault(style, propertyName) {
-  return parseFloat(style[propertyName] || 0)
+  return parseFloat(style[propertyName] || 0);
 }
 
 export default function calculateDimension(el, axis, borderBox = false, withMargin = false) {
@@ -16,20 +16,20 @@ export default function calculateDimension(el, axis, borderBox = false, withMarg
   // Offset includes border and padding
   const { offsetWidth, offsetHeight } = el;
   let size = axis === 'width' ? offsetWidth : offsetHeight;
-  
+
   // Get the inner size
   if (!borderBox) {
     size -= (
-      getStyleOrDefault(`padding${axisStart}`)
-      + getStyleOrDefault(`padding${axisEnd}`)
-      + getStyleOrDefault(`border${axisStart}Width`)
-      + getStyleOrDefault(`border${axisEnd}Width`)
+      getStyleOrDefault(style, `padding${axisStart}`)
+      + getStyleOrDefault(style, `padding${axisEnd}`)
+      + getStyleOrDefault(style, `border${axisStart}Width`)
+      + getStyleOrDefault(style, `border${axisEnd}Width`)
     );
   }
 
   // Apply margin
   if (withMargin) {
-    size += (getStyleOrDefault(`margin${axisStart}`) + getStyleOrDefault(`margin${axisEnd}`));
+    size += (getStyleOrDefault(style, `margin${axisStart}`) + getStyleOrDefault(style, `margin${axisEnd}`));
   }
 
   return size;

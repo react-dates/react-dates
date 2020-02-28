@@ -77,27 +77,27 @@ describe('#calculateDimension', () => {
     let testElement = null;
 
     jsdom({
-      url: "http://localhost"
-    })
+      url: 'http://localhost',
+    });
 
     beforeEach(() => {
       testElement = document.createElement('div');
     });
 
     it('does not return NaN', () => {
-      expect(calculateDimension(testElement, 'height')).not.NaN;
+      expect(Number.isNaN(calculateDimension(testElement, 'height'))).to.equal(false);
     });
 
     it('does not return NaN with border box and no margin', () => {
-      expect(calculateDimension(testElement, 'height', true)).not.NaN;
+      expect(Number.isNaN(calculateDimension(testElement, 'height', true))).to.equal(false);
     });
 
     it('does not return NaN with border box and margin', () => {
-      expect(calculateDimension(testElement, 'height', true, true)).not.NaN;
+      expect(Number.isNaN(calculateDimension(testElement, 'height', true, true))).to.equal(false);
     });
 
     it('does not return NaN with margin and no border box', () => {
-      expect(calculateDimension(testElement, 'height', false, true)).not.NaN;
+      expect(Number.isNaN(calculateDimension(testElement, 'height', false, true))).to.equal(false);
     });
   });
 });
