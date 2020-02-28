@@ -94,6 +94,7 @@
     "karma-sinon": "^1.0.5",
     "karma-webpack": "^4.0.2",
     "mocha": "^3.5.3",
+    "mocha-jsdom": "^2.0.0",
     "mocha-wrap": "^2.1.2",
     "moment": "^2.24.0",
     "moment-jalaali": "^0.7.4",
