@@ -103,6 +103,7 @@ const propTypes = forbidExtraProps({
   renderMonthText: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'),
   renderMonthElement: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'),
   renderWeekHeaderElement: PropTypes.func,
+  initialMonthTitleHeight: PropTypes.number,
 
   // day props
   modifiers: PropTypes.objectOf(PropTypes.objectOf(ModifiersShape)),
@@ -173,6 +174,7 @@ export const defaultProps = {
   renderMonthText: null,
   renderMonthElement: null,
   renderWeekHeaderElement: null,
+  initialMonthTitleHeight: undefined,
 
   // day props
   modifiers: {},
@@ -259,6 +261,10 @@ class DayPicker extends React.PureComponent {
     this.setContainerRef = this.setContainerRef.bind(this);
     this.setTransitionContainerRef = this.setTransitionContainerRef.bind(this);
     this.setMonthTitleHeight = this.setMonthTitleHeight.bind(this);
+    
+    if (props.initialMonthTitleHeight) {
+      this.setMonthTitleHeight(props.initialMonthTitleHeight);
+    }
   }
 
   componentDidMount() {
