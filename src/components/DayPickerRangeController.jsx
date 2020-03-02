@@ -1036,6 +1036,15 @@ export default class DayPickerRangeController extends React.PureComponent {
     });
   }
 
+  getFirstDayOfWeek() {
+    const { firstDayOfWeek } = this.props;
+    if (firstDayOfWeek == null) {
+      return moment.localeData().firstDayOfWeek();
+    }
+
+    return firstDayOfWeek;
+  }
+
   getFirstFocusableDay(newMonth) {
     const {
       startDate,
@@ -1250,13 +1259,11 @@ export default class DayPickerRangeController extends React.PureComponent {
   }
 
   isFirstDayOfWeek(day) {
-    const { firstDayOfWeek } = this.props;
-    return day.day() === (firstDayOfWeek || moment.localeData().firstDayOfWeek());
+    return day.day() === this.getFirstDayOfWeek();
   }
 
   isLastDayOfWeek(day) {
-    const { firstDayOfWeek } = this.props;
-    return day.day() === ((firstDayOfWeek || moment.localeData().firstDayOfWeek()) + 6) % 7;
+    return day.day() === (this.getFirstDayOfWeek() + 6) % 7;
   }
 
   isFirstPossibleEndDateForHoveredStartDate(day, hoverDate) {

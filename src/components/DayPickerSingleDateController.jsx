@@ -542,6 +542,15 @@ export default class DayPickerSingleDateController extends React.PureComponent {
     });
   }
 
+  getFirstDayOfWeek() {
+    const { firstDayOfWeek } = this.props;
+    if (firstDayOfWeek == null) {
+      return moment.localeData().firstDayOfWeek();
+    }
+
+    return firstDayOfWeek;
+  }
+
   getFirstFocusableDay(newMonth) {
     const { date, numberOfMonths } = this.props;
 
@@ -643,13 +652,11 @@ export default class DayPickerSingleDateController extends React.PureComponent {
   }
 
   isFirstDayOfWeek(day) {
-    const { firstDayOfWeek } = this.props;
-    return day.day() === (firstDayOfWeek || moment.localeData().firstDayOfWeek());
+    return day.day() === this.getFirstDayOfWeek();
   }
 
   isLastDayOfWeek(day) {
-    const { firstDayOfWeek } = this.props;
-    return day.day() === ((firstDayOfWeek || moment.localeData().firstDayOfWeek()) + 6) % 7;
+    return day.day() === (this.getFirstDayOfWeek() + 6) % 7;
   }
 
   render() {

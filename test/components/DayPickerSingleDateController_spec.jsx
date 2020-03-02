@@ -1634,6 +1634,19 @@ describe('DayPickerSingleDateController', () => {
         expect(wrapper.instance().isFirstDayOfWeek(moment().startOf('week').day(firstDayOfWeek))).to.equal(true);
       });
 
+      it('returns true if first day of week and prop are both zero', () => {
+        const firstDayOfWeek = 0;
+        const wrapper = shallow(<DayPickerSingleDateController firstDayOfWeek={firstDayOfWeek} />);
+        expect(wrapper.instance().isFirstDayOfWeek(moment().startOf('week').day(firstDayOfWeek))).to.equal(true);
+      });
+
+      it('returns true if first day of week is not zero, and prop is zero', () => {
+        sinon.stub(moment.localeData(), 'firstDayOfWeek').returns(1);
+        const firstDayOfWeek = 0;
+        const wrapper = shallow(<DayPickerSingleDateController firstDayOfWeek={firstDayOfWeek} />);
+        expect(wrapper.instance().isFirstDayOfWeek(moment().startOf('week').day(firstDayOfWeek))).to.equal(true);
+      });
+
       it('returns false if not the first day of the week', () => {
         const wrapper = shallow(<DayPickerSingleDateController />);
         expect(wrapper.instance().isFirstDayOfWeek(moment().endOf('week'))).to.equal(false);
