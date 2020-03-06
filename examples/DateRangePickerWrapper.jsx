@@ -24,6 +24,7 @@ const propTypes = {
   stateDateWrapper: PropTypes.func,
   initialStartDate: momentPropTypes.momentObj,
   initialEndDate: momentPropTypes.momentObj,
+  onInvalidInput: PropTypes.func,
 
   ...omit(DateRangePickerShape, [
     'startDate',
@@ -40,6 +41,7 @@ const defaultProps = {
   autoFocusEndDate: false,
   initialStartDate: null,
   initialEndDate: null,
+  onInvalidInput: () => null,
 
   // input related props
   startDateId: START_DATE,
@@ -85,7 +87,7 @@ const defaultProps = {
   minimumNights: 1,
   enableOutsideDays: false,
   isDayBlocked: () => false,
-  isOutsideRange: day => !isInclusivelyAfterDay(day, moment()),
+  isOutsideRange: (day) => !isInclusivelyAfterDay(day, moment()),
   isDayHighlighted: () => false,
 
   // internationalization
@@ -93,7 +95,7 @@ const defaultProps = {
   monthFormat: 'MMMM YYYY',
   phrases: DateRangePickerPhrases,
 
-  stateDateWrapper: date => date,
+  stateDateWrapper: (date) => date,
 };
 
 class DateRangePickerWrapper extends React.Component {
@@ -117,12 +119,15 @@ class DateRangePickerWrapper extends React.Component {
     this.onFocusChange = this.onFocusChange.bind(this);
   }
 
-  onDatesChange({ startDate, endDate }) {
-    const { stateDateWrapper } = this.props;
+  onDatesChange({ startDate, endDate, invalidDateString }) {
+    const { onInvalidInput, stateDateWrapper } = this.props;
     this.setState({
       startDate: startDate && stateDateWrapper(startDate),
       endDate: endDate && stateDateWrapper(endDate),
     });
+    if (invalidDateString) {
+      onInvalidInput(invalidDateString);
+    }
   }
 
   onFocusChange(focusedInput) {
@@ -141,6 +146,7 @@ class DateRangePickerWrapper extends React.Component {
       'initialStartDate',
       'initialEndDate',
       'stateDateWrapper',
+      'onInvalidInput',
     ]);
 
     return (

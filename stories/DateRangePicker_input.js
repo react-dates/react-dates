@@ -42,7 +42,9 @@ const TestCustomCloseIcon = () => (
       color: '#484848',
       padding: '3px',
     }}
-  >'X'</span>
+  >
+    'X'
+  </span>
 );
 
 storiesOf('DRP - Input Props', module)
@@ -64,7 +66,7 @@ storiesOf('DRP - Input Props', module)
       initialStartDate={moment().add(3, 'months')}
       initialEndDate={moment().add(3, 'months').add(10, 'days')}
       disabled="startDate"
-      isOutsideRange={day => !isInclusivelyAfterDay(day, moment().add(3, 'months'))}
+      isOutsideRange={(day) => !isInclusivelyAfterDay(day, moment().add(3, 'months'))}
     />
   )))
   .add('disabled end date', withInfo()(() => (
@@ -72,8 +74,8 @@ storiesOf('DRP - Input Props', module)
       initialStartDate={moment().add(3, 'months')}
       initialEndDate={moment().add(3, 'months').add(10, 'days')}
       disabled="endDate"
-      isOutsideRange={day => !isInclusivelyAfterDay(day, moment()) ||
-        !isInclusivelyBeforeDay(day, moment().add(3, 'months').add(10, 'days'))}
+      isOutsideRange={(day) => !isInclusivelyAfterDay(day, moment())
+        || !isInclusivelyBeforeDay(day, moment().add(3, 'months').add(10, 'days'))}
     />
   )))
   .add('readOnly', withInfo()(() => (
@@ -178,5 +180,12 @@ storiesOf('DRP - Input Props', module)
       initialEndDate={moment().add(10, 'days')}
       showClearDates
       regular
+    />
+  )))
+  .add('handle invalid input', withInfo()(() => (
+    <DateRangePickerWrapper
+      initialStartDate={moment().add(3, 'months')}
+      initialEndDate={moment().add(3, 'months').add(10, 'days')}
+      onInvalidInput={(input) => alert(`invalid date string: ${input}`)}
     />
   )));

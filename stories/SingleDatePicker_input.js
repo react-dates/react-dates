@@ -106,4 +106,10 @@ storiesOf('SDP - Input Props', module)
       showClearDate
       regular
     />
+  )))
+  .add('handle invalid input', withInfo()(() => (
+    <SingleDatePickerWrapper
+      initialDate={moment().add(3, 'days')}
+      onInvalidInput={(input) => alert(`invalid date string: ${input}`)}
+    />
   )));

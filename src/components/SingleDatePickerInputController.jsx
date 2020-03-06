@@ -147,7 +147,7 @@ export default class SingleDatePickerInputController extends React.PureComponent
         onClose({ date: newDate });
       }
     } else {
-      onDateChange(null);
+      onDateChange(null, dateString);
     }
   }
 

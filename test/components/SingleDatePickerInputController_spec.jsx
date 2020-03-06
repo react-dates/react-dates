@@ -182,13 +182,22 @@ describe('SingleDatePickerInputController', () => {
         expect(onDateChangeStub.callCount).to.equal(1);
       });
 
-      it('calls props.onDateChange with null as arg', () => {
+      it('calls props.onDateChange with null as first arg', () => {
         const onDateChangeStub = sinon.stub();
         const wrapper = shallow((
           <SingleDatePickerInputController id="date" onDateChange={onDateChangeStub} onFocusChange={() => {}} />
         ));
         wrapper.instance().onChange(invalidDateString);
         expect(onDateChangeStub.getCall(0).args[0]).to.equal(null);
+      });
+
+      it('calls props.onDateChange with invalid string as second arg', () => {
+        const onDateChangeStub = sinon.stub();
+        const wrapper = shallow((
+          <SingleDatePickerInputController id="date" onDateChange={onDateChangeStub} onFocusChange={() => {}} />
+        ));
+        wrapper.instance().onChange(invalidDateString);
+        expect(onDateChangeStub.getCall(0).args[1]).to.equal(invalidDateString);
       });
 
       it('does not call props.onFocusChange', () => {
@@ -219,7 +228,7 @@ describe('SingleDatePickerInputController', () => {
         expect(onDateChangeStub.callCount).to.equal(1);
       });
 
-      it('calls props.onDateChange with null as arg', () => {
+      it('calls props.onDateChange with null as first arg', () => {
         const onDateChangeStub = sinon.stub();
         const wrapper = shallow((
           <SingleDatePickerInputController
@@ -231,6 +240,20 @@ describe('SingleDatePickerInputController', () => {
         ));
         wrapper.instance().onChange(todayDateString);
         expect(onDateChangeStub.getCall(0).args[0]).to.equal(null);
+      });
+
+      it('calls props.onDateChange with date string as second arg', () => {
+        const onDateChangeStub = sinon.stub();
+        const wrapper = shallow((
+          <SingleDatePickerInputController
+            id="date"
+            onDateChange={onDateChangeStub}
+            onFocusChange={() => {}}
+            isOutsideRange={isOutsideRangeStub}
+          />
+        ));
+        wrapper.instance().onChange(todayDateString);
+        expect(onDateChangeStub.getCall(0).args[1]).to.equal(todayDateString);
       });
 
       it('does not call props.onFocusChange', () => {
@@ -266,7 +289,7 @@ describe('SingleDatePickerInputController', () => {
         expect(onDateChangeStub.callCount).to.equal(1);
       });
 
-      it('calls props.onDateChange with null as arg', () => {
+      it('calls props.onDateChange with null as first arg', () => {
         const onDateChangeStub = sinon.stub();
         const wrapper = shallow((
           <SingleDatePickerInputController
@@ -278,6 +301,20 @@ describe('SingleDatePickerInputController', () => {
         ));
         wrapper.instance().onChange(todayDateString);
         expect(onDateChangeStub.getCall(0).args[0]).to.equal(null);
+      });
+
+      it('calls props.onDateChange with date string as second arg', () => {
+        const onDateChangeStub = sinon.stub();
+        const wrapper = shallow((
+          <SingleDatePickerInputController
+            id="date"
+            onDateChange={onDateChangeStub}
+            onFocusChange={() => {}}
+            isDayBlocked={isDayBlocked}
+          />
+        ));
+        wrapper.instance().onChange(todayDateString);
+        expect(onDateChangeStub.getCall(0).args[1]).to.equal(todayDateString);
       });
     });
   });
