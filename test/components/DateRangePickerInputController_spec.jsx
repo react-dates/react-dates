@@ -432,6 +432,37 @@ describe('DateRangePickerInputController', () => {
       });
     });
 
+    describe('is blocked', () => {
+      const futureDate = moment().add(7, 'days').format('DD/MM/YYYY');
+      const isDayBlocked = sinon.stub().returns(true);
+
+      it('calls props.onDatesChange', () => {
+        const onDatesChangeStub = sinon.stub();
+        const wrapper = shallow((
+          <DateRangePickerInputController
+            onDatesChange={onDatesChangeStub}
+            isDayBlocked={isDayBlocked}
+          />
+        ));
+        wrapper.instance().onEndDateChange(futureDate);
+        expect(onDatesChangeStub.callCount).to.equal(1);
+      });
+
+      it('calls props.onDatesChange with endDate === null', () => {
+        const onDatesChangeStub = sinon.stub();
+        const wrapper = shallow((
+          <DateRangePickerInputController
+            onDatesChange={onDatesChangeStub}
+            startDate={today}
+            isDayBlocked={isDayBlocked}
+          />
+        ));
+        wrapper.instance().onEndDateChange(futureDate);
+        const args = onDatesChangeStub.getCall(0).args[0];
+        expect(args.endDate).to.equal(null);
+      });
+    });
+
     describe('is inclusively before state.startDate', () => {
       const startDate = moment(today).add(10, 'days');
       const beforeStartDateString = today.toISOString();
@@ -720,7 +751,7 @@ describe('DateRangePickerInputController', () => {
     });
 
     describe('is outside range', () => {
-      const futureDate = moment().add(7, 'days').toISOString();
+      const futureDate = moment().add(7, 'days').format('DD/MM/YYYY');
       const isOutsideRange = (day) => day > moment().add(5, 'days');
 
       it('calls props.onDatesChange', () => {
@@ -761,6 +792,37 @@ describe('DateRangePickerInputController', () => {
         wrapper.instance().onStartDateChange(futureDate);
         const args = onDatesChangeStub.getCall(0).args[0];
         expect(args.endDate).to.equal(today);
+      });
+    });
+
+    describe('is blocked', () => {
+      const futureDate = moment().add(7, 'days').format('DD/MM/YYYY');
+      const isDayBlocked = sinon.stub().returns(true);
+
+      it('calls props.onDatesChange', () => {
+        const onDatesChangeStub = sinon.stub();
+        const wrapper = shallow((
+          <DateRangePickerInputController
+            onDatesChange={onDatesChangeStub}
+            isDayBlocked={isDayBlocked}
+          />
+        ));
+        wrapper.instance().onStartDateChange(futureDate);
+        expect(onDatesChangeStub.callCount).to.equal(1);
+      });
+
+      it('calls props.onDatesChange with startDate === null', () => {
+        const onDatesChangeStub = sinon.stub();
+        const wrapper = shallow((
+          <DateRangePickerInputController
+            onDatesChange={onDatesChangeStub}
+            startDate={today}
+            isDayBlocked={isDayBlocked}
+          />
+        ));
+        wrapper.instance().onStartDateChange(futureDate);
+        const args = onDatesChangeStub.getCall(0).args[0];
+        expect(args.startDate).to.equal(null);
       });
     });
   });

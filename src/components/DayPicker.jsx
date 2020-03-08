@@ -25,6 +25,7 @@ import getCalendarMonthWidth from '../utils/getCalendarMonthWidth';
 import calculateDimension from '../utils/calculateDimension';
 import getActiveElement from '../utils/getActiveElement';
 import isDayVisible from '../utils/isDayVisible';
+import isSameMonth from '../utils/isSameMonth';
 
 import ModifiersShape from '../shapes/ModifiersShape';
 import NavPositionShape from '../shapes/NavPositionShape';
@@ -51,6 +52,8 @@ const PREV_TRANSITION = 'prev';
 const NEXT_TRANSITION = 'next';
 const MONTH_SELECTION_TRANSITION = 'month_selection';
 const YEAR_SELECTION_TRANSITION = 'year_selection';
+const PREV_NAV = 'prev_nav';
+const NEXT_NAV = 'next_nav';
 
 const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
@@ -84,12 +87,17 @@ const propTypes = forbidExtraProps({
   navPosition: NavPositionShape,
   navPrev: PropTypes.node,
   navNext: PropTypes.node,
+  renderNavPrevButton: PropTypes.func,
+  renderNavNextButton: PropTypes.func,
   noNavButtons: PropTypes.bool,
+  noNavNextButton: PropTypes.bool,
+  noNavPrevButton: PropTypes.bool,
   onPrevMonthClick: PropTypes.func,
   onNextMonthClick: PropTypes.func,
   onMonthChange: PropTypes.func,
   onYearChange: PropTypes.func,
-  onMultiplyScrollableMonths: PropTypes.func, // VERTICAL_SCROLLABLE daypickers only
+  onGetNextScrollableMonths: PropTypes.func, // VERTICAL_SCROLLABLE daypickers only
+  onGetPrevScrollableMonths: PropTypes.func, // VERTICAL_SCROLLABLE daypickers only
 
   // month props
   renderMonthText: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'),
@@ -149,12 +157,17 @@ export const defaultProps = {
   navPosition: NAV_POSITION_TOP,
   navPrev: null,
   navNext: null,
+  renderNavPrevButton: null,
+  renderNavNextButton: null,
   noNavButtons: false,
+  noNavNextButton: false,
+  noNavPrevButton: false,
   onPrevMonthClick() {},
   onNextMonthClick() {},
   onMonthChange() {},
   onYearChange() {},
-  onMultiplyScrollableMonths() {},
+  onGetNextScrollableMonths() {},
+  onGetPrevScrollableMonths() {},
 
   // month props
   renderMonthText: null,
@@ -203,6 +216,7 @@ class DayPicker extends React.PureComponent {
 
     this.hasSetInitialVisibleMonth = !props.hidden;
     this.state = {
+      currentMonthScrollTop: null,
       currentMonth,
       monthTransition: null,
       translationValue,
@@ -234,7 +248,8 @@ class DayPicker extends React.PureComponent {
     this.onMonthChange = this.onMonthChange.bind(this);
     this.onYearChange = this.onYearChange.bind(this);
 
-    this.multiplyScrollableMonths = this.multiplyScrollableMonths.bind(this);
+    this.getNextScrollableMonths = this.getNextScrollableMonths.bind(this);
+    this.getPrevScrollableMonths = this.getPrevScrollableMonths.bind(this);
     this.updateStateAfterMonthTransition = this.updateStateAfterMonthTransition.bind(this);
 
     this.openKeyboardShortcutsPanel = this.openKeyboardShortcutsPanel.bind(this);
@@ -247,29 +262,37 @@ class DayPicker extends React.PureComponent {
   }
 
   componentDidMount() {
+    const { orientation } = this.props;
     const { currentMonth } = this.state;
-    if (this.calendarInfo) {
-      this.setState({
-        isTouchDevice: isTouchDevice(),
-        calendarInfoWidth: calculateDimension(this.calendarInfo, 'width', true, true),
-      });
-    } else {
-      this.setState({ isTouchDevice: isTouchDevice() });
-    }
+
+    const calendarInfoWidth = this.calendarInfo
+      ? calculateDimension(this.calendarInfo, 'width', true, true)
+      : 0;
+    const currentMonthScrollTop = this.transitionContainer && orientation === VERTICAL_SCROLLABLE
+      ? this.transitionContainer.scrollHeight - this.transitionContainer.scrollTop
+      : null;
+
+    this.setState({
+      isTouchDevice: isTouchDevice(),
+      calendarInfoWidth,
+      currentMonthScrollTop,
+    });
 
     this.setCalendarMonthWeeks(currentMonth);
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps, nextState) {
     const {
       hidden,
       isFocused,
       showKeyboardShortcuts,
       onBlur,
+      orientation,
       renderMonthText,
       horizontalMonthPadding,
     } = nextProps;
     const { currentMonth } = this.state;
+    const { currentMonth: nextCurrentMonth } = nextState;
 
     if (!hidden) {
       if (!this.hasSetInitialVisibleMonth) {
@@ -321,6 +344,20 @@ class DayPicker extends React.PureComponent {
         monthTitleHeight: null,
       });
     }
+
+    // Capture the scroll position so when previous months are rendered above the current month
+    // we can adjust scroll after the component has updated and the previous current month
+    // stays in view.
+    if (
+      orientation === VERTICAL_SCROLLABLE
+      && this.transitionContainer
+      && !isSameMonth(currentMonth, nextCurrentMonth)
+    ) {
+      this.setState({
+        currentMonthScrollTop:
+          this.transitionContainer.scrollHeight - this.transitionContainer.scrollTop,
+      });
+    }
   }
 
   componentWillUpdate() {
@@ -342,11 +379,16 @@ class DayPicker extends React.PureComponent {
     }
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     const {
       orientation, daySize, isFocused, numberOfMonths,
     } = this.props;
-    const { focusedDate, monthTitleHeight } = this.state;
+    const {
+      currentMonth,
+      currentMonthScrollTop,
+      focusedDate,
+      monthTitleHeight,
+    } = this.state;
 
     if (
       this.isHorizontal()
@@ -360,6 +402,18 @@ class DayPicker extends React.PureComponent {
 
     if (!prevProps.isFocused && isFocused && !focusedDate) {
       this.container.focus();
+    }
+
+    // If orientation is VERTICAL_SCROLLABLE and currentMonth has changed adjust scrollTop so the
+    // new months rendered above the current month don't push the current month out of view.
+    if (
+      orientation === VERTICAL_SCROLLABLE
+      && !isSameMonth(prevState.currentMonth, currentMonth)
+      && currentMonthScrollTop
+      && this.transitionContainer
+    ) {
+      this.transitionContainer.scrollTop = this.transitionContainer.scrollHeight
+        - currentMonthScrollTop;
     }
   }
 
@@ -670,6 +724,29 @@ class DayPicker extends React.PureComponent {
     this.transitionContainer = ref;
   }
 
+  getNextScrollableMonths(e) {
+    const { onGetNextScrollableMonths } = this.props;
+    if (e) e.preventDefault();
+
+    if (onGetNextScrollableMonths) onGetNextScrollableMonths(e);
+
+    this.setState(({ scrollableMonthMultiple }) => ({
+      scrollableMonthMultiple: scrollableMonthMultiple + 1,
+    }));
+  }
+
+  getPrevScrollableMonths(e) {
+    const { numberOfMonths, onGetPrevScrollableMonths } = this.props;
+    if (e) e.preventDefault();
+
+    if (onGetPrevScrollableMonths) onGetPrevScrollableMonths(e);
+
+    this.setState(({ currentMonth, scrollableMonthMultiple }) => ({
+      currentMonth: currentMonth.clone().subtract(numberOfMonths, 'month'),
+      scrollableMonthMultiple: scrollableMonthMultiple + 1,
+    }));
+  }
+
   maybeTransitionNextMonth(newFocusedDate) {
     const { numberOfMonths } = this.props;
     const { currentMonth, focusedDate } = this.state;
@@ -698,17 +775,6 @@ class DayPicker extends React.PureComponent {
     }
 
     return false;
-  }
-
-  multiplyScrollableMonths(e) {
-    const { onMultiplyScrollableMonths } = this.props;
-    if (e) e.preventDefault();
-
-    if (onMultiplyScrollableMonths) onMultiplyScrollableMonths(e);
-
-    this.setState(({ scrollableMonthMultiple }) => ({
-      scrollableMonthMultiple: scrollableMonthMultiple + 1,
-    }));
   }
 
   isHorizontal() {
@@ -838,7 +904,7 @@ class DayPicker extends React.PureComponent {
     });
   }
 
-  renderNavigation() {
+  renderNavigation(navDirection) {
     const {
       dayPickerNavigationInlineStyles,
       disablePrev,
@@ -847,8 +913,12 @@ class DayPicker extends React.PureComponent {
       navPrev,
       navNext,
       noNavButtons,
+      noNavNextButton,
+      noNavPrevButton,
       orientation,
       phrases,
+      renderNavPrevButton,
+      renderNavNextButton,
       isRTL,
     } = this.props;
 
@@ -856,8 +926,12 @@ class DayPicker extends React.PureComponent {
       return null;
     }
 
+    const onPrevMonthClick = orientation === VERTICAL_SCROLLABLE
+      ? this.getPrevScrollableMonths
+      : this.onPrevMonthClick;
+
     const onNextMonthClick = orientation === VERTICAL_SCROLLABLE
-      ? this.multiplyScrollableMonths
+      ? this.getNextScrollableMonths
       : this.onNextMonthClick;
 
     return (
@@ -865,14 +939,22 @@ class DayPicker extends React.PureComponent {
         disablePrev={disablePrev}
         disableNext={disableNext}
         inlineStyles={dayPickerNavigationInlineStyles}
-        onPrevMonthClick={this.onPrevMonthClick}
+        onPrevMonthClick={onPrevMonthClick}
         onNextMonthClick={onNextMonthClick}
         navPosition={navPosition}
         navPrev={navPrev}
         navNext={navNext}
+        renderNavPrevButton={renderNavPrevButton}
+        renderNavNextButton={renderNavNextButton}
         orientation={orientation}
         phrases={phrases}
         isRTL={isRTL}
+        showNavNextButton={
+          !(noNavNextButton || (orientation === VERTICAL_SCROLLABLE && navDirection === PREV_NAV))
+        }
+        showNavPrevButton={
+          !(noNavPrevButton || (orientation === VERTICAL_SCROLLABLE && navDirection === NEXT_NAV))
+        }
       />
     );
   }
@@ -1110,6 +1192,7 @@ class DayPicker extends React.PureComponent {
                 )}
                 ref={this.setTransitionContainerRef}
               >
+                {verticalScrollable && this.renderNavigation(PREV_NAV)}
                 <CalendarMonthGrid
                   setMonthTitleHeight={!monthTitleHeight ? this.setMonthTitleHeight : undefined}
                   translationValue={translationValue}
@@ -1142,7 +1225,7 @@ class DayPicker extends React.PureComponent {
                   verticalBorderSpacing={verticalBorderSpacing}
                   horizontalMonthPadding={horizontalMonthPadding}
                 />
-                {verticalScrollable && this.renderNavigation()}
+                {verticalScrollable && this.renderNavigation(NEXT_NAV)}
               </div>
 
               {!verticalScrollable

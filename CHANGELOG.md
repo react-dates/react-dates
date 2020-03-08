@@ -4,6 +4,57 @@
 - []  ([#](https://github.com/airbnb/react-dates/pull/))
 -->
 
+## 21.8.0
+
+- [new] Add option to allow days violating min nights to be clicked ([#1913](https://github.com/airbnb/react-dates/pull/1913))
+- [fix] Prevent vertical scrollable prev nav button from overlapping weekday headers ([#1914](https://github.com/airbnb/react-dates/pull/1914))
+
+## 21.7.2
+- [fix] Add tests for previous fix ([#1912](https://github.com/airbnb/react-dates/pull/1912))
+
+## 21.7.1
+- [fix] Fix render conditional in DayPickerKeyboardShortcuts ([#1911](https://github.com/airbnb/react-dates/pull/1911))
+
+## 21.7.0
+- [fix] Keep scroll position when prev months rendered on vertical scrollable calendar ([#1902](https://github.com/airbnb/react-dates/pull/1902))
+- [new] Add ability to not show prev or next navigation buttons ([#1900](https://github.com/airbnb/react-dates/pull/1900))
+- [fix] Fix logic for applying default navigation button styling ([#1898](https://github.com/airbnb/react-dates/pull/1898))
+
+## 21.6.0
+
+- [new] Add functionality to see previous months for vertical scrollable calendar ([#1894](https://github.com/airbnb/react-dates/pull/1894))
+- [new] Add support for noNavButtons in DayPickerSingleDateController (match DayPickerRangeController support) ([#1895](https://github.com/airbnb/react-dates/pull/1895))
+
+## 21.5.1
+
+- [fix] Remove redundant overflowY:scroll on CalendarMonthGrid ([#1881](https://github.com/airbnb/react-dates/pull/1881))
+
+## 21.5.0
+
+- [new] Add support for custom month navigation buttons ([#1859](https://github.com/airbnb/react-dates/pull/1859))
+
+## 21.4.0
+
+- [new] Expose 'after-hovered-start' modifier and add 'before-hovered-end', 'no-selected-start-before-selected-end', 'selected-start-in-hovered-span', 'selected-end-in-hovered-span', 'selected-start-no-selected-end', and 'selected-end-no-selected-start' modifiers [#1608](https://github.com/airbnb/react-dates/pull/1608)
+- [fix] Loosen up CustomizeableCalendarDay restriction on children  ([#1857](https://github.com/airbnb/react-dates/pull/1857))
+
+## 21.3.2
+
+- [fix] Revert "Call getStateForNewMonth when date/startDate/endDate is set to a date that is not visible" ([#1851](https://github.com/airbnb/react-dates/pull/1851))
+
+## 21.3.1
+
+- [fix] Update react-with-styles 4.1.0-alpha.1 -> 4.1.0
+
+## 21.3.0
+
+- [new] Update react-with-styles 4.0.1 -> 4.1.0 ([#1843](https://github.com/airbnb/react-dates/pull/1843))
+- [new] Add Input Font-Weight to Default Theme ([#1765](https://github.com/airbnb/react-dates/pull/#1765))
+
+## 21.2.1
+
+- [fix] Call getStateForNewMonth when date/startDate/endDate is set to a date that is not visible ([#1834](https://github.com/airbnb/react-dates/pull/1834))
+
 ## 21.2.0
 
 - [fix] Revert "Merge pull request [#1758](https://github.com/airbnb/react-dates/pull/1758): Remove all direct imports of css in favor of injected prop" ([#1818](https://github.com/airbnb/react-dates/pull/1818))

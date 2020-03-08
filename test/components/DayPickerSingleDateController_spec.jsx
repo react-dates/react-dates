@@ -6,6 +6,7 @@ import moment from 'moment';
 
 import DayPicker from '../../src/components/DayPicker';
 import DayPickerSingleDateController from '../../src/components/DayPickerSingleDateController';
+import DayPickerNavigation from '../../src/components/DayPickerNavigation';
 
 import toISODateString from '../../src/utils/toISODateString';
 import toISOMonthString from '../../src/utils/toISOMonthString';
@@ -761,6 +762,72 @@ describe('DayPickerSingleDateController', () => {
       expect(onPrevMonthClickStub.firstCall.args[0].year()).to.equal(newMonth.year());
       expect(onPrevMonthClickStub.firstCall.args[0].month()).to.equal(newMonth.month());
     });
+
+    it('calls this.shouldDisableMonthNavigation twice', () => {
+      const shouldDisableMonthNavigationSpy = sinon.spy(DayPickerSingleDateController.prototype, 'shouldDisableMonthNavigation');
+      const wrapper = shallow((
+        <DayPickerSingleDateController
+          onDatesChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />
+      ));
+      shouldDisableMonthNavigationSpy.resetHistory();
+      wrapper.instance().onPrevMonthClick();
+      expect(shouldDisableMonthNavigationSpy).to.have.property('callCount', 2);
+    });
+
+    it('sets disablePrev and disablePrev as false on onPrevMonthClick call withouth maxDate and minDate set', () => {
+      const numberOfMonths = 2;
+      const wrapper = shallow((
+        <DayPickerSingleDateController
+          onDatesChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+          numberOfMonths={numberOfMonths}
+        />
+      ));
+      wrapper.setState({
+        currentMonth: today,
+      });
+      wrapper.instance().onPrevMonthClick();
+      expect(wrapper.state()).to.have.property('disablePrev', false);
+      expect(wrapper.state()).to.have.property('disableNext', false);
+    });
+
+    it('sets disableNext as true when maxDate is in visible month', () => {
+      const numberOfMonths = 2;
+      const wrapper = shallow((
+        <DayPickerSingleDateController
+          onDatesChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+          numberOfMonths={numberOfMonths}
+          maxDate={today}
+        />
+      ));
+      wrapper.setState({
+        currentMonth: today,
+      });
+      wrapper.instance().onPrevMonthClick();
+      expect(wrapper.state()).to.have.property('disablePrev', false);
+      expect(wrapper.state()).to.have.property('disableNext', true);
+    });
+
+    it('sets disablePrev as true when minDate is in visible month', () => {
+      const numberOfMonths = 2;
+      const wrapper = shallow((
+        <DayPickerSingleDateController
+          onDatesChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+          numberOfMonths={numberOfMonths}
+          minDate={today.clone().subtract(1, 'month')}
+        />
+      ));
+      wrapper.setState({
+        currentMonth: today,
+      });
+      wrapper.instance().onPrevMonthClick();
+      expect(wrapper.state()).to.have.property('disablePrev', true);
+      expect(wrapper.state()).to.have.property('disableNext', false);
+    });
   });
 
   describe('#onNextMonthClick', () => {
@@ -1178,7 +1245,7 @@ describe('DayPickerSingleDateController', () => {
       expect(Array.from(modifiers[nextMonthISO][nextMonthDayISO])).to.contain(modifierToAdd);
     });
 
-    it('return value now has modifier arg for day after multiplying number of months', () => {
+    it('return value now has modifier arg for day after getting next scrollable months', () => {
       const modifierToAdd = 'foo';
       const numberOfMonths = 2;
       const nextMonth = today.clone().add(numberOfMonths, 'month');
@@ -1197,9 +1264,33 @@ describe('DayPickerSingleDateController', () => {
       )).instance();
       let modifiers = wrapper.addModifier(updatedDays, nextMonth, modifierToAdd);
       expect(Array.from(modifiers[nextMonthISO][nextMonthDayISO])).to.not.contain(modifierToAdd);
-      wrapper.onMultiplyScrollableMonths();
+      wrapper.onGetNextScrollableMonths();
       modifiers = wrapper.addModifier(updatedDays, nextMonth, modifierToAdd);
       expect(Array.from(modifiers[nextMonthISO][nextMonthDayISO])).to.contain(modifierToAdd);
+    });
+
+    it('return value now has modifier arg for day after getting previous scrollable months', () => {
+      const modifierToAdd = 'foo';
+      const numberOfMonths = 2;
+      const pastDateAfterMultiply = today.clone().subtract(numberOfMonths, 'months');
+      const monthISO = toISOMonthString(pastDateAfterMultiply);
+      const dayISO = toISODateString(pastDateAfterMultiply);
+      const updatedDays = {
+        [monthISO]: { [dayISO]: new Set(['bar', 'baz']) },
+      };
+      const wrapper = shallow((
+        <DayPickerSingleDateController
+          onDatesChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+          numberOfMonths={numberOfMonths}
+          orientation={VERTICAL_SCROLLABLE}
+        />
+      )).instance();
+      let modifiers = wrapper.addModifier(updatedDays, pastDateAfterMultiply, modifierToAdd);
+      expect(Array.from(modifiers[monthISO][dayISO])).to.not.contain(modifierToAdd);
+      wrapper.onGetPrevScrollableMonths();
+      modifiers = wrapper.addModifier(updatedDays, pastDateAfterMultiply, modifierToAdd);
+      expect(Array.from(modifiers[monthISO][dayISO])).to.contain(modifierToAdd);
     });
   });
 
@@ -1538,6 +1629,18 @@ describe('DayPickerSingleDateController', () => {
         ));
         const dayPicker = wrapper.find(DayPicker);
         expect(dayPicker.props().initialVisibleMonth().isSame(today, 'day')).to.equal(true);
+      });
+    });
+
+    describe('noNavButtons prop', () => {
+      it('renders navigation button', () => {
+        const wrapper = shallow(<DayPickerSingleDateController />).dive().dive();
+        expect(wrapper.find(DayPickerNavigation)).to.have.lengthOf(1);
+      });
+
+      it('does not render navigation button when noNavButtons prop applied', () => {
+        const wrapper = shallow(<DayPickerSingleDateController noNavButtons />).dive().dive();
+        expect(wrapper.find(DayPickerNavigation)).to.have.lengthOf(0);
       });
     });
   });

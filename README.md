@@ -26,7 +26,7 @@ To run that demo on your own computer:
 
 ## Getting Started
 ### Install dependencies
-Ensure packages are installed with correct version numbers by running:
+Ensure packages are installed with correct version numbers by running (from your command line):
   ```sh
   (
     export PKG=react-dates;
@@ -39,6 +39,8 @@ Ensure packages are installed with correct version numbers by running:
   ```sh
   npm install --save react-dates moment@>=#.## react@>=#.## react-dom@>=#.##
   ```
+
+  > If you are running Windows, that command will not work, but if you are running npm 5 or higher, you can run `npx install-peerdeps react-dates` on any platform
 
 ### Initialize
 ```js
