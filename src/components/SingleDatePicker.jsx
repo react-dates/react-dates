@@ -45,6 +45,8 @@ const defaultProps = {
   // required props for a functional interactive SingleDatePicker
   date: null,
   focused: false,
+  minDate: null,
+  maxDate: null,
 
   // input related props
   id: 'date',
@@ -395,6 +397,8 @@ class SingleDatePicker extends React.PureComponent {
       openDirection,
       onDateChange,
       date,
+      minDate,
+      maxDate,
       onFocusChange,
       focused,
       enableOutsideDays,
@@ -477,6 +481,8 @@ class SingleDatePicker extends React.PureComponent {
       >
         <DayPickerSingleDateController
           date={date}
+          minDate={minDate}
+          maxDate={maxDate}
           onDateChange={onDateChange}
           onFocusChange={onFocusChange}
           orientation={orientation}
