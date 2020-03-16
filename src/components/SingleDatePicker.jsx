@@ -1,11 +1,13 @@
 import React from 'react';
-import moment from 'moment';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 import { Portal } from 'react-portal';
 import { forbidExtraProps } from 'airbnb-prop-types';
 import { addEventListener } from 'consolidated-events';
 import isTouchDevice from 'is-touch-device';
 import OutsideClickHandler from 'react-outside-click-handler';
+
+import { driver } from '../drivers/driver';
+import formats from '../drivers/formats';
 
 import SingleDatePickerShape from '../shapes/SingleDatePickerShape';
 import { SingleDatePickerPhrases } from '../defaultPhrases';
@@ -113,13 +115,13 @@ const defaultProps = {
   renderMonthElement: null,
   enableOutsideDays: false,
   isDayBlocked: () => false,
-  isOutsideRange: (day) => !isInclusivelyAfterDay(day, moment()),
+  isOutsideRange: (day) => !isInclusivelyAfterDay(day, driver.now()),
   isDayHighlighted: () => {},
 
   // internationalization props
-  displayFormat: () => moment.localeData().longDateFormat('L'),
-  monthFormat: 'MMMM YYYY',
-  weekDayFormat: 'dd',
+  displayFormat: driver.formatString(formats.DISPLAY),
+  monthFormat: driver.formatString(formats.MONTH),
+  weekDayFormat: driver.formatString(formats.WEEKDAY),
   phrases: SingleDatePickerPhrases,
   dayAriaLabelFormat: undefined,
 };

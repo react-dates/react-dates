@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import momentPropTypes from 'react-moment-proptypes';
 import { forbidExtraProps, mutuallyExclusiveProps, nonNegativeInteger } from 'airbnb-prop-types';
-import moment from 'moment';
 import values from 'object.values';
 import isTouchDevice from 'is-touch-device';
+
+import { driver } from '../drivers/driver';
+import formats from '../drivers/formats';
 
 import { DayPickerPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
@@ -35,9 +36,9 @@ import DayPicker from './DayPicker';
 import getPooledMoment from '../utils/getPooledMoment';
 
 const propTypes = forbidExtraProps({
-  date: momentPropTypes.momentObj,
-  minDate: momentPropTypes.momentObj,
-  maxDate: momentPropTypes.momentObj,
+  date: driver.datePropType,
+  minDate: driver.datePropType,
+  maxDate: driver.datePropType,
   onDateChange: PropTypes.func,
 
   focused: PropTypes.bool,
@@ -161,8 +162,8 @@ const defaultProps = {
   onShiftTab() {},
 
   // i18n
-  monthFormat: 'MMMM YYYY',
-  weekDayFormat: 'dd',
+  monthFormat: driver.formatString(formats.MONTH),
+  weekDayFormat: driver.formatString(formats.WEEKDAY),
   phrases: DayPickerPhrases,
   dayAriaLabelFormat: undefined,
 
@@ -174,7 +175,7 @@ export default class DayPickerSingleDateController extends React.PureComponent {
     super(props);
 
     this.isTouchDevice = false;
-    this.today = moment();
+    this.today = driver.now();
 
     this.modifiers = {
       today: (day) => this.isToday(day),
@@ -293,6 +294,7 @@ export default class DayPickerSingleDateController extends React.PureComponent {
     if (didFocusChange || recomputePropModifiers) {
       values(visibleDays).forEach((days) => {
         Object.keys(days).forEach((day) => {
+          // TODO: @tonyhb pooling
           const momentObj = getPooledMoment(day);
           if (this.isBlocked(momentObj)) {
             modifiers = this.addModifier(modifiers, momentObj, 'blocked');
@@ -327,7 +329,7 @@ export default class DayPickerSingleDateController extends React.PureComponent {
       });
     }
 
-    const today = moment();
+    const today = driver.now();
     if (!isSameDay(this.today, today)) {
       modifiers = this.deleteModifier(modifiers, this.today, 'today');
       modifiers = this.addModifier(modifiers, today, 'today');
@@ -345,7 +347,7 @@ export default class DayPickerSingleDateController extends React.PureComponent {
   }
 
   componentWillUpdate() {
-    this.today = moment();
+    this.today = driver.now();
   }
 
   onDayClick(day, e) {
@@ -628,12 +630,12 @@ export default class DayPickerSingleDateController extends React.PureComponent {
 
   isFirstDayOfWeek(day) {
     const { firstDayOfWeek } = this.props;
-    return day.day() === (firstDayOfWeek || moment.localeData().firstDayOfWeek());
+    return day.day() === (firstDayOfWeek || driver.firstDayOfWeek());
   }
 
   isLastDayOfWeek(day) {
     const { firstDayOfWeek } = this.props;
-    return day.day() === ((firstDayOfWeek || moment.localeData().firstDayOfWeek()) + 6) % 7;
+    return day.day() === ((firstDayOfWeek || driver.firstDayOfWeek()) + 6) % 7;
   }
 
   render() {

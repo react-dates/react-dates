@@ -1,10 +1,13 @@
 import React from 'react';
+import moment from 'moment';
 import PropTypes from 'prop-types';
-import momentPropTypes from 'react-moment-proptypes';
 import { forbidExtraProps, mutuallyExclusiveProps, nonNegativeInteger } from 'airbnb-prop-types';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
-import moment from 'moment';
 import { addEventListener } from 'consolidated-events';
+
+import { driver } from '../drivers/driver';
+import formats from '../drivers/formats';
+import parts from '../drivers/parts';
 
 import { CalendarDayPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
@@ -36,7 +39,7 @@ const propTypes = forbidExtraProps({
   enableOutsideDays: PropTypes.bool,
   firstVisibleMonthIndex: PropTypes.number,
   horizontalMonthPadding: nonNegativeInteger,
-  initialMonth: momentPropTypes.momentObj,
+  initialMonth: driver.datePropType,
   isAnimating: PropTypes.bool,
   numberOfMonths: PropTypes.number,
   modifiers: PropTypes.objectOf(PropTypes.objectOf(ModifiersShape)),
@@ -53,7 +56,7 @@ const propTypes = forbidExtraProps({
   translationValue: PropTypes.number,
   renderMonthElement: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'),
   daySize: nonNegativeInteger,
-  focusedDate: momentPropTypes.momentObj, // indicates focusable day
+  focusedDate: driver.datePropType, // indicates focusable day
   isFocused: PropTypes.bool, // indicates whether or not to move focus to focusable day
   firstDayOfWeek: DayOfWeekShape,
   setMonthTitleHeight: PropTypes.func,
@@ -71,7 +74,7 @@ const defaultProps = {
   enableOutsideDays: false,
   firstVisibleMonthIndex: 0,
   horizontalMonthPadding: 13,
-  initialMonth: moment(),
+  initialMonth: driver.now(),
   isAnimating: false,
   numberOfMonths: 1,
   modifiers: {},
@@ -97,19 +100,19 @@ const defaultProps = {
   verticalBorderSpacing: undefined,
 
   // i18n
-  monthFormat: 'MMMM YYYY', // english locale
+  monthFormat: driver.formatString(formats.MONTH),
   phrases: CalendarDayPhrases,
   dayAriaLabelFormat: undefined,
 };
 
 function getMonths(initialMonth, numberOfMonths, withoutTransitionMonths) {
-  let month = initialMonth.clone();
-  if (!withoutTransitionMonths) month = month.subtract(1, 'month');
+  let month = initialMonth;
+  if (!withoutTransitionMonths) month = driver.subtract(month, { [parts.MONTHS]: 1 });
 
   const months = [];
   for (let i = 0; i < (withoutTransitionMonths ? numberOfMonths : numberOfMonths + 2); i += 1) {
     months.push(month);
-    month = month.clone().add(1, 'month');
+    month = driver.add(month, { [parts.MONTHS]: 1 });
   }
 
   return months;
@@ -127,6 +130,7 @@ class CalendarMonthGrid extends React.PureComponent {
     this.onTransitionEnd = this.onTransitionEnd.bind(this);
     this.setContainerRef = this.setContainerRef.bind(this);
 
+    // TODO: @tonyhb locale?
     this.locale = moment.locale();
     this.onMonthSelect = this.onMonthSelect.bind(this);
     this.onYearSelect = this.onYearSelect.bind(this);
@@ -148,17 +152,18 @@ class CalendarMonthGrid extends React.PureComponent {
       initialMonth: prevInitialMonth,
       numberOfMonths: prevNumberOfMonths,
     } = this.props;
-    const hasMonthChanged = !prevInitialMonth.isSame(initialMonth, 'month');
+    const hasMonthChanged = driver.get(prevInitialMonth, parts.MONTHS) !== driver
+      .get(initialMonth, parts.MONTHS);
     const hasNumberOfMonthsChanged = prevNumberOfMonths !== numberOfMonths;
     let newMonths = months;
 
     if (hasMonthChanged && !hasNumberOfMonthsChanged) {
       if (isNextMonth(prevInitialMonth, initialMonth)) {
         newMonths = months.slice(1);
-        newMonths.push(months[months.length - 1].clone().add(1, 'month'));
+        newMonths.push(driver.add(months[months.length - 1], { [parts.MONTHS]: 1 }));
       } else if (isPrevMonth(prevInitialMonth, initialMonth)) {
         newMonths = months.slice(0, months.length - 1);
-        newMonths.unshift(months[0].clone().subtract(1, 'month'));
+        newMonths.unshift(driver.subtract(months[0], { [parts.MONTHS]: 1 }));
       } else {
         const withoutTransitionMonths = orientation === VERTICAL_SCROLLABLE;
         newMonths = getMonths(initialMonth, numberOfMonths, withoutTransitionMonths);

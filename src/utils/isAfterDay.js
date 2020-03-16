@@ -1,9 +1,9 @@
-import moment from 'moment';
+import { driver } from '../drivers/driver';
 
 import isBeforeDay from './isBeforeDay';
 import isSameDay from './isSameDay';
 
 export default function isAfterDay(a, b) {
-  if (!moment.isMoment(a) || !moment.isMoment(b)) return false;
+  if (!driver.valid(a) || !driver.valid(b)) return false;
   return !isBeforeDay(a, b) && !isSameDay(a, b);
 }

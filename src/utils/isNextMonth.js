@@ -1,8 +1,9 @@
-import moment from 'moment';
+import { driver } from '../drivers/driver';
+import parts from '../drivers/parts';
 
 import isSameMonth from './isSameMonth';
 
 export default function isNextMonth(a, b) {
-  if (!moment.isMoment(a) || !moment.isMoment(b)) return false;
-  return isSameMonth(a.clone().add(1, 'month'), b);
+  if (!driver.valid(a) || !driver.valid(b)) return false;
+  return isSameMonth(driver.add(a, { [parts.MONTHS]: 1 }), b);
 }

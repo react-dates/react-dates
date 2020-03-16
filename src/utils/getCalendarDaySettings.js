@@ -1,3 +1,5 @@
+import { driver } from '../drivers/driver';
+
 import getPhrase from './getPhrase';
 import { BLOCKED_MODIFIER } from '../constants';
 
@@ -29,7 +31,7 @@ function getAriaLabel(phrases, modifiers, day, ariaLabelFormat) {
   } = phrases;
 
   const formattedDate = {
-    date: day.format(ariaLabelFormat),
+    date: driver.format(day, ariaLabelFormat),
   };
 
   if (modifiers.has('selected-start') && dateIsSelectedAsStartDate) {

@@ -1,8 +1,8 @@
-import moment from 'moment';
+import { driver } from '../drivers/driver';
 
 import isBeforeDay from './isBeforeDay';
 
 export default function isInclusivelyAfterDay(a, b) {
-  if (!moment.isMoment(a) || !moment.isMoment(b)) return false;
+  if (!driver.valid(a) || !driver.valid(b)) return false;
   return !isBeforeDay(a, b);
 }
