@@ -2,8 +2,9 @@ import React from 'react';
 import moment from 'moment';
 import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
+import { action } from '@storybook/addon-actions';
 
-import SingleDatePickerWrapper from '../examples/SingleDatePickerWrapper';
+import SingleDatePickerWrapperExample from '../examples/SingleDatePickerWrapper';
 
 const TestCustomInputIcon = () => (
   <span
@@ -16,6 +17,14 @@ const TestCustomInputIcon = () => (
   >
     C
   </span>
+);
+
+const SingleDatePickerWrapper = (props) => (
+  <SingleDatePickerWrapperExample
+    {...props}
+    onDateChange={action('onDateChange')}
+    onFocusChange={action('onFocusChange')}
+  />
 );
 
 storiesOf('SDP - Input Props', module)

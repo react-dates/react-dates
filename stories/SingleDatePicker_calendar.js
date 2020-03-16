@@ -2,8 +2,9 @@ import React from 'react';
 import moment from 'moment';
 import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
+import { action } from '@storybook/addon-actions';
 
-import SingleDatePickerWrapper from '../examples/SingleDatePickerWrapper';
+import SingleDatePickerWrapperExample from '../examples/SingleDatePickerWrapper';
 
 import { VERTICAL_ORIENTATION, ANCHOR_RIGHT, OPEN_UP } from '../src/constants';
 
@@ -18,7 +19,7 @@ const TestPrevIcon = () => (
       position: 'absolute',
       top: '20px',
     }}
-    tabindex="0"
+    tabIndex="0"
   >
     Prev
   </div>
@@ -35,7 +36,7 @@ const TestNextIcon = () => (
       right: '22px',
       top: '20px',
     }}
-    tabindex="0"
+    tabIndex="0"
   >
     Next
   </div>
@@ -50,6 +51,14 @@ const TestCustomInfoPanel = () => (
   >
     &#x2755; Some useful info here
   </div>
+);
+
+const SingleDatePickerWrapper = (props) => (
+  <SingleDatePickerWrapperExample
+    {...props}
+    onDateChange={action('onDateChange')}
+    onFocusChange={action('onFocusChange')}
+  />
 );
 
 storiesOf('SDP - Calendar Props', module)
