@@ -31,6 +31,32 @@ describe('DayPicker', () => {
     sinon.restore();
   });
 
+  describe('#componentWillReceiveProps', () => {
+    describe('when nextProps.showKeyboardShortcuts is true', () => {
+      it('should set state.showKeyboardShortcuts to true', () => {
+        const wrapper = shallow(<DayPicker />).dive();
+        wrapper.setState({
+          showKeyboardShortcuts: false,
+        });
+        wrapper.instance().componentWillReceiveProps(
+          { showKeyboardShortcuts: true },
+          { currentMonth: moment() },
+        );
+        expect(wrapper.state().showKeyboardShortcuts).to.equal(true);
+      });
+
+      it('should set state.onKeyboardShortcutsPanelClose', () => {
+        const wrapper = shallow(<DayPicker />).dive();
+        const onBlur = sinon.spy();
+        wrapper.instance().componentWillReceiveProps(
+          { showKeyboardShortcuts: true, onBlur },
+          { currentMonth: moment() },
+        );
+        expect(wrapper.state().onKeyboardShortcutsPanelClose).to.equal(onBlur);
+      });
+    });
+  });
+
   describe('#render', () => {
     describe('renderWeekHeader', () => {
       it('there are 7 elements on each .DayPicker__week-header class', () => {

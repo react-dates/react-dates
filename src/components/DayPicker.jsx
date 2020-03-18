@@ -322,21 +322,21 @@ class DayPicker extends React.PureComponent {
       if (isFocused) {
         const focusedDate = this.getFocusedDay(currentMonth);
 
-        let { onKeyboardShortcutsPanelClose } = this.state;
-        if (nextProps.showKeyboardShortcuts) {
-          // the ? shortcut came from the input and we should return input there once it is close
-          onKeyboardShortcutsPanelClose = onBlur;
-        }
-
         this.setState({
-          showKeyboardShortcuts,
-          onKeyboardShortcutsPanelClose,
           focusedDate,
           withMouseInteractions: false,
         });
       } else {
         this.setState({ focusedDate: null });
       }
+    }
+
+    if (showKeyboardShortcuts) {
+      // the ? shortcut came from the input and we should return input there once it is closed
+      this.setState({
+        showKeyboardShortcuts: true,
+        onKeyboardShortcutsPanelClose: onBlur,
+      });
     }
 
     if (renderMonthText !== prevRenderMonthText) {

@@ -598,7 +598,7 @@ describe('SingleDatePicker', () => {
       expect(wrapper.state().isInputFocused).to.equal(false);
     });
 
-    it('sets state.isDayPickerFocused to true', () => {
+    it('sets state.isDayPickerFocused to false', () => {
       const wrapper = shallow((
         <SingleDatePicker
           onDateChange={sinon.stub()}
@@ -609,7 +609,7 @@ describe('SingleDatePicker', () => {
         isDayPickerFocused: false,
       });
       wrapper.instance().showKeyboardShortcutsPanel();
-      expect(wrapper.state().isDayPickerFocused).to.equal(true);
+      expect(wrapper.state().isDayPickerFocused).to.equal(false);
     });
 
     it('sets state.showKeyboardShortcuts to true', () => {
