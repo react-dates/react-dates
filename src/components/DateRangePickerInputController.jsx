@@ -29,7 +29,6 @@ import {
 const propTypes = forbidExtraProps({
   children: PropTypes.node,
 
-  // TODO: @tonyhb luxon prop types
   startDate: driver.datePropType,
   startDateId: PropTypes.string,
   startDatePlaceholderText: PropTypes.string,

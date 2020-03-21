@@ -13,6 +13,7 @@ import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 
 import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
 import isNextDay from '../utils/isNextDay';
+import isBetween from '../utils/isBetween';
 import isSameDay from '../utils/isSameDay';
 import isAfterDay from '../utils/isAfterDay';
 import isBeforeDay from '../utils/isBeforeDay';
@@ -1220,10 +1221,10 @@ export default class DayPickerRangeController extends React.PureComponent {
     const { hoverDate } = this.state || {};
 
     const isForwardRange = !!startDate && !endDate && (
-      day.isBetween(startDate, hoverDate) || isSameDay(hoverDate, day)
+      isBetween(day, startDate, hoverDate) || isSameDay(hoverDate, day)
     );
     const isBackwardRange = !!endDate && !startDate && (
-      day.isBetween(hoverDate, endDate) || isSameDay(hoverDate, day)
+      isBetween(day, hoverDate, endDate) || isSameDay(hoverDate, day)
     );
 
     const isValidDayHovered = hoverDate && !this.isBlocked(hoverDate);
@@ -1233,7 +1234,7 @@ export default class DayPickerRangeController extends React.PureComponent {
 
   isInSelectedSpan(day) {
     const { startDate, endDate } = this.props;
-    return day.isBetween(startDate, endDate, 'days');
+    return isBetween(day, startDate, endDate);
   }
 
   isLastInRange(day) {

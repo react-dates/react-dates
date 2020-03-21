@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
-import { driver } from '../drivers/driver';
 import { mutuallyExclusiveProps, nonNegativeInteger } from 'airbnb-prop-types';
 
+import { driver } from '../drivers/driver';
 import { DateRangePickerPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 

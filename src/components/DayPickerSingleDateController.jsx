@@ -538,7 +538,10 @@ export default class DayPickerSingleDateController extends React.PureComponent {
 
     if (this.isBlocked(focusedDate)) {
       const days = [];
-      const lastVisibleDay = chain(newMonth).add({ [parts.MONTHS]: numberOfMonths - 1 }).endOf(parts.MONTHS).value();
+      const lastVisibleDay = chain(newMonth)
+        .add({ [parts.MONTHS]: numberOfMonths - 1 })
+        .endOf(parts.MONTHS)
+        .value();
       let currentDay = focusedDate;
       while (!isAfterDay(currentDay, lastVisibleDay)) {
         currentDay = driver.add(currentDay, { [parts.DAYS]: 1 });

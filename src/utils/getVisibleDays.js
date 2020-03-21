@@ -11,7 +11,8 @@ export default function getVisibleDays(
   if (!driver.valid(month)) return {};
 
   const visibleDaysByMonth = {};
-  let currentMonth = withoutTransitionMonths ? month : driver.subtract(month, { [parts.MONTHS]: 1 });
+  let currentMonth = withoutTransitionMonths
+    ? month : driver.subtract(month, { [parts.MONTHS]: 1 });
   for (let i = 0; i < (withoutTransitionMonths ? numberOfMonths : numberOfMonths + 2); i += 1) {
     const visibleDays = [];
 

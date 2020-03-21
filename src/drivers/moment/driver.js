@@ -154,8 +154,8 @@ function formatString(type) {
   }
 }
 
-function weekday(date) {
-  return date.weekday();
+function weekday(d) {
+  return d.weekday();
 }
 
 
