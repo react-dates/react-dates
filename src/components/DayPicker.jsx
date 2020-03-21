@@ -658,7 +658,7 @@ class DayPicker extends React.PureComponent {
     const weekHeaders = [];
     for (let i = 0; i < 7; i += 1) {
       const date = chain(currentMonth)
-        .set({ [parts.DAYS]: ((i + firstDayOfWeek) % 7) })
+        .set({ [parts.WEEKDAYS]: ((i + firstDayOfWeek) % 7) })
         .format(weekDayFormat)
         .value();
       weekHeaders.push(date);
@@ -749,7 +749,7 @@ class DayPicker extends React.PureComponent {
     if (onGetPrevScrollableMonths) onGetPrevScrollableMonths(e);
 
     this.setState(({ currentMonth, scrollableMonthMultiple }) => ({
-      currentMonth: currentMonth.minus({ months: numberOfMonths }),
+      currentMonth: driver.subtract(currentMonth, { [parts.MONTHS]: numberOfMonths }),
       scrollableMonthMultiple: scrollableMonthMultiple + 1,
     }));
   }
@@ -758,8 +758,8 @@ class DayPicker extends React.PureComponent {
     const { numberOfMonths } = this.props;
     const { currentMonth, focusedDate } = this.state;
 
-    const newFocusedDateMonth = newFocusedDate.month();
-    const focusedDateMonth = focusedDate.month();
+    const newFocusedDateMonth = driver.get(newFocusedDate, parts.MONTHS);
+    const focusedDateMonth = driver.get(focusedDate, parts.MONTHS);
     const isNewFocusedDateVisible = isDayVisible(newFocusedDate, currentMonth, numberOfMonths);
     if (newFocusedDateMonth !== focusedDateMonth && !isNewFocusedDateVisible) {
       this.onNextMonthTransition(newFocusedDate);
@@ -773,8 +773,8 @@ class DayPicker extends React.PureComponent {
     const { numberOfMonths } = this.props;
     const { currentMonth, focusedDate } = this.state;
 
-    const newFocusedDateMonth = newFocusedDate.month;
-    const focusedDateMonth = focusedDate.month;
+    const newFocusedDateMonth = driver.get(newFocusedDate, parts.MONTHS);
+    const focusedDateMonth = driver.get(focusedDate, parts.MONTHS);
     const isNewFocusedDateVisible = isDayVisible(newFocusedDate, currentMonth, numberOfMonths);
     if (newFocusedDateMonth !== focusedDateMonth && !isNewFocusedDateVisible) {
       this.onPrevMonthTransition(newFocusedDate);

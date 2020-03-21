@@ -4,7 +4,8 @@ import { forbidExtraProps, mutuallyExclusiveProps, nonNegativeInteger } from 'ai
 import values from 'object.values';
 import isTouchDevice from 'is-touch-device';
 
-import { driver } from '../drivers/driver';
+import { driver, chain } from '../drivers/driver';
+import parts from '../drivers/parts';
 import formats from '../drivers/formats';
 
 import { DayPickerPhrases } from '../defaultPhrases';
@@ -33,7 +34,7 @@ import {
 } from '../constants';
 
 import DayPicker from './DayPicker';
-import getPooledMoment from '../utils/getPooledMoment';
+import getDatePool from '../utils/getDatePool';
 
 const propTypes = forbidExtraProps({
   date: driver.datePropType,
@@ -294,35 +295,34 @@ export default class DayPickerSingleDateController extends React.PureComponent {
     if (didFocusChange || recomputePropModifiers) {
       values(visibleDays).forEach((days) => {
         Object.keys(days).forEach((day) => {
-          // TODO: @tonyhb pooling
-          const momentObj = getPooledMoment(day);
-          if (this.isBlocked(momentObj)) {
-            modifiers = this.addModifier(modifiers, momentObj, 'blocked');
+          const dateObj = getDatePool(day);
+          if (this.isBlocked(dateObj)) {
+            modifiers = this.addModifier(modifiers, dateObj, 'blocked');
           } else {
-            modifiers = this.deleteModifier(modifiers, momentObj, 'blocked');
+            modifiers = this.deleteModifier(modifiers, dateObj, 'blocked');
           }
 
           if (didFocusChange || recomputeOutsideRange) {
-            if (isOutsideRange(momentObj)) {
-              modifiers = this.addModifier(modifiers, momentObj, 'blocked-out-of-range');
+            if (isOutsideRange(dateObj)) {
+              modifiers = this.addModifier(modifiers, dateObj, 'blocked-out-of-range');
             } else {
-              modifiers = this.deleteModifier(modifiers, momentObj, 'blocked-out-of-range');
+              modifiers = this.deleteModifier(modifiers, dateObj, 'blocked-out-of-range');
             }
           }
 
           if (didFocusChange || recomputeDayBlocked) {
-            if (isDayBlocked(momentObj)) {
-              modifiers = this.addModifier(modifiers, momentObj, 'blocked-calendar');
+            if (isDayBlocked(dateObj)) {
+              modifiers = this.addModifier(modifiers, dateObj, 'blocked-calendar');
             } else {
-              modifiers = this.deleteModifier(modifiers, momentObj, 'blocked-calendar');
+              modifiers = this.deleteModifier(modifiers, dateObj, 'blocked-calendar');
             }
           }
 
           if (didFocusChange || recomputeDayHighlighted) {
-            if (isDayHighlighted(momentObj)) {
-              modifiers = this.addModifier(modifiers, momentObj, 'highlighted-calendar');
+            if (isDayHighlighted(dateObj)) {
+              modifiers = this.addModifier(modifiers, dateObj, 'highlighted-calendar');
             } else {
-              modifiers = this.deleteModifier(modifiers, momentObj, 'highlighted-calendar');
+              modifiers = this.deleteModifier(modifiers, dateObj, 'highlighted-calendar');
             }
           }
         });
@@ -413,9 +413,9 @@ export default class DayPickerSingleDateController extends React.PureComponent {
       newVisibleDays[month] = visibleDays[month];
     });
 
-    const prevMonth = currentMonth.clone().subtract(1, 'month');
+    const prevMonth = driver.subtract(currentMonth, { [parts.MONTHS]: 1 });
     const prevMonthVisibleDays = getVisibleDays(prevMonth, 1, enableOutsideDays);
-    const newCurrentMonth = currentMonth.clone().subtract(1, 'month');
+    const newCurrentMonth = driver.subtract(currentMonth, { [parts.MONTHS]: 1 });
 
     this.setState({
       currentMonth: prevMonth,
@@ -426,7 +426,7 @@ export default class DayPickerSingleDateController extends React.PureComponent {
         ...this.getModifiers(prevMonthVisibleDays),
       },
     }, () => {
-      onPrevMonthClick(prevMonth.clone());
+      onPrevMonthClick(prevMonth);
     });
   }
 
@@ -445,10 +445,10 @@ export default class DayPickerSingleDateController extends React.PureComponent {
       newVisibleDays[month] = visibleDays[month];
     });
 
-    const nextMonth = currentMonth.clone().add(numberOfMonths, 'month');
+    const nextMonth = driver.add(currentMonth, { [parts.MONTHS]: numberOfMonths });
     const nextMonthVisibleDays = getVisibleDays(nextMonth, 1, enableOutsideDays);
+    const newCurrentMonth = driver.add(currentMonth, { [parts.MONTHS]: 1 });
 
-    const newCurrentMonth = currentMonth.clone().add(1, 'month');
     this.setState({
       currentMonth: newCurrentMonth,
       disablePrev: this.shouldDisableMonthNavigation(minDate, newCurrentMonth),
@@ -458,7 +458,7 @@ export default class DayPickerSingleDateController extends React.PureComponent {
         ...this.getModifiers(nextMonthVisibleDays),
       },
     }, () => {
-      onNextMonthClick(newCurrentMonth.clone());
+      onNextMonthClick(newCurrentMonth);
     });
   }
 
@@ -473,7 +473,7 @@ export default class DayPickerSingleDateController extends React.PureComponent {
     );
 
     this.setState({
-      currentMonth: newMonth.clone(),
+      currentMonth: newMonth,
       visibleDays: this.getModifiers(newVisibleDays),
     });
   }
@@ -489,7 +489,7 @@ export default class DayPickerSingleDateController extends React.PureComponent {
     );
 
     this.setState({
-      currentMonth: newMonth.clone(),
+      currentMonth: newMonth,
       visibleDays: this.getModifiers(newVisibleDays),
     });
   }
@@ -499,7 +499,7 @@ export default class DayPickerSingleDateController extends React.PureComponent {
     const { currentMonth, visibleDays } = this.state;
 
     const numberOfVisibleMonths = Object.keys(visibleDays).length;
-    const nextMonth = currentMonth.clone().add(numberOfVisibleMonths, 'month');
+    const nextMonth = driver.add(currentMonth, { [parts.MONTHS]: numberOfVisibleMonths });
     const newVisibleDays = getVisibleDays(nextMonth, numberOfMonths, enableOutsideDays, true);
 
     this.setState({
@@ -514,13 +514,13 @@ export default class DayPickerSingleDateController extends React.PureComponent {
     const { numberOfMonths, enableOutsideDays } = this.props;
     const { currentMonth, visibleDays } = this.state;
 
-    const firstPreviousMonth = currentMonth.clone().subtract(numberOfMonths, 'month');
+    const firstPreviousMonth = driver.subtract(currentMonth, { [parts.MONTHS]: numberOfMonths });
     const newVisibleDays = getVisibleDays(
       firstPreviousMonth, numberOfMonths, enableOutsideDays, true,
     );
 
     this.setState({
-      currentMonth: firstPreviousMonth.clone(),
+      currentMonth: firstPreviousMonth,
       visibleDays: {
         ...visibleDays,
         ...this.getModifiers(newVisibleDays),
@@ -531,17 +531,17 @@ export default class DayPickerSingleDateController extends React.PureComponent {
   getFirstFocusableDay(newMonth) {
     const { date, numberOfMonths } = this.props;
 
-    let focusedDate = newMonth.clone().startOf('month');
+    let focusedDate = driver.startOf(newMonth, parts.MONTHS);
     if (date) {
-      focusedDate = date.clone();
+      focusedDate = date;
     }
 
     if (this.isBlocked(focusedDate)) {
       const days = [];
-      const lastVisibleDay = newMonth.clone().add(numberOfMonths - 1, 'months').endOf('month');
-      let currentDay = focusedDate.clone();
+      const lastVisibleDay = chain(newMonth).add({ [parts.MONTHS]: numberOfMonths - 1 }).endOf(parts.MONTHS).value();
+      let currentDay = focusedDate;
       while (!isAfterDay(currentDay, lastVisibleDay)) {
-        currentDay = currentDay.clone().add(1, 'day');
+        currentDay = driver.add(currentDay, { [parts.DAYS]: 1 });
         days.push(currentDay);
       }
 
@@ -630,12 +630,12 @@ export default class DayPickerSingleDateController extends React.PureComponent {
 
   isFirstDayOfWeek(day) {
     const { firstDayOfWeek } = this.props;
-    return day.day() === (firstDayOfWeek || driver.firstDayOfWeek());
+    return driver.weekday(day) === (firstDayOfWeek || driver.firstDayOfWeek());
   }
 
   isLastDayOfWeek(day) {
     const { firstDayOfWeek } = this.props;
-    return day.day() === ((firstDayOfWeek || driver.firstDayOfWeek()) + 6) % 7;
+    return driver.weekday(day) === ((firstDayOfWeek || driver.firstDayOfWeek()) + 6) % 7;
   }
 
   render() {

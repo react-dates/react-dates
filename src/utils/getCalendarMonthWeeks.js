@@ -21,8 +21,8 @@ export default function getCalendarMonthWeeks(
 
   // calculate the exact first and last days to fill the entire matrix
   // (considering days outside month)
-  const prevDays = ((driver.get(firstOfMonth, parts.DAYS) + 7 - firstDayOfWeek) % 7);
-  const nextDays = ((firstDayOfWeek + 6 - driver.get(lastOfMonth, parts.DAYS)) % 7);
+  const prevDays = ((driver.weekday(firstOfMonth) + 7 - firstDayOfWeek) % 7);
+  const nextDays = ((firstDayOfWeek + 6 - driver.weekday(lastOfMonth)) % 7);
   const firstDay = driver.subtract(firstOfMonth, { [parts.DAYS]: prevDays });
   const lastDay = driver.add(lastOfMonth, { [parts.DAYS]: nextDays });
 

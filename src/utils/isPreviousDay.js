@@ -5,6 +5,6 @@ import isSameDay from './isSameDay';
 
 export default function isPreviousDay(a, b) {
   if (!driver.valid(a) || !driver.valid(b)) return false;
-  const dayBefore = driver(a).subtract({ [parts.DAYS]: 1 });
+  const dayBefore = driver.subtract(a, { [parts.DAYS]: 1 });
   return isSameDay(dayBefore, b);
 }

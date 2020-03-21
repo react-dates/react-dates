@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
+
 import { driver } from '../drivers/driver';
+import formats from '../drivers/formats';
 
 import openDirectionShape from '../shapes/OpenDirectionShape';
 
@@ -28,13 +30,13 @@ const propTypes = forbidExtraProps({
   children: PropTypes.node,
 
   // TODO: @tonyhb luxon prop types
-  startDate: PropTypes.object,
+  startDate: driver.datePropType,
   startDateId: PropTypes.string,
   startDatePlaceholderText: PropTypes.string,
   isStartDateFocused: PropTypes.bool,
   startDateAriaLabel: PropTypes.string,
 
-  endDate: PropTypes.object,
+  endDate: driver.datePropType,
   endDateId: PropTypes.string,
   endDatePlaceholderText: PropTypes.string,
   isEndDateFocused: PropTypes.bool,
@@ -119,7 +121,7 @@ const defaultProps = {
   isOutsideRange: (day) => !isInclusivelyAfterDay(day, driver.now()),
   isDayBlocked: () => false,
   // TODO: @tonyhb driver.formats
-  displayFormat: 'D',
+  displayFormat: driver.formatString(formats.DISPLAY),
 
   onFocusChange() {},
   onClose() {},

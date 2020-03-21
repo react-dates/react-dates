@@ -42,7 +42,7 @@ const defaultProps = {
   onDayMouseEnter() {},
   onDayMouseLeave() {},
   renderDayContents: null,
-  ariaLabelFormat: 'cccc, DDD',
+  ariaLabelFormat: driver.formatString(formats.ARIA_LABEL),
 
   // internationalization
   phrases: CalendarDayPhrases,

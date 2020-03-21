@@ -9,6 +9,7 @@ const formats = {
   DAY: 'day_format',
   MONTH: 'month_format',
   WEEKDAY: 'weekday_format',
+  ARIA_LABEL: 'aria_format',
 };
 
 export default formats;

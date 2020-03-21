@@ -7,7 +7,7 @@ import toMomentObject from './toMomentObject';
 
 // valid returns whether the given value is a DateTime object
 function valid(instance) {
-  return instance instanceof moment;
+  return moment.isMoment(instance) && instance.isValid();
 }
 
 function now() {
@@ -16,13 +16,10 @@ function now() {
 
 // date constructs a new DateTime object as per the driver's interface.
 function date(val, withFormat) {
-  if (val && withFormat) {
-    return toMomentObject(val, withFormat);
-  }
   if (valid(val)) {
     return val;
   }
-  return moment();
+  return toMomentObject(val, withFormat);
 }
 
 // startOf returns a modified version of the date to start from a given date part.
@@ -48,8 +45,20 @@ function set(d, withParts) {
   const dateObj = valid(d) ? d : toMomentObject(d);
   if (!dateObj) return null;
 
-  const copy = { date: withParts[parts.DAYS], ...withParts };
-  delete copy[parts.DAYS];
+  // Normalize setting the day part of the date (eg. 31st) within moment.
+  let copy = { ...withParts };
+  if (withParts[parts.DAYS] !== undefined) {
+    copy = { date: withParts[parts.DAYS], ...withParts };
+    delete copy[parts.DAYS];
+  }
+
+  // Normalize setting weekdays in moment.  Weekdays in moment
+  // are set with the "day" key, even though the weekday key
+  // exists.
+  if (withParts[parts.WEEKDAYS] !== undefined) {
+    copy = { day: withParts[parts.WEEKDAYS], ...withParts };
+    delete copy[parts.WEEKDAYS];
+  }
 
   return dateObj.clone().set(copy);
 }
@@ -99,6 +108,8 @@ function get(d, part) {
       return dateObj.month();
     case parts.DAYS:
       return dateObj.date();
+    case parts.WEEKDAYS:
+      return dateObj.day();
     case parts.HOURS:
       return dateObj.hour();
     case parts.MINUTES:
@@ -131,15 +142,22 @@ function formatString(type) {
     case formats.DAY:
       return 'D';
     case formats.MONTH:
-      return 'MMMM YY';
+      return 'MMMM YYYY';
     case formats.WEEKDAY:
       return 'dd';
     case formats.DISPLAY:
       return 'L';
+    case formats.ARIA_LABEL:
+      return 'dddd, LL';
     default:
       return 'L';
   }
 }
+
+function weekday(date) {
+  return date.weekday();
+}
+
 
 const driver = {
   datePropType: momentPropTypes.momentObj,
@@ -162,6 +180,7 @@ const driver = {
   format,
   formatString,
   daysInMonth,
+  weekday,
 };
 
 export default driver;

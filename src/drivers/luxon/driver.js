@@ -42,6 +42,13 @@ function endOf(d, part) {
 function set(d, values) {
   const dateObj = valid(d) ? d : toLuxonObject(d);
   if (!dateObj) return null;
+
+  // Luxon's weekdays are 1-7;  if we're setting a weekday, the main library
+  // expects weekdays to be 0 indexed.
+  if (values[parts.WEEKDAYS] !== undefined) {
+    values[parts.WEEKDAYS] -= 1;
+  }
+
   return dateObj.set(values);
 }
 
@@ -76,6 +83,9 @@ function get(d, part) {
       return dateObj.year;
     case parts.MONTHS:
       return dateObj.month;
+    case parts.WEEKDAYS:
+      // Again, luxon weekdays are indexed from 1-7 but we expect 0-6
+      return dateObj.weekday - 1;
     case parts.DAYS:
       return dateObj.day;
     case parts.HOURS:
@@ -108,6 +118,11 @@ function firstDayOfWeek() {
   return 0;
 }
 
+function weekday(date) {
+  // Keep days of weeks 0 indexed
+  return date.toFormat('c') - 1;
+}
+
 function formatString(type) {
   switch (type) {
     case formats.DAY:
@@ -118,6 +133,8 @@ function formatString(type) {
       return 'ccc';
     case formats.DISPLAY:
       return 'D';
+    case formats.ARIA_LABEL:
+      return 'cccc, DDD';
     default:
       return 'D';
   }
@@ -144,6 +161,7 @@ const driver = {
   format,
   formatString,
   daysInMonth,
+  weekday,
 };
 
 export default driver;

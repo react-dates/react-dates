@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import momentPropTypes from 'react-moment-proptypes';
 import { forbidExtraProps, nonNegativeInteger, or } from 'airbnb-prop-types';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
-import moment from 'moment';
 import raf from 'raf';
+import { driver } from '../drivers/driver';
+import formats from '../drivers/formats';
 
 import { CalendarDayPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
@@ -40,7 +40,7 @@ const DayStyleShape = PropTypes.shape({
 
 const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
-  day: momentPropTypes.momentObj,
+  day: driver.datePropType,
   daySize: nonNegativeInteger,
   isOutsideDay: PropTypes.bool,
   modifiers: PropTypes.instanceOf(Set),
@@ -178,7 +178,7 @@ export const selectedStyles = {
 };
 
 const defaultProps = {
-  day: moment(),
+  day: driver.now(),
   daySize: DAY_SIZE,
   isOutsideDay: false,
   modifiers: new Set(),
@@ -188,7 +188,7 @@ const defaultProps = {
   onDayMouseEnter() {},
   onDayMouseLeave() {},
   renderDayContents: null,
-  ariaLabelFormat: 'dddd, LL',
+  ariaLabelFormat: driver.formatString(formats.ARIA_LABEL),
 
   // style defaults
   defaultStyles,

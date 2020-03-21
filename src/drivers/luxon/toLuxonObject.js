@@ -20,5 +20,5 @@ export default function toLuxonObject(dateString, customFormat) {
     return date.isValid;
   });
 
-  return date ? date.hour(12) : null;
+  return date ? date.set({ hours: 12 }) : null;
 }

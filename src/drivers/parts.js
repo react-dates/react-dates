@@ -2,7 +2,8 @@ const parts = {
   SECONDS: 'seconds',
   MINUTES: 'minutes',
   HOURS: 'hours',
-  DAYS: 'days',
+  WEEKDAYS: 'weekday', // 0-6 day of week
+  DAYS: 'days', // Days in the month
   WEEKS: 'weeks',
   MONTHS: 'months',
   YEARS: 'years',

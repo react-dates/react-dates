@@ -221,12 +221,12 @@ describe('moment driver', () => {
   });
 
   describe('format', () => {
-    it('gets a part', () => {
+    it('formats correctly', () => {
       const date = moment('2019-02-05T19:12:14');
       expect(driver.format(date, driver.formatString(formats.DAY)))
-        .to.equal('2');
+        .to.equal('5');
       expect(driver.format(date, driver.formatString(formats.MONTH)))
-        .to.equal('February 19');
+        .to.equal('February 2019');
       expect(driver.format(date, driver.formatString(formats.WEEKDAY)))
         .to.equal('Tu');
       expect(driver.format(date, driver.formatString(formats.DISPLAY)))

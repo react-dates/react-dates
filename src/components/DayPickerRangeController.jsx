@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
 import { forbidExtraProps, mutuallyExclusiveProps, nonNegativeInteger } from 'airbnb-prop-types';
 import values from 'object.values';
 import isTouchDevice from 'is-touch-device';
@@ -45,17 +44,16 @@ import {
 } from '../constants';
 
 import DayPicker from './DayPicker';
-import getPooledMoment from '../utils/getPooledMoment';
+import getDatePool from '../utils/getDatePool';
 
 const propTypes = forbidExtraProps({
-  // TODO: @tonyhb driver.datePropTypes
-  startDate: PropTypes.object,
-  endDate: PropTypes.object,
+  startDate: driver.datePropTypes,
+  endDate: driver.datePropTypes,
   onDatesChange: PropTypes.func,
   startDateOffset: PropTypes.func,
   endDateOffset: PropTypes.func,
-  minDate: PropTypes.object,
-  maxDate: PropTypes.object,
+  minDate: driver.datePropTypes,
+  maxDate: driver.datePropTypes,
 
   focusedInput: FocusedInputShape,
   onFocusChange: PropTypes.func,
@@ -193,7 +191,6 @@ const defaultProps = {
   onShiftTab() {},
 
   // i18n
-  // TODO: @tonyhb driver.formats
   monthFormat: driver.formatString(formats.MONTH),
   weekDayFormat: driver.formatString(formats.WEEKDAY),
   phrases: DayPickerPhrases,
@@ -376,7 +373,7 @@ export default class DayPickerRangeController extends React.PureComponent {
         values(visibleDays).forEach((days) => {
           Object.keys(days).forEach((day) => {
             // TODO: what format is this?!
-            const dateObj = moment(day);
+            const dateObj = driver.date(day);
             modifiers = this.deleteModifier(modifiers, dateObj, 'no-selected-start-before-selected-end');
           });
         });
@@ -429,7 +426,7 @@ export default class DayPickerRangeController extends React.PureComponent {
       if (!startDate && endDate) {
         values(visibleDays).forEach((days) => {
           Object.keys(days).forEach((day) => {
-            const dateObj = moment(day);
+            const dateObj = driver.date(day);
 
             if (isBeforeDay(dateObj, endDate)) {
               modifiers = this.addModifier(modifiers, dateObj, 'no-selected-start-before-selected-end');
@@ -473,8 +470,7 @@ export default class DayPickerRangeController extends React.PureComponent {
     if (didFocusChange || recomputePropModifiers) {
       values(visibleDays).forEach((days) => {
         Object.keys(days).forEach((day) => {
-          // TODO: What is the format here?
-          const dateObj = getPooledMoment(day);
+          const dateObj = getDatePool(day);
           let isBlocked = false;
 
           if (didFocusChange || recomputeOutsideRange) {
@@ -1263,12 +1259,12 @@ export default class DayPickerRangeController extends React.PureComponent {
 
   isFirstDayOfWeek(day) {
     const { firstDayOfWeek } = this.props;
-    return day.day() === (firstDayOfWeek || moment.localeData().firstDayOfWeek());
+    return day.day() === (firstDayOfWeek || driver.firstDayOfWeek());
   }
 
   isLastDayOfWeek(day) {
     const { firstDayOfWeek } = this.props;
-    return day.day() === ((firstDayOfWeek || moment.localeData().firstDayOfWeek()) + 6) % 7;
+    return day.day() === ((firstDayOfWeek || driver.firstDayOfWeek()) + 6) % 7;
   }
 
   isFirstPossibleEndDateForHoveredStartDate(day, hoverDate) {

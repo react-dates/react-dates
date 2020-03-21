@@ -24,6 +24,7 @@ const chainable = {
   diff: true,
   format: true,
   daysInMonth: true,
+  weedkay: true,
 };
 
 // chain exposes the driver's modifiable functions so that they can chain to mutate
@@ -95,11 +96,13 @@ type Driver interface {
   add: (date, object: { [part: parts]: number }) => any;
   subtract: (date, object: { [part: parts]: number }) => any;
 
+
   // # Getters/formatters
   get: (date, part) => number;
   diff: (a, b, part) => number;
   format: (date, format) => string;
   daysInMonth: (date) => number;
+  weekday: (date) => number; // return the weekday of the current date (eg 0-6 in moment)
 }
 
 * */

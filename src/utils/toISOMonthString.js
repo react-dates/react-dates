@@ -10,5 +10,5 @@ export default function toISODateString(date, currentFormat) {
   // want to use old-fashioned +.
   // eslint-disable-next-line prefer-template
   return driver.get(dateObj, parts.YEARS) + '-'
-    + String(driver.get(dateObj, parts.MONTHS) + 1).padStart(2, '0') + '-';
+    + String(driver.get(dateObj, parts.MONTHS) + 1).padStart(2, '0');
 }

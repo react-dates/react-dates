@@ -120,7 +120,6 @@
     "enzyme-shallow-equal": "^1.0.0",
     "is-touch-device": "^1.0.1",
     "lodash": "^4.1.1",
-    "luxon": "^1.22.0",
     "object.assign": "^4.1.0",
     "object.values": "^1.1.0",
     "prop-types": "^15.7.2",
