@@ -69,7 +69,7 @@ class CalendarDay extends React.PureComponent {
   componentDidUpdate(prevProps) {
     const { isFocused, tabIndex } = this.props;
     if (tabIndex === 0) {
-      if (isFocused || tabIndex !== prevProps.tabIndex) {
+      if (isFocused && tabIndex !== prevProps.tabIndex) {
         raf(() => {
           if (this.buttonRef) {
             this.buttonRef.focus();

@@ -86,6 +86,7 @@ const propTypes = forbidExtraProps({
   calendarInfoPosition: CalendarInfoPositionShape,
 
   // accessibility
+  onFocus: PropTypes.func,
   onBlur: PropTypes.func,
   isFocused: PropTypes.bool,
   showKeyboardShortcuts: PropTypes.bool,
@@ -154,6 +155,7 @@ const defaultProps = {
   calendarInfoPosition: INFO_POSITION_BOTTOM,
 
   // accessibility
+  onFocus() {},
   onBlur() {},
   isFocused: false,
   showKeyboardShortcuts: false,
@@ -670,6 +672,7 @@ export default class DayPickerSingleDateController extends React.PureComponent {
       isRTL,
       phrases,
       dayAriaLabelFormat,
+      onFocus,
       onBlur,
       showKeyboardShortcuts,
       weekDayFormat,
@@ -729,6 +732,7 @@ export default class DayPickerSingleDateController extends React.PureComponent {
         calendarInfoPosition={calendarInfoPosition}
         isFocused={isFocused}
         getFirstFocusableDay={this.getFirstFocusableDay}
+        onFocus={onFocus}
         onBlur={onBlur}
         onTab={onTab}
         onShiftTab={onShiftTab}
