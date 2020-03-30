@@ -32,13 +32,17 @@ node_modules
 # Optional REPL history
 .node_repl_history
 
+.cache
+.github
+.lgtm
 .storybook
 .storybook-css
+_gh-pages
 examples
+MAINTAINERS
 public
 react-dates-demo.gif
 stories
 test
 css
 !lib/css
-

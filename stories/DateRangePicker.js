@@ -117,4 +117,11 @@ storiesOf('DateRangePicker (DRP)', module)
       orientation={VERTICAL_ORIENTATION}
       verticalHeight={568}
     />
+  )))
+  .add('with navigation blocked (minDate and maxDate)', withInfo()(() => (
+    <DateRangePickerWrapper
+      minDate={moment().subtract(2, 'months').startOf('month')}
+      maxDate={moment().add(2, 'months').endOf('month')}
+      numberOfMonths={2}
+    />
   )));

@@ -4,6 +4,116 @@
 - []  ([#](https://github.com/airbnb/react-dates/pull/))
 -->
 
+## 21.8.0
+
+- [new] Add option to allow days violating min nights to be clicked ([#1913](https://github.com/airbnb/react-dates/pull/1913))
+- [fix] Prevent vertical scrollable prev nav button from overlapping weekday headers ([#1914](https://github.com/airbnb/react-dates/pull/1914))
+
+## 21.7.2
+- [fix] Add tests for previous fix ([#1912](https://github.com/airbnb/react-dates/pull/1912))
+
+## 21.7.1
+- [fix] Fix render conditional in DayPickerKeyboardShortcuts ([#1911](https://github.com/airbnb/react-dates/pull/1911))
+
+## 21.7.0
+- [fix] Keep scroll position when prev months rendered on vertical scrollable calendar ([#1902](https://github.com/airbnb/react-dates/pull/1902))
+- [new] Add ability to not show prev or next navigation buttons ([#1900](https://github.com/airbnb/react-dates/pull/1900))
+- [fix] Fix logic for applying default navigation button styling ([#1898](https://github.com/airbnb/react-dates/pull/1898))
+
+## 21.6.0
+
+- [new] Add functionality to see previous months for vertical scrollable calendar ([#1894](https://github.com/airbnb/react-dates/pull/1894))
+- [new] Add support for noNavButtons in DayPickerSingleDateController (match DayPickerRangeController support) ([#1895](https://github.com/airbnb/react-dates/pull/1895))
+
+## 21.5.1
+
+- [fix] Remove redundant overflowY:scroll on CalendarMonthGrid ([#1881](https://github.com/airbnb/react-dates/pull/1881))
+
+## 21.5.0
+
+- [new] Add support for custom month navigation buttons ([#1859](https://github.com/airbnb/react-dates/pull/1859))
+
+## 21.4.0
+
+- [new] Expose 'after-hovered-start' modifier and add 'before-hovered-end', 'no-selected-start-before-selected-end', 'selected-start-in-hovered-span', 'selected-end-in-hovered-span', 'selected-start-no-selected-end', and 'selected-end-no-selected-start' modifiers [#1608](https://github.com/airbnb/react-dates/pull/1608)
+- [fix] Loosen up CustomizeableCalendarDay restriction on children  ([#1857](https://github.com/airbnb/react-dates/pull/1857))
+
+## 21.3.2
+
+- [fix] Revert "Call getStateForNewMonth when date/startDate/endDate is set to a date that is not visible" ([#1851](https://github.com/airbnb/react-dates/pull/1851))
+
+## 21.3.1
+
+- [fix] Update react-with-styles 4.1.0-alpha.1 -> 4.1.0
+
+## 21.3.0
+
+- [new] Update react-with-styles 4.0.1 -> 4.1.0 ([#1843](https://github.com/airbnb/react-dates/pull/1843))
+- [new] Add Input Font-Weight to Default Theme ([#1765](https://github.com/airbnb/react-dates/pull/#1765))
+
+## 21.2.1
+
+- [fix] Call getStateForNewMonth when date/startDate/endDate is set to a date that is not visible ([#1834](https://github.com/airbnb/react-dates/pull/1834))
+
+## 21.2.0
+
+- [fix] Revert "Merge pull request [#1758](https://github.com/airbnb/react-dates/pull/1758): Remove all direct imports of css in favor of injected prop" ([#1818](https://github.com/airbnb/react-dates/pull/1818))
+- [fix] Fix for getWeekHeaders(), prevents it from changing state.currentMonth ([#1796](https://github.com/airbnb/react-dates/pull/1796))
+- [new] Add support for positioning month navigation under the calendar ([#1784](https://github.com/airbnb/react-dates/pull/1784))
+- [new] Add minDate and maxDate props to DateRangePicker ([#1793](https://github.com/airbnb/react-dates/pull/1793), [#1794](https://github.com/airbnb/react-dates/pull/1794))
+
+## 21.1.0
+
+- [fix] `DayPicker`: week headers: use the passed-in moment object’s instance, to support localy ([#1577](https://github.com/airbnb/react-dates/pull/1577))
+- [fix] Combine labelled DayPicker container elements ([#1783](https://github.com/airbnb/react-dates/pull/1783))
+- [new] Add a render function for customizable week header text ([#1787](https://github.com/airbnb/react-dates/pull/1787))
+
+## 21.0.1
+
+- [fix] [deps] Update react-with-styles ^4.0.0 -> ^4.0.1 ([#1781](https://github.com/airbnb/react-dates/pull/1781))
+
+## 21.0.0
+
+- [breaking] [deps] Update react-with-styles and other deps ([#1761](https://github.com/airbnb/react-dates/pull/1761)
+- [new] [deps] Update dependencies related to react-with-styles ([#1775](https://github.com/airbnb/react-dates/pull/1775))
+- [new] `DayPickerSingleDateController`: Add onMultiplyScrollableMonths ([#1770](https://github.com/airbnb/react-dates/pull/1770))
+- [dev] Fix moment date formats ([#1767](https://github.com/airbnb/react-dates/pull/1767))
+- [dev] Fix addons webpack loader, Fix tests ([#1764](https://github.com/airbnb/react-dates/pull/1764))
+- [dev] build: fix linting (refs eslint/eslint#12119)
+- [new] [deps] update `@babel/runtime`, `airbnb-prop-types`, `object.values`, `prop-types`, `react-outside-click-handler`, `react-portal`
+- [dev] [deps] update `@babel/*`, `@storybook/*`, `babel-plugin-inline-svg`, `babel-plugin-istanbul`, `babel-preset-airbnb`, `eslint-config-airbnb` to v18 (plus peer deps), `eslint` to v6; `eslint-plugin-react-with-styles`, `karma`, `karma-firefox-launcher`, `mocha`, `safe-publish-latest`, `sass-loader`, `sinon`, `sinon-sandbox`, `coveralls`, `enzyme-adapter-react-helper`
+- [fix] Remove all direct imports of css in favor of injected prop ([#1758](https://github.com/airbnb/react-dates/pull/1758))
+
+## 20.3.0
+- [fix] Optimize setState dayPickerContainerStyles in responsivizePickerPosition ([#1735](https://github.com/airbnb/react-dates/pull/1735))
+- [fix] Stop calendar blinking on DateRangePickerInput focus switch (fixes #1523) ([#1553](https://github.com/airbnb/react-dates/pull/1553))
+- [new] [a11y] Add `aria-roledescription` ([#1746](https://github.com/airbnb/react-dates/pull/1746))
+
+## 20.2.5
+- [fix] Defer day focusing until next animation frame ([#1707](https://github.com/airbnb/react-dates/pull/1707))
+- [fix] Fix startDate style (@mmarkelov, [#1710](https://github.com/airbnb/react-dates/pull/1710))
+- [fix] Pass correct props to SingleDatePicker on close (@AlokTakshak, [#1678](https://github.com/airbnb/react-dates/pull/1678))
+- [dev] Update blocked navigation (min/maxDate) stories (@ianduvall, [#1598](https://github.com/airbnb/react-dates/pull/1598))
+- [dev] Add positioning to custom navigation in stories (@dougmacknz, [#1573](https://github.com/airbnb/react-dates/pull/1573))
+- [dev] Update karma 3 → 4, mocha 3 → 6, nyc 12 → 14, sinon 6 → 7, eslint 5 → 6 ([#1713](https://github.com/airbnb/react-dates/pull/1713), [#1712](https://github.com/airbnb/react-dates/pull/1713))
+
+## 20.2.4
+- [fix] Replace react-addons-shallow-compare with enzyme-shallow-equal (bf7e3347702f)
+- [fix] Optimize SVG assets ([#1690](https://github.com/airbnb/react-dates/pull/1690))
+- [fix] Update babel-preset-airbnb 3.2.1 -> 4.0.0 ([#1692](https://github.com/airbnb/react-dates/pull/1692))
+
+## 20.2.3
+- [fix] Add guard for undefined objects in deleteModifier ([#1687](https://github.com/airbnb/react-dates/pull/1687))
+- [dev] Update Storybook from v4 to v5 ([@trotzig](https://github.com/trotzig) [#1673](https://github.com/airbnb/react-dates/pull/1673))
+
+## 20.2.2
+- [fix] Add guard for undefined objects in addModifier ([#1667](https://github.com/airbnb/react-dates/pull/1667))
+
+## 20.2.1
+- [fix] Compile classes in loose mode ([#1655](https://github.com/airbnb/react-dates/pull/1655))
+- [fix] Performance optimizations ([#1656](https://github.com/airbnb/react-dates/pull/1656), [#1657](https://github.com/airbnb/react-dates/pull/1657), [#1659](https://github.com/airbnb/react-dates/pull/1659), [#1661](https://github.com/airbnb/react-dates/pull/1661), [#1662](https://github.com/airbnb/react-dates/pull/1662), and [#1663](https://github.com/airbnb/react-dates/pull/1663))
+- [docs] Add `initialVisibleMonth` to `DayPickerRangeController` in readme ([@AlokTakshak](https://github.com/AlokTakshak) [1652](https://github.com/airbnb/react-dates/pull/1652))
+
 ## 20.2.0
 - [fix] Fix date selection in the SDP ([#1530](https://github.com/airbnb/react-dates/pull/1530))
 - [new] Add explicit aria label props ([#1594](https://github.com/airbnb/react-dates/pull/1594))

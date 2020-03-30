@@ -6,6 +6,7 @@ import moment from 'moment';
 
 import DayPicker from '../../src/components/DayPicker';
 import DayPickerSingleDateController from '../../src/components/DayPickerSingleDateController';
+import DayPickerNavigation from '../../src/components/DayPickerNavigation';
 
 import toISODateString from '../../src/utils/toISODateString';
 import toISOMonthString from '../../src/utils/toISOMonthString';
@@ -18,7 +19,7 @@ import { VERTICAL_SCROLLABLE } from '../../src/constants';
 const today = moment().startOf('day').hours(12);
 
 function getCallsByModifier(stub, modifier) {
-  return stub.getCalls().filter(call => call.args[call.args.length - 1] === modifier);
+  return stub.getCalls().filter((call) => call.args[call.args.length - 1] === modifier);
 }
 
 describe('DayPickerSingleDateController', () => {
@@ -111,9 +112,9 @@ describe('DayPickerSingleDateController', () => {
             const startOfMonth = today.clone().startOf('month');
             visibleDays = {
               [toISOMonthString(startOfMonth)]: {
-                [toISODateString(startOfMonth)]: [],
-                [toISODateString(startOfMonth.clone().add(1, 'day'))]: [],
-                [toISODateString(startOfMonth.clone().add(2, 'days'))]: [],
+                [toISODateString(startOfMonth)]: new Set(),
+                [toISODateString(startOfMonth.clone().add(1, 'day'))]: new Set(),
+                [toISODateString(startOfMonth.clone().add(2, 'days'))]: new Set(),
               },
             };
           });
@@ -194,9 +195,9 @@ describe('DayPickerSingleDateController', () => {
             const startOfMonth = today.clone().startOf('month');
             visibleDays = {
               [toISOMonthString(startOfMonth)]: {
-                [toISODateString(startOfMonth)]: [],
-                [toISODateString(startOfMonth.clone().add(1, 'day'))]: [],
-                [toISODateString(startOfMonth.clone().add(2, 'days'))]: [],
+                [toISODateString(startOfMonth)]: new Set(),
+                [toISODateString(startOfMonth.clone().add(1, 'day'))]: new Set(),
+                [toISODateString(startOfMonth.clone().add(2, 'days'))]: new Set(),
               },
             };
           });
@@ -289,9 +290,9 @@ describe('DayPickerSingleDateController', () => {
             const startOfMonth = today.clone().startOf('month');
             visibleDays = {
               [toISOMonthString(startOfMonth)]: {
-                [toISODateString(startOfMonth)]: [],
-                [toISODateString(startOfMonth.clone().add(1, 'day'))]: [],
-                [toISODateString(startOfMonth.clone().add(2, 'days'))]: [],
+                [toISODateString(startOfMonth)]: new Set(),
+                [toISODateString(startOfMonth.clone().add(1, 'day'))]: new Set(),
+                [toISODateString(startOfMonth.clone().add(2, 'days'))]: new Set(),
               },
             };
           });
@@ -372,9 +373,9 @@ describe('DayPickerSingleDateController', () => {
             const startOfMonth = today.clone().startOf('month');
             visibleDays = {
               [toISOMonthString(startOfMonth)]: {
-                [toISODateString(startOfMonth)]: [],
-                [toISODateString(startOfMonth.clone().add(1, 'day'))]: [],
-                [toISODateString(startOfMonth.clone().add(2, 'days'))]: [],
+                [toISODateString(startOfMonth)]: new Set(),
+                [toISODateString(startOfMonth.clone().add(1, 'day'))]: new Set(),
+                [toISODateString(startOfMonth.clone().add(2, 'days'))]: new Set(),
               },
             };
           });
@@ -761,6 +762,72 @@ describe('DayPickerSingleDateController', () => {
       expect(onPrevMonthClickStub.firstCall.args[0].year()).to.equal(newMonth.year());
       expect(onPrevMonthClickStub.firstCall.args[0].month()).to.equal(newMonth.month());
     });
+
+    it('calls this.shouldDisableMonthNavigation twice', () => {
+      const shouldDisableMonthNavigationSpy = sinon.spy(DayPickerSingleDateController.prototype, 'shouldDisableMonthNavigation');
+      const wrapper = shallow((
+        <DayPickerSingleDateController
+          onDatesChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />
+      ));
+      shouldDisableMonthNavigationSpy.resetHistory();
+      wrapper.instance().onPrevMonthClick();
+      expect(shouldDisableMonthNavigationSpy).to.have.property('callCount', 2);
+    });
+
+    it('sets disablePrev and disablePrev as false on onPrevMonthClick call withouth maxDate and minDate set', () => {
+      const numberOfMonths = 2;
+      const wrapper = shallow((
+        <DayPickerSingleDateController
+          onDatesChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+          numberOfMonths={numberOfMonths}
+        />
+      ));
+      wrapper.setState({
+        currentMonth: today,
+      });
+      wrapper.instance().onPrevMonthClick();
+      expect(wrapper.state()).to.have.property('disablePrev', false);
+      expect(wrapper.state()).to.have.property('disableNext', false);
+    });
+
+    it('sets disableNext as true when maxDate is in visible month', () => {
+      const numberOfMonths = 2;
+      const wrapper = shallow((
+        <DayPickerSingleDateController
+          onDatesChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+          numberOfMonths={numberOfMonths}
+          maxDate={today}
+        />
+      ));
+      wrapper.setState({
+        currentMonth: today,
+      });
+      wrapper.instance().onPrevMonthClick();
+      expect(wrapper.state()).to.have.property('disablePrev', false);
+      expect(wrapper.state()).to.have.property('disableNext', true);
+    });
+
+    it('sets disablePrev as true when minDate is in visible month', () => {
+      const numberOfMonths = 2;
+      const wrapper = shallow((
+        <DayPickerSingleDateController
+          onDatesChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+          numberOfMonths={numberOfMonths}
+          minDate={today.clone().subtract(1, 'month')}
+        />
+      ));
+      wrapper.setState({
+        currentMonth: today,
+      });
+      wrapper.instance().onPrevMonthClick();
+      expect(wrapper.state()).to.have.property('disablePrev', true);
+      expect(wrapper.state()).to.have.property('disableNext', false);
+    });
   });
 
   describe('#onNextMonthClick', () => {
@@ -1087,7 +1154,7 @@ describe('DayPickerSingleDateController', () => {
           onFocusChange={sinon.stub()}
         />
       ));
-      const modifiers = wrapper.instance().addModifier({}, today);
+      const modifiers = wrapper.instance().addModifier({}, today, 'foo');
       expect(Object.keys(modifiers)).to.contain(toISOMonthString(today));
     });
 
@@ -1098,6 +1165,18 @@ describe('DayPickerSingleDateController', () => {
           onFocusChange={sinon.stub()}
         />
       ));
+      const modifiers = wrapper.instance().addModifier({}, today);
+      expect(Object.keys(modifiers[toISOMonthString(today)])).to.contain(toISODateString(today));
+    });
+
+    it('is resilient when visibleDays is an empty object', () => {
+      const wrapper = shallow((
+        <DayPickerSingleDateController
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />
+      ));
+      wrapper.instance().setState({ visibleDays: {} });
       const modifiers = wrapper.instance().addModifier({}, today);
       expect(Object.keys(modifiers[toISOMonthString(today)])).to.contain(toISODateString(today));
     });
@@ -1165,6 +1244,54 @@ describe('DayPickerSingleDateController', () => {
       const modifiers = wrapper.instance().addModifier(updatedDays, nextMonth, modifierToAdd);
       expect(Array.from(modifiers[nextMonthISO][nextMonthDayISO])).to.contain(modifierToAdd);
     });
+
+    it('return value now has modifier arg for day after getting next scrollable months', () => {
+      const modifierToAdd = 'foo';
+      const numberOfMonths = 2;
+      const nextMonth = today.clone().add(numberOfMonths, 'month');
+      const nextMonthISO = toISOMonthString(nextMonth);
+      const nextMonthDayISO = toISODateString(nextMonth);
+      const updatedDays = {
+        [nextMonthISO]: { [nextMonthDayISO]: new Set(['bar', 'baz']) },
+      };
+      const wrapper = shallow((
+        <DayPickerSingleDateController
+          onDatesChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+          numberOfMonths={numberOfMonths}
+          orientation={VERTICAL_SCROLLABLE}
+        />
+      )).instance();
+      let modifiers = wrapper.addModifier(updatedDays, nextMonth, modifierToAdd);
+      expect(Array.from(modifiers[nextMonthISO][nextMonthDayISO])).to.not.contain(modifierToAdd);
+      wrapper.onGetNextScrollableMonths();
+      modifiers = wrapper.addModifier(updatedDays, nextMonth, modifierToAdd);
+      expect(Array.from(modifiers[nextMonthISO][nextMonthDayISO])).to.contain(modifierToAdd);
+    });
+
+    it('return value now has modifier arg for day after getting previous scrollable months', () => {
+      const modifierToAdd = 'foo';
+      const numberOfMonths = 2;
+      const pastDateAfterMultiply = today.clone().subtract(numberOfMonths, 'months');
+      const monthISO = toISOMonthString(pastDateAfterMultiply);
+      const dayISO = toISODateString(pastDateAfterMultiply);
+      const updatedDays = {
+        [monthISO]: { [dayISO]: new Set(['bar', 'baz']) },
+      };
+      const wrapper = shallow((
+        <DayPickerSingleDateController
+          onDatesChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+          numberOfMonths={numberOfMonths}
+          orientation={VERTICAL_SCROLLABLE}
+        />
+      )).instance();
+      let modifiers = wrapper.addModifier(updatedDays, pastDateAfterMultiply, modifierToAdd);
+      expect(Array.from(modifiers[monthISO][dayISO])).to.not.contain(modifierToAdd);
+      wrapper.onGetPrevScrollableMonths();
+      modifiers = wrapper.addModifier(updatedDays, pastDateAfterMultiply, modifierToAdd);
+      expect(Array.from(modifiers[monthISO][dayISO])).to.contain(modifierToAdd);
+    });
   });
 
   describe('#deleteModifier', () => {
@@ -1200,8 +1327,14 @@ describe('DayPickerSingleDateController', () => {
           onFocusChange={sinon.stub()}
         />
       ));
-      const modifiers = wrapper.instance().deleteModifier({}, today);
-      expect(Object.keys(modifiers)).to.contain(toISOMonthString(today));
+
+      const isoMonth = toISOMonthString(today);
+      const isoDate = toISODateString(today);
+      const modifiers = wrapper.instance()
+        .deleteModifier({ [isoMonth]: { [isoDate]: new Set(['foo']) } }, today, 'foo');
+
+      expect(Object.keys(modifiers)).to.contain(isoMonth);
+      expect(modifiers[isoMonth][isoDate].size).to.equal(0);
     });
 
     it('has day ISO as key one layer down', () => {
@@ -1213,6 +1346,17 @@ describe('DayPickerSingleDateController', () => {
       ));
       const modifiers = wrapper.instance().addModifier({}, today);
       expect(Object.keys(modifiers[toISOMonthString(today)])).to.contain(toISODateString(today));
+    });
+
+    it('is resilient when visibleDays is an empty object', () => {
+      const wrapper = shallow((
+        <DayPickerSingleDateController
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />
+      ));
+      wrapper.instance().setState({ visibleDays: {} });
+      expect(() => { wrapper.instance().deleteModifier({}, today); }).to.not.throw();
     });
 
     it('return value no longer has modifier arg for day if was in first arg', () => {
@@ -1485,6 +1629,18 @@ describe('DayPickerSingleDateController', () => {
         ));
         const dayPicker = wrapper.find(DayPicker);
         expect(dayPicker.props().initialVisibleMonth().isSame(today, 'day')).to.equal(true);
+      });
+    });
+
+    describe('noNavButtons prop', () => {
+      it('renders navigation button', () => {
+        const wrapper = shallow(<DayPickerSingleDateController />).dive().dive();
+        expect(wrapper.find(DayPickerNavigation)).to.have.lengthOf(1);
+      });
+
+      it('does not render navigation button when noNavButtons prop applied', () => {
+        const wrapper = shallow(<DayPickerSingleDateController noNavButtons />).dive().dive();
+        expect(wrapper.find(DayPickerNavigation)).to.have.lengthOf(0);
       });
     });
   });

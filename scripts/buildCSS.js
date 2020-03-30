@@ -20,6 +20,12 @@ registerCSSInterfaceWithDefaultTheme();
 const path = './scripts/renderAllComponents.jsx';
 const CSS = compileCSS(path);
 
+if (CSS === '') {
+  throw new Error('Failed to compile CSS');
+} else {
+  console.log('CSS compilation complete.');
+}
+
 const format = new CleanCSS({
   level: optimizeForProduction ? 2 : 0,
   format: 'beautify',

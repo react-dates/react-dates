@@ -26,7 +26,7 @@ To run that demo on your own computer:
 
 ## Getting Started
 ### Install dependencies
-Ensure packages are installed with correct version numbers by running:
+Ensure packages are installed with correct version numbers by running (from your command line):
   ```sh
   (
     export PKG=react-dates;
@@ -39,6 +39,8 @@ Ensure packages are installed with correct version numbers by running:
   ```sh
   npm install --save react-dates moment@>=#.## react@>=#.## react-dom@>=#.##
   ```
+
+  > If you are running Windows, that command will not work, but if you are running npm 5 or higher, you can run `npx install-peerdeps react-dates` on any platform
 
 ### Initialize
 ```js
@@ -188,6 +190,8 @@ transitionDuration: nonNegativeInteger, // milliseconds
 renderCalendarDay: PropTypes.func,
 renderDayContents: PropTypes.func,
 minimumNights: PropTypes.number,
+minDate: momentPropTypes.momentObj,
+maxDate: momentPropTypes.momentObj,
 enableOutsideDays: PropTypes.bool,
 isDayBlocked: PropTypes.func,
 isOutsideRange: PropTypes.func,
@@ -296,6 +300,7 @@ Here is the minimum *REQUIRED* setup you need to get the `DayPickerRangeControll
   onDatesChange={({ startDate, endDate }) => this.setState({ startDate, endDate })} // PropTypes.func.isRequired,
   focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
   onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
+  initialVisibleMonth={() => moment().add(2, "M")} // PropTypes.func or null,
 />
 ```
 

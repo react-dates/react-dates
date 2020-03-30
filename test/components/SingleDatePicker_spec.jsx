@@ -56,6 +56,21 @@ describe('SingleDatePicker', () => {
           expect(wrapper.find(SingleDatePickerInputController).prop('isOutsideRange')).to.equal(isOutsideRange);
         });
       });
+
+      describe('props.isDayBlocked is defined', () => {
+        it('should pass props.isDayBlocked to <SingleDatePickerInputController>', () => {
+          const isDayBlocked = sinon.stub();
+          const wrapper = shallow((
+            <SingleDatePicker
+              id="date"
+              onDateChange={() => {}}
+              onFocusChange={() => {}}
+              isDayBlocked={isDayBlocked}
+            />
+          )).dive();
+          expect(wrapper.find(SingleDatePickerInputController).prop('isDayBlocked')).to.equal(isDayBlocked);
+        });
+      });
     });
 
     describe('DayPickerSingleDateController', () => {
@@ -459,6 +474,23 @@ describe('SingleDatePicker', () => {
         )).dive();
         wrapper.instance().onOutsideClick();
         expect(onFocusChangeStub.getCall(0).args[0].focused).to.equal(false);
+      });
+
+      it('calls props.onClose with { date: "08-06-2019" } as arg', () => {
+        const onFocusChangeStub = sinon.stub();
+        const onCloseStub = sinon.stub();
+        const wrapper = shallow((
+          <SingleDatePicker
+            id="date"
+            onClose={onCloseStub}
+            onDateChange={() => {}}
+            onFocusChange={onFocusChangeStub}
+            focused
+            date="08-06-2019"
+          />
+        )).dive();
+        wrapper.instance().onOutsideClick();
+        expect(onCloseStub.getCall(0).args[0].date).to.equal('08-06-2019');
       });
     });
   });

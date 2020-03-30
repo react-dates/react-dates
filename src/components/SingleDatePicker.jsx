@@ -33,6 +33,7 @@ import {
   INFO_POSITION_BOTTOM,
   FANG_HEIGHT_PX,
   DEFAULT_VERTICAL_SPACING,
+  NAV_POSITION_TOP,
 } from '../constants';
 
 const propTypes = forbidExtraProps({
@@ -44,6 +45,8 @@ const defaultProps = {
   // required props for a functional interactive SingleDatePicker
   date: null,
   focused: false,
+  minDate: null,
+  maxDate: null,
 
   // input related props
   id: 'date',
@@ -89,8 +92,12 @@ const defaultProps = {
   horizontalMonthPadding: 13,
 
   // navigation related props
+  dayPickerNavigationInlineStyles: null,
+  navPosition: NAV_POSITION_TOP,
   navPrev: null,
   navNext: null,
+  renderNavPrevButton: null,
+  renderNavNextButton: null,
 
   onPrevMonthClick() {},
   onNextMonthClick() {},
@@ -98,6 +105,7 @@ const defaultProps = {
 
   // month presentation and interaction related props
   renderMonthText: null,
+  renderWeekHeaderElement: null,
 
   // day presentation and interaction related props
   renderCalendarDay: undefined,
@@ -105,7 +113,7 @@ const defaultProps = {
   renderMonthElement: null,
   enableOutsideDays: false,
   isDayBlocked: () => false,
-  isOutsideRange: day => !isInclusivelyAfterDay(day, moment()),
+  isOutsideRange: (day) => !isInclusivelyAfterDay(day, moment()),
   isDayHighlighted: () => {},
 
   // internationalization props
@@ -188,8 +196,7 @@ class SingleDatePicker extends React.PureComponent {
       focused,
       onFocusChange,
       onClose,
-      startDate,
-      endDate,
+      date,
       appendToBody,
     } = this.props;
 
@@ -203,7 +210,7 @@ class SingleDatePicker extends React.PureComponent {
     });
 
     onFocusChange({ focused: false });
-    onClose({ startDate, endDate });
+    onClose({ date });
   }
 
   onInputFocus({ focused }) {
@@ -388,14 +395,20 @@ class SingleDatePicker extends React.PureComponent {
       openDirection,
       onDateChange,
       date,
+      minDate,
+      maxDate,
       onFocusChange,
       focused,
       enableOutsideDays,
       numberOfMonths,
       orientation,
       monthFormat,
+      dayPickerNavigationInlineStyles,
+      navPosition,
       navPrev,
       navNext,
+      renderNavPrevButton,
+      renderNavNextButton,
       onPrevMonthClick,
       onNextMonthClick,
       onClose,
@@ -404,6 +417,7 @@ class SingleDatePicker extends React.PureComponent {
       keepOpenOnDateSelect,
       initialVisibleMonth,
       renderMonthText,
+      renderWeekHeaderElement,
       renderCalendarDay,
       renderDayContents,
       renderCalendarInfo,
@@ -437,8 +451,10 @@ class SingleDatePicker extends React.PureComponent {
 
     const withAnyPortal = withPortal || withFullScreenPortal;
 
+    /* eslint-disable jsx-a11y/no-static-element-interactions */
+    /* eslint-disable jsx-a11y/click-events-have-key-events */
     return (
-      <div // eslint-disable-line jsx-a11y/no-static-element-interactions
+      <div
         ref={this.setDayPickerContainerRef}
         {...css(
           styles.SingleDatePicker_picker,
@@ -463,6 +479,8 @@ class SingleDatePicker extends React.PureComponent {
       >
         <DayPickerSingleDateController
           date={date}
+          minDate={minDate}
+          maxDate={maxDate}
           onDateChange={onDateChange}
           onFocusChange={onFocusChange}
           orientation={orientation}
@@ -474,12 +492,17 @@ class SingleDatePicker extends React.PureComponent {
           keepOpenOnDateSelect={keepOpenOnDateSelect}
           hideKeyboardShortcutsPanel={hideKeyboardShortcutsPanel}
           initialVisibleMonth={initialVisibleMonth}
+          dayPickerNavigationInlineStyles={dayPickerNavigationInlineStyles}
+          navPosition={navPosition}
           navPrev={navPrev}
           navNext={navNext}
+          renderNavPrevButton={renderNavPrevButton}
+          renderNavNextButton={renderNavNextButton}
           onPrevMonthClick={onPrevMonthClick}
           onNextMonthClick={onNextMonthClick}
           onClose={onClose}
           renderMonthText={renderMonthText}
+          renderWeekHeaderElement={renderWeekHeaderElement}
           renderCalendarDay={renderCalendarDay}
           renderDayContents={renderDayContents}
           renderCalendarInfo={renderCalendarInfo}
@@ -516,6 +539,8 @@ class SingleDatePicker extends React.PureComponent {
         )}
       </div>
     );
+    /* eslint-enable jsx-a11y/no-static-element-interactions */
+    /* eslint-enable jsx-a11y/click-events-have-key-events */
   }
 
   render() {
@@ -550,6 +575,7 @@ class SingleDatePicker extends React.PureComponent {
       keepOpenOnDateSelect,
       styles,
       isOutsideRange,
+      isDayBlocked,
     } = this.props;
 
     const { isInputFocused } = this.state;
@@ -574,6 +600,7 @@ class SingleDatePicker extends React.PureComponent {
         showDefaultInputIcon={showDefaultInputIcon}
         inputIconPosition={inputIconPosition}
         isOutsideRange={isOutsideRange}
+        isDayBlocked={isDayBlocked}
         customCloseIcon={customCloseIcon}
         customInputIcon={customInputIcon}
         date={date}

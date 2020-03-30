@@ -35,6 +35,7 @@ import {
   INFO_POSITION_BOTTOM,
   FANG_HEIGHT_PX,
   DEFAULT_VERTICAL_SPACING,
+  NAV_POSITION_TOP,
 } from '../constants';
 
 const propTypes = forbidExtraProps({
@@ -73,6 +74,7 @@ const defaultProps = {
 
   // calendar presentation and interaction related props
   renderMonthText: null,
+  renderWeekHeaderElement: null,
   orientation: HORIZONTAL_ORIENTATION,
   anchorDirection: ANCHOR_LEFT,
   openDirection: OPEN_DOWN,
@@ -97,8 +99,12 @@ const defaultProps = {
   horizontalMonthPadding: undefined,
 
   // navigation related props
+  dayPickerNavigationInlineStyles: null,
+  navPosition: NAV_POSITION_TOP,
   navPrev: null,
   navNext: null,
+  renderNavPrevButton: null,
+  renderNavNextButton: null,
 
   onPrevMonthClick() {},
   onNextMonthClick() {},
@@ -112,8 +118,10 @@ const defaultProps = {
   minimumNights: 1,
   enableOutsideDays: false,
   isDayBlocked: () => false,
-  isOutsideRange: day => !isInclusivelyAfterDay(day, moment()),
+  isOutsideRange: (day) => !isInclusivelyAfterDay(day, moment()),
   isDayHighlighted: () => false,
+  minDate: undefined,
+  maxDate: undefined,
 
   // internationalization
   displayFormat: () => moment.localeData().longDateFormat('L'),
@@ -318,7 +326,11 @@ class DateRangePicker extends React.PureComponent {
   responsivizePickerPosition() {
     // It's possible the portal props have been changed in response to window resizes
     // So let's ensure we reset this back to the base state each time
-    this.setState({ dayPickerContainerStyles: {} });
+    const { dayPickerContainerStyles } = this.state;
+
+    if (Object.keys(dayPickerContainerStyles).length > 0) {
+      this.setState({ dayPickerContainerStyles: {} });
+    }
 
     if (!this.isOpened()) {
       return;
@@ -332,7 +344,6 @@ class DateRangePicker extends React.PureComponent {
       withFullScreenPortal,
       appendToBody,
     } = this.props;
-    const { dayPickerContainerStyles } = this.state;
 
     const isAnchoredLeft = anchorDirection === ANCHOR_LEFT;
     if (!withPortal && !withFullScreenPortal) {
@@ -397,8 +408,13 @@ class DateRangePicker extends React.PureComponent {
       orientation,
       monthFormat,
       renderMonthText,
+      renderWeekHeaderElement,
+      dayPickerNavigationInlineStyles,
+      navPosition,
       navPrev,
       navNext,
+      renderNavPrevButton,
+      renderNavNextButton,
       onPrevMonthClick,
       onNextMonthClick,
       onDatesChange,
@@ -412,6 +428,8 @@ class DateRangePicker extends React.PureComponent {
       startDateOffset,
       endDate,
       endDateOffset,
+      minDate,
+      maxDate,
       minimumNights,
       keepOpenOnDateSelect,
       renderCalendarDay,
@@ -455,8 +473,10 @@ class DateRangePicker extends React.PureComponent {
 
     const withAnyPortal = withPortal || withFullScreenPortal;
 
+    /* eslint-disable jsx-a11y/no-static-element-interactions */
+    /* eslint-disable jsx-a11y/click-events-have-key-events */
     return (
-      <div // eslint-disable-line jsx-a11y/no-static-element-interactions
+      <div
         ref={this.setDayPickerContainerRef}
         {...css(
           styles.DateRangePicker_picker,
@@ -491,14 +511,21 @@ class DateRangePicker extends React.PureComponent {
           startDateOffset={startDateOffset}
           endDate={endDate}
           endDateOffset={endDateOffset}
+          minDate={minDate}
+          maxDate={maxDate}
           monthFormat={monthFormat}
           renderMonthText={renderMonthText}
+          renderWeekHeaderElement={renderWeekHeaderElement}
           withPortal={withAnyPortal}
           daySize={daySize}
           initialVisibleMonth={initialVisibleMonthThunk}
           hideKeyboardShortcutsPanel={hideKeyboardShortcutsPanel}
+          dayPickerNavigationInlineStyles={dayPickerNavigationInlineStyles}
+          navPosition={navPosition}
           navPrev={navPrev}
           navNext={navNext}
+          renderNavPrevButton={renderNavPrevButton}
+          renderNavNextButton={renderNavNextButton}
           minimumNights={minimumNights}
           isOutsideRange={isOutsideRange}
           isDayHighlighted={isDayHighlighted}
@@ -535,6 +562,8 @@ class DateRangePicker extends React.PureComponent {
         )}
       </div>
     );
+    /* eslint-enable jsx-a11y/no-static-element-interactions */
+    /* eslint-enable jsx-a11y/click-events-have-key-events */
   }
 
   render() {
@@ -561,6 +590,7 @@ class DateRangePicker extends React.PureComponent {
       openDirection,
       phrases,
       isOutsideRange,
+      isDayBlocked,
       minimumNights,
       withPortal,
       withFullScreenPortal,
@@ -611,6 +641,7 @@ class DateRangePicker extends React.PureComponent {
         reopenPickerOnClearDates={reopenPickerOnClearDates}
         keepOpenOnDateSelect={keepOpenOnDateSelect}
         isOutsideRange={isOutsideRange}
+        isDayBlocked={isDayBlocked}
         minimumNights={minimumNights}
         withFullScreenPortal={withFullScreenPortal}
         onDatesChange={onDatesChange}

@@ -5,7 +5,7 @@ import sinon from 'sinon-sandbox';
 import getCalendarDaySettings from '../../src/utils/getCalendarDaySettings';
 import { BLOCKED_MODIFIER } from '../../src/constants';
 
-const testDay = moment('10/10/2017');
+const testDay = moment('10/10/2017', 'MM/DD/YYYY');
 const expectedFormattedDay = { date: 'Tuesday, October 10, 2017' };
 const testAriaLabelFormat = 'dddd, LL';
 const testDaySize = 39;

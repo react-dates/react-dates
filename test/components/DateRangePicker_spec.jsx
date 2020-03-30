@@ -110,6 +110,16 @@ describe('DateRangePicker', () => {
       });
     });
 
+    describe('props.isDayBlocked is defined', () => {
+      it('should pass props.isDayBlocked to <DateRangePickerInputController>', () => {
+        const isDayBlocked = sinon.stub();
+        const wrapper = shallow((
+          <DateRangePicker {...requiredProps} isDayBlocked={isDayBlocked} />
+        )).dive();
+        expect(wrapper.find(DateRangePickerInputController).prop('isDayBlocked')).to.equal(isDayBlocked);
+      });
+    });
+
     describe('props.appendToBody', () => {
       it('renders <DayPickerRangeController> inside <Portal>', () => {
         const wrapper = shallow((
@@ -708,7 +718,7 @@ describe('DateRangePicker', () => {
         const wrapper = shallow((
           <DateRangePicker
             {...requiredProps}
-            startDateOffset={date => date.subtract(5, 'days')}
+            startDateOffset={(date) => date.subtract(5, 'days')}
             onDatesChange={onDatesChangeStub}
             focusedInput={START_DATE}
           />
@@ -728,7 +738,7 @@ describe('DateRangePicker', () => {
         const wrapper = shallow((
           <DateRangePicker
             {...requiredProps}
-            endDateOffset={date => date.subtract(5, 'days')}
+            endDateOffset={(date) => date.subtract(5, 'days')}
             onDatesChange={onDatesChangeStub}
             focusedInput={START_DATE}
           />
@@ -738,6 +748,36 @@ describe('DateRangePicker', () => {
         const dayPickerEndDateOffset = dayPicker.props().endDateOffset(endDate);
 
         expect(dayPickerEndDateOffset.format()).to.equal(endDate.format());
+      });
+    });
+  });
+
+  describe('minDate and maxDate props', () => {
+    describe('minDate is passed in', () => {
+      it('Should pass minDate to DayPickerRangeController', () => {
+        const minDate = moment('2018-10-19');
+        const wrapper = shallow((
+          <DateRangePicker
+            {...requiredProps}
+            focusedInput={START_DATE}
+            minDate={minDate}
+          />
+        )).dive();
+        expect(wrapper.find(DayPickerRangeController).props().minDate).to.equal(minDate);
+      });
+    });
+
+    describe('maxDate is passed in', () => {
+      it('Should pass maxDate to DayPickerRangeController', () => {
+        const maxDate = moment('2018-12-19');
+        const wrapper = shallow((
+          <DateRangePicker
+            {...requiredProps}
+            focusedInput={START_DATE}
+            maxDate={maxDate}
+          />
+        )).dive();
+        expect(wrapper.find(DayPickerRangeController).props().maxDate).to.equal(maxDate);
       });
     });
   });
