@@ -160,7 +160,7 @@ class DateInput extends React.PureComponent {
 
     const allowedSymbolsRegex = new RegExp('^[0-9/]$');
     const allowedSpecialKeys = [KEY_BACKSPACE, KEY_DELETE, KEY_ARROW_RIGHT, KEY_ARROW_LEFT];
-
+    console.log(e.keyCode, '>>>');
     const isKeyAllowed = allowedSymbolsRegex.test(e.key);
     const isSpecialKeyAllowed = allowedSpecialKeys.includes(e.keyCode);
 
