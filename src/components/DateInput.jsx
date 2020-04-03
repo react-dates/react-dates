@@ -13,6 +13,8 @@ import {
   FANG_WIDTH_PX,
   DEFAULT_VERTICAL_SPACING,
   MODIFIER_KEY_NAMES,
+  KEY_ARROW_LEFT,
+  KEY_ARROW_RIGHT,
 } from '../constants';
 import noflip from '../utils/noflip';
 import getInputHeight from '../utils/getInputHeight';
@@ -157,7 +159,7 @@ class DateInput extends React.PureComponent {
     const { displayValue } = this.props;
 
     const allowedSymbolsRegex = new RegExp('^[0-9/]$');
-    const allowedSpecialKeys = [KEY_BACKSPACE, KEY_DELETE];
+    const allowedSpecialKeys = [KEY_BACKSPACE, KEY_DELETE, KEY_ARROW_RIGHT, KEY_ARROW_LEFT];
 
     const isKeyAllowed = allowedSymbolsRegex.test(e.key);
     const isSpecialKeyAllowed = allowedSpecialKeys.includes(e.keyCode);
