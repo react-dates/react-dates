@@ -1,6 +1,6 @@
 {
   "name": "react-dates-s4",
-  "version": "21.1.21",
+  "version": "21.1.22",
   "description": "A responsive and accessible date range picker component built with React",
   "main": "index.js",
   "scripts": {
