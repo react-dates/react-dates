@@ -1060,6 +1060,7 @@ class DayPicker extends React.PureComponent {
       verticalBorderSpacing,
       horizontalMonthPadding,
       navPosition,
+      hidden
     } = this.props;
 
     const { reactDates: { spacing: { dayPickerHorizontalPadding } } } = theme;
@@ -1144,7 +1145,7 @@ class DayPicker extends React.PureComponent {
           isHorizontal && withPortal && styles.DayPicker_portal__horizontal,
           this.isVertical() && withPortal && styles.DayPicker_portal__vertical,
           dayPickerStyle,
-          !monthTitleHeight && styles.DayPicker__hidden,
+          hidden && styles.DayPicker__hidden,
           !noBorder && styles.DayPicker__withBorder,
         )}
       >
