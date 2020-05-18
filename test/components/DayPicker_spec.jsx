@@ -606,6 +606,21 @@ describe('DayPicker', () => {
     });
   });
 
+  describe('monthTitleHeight', () => {
+    it('change monthTitleHeight correctly with setMonthTitleHeight', () => {
+      const wrapper = shallow(<DayPicker />).dive();
+      wrapper.instance().setMonthTitleHeight(80);
+      expect(wrapper.state().monthTitleHeight).to.equal(80);
+    });
+
+    it('do not change monthTitleHeight with renderMonthText === prevRenderMonthText', () => {
+      const wrapper = shallow(<DayPicker renderMonthText={() => 'foo'} />).dive();
+      wrapper.instance().setMonthTitleHeight(80);
+      wrapper.setProps({ renderMonthText: () => 'foo' });
+      expect(wrapper.state().monthTitleHeight).to.equal(80);
+    });
+  });
+
   describe('#onNextMonthClick', () => {
     it('calls onNextMonthTransition', () => {
       const onNextMonthTransitionSpy = sinon.spy(PureDayPicker.prototype, 'onNextMonthTransition');
