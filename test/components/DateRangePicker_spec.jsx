@@ -593,7 +593,6 @@ describe('DateRangePicker', () => {
       expect(onOutsideClick.callCount).to.equal(1);
     });
 
-
     it('tabbing within itself does not behave as an outside click', () => {
       const target = sinon.stub();
       const onOutsideClick = sinon.stub();

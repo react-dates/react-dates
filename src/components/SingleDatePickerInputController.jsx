@@ -151,7 +151,6 @@ export default class SingleDatePickerInputController extends React.PureComponent
     }
   }
 
-
   onFocus() {
     const {
       onFocusChange,

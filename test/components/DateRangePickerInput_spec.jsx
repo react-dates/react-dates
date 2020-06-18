@@ -145,7 +145,6 @@ describe('DateRangePickerInput', () => {
       });
     });
 
-
     describe('props.disabled=false', () => {
       it('First DateInput gets disabled prop, second does not', () => {
         const wrapper = shallow(<DateRangePickerInput disabled={false} />).dive();
