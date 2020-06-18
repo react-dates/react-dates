@@ -54,7 +54,7 @@ describe('CalendarDay', () => {
       expect(wrapper.props().tabIndex).to.equal(tabIndex);
     });
 
-    describe('area-current', () => {
+    describe('aria-current', () => {
       it('should add aria-current to date for today date', () => {
         const modifiers = new Set(['today']);
 
@@ -64,7 +64,7 @@ describe('CalendarDay', () => {
           />
         )).dive();
 
-        expect(wrapper.prop('area-current')).to.equal('date');
+        expect(wrapper.prop('aria-current')).to.equal('date');
       });
 
       it('should not add aria-current for not today date', () => {
@@ -76,7 +76,7 @@ describe('CalendarDay', () => {
           />
         )).dive();
 
-        expect(wrapper).to.not.have.property('area-current');
+        expect(wrapper).to.not.have.property('aria-current');
       });
     });
 
