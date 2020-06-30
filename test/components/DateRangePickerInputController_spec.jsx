@@ -377,7 +377,7 @@ describe('DateRangePickerInputController', () => {
         expect(args.startDate).to.equal(today);
       });
 
-      it('calls props.onDatesChange with endDate === null', () => {
+      it('calls props.onDatesChange with endDate === null and endDateInvalid === endDateString', () => {
         const onDatesChangeStub = sinon.stub();
         const wrapper = shallow((
           <DateRangePickerInputController onDatesChange={onDatesChangeStub} />
@@ -385,6 +385,7 @@ describe('DateRangePickerInputController', () => {
         wrapper.instance().onEndDateChange(invalidDateString);
         const args = onDatesChangeStub.getCall(0).args[0];
         expect(args.endDate).to.equal(null);
+        expect(args.endDateInvalid).to.equal(invalidDateString);
       });
     });
 
@@ -726,7 +727,7 @@ describe('DateRangePickerInputController', () => {
         expect(onDatesChangeStub.callCount).to.equal(1);
       });
 
-      it('calls props.onDatesChange with startDate === null', () => {
+      it('calls props.onDatesChange with startDate === null and startDateInvalid === startDateString', () => {
         const onDatesChangeStub = sinon.stub();
         const wrapper = shallow((
           <DateRangePickerInputController
@@ -737,6 +738,7 @@ describe('DateRangePickerInputController', () => {
         wrapper.instance().onStartDateChange(invalidDateString);
         const args = onDatesChangeStub.getCall(0).args[0];
         expect(args.startDate).to.equal(null);
+        expect(args.startDateInvalid).to.equal(invalidDateString);
       });
 
       it('calls props.onDatesChange with endDate === props.endDate', () => {
