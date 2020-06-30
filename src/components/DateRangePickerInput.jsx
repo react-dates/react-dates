@@ -281,7 +281,6 @@ function DateRangePickerInput({
         regular={regular}
       />
 
-
       {showClearDates && (
         <button
           type="button"
