@@ -187,7 +187,7 @@ export default class DateRangePickerInputController extends React.PureComponent 
       onDatesChange({
         startDate,
         endDate: null,
-        endDateInvalid: endDateString
+        endDateInvalid: endDateString,
       });
     }
   }
@@ -238,7 +238,7 @@ export default class DateRangePickerInputController extends React.PureComponent 
     } else {
       onDatesChange({
         startDate: null,
-        startDateInvalid: startDateString
+        startDateInvalid: startDateString,
         endDate,
       });
     }
