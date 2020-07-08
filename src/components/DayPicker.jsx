@@ -1,4 +1,5 @@
 import React from 'react';
+import momentPropTypes from 'react-moment-proptypes';
 import PropTypes from 'prop-types';
 import { forbidExtraProps, mutuallyExclusiveProps, nonNegativeInteger } from 'airbnb-prop-types';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
@@ -26,6 +27,8 @@ import calculateDimension from '../utils/calculateDimension';
 import getActiveElement from '../utils/getActiveElement';
 import isDayVisible from '../utils/isDayVisible';
 import isSameMonth from '../utils/isSameMonth';
+import isBeforeDay from '../utils/isBeforeDay';
+import isAfterDay from '../utils/isAfterDay';
 
 import ModifiersShape from '../shapes/ModifiersShape';
 import NavPositionShape from '../shapes/NavPositionShape';
@@ -103,6 +106,8 @@ const propTypes = forbidExtraProps({
   renderMonthText: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'),
   renderMonthElement: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'),
   renderWeekHeaderElement: PropTypes.func,
+  minDate: momentPropTypes.momentObj,
+  maxDate: momentPropTypes.momentObj,
 
   // day props
   modifiers: PropTypes.objectOf(PropTypes.objectOf(ModifiersShape)),
@@ -173,6 +178,8 @@ export const defaultProps = {
   renderMonthText: null,
   renderMonthElement: null,
   renderWeekHeaderElement: null,
+  minDate: null,
+  maxDate: null,
 
   // day props
   modifiers: {},
@@ -572,7 +579,15 @@ class DayPicker extends React.PureComponent {
   }
 
   onMonthChange(currentMonth) {
-    this.setCalendarMonthWeeks(currentMonth);
+    const { minDate, maxDate } = this.props;
+    let currentNewMonth = currentMonth;
+    if (isBeforeDay(currentNewMonth, minDate)) {
+      currentNewMonth = minDate;
+    }
+    if (isAfterDay(currentNewMonth, maxDate)) {
+      currentNewMonth = maxDate;
+    }
+    this.setCalendarMonthWeeks(currentNewMonth);
     this.calculateAndSetDayPickerHeight();
 
     // Translation value is a hack to force an invisible transition that
@@ -581,8 +596,8 @@ class DayPicker extends React.PureComponent {
       monthTransition: MONTH_SELECTION_TRANSITION,
       translationValue: 0.00001,
       focusedDate: null,
-      nextFocusedDate: currentMonth,
-      currentMonth,
+      nextFocusedDate: currentNewMonth,
+      currentMonth: currentNewMonth,
     });
   }
 

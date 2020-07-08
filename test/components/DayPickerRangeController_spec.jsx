@@ -3611,6 +3611,34 @@ describe('DayPickerRangeController', () => {
     });
   });
 
+  describe('#onMonthChange', () => {
+    it('updates state.currentMonth to minDate if new month is before minDate', () => {
+      const wrapper = shallow((
+        <DayPickerRangeController
+          minDate={today.clone().subtract(1, 'month')}
+        />
+      ));
+      wrapper.setState({
+        currentMonth: today,
+      });
+      wrapper.instance().onMonthChange(today.clone().subtract(4, 'month'));
+      expect(wrapper.state().currentMonth.month()).to.equal(today.clone().subtract(1, 'month').month());
+    });
+
+    it('updates state.currentMonth to maxDate if new month is after maxDate', () => {
+      const wrapper = shallow((
+        <DayPickerRangeController
+          maxDate={today.clone().add(1, 'month')}
+        />
+      ));
+      wrapper.setState({
+        currentMonth: today,
+      });
+      wrapper.instance().onMonthChange(today.clone().add(4, 'month'));
+      expect(wrapper.state().currentMonth.month()).to.equal(today.clone().add(1, 'month').month());
+    });
+  });
+
   describe('#onNextMonthClick', () => {
     it('updates state.currentMonth to add 1 month', () => {
       const wrapper = shallow((
