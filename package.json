@@ -142,5 +142,8 @@
       "mocha",
       "webpack"
     ]
+  },
+  "engines": {
+    "node": ">=0.10"
   }
 }
