@@ -2,6 +2,7 @@ import React from 'react';
 import moment from 'moment/min/moment-with-locales';
 import { expect } from 'chai';
 import sinon from 'sinon-sandbox';
+import wrap from 'mocha-wrap';
 import { mount, shallow } from 'enzyme';
 
 import * as isDayVisible from '../../src/utils/isDayVisible';
@@ -23,8 +24,9 @@ const today = moment().locale('en');
 const event = { preventDefault() {}, stopPropagation() {} };
 
 describe('DayPicker', () => {
+  let adjustDayPickerHeightSpy;
   beforeEach(() => {
-    sinon.stub(PureDayPicker.prototype, 'adjustDayPickerHeight');
+    adjustDayPickerHeightSpy = sinon.stub(PureDayPicker.prototype, 'adjustDayPickerHeight');
   });
 
   afterEach(() => {
@@ -894,13 +896,8 @@ describe('DayPicker', () => {
     });
   });
 
-  describe.skip('life cycle methods', () => {
-    let adjustDayPickerHeightSpy;
-    beforeEach(() => {
-      adjustDayPickerHeightSpy = sinon.stub(PureDayPicker.prototype, 'adjustDayPickerHeight');
-    });
-
-    describe('#componentDidMount', () => {
+  describe('life cycle methods', () => {
+    describe.skip('#componentDidMount', () => {
       describe('props.orientation === HORIZONTAL_ORIENTATION', () => {
         it('calls adjustDayPickerHeight', () => {
           mount(<DayPicker orientation={HORIZONTAL_ORIENTATION} />);
@@ -936,7 +933,7 @@ describe('DayPicker', () => {
       });
     });
 
-    describe('#componentWillReceiveProps', () => {
+    describe.skip('#componentWillReceiveProps', () => {
       describe('props.orientation === VERTICAL_SCROLLABLE', () => {
         it('updates state.currentMonthScrollTop', () => {
           sinon.spy(DayPicker.prototype, 'setTransitionContainerRef');
@@ -951,7 +948,29 @@ describe('DayPicker', () => {
       });
     });
 
-    describe('#componentDidUpdate', () => {
+    wrap()
+      .withGlobal('window', () => ({ getComputedStyle: sinon.stub().returns({}) }))
+      .describe('#componentWillUpdate', () => {
+        it('clears timeouts appropriately', (done) => {
+          const wrapper = shallow(<DayPicker />).dive();
+          const instance = wrapper.instance();
+          instance.calendarInfo = 'something';
+          expect(instance).to.have.property('setCalendarInfoWidthTimeout', null);
+
+          // trigger a componentWillUpdate by setting state.
+          wrapper.setState({ calendarInfoWidth: 1 });
+
+          // this.setCalendarInfoWidthTimeout is no longer null.
+          expect(instance).not.to.have.property('setCalendarInfoWidthTimeout', null);
+
+          setTimeout(() => {
+            expect(window.getComputedStyle).to.have.property('callCount', 1);
+            done();
+          }, 1);
+        });
+      });
+
+    describe.skip('#componentDidUpdate', () => {
       let updateStateAfterMonthTransitionSpy;
       beforeEach(() => {
         updateStateAfterMonthTransitionSpy = sinon.stub(

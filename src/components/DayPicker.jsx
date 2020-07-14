@@ -367,6 +367,8 @@ class DayPicker extends React.PureComponent {
     // breaks the CSS transition.
     // The setTimeout will wait until the transition ends.
     if (this.calendarInfo) {
+      clearTimeout(this.setCalendarInfoWidthTimeout);
+
       this.setCalendarInfoWidthTimeout = setTimeout(() => {
         const { calendarInfoWidth } = this.state;
         const calendarInfoPanelWidth = calculateDimension(this.calendarInfo, 'width', true, true);
