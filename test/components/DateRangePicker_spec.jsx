@@ -118,6 +118,13 @@ describe('DateRangePicker', () => {
         )).dive();
         expect(wrapper.find(DateRangePickerInputController).prop('isDayBlocked')).to.equal(isDayBlocked);
       });
+
+      it('is a noop when omitted', () => {
+        const wrapper = shallow((
+          <DateRangePicker {...requiredProps} />
+        )).dive();
+        expect(wrapper.find(DateRangePickerInputController).prop('isDayBlocked')).not.to.throw();
+      });
     });
 
     describe('props.appendToBody', () => {
