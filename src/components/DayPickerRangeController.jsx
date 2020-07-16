@@ -898,7 +898,6 @@ export default class DayPickerRangeController extends React.PureComponent {
       }
     }
 
-
     this.setState({
       hoverDate: null,
       visibleDays: {
