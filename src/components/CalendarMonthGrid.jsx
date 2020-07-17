@@ -23,7 +23,6 @@ import ModifiersShape from '../shapes/ModifiersShape';
 import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
 import DayOfWeekShape from '../shapes/DayOfWeekShape';
 
-
 import {
   HORIZONTAL_ORIENTATION,
   VERTICAL_ORIENTATION,

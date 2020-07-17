@@ -19,7 +19,6 @@ import {
   NAV_POSITION_BOTTOM,
 } from '../../src/constants';
 
-
 const today = moment().locale('en');
 const event = { preventDefault() {}, stopPropagation() {} };
 
@@ -515,7 +514,6 @@ describe('DayPicker', () => {
         });
       });
     });
-
 
     describe('focusedDate is falsy', () => {
       it('does not call maybeTransitionPrevMonth', () => {
