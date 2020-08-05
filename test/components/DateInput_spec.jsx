@@ -42,13 +42,20 @@ describe('DateInput', () => {
         expect(wrapper.find('input').props().value).to.equal(DATE_STRING);
       });
 
-      it('props.displayValue overrides dateString when not null', () => {
+      it('props.displayValue overrides dateString when not null and focused changed', () => {
         const DATE_STRING = 'foobar';
         const DISPLAY_VALUE = 'display-value';
-        const wrapper = shallow(<DateInput id="date" />).dive();
+
+        let wrapper = shallow(<DateInput id="date" focused />).dive();
         wrapper.setState({ dateString: DATE_STRING });
         expect(wrapper.find('input').props().value).to.equal(DATE_STRING);
-        wrapper.setProps({ displayValue: DISPLAY_VALUE });
+        wrapper.setProps({ displayValue: DISPLAY_VALUE, focused: false });
+        expect(wrapper.find('input').props().value).to.equal(DISPLAY_VALUE);
+
+        wrapper = shallow(<DateInput id="date" focused={false} />).dive();
+        wrapper.setState({ dateString: DATE_STRING });
+        expect(wrapper.find('input').props().value).to.equal(DATE_STRING);
+        wrapper.setProps({ displayValue: DISPLAY_VALUE, focused: true });
         expect(wrapper.find('input').props().value).to.equal(DISPLAY_VALUE);
       });
 
@@ -112,12 +119,17 @@ describe('DateInput', () => {
 
   describe('#componentWillReceiveProps', () => {
     describe('nextProps.displayValue exists', () => {
-      it('sets state.dateString to \'\'', () => {
+      it('does not change state.dateString if focused remain the same', () => {
         const dateString = 'foo123';
-        const wrapper = shallow(<DateInput id="date" />).dive();
+        let wrapper = shallow(<DateInput id="date" focused />).dive();
         wrapper.setState({ dateString });
-        wrapper.instance().componentWillReceiveProps({ displayValue: '1991-07-13' });
-        expect(wrapper.state()).to.have.property('dateString', '');
+        wrapper.instance().componentWillReceiveProps({ displayValue: '1991-07-13', focused: true });
+        expect(wrapper.state()).to.have.property('dateString', 'foo123');
+
+        wrapper = shallow(<DateInput id="date" focused={false} />).dive();
+        wrapper.setState({ dateString });
+        wrapper.instance().componentWillReceiveProps({ displayValue: '1991-07-13', focused: false });
+        expect(wrapper.state()).to.have.property('dateString', 'foo123');
       });
     });
 
