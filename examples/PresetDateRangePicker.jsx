@@ -10,7 +10,9 @@ import DateRangePicker from '../src/components/DateRangePicker';
 
 import { DateRangePickerPhrases } from '../src/defaultPhrases';
 import DateRangePickerShape from '../src/shapes/DateRangePickerShape';
-import { START_DATE, END_DATE, HORIZONTAL_ORIENTATION, ANCHOR_LEFT } from '../src/constants';
+import {
+  START_DATE, END_DATE, HORIZONTAL_ORIENTATION, ANCHOR_LEFT,
+} from '../src/constants';
 import isSameDay from '../src/utils/isSameDay';
 
 const propTypes = {
@@ -51,7 +53,7 @@ const defaultProps = {
   endDatePlaceholderText: 'End Date',
   disabled: false,
   required: false,
-  screenReaderInputMessage: '',
+  screenReaderInputMessage: undefined,
   showClearDates: false,
   showDefaultInputIcon: false,
   customInputIcon: null,
@@ -83,7 +85,7 @@ const defaultProps = {
   minimumNights: 0,
   enableOutsideDays: false,
   isDayBlocked: () => false,
-  isOutsideRange: day => false,
+  isOutsideRange: (day) => false,
   isDayHighlighted: () => false,
 
   // internationalization

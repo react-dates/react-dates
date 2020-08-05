@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 
 import momentPropTypes from 'react-moment-proptypes';
-import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
+import { forbidExtraProps, nonNegativeInteger, mutuallyExclusiveProps } from 'airbnb-prop-types';
 import openDirectionShape from '../shapes/OpenDirectionShape';
 
 import { SingleDatePickerInputPhrases } from '../defaultPhrases';
@@ -13,6 +13,7 @@ import SingleDatePickerInput from './SingleDatePickerInput';
 
 import IconPositionShape from '../shapes/IconPositionShape';
 import DisabledShape from '../shapes/DisabledShape';
+import AriaInvalidShape from '../shapes/AriaInvalidShape';
 
 import toMomentObject from '../utils/toMomentObject';
 import toLocalizedDateString from '../utils/toLocalizedDateString';
@@ -35,8 +36,6 @@ const propTypes = forbidExtraProps({
 
   id: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
-  ariaLabel: PropTypes.string,
-  screenReaderMessage: PropTypes.string,
   showClearDate: PropTypes.bool,
   showCaret: PropTypes.bool,
   showDefaultInputIcon: PropTypes.bool,
@@ -66,6 +65,10 @@ const propTypes = forbidExtraProps({
 
   // accessibility
   isFocused: PropTypes.bool,
+  ariaLabel: PropTypes.string,
+  ariaInvalid: AriaInvalidShape,
+  ariaDescribedby: mutuallyExclusiveProps(PropTypes.string, 'ariaDescribedby', 'screenReaderMessage'),
+  screenReaderMessage: mutuallyExclusiveProps(PropTypes.string, 'ariaDescribedby', 'screenReaderMessage'),
 
   // i18n
   phrases: PropTypes.shape(getPhrasePropTypes(SingleDatePickerInputPhrases)),
@@ -80,8 +83,6 @@ const defaultProps = {
   focused: false,
 
   placeholder: '',
-  ariaLabel: undefined,
-  screenReaderMessage: 'Date',
   showClearDate: false,
   showCaret: false,
   showDefaultInputIcon: false,
@@ -111,6 +112,10 @@ const defaultProps = {
 
   // accessibility
   isFocused: false,
+  ariaLabel: undefined,
+  ariaInvalid: undefined,
+  ariaDescribedby: undefined,
+  screenReaderMessage: undefined,
 
   // i18n
   phrases: SingleDatePickerInputPhrases,
@@ -202,6 +207,8 @@ export default class SingleDatePickerInputController extends React.PureComponent
       id,
       placeholder,
       ariaLabel,
+      ariaInvalid,
+      ariaDescribedby,
       disabled,
       focused,
       isFocused,
@@ -234,6 +241,8 @@ export default class SingleDatePickerInputController extends React.PureComponent
         id={id}
         placeholder={placeholder}
         ariaLabel={ariaLabel}
+        ariaInvalid={ariaInvalid}
+        ariaDescribedby={ariaDescribedby}
         focused={focused}
         isFocused={isFocused}
         disabled={disabled}

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
+import { forbidExtraProps, nonNegativeInteger, mutuallyExclusiveProps } from 'airbnb-prop-types';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 
 import { SingleDatePickerInputPhrases } from '../defaultPhrases';
@@ -14,6 +14,7 @@ import CloseButton from './CloseButton';
 import CalendarIcon from './CalendarIcon';
 
 import openDirectionShape from '../shapes/OpenDirectionShape';
+import AriaInvalidShape from '../shapes/AriaInvalidShape';
 import { ICON_BEFORE_POSITION, ICON_AFTER_POSITION, OPEN_DOWN } from '../constants';
 
 const propTypes = forbidExtraProps({
@@ -22,8 +23,10 @@ const propTypes = forbidExtraProps({
   children: PropTypes.node,
   placeholder: PropTypes.string,
   ariaLabel: PropTypes.string,
+  ariaInvalid: AriaInvalidShape,
+  ariaDescribedby: mutuallyExclusiveProps(PropTypes.string, 'ariaDescribedby', 'screenReaderMessage'),
+  screenReaderMessage: mutuallyExclusiveProps(PropTypes.string, 'ariaDescribedby', 'screenReaderMessage'),
   displayValue: PropTypes.string,
-  screenReaderMessage: PropTypes.string,
   focused: PropTypes.bool,
   isFocused: PropTypes.bool, // describes actual DOM focus
   disabled: PropTypes.bool,
@@ -59,8 +62,10 @@ const defaultProps = {
   children: null,
   placeholder: 'Select Date',
   ariaLabel: undefined,
+  ariaInvalid: undefined,
+  ariaDescribedby: undefined,
   displayValue: '',
-  screenReaderMessage: '',
+  screenReaderMessage: undefined,
   focused: false,
   isFocused: false,
   disabled: false,
@@ -97,6 +102,8 @@ function SingleDatePickerInput({
   children,
   placeholder,
   ariaLabel,
+  ariaInvalid,
+  ariaDescribedby,
   displayValue,
   focused,
   isFocused,
@@ -169,6 +176,8 @@ function SingleDatePickerInput({
         id={id}
         placeholder={placeholder}
         ariaLabel={ariaLabel}
+        ariaInvalid={ariaInvalid}
+        ariaDescribedby={ariaDescribedby}
         displayValue={displayValue}
         screenReaderMessage={screenReaderText}
         focused={focused}

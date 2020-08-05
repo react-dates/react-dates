@@ -10,21 +10,52 @@ const event = { preventDefault() {}, stopPropagation() {} };
 describe('DateInput', () => {
   describe('#render', () => {
     describe('input', () => {
-      it('has props.ariaLabel as an aria-label if ariaLabel is passed in', () => {
-        const ariaLabel = 'ariaLabelExample';
-        const wrapper = shallow(<DateInput id="date" ariaLabel={ariaLabel} />).dive();
-        expect(wrapper.find('input').props()['aria-label']).to.equal(ariaLabel);
+      describe('aria-label', () => {
+        it('has props.ariaLabel as an aria-label if ariaLabel is passed in', () => {
+          const ariaLabel = 'ariaLabelExample';
+          const wrapper = shallow(<DateInput id="date" ariaLabel={ariaLabel} />).dive();
+          expect(wrapper.find('input').props()['aria-label']).to.equal(ariaLabel);
+        });
+
+        it('has no aria-label if props.ariaLabel is null', () => {
+          const wrapper = shallow(<DateInput id="date" ariaLabel={null} />).dive();
+          expect(wrapper.find('input').props()['aria-label']).to.equal(null);
+        });
+
+        it('has props.placeholder as an aria-label if ariaLabel is not passed in', () => {
+          const placeholder = 'placeholder foo';
+          const wrapper = shallow(<DateInput id="date" placeholder={placeholder} />).dive();
+          expect(wrapper.find('input').props()['aria-label']).to.equal(placeholder);
+        });
       });
 
-      it('has no aria-label if props.ariaLabel is null', () => {
-        const wrapper = shallow(<DateInput id="date" ariaLabel={null} />).dive();
-        expect(wrapper.find('input').props()['aria-label']).to.equal(null);
+      describe('aria-invalid', () => {
+        it('has props.ariaInvalid as aria-invalid when ariaInvalid is passed in', () => {
+          const wrapper = shallow(<DateInput id="date" ariaInvalid />).dive();
+          expect(wrapper.find('input').props()['aria-invalid']).to.equal(true);
+        });
+
+        it('has has no aria-invalid when ariaInvalid is not defined', () => {
+          const wrapper = shallow(<DateInput id="date" />).dive();
+          expect(wrapper.find('input').props()['aria-invalid']).to.equal(undefined);
+        });
       });
 
-      it('has props.placeholder as an aria-label if ariaLabel is not passed in', () => {
-        const placeholder = 'placeholder foo';
-        const wrapper = shallow(<DateInput id="date" placeholder={placeholder} />).dive();
-        expect(wrapper.find('input').props()['aria-label']).to.equal(placeholder);
+      describe('aria-describedby', () => {
+        it('has props.ariaDescribedby as aria-describedby when ariaDescribedby is passed in', () => {
+          const wrapper = shallow(<DateInput id="date" ariaDescribedby="test-el" />).dive();
+          expect(wrapper.find('input').props()['aria-describedby']).to.equal('test-el');
+        });
+
+        it('has no aria-describedby when ariaDescribedby is not defined', () => {
+          const wrapper = shallow(<DateInput id="date" />).dive();
+          expect(wrapper.find('input').props()['aria-describedby']).to.equal(undefined);
+        });
+
+        it('uses props.ariaDescribedby as aria-describedby instead of using props.screenReaderMessage behavior', () => {
+          const wrapper = shallow(<DateInput id="date" ariaDescribedby="test-el" screenReaderMessage="test-sr-message" />).dive();
+          expect(wrapper.find('input').props()['aria-describedby']).to.equal('test-el');
+        });
       });
 
       it('has value === props.displayValue', () => {

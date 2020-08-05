@@ -88,7 +88,7 @@ const defaultProps = {
   endDatePlaceholderText: 'End Date',
   startDateAriaLabel: undefined,
   endDateAriaLabel: undefined,
-  screenReaderMessage: '',
+  screenReaderMessage: undefined,
   onStartDateFocus() {},
   onEndDateFocus() {},
   onStartDateChange() {},

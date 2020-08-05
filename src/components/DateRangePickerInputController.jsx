@@ -99,7 +99,7 @@ const defaultProps = {
   isEndDateFocused: false,
   endDateAriaLabel: undefined,
 
-  screenReaderMessage: '',
+  screenReaderMessage: undefined,
   showClearDates: false,
   showCaret: false,
   showDefaultInputIcon: false,

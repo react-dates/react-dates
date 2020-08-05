@@ -59,7 +59,7 @@ const defaultProps = {
   disabled: false,
   required: false,
   readOnly: false,
-  screenReaderInputMessage: '',
+  screenReaderInputMessage: undefined,
   showClearDates: false,
   showDefaultInputIcon: false,
   inputIconPosition: ICON_BEFORE_POSITION,
