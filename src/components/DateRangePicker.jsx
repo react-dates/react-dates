@@ -645,6 +645,7 @@ class DateRangePicker extends React.PureComponent {
         minimumNights={minimumNights}
         withFullScreenPortal={withFullScreenPortal}
         onDatesChange={onDatesChange}
+        onBlur={this.onDayPickerFocusOut}
         onFocusChange={this.onDateRangePickerInputFocus}
         onKeyDownArrowDown={this.onDayPickerFocus}
         onKeyDownQuestionMark={this.showKeyboardShortcutsPanel}

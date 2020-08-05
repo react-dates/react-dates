@@ -607,6 +607,7 @@ class SingleDatePicker extends React.PureComponent {
         onDateChange={onDateChange}
         displayFormat={displayFormat}
         onFocusChange={this.onInputFocus}
+        onBlur={this.onFocusOut}
         onKeyDownArrowDown={this.onDayPickerFocus}
         onKeyDownQuestionMark={this.showKeyboardShortcutsPanel}
         screenReaderMessage={screenReaderInputMessage}
