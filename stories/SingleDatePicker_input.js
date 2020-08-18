@@ -36,6 +36,13 @@ storiesOf('SDP - Input Props', module)
       readOnly
     />
   )))
+  .add('readOnly with keepFocusOnInput', withInfo()(() => (
+    <SingleDatePickerWrapper
+      initialDate={moment().add(3, 'days')}
+      readOnly
+      keepFocusOnInput
+    />
+  )))
   .add('with clear dates button', withInfo()(() => (
     <SingleDatePickerWrapper
       initialDate={moment().add(3, 'days')}

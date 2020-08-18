@@ -362,7 +362,7 @@ class SingleDatePicker extends React.PureComponent {
   showKeyboardShortcutsPanel() {
     this.setState({
       isInputFocused: false,
-      isDayPickerFocused: true,
+      isDayPickerFocused: false,
       showKeyboardShortcuts: true,
     });
   }
