@@ -109,7 +109,7 @@ class CalendarMonth extends React.PureComponent {
     this.setMonthTitleHeightTimeout = setTimeout(this.setMonthTitleHeight, 0);
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { month, enableOutsideDays, firstDayOfWeek } = nextProps;
     const {
       month: prevMonth,
