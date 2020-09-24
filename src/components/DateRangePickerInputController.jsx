@@ -84,6 +84,8 @@ const propTypes = forbidExtraProps({
   phrases: PropTypes.shape(getPhrasePropTypes(DateRangePickerInputPhrases)),
 
   isRTL: PropTypes.bool,
+  renderInputs: PropTypes.func,
+  setInputHeight: PropTypes.func,
 });
 
 const defaultProps = {
@@ -312,6 +314,8 @@ export default class DateRangePickerInputController extends React.PureComponent 
       small,
       regular,
       verticalSpacing,
+      renderInputs,
+      setInputHeight,
     } = this.props;
 
     const startDateString = this.getDateString(startDate);
@@ -359,6 +363,8 @@ export default class DateRangePickerInputController extends React.PureComponent 
         small={small}
         regular={regular}
         verticalSpacing={verticalSpacing}
+        renderInputs={renderInputs}
+        setInputHeight={setInputHeight}
       >
         {children}
       </DateRangePickerInput>

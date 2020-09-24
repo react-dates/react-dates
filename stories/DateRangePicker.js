@@ -124,4 +124,18 @@ storiesOf('DateRangePicker (DRP)', module)
       maxDate={moment().add(2, 'months').endOf('month')}
       numberOfMonths={2}
     />
+  )))
+  .add('renderInputs', withInfo()(() => (
+    <DateRangePickerWrapper renderInputs={
+      (a, b) => (
+        <div>
+          {a}
+          <br />
+          <span>I can now inject my own content/components between the inputs</span>
+          <br />
+          <span>Why do this? So you could inject other components like a time picker into the ui</span>
+          {b}
+        </div>
+      )
+    } />
   )));

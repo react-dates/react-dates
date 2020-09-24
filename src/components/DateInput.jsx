@@ -193,6 +193,7 @@ class DateInput extends React.PureComponent {
       block,
       styles,
       theme: { reactDates },
+      setInputHeight,
     } = this.props;
 
     const value = dateString || displayValue || '';
@@ -201,6 +202,7 @@ class DateInput extends React.PureComponent {
     const withFang = showCaret && focused;
 
     const inputHeight = getInputHeight(reactDates, small);
+    const heightVal = inputHeight + verticalSpacing - FANG_HEIGHT_PX - 1;
 
     return (
       <div
@@ -232,7 +234,10 @@ class DateInput extends React.PureComponent {
           value={value}
           onChange={this.onChange}
           onKeyDown={this.onKeyDown}
-          onFocus={onFocus}
+          onFocus={e => {
+            setInputHeight(e.target.getBoundingClientRect().y - FANG_HEIGHT_PX - 3);
+            onFocus(e);
+          }}
           placeholder={placeholder}
           autoComplete="off"
           disabled={disabled}
@@ -248,10 +253,10 @@ class DateInput extends React.PureComponent {
             {...css(
               styles.DateInput_fang,
               openDirection === OPEN_DOWN && {
-                top: inputHeight + verticalSpacing - FANG_HEIGHT_PX - 1,
+                top: heightVal,
               },
               openDirection === OPEN_UP && {
-                bottom: inputHeight + verticalSpacing - FANG_HEIGHT_PX - 1,
+                bottom: heightVal,
               },
             )}
           >

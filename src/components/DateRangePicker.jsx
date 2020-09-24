@@ -136,11 +136,13 @@ const defaultProps = {
 class DateRangePicker extends React.PureComponent {
   constructor(props) {
     super(props);
+    const {small, theme: {reactDates}} = props
     this.state = {
       dayPickerContainerStyles: {},
       isDateRangePickerInputFocused: false,
       isDayPickerFocused: false,
       showKeyboardShortcuts: false,
+      inputHeight: getInputHeight(reactDates, small)
     };
 
     this.isTouchDevice = false;
@@ -289,6 +291,11 @@ class DateRangePicker extends React.PureComponent {
 
   setContainerRef(ref) {
     this.container = ref;
+  }
+
+  setInputHeight(h) {
+    console.log('set', h)
+    this.setState({inputHeight: h})
   }
 
   addDayPickerEventListeners() {
@@ -458,7 +465,8 @@ class DateRangePicker extends React.PureComponent {
       theme: { reactDates },
     } = this.props;
 
-    const { dayPickerContainerStyles, isDayPickerFocused, showKeyboardShortcuts } = this.state;
+    const { dayPickerContainerStyles, isDayPickerFocused, showKeyboardShortcuts, inputHeight } = this.state;
+    console.log('state', inputHeight)
 
     const onOutsideClick = (!withFullScreenPortal && withPortal)
       ? this.onOutsideClick
@@ -470,8 +478,6 @@ class DateRangePicker extends React.PureComponent {
     const closeIcon = customCloseIcon || (
       <CloseButton {...css(styles.DateRangePicker_closeButton_svg)} />
     );
-
-    const inputHeight = getInputHeight(reactDates, small);
 
     const withAnyPortal = withPortal || withFullScreenPortal;
 
@@ -610,6 +616,7 @@ class DateRangePicker extends React.PureComponent {
       small,
       regular,
       styles,
+      renderInputs
     } = this.props;
 
     const { isDateRangePickerInputFocused } = this.state;
@@ -620,6 +627,8 @@ class DateRangePicker extends React.PureComponent {
 
     const input = (
       <DateRangePickerInputController
+        renderInputs={renderInputs}
+        setInputHeight={this.setInputHeight.bind(this)}
         startDate={startDate}
         startDateId={startDateId}
         startDatePlaceholderText={startDatePlaceholderText}
