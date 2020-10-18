@@ -1,4 +1,5 @@
-import moment from 'moment';
+import { driver, chain } from '../drivers/driver';
+import parts from '../drivers/parts';
 
 import isBeforeDay from './isBeforeDay';
 import isAfterDay from './isAfterDay';
@@ -11,7 +12,7 @@ const startCacheInsideDays = new Map();
 const endCacheInsideDays = new Map();
 
 export default function isDayVisible(day, month, numberOfMonths, enableOutsideDays) {
-  if (!moment.isMoment(day)) return false;
+  if (!driver.valid(day)) return false;
 
   // Cloning is a little expensive, so we want to do it as little as possible.
 
@@ -21,7 +22,10 @@ export default function isDayVisible(day, month, numberOfMonths, enableOutsideDa
 
   if (enableOutsideDays) {
     if (!startCacheOutsideDays.has(startKey)) {
-      startCacheOutsideDays.set(startKey, month.clone().startOf('month').startOf('week'));
+      startCacheOutsideDays.set(startKey, chain(month)
+        .startOf(parts.MONTHS)
+        .startOf(parts.WEEKS)
+        .value());
     }
 
     if (isBeforeDay(day, startCacheOutsideDays.get(startKey))) return false;
@@ -29,8 +33,12 @@ export default function isDayVisible(day, month, numberOfMonths, enableOutsideDa
     if (!endCacheOutsideDays.has(endKey)) {
       endCacheOutsideDays.set(
         endKey,
-        month.clone().endOf('week').add(numberOfMonths - 1, 'months').endOf('month')
-          .endOf('week'),
+        chain(month)
+          .endOf(parts.WEEKS)
+          .add({ [parts.MONTHS]: numberOfMonths - 1 })
+          .endOf(parts.MONTHS)
+          .endOf(parts.WEEKS)
+          .value(),
       );
     }
 
@@ -40,7 +48,7 @@ export default function isDayVisible(day, month, numberOfMonths, enableOutsideDa
   // !enableOutsideDays
 
   if (!startCacheInsideDays.has(startKey)) {
-    startCacheInsideDays.set(startKey, month.clone().startOf('month'));
+    startCacheInsideDays.set(startKey, driver.startOf(month, parts.MONTHS));
   }
 
   if (isBeforeDay(day, startCacheInsideDays.get(startKey))) return false;
@@ -48,7 +56,7 @@ export default function isDayVisible(day, month, numberOfMonths, enableOutsideDa
   if (!endCacheInsideDays.has(endKey)) {
     endCacheInsideDays.set(
       endKey,
-      month.clone().add(numberOfMonths - 1, 'months').endOf('month'),
+      chain(month).add({ [parts.MONTHS]: numberOfMonths - 1 }).endOf('month').value(),
     );
   }
 

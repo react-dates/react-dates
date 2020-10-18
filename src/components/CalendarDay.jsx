@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import momentPropTypes from 'react-moment-proptypes';
 import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
-import moment from 'moment';
 import raf from 'raf';
+import { driver } from '../drivers/driver';
+import formats from '../drivers/formats';
 
 import { CalendarDayPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
@@ -15,7 +15,7 @@ import { DAY_SIZE } from '../constants';
 
 const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
-  day: momentPropTypes.momentObj,
+  day: driver.datePropType,
   daySize: nonNegativeInteger,
   isOutsideDay: PropTypes.bool,
   modifiers: ModifiersShape,
@@ -32,7 +32,7 @@ const propTypes = forbidExtraProps({
 });
 
 const defaultProps = {
-  day: moment(),
+  day: driver.now(),
   daySize: DAY_SIZE,
   isOutsideDay: false,
   modifiers: new Set(),
@@ -42,7 +42,7 @@ const defaultProps = {
   onDayMouseEnter() {},
   onDayMouseLeave() {},
   renderDayContents: null,
-  ariaLabelFormat: 'dddd, LL',
+  ariaLabelFormat: driver.formatString(formats.ARIA_LABEL),
 
   // internationalization
   phrases: CalendarDayPhrases,
@@ -163,7 +163,9 @@ class CalendarDay extends React.PureComponent {
         onKeyDown={(e) => { this.onKeyDown(day, e); }}
         tabIndex={tabIndex}
       >
-        {renderDayContents ? renderDayContents(day, modifiers) : day.format('D')}
+        {renderDayContents
+          ? renderDayContents(day, modifiers)
+          : driver.format(day, driver.formatString(formats.DAY))}
       </td>
     );
   }

@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
 
-import momentPropTypes from 'react-moment-proptypes';
 import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
+import { driver } from '../drivers/driver';
+import formats from '../drivers/formats';
+
 import openDirectionShape from '../shapes/OpenDirectionShape';
 
 import { SingleDatePickerInputPhrases } from '../defaultPhrases';
@@ -14,7 +15,6 @@ import SingleDatePickerInput from './SingleDatePickerInput';
 import IconPositionShape from '../shapes/IconPositionShape';
 import DisabledShape from '../shapes/DisabledShape';
 
-import toMomentObject from '../utils/toMomentObject';
 import toLocalizedDateString from '../utils/toLocalizedDateString';
 
 import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
@@ -27,7 +27,7 @@ import {
 const propTypes = forbidExtraProps({
   children: PropTypes.node,
 
-  date: momentPropTypes.momentObj,
+  date: driver.datePropType,
   onDateChange: PropTypes.func.isRequired,
 
   focused: PropTypes.bool,
@@ -100,9 +100,9 @@ const defaultProps = {
 
   keepOpenOnDateSelect: false,
   reopenPickerOnClearDate: false,
-  isOutsideRange: (day) => !isInclusivelyAfterDay(day, moment()),
+  isOutsideRange: (day) => !isInclusivelyAfterDay(day, driver.now()),
   isDayBlocked: () => false,
-  displayFormat: () => moment.localeData().longDateFormat('L'),
+  displayFormat: driver.formatString(formats.DISPLAY),
 
   onClose() {},
   onKeyDownArrowDown() {},
@@ -139,7 +139,7 @@ export default class SingleDatePickerInputController extends React.PureComponent
       onFocusChange,
       onClose,
     } = this.props;
-    const newDate = toMomentObject(dateString, this.getDisplayFormat());
+    const newDate = driver.date(dateString, this.getDisplayFormat());
 
     const isValid = newDate && !isOutsideRange(newDate) && !isDayBlocked(newDate);
     if (isValid) {
@@ -185,7 +185,7 @@ export default class SingleDatePickerInputController extends React.PureComponent
   getDateString(date) {
     const displayFormat = this.getDisplayFormat();
     if (date && displayFormat) {
-      return date && date.format(displayFormat);
+      return date && driver.format(date, displayFormat);
     }
     return toLocalizedDateString(date);
   }

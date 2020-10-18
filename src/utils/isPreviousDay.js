@@ -1,9 +1,10 @@
-import moment from 'moment';
+import { driver } from '../drivers/driver';
+import parts from '../drivers/parts';
 
 import isSameDay from './isSameDay';
 
 export default function isPreviousDay(a, b) {
-  if (!moment.isMoment(a) || !moment.isMoment(b)) return false;
-  const dayBefore = moment(a).subtract(1, 'day');
+  if (!driver.valid(a) || !driver.valid(b)) return false;
+  const dayBefore = driver.subtract(a, { [parts.DAYS]: 1 });
   return isSameDay(dayBefore, b);
 }

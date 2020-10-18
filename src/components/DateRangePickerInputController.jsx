@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
-
-import momentPropTypes from 'react-moment-proptypes';
 import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
+
+import { driver } from '../drivers/driver';
+import formats from '../drivers/formats';
+
 import openDirectionShape from '../shapes/OpenDirectionShape';
 
 import { DateRangePickerInputPhrases } from '../defaultPhrases';
@@ -14,9 +15,7 @@ import DateRangePickerInput from './DateRangePickerInput';
 import IconPositionShape from '../shapes/IconPositionShape';
 import DisabledShape from '../shapes/DisabledShape';
 
-import toMomentObject from '../utils/toMomentObject';
 import toLocalizedDateString from '../utils/toLocalizedDateString';
-
 import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
 import isBeforeDay from '../utils/isBeforeDay';
 
@@ -30,14 +29,14 @@ import {
 const propTypes = forbidExtraProps({
   children: PropTypes.node,
 
-  startDate: momentPropTypes.momentObj,
+  startDate: driver.datePropType,
   startDateId: PropTypes.string,
   startDatePlaceholderText: PropTypes.string,
   isStartDateFocused: PropTypes.bool,
   startDateAriaLabel: PropTypes.string,
   startDateTitleText: PropTypes.string,
 
-  endDate: momentPropTypes.momentObj,
+  endDate: driver.datePropType,
   endDateId: PropTypes.string,
   endDatePlaceholderText: PropTypes.string,
   isEndDateFocused: PropTypes.bool,
@@ -122,9 +121,10 @@ const defaultProps = {
   reopenPickerOnClearDates: false,
   withFullScreenPortal: false,
   minimumNights: 1,
-  isOutsideRange: (day) => !isInclusivelyAfterDay(day, moment()),
+  isOutsideRange: (day) => !isInclusivelyAfterDay(day, driver.now()),
   isDayBlocked: () => false,
-  displayFormat: () => moment.localeData().longDateFormat('L'),
+  // TODO: @tonyhb driver.formats
+  displayFormat: driver.formatString(formats.DISPLAY),
 
   onFocusChange() {},
   onClose() {},
@@ -179,11 +179,11 @@ export default class DateRangePickerInputController extends React.PureComponent 
       onDatesChange,
     } = this.props;
 
-    const endDate = toMomentObject(endDateString, this.getDisplayFormat());
+    const endDate = driver.date(endDateString, this.getDisplayFormat());
 
     const isEndDateValid = endDate
       && !isOutsideRange(endDate) && !isDayBlocked(endDate)
-      && !(startDate && isBeforeDay(endDate, startDate.clone().add(minimumNights, 'days')));
+      && !(startDate && isBeforeDay(endDate, driver.add(startDate, { days: minimumNights })));
     if (isEndDateValid) {
       onDatesChange({ startDate, endDate });
       if (!keepOpenOnDateSelect) this.onClearFocus();
@@ -224,9 +224,9 @@ export default class DateRangePickerInputController extends React.PureComponent 
       disabled,
     } = this.props;
 
-    const startDate = toMomentObject(startDateString, this.getDisplayFormat());
+    const startDate = driver.date(startDateString, this.getDisplayFormat());
     const isEndDateBeforeStartDate = startDate
-      && isBeforeDay(endDate, startDate.clone().add(minimumNights, 'days'));
+      && isBeforeDay(endDate, driver.add(startDate, { days: minimumNights }));
     const isStartDateValid = startDate
       && !isOutsideRange(startDate) && !isDayBlocked(startDate)
       && !(disabled === END_DATE && isEndDateBeforeStartDate);
@@ -262,7 +262,7 @@ export default class DateRangePickerInputController extends React.PureComponent 
   getDateString(date) {
     const displayFormat = this.getDisplayFormat();
     if (date && displayFormat) {
-      return date && date.format(displayFormat);
+      return driver.format(date, displayFormat);
     }
     return toLocalizedDateString(date);
   }

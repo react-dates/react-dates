@@ -1,11 +1,13 @@
 import React from 'react';
-import moment from 'moment';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 import { Portal } from 'react-portal';
 import { forbidExtraProps } from 'airbnb-prop-types';
 import { addEventListener } from 'consolidated-events';
 import isTouchDevice from 'is-touch-device';
 import OutsideClickHandler from 'react-outside-click-handler';
+
+import { driver } from '../drivers/driver';
+import formats from '../drivers/formats';
 
 import DateRangePickerShape from '../shapes/DateRangePickerShape';
 import { DateRangePickerPhrases } from '../defaultPhrases';
@@ -120,15 +122,15 @@ const defaultProps = {
   minimumNights: 1,
   enableOutsideDays: false,
   isDayBlocked: () => false,
-  isOutsideRange: (day) => !isInclusivelyAfterDay(day, moment()),
+  isOutsideRange: (day) => !isInclusivelyAfterDay(day, driver.now()),
   isDayHighlighted: () => false,
   minDate: undefined,
   maxDate: undefined,
 
-  // internationalization
-  displayFormat: () => moment.localeData().longDateFormat('L'),
-  monthFormat: 'MMMM YYYY',
-  weekDayFormat: 'dd',
+  displayFormat: driver.formatString(formats.DISPLAY),
+  monthFormat: driver.formatString(formats.MONTH),
+  weekDayFormat: driver.formatString(formats.WEEKDAY),
+
   phrases: DateRangePickerPhrases,
   dayAriaLabelFormat: undefined,
 };
@@ -464,7 +466,7 @@ class DateRangePicker extends React.PureComponent {
       ? this.onOutsideClick
       : undefined;
     const initialVisibleMonthThunk = initialVisibleMonth || (
-      () => (startDate || endDate || moment())
+      () => (startDate || endDate || driver.now())
     );
 
     const closeIcon = customCloseIcon || (

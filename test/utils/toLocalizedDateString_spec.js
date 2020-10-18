@@ -1,10 +1,18 @@
-import moment from 'moment';
 import { expect } from 'chai';
+import moment from 'moment';
 
 import toLocalizedDateString from '../../src/utils/toLocalizedDateString';
-import { ISO_FORMAT } from '../../src/constants';
+
+import { setDriver } from '../../src/drivers/driver';
+import momentDriver from '../../src/drivers/moment/driver';
+import { ISO_FORMAT } from '../../src/drivers/moment/constants';
+
 
 describe('toLocalizedDateString', () => {
+  beforeEach(() => {
+    setDriver(momentDriver);
+  });
+
   it('returns null for falsy argument', () => {
     expect(toLocalizedDateString()).to.equal(null);
   });

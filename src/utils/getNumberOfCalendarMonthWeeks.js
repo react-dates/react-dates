@@ -1,15 +1,17 @@
-import moment from 'moment';
+import { driver } from '../drivers/driver';
+import parts from '../drivers/parts';
 
 function getBlankDaysBeforeFirstDay(firstDayOfMonth, firstDayOfWeek) {
-  const weekDayDiff = firstDayOfMonth.day() - firstDayOfWeek;
+  const weekDayDiff = driver.weekday(firstDayOfMonth) - firstDayOfWeek;
   return (weekDayDiff + 7) % 7;
 }
 
 export default function getNumberOfCalendarMonthWeeks(
   month,
-  firstDayOfWeek = moment.localeData().firstDayOfWeek(),
+  firstDayOfWeek = driver.firstDayOfWeek(),
 ) {
-  const firstDayOfMonth = month.clone().startOf('month');
+  const firstDayOfMonth = driver.startOf(month, parts.MONTHS);
   const numBlankDays = getBlankDaysBeforeFirstDay(firstDayOfMonth, firstDayOfWeek);
-  return Math.ceil((numBlankDays + month.daysInMonth()) / 7);
+
+  return Math.ceil((numBlankDays + driver.daysInMonth(month)) / 7);
 }

@@ -3,10 +3,13 @@ import PropTypes from 'prop-types';
 import { forbidExtraProps, mutuallyExclusiveProps, nonNegativeInteger } from 'airbnb-prop-types';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 
-import moment from 'moment';
 import throttle from 'lodash/throttle';
 import isTouchDevice from 'is-touch-device';
 import OutsideClickHandler from 'react-outside-click-handler';
+import { driver, chain } from '../drivers/driver';
+import parts from '../drivers/parts';
+import formats from '../drivers/formats';
+
 
 import { DayPickerPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
@@ -135,7 +138,7 @@ export const defaultProps = {
   withPortal: false,
   onOutsideClick() {},
   hidden: false,
-  initialVisibleMonth: () => moment(),
+  initialVisibleMonth: () => driver.now(),
   firstDayOfWeek: null,
   renderCalendarInfo: null,
   calendarInfoPosition: INFO_POSITION_BOTTOM,
@@ -191,8 +194,8 @@ export const defaultProps = {
   onShiftTab() {},
 
   // internationalization
-  monthFormat: 'MMMM YYYY',
-  weekDayFormat: 'dd',
+  monthFormat: driver.formatString(formats.MONTH),
+  weekDayFormat: driver.formatString(formats.WEEKDAY),
   phrases: DayPickerPhrases,
   dayAriaLabelFormat: undefined,
 };
@@ -201,9 +204,9 @@ class DayPicker extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    const currentMonth = props.hidden ? moment() : props.initialVisibleMonth();
+    const currentMonth = props.hidden ? driver.now() : props.initialVisibleMonth();
 
-    let focusedDate = currentMonth.clone().startOf('month');
+    let focusedDate = driver.startOf(currentMonth, 'month');
     if (props.getFirstFocusableDay) {
       focusedDate = props.getFirstFocusableDay(currentMonth);
     }
@@ -443,7 +446,7 @@ class DayPicker extends React.PureComponent {
     const { focusedDate, showKeyboardShortcuts } = this.state;
     if (!focusedDate) return;
 
-    const newFocusedDate = focusedDate.clone();
+    let newFocusedDate = focusedDate;
 
     let didTransitionMonth = false;
 
@@ -457,51 +460,51 @@ class DayPicker extends React.PureComponent {
     switch (e.key) {
       case 'ArrowUp':
         e.preventDefault();
-        newFocusedDate.subtract(1, 'week');
+        newFocusedDate = driver.add(newFocusedDate, { days: -7 });
         didTransitionMonth = this.maybeTransitionPrevMonth(newFocusedDate);
         break;
       case 'ArrowLeft':
         e.preventDefault();
         if (isRTL) {
-          newFocusedDate.add(1, 'day');
+          newFocusedDate = driver.add(newFocusedDate, { days: 1 });
         } else {
-          newFocusedDate.subtract(1, 'day');
+          newFocusedDate = driver.add(newFocusedDate, { days: -1 });
         }
         didTransitionMonth = this.maybeTransitionPrevMonth(newFocusedDate);
         break;
       case 'Home':
         e.preventDefault();
-        newFocusedDate.startOf('week');
+        newFocusedDate = driver.startOf(newFocusedDate, 'week');
         didTransitionMonth = this.maybeTransitionPrevMonth(newFocusedDate);
         break;
       case 'PageUp':
         e.preventDefault();
-        newFocusedDate.subtract(1, 'month');
+        newFocusedDate = driver.add(newFocusedDate, { months: -1 });
         didTransitionMonth = this.maybeTransitionPrevMonth(newFocusedDate);
         break;
 
       case 'ArrowDown':
         e.preventDefault();
-        newFocusedDate.add(1, 'week');
+        newFocusedDate = driver.add(newFocusedDate, { days: 7 });
         didTransitionMonth = this.maybeTransitionNextMonth(newFocusedDate);
         break;
       case 'ArrowRight':
         e.preventDefault();
         if (isRTL) {
-          newFocusedDate.subtract(1, 'day');
+          newFocusedDate = driver.add(newFocusedDate, { days: -1 });
         } else {
-          newFocusedDate.add(1, 'day');
+          newFocusedDate = driver.add(newFocusedDate, { days: 1 });
         }
         didTransitionMonth = this.maybeTransitionNextMonth(newFocusedDate);
         break;
       case 'End':
         e.preventDefault();
-        newFocusedDate.endOf('week');
+        newFocusedDate = driver.endOf(newFocusedDate, 'week');
         didTransitionMonth = this.maybeTransitionNextMonth(newFocusedDate);
         break;
       case 'PageDown':
         e.preventDefault();
-        newFocusedDate.add(1, 'month');
+        newFocusedDate = driver.add(newFocusedDate, { months: 1 });
         didTransitionMonth = this.maybeTransitionNextMonth(newFocusedDate);
         break;
 
@@ -642,7 +645,7 @@ class DayPicker extends React.PureComponent {
   getFirstDayOfWeek() {
     const { firstDayOfWeek } = this.props;
     if (firstDayOfWeek == null) {
-      return moment.localeData().firstDayOfWeek();
+      return driver.firstDayOfWeek();
     }
 
     return firstDayOfWeek;
@@ -655,7 +658,11 @@ class DayPicker extends React.PureComponent {
 
     const weekHeaders = [];
     for (let i = 0; i < 7; i += 1) {
-      weekHeaders.push(currentMonth.clone().day((i + firstDayOfWeek) % 7).format(weekDayFormat));
+      const date = chain(currentMonth)
+        .set({ [parts.WEEKDAYS]: ((i + firstDayOfWeek) % 7) })
+        .format(weekDayFormat)
+        .value();
+      weekHeaders.push(date);
     }
 
     return weekHeaders;
@@ -686,7 +693,7 @@ class DayPicker extends React.PureComponent {
     }
 
     if (newMonth && (!focusedDate || !isDayVisible(focusedDate, newMonth, numberOfMonths))) {
-      focusedDate = newMonth.clone().startOf('month');
+      focusedDate = driver.startOf(newMonth, 'month');
     }
 
     return focusedDate;
@@ -704,12 +711,12 @@ class DayPicker extends React.PureComponent {
     const { numberOfMonths } = this.props;
 
     this.calendarMonthWeeks = [];
-    let month = currentMonth.clone().subtract(1, 'months');
+    let month = driver.add(currentMonth, { months: -1 });
     const firstDayOfWeek = this.getFirstDayOfWeek();
     for (let i = 0; i < numberOfMonths + 2; i += 1) {
       const numberOfWeeks = getNumberOfCalendarMonthWeeks(month, firstDayOfWeek);
       this.calendarMonthWeeks.push(numberOfWeeks);
-      month = month.add(1, 'months');
+      month = driver.add(month, { months: 1 });
     }
   }
 
@@ -743,7 +750,7 @@ class DayPicker extends React.PureComponent {
     if (onGetPrevScrollableMonths) onGetPrevScrollableMonths(e);
 
     this.setState(({ currentMonth, scrollableMonthMultiple }) => ({
-      currentMonth: currentMonth.clone().subtract(numberOfMonths, 'month'),
+      currentMonth: driver.subtract(currentMonth, { [parts.MONTHS]: numberOfMonths }),
       scrollableMonthMultiple: scrollableMonthMultiple + 1,
     }));
   }
@@ -752,8 +759,8 @@ class DayPicker extends React.PureComponent {
     const { numberOfMonths } = this.props;
     const { currentMonth, focusedDate } = this.state;
 
-    const newFocusedDateMonth = newFocusedDate.month();
-    const focusedDateMonth = focusedDate.month();
+    const newFocusedDateMonth = driver.get(newFocusedDate, parts.MONTHS);
+    const focusedDateMonth = driver.get(focusedDate, parts.MONTHS);
     const isNewFocusedDateVisible = isDayVisible(newFocusedDate, currentMonth, numberOfMonths);
     if (newFocusedDateMonth !== focusedDateMonth && !isNewFocusedDateVisible) {
       this.onNextMonthTransition(newFocusedDate);
@@ -767,8 +774,8 @@ class DayPicker extends React.PureComponent {
     const { numberOfMonths } = this.props;
     const { currentMonth, focusedDate } = this.state;
 
-    const newFocusedDateMonth = newFocusedDate.month();
-    const focusedDateMonth = focusedDate.month();
+    const newFocusedDateMonth = driver.get(newFocusedDate, parts.MONTHS);
+    const focusedDateMonth = driver.get(focusedDate, parts.MONTHS);
     const isNewFocusedDateVisible = isDayVisible(newFocusedDate, currentMonth, numberOfMonths);
     if (newFocusedDateMonth !== focusedDateMonth && !isNewFocusedDateVisible) {
       this.onPrevMonthTransition(newFocusedDate);
@@ -809,18 +816,18 @@ class DayPicker extends React.PureComponent {
 
     if (!monthTransition) return;
 
-    const newMonth = currentMonth.clone();
+    let newMonth = currentMonth;
     const firstDayOfWeek = this.getFirstDayOfWeek();
     if (monthTransition === PREV_TRANSITION) {
-      newMonth.subtract(1, 'month');
+      newMonth = driver.add(newMonth, { [parts.MONTHS]: -1 });
       if (onPrevMonthClick) onPrevMonthClick(newMonth);
-      const newInvisibleMonth = newMonth.clone().subtract(1, 'month');
+      const newInvisibleMonth = driver.add(newMonth, { [parts.MONTHS]: -1 });
       const numberOfWeeks = getNumberOfCalendarMonthWeeks(newInvisibleMonth, firstDayOfWeek);
       this.calendarMonthWeeks = [numberOfWeeks, ...this.calendarMonthWeeks.slice(0, -1)];
     } else if (monthTransition === NEXT_TRANSITION) {
-      newMonth.add(1, 'month');
+      newMonth = driver.add(newMonth.add, { [parts.MONTHS]: 1 });
       if (onNextMonthClick) onNextMonthClick(newMonth);
-      const newInvisibleMonth = newMonth.clone().add(numberOfMonths, 'month');
+      const newInvisibleMonth = driver.add(newMonth, { [parts.MONTHS]: numberOfMonths });
       const numberOfWeeks = getNumberOfCalendarMonthWeeks(newInvisibleMonth, firstDayOfWeek);
       this.calendarMonthWeeks = [...this.calendarMonthWeeks.slice(1), numberOfWeeks];
     } else if (monthTransition === MONTH_SELECTION_TRANSITION) {

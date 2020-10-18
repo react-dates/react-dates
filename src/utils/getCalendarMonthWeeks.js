@@ -1,33 +1,34 @@
-import moment from 'moment';
+import { driver, chain } from '../drivers/driver';
+import parts from '../drivers/parts';
 
 import { WEEKDAYS } from '../constants';
 
 export default function getCalendarMonthWeeks(
   month,
   enableOutsideDays,
-  firstDayOfWeek = moment.localeData().firstDayOfWeek(),
+  firstDayOfWeek = driver.firstDayOfWeek(),
 ) {
-  if (!moment.isMoment(month) || !month.isValid()) {
-    throw new TypeError('`month` must be a valid moment object');
+  if (!driver.valid(month)) {
+    throw new TypeError('`month` must be a valid driver date instance');
   }
   if (WEEKDAYS.indexOf(firstDayOfWeek) === -1) {
     throw new TypeError('`firstDayOfWeek` must be an integer between 0 and 6');
   }
 
   // set utc offset to get correct dates in future (when timezone changes)
-  const firstOfMonth = month.clone().startOf('month').hour(12);
-  const lastOfMonth = month.clone().endOf('month').hour(12);
+  const firstOfMonth = chain(month).startOf(parts.MONTHS).set({ [parts.HOURS]: 12 }).value();
+  const lastOfMonth = chain(month).endOf(parts.MONTHS).set({ [parts.HOURS]: 12 }).value();
 
   // calculate the exact first and last days to fill the entire matrix
   // (considering days outside month)
-  const prevDays = ((firstOfMonth.day() + 7 - firstDayOfWeek) % 7);
-  const nextDays = ((firstDayOfWeek + 6 - lastOfMonth.day()) % 7);
-  const firstDay = firstOfMonth.clone().subtract(prevDays, 'day');
-  const lastDay = lastOfMonth.clone().add(nextDays, 'day');
+  const prevDays = ((driver.weekday(firstOfMonth) + 7 - firstDayOfWeek) % 7);
+  const nextDays = ((firstDayOfWeek + 6 - driver.weekday(lastOfMonth)) % 7);
+  const firstDay = driver.subtract(firstOfMonth, { [parts.DAYS]: prevDays });
+  const lastDay = driver.add(lastOfMonth, { [parts.DAYS]: nextDays });
 
-  const totalDays = lastDay.diff(firstDay, 'days') + 1;
+  const totalDays = driver.diff(lastDay, firstDay, parts.DAYS) + 1;
 
-  const currentDay = firstDay.clone();
+  let currentDay = firstDay;
   const weeksInMonth = [];
 
   for (let i = 0; i < totalDays; i += 1) {
@@ -37,12 +38,12 @@ export default function getCalendarMonthWeeks(
 
     let day = null;
     if ((i >= prevDays && i < (totalDays - nextDays)) || enableOutsideDays) {
-      day = currentDay.clone();
+      day = currentDay;
     }
 
     weeksInMonth[weeksInMonth.length - 1].push(day);
 
-    currentDay.add(1, 'day');
+    currentDay = driver.add(currentDay, { [parts.DAYS]: 1 });
   }
 
   return weeksInMonth;

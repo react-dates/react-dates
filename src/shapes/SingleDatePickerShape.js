@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
-import momentPropTypes from 'react-moment-proptypes';
 import { mutuallyExclusiveProps, nonNegativeInteger } from 'airbnb-prop-types';
 
+import { driver } from '../drivers/driver';
 import { SingleDatePickerPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 
@@ -15,7 +15,7 @@ import NavPositionShape from './NavPositionShape';
 
 export default {
   // required props for a functional interactive SingleDatePicker
-  date: momentPropTypes.momentObj,
+  date: driver.datePropType,
   onDateChange: PropTypes.func.isRequired,
 
   focused: PropTypes.bool,
@@ -87,8 +87,8 @@ export default {
   isDayBlocked: PropTypes.func,
   isOutsideRange: PropTypes.func,
   isDayHighlighted: PropTypes.func,
-  minDate: momentPropTypes.momentObj,
-  maxDate: momentPropTypes.momentObj,
+  minDate: driver.datePropType,
+  maxDate: driver.datePropType,
 
   // internationalization props
   displayFormat: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),

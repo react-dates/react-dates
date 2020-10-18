@@ -4,6 +4,10 @@ import { expect } from 'chai';
 import getNumberOfCalendarMonthWeeks from '../../src/utils/getNumberOfCalendarMonthWeeks';
 
 describe('getNumberOfCalendarMonthWeeks', () => {
+  beforeEach(() => {
+    moment.locale('en');
+  });
+
   it('returns 4 weeks for a 4-week month', () => {
     const february2018 = moment('2018-02-01', 'YYYY-MM-DD');
     expect(getNumberOfCalendarMonthWeeks(february2018, 4)).to.equal(4);
