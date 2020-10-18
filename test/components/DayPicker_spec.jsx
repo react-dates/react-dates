@@ -105,6 +105,47 @@ describe('DayPicker', () => {
           expect(CalendarMonthGridComponent.prop('isAnimating')).to.equal(false);
         });
       });
+
+      describe('prop.isFocused', () => {
+        it('is false if state.preventFocusDate is true', () => {
+          const wrapper = shallow(<DayPicker />).dive();
+          wrapper.setState({ preventFocusDate: true });
+          const CalendarMonthGridComponent = wrapper.find(CalendarMonthGrid);
+          expect(CalendarMonthGridComponent.prop('isFocused')).to.equal(false);
+        });
+
+        it('is false if state.monthTransition is truthy', () => {
+          const wrapper = shallow(<DayPicker />).dive();
+          wrapper.setState({
+            preventFocusDate: false,
+            monthTransition: 'foo',
+          });
+          const CalendarMonthGridComponent = wrapper.find(CalendarMonthGrid);
+          expect(CalendarMonthGridComponent.prop('isFocused')).to.equal(false);
+        });
+
+        it('is false if isFocused is false', () => {
+          const wrapper = shallow(<DayPicker />).dive();
+          wrapper.setState({
+            preventFocusDate: false,
+            monthTransition: null,
+            isFocused: false,
+          });
+          const CalendarMonthGridComponent = wrapper.find(CalendarMonthGrid);
+          expect(CalendarMonthGridComponent.prop('isFocused')).to.equal(false);
+        });
+
+        it('is true if state.preventFocusDate and state.monthTransition are falsy and isFocused is true', () => {
+          const wrapper = shallow(<DayPicker />).dive();
+          wrapper.setState({
+            preventFocusDate: false,
+            monthTransition: null,
+          });
+          wrapper.setProps({ isFocused: true });
+          const CalendarMonthGridComponent = wrapper.find(CalendarMonthGrid);
+          expect(CalendarMonthGridComponent.prop('isFocused')).to.equal(true);
+        });
+      });
     });
 
     describe('DayPickerNavigation', () => {

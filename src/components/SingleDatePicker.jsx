@@ -511,6 +511,7 @@ class SingleDatePicker extends React.PureComponent {
           calendarInfoPosition={calendarInfoPosition}
           isFocused={isDayPickerFocused}
           showKeyboardShortcuts={showKeyboardShortcuts}
+          onFocus={this.onDayPickerFocus}
           onBlur={this.onDayPickerBlur}
           phrases={phrases}
           dayAriaLabelFormat={dayAriaLabelFormat}

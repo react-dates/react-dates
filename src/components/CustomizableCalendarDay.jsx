@@ -225,10 +225,21 @@ class CustomizableCalendarDay extends React.PureComponent {
     this.setButtonRef = this.setButtonRef.bind(this);
   }
 
+  componentDidMount() {
+    const { isFocused, tabIndex } = this.props;
+    if (isFocused && tabIndex === 0) {
+      setTimeout(() => {
+        if (this.buttonRef) {
+          this.buttonRef.focus();
+        }
+      }, 0);
+    }
+  }
+
   componentDidUpdate(prevProps) {
     const { isFocused, tabIndex } = this.props;
     if (tabIndex === 0) {
-      if (isFocused || tabIndex !== prevProps.tabIndex) {
+      if (isFocused && tabIndex !== prevProps.tabIndex) {
         raf(() => {
           if (this.buttonRef) {
             this.buttonRef.focus();

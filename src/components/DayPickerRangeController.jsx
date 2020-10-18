@@ -105,6 +105,7 @@ const propTypes = forbidExtraProps({
   transitionDuration: nonNegativeInteger,
 
   // accessibility
+  onFocus: PropTypes.func,
   onBlur: PropTypes.func,
   isFocused: PropTypes.bool,
   showKeyboardShortcuts: PropTypes.bool,
@@ -182,6 +183,7 @@ const defaultProps = {
   horizontalMonthPadding: 13,
 
   // accessibility
+  onFocus() {},
   onBlur() {},
   isFocused: false,
   showKeyboardShortcuts: false,
@@ -1314,6 +1316,7 @@ export default class DayPickerRangeController extends React.PureComponent {
       renderCalendarInfo,
       renderMonthElement,
       calendarInfoPosition,
+      onFocus,
       onBlur,
       onShiftTab,
       onTab,
@@ -1384,6 +1387,7 @@ export default class DayPickerRangeController extends React.PureComponent {
         hideKeyboardShortcutsPanel={hideKeyboardShortcutsPanel}
         isFocused={isFocused}
         getFirstFocusableDay={this.getFirstFocusableDay}
+        onFocus={onFocus}
         onBlur={onBlur}
         showKeyboardShortcuts={showKeyboardShortcuts}
         phrases={phrases}

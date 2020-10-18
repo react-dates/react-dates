@@ -3,6 +3,7 @@ import moment from 'moment';
 import momentJalaali from 'moment-jalaali';
 import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
+import { action } from '@storybook/addon-actions';
 import DirectionProvider, { DIRECTIONS } from 'react-with-direction/dist/DirectionProvider';
 import isInclusivelyBeforeDay from '../src/utils/isInclusivelyBeforeDay';
 import isInclusivelyAfterDay from '../src/utils/isInclusivelyAfterDay';
@@ -12,9 +13,9 @@ import {
   ANCHOR_RIGHT,
 } from '../src/constants';
 
-import SingleDatePickerWrapper from '../examples/SingleDatePickerWrapper';
+import SingleDatePickerWrapperExample from '../examples/SingleDatePickerWrapper';
 
-const TestInput = props => (
+const TestInput = (props) => (
   <div style={{ marginTop: 16 }} >
     <input
       {...props}
@@ -28,6 +29,14 @@ const TestInput = props => (
       }}
     />
   </div>
+);
+
+const SingleDatePickerWrapper = (props) => (
+  <SingleDatePickerWrapperExample
+    {...props}
+    onDateChange={action('onDateChange')}
+    onFocusChange={action('onFocusChange')}
+  />
 );
 
 storiesOf('SingleDatePicker (SDP)', module)

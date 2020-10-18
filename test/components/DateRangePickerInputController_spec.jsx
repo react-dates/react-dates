@@ -751,13 +751,15 @@ describe('DateRangePickerInputController', () => {
     });
 
     describe('is outside range', () => {
-      const futureDate = moment().add(7, 'days').format('DD/MM/YYYY');
+      const displayFormat = 'DD/MM/YYYY';
+      const futureDate = moment().add(7, 'days').format(displayFormat);
       const isOutsideRange = (day) => day > moment().add(5, 'days');
 
       it('calls props.onDatesChange', () => {
         const onDatesChangeStub = sinon.stub();
         const wrapper = shallow((
           <DateRangePickerInputController
+            displayFormat={displayFormat}
             onDatesChange={onDatesChangeStub}
             isOutsideRange={isOutsideRange}
           />
@@ -770,6 +772,7 @@ describe('DateRangePickerInputController', () => {
         const onDatesChangeStub = sinon.stub();
         const wrapper = shallow((
           <DateRangePickerInputController
+            displayFormat={displayFormat}
             onDatesChange={onDatesChangeStub}
             startDate={today}
             isOutsideRange={isOutsideRange}
@@ -784,6 +787,7 @@ describe('DateRangePickerInputController', () => {
         const onDatesChangeStub = sinon.stub();
         const wrapper = shallow((
           <DateRangePickerInputController
+            displayFormat={displayFormat}
             onDatesChange={onDatesChangeStub}
             endDate={today}
             isOutsideRange={isOutsideRange}
@@ -796,13 +800,15 @@ describe('DateRangePickerInputController', () => {
     });
 
     describe('is blocked', () => {
-      const futureDate = moment().add(7, 'days').format('DD/MM/YYYY');
+      const displayFormat = 'DD/MM/YYYY';
+      const futureDate = moment().add(7, 'days').format(displayFormat);
       const isDayBlocked = sinon.stub().returns(true);
 
       it('calls props.onDatesChange', () => {
         const onDatesChangeStub = sinon.stub();
         const wrapper = shallow((
           <DateRangePickerInputController
+            displayFormat={displayFormat}
             onDatesChange={onDatesChangeStub}
             isDayBlocked={isDayBlocked}
           />
@@ -815,6 +821,7 @@ describe('DateRangePickerInputController', () => {
         const onDatesChangeStub = sinon.stub();
         const wrapper = shallow((
           <DateRangePickerInputController
+            displayFormat={displayFormat}
             onDatesChange={onDatesChangeStub}
             startDate={today}
             isDayBlocked={isDayBlocked}
