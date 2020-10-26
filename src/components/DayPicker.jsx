@@ -427,6 +427,7 @@ class DayPicker extends React.PureComponent {
     e.stopPropagation();
 
     if (!MODIFIER_KEY_NAMES.has(e.key)) {
+      if (e.key !== 'Tab') e.preventDefault();
       this.throttledKeyDown(e);
     }
   }
