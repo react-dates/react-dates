@@ -101,8 +101,8 @@
     "node-sass": "^4.12.0",
     "nyc": "^14.1.1",
     "raw-loader": "^0.5.1",
-    "react": "^0.14 || ^15.5.4 || ^16.1.1",
-    "react-dom": "^0.14 || ^15.5.4 || ^16.1.1",
+    "react": "^16.3.0 || ^17.0.0",
+    "react-dom": "^16.3.0 || ^17.0.0",
     "react-with-styles-interface-aphrodite": "^6.0.0",
     "react-with-styles-interface-css-compiler": "^2.2.0",
     "rimraf": "^2.6.3",
@@ -135,8 +135,8 @@
   "peerDependencies": {
     "@babel/runtime": "^7.0.0",
     "moment": "^2.18.1",
-    "react": "^0.14 || ^15.5.4 || ^16.1.1",
-    "react-dom": "^0.14 || ^15.5.4 || ^16.1.1",
+    "react": "^16.3.0 || ^17.0.0",
+    "react-dom": "^16.3.0 || ^17.0.0",
     "react-with-direction": "^1.3.1"
   },
   "greenkeeper": {
