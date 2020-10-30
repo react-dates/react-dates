@@ -116,6 +116,7 @@
   },
   "dependencies": {
     "airbnb-prop-types": "^2.16.0",
+    "color2k": "^1.1.0",
     "consolidated-events": "^1.1.1 || ^2.0.0",
     "enzyme-shallow-equal": "^1.0.4",
     "is-touch-device": "^1.0.1",
