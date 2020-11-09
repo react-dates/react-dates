@@ -253,4 +253,11 @@ storiesOf('DRP - Calendar Props', module)
       verticalSpacing={0}
       autoFocus
     />
+  )))
+  .add('without borders', withInfo()(() => (
+    <DateRangePickerWrapper
+      verticalSpacing={0}
+      noBorder
+      autoFocus
+    />
   )));

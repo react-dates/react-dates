@@ -451,6 +451,7 @@ class DateRangePicker extends React.PureComponent {
       weekDayFormat,
       styles,
       verticalHeight,
+      noBorder,
       transitionDuration,
       verticalSpacing,
       horizontalMonthPadding,
@@ -548,6 +549,7 @@ class DateRangePicker extends React.PureComponent {
           firstDayOfWeek={firstDayOfWeek}
           weekDayFormat={weekDayFormat}
           verticalHeight={verticalHeight}
+          noBorder={noBorder}
           transitionDuration={transitionDuration}
           disabled={disabled}
           horizontalMonthPadding={horizontalMonthPadding}
