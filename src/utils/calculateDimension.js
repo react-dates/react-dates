@@ -1,3 +1,7 @@
+function getStyleOrDefault(style, propertyName) {
+  return parseFloat(style[propertyName] || 0);
+}
+
 export default function calculateDimension(el, axis, borderBox = false, withMargin = false) {
   if (!el) {
     return 0;
@@ -16,16 +20,16 @@ export default function calculateDimension(el, axis, borderBox = false, withMarg
   // Get the inner size
   if (!borderBox) {
     size -= (
-      parseFloat(style[`padding${axisStart}`])
-      + parseFloat(style[`padding${axisEnd}`])
-      + parseFloat(style[`border${axisStart}Width`])
-      + parseFloat(style[`border${axisEnd}Width`])
+      getStyleOrDefault(style, `padding${axisStart}`)
+      + getStyleOrDefault(style, `padding${axisEnd}`)
+      + getStyleOrDefault(style, `border${axisStart}Width`)
+      + getStyleOrDefault(style, `border${axisEnd}Width`)
     );
   }
 
   // Apply margin
   if (withMargin) {
-    size += (parseFloat(style[`margin${axisStart}`]) + parseFloat(style[`margin${axisEnd}`]));
+    size += (getStyleOrDefault(style, `margin${axisStart}`) + getStyleOrDefault(style, `margin${axisEnd}`));
   }
 
   return size;

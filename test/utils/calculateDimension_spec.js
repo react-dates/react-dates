@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-
+import { JSDOM } from 'jsdom';
 import calculateDimension from '../../src/utils/calculateDimension';
 
 describe('#calculateDimension', () => {
@@ -24,15 +24,15 @@ describe('#calculateDimension', () => {
     });
   });
 
-  /* Requires a DOM */
+  /* Requires a DOM that correctly returns window.getComputedStyle() styles */
   describe.skip('withMargin false and borderBox true', () => {
     let testElement = null;
 
     beforeEach(() => {
       testElement = document.createElement('div');
 
-      testElement.style.width = '100px';
-      testElement.style.height = '250px';
+      testElement.style.offsetWidth = '100px';
+      testElement.style.offsetHeight = '250px';
       testElement.style.padding = '15px 10px';
       testElement.style.border = '1px solid red';
       testElement.style.margin = '3px 6px 5px 2px';
@@ -69,6 +69,37 @@ describe('#calculateDimension', () => {
 
     it('calculates content-box width with margin', () => {
       expect(calculateDimension(testElement, 'width', false, true)).to.equal(108);
+    });
+  });
+
+  // https://github.com/airbnb/react-dates/issues/1426
+  describe('withMargin false and borderBox true when style properties are absent', () => {
+    let testElement = null;
+
+    beforeEach(() => {
+      const { window } = new JSDOM('<div />');
+      global.window = window;
+      testElement = window.document.querySelector('div');
+    });
+
+    afterEach(() => {
+      delete global.window;
+    });
+
+    it('does not return NaN', () => {
+      expect(Number.isNaN(calculateDimension(testElement, 'height'))).to.equal(false);
+    });
+
+    it('does not return NaN with border box and no margin', () => {
+      expect(Number.isNaN(calculateDimension(testElement, 'height', true))).to.equal(false);
+    });
+
+    it('does not return NaN with border box and margin', () => {
+      expect(Number.isNaN(calculateDimension(testElement, 'height', true, true))).to.equal(false);
+    });
+
+    it('does not return NaN with margin and no border box', () => {
+      expect(Number.isNaN(calculateDimension(testElement, 'height', false, true))).to.equal(false);
     });
   });
 });
