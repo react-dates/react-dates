@@ -949,7 +949,7 @@ describe('DayPicker', () => {
       });
     });
 
-    describe('#componentWillReceiveProps', () => {
+    describe('#UNSAFE_componentWillReceiveProps', () => {
       describe('props.orientation === VERTICAL_SCROLLABLE', () => {
         it('updates state.currentMonthScrollTop', () => {
           sinon.spy(DayPicker.prototype, 'setTransitionContainerRef');

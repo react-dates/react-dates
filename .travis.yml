@@ -23,8 +23,6 @@ env:
   global:
     - TEST=true
   matrix:
-    - REACT=0.14
-    - REACT=15
     - REACT=16
 sudo: false
 matrix:

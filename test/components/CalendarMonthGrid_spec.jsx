@@ -31,7 +31,7 @@ describe('CalendarMonthGrid', () => {
       <CalendarMonthGrid numberOfMonths={12} initialMonth={initialMonth} />
     )).dive();
 
-    wrapper.instance().componentWillReceiveProps({
+    wrapper.instance().UNSAFE_componentWillReceiveProps({
       initialMonth,
       numberOfMonths: 24,
     });
@@ -51,7 +51,7 @@ describe('CalendarMonthGrid', () => {
       <CalendarMonthGrid numberOfMonths={12} initialMonth={initialMonth} />
     )).dive();
 
-    wrapper.instance().componentWillReceiveProps({
+    wrapper.instance().UNSAFE_componentWillReceiveProps({
       initialMonth,
       numberOfMonths: 12,
       firstVisibleMonthIndex: 0,

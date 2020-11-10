@@ -281,7 +281,7 @@ class DayPicker extends React.PureComponent {
     this.setCalendarMonthWeeks(currentMonth);
   }
 
-  componentWillReceiveProps(nextProps, nextState) {
+  UNSAFE_componentWillReceiveProps(nextProps, nextState) {
     const {
       hidden,
       isFocused,
@@ -361,7 +361,7 @@ class DayPicker extends React.PureComponent {
     }
   }
 
-  componentWillUpdate() {
+  UNSAFE_componentWillUpdate() {
     const { transitionDuration } = this.props;
 
     // Calculating the dimensions trigger a DOM repaint which

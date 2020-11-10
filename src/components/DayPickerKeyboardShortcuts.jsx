@@ -91,7 +91,7 @@ class DayPickerKeyboardShortcuts extends React.PureComponent {
     this.onKeyDown = this.onKeyDown.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { phrases } = this.props;
     if (nextProps.phrases !== phrases) {
       this.keyboardShortcuts = getKeyboardShortcuts(nextProps.phrases);
