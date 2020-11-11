@@ -539,6 +539,40 @@ describe('DayPickerSingleDateController', () => {
         expect(onDateChangeStub.callCount).to.equal(1);
       });
 
+      it('props.onDateChange receives undefined when day selected', () => {
+        const date = moment();
+        const onDateChangeStub = sinon.stub();
+        const wrapper = shallow((
+          <DayPickerSingleDateController
+            onDateChange={onDateChangeStub}
+            onFocusChange={() => {}}
+            date={date}
+            allowUnselect
+          />
+        ));
+        // Click same day as the provided date.
+        wrapper.instance().onDayClick(date);
+        expect(onDateChangeStub.callCount).to.equal(1);
+        expect(onDateChangeStub.getCall(0).args[0]).to.equal(undefined);
+      });
+
+      it('props.onDateChange receives day when allowUnselect is disabled', () => {
+        const date = moment();
+        const onDateChangeStub = sinon.stub();
+        const wrapper = shallow((
+          <DayPickerSingleDateController
+            onDateChange={onDateChangeStub}
+            onFocusChange={() => {}}
+            date={date}
+            allowUnselect={false}
+          />
+        ));
+        // Click same day as the provided date.
+        wrapper.instance().onDayClick(date);
+        expect(onDateChangeStub.callCount).to.equal(1);
+        expect(onDateChangeStub.getCall(0).args[0]).to.equal(date);
+      });
+
       describe('props.keepOpenOnDateSelect is false', () => {
         it('props.onFocusChange is called', () => {
           const onFocusChangeStub = sinon.stub();
