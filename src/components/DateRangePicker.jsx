@@ -132,6 +132,7 @@ const defaultProps = {
   weekDayFormat: 'dd',
   phrases: DateRangePickerPhrases,
   dayAriaLabelFormat: undefined,
+  predefinedHours: false
 };
 
 class DateRangePicker extends React.PureComponent {
@@ -613,6 +614,7 @@ class DateRangePicker extends React.PureComponent {
       small,
       regular,
       styles,
+      predefinedHours,
     } = this.props;
 
     const { isDateRangePickerInputFocused } = this.state;
@@ -667,6 +669,7 @@ class DateRangePicker extends React.PureComponent {
         small={small}
         regular={regular}
         verticalSpacing={verticalSpacing}
+        predefinedHours={predefinedHours}
       >
         {this.maybeRenderDayPickerWithPortal()}
       </DateRangePickerInputController>

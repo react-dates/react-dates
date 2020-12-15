@@ -43,6 +43,28 @@ describe('toMomentObject', () => {
     expect(date.year()).to.equal(1991);
   });
 
+  describe('parses format with time', () => {
+    it('using default hours', () => {
+      const date = toMomentObject('Dec 02 1993 06:15', 'MMM DD YYYY HH:mm');
+      expect(date).not.to.equal(null);
+      expect(date.month()).to.equal(12);
+      expect(date.date()).to.equal(2);
+      expect(date.year()).to.equal(1993);
+      expect(date.hours()).to.equal(12);
+      expect(date.minutes()).to.equal(15);
+    })
+
+    it('using input hours', () => {
+      const date = toMomentObject('Dec 02 1993 06:15', 'MMM DD YYYY HH:mm', false);
+      expect(date).not.to.equal(null);
+      expect(date.month()).to.equal(12);
+      expect(date.date()).to.equal(2);
+      expect(date.year()).to.equal(1993);
+      expect(date.hours()).to.equal(6);
+      expect(date.minutes()).to.equal(15);
+    })
+  })
+
   describe('Daylight Savings Time issues', () => {
     it('last of February does not equal first of March', () => {
       expect(isSameDay(toMomentObject('2017-02-28'), toMomentObject('2017-03-01'))).to.equal(false);

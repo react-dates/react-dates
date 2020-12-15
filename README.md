@@ -205,6 +205,7 @@ monthFormat: PropTypes.string,
 weekDayFormat: PropTypes.string,
 phrases: PropTypes.shape(getPhrasePropTypes(DateRangePickerPhrases)),
 dayAriaLabelFormat: PropTypes.string,
+predefinedHours: PropTypes.bool,
 ```
 
 #### SingleDatePicker
@@ -288,6 +289,7 @@ monthFormat: PropTypes.string,
 weekDayFormat: PropTypes.string,
 phrases: PropTypes.shape(getPhrasePropTypes(SingleDatePickerPhrases)),
 dayAriaLabelFormat: PropTypes.string,
+predefinedHours: PropTypes.bool,
 ```
 
 #### DayPickerRangeController
