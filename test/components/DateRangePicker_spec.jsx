@@ -9,6 +9,7 @@ import DateRangePicker, { PureDateRangePicker } from '../../src/components/DateR
 
 import DateRangePickerInputController from '../../src/components/DateRangePickerInputController';
 import DayPickerRangeController from '../../src/components/DayPickerRangeController';
+import DayPicker from '../../src/components/DayPicker';
 
 import {
   HORIZONTAL_ORIENTATION,
@@ -16,6 +17,49 @@ import {
 } from '../../src/constants';
 
 const describeIfWindow = typeof document === 'undefined' ? describe.skip : describe;
+
+class DateRangePickerWrapper extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      focusedInput: null,
+      startDate: null,
+      endDate: null,
+    };
+
+    this.onDatesChange = this.onDatesChange.bind(this);
+    this.onFocusChange = this.onFocusChange.bind(this);
+  }
+
+  onDatesChange({ startDate, endDate }) {
+    this.setState({ startDate, endDate });
+  }
+
+  onFocusChange(focusedInput) {
+    this.setState({ focusedInput });
+  }
+
+  render() {
+    const { focusedInput, startDate, endDate } = this.state;
+
+    return (
+      <div>
+        <DateRangePicker
+          {...this.props}
+          onDatesChange={this.onDatesChange}
+          onFocusChange={this.onFocusChange}
+          focusedInput={focusedInput}
+          startDate={startDate}
+          endDate={endDate}
+        />
+        <button type="button">
+          Dummy button
+        </button>
+      </div>
+    );
+  }
+}
 
 const requiredProps = {
   onDatesChange: () => {},
@@ -536,6 +580,23 @@ describe('DateRangePicker', () => {
         wrapper.instance().onDayPickerFocus();
         expect(onFocusChangeStub.getCall(0).args[0]).to.equal(START_DATE);
       });
+    });
+  });
+
+  describeIfWindow('day picker position', () => {
+    it('day picker is opened after the end date input when end date input is focused', () => {
+      const wrapper = mount((
+        <DateRangePickerWrapper
+          startDateId="startDate"
+          endDateId="endDate"
+        />
+      ));
+      expect(wrapper.find(DayPicker)).to.have.length(0);
+      wrapper.find('input').at(0).simulate('focus'); // when focusing on start date the day picker is rendered after the start date input
+      expect(wrapper.find('DateRangePickerInput').children().childAt(1).find(DayPicker)).to.have.length(1);
+      wrapper.find('input').at(1).simulate('focus'); // when focusing on end date the day picker is rendered after the end date input
+      expect(wrapper.find('DateRangePickerInput').children().childAt(1).find(DayPicker)).to.have.length(0);
+      expect(wrapper.find('DateRangePickerInput').children().childAt(3).find(DayPicker)).to.have.length(1);
     });
   });
 

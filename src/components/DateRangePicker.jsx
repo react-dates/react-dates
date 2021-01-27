@@ -481,6 +481,7 @@ class DateRangePicker extends React.PureComponent {
     /* eslint-disable jsx-a11y/click-events-have-key-events */
     return (
       <div
+        key="day-picker"
         ref={this.setDayPickerContainerRef}
         {...css(
           styles.DateRangePicker_picker,
