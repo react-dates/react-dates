@@ -177,13 +177,13 @@ export default class SingleDatePickerInputController extends React.PureComponent
     onClose({ date });
   }
 
-  getDisplayFormat() {
+  getDisplayFormat(date) {
     const { displayFormat } = this.props;
-    return typeof displayFormat === 'string' ? displayFormat : displayFormat();
+    return typeof displayFormat === 'string' ? displayFormat : displayFormat(date);
   }
 
   getDateString(date) {
-    const displayFormat = this.getDisplayFormat();
+    const displayFormat = this.getDisplayFormat(date);
     if (date && displayFormat) {
       return date && date.format(displayFormat);
     }
