@@ -126,6 +126,14 @@ storiesOf('DRP - Input Props', module)
       customArrowIcon={<TestCustomArrowIcon />}
     />
   )))
+  .add('with custom arrow icon and RTL support', withInfo()(() => (
+    <DateRangePickerWrapper
+      initialStartDate={moment().add(3, 'days')}
+      initialEndDate={moment().add(10, 'days')}
+      customArrowIcon={<TestCustomArrowIcon />}
+      isRTL
+    />
+  )))
   .add('with custom close icon', withInfo()(() => (
     <DateRangePickerWrapper
       initialStartDate={moment().add(3, 'days')}
@@ -147,6 +155,14 @@ storiesOf('DRP - Input Props', module)
       initialStartDate={moment().add(3, 'days')}
       initialEndDate={moment().add(10, 'days')}
       screenReaderInputMessage="Here you could inform screen reader users of the date format, minimum nights, blocked out dates, etc"
+    />
+  )))
+  .add('with custom Start & End Date title attributes', withInfo()(() => (
+    <DateRangePickerWrapper
+      initialStartDate={moment().add(3, 'days')}
+      initialEndDate={moment().add(10, 'days')}
+      startDateTitleText="Here you can set the title attribute of the Start input, which shows in the tooltip on :hover over the field"
+      endDateTitleText="Here you can set the title attribute of the End input, which shows in the tooltip on :hover over the field"
     />
   )))
   .add('noBorder', withInfo()(() => (

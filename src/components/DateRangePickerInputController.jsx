@@ -35,12 +35,14 @@ const propTypes = forbidExtraProps({
   startDatePlaceholderText: PropTypes.string,
   isStartDateFocused: PropTypes.bool,
   startDateAriaLabel: PropTypes.string,
+  startDateTitleText: PropTypes.string,
 
   endDate: momentPropTypes.momentObj,
   endDateId: PropTypes.string,
   endDatePlaceholderText: PropTypes.string,
   isEndDateFocused: PropTypes.bool,
   endDateAriaLabel: PropTypes.string,
+  endDateTitleText: PropTypes.string,
 
   screenReaderMessage: PropTypes.string,
   showClearDates: PropTypes.bool,
@@ -92,12 +94,14 @@ const defaultProps = {
   startDatePlaceholderText: 'Start Date',
   isStartDateFocused: false,
   startDateAriaLabel: undefined,
+  startDateTitleText: undefined,
 
   endDate: null,
   endDateId: END_DATE,
   endDatePlaceholderText: 'End Date',
   isEndDateFocused: false,
   endDateAriaLabel: undefined,
+  endDateTitleText: undefined,
 
   screenReaderMessage: '',
   showClearDates: false,
@@ -279,10 +283,12 @@ export default class DateRangePickerInputController extends React.PureComponent 
       startDatePlaceholderText,
       isStartDateFocused,
       startDateAriaLabel,
+      startDateTitleText,
       endDate,
       endDateId,
       endDatePlaceholderText,
       endDateAriaLabel,
+      endDateTitleText,
       isEndDateFocused,
       screenReaderMessage,
       showClearDates,
@@ -318,11 +324,13 @@ export default class DateRangePickerInputController extends React.PureComponent 
         startDatePlaceholderText={startDatePlaceholderText}
         isStartDateFocused={isStartDateFocused}
         startDateAriaLabel={startDateAriaLabel}
+        startDateTitleText={startDateTitleText}
         endDate={endDateString}
         endDateId={endDateId}
         endDatePlaceholderText={endDatePlaceholderText}
         isEndDateFocused={isEndDateFocused}
         endDateAriaLabel={endDateAriaLabel}
+        endDateTitleText={endDateTitleText}
         isFocused={isFocused}
         disabled={disabled}
         required={required}

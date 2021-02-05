@@ -118,6 +118,13 @@ describe('DateRangePicker', () => {
         )).dive();
         expect(wrapper.find(DateRangePickerInputController).prop('isDayBlocked')).to.equal(isDayBlocked);
       });
+
+      it('is a noop when omitted', () => {
+        const wrapper = shallow((
+          <DateRangePicker {...requiredProps} />
+        )).dive();
+        expect(wrapper.find(DateRangePickerInputController).prop('isDayBlocked')).not.to.throw();
+      });
     });
 
     describe('props.appendToBody', () => {
@@ -593,7 +600,6 @@ describe('DateRangePicker', () => {
       expect(onOutsideClick.callCount).to.equal(1);
     });
 
-
     it('tabbing within itself does not behave as an outside click', () => {
       const target = sinon.stub();
       const onOutsideClick = sinon.stub();
@@ -780,5 +786,13 @@ describe('DateRangePicker', () => {
         expect(wrapper.find(DayPickerRangeController).props().maxDate).to.equal(maxDate);
       });
     });
+  });
+
+  it('should pass noBorder as noBorder to <DayPickerRangeController>', () => {
+    const wrapper = shallow((
+      <DateRangePicker {...requiredProps} focusedInput={START_DATE} noBorder />
+    )).dive();
+
+    expect(wrapper.find(DayPickerRangeController).prop('noBorder')).to.equal(true);
   });
 });

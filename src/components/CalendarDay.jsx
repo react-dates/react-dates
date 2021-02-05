@@ -154,6 +154,7 @@ class CalendarDay extends React.PureComponent {
         role="button" // eslint-disable-line jsx-a11y/no-noninteractive-element-to-interactive-role
         ref={this.setButtonRef}
         aria-disabled={modifiers.has('blocked')}
+        {...(modifiers.has('today') ? { 'aria-current': 'date' } : {})}
         aria-label={ariaLabel}
         onMouseEnter={(e) => { this.onDayMouseEnter(day, e); }}
         onMouseLeave={(e) => { this.onDayMouseLeave(day, e); }}
