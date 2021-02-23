@@ -18,7 +18,7 @@ script:
   - 'if [ -n "${KARMA-}" ]; then npm run tests-karma ; fi'
   - 'if [ -n "${COVERAGE-}" ] && [ "${TRAVIS_BRANCH-}" = "master" ]; then npm run cover; cat ./coverage/lcov.info | ./node_modules/.bin/coveralls ; fi'
 install:
-  - 'if [ -n "${LINT-}" ]; then npm install --legacy-bundling ; else npm install ; fi'
+  - 'if [ -n "${LINT-}" ]; then NPM_CONFIG_LEGACY_PEER_DEPS=true npm install --legacy-bundling ; else npm install ; fi'
 env:
   global:
     - TEST=true
