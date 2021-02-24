@@ -971,17 +971,28 @@ export default class DayPickerRangeController extends React.PureComponent {
   }
 
   onMonthChange(newMonth) {
-    const { numberOfMonths, enableOutsideDays, orientation } = this.props;
+    const {
+      numberOfMonths, enableOutsideDays, orientation, minDate, maxDate,
+    } = this.props;
     const withoutTransitionMonths = orientation === VERTICAL_SCROLLABLE;
+    let currentNewMonth = newMonth;
+    if (isBeforeDay(currentNewMonth, minDate)) {
+      currentNewMonth = minDate;
+    }
+    if (isAfterDay(currentNewMonth, maxDate)) {
+      currentNewMonth = maxDate;
+    }
     const newVisibleDays = getVisibleDays(
-      newMonth,
+      currentNewMonth,
       numberOfMonths,
       enableOutsideDays,
       withoutTransitionMonths,
     );
 
     this.setState({
-      currentMonth: newMonth.clone(),
+      currentMonth: currentNewMonth,
+      disablePrev: this.shouldDisableMonthNavigation(minDate, currentNewMonth),
+      disableNext: this.shouldDisableMonthNavigation(maxDate, currentNewMonth),
       visibleDays: this.getModifiers(newVisibleDays),
     });
   }
@@ -1327,6 +1338,8 @@ export default class DayPickerRangeController extends React.PureComponent {
       transitionDuration,
       verticalBorderSpacing,
       horizontalMonthPadding,
+      minDate,
+      maxDate,
     } = this.props;
 
     const {
@@ -1349,6 +1362,8 @@ export default class DayPickerRangeController extends React.PureComponent {
         onPrevMonthClick={this.onPrevMonthClick}
         onNextMonthClick={this.onNextMonthClick}
         onMonthChange={this.onMonthChange}
+        minDate={minDate}
+        maxDate={maxDate}
         onTab={onTab}
         onShiftTab={onShiftTab}
         onYearChange={this.onYearChange}

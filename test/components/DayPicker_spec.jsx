@@ -559,6 +559,20 @@ describe('DayPicker', () => {
       wrapper.instance().onMonthChange(date);
       expect(wrapper.state().currentMonth).to.equal(date);
     });
+
+    it('sets state.currentMonth to minDate if new month is before minDate', () => {
+      const minDate = today.clone().subtract(1, 'month');
+      const wrapper = shallow(<DayPicker minDate={minDate} />).dive();
+      wrapper.instance().onMonthChange(today.clone().subtract(4, 'month'));
+      expect(wrapper.state().currentMonth.month()).to.equal(minDate.month());
+    });
+
+    it('sets state.currentMonth to maxDate if new month is after maxDate', () => {
+      const maxDate = today.clone().add(1, 'month');
+      const wrapper = shallow(<DayPicker maxDate={maxDate} />).dive();
+      wrapper.instance().onMonthChange(today.clone().add(4, 'month'));
+      expect(wrapper.state().currentMonth.month()).to.equal(maxDate.month());
+    });
   });
 
   describe('#onYearChange', () => {
