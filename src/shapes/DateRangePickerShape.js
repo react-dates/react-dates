@@ -107,4 +107,5 @@ export default {
   weekDayFormat: PropTypes.string,
   phrases: PropTypes.shape(getPhrasePropTypes(DateRangePickerPhrases)),
   dayAriaLabelFormat: PropTypes.string,
+  predefinedHours: PropTypes.bool,
 };

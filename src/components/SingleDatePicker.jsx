@@ -124,6 +124,7 @@ const defaultProps = {
   weekDayFormat: 'dd',
   phrases: SingleDatePickerPhrases,
   dayAriaLabelFormat: undefined,
+  predefinedHours: false
 };
 
 class SingleDatePicker extends React.PureComponent {
@@ -579,6 +580,7 @@ class SingleDatePicker extends React.PureComponent {
       styles,
       isOutsideRange,
       isDayBlocked,
+      predefinedHours,
     } = this.props;
 
     const { isInputFocused } = this.state;
@@ -623,6 +625,7 @@ class SingleDatePicker extends React.PureComponent {
         verticalSpacing={verticalSpacing}
         reopenPickerOnClearDate={reopenPickerOnClearDate}
         keepOpenOnDateSelect={keepOpenOnDateSelect}
+        predefinedHours={predefinedHours}
       >
         {this.maybeRenderDayPickerWithPortal()}
       </SingleDatePickerInputController>
