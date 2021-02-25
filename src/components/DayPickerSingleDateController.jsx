@@ -72,6 +72,7 @@ const propTypes = forbidExtraProps({
   verticalBorderSpacing: nonNegativeInteger,
   transitionDuration: nonNegativeInteger,
   horizontalMonthPadding: nonNegativeInteger,
+  monthPadding: nonNegativeInteger,
 
   dayPickerNavigationInlineStyles: PropTypes.object,
   navPosition: NavPositionShape,
@@ -139,6 +140,7 @@ const defaultProps = {
   verticalBorderSpacing: undefined,
   transitionDuration: undefined,
   horizontalMonthPadding: 13,
+  monthPadding: 23,
 
   dayPickerNavigationInlineStyles: null,
   navPosition: NAV_POSITION_TOP,
@@ -688,6 +690,7 @@ export default class DayPickerSingleDateController extends React.PureComponent {
       transitionDuration,
       verticalBorderSpacing,
       horizontalMonthPadding,
+      monthPadding,
     } = this.props;
 
     const {
@@ -753,6 +756,7 @@ export default class DayPickerSingleDateController extends React.PureComponent {
         transitionDuration={transitionDuration}
         verticalBorderSpacing={verticalBorderSpacing}
         horizontalMonthPadding={horizontalMonthPadding}
+        monthPadding={monthPadding}
       />
     );
   }

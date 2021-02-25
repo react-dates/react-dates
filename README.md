@@ -179,6 +179,8 @@ reopenPickerOnClearDates: PropTypes.bool,
 renderCalendarInfo: PropTypes.func,
 renderMonthElement: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'), PropTypes.func, // ({ month, onMonthSelect, onYearSelect, isVisible }) => PropTypes.node,
 hideKeyboardShortcutsPanel: PropTypes.bool,
+horizontalMonthPadding: PropTypes.number,
+monthPadding: PropTypes.number,
 
 // navigation related props
 navPrev: PropTypes.node,
@@ -265,6 +267,8 @@ renderMonthElement: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'r
 hideKeyboardShortcutsPanel: PropTypes.bool,
 daySize: nonNegativeInteger,
 isRTL: PropTypes.bool,
+horizontalMonthPadding: PropTypes.number,
+monthPadding: PropTypes.number,
 
 // navigation related props
 navPrev: PropTypes.node,
