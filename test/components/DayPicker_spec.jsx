@@ -2,6 +2,7 @@ import React from 'react';
 import moment from 'moment/min/moment-with-locales';
 import { expect } from 'chai';
 import sinon from 'sinon-sandbox';
+import wrap from 'mocha-wrap';
 import { mount, shallow } from 'enzyme';
 
 import * as isDayVisible from '../../src/utils/isDayVisible';
@@ -961,7 +962,29 @@ describe('DayPicker', () => {
       });
     });
 
-    describe('#componentDidUpdate', () => {
+    wrap()
+      .withGlobal('window', () => ({ getComputedStyle: sinon.stub().returns({}) }))
+      .describe('#componentWillUpdate', () => {
+        it('clears timeouts appropriately', (done) => {
+          const wrapper = shallow(<DayPicker />).dive();
+          const instance = wrapper.instance();
+          instance.calendarInfo = 'something';
+          expect(instance).to.have.property('setCalendarInfoWidthTimeout', null);
+
+          // trigger a componentWillUpdate by setting state.
+          wrapper.setState({ calendarInfoWidth: 1 });
+
+          // this.setCalendarInfoWidthTimeout is no longer null.
+          expect(instance).not.to.have.property('setCalendarInfoWidthTimeout', null);
+
+          setTimeout(() => {
+            expect(window.getComputedStyle).to.have.property('callCount', 1);
+            done();
+          }, 1);
+        });
+      });
+
+    describe.skip('#componentDidUpdate', () => {
       let updateStateAfterMonthTransitionSpy;
 
       beforeEach(() => {
