@@ -255,7 +255,6 @@ export default class DateRangePickerInputController extends React.PureComponent 
   }
 
   getDisplayFormat(date) {
-    console.log(date);
     const { displayFormat } = this.props;
     return typeof displayFormat === 'string' ? displayFormat : displayFormat(date);
   }
