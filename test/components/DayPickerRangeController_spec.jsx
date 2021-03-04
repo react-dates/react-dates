@@ -103,6 +103,68 @@ describe('DayPickerRangeController', () => {
       onFocusChange() {},
     };
 
+    describe('rebuilding navigation arrows', () => {
+      describe('minDate changed', () => {
+        it('sets state.disablePrev to true', () => {
+          const wrapper = shallow(
+            <DayPickerRangeController
+              {...props}
+              minDate={moment().subtract(1, 'months')}
+            />,
+          );
+          wrapper.instance().componentWillReceiveProps({
+            ...props,
+            minDate: moment(),
+          });
+          expect(wrapper.instance().state.disablePrev).to.equal(true);
+        });
+
+        it('sets state.disablePrev to false', () => {
+          const wrapper = shallow(
+            <DayPickerRangeController
+              {...props}
+              minDate={moment()}
+            />,
+          );
+          wrapper.instance().componentWillReceiveProps({
+            ...props,
+            minDate: moment().subtract(1, 'months'),
+          });
+          expect(wrapper.instance().state.disablePrev).to.equal(false);
+        });
+      });
+
+      describe('maxDate changed', () => {
+        it('sets state.disableNext to true', () => {
+          const wrapper = shallow(
+            <DayPickerRangeController
+              {...props}
+              maxDate={moment().add(1, 'months')}
+            />,
+          );
+          wrapper.instance().componentWillReceiveProps({
+            ...props,
+            maxDate: moment(),
+          });
+          expect(wrapper.instance().state.disableNext).to.equal(true);
+        });
+
+        it('sets state.disableNext to false', () => {
+          const wrapper = shallow(
+            <DayPickerRangeController
+              {...props}
+              maxDate={moment()}
+            />,
+          );
+          wrapper.instance().componentWillReceiveProps({
+            ...props,
+            maxDate: moment().add(1, 'months'),
+          });
+          expect(wrapper.instance().state.disableNext).to.equal(false);
+        });
+      });
+    });
+
     describe('rebuilding currentMonth/visibleDays', () => {
       describe('initialVisibleMonth changed', () => {
         describe('focusedInput has changed and is truthy', () => {
