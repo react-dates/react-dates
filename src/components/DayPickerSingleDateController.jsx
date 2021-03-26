@@ -223,7 +223,7 @@ export default class DayPickerSingleDateController extends React.PureComponent {
     this.isTouchDevice = isTouchDevice();
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const {
       date,
       focused,
@@ -351,7 +351,7 @@ export default class DayPickerSingleDateController extends React.PureComponent {
     }
   }
 
-  componentWillUpdate() {
+  UNSAFE_componentWillUpdate() {
     this.today = moment();
   }
 

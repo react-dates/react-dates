@@ -102,7 +102,7 @@ class DateInput extends React.PureComponent {
     this.setState({ isTouchDevice: isTouchDevice() });
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { dateString } = this.state;
     if (dateString && nextProps.displayValue) {
       this.setState({
