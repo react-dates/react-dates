@@ -29,6 +29,8 @@
     "react/jsx-props-no-spreading": 0, // TODO: re-evaluate
 
     "react/no-deprecated": 1, // TODO: update to UNSAFE_componentWillReceiveProps
+
+    "camelcase": "off"
   },
 
   "overrides": [
