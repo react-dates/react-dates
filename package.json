@@ -19,7 +19,6 @@
     "react": "SET NPM_CONFIG_LEGACY_PEER_DEPS=true&& enzyme-adapter-react-install 16",
     "pretest": "npm run --silent lint",
     "pretests-only": "npm run react",
-    "postinstall": "npm run build",
     "tests-only": "npm run mocha --silent",
     "pretests-karma": "npm run react",
     "tests-karma": "karma start",
