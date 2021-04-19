@@ -376,7 +376,6 @@ describe('SingleDatePicker', () => {
       expect(onDayPickerFocusSpy.callCount).to.equal(1);
     });
 
-
     it('calls onDayPickerFocus if readOnly and keepFocusOnInput', () => {
       const wrapper = shallow((
         <SingleDatePicker

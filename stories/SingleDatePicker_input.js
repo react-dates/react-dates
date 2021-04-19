@@ -80,6 +80,12 @@ storiesOf('SDP - Input Props', module)
       screenReaderInputMessage="Here you could inform screen reader users of the date format, minimum nights, blocked out dates, etc"
     />
   )))
+  .add('with custom title attribute', withInfo()(() => (
+    <SingleDatePickerWrapper
+      initialDate={moment().add(3, 'days')}
+      titleText="Here you can set the title attribute of the input, which shows in the tooltip on :hover over the field"
+    />
+  )))
   .add('noBorder', withInfo()(() => (
     <SingleDatePickerWrapper
       initialDate={moment().add(3, 'days')}

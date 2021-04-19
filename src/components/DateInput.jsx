@@ -29,6 +29,7 @@ const propTypes = forbidExtraProps({
   placeholder: PropTypes.string,
   displayValue: PropTypes.string,
   ariaLabel: PropTypes.string,
+  titleText: PropTypes.string,
   screenReaderMessage: PropTypes.string,
   focused: PropTypes.bool,
   disabled: PropTypes.bool,
@@ -57,6 +58,7 @@ const defaultProps = {
   placeholder: 'Select Date',
   displayValue: '',
   ariaLabel: undefined,
+  titleText: undefined,
   screenReaderMessage: '',
   focused: false,
   disabled: false,
@@ -175,6 +177,7 @@ class DateInput extends React.PureComponent {
       id,
       placeholder,
       ariaLabel,
+      titleText,
       displayValue,
       screenReaderMessage,
       focused,
@@ -221,6 +224,7 @@ class DateInput extends React.PureComponent {
             disabled && styles.DateInput_input__disabled,
           )}
           aria-label={ariaLabel === undefined ? placeholder : ariaLabel}
+          title={titleText}
           type="text"
           id={id}
           name={id}

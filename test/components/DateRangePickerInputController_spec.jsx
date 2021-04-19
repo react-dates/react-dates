@@ -774,7 +774,7 @@ describe('DateRangePickerInputController', () => {
     });
 
     describe('is outside range', () => {
-      const futureDate = moment().add(7, 'days').format('DD/MM/YYYY');
+      const futureDate = moment().add(7, 'days').format('YYYY/MM/DD');
       const isOutsideRange = (day) => day > moment().add(5, 'days');
 
       it('calls props.onDatesChange', () => {

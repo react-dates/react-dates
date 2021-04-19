@@ -1651,7 +1651,6 @@ describe('DayPickerRangeController', () => {
           });
         });
 
-
         describe('start date has changed, and end date or previous end date are falsey', () => {
           it('calls deleteModifier with `selected-start-no-selected-end`', () => {
             const deleteModifierSpy = sinon.spy(DayPickerRangeController.prototype, 'deleteModifier');
