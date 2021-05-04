@@ -26,6 +26,7 @@ export default {
   placeholder: PropTypes.string,
   ariaLabel: PropTypes.string,
   titleText: PropTypes.string,
+  name: PropTypes.string,
   disabled: PropTypes.bool,
   required: PropTypes.bool,
   readOnly: PropTypes.bool,
