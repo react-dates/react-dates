@@ -116,7 +116,7 @@ describe('DayPickerRangeController', () => {
             ...props,
             minDate: moment(),
           });
-          expect(wrapper.instance().state.disablePrev).to.equal(true);
+          expect(wrapper.state()).to.have.property('disablePrev', true);
         });
 
         it('sets state.disablePrev to false', () => {
@@ -130,7 +130,7 @@ describe('DayPickerRangeController', () => {
             ...props,
             minDate: moment().subtract(1, 'months'),
           });
-          expect(wrapper.instance().state.disablePrev).to.equal(false);
+          expect(wrapper.state()).to.have.property('disablePrev', false);
         });
       });
 
@@ -146,7 +146,7 @@ describe('DayPickerRangeController', () => {
             ...props,
             maxDate: moment(),
           });
-          expect(wrapper.instance().state.disableNext).to.equal(true);
+          expect(wrapper.state()).to.have.property('disableNext', true);
         });
 
         it('sets state.disableNext to false', () => {
@@ -160,7 +160,7 @@ describe('DayPickerRangeController', () => {
             ...props,
             maxDate: moment().add(1, 'months'),
           });
-          expect(wrapper.instance().state.disableNext).to.equal(false);
+          expect(wrapper.state()).to.have.property('disableNext', false);
         });
       });
     });
