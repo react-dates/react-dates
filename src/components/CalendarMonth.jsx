@@ -203,7 +203,7 @@ class CalendarMonth extends React.PureComponent {
               isVisible,
             })
           ) : (
-            <strong>
+            <strong aria-live="polite">
               {monthTitle}
             </strong>
           )}
