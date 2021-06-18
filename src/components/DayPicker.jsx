@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { forbidExtraProps, mutuallyExclusiveProps, nonNegativeInteger } from 'airbnb-prop-types';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 
-import moment from 'moment';
 import throttle from 'lodash/throttle';
 import isTouchDevice from 'is-touch-device';
 import OutsideClickHandler from 'react-outside-click-handler';
@@ -46,6 +45,7 @@ import {
   NAV_POSITION_TOP,
   NAV_POSITION_BOTTOM,
 } from '../constants';
+import { moment } from '../utils/DateObj';
 
 const MONTH_PADDING = 23;
 const PREV_TRANSITION = 'prev';
@@ -125,6 +125,7 @@ const propTypes = forbidExtraProps({
   weekDayFormat: PropTypes.string,
   phrases: PropTypes.shape(getPhrasePropTypes(DayPickerPhrases)),
   dayAriaLabelFormat: PropTypes.string,
+  locale: PropTypes.object,
 });
 
 export const defaultProps = {
@@ -195,13 +196,15 @@ export const defaultProps = {
   weekDayFormat: 'dd',
   phrases: DayPickerPhrases,
   dayAriaLabelFormat: undefined,
+  locale: null,
 };
 
 class DayPicker extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    const currentMonth = props.hidden ? moment() : props.initialVisibleMonth();
+    const currentMonth = props.hidden ? moment().setLocale(props.locale)
+      : props.initialVisibleMonth();
 
     let focusedDate = currentMonth.clone().startOf('month');
     if (props.getFirstFocusableDay) {
@@ -648,19 +651,20 @@ class DayPicker extends React.PureComponent {
     });
   }
 
-  getFirstDayOfWeek() {
-    const { firstDayOfWeek } = this.props;
+  // TODO check the locale
+  getFirstDayOfWeek(locale) {
+    let { firstDayOfWeek } = this.props;
     if (firstDayOfWeek == null) {
-      return moment.localeData().firstDayOfWeek();
+      firstDayOfWeek = moment().setLocale(locale).localeData().firstDayOfWeek();
     }
 
     return firstDayOfWeek;
   }
 
-  getWeekHeaders() {
+  getWeekHeaders(locale) {
     const { weekDayFormat } = this.props;
     const { currentMonth } = this.state;
-    const firstDayOfWeek = this.getFirstDayOfWeek();
+    const firstDayOfWeek = this.getFirstDayOfWeek(locale);
 
     const weekHeaders = [];
     for (let i = 0; i < 7; i += 1) {
@@ -976,6 +980,7 @@ class DayPicker extends React.PureComponent {
       orientation,
       renderWeekHeaderElement,
       styles,
+      locale,
     } = this.props;
 
     const { calendarMonthWidth } = this.state;
@@ -996,7 +1001,7 @@ class DayPicker extends React.PureComponent {
       weekHeaderStyle = verticalStyle;
     }
 
-    const weekHeaders = this.getWeekHeaders();
+    const weekHeaders = this.getWeekHeaders(locale);
     const header = weekHeaders.map((day) => (
       <li key={day} {...css(styles.DayPicker_weekHeader_li, { width: daySize })}>
         {renderWeekHeaderElement ? renderWeekHeaderElement(day) : <small>{day}</small>}

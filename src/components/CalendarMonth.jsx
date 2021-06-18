@@ -2,10 +2,8 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import momentPropTypes from 'react-moment-proptypes';
 import { forbidExtraProps, mutuallyExclusiveProps, nonNegativeInteger } from 'airbnb-prop-types';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
-import moment from 'moment';
 
 import { CalendarDayPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
@@ -30,7 +28,7 @@ import {
 
 const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
-  month: momentPropTypes.momentObj,
+  month: PropTypes.object,
   horizontalMonthPadding: nonNegativeInteger,
   isVisible: PropTypes.bool,
   enableOutsideDays: PropTypes.bool,
@@ -50,7 +48,7 @@ const propTypes = forbidExtraProps({
   setMonthTitleHeight: PropTypes.func,
   verticalBorderSpacing: nonNegativeInteger,
 
-  focusedDate: momentPropTypes.momentObj, // indicates focusable day
+  focusedDate: PropTypes.object, // indicates focusable day
   isFocused: PropTypes.bool, // indicates whether or not to move focus to focusable day
 
   // i18n
@@ -60,7 +58,7 @@ const propTypes = forbidExtraProps({
 });
 
 const defaultProps = {
-  month: moment(),
+  month: new DateObj(),
   horizontalMonthPadding: 13,
   isVisible: true,
   enableOutsideDays: false,
@@ -97,8 +95,8 @@ class CalendarMonth extends React.PureComponent {
       weeks: getCalendarMonthWeeks(
         props.month,
         props.enableOutsideDays,
-        props.firstDayOfWeek == null ? moment.localeData().firstDayOfWeek() : props.firstDayOfWeek,
-      ),
+        props.firstDayOfWeek == null ?
+        props.month.localeData().firstDayOfWeek() : props.firstDayOfWeek,      ),
     };
 
     this.setCaptionRef = this.setCaptionRef.bind(this);
@@ -125,8 +123,7 @@ class CalendarMonth extends React.PureComponent {
         weeks: getCalendarMonthWeeks(
           month,
           enableOutsideDays,
-          firstDayOfWeek == null ? moment.localeData().firstDayOfWeek() : firstDayOfWeek,
-        ),
+          firstDayOfWeek == null ? month.localeData().firstDayOfWeek() : firstDayOfWeek,        ),
       });
     }
   }

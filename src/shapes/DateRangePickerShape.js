@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import momentPropTypes from 'react-moment-proptypes';
 import { mutuallyExclusiveProps, nonNegativeInteger } from 'airbnb-prop-types';
 
 import { DateRangePickerPhrases } from '../defaultPhrases';
@@ -17,8 +16,8 @@ import NavPositionShape from './NavPositionShape';
 
 export default {
   // required props for a functional interactive DateRangePicker
-  startDate: momentPropTypes.momentObj,
-  endDate: momentPropTypes.momentObj,
+  startDate: PropTypes.object,
+  endDate: PropTypes.object,
   onDatesChange: PropTypes.func.isRequired,
 
   focusedInput: FocusedInputShape,
@@ -94,8 +93,8 @@ export default {
   renderCalendarDay: PropTypes.func,
   renderDayContents: PropTypes.func,
   minimumNights: PropTypes.number,
-  minDate: momentPropTypes.momentObj,
-  maxDate: momentPropTypes.momentObj,
+  minDate: PropTypes.object,
+  maxDate: PropTypes.object,
   enableOutsideDays: PropTypes.bool,
   isDayBlocked: PropTypes.func,
   isOutsideRange: PropTypes.func,

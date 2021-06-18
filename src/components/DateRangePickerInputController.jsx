@@ -1,8 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
-
-import momentPropTypes from 'react-moment-proptypes';
 import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
 import openDirectionShape from '../shapes/OpenDirectionShape';
 
@@ -14,12 +11,11 @@ import DateRangePickerInput from './DateRangePickerInput';
 import IconPositionShape from '../shapes/IconPositionShape';
 import DisabledShape from '../shapes/DisabledShape';
 
-import toMomentObject from '../utils/toMomentObject';
 import toLocalizedDateString from '../utils/toLocalizedDateString';
 
 import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
 import isBeforeDay from '../utils/isBeforeDay';
-
+import DateObj from '../utils/DateObj';
 import {
   START_DATE,
   END_DATE,
@@ -30,14 +26,14 @@ import {
 const propTypes = forbidExtraProps({
   children: PropTypes.node,
 
-  startDate: momentPropTypes.momentObj,
+  startDate: new DateObj(),
   startDateId: PropTypes.string,
   startDatePlaceholderText: PropTypes.string,
   isStartDateFocused: PropTypes.bool,
   startDateAriaLabel: PropTypes.string,
   startDateTitleText: PropTypes.string,
 
-  endDate: momentPropTypes.momentObj,
+  endDate: new DateObj(),
   endDateId: PropTypes.string,
   endDatePlaceholderText: PropTypes.string,
   isEndDateFocused: PropTypes.bool,
@@ -122,9 +118,9 @@ const defaultProps = {
   reopenPickerOnClearDates: false,
   withFullScreenPortal: false,
   minimumNights: 1,
-  isOutsideRange: (day) => !isInclusivelyAfterDay(day, moment()),
+  isOutsideRange: (day) => !isInclusivelyAfterDay(day, new DateObj()),
   isDayBlocked: () => false,
-  displayFormat: () => moment.localeData().longDateFormat('L'),
+  displayFormat: () => new DateObj().localeData().longDateFormat('L'),
 
   onFocusChange() {},
   onClose() {},
@@ -179,7 +175,7 @@ export default class DateRangePickerInputController extends React.PureComponent 
       onDatesChange,
     } = this.props;
 
-    const endDate = toMomentObject(endDateString, this.getDisplayFormat());
+    const endDate = DateObj.toDateObject(endDateString, this.getDisplayFormat());
 
     const isEndDateValid = endDate
       && !isOutsideRange(endDate) && !isDayBlocked(endDate)
@@ -224,7 +220,7 @@ export default class DateRangePickerInputController extends React.PureComponent 
       disabled,
     } = this.props;
 
-    const startDate = toMomentObject(startDateString, this.getDisplayFormat());
+    const startDate = DateObj.toDateObject(startDateString, this.getDisplayFormat());
     const isEndDateBeforeStartDate = startDate
       && isBeforeDay(endDate, startDate.clone().add(minimumNights, 'days'));
     const isStartDateValid = startDate

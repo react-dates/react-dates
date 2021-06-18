@@ -1,5 +1,4 @@
 import React from 'react';
-import moment from 'moment';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 import { Portal } from 'react-portal';
 import { forbidExtraProps } from 'airbnb-prop-types';
@@ -21,6 +20,7 @@ import noflip from '../utils/noflip';
 import SingleDatePickerInputController from './SingleDatePickerInputController';
 import DayPickerSingleDateController from './DayPickerSingleDateController';
 import CloseButton from './CloseButton';
+import DateObj from '../utils/DateObj';
 
 import {
   HORIZONTAL_ORIENTATION,
@@ -115,11 +115,11 @@ const defaultProps = {
   renderMonthElement: null,
   enableOutsideDays: false,
   isDayBlocked: () => false,
-  isOutsideRange: (day) => !isInclusivelyAfterDay(day, moment()),
+  isOutsideRange: (day) => !isInclusivelyAfterDay(day, new DateObj()),
   isDayHighlighted: () => {},
 
   // internationalization props
-  displayFormat: () => moment.localeData().longDateFormat('L'),
+  displayFormat: () => new DateObj().localeData().longDateFormat('L'),
   monthFormat: 'MMMM YYYY',
   weekDayFormat: 'dd',
   phrases: SingleDatePickerPhrases,
@@ -442,6 +442,7 @@ class SingleDatePicker extends React.PureComponent {
       verticalSpacing,
       horizontalMonthPadding,
       small,
+      locale,
       theme: { reactDates },
     } = this.props;
     const { dayPickerContainerStyles, isDayPickerFocused, showKeyboardShortcuts } = this.state;
@@ -525,6 +526,7 @@ class SingleDatePicker extends React.PureComponent {
           verticalHeight={verticalHeight}
           transitionDuration={transitionDuration}
           horizontalMonthPadding={horizontalMonthPadding}
+          locale={locale}
         />
 
         {withFullScreenPortal && (

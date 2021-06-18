@@ -1,8 +1,11 @@
-import moment from 'moment';
 import { expect } from 'chai';
+
+import enUS from 'date-fns/locale/en-US';
+import es from 'date-fns/locale/es';
 
 import isSameDay from '../../src/utils/isSameDay';
 import getCalendarMonthWeeks from '../../src/utils/getCalendarMonthWeeks';
+import { moment } from '../../src/utils/DateObj';
 
 const today = moment();
 const weeks = getCalendarMonthWeeks(today);
@@ -12,14 +15,13 @@ describe('getCalendarMonthWeeks', () => {
   describe('input validation', () => {
     it('throws a TypeError if first arg is not a valid moment object', () => {
       const invalidValues = [
-        null,
         '2017-01-01T00:00:00Z',
         new Date(),
         moment.invalid(),
       ];
       invalidValues.forEach((value) => {
         expect(() => getCalendarMonthWeeks(value))
-          .to.throw(TypeError, '`month` must be a valid moment object');
+          .to.throw(TypeError, '`month` must be a valid DateObj object');
       });
     });
 
@@ -163,8 +165,7 @@ describe('getCalendarMonthWeeks', () => {
     });
 
     it('last week contains last of the month if next month begins on Monday', () => {
-      moment.locale('es');
-      const april2017 = moment('2017-04-01');
+      const april2017 = moment('2017-04-01').setLocale(es);
       const lastOfMonth = april2017.clone().endOf('month');
       const weeksInApril = getCalendarMonthWeeks(april2017);
       const containsLastOfMonth = weeksInApril[weeksInApril.length - 1]
@@ -191,7 +192,7 @@ describe('getCalendarMonthWeeks', () => {
   describe('setting firstDayOfWeek argument', () => {
     // using these known dates to see if they appear at the right position of the calendar
     // trying different firstDayOfWeek values
-    const january2017Start = moment('2017-01-01'); // Sunday
+    const january2017Start = moment('2017-01-01').setLocale(enUS); // Sunday
     const january2017End = january2017Start.clone().endOf('month'); // Tuesday
 
     it('month starts at [0][0] when first day is Sunday and first day of week is Sunday', () => {
@@ -230,10 +231,6 @@ describe('getCalendarMonthWeeks', () => {
     const january2017End = january2017Start.clone().endOf('month'); // Tuesday
 
     describe('locale with Sunday as first day of week', () => {
-      beforeEach(() => {
-        moment.locale('en');
-      });
-
       it('month starts at [0][0] if first day is Sunday', () => {
         const weeksInJanuary2017 = getCalendarMonthWeeks(january2017Start);
         const firstDayOfMonth = weeksInJanuary2017[0][0];
@@ -251,7 +248,7 @@ describe('getCalendarMonthWeeks', () => {
 
     describe('locale with Monday as first day of week', () => {
       beforeEach(() => {
-        moment.locale('es');
+        january2017Start.setLocale(es);
       });
 
       it('month starts at [0][6] if first day is Sunday', () => {
