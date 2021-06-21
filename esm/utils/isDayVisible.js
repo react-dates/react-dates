@@ -1,13 +1,13 @@
-import moment from 'moment';
 import isBeforeDay from './isBeforeDay';
 import isAfterDay from './isAfterDay';
 import toISOMonthString from './toISOMonthString';
+import DateObj from './DateObj';
 var startCacheOutsideDays = new Map();
 var endCacheOutsideDays = new Map();
 var startCacheInsideDays = new Map();
 var endCacheInsideDays = new Map();
 export default function isDayVisible(day, month, numberOfMonths, enableOutsideDays) {
-  if (!moment.isMoment(day)) return false; // Cloning is a little expensive, so we want to do it as little as possible.
+  if (!DateObj.isDate(day)) return false; // Cloning is a little expensive, so we want to do it as little as possible.
 
   var startKey = toISOMonthString(month); // eslint-disable-next-line prefer-template
 

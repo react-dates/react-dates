@@ -4,17 +4,15 @@ import _inheritsLoose from "@babel/runtime/helpers/esm/inheritsLoose";
 import _defineProperty from "@babel/runtime/helpers/esm/defineProperty";
 import shallowEqual from "enzyme-shallow-equal";
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 /* eslint react/no-array-index-key: 0 */
 import React from 'react';
 import PropTypes from 'prop-types';
-import momentPropTypes from 'react-moment-proptypes';
 import { forbidExtraProps, mutuallyExclusiveProps, nonNegativeInteger } from 'airbnb-prop-types';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
-import moment from 'moment';
 import { CalendarDayPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 import CalendarWeek from './CalendarWeek';
@@ -27,8 +25,9 @@ import ModifiersShape from '../shapes/ModifiersShape';
 import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
 import DayOfWeekShape from '../shapes/DayOfWeekShape';
 import { HORIZONTAL_ORIENTATION, VERTICAL_SCROLLABLE, DAY_SIZE } from '../constants';
+import DateObj from '../utils/DateObj';
 var propTypes = process.env.NODE_ENV !== "production" ? forbidExtraProps(_objectSpread(_objectSpread({}, withStylesPropTypes), {}, {
-  month: momentPropTypes.momentObj,
+  month: PropTypes.object,
   horizontalMonthPadding: nonNegativeInteger,
   isVisible: PropTypes.bool,
   enableOutsideDays: PropTypes.bool,
@@ -47,7 +46,7 @@ var propTypes = process.env.NODE_ENV !== "production" ? forbidExtraProps(_object
   firstDayOfWeek: DayOfWeekShape,
   setMonthTitleHeight: PropTypes.func,
   verticalBorderSpacing: nonNegativeInteger,
-  focusedDate: momentPropTypes.momentObj,
+  focusedDate: PropTypes.object,
   // indicates focusable day
   isFocused: PropTypes.bool,
   // indicates whether or not to move focus to focusable day
@@ -57,7 +56,7 @@ var propTypes = process.env.NODE_ENV !== "production" ? forbidExtraProps(_object
   dayAriaLabelFormat: PropTypes.string
 })) : {};
 var defaultProps = {
-  month: moment(),
+  month: new DateObj(),
   horizontalMonthPadding: 13,
   isVisible: true,
   enableOutsideDays: false,
@@ -101,7 +100,7 @@ var CalendarMonth = /*#__PURE__*/function (_ref) {
 
     _this = _ref.call(this, props) || this;
     _this.state = {
-      weeks: getCalendarMonthWeeks(props.month, props.enableOutsideDays, props.firstDayOfWeek == null ? moment.localeData().firstDayOfWeek() : props.firstDayOfWeek)
+      weeks: getCalendarMonthWeeks(props.month, props.enableOutsideDays, props.firstDayOfWeek == null ? props.month.localeData().firstDayOfWeek() : props.firstDayOfWeek)
     };
     _this.setCaptionRef = _this.setCaptionRef.bind(_assertThisInitialized(_this));
     _this.setMonthTitleHeight = _this.setMonthTitleHeight.bind(_assertThisInitialized(_this));
@@ -123,7 +122,7 @@ var CalendarMonth = /*#__PURE__*/function (_ref) {
 
     if (!month.isSame(prevMonth) || enableOutsideDays !== prevEnableOutsideDays || firstDayOfWeek !== prevFirstDayOfWeek) {
       this.setState({
-        weeks: getCalendarMonthWeeks(month, enableOutsideDays, firstDayOfWeek == null ? moment.localeData().firstDayOfWeek() : firstDayOfWeek)
+        weeks: getCalendarMonthWeeks(month, enableOutsideDays, firstDayOfWeek == null ? month.localeData().firstDayOfWeek() : firstDayOfWeek)
       });
     }
   };

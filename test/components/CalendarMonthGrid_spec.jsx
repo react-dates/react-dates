@@ -1,12 +1,11 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
-import moment from 'moment';
 import sinon from 'sinon-sandbox';
 
 import CalendarMonth from '../../src/components/CalendarMonth';
 import CalendarMonthGrid from '../../src/components/CalendarMonthGrid';
-
+import DateObj from '../../src/utils/DateObj';
 import getTransformStyles from '../../src/utils/getTransformStyles';
 
 describe('CalendarMonthGrid', () => {
@@ -26,7 +25,7 @@ describe('CalendarMonthGrid', () => {
   });
 
   it('does not generate duplicate months', () => {
-    const initialMonth = moment();
+    const initialMonth = new DateObj();
     const wrapper = shallow((
       <CalendarMonthGrid numberOfMonths={12} initialMonth={initialMonth} />
     )).dive();
@@ -46,7 +45,7 @@ describe('CalendarMonthGrid', () => {
   });
 
   it('works with the same number of months', () => {
-    const initialMonth = moment();
+    const initialMonth = new DateObj();
     const wrapper = shallow((
       <CalendarMonthGrid numberOfMonths={12} initialMonth={initialMonth} />
     )).dive();
@@ -70,7 +69,7 @@ describe('CalendarMonthGrid', () => {
     it('calls onMonthChange', () => {
       const onMonthChangeSpy = sinon.spy();
       const wrapper = shallow(<CalendarMonthGrid onMonthChange={onMonthChangeSpy} />).dive();
-      const currentMonth = moment();
+      const currentMonth = new DateObj();
       const newMonthVal = (currentMonth.month() + 5) % 12;
       wrapper.instance().onMonthSelect(currentMonth, newMonthVal);
       expect(onMonthChangeSpy.callCount).to.equal(1);
@@ -81,7 +80,7 @@ describe('CalendarMonthGrid', () => {
     it('calls onYearChange', () => {
       const onYearChangeSpy = sinon.spy();
       const wrapper = shallow(<CalendarMonthGrid onYearChange={onYearChangeSpy} />).dive();
-      const currentMonth = moment();
+      const currentMonth = new DateObj();
       const newMonthVal = (currentMonth.month() + 5) % 12;
       wrapper.instance().onYearSelect(currentMonth, newMonthVal);
       expect(onYearChangeSpy.callCount).to.equal(1);

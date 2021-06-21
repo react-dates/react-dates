@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
 
-import momentPropTypes from 'react-moment-proptypes';
 import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
 import openDirectionShape from '../shapes/OpenDirectionShape';
 
@@ -10,11 +8,10 @@ import { SingleDatePickerInputPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 
 import SingleDatePickerInput from './SingleDatePickerInput';
-
+import DateObj from '../utils/DateObj';
 import IconPositionShape from '../shapes/IconPositionShape';
 import DisabledShape from '../shapes/DisabledShape';
 
-import toMomentObject from '../utils/toMomentObject';
 import toLocalizedDateString from '../utils/toLocalizedDateString';
 
 import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
@@ -27,7 +24,7 @@ import {
 const propTypes = forbidExtraProps({
   children: PropTypes.node,
 
-  date: momentPropTypes.momentObj,
+  date: PropTypes.object,
   onDateChange: PropTypes.func.isRequired,
 
   focused: PropTypes.bool,
@@ -100,9 +97,9 @@ const defaultProps = {
 
   keepOpenOnDateSelect: false,
   reopenPickerOnClearDate: false,
-  isOutsideRange: (day) => !isInclusivelyAfterDay(day, moment()),
+  isOutsideRange: (day) => !isInclusivelyAfterDay(day, new DateObj()),
   isDayBlocked: () => false,
-  displayFormat: () => moment.localeData().longDateFormat('L'),
+  displayFormat: () => new DateObj().localeData().longDateFormat('L'),
 
   onClose() {},
   onKeyDownArrowDown() {},
@@ -139,7 +136,7 @@ export default class SingleDatePickerInputController extends React.PureComponent
       onFocusChange,
       onClose,
     } = this.props;
-    const newDate = toMomentObject(dateString, this.getDisplayFormat());
+    const newDate = DateObj().toDateObject(dateString, this.getDisplayFormat());
 
     const isValid = newDate && !isOutsideRange(newDate) && !isDayBlocked(newDate);
     if (isValid) {

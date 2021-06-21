@@ -1,7 +1,7 @@
-import moment from 'moment';
+import DateObj from './DateObj';
 import isSameDay from './isSameDay';
 export default function isPreviousDay(a, b) {
-  if (!moment.isMoment(a) || !moment.isMoment(b)) return false;
-  var dayBefore = moment(a).subtract(1, 'day');
+  if (!DateObj.isDate(a) || !DateObj.isDate(b)) return false;
+  var dayBefore = new DateObj(a).subtract(1, 'day');
   return isSameDay(dayBefore, b);
 }

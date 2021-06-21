@@ -25,6 +25,7 @@ import {
   VERTICAL_SCROLLABLE,
   DAY_SIZE,
 } from '../constants';
+import DateObj from '../utils/DateObj';
 
 const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
@@ -95,8 +96,9 @@ class CalendarMonth extends React.PureComponent {
       weeks: getCalendarMonthWeeks(
         props.month,
         props.enableOutsideDays,
-        props.firstDayOfWeek == null ?
-        props.month.localeData().firstDayOfWeek() : props.firstDayOfWeek,      ),
+        props.firstDayOfWeek == null
+          ? props.month.localeData().firstDayOfWeek() : props.firstDayOfWeek,
+      ),
     };
 
     this.setCaptionRef = this.setCaptionRef.bind(this);
@@ -123,7 +125,8 @@ class CalendarMonth extends React.PureComponent {
         weeks: getCalendarMonthWeeks(
           month,
           enableOutsideDays,
-          firstDayOfWeek == null ? month.localeData().firstDayOfWeek() : firstDayOfWeek,        ),
+          firstDayOfWeek == null ? month.localeData().firstDayOfWeek() : firstDayOfWeek,
+        ),
       });
     }
   }

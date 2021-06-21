@@ -5,7 +5,7 @@ import _inheritsLoose from "@babel/runtime/helpers/esm/inheritsLoose";
 import _defineProperty from "@babel/runtime/helpers/esm/defineProperty";
 import shallowEqual from "enzyme-shallow-equal";
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
@@ -13,7 +13,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { forbidExtraProps, mutuallyExclusiveProps, nonNegativeInteger } from 'airbnb-prop-types';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
-import moment from 'moment';
 import throttle from 'lodash/throttle';
 import isTouchDevice from 'is-touch-device';
 import OutsideClickHandler from 'react-outside-click-handler';
@@ -35,6 +34,7 @@ import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
 import DayOfWeekShape from '../shapes/DayOfWeekShape';
 import CalendarInfoPositionShape from '../shapes/CalendarInfoPositionShape';
 import { HORIZONTAL_ORIENTATION, VERTICAL_ORIENTATION, VERTICAL_SCROLLABLE, DAY_SIZE, INFO_POSITION_TOP, INFO_POSITION_BOTTOM, INFO_POSITION_BEFORE, INFO_POSITION_AFTER, MODIFIER_KEY_NAMES, NAV_POSITION_TOP, NAV_POSITION_BOTTOM } from '../constants';
+import { moment } from '../utils/DateObj';
 var MONTH_PADDING = 23;
 var PREV_TRANSITION = 'prev';
 var NEXT_TRANSITION = 'next';
@@ -106,7 +106,8 @@ var propTypes = process.env.NODE_ENV !== "production" ? forbidExtraProps(_object
   monthFormat: PropTypes.string,
   weekDayFormat: PropTypes.string,
   phrases: PropTypes.shape(getPhrasePropTypes(DayPickerPhrases)),
-  dayAriaLabelFormat: PropTypes.string
+  dayAriaLabelFormat: PropTypes.string,
+  locale: PropTypes.object
 })) : {};
 export var defaultProps = {
   // calendar presentation props
@@ -172,7 +173,8 @@ export var defaultProps = {
   monthFormat: 'MMMM YYYY',
   weekDayFormat: 'dd',
   phrases: DayPickerPhrases,
-  dayAriaLabelFormat: undefined
+  dayAriaLabelFormat: undefined,
+  locale: null
 };
 
 var DayPicker = /*#__PURE__*/function (_ref) {
@@ -188,7 +190,7 @@ var DayPicker = /*#__PURE__*/function (_ref) {
     var _this;
 
     _this = _ref.call(this, props) || this;
-    var currentMonth = props.hidden ? moment() : props.initialVisibleMonth();
+    var currentMonth = props.hidden ? moment().setLocale(props.locale) : props.initialVisibleMonth();
     var focusedDate = currentMonth.clone().startOf('month');
 
     if (props.getFirstFocusableDay) {
@@ -631,22 +633,23 @@ var DayPicker = /*#__PURE__*/function (_ref) {
       focusedDate: null,
       nextFocusedDate: nextFocusedDate
     });
-  };
+  } // TODO check the locale
+  ;
 
-  _proto.getFirstDayOfWeek = function getFirstDayOfWeek() {
+  _proto.getFirstDayOfWeek = function getFirstDayOfWeek(locale) {
     var firstDayOfWeek = this.props.firstDayOfWeek;
 
     if (firstDayOfWeek == null) {
-      return moment.localeData().firstDayOfWeek();
+      firstDayOfWeek = moment().setLocale(locale).localeData().firstDayOfWeek();
     }
 
     return firstDayOfWeek;
   };
 
-  _proto.getWeekHeaders = function getWeekHeaders() {
+  _proto.getWeekHeaders = function getWeekHeaders(locale) {
     var weekDayFormat = this.props.weekDayFormat;
     var currentMonth = this.state.currentMonth;
-    var firstDayOfWeek = this.getFirstDayOfWeek();
+    var firstDayOfWeek = this.getFirstDayOfWeek(locale);
     var weekHeaders = [];
 
     for (var i = 0; i < 7; i += 1) {
@@ -966,7 +969,8 @@ var DayPicker = /*#__PURE__*/function (_ref) {
         horizontalMonthPadding = _this$props11.horizontalMonthPadding,
         orientation = _this$props11.orientation,
         renderWeekHeaderElement = _this$props11.renderWeekHeaderElement,
-        styles = _this$props11.styles;
+        styles = _this$props11.styles,
+        locale = _this$props11.locale;
     var calendarMonthWidth = this.state.calendarMonthWidth;
     var verticalScrollable = orientation === VERTICAL_SCROLLABLE;
     var horizontalStyle = {
@@ -983,7 +987,7 @@ var DayPicker = /*#__PURE__*/function (_ref) {
       weekHeaderStyle = verticalStyle;
     }
 
-    var weekHeaders = this.getWeekHeaders();
+    var weekHeaders = this.getWeekHeaders(locale);
     var header = weekHeaders.map(function (day) {
       return /*#__PURE__*/React.createElement("li", _extends({
         key: day

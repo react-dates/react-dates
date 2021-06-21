@@ -1,7 +1,5 @@
-import moment from 'moment';
-import isBeforeDay from './isBeforeDay';
-import isSameDay from './isSameDay';
+import DateObj from './DateObj';
 export default function isAfterDay(a, b) {
-  if (!moment.isMoment(a) || !moment.isMoment(b)) return false;
-  return !isBeforeDay(a, b) && !isSameDay(a, b);
+  if (!DateObj.isDate(a) || !DateObj.isDate(b)) return false;
+  return a.isAfterDay(b);
 }

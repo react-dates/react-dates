@@ -4,20 +4,19 @@ import _assertThisInitialized from "@babel/runtime/helpers/esm/assertThisInitial
 import _inheritsLoose from "@babel/runtime/helpers/esm/inheritsLoose";
 import shallowEqual from "enzyme-shallow-equal";
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import momentPropTypes from 'react-moment-proptypes';
 import { forbidExtraProps, mutuallyExclusiveProps, nonNegativeInteger } from 'airbnb-prop-types';
-import moment from 'moment';
 import values from 'object.values';
 import isTouchDevice from 'is-touch-device';
 import { DayPickerPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 import isSameDay from '../utils/isSameDay';
+import { moment } from '../utils/DateObj';
 import isAfterDay from '../utils/isAfterDay';
 import isDayVisible from '../utils/isDayVisible';
 import getVisibleDays from '../utils/getVisibleDays';
@@ -35,9 +34,9 @@ import getPooledMoment from '../utils/getPooledMoment'; // Default value of the 
 
 var DATE_UNSET_VALUE = undefined;
 var propTypes = process.env.NODE_ENV !== "production" ? forbidExtraProps({
-  date: momentPropTypes.momentObj,
-  minDate: momentPropTypes.momentObj,
-  maxDate: momentPropTypes.momentObj,
+  date: PropTypes.object,
+  minDate: PropTypes.object,
+  maxDate: PropTypes.object,
   onDateChange: PropTypes.func,
   allowUnselect: PropTypes.bool,
   focused: PropTypes.bool,
@@ -91,7 +90,8 @@ var propTypes = process.env.NODE_ENV !== "production" ? forbidExtraProps({
   weekDayFormat: PropTypes.string,
   phrases: PropTypes.shape(getPhrasePropTypes(DayPickerPhrases)),
   dayAriaLabelFormat: PropTypes.string,
-  isRTL: PropTypes.bool
+  isRTL: PropTypes.bool,
+  locale: PropTypes.object
 }) : {};
 var defaultProps = {
   date: DATE_UNSET_VALUE,
@@ -150,7 +150,8 @@ var defaultProps = {
   weekDayFormat: 'dd',
   phrases: DayPickerPhrases,
   dayAriaLabelFormat: undefined,
-  isRTL: false
+  isRTL: false,
+  locale: null
 };
 
 var DayPickerSingleDateController = /*#__PURE__*/function (_ref) {
@@ -166,8 +167,9 @@ var DayPickerSingleDateController = /*#__PURE__*/function (_ref) {
     var _this;
 
     _this = _ref.call(this, props) || this;
+    var locale = _this.props.locale;
     _this.isTouchDevice = false;
-    _this.today = moment();
+    _this.today = moment().setLocale(locale);
     _this.modifiers = {
       today: function today(day) {
         return _this.isToday(day);
@@ -337,7 +339,8 @@ var DayPickerSingleDateController = /*#__PURE__*/function (_ref) {
       });
     }
 
-    var today = moment();
+    var locale = this.props.locale;
+    var today = moment().setLocale(locale);
 
     if (!isSameDay(this.today, today)) {
       modifiers = this.deleteModifier(modifiers, this.today, 'today');
@@ -353,7 +356,8 @@ var DayPickerSingleDateController = /*#__PURE__*/function (_ref) {
   };
 
   _proto.UNSAFE_componentWillUpdate = function UNSAFE_componentWillUpdate() {
-    this.today = moment();
+    var locale = this.props.locale;
+    this.today = moment().setLocale(locale);
   };
 
   _proto.onDayClick = function onDayClick(day, e) {
@@ -633,16 +637,17 @@ var DayPickerSingleDateController = /*#__PURE__*/function (_ref) {
 
   _proto.isFirstDayOfWeek = function isFirstDayOfWeek(day) {
     var firstDayOfWeek = this.props.firstDayOfWeek;
-    return day.day() === (firstDayOfWeek || moment.localeData().firstDayOfWeek());
+    return day.day() === (firstDayOfWeek || moment().localeData().firstDayOfWeek());
   };
 
   _proto.isLastDayOfWeek = function isLastDayOfWeek(day) {
     var firstDayOfWeek = this.props.firstDayOfWeek;
-    return day.day() === ((firstDayOfWeek || moment.localeData().firstDayOfWeek()) + 6) % 7;
+    return day.day() === ((firstDayOfWeek || moment().localeData().firstDayOfWeek()) + 6) % 7;
   };
 
   _proto.render = function render() {
     var _this$props12 = this.props,
+        locale = _this$props12.locale,
         numberOfMonths = _this$props12.numberOfMonths,
         orientation = _this$props12.orientation,
         monthFormat = _this$props12.monthFormat,
@@ -737,6 +742,7 @@ var DayPickerSingleDateController = /*#__PURE__*/function (_ref) {
       phrases: phrases,
       daySize: daySize,
       isRTL: isRTL,
+      locale: locale,
       showKeyboardShortcuts: showKeyboardShortcuts,
       weekDayFormat: weekDayFormat,
       dayAriaLabelFormat: dayAriaLabelFormat,

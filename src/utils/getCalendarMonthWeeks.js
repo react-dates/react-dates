@@ -8,7 +8,7 @@ export default function getCalendarMonthWeeks(
   firstDayOfWeekParam,
 ) {
   if (!DateObj.isDate(month) || !DateObj.isValid()) {
-    throw new TypeError('`month` must be a valid moment object');
+    throw new TypeError('`month` must be a valid Date object');
   }
   const firstDayOfWeek = firstDayOfWeekParam != null
     ? firstDayOfWeekParam : month.localeData().firstDayOfWeek();

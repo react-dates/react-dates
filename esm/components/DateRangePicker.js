@@ -4,12 +4,11 @@ import _inheritsLoose from "@babel/runtime/helpers/esm/inheritsLoose";
 import _defineProperty from "@babel/runtime/helpers/esm/defineProperty";
 import shallowEqual from "enzyme-shallow-equal";
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 import React from 'react';
-import moment from 'moment';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 import { Portal } from 'react-portal';
 import { forbidExtraProps } from 'airbnb-prop-types';
@@ -17,6 +16,7 @@ import { addEventListener } from 'consolidated-events';
 import isTouchDevice from 'is-touch-device';
 import OutsideClickHandler from 'react-outside-click-handler';
 import { darken } from 'color2k';
+import DateObj from '../utils/DateObj';
 import DateRangePickerShape from '../shapes/DateRangePickerShape';
 import { DateRangePickerPhrases } from '../defaultPhrases';
 import getResponsiveContainerStyles from '../utils/getResponsiveContainerStyles';
@@ -104,7 +104,7 @@ var defaultProps = {
     return false;
   },
   isOutsideRange: function isOutsideRange(day) {
-    return !isInclusivelyAfterDay(day, moment());
+    return !isInclusivelyAfterDay(day, new DateObj());
   },
   isDayHighlighted: function isDayHighlighted() {
     return false;
@@ -113,12 +113,13 @@ var defaultProps = {
   maxDate: undefined,
   // internationalization
   displayFormat: function displayFormat() {
-    return moment.localeData().longDateFormat('L');
+    return new DateObj().localeData().longDateFormat('L');
   },
   monthFormat: 'MMMM YYYY',
   weekDayFormat: 'dd',
   phrases: DateRangePickerPhrases,
-  dayAriaLabelFormat: undefined
+  dayAriaLabelFormat: undefined,
+  locale: null
 };
 
 var DateRangePicker = /*#__PURE__*/function (_ref) {
@@ -416,6 +417,7 @@ var DateRangePicker = /*#__PURE__*/function (_ref) {
         dayAriaLabelFormat = _this$props7.dayAriaLabelFormat,
         isRTL = _this$props7.isRTL,
         weekDayFormat = _this$props7.weekDayFormat,
+        locale = _this$props7.locale,
         styles = _this$props7.styles,
         verticalHeight = _this$props7.verticalHeight,
         noBorder = _this$props7.noBorder,
@@ -432,7 +434,7 @@ var DateRangePicker = /*#__PURE__*/function (_ref) {
     var onOutsideClick = !withFullScreenPortal && withPortal ? this.onOutsideClick : undefined;
 
     var initialVisibleMonthThunk = initialVisibleMonth || function () {
-      return startDate || endDate || moment();
+      return startDate || endDate || new DateObj();
     };
 
     var closeIcon = customCloseIcon || /*#__PURE__*/React.createElement(CloseButton, css(styles.DateRangePicker_closeButton_svg));
@@ -501,7 +503,8 @@ var DateRangePicker = /*#__PURE__*/function (_ref) {
       noBorder: noBorder,
       transitionDuration: transitionDuration,
       disabled: disabled,
-      horizontalMonthPadding: horizontalMonthPadding
+      horizontalMonthPadding: horizontalMonthPadding,
+      locale: locale
     }), withFullScreenPortal && /*#__PURE__*/React.createElement("button", _extends({}, css(styles.DateRangePicker_closeButton), {
       type: "button",
       onClick: this.onOutsideClick,

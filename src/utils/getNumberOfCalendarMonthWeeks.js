@@ -1,4 +1,4 @@
-import moment from 'moment';
+import DateObj from './DateObj';
 
 function getBlankDaysBeforeFirstDay(firstDayOfMonth, firstDayOfWeek) {
   const weekDayDiff = firstDayOfMonth.day() - firstDayOfWeek;
@@ -7,7 +7,7 @@ function getBlankDaysBeforeFirstDay(firstDayOfMonth, firstDayOfWeek) {
 
 export default function getNumberOfCalendarMonthWeeks(
   month,
-  firstDayOfWeek = moment.localeData().firstDayOfWeek(),
+  firstDayOfWeek = DateObj.localeData().firstDayOfWeek(),
 ) {
   const firstDayOfMonth = month.clone().startOf('month');
   const numBlankDays = getBlankDaysBeforeFirstDay(firstDayOfMonth, firstDayOfWeek);

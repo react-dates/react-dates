@@ -1,6 +1,6 @@
-import moment from 'moment';
+import DateObj from './DateObj';
 import isSameMonth from './isSameMonth';
 export default function isPrevMonth(a, b) {
-  if (!moment.isMoment(a) || !moment.isMoment(b)) return false;
+  if (!DateObj().isMoment(a) || !DateObj().isMoment(b)) return false;
   return isSameMonth(a.clone().subtract(1, 'month'), b);
 }

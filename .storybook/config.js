@@ -5,13 +5,13 @@ if (process.env.NODE_ENV !== 'production') {
   whyDidYouRender(React);
 }
 
-import moment from 'moment';
 import aphroditeInterface from 'react-with-styles-interface-aphrodite';
 
 import { configure, addDecorator, setAddon } from '@storybook/react';
 import infoAddon from '@storybook/addon-info';
 import { setOptions } from '@storybook/addon-options';
 
+import { moment } from '../src/utils/DateObj'
 import registerInterfaceWithDefaultTheme from '../src/utils/registerInterfaceWithDefaultTheme';
 
 import '../css/storybook.scss';
@@ -19,7 +19,7 @@ import '../css/storybook.scss';
 registerInterfaceWithDefaultTheme(aphroditeInterface);
 
 addDecorator((story) => {
-  moment.locale('en');
+  moment().setLocale('en');
   return story();
 });
 

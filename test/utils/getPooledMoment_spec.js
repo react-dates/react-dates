@@ -1,5 +1,6 @@
 import { expect } from 'chai';
-import moment from 'moment';
+
+import { moment } from '../../src/utils/DateObj';
 
 import getPooledMoment from '../../src/utils/getPooledMoment';
 

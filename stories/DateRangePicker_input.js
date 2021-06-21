@@ -1,5 +1,4 @@
 import React from 'react';
-import moment from 'moment';
 import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
 
@@ -7,6 +6,7 @@ import isInclusivelyBeforeDay from '../src/utils/isInclusivelyBeforeDay';
 import isInclusivelyAfterDay from '../src/utils/isInclusivelyAfterDay';
 
 import DateRangePickerWrapper from '../examples/DateRangePickerWrapper';
+import { moment } from '../src/utils/DateObj';
 
 const TestCustomInputIcon = () => (
   <span

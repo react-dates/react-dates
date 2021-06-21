@@ -1,9 +1,7 @@
 /* eslint-disable react/no-unused-prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
-import momentPropTypes from 'react-moment-proptypes';
 import { forbidExtraProps } from 'airbnb-prop-types';
-import moment from 'moment';
 import omit from 'lodash/omit';
 
 import DayPickerSingleDateController from '../src/components/DayPickerSingleDateController';
@@ -12,11 +10,12 @@ import ScrollableOrientationShape from '../src/shapes/ScrollableOrientationShape
 
 import { HORIZONTAL_ORIENTATION } from '../src/constants';
 import isInclusivelyAfterDay from '../src/utils/isInclusivelyAfterDay';
+import DateObj from '../src/utils/DateObj';
 
 const propTypes = forbidExtraProps({
   // example props for the demo
   autoFocus: PropTypes.bool,
-  initialDate: momentPropTypes.momentObj,
+  initialDate: PropTypes.object,
   showInput: PropTypes.bool,
 
   allowUnselect: PropTypes.bool,
@@ -61,7 +60,7 @@ const defaultProps = {
   renderCalendarDay: undefined,
   renderDayContents: null,
   isDayBlocked: () => false,
-  isOutsideRange: day => !isInclusivelyAfterDay(day, moment()),
+  isOutsideRange: day => !isInclusivelyAfterDay(day, DateObj()),
   isDayHighlighted: () => false,
   enableOutsideDays: false,
 

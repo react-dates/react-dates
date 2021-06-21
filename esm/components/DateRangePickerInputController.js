@@ -3,8 +3,6 @@ import _inheritsLoose from "@babel/runtime/helpers/esm/inheritsLoose";
 import shallowEqual from "enzyme-shallow-equal";
 import React from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
-import momentPropTypes from 'react-moment-proptypes';
 import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
 import openDirectionShape from '../shapes/OpenDirectionShape';
 import { DateRangePickerInputPhrases } from '../defaultPhrases';
@@ -12,20 +10,20 @@ import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 import DateRangePickerInput from './DateRangePickerInput';
 import IconPositionShape from '../shapes/IconPositionShape';
 import DisabledShape from '../shapes/DisabledShape';
-import toMomentObject from '../utils/toMomentObject';
 import toLocalizedDateString from '../utils/toLocalizedDateString';
 import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
 import isBeforeDay from '../utils/isBeforeDay';
+import DateObj from '../utils/DateObj';
 import { START_DATE, END_DATE, ICON_BEFORE_POSITION, OPEN_DOWN } from '../constants';
 var propTypes = process.env.NODE_ENV !== "production" ? forbidExtraProps({
   children: PropTypes.node,
-  startDate: momentPropTypes.momentObj,
+  startDate: new DateObj(),
   startDateId: PropTypes.string,
   startDatePlaceholderText: PropTypes.string,
   isStartDateFocused: PropTypes.bool,
   startDateAriaLabel: PropTypes.string,
   startDateTitleText: PropTypes.string,
-  endDate: momentPropTypes.momentObj,
+  endDate: new DateObj(),
   endDateId: PropTypes.string,
   endDatePlaceholderText: PropTypes.string,
   isEndDateFocused: PropTypes.bool,
@@ -99,13 +97,13 @@ var defaultProps = {
   withFullScreenPortal: false,
   minimumNights: 1,
   isOutsideRange: function isOutsideRange(day) {
-    return !isInclusivelyAfterDay(day, moment());
+    return !isInclusivelyAfterDay(day, new DateObj());
   },
   isDayBlocked: function isDayBlocked() {
     return false;
   },
   displayFormat: function displayFormat() {
-    return moment.localeData().longDateFormat('L');
+    return new DateObj().localeData().longDateFormat('L');
   },
   onFocusChange: function onFocusChange() {},
   onClose: function onClose() {},
@@ -165,7 +163,7 @@ var DateRangePickerInputController = /*#__PURE__*/function (_ref) {
         minimumNights = _this$props2.minimumNights,
         keepOpenOnDateSelect = _this$props2.keepOpenOnDateSelect,
         onDatesChange = _this$props2.onDatesChange;
-    var endDate = toMomentObject(endDateString, this.getDisplayFormat());
+    var endDate = DateObj.toDateObject(endDateString, this.getDisplayFormat());
     var isEndDateValid = endDate && !isOutsideRange(endDate) && !isDayBlocked(endDate) && !(startDate && isBeforeDay(endDate, startDate.clone().add(minimumNights, 'days')));
 
     if (isEndDateValid) {
@@ -208,7 +206,7 @@ var DateRangePickerInputController = /*#__PURE__*/function (_ref) {
         onDatesChange = _this$props4.onDatesChange,
         onFocusChange = _this$props4.onFocusChange,
         disabled = _this$props4.disabled;
-    var startDate = toMomentObject(startDateString, this.getDisplayFormat());
+    var startDate = DateObj.toDateObject(startDateString, this.getDisplayFormat());
     var isEndDateBeforeStartDate = startDate && isBeforeDay(endDate, startDate.clone().add(minimumNights, 'days'));
     var isStartDateValid = startDate && !isOutsideRange(startDate) && !isDayBlocked(startDate) && !(disabled === END_DATE && isEndDateBeforeStartDate);
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
-import moment from 'moment';
+import { moment } from '../src/utils/DateObj';
 
 import PresetDateRangePicker from '../examples/PresetDateRangePicker';
 

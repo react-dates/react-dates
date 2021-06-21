@@ -1,8 +1,7 @@
-import moment from 'moment';
-
 import isBeforeDay from './isBeforeDay';
 import isAfterDay from './isAfterDay';
 import toISOMonthString from './toISOMonthString';
+import DateObj from './DateObj';
 
 const startCacheOutsideDays = new Map();
 const endCacheOutsideDays = new Map();
@@ -11,7 +10,7 @@ const startCacheInsideDays = new Map();
 const endCacheInsideDays = new Map();
 
 export default function isDayVisible(day, month, numberOfMonths, enableOutsideDays) {
-  if (!moment.isMoment(day)) return false;
+  if (!DateObj.isDate(day)) return false;
 
   // Cloning is a little expensive, so we want to do it as little as possible.
 

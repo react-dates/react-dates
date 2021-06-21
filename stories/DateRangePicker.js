@@ -1,10 +1,9 @@
 import React from 'react';
-import moment from 'moment';
-import momentJalaali from 'moment-jalaali';
 import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
 import DirectionProvider, { DIRECTIONS } from 'react-with-direction/dist/DirectionProvider';
 
+import { moment } from '../src/utils/DateObj';
 import {
   VERTICAL_ORIENTATION,
   ANCHOR_RIGHT,
@@ -72,7 +71,7 @@ storiesOf('DateRangePicker (DRP)', module)
     </div>
   )))
   .add('non-english locale', withInfo()(() => {
-    moment.locale('zh-cn');
+    moment().setLocale('zh-cn');
     return (
       <DateRangePickerWrapper
         showClearDates
@@ -87,18 +86,18 @@ storiesOf('DateRangePicker (DRP)', module)
     );
   }))
   .add('non-english locale (Persian)', withInfo()(() => {
-    moment.locale('fa');
-    momentJalaali.loadPersian({ dialect: 'persian-modern', usePersianDigits: true });
-    return (
-      <DateRangePickerWrapper
-        isRTL
-        stateDateWrapper={momentJalaali}
-        startDatePlaceholderText="تاریخ شروع"
-        endDatePlaceholderText="تاریخ پایان"
-        renderMonthText={month => momentJalaali(month).format('jMMMM jYYYY')}
-        renderDayContents={day => momentJalaali(day).format('jD')}
-      />
-    );
+    moment().setLocale('fa');
+    // momentJalaali.loadPersian({ dialect: 'persian-modern', usePersianDigits: true });
+    // return (
+    //   <DateRangePickerWrapper
+    //     isRTL
+    //     stateDateWrapper={momentJalaali}
+    //     startDatePlaceholderText="تاریخ شروع"
+    //     endDatePlaceholderText="تاریخ پایان"
+    //     renderMonthText={month => momentJalaali(month).format('jMMMM jYYYY')}
+    //     renderDayContents={day => momentJalaali(day).format('jD')}
+    //   />
+    // );
   }))
   .add('with DirectionProvider', withInfo()(() => (
     <DirectionProvider direction={DIRECTIONS.RTL}>

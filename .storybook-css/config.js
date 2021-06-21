@@ -1,10 +1,8 @@
 import React from 'react';
-import moment from 'moment';
-
 import { configure, addDecorator, setAddon } from '@storybook/react';
 import infoAddon from '@storybook/addon-info';
 import { setOptions } from '@storybook/addon-options';
-
+import { moment } from '../src/utils/DateObj'
 import registerCSSInterfaceWithDefaultTheme from '../src/utils/registerCSSInterfaceWithDefaultTheme';
 
 import '../css/storybook.scss';
@@ -13,7 +11,7 @@ import '../css/styles.css';
 registerCSSInterfaceWithDefaultTheme();
 
 addDecorator((story) => {
-  moment.locale('en');
+  moment.setLocale('en');
   return story();
 });
 

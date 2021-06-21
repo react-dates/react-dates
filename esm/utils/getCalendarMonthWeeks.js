@@ -1,11 +1,11 @@
-import moment from 'moment';
+import DateObj from './DateObj';
 import { WEEKDAYS } from '../constants';
-export default function getCalendarMonthWeeks(month, enableOutsideDays) {
-  var firstDayOfWeek = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : moment.localeData().firstDayOfWeek();
-
-  if (!moment.isMoment(month) || !month.isValid()) {
-    throw new TypeError('`month` must be a valid moment object');
+export default function getCalendarMonthWeeks(month, enableOutsideDays, firstDayOfWeekParam) {
+  if (!DateObj.isDate(month) || !DateObj.isValid()) {
+    throw new TypeError('`month` must be a valid Date object');
   }
+
+  var firstDayOfWeek = firstDayOfWeekParam != null ? firstDayOfWeekParam : month.localeData().firstDayOfWeek();
 
   if (WEEKDAYS.indexOf(firstDayOfWeek) === -1) {
     throw new TypeError('`firstDayOfWeek` must be an integer between 0 and 6');

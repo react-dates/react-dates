@@ -2,11 +2,11 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon-sandbox';
 import { shallow } from 'enzyme';
-import moment from 'moment';
 import raf from 'raf';
 
 import { BLOCKED_MODIFIER } from '../../src/constants';
 import CalendarDay, { PureCalendarDay } from '../../src/components/CalendarDay';
+import DateObj from '../../src/utils/DateObj';
 
 describe('CalendarDay', () => {
   afterEach(() => {
@@ -15,19 +15,19 @@ describe('CalendarDay', () => {
 
   describe('#render', () => {
     it('contains formatted day for single digit days', () => {
-      const firstOfMonth = moment().startOf('month');
+      const firstOfMonth = DateObj().startOf('month');
       const wrapper = shallow(<CalendarDay day={firstOfMonth} />).dive();
       expect(wrapper.text()).to.equal(firstOfMonth.format('D'));
     });
 
     it('contains formatted day for double digit days', () => {
-      const lastOfMonth = moment().endOf('month');
+      const lastOfMonth = DateObj().endOf('month');
       const wrapper = shallow(<CalendarDay day={lastOfMonth} />).dive();
       expect(wrapper.text()).to.equal(lastOfMonth.format('D'));
     });
 
     it('contains arbitrary content if renderDay is provided', () => {
-      const dayName = moment().format('dddd');
+      const dayName = DateObj().format('dddd');
       const renderDay = (day) => day.format('dddd');
       const wrapper = shallow(<CalendarDay renderDayContents={renderDay} />).dive();
       expect(wrapper.text()).to.equal(dayName);
@@ -36,7 +36,7 @@ describe('CalendarDay', () => {
     it('passes modifiers to renderDayContents', () => {
       const modifiers = new Set([BLOCKED_MODIFIER]);
       const renderDayContents = (day, mods) => `${day.format('dddd')}${mods.has(BLOCKED_MODIFIER) ? 'BLOCKED' : ''}`;
-      const expected = `${moment().format('dddd')}BLOCKED`;
+      const expected = `${DateObj().format('dddd')}BLOCKED`;
       const wrapper = shallow((
         <CalendarDay renderDayContents={renderDayContents} modifiers={modifiers} />
       )).dive();
@@ -82,7 +82,7 @@ describe('CalendarDay', () => {
 
     describe('aria-label', () => {
       const phrases = {};
-      const day = moment('10/10/2017', 'MM/DD/YYYY');
+      const day = DateObj()('10/10/2017', 'MM/DD/YYYY');
 
       beforeEach(() => {
         phrases.chooseAvailableDate = sinon.stub().returns('chooseAvailableDate text');
@@ -192,7 +192,7 @@ describe('CalendarDay', () => {
     });
 
     describe('event handlers', () => {
-      const day = moment('10/10/2017', 'MM/DD/YYYY');
+      const day = DateObj()('10/10/2017', 'MM/DD/YYYY');
 
       let wrapper;
       beforeEach(() => {
@@ -230,7 +230,7 @@ describe('CalendarDay', () => {
   });
 
   describe('#onKeyDown', () => {
-    const day = moment('10/10/2017', 'MM/DD/YYYY');
+    const day = new DateObj('10/10/2017', 'MM/DD/YYYY');
 
     let onDayClick;
     let wrapper;

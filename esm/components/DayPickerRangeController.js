@@ -4,15 +4,13 @@ import _assertThisInitialized from "@babel/runtime/helpers/esm/assertThisInitial
 import _inheritsLoose from "@babel/runtime/helpers/esm/inheritsLoose";
 import shallowEqual from "enzyme-shallow-equal";
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import momentPropTypes from 'react-moment-proptypes';
 import { forbidExtraProps, mutuallyExclusiveProps, nonNegativeInteger } from 'airbnb-prop-types';
-import moment from 'moment';
 import values from 'object.values';
 import isTouchDevice from 'is-touch-device';
 import { DayPickerPhrases } from '../defaultPhrases';
@@ -37,14 +35,15 @@ import NavPositionShape from '../shapes/NavPositionShape';
 import { START_DATE, END_DATE, HORIZONTAL_ORIENTATION, VERTICAL_SCROLLABLE, DAY_SIZE, INFO_POSITION_BOTTOM, NAV_POSITION_TOP } from '../constants';
 import DayPicker from './DayPicker';
 import getPooledMoment from '../utils/getPooledMoment';
+import DateObj from '../utils/DateObj';
 var propTypes = process.env.NODE_ENV !== "production" ? forbidExtraProps({
-  startDate: momentPropTypes.momentObj,
-  endDate: momentPropTypes.momentObj,
+  startDate: PropTypes.object,
+  endDate: PropTypes.object,
   onDatesChange: PropTypes.func,
   startDateOffset: PropTypes.func,
   endDateOffset: PropTypes.func,
-  minDate: momentPropTypes.momentObj,
-  maxDate: momentPropTypes.momentObj,
+  minDate: PropTypes.object,
+  maxDate: PropTypes.object,
   focusedInput: FocusedInputShape,
   onFocusChange: PropTypes.func,
   onClose: PropTypes.func,
@@ -102,7 +101,8 @@ var propTypes = process.env.NODE_ENV !== "production" ? forbidExtraProps({
   weekDayFormat: PropTypes.string,
   phrases: PropTypes.shape(getPhrasePropTypes(DayPickerPhrases)),
   dayAriaLabelFormat: PropTypes.string,
-  isRTL: PropTypes.bool
+  isRTL: PropTypes.bool,
+  locale: PropTypes.object
 }) : {};
 var defaultProps = {
   startDate: undefined,
@@ -171,7 +171,8 @@ var defaultProps = {
   weekDayFormat: 'dd',
   phrases: DayPickerPhrases,
   dayAriaLabelFormat: undefined,
-  isRTL: false
+  isRTL: false,
+  locale: null
 };
 
 var getChooseAvailableDatePhrase = function getChooseAvailableDatePhrase(phrases, focusedInput) {
@@ -200,7 +201,7 @@ var DayPickerRangeController = /*#__PURE__*/function (_ref) {
 
     _this = _ref.call(this, props) || this;
     _this.isTouchDevice = isTouchDevice();
-    _this.today = moment();
+    _this.today = new DateObj();
     _this.modifiers = {
       today: function today(day) {
         return _this.isToday(day);
@@ -399,7 +400,7 @@ var DayPickerRangeController = /*#__PURE__*/function (_ref) {
         modifiers = this.deleteModifier(modifiers, endDate, 'selected-end-in-hovered-span');
         values(visibleDays).forEach(function (days) {
           Object.keys(days).forEach(function (day) {
-            var momentObj = moment(day);
+            var momentObj = day;
             modifiers = _this2.deleteModifier(modifiers, momentObj, 'no-selected-start-before-selected-end');
           });
         });
@@ -436,7 +437,7 @@ var DayPickerRangeController = /*#__PURE__*/function (_ref) {
       if (!startDate && endDate) {
         values(visibleDays).forEach(function (days) {
           Object.keys(days).forEach(function (day) {
-            var momentObj = moment(day);
+            var momentObj = new DateObj(day);
 
             if (isBeforeDay(momentObj, endDate)) {
               modifiers = _this2.addModifier(modifiers, momentObj, 'no-selected-start-before-selected-end');
@@ -531,7 +532,7 @@ var DayPickerRangeController = /*#__PURE__*/function (_ref) {
       modifiers = this.addModifierToRange(modifiers, startDate, startDate.clone().add(minimumNights, 'days'), 'blocked');
     }
 
-    var today = moment();
+    var today = new DateObj();
 
     if (!isSameDay(this.today, today)) {
       modifiers = this.deleteModifier(modifiers, this.today, 'today');
@@ -1121,7 +1122,7 @@ var DayPickerRangeController = /*#__PURE__*/function (_ref) {
       return dayDiff < minimumNights && dayDiff >= 0;
     }
 
-    return isOutsideRange(moment(day).subtract(minimumNights, 'days'));
+    return isOutsideRange(day.subtract(minimumNights, 'days'));
   };
 
   _proto.doesNotMeetMinNightsForHoveredStartDate = function doesNotMeetMinNightsForHoveredStartDate(day, hoverDate) {
@@ -1209,12 +1210,12 @@ var DayPickerRangeController = /*#__PURE__*/function (_ref) {
 
   _proto.isFirstDayOfWeek = function isFirstDayOfWeek(day) {
     var firstDayOfWeek = this.props.firstDayOfWeek;
-    return day.day() === (firstDayOfWeek || moment.localeData().firstDayOfWeek());
+    return day.day() === (firstDayOfWeek || day.localeData().firstDayOfWeek());
   };
 
   _proto.isLastDayOfWeek = function isLastDayOfWeek(day) {
     var firstDayOfWeek = this.props.firstDayOfWeek;
-    return day.day() === ((firstDayOfWeek || moment.localeData().firstDayOfWeek()) + 6) % 7;
+    return day.day() === ((firstDayOfWeek || day.localeData().firstDayOfWeek()) + 6) % 7;
   };
 
   _proto.isFirstPossibleEndDateForHoveredStartDate = function isFirstPossibleEndDateForHoveredStartDate(day, hoverDate) {
@@ -1286,7 +1287,8 @@ var DayPickerRangeController = /*#__PURE__*/function (_ref) {
         noBorder = _this$props22.noBorder,
         transitionDuration = _this$props22.transitionDuration,
         verticalBorderSpacing = _this$props22.verticalBorderSpacing,
-        horizontalMonthPadding = _this$props22.horizontalMonthPadding;
+        horizontalMonthPadding = _this$props22.horizontalMonthPadding,
+        locale = _this$props22.locale;
     var _this$state7 = this.state,
         currentMonth = _this$state7.currentMonth,
         phrases = _this$state7.phrases,
@@ -1351,7 +1353,8 @@ var DayPickerRangeController = /*#__PURE__*/function (_ref) {
       verticalBorderSpacing: verticalBorderSpacing,
       noBorder: noBorder,
       transitionDuration: transitionDuration,
-      horizontalMonthPadding: horizontalMonthPadding
+      horizontalMonthPadding: horizontalMonthPadding,
+      locale: locale
     });
   };
 

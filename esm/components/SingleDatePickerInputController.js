@@ -3,22 +3,20 @@ import _inheritsLoose from "@babel/runtime/helpers/esm/inheritsLoose";
 import shallowEqual from "enzyme-shallow-equal";
 import React from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
-import momentPropTypes from 'react-moment-proptypes';
 import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
 import openDirectionShape from '../shapes/OpenDirectionShape';
 import { SingleDatePickerInputPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 import SingleDatePickerInput from './SingleDatePickerInput';
+import DateObj from '../utils/DateObj';
 import IconPositionShape from '../shapes/IconPositionShape';
 import DisabledShape from '../shapes/DisabledShape';
-import toMomentObject from '../utils/toMomentObject';
 import toLocalizedDateString from '../utils/toLocalizedDateString';
 import isInclusivelyAfterDay from '../utils/isInclusivelyAfterDay';
 import { ICON_BEFORE_POSITION, OPEN_DOWN } from '../constants';
 var propTypes = process.env.NODE_ENV !== "production" ? forbidExtraProps({
   children: PropTypes.node,
-  date: momentPropTypes.momentObj,
+  date: PropTypes.object,
   onDateChange: PropTypes.func.isRequired,
   focused: PropTypes.bool,
   onFocusChange: PropTypes.func.isRequired,
@@ -80,13 +78,13 @@ var defaultProps = {
   keepOpenOnDateSelect: false,
   reopenPickerOnClearDate: false,
   isOutsideRange: function isOutsideRange(day) {
-    return !isInclusivelyAfterDay(day, moment());
+    return !isInclusivelyAfterDay(day, new DateObj());
   },
   isDayBlocked: function isDayBlocked() {
     return false;
   },
   displayFormat: function displayFormat() {
-    return moment.localeData().longDateFormat('L');
+    return new DateObj().localeData().longDateFormat('L');
   },
   onClose: function onClose() {},
   onKeyDownArrowDown: function onKeyDownArrowDown() {},
@@ -128,7 +126,7 @@ var SingleDatePickerInputController = /*#__PURE__*/function (_ref) {
         onDateChange = _this$props.onDateChange,
         onFocusChange = _this$props.onFocusChange,
         onClose = _this$props.onClose;
-    var newDate = toMomentObject(dateString, this.getDisplayFormat());
+    var newDate = DateObj().toDateObject(dateString, this.getDisplayFormat());
     var isValid = newDate && !isOutsideRange(newDate) && !isDayBlocked(newDate);
 
     if (isValid) {

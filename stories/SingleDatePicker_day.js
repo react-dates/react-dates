@@ -1,11 +1,12 @@
 import React from 'react';
-import moment from 'moment';
+
 import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
 
 import isInclusivelyAfterDay from '../src/utils/isInclusivelyAfterDay';
 import isSameDay from '../src/utils/isSameDay';
 
+import { moment } from '../src/utils/DateObj';
 import SingleDatePickerWrapper from '../examples/SingleDatePickerWrapper';
 
 const datesList = [

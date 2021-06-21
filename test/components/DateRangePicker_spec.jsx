@@ -1,10 +1,10 @@
 import React from 'react';
-import moment from 'moment';
 import { expect } from 'chai';
 import sinon from 'sinon-sandbox';
 import { shallow, mount } from 'enzyme';
 import { Portal } from 'react-portal';
 
+import { moment } from '../../src/utils/DateObj';
 import DateRangePicker, { PureDateRangePicker } from '../../src/components/DateRangePicker';
 
 import DateRangePickerInputController from '../../src/components/DateRangePickerInputController';

@@ -1,6 +1,6 @@
-import moment from 'moment';
 import { expect } from 'chai';
 import sinon from 'sinon-sandbox';
+import { moment } from '../../src/utils/DateObj';
 
 import getCalendarDaySettings from '../../src/utils/getCalendarDaySettings';
 import { BLOCKED_MODIFIER } from '../../src/constants';

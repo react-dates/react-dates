@@ -1,9 +1,9 @@
 import React from 'react';
 import { expect } from 'chai';
-import moment from 'moment';
 import sinon from 'sinon-sandbox';
 import { shallow } from 'enzyme';
 
+import { moment } from '../../src/utils/DateObj';
 import DateRangePickerInputController
   from '../../src/components/DateRangePickerInputController';
 

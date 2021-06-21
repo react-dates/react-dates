@@ -4,17 +4,16 @@ import _inheritsLoose from "@babel/runtime/helpers/esm/inheritsLoose";
 import _defineProperty from "@babel/runtime/helpers/esm/defineProperty";
 import shallowEqual from "enzyme-shallow-equal";
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import momentPropTypes from 'react-moment-proptypes';
 import { forbidExtraProps, mutuallyExclusiveProps, nonNegativeInteger } from 'airbnb-prop-types';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
-import moment from 'moment';
 import { addEventListener } from 'consolidated-events';
+import DateObj from '../utils/DateObj';
 import { CalendarDayPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 import noflip from '../utils/noflip';
@@ -33,7 +32,7 @@ var propTypes = process.env.NODE_ENV !== "production" ? forbidExtraProps(_object
   enableOutsideDays: PropTypes.bool,
   firstVisibleMonthIndex: PropTypes.number,
   horizontalMonthPadding: nonNegativeInteger,
-  initialMonth: momentPropTypes.momentObj,
+  initialMonth: PropTypes.object,
   isAnimating: PropTypes.bool,
   numberOfMonths: PropTypes.number,
   modifiers: PropTypes.objectOf(PropTypes.objectOf(ModifiersShape)),
@@ -50,7 +49,7 @@ var propTypes = process.env.NODE_ENV !== "production" ? forbidExtraProps(_object
   translationValue: PropTypes.number,
   renderMonthElement: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'),
   daySize: nonNegativeInteger,
-  focusedDate: momentPropTypes.momentObj,
+  focusedDate: PropTypes.object,
   // indicates focusable day
   isFocused: PropTypes.bool,
   // indicates whether or not to move focus to focusable day
@@ -68,7 +67,7 @@ var defaultProps = {
   enableOutsideDays: false,
   firstVisibleMonthIndex: 0,
   horizontalMonthPadding: 13,
-  initialMonth: moment(),
+  initialMonth: new DateObj(),
   isAnimating: false,
   numberOfMonths: 1,
   modifiers: {},
@@ -131,8 +130,9 @@ var CalendarMonthGrid = /*#__PURE__*/function (_ref) {
     };
     _this.isTransitionEndSupported = isTransitionEndSupported();
     _this.onTransitionEnd = _this.onTransitionEnd.bind(_assertThisInitialized(_this));
-    _this.setContainerRef = _this.setContainerRef.bind(_assertThisInitialized(_this));
-    _this.locale = moment.locale();
+    _this.setContainerRef = _this.setContainerRef.bind(_assertThisInitialized(_this)); // TODO check this
+
+    _this.locale = new DateObj().localeData();
     _this.onMonthSelect = _this.onMonthSelect.bind(_assertThisInitialized(_this));
     _this.onYearSelect = _this.onYearSelect.bind(_assertThisInitialized(_this));
     return _this;
@@ -175,7 +175,7 @@ var CalendarMonthGrid = /*#__PURE__*/function (_ref) {
       newMonths = getMonths(initialMonth, numberOfMonths, _withoutTransitionMonths);
     }
 
-    var momentLocale = moment.locale();
+    var momentLocale = new DateObj().localeData();
 
     if (this.locale !== momentLocale) {
       this.locale = momentLocale;

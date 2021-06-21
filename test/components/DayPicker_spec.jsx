@@ -1,9 +1,9 @@
 import React from 'react';
-import moment from 'moment/min/moment-with-locales';
 import { expect } from 'chai';
 import sinon from 'sinon-sandbox';
 import { mount, shallow } from 'enzyme';
 
+import { moment } from '../../src/utils/DateObj';
 import * as isDayVisible from '../../src/utils/isDayVisible';
 import isSameMonth from '../../src/utils/isSameMonth';
 
@@ -19,7 +19,7 @@ import {
   NAV_POSITION_BOTTOM,
 } from '../../src/constants';
 
-const today = moment().locale('en');
+const today = moment().setLocale('en');
 const event = { preventDefault() {}, stopPropagation() {} };
 
 describe('DayPicker', () => {
