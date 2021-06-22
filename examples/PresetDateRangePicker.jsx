@@ -85,8 +85,8 @@ const defaultProps = {
   isDayHighlighted: () => false,
 
   // internationalization
-  displayFormat: () => moment().localeData().longDateFormat('L'),
-  monthFormat: 'MMMM YYYY',
+  displayFormat: () => moment().localeData().longDateFormat(),
+  monthFormat: 'MMMM yyyy',
   phrases: DateRangePickerPhrases,
 };
 

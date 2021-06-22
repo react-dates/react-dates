@@ -739,7 +739,7 @@ describe('DateRangePicker', () => {
 
     describe('endDateOffset is passed in', () => {
       it('Should pass endDateOffset to DayPickerRangeController', () => {
-        const endDate = moment('2018-10-17', 'YYYY-MM-DD');
+        const endDate = moment('2018-10-17', 'yyyy-mm-dd');
         const onDatesChangeStub = sinon.stub();
         const wrapper = shallow((
           <DateRangePicker

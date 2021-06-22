@@ -1,6 +1,6 @@
 export var DISPLAY_FORMAT = 'L';
-export var ISO_FORMAT = 'YYYY-MM-DD';
-export var ISO_MONTH_FORMAT = 'YYYY-MM'; // TODO delete this line of dead code on next breaking change
+export var ISO_FORMAT = 'yyyy-mm-dd';
+export var ISO_MONTH_FORMAT = 'yyyy-MM'; // TODO delete this line of dead code on next breaking change
 
 export var START_DATE = 'startDate';
 export var END_DATE = 'endDate';

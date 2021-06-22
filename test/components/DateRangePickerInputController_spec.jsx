@@ -128,7 +128,7 @@ describe('DateRangePickerInputController', () => {
 
   describe('#onEndDateChange', () => {
     describe('is a valid end date', () => {
-      const validFutureDateString = moment(today).add(10, 'days').format('YYYY-MM-DD');
+      const validFutureDateString = moment(today).add(10, 'days').format('yyyy-mm-dd');
       describe('when props.startDate is not provided', () => {
         it('calls props.onDatesChange with provided end date', () => {
           const onDatesChangeStub = sinon.stub();
@@ -433,7 +433,7 @@ describe('DateRangePickerInputController', () => {
     });
 
     describe('is blocked', () => {
-      const futureDate = moment().add(7, 'days').format('DD/MM/YYYY');
+      const futureDate = moment().add(7, 'days').format('DD/MM/yyyy');
       const isDayBlocked = sinon.stub().returns(true);
 
       it('calls props.onDatesChange', () => {
@@ -508,7 +508,7 @@ describe('DateRangePickerInputController', () => {
 
   describe('#onStartDateChange', () => {
     describe('is a valid start date', () => {
-      const validFutureDateString = moment(today).add(5, 'days').format('YYYY-MM-DD');
+      const validFutureDateString = moment(today).add(5, 'days').format('yyyy-mm-dd');
       describe('is before props.endDate', () => {
         const endDate = moment(today).add(10, 'days');
         it('calls props.onDatesChange provided start date and props.endDate', () => {
@@ -751,7 +751,7 @@ describe('DateRangePickerInputController', () => {
     });
 
     describe('is outside range', () => {
-      const futureDate = moment().add(7, 'days').format('YYYY/MM/DD');
+      const futureDate = moment().add(7, 'days').format('yyyy/MM/DD');
       const isOutsideRange = (day) => day > moment().add(5, 'days');
 
       it('calls props.onDatesChange', () => {
@@ -796,7 +796,7 @@ describe('DateRangePickerInputController', () => {
     });
 
     describe('is blocked', () => {
-      const futureDate = moment().add(7, 'days').format('DD/MM/YYYY');
+      const futureDate = moment().add(7, 'days').format('DD/MM/yyyy');
       const isDayBlocked = sinon.stub().returns(true);
 
       it('calls props.onDatesChange', () => {

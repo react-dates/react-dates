@@ -82,7 +82,7 @@ describe('CalendarDay', () => {
 
     describe('aria-label', () => {
       const phrases = {};
-      const day = DateObj()('10/10/2017', 'MM/DD/YYYY');
+      const day = DateObj()('10/10/2017', 'MM/DD/yyyy');
 
       beforeEach(() => {
         phrases.chooseAvailableDate = sinon.stub().returns('chooseAvailableDate text');
@@ -183,7 +183,7 @@ describe('CalendarDay', () => {
           <CalendarDay
             modifiers={modifiers}
             day={day}
-            ariaLabelFormat="MMMM Do YYYY"
+            ariaLabelFormat="MMMM Do yyyy"
           />
         )).dive();
 
@@ -192,14 +192,14 @@ describe('CalendarDay', () => {
     });
 
     describe('event handlers', () => {
-      const day = DateObj()('10/10/2017', 'MM/DD/YYYY');
+      const day = DateObj()('10/10/2017', 'MM/DD/yyyy');
 
       let wrapper;
       beforeEach(() => {
         wrapper = shallow((
           <CalendarDay
             day={day}
-            ariaLabelFormat="MMMM Do YYYY"
+            ariaLabelFormat="MMMM Do yyyy"
           />
         )).dive();
       });
@@ -230,7 +230,7 @@ describe('CalendarDay', () => {
   });
 
   describe('#onKeyDown', () => {
-    const day = new DateObj('10/10/2017', 'MM/DD/YYYY');
+    const day = new DateObj('10/10/2017', 'MM/DD/yyyy');
 
     let onDayClick;
     let wrapper;

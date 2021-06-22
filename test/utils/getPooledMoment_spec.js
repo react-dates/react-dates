@@ -8,7 +8,7 @@ describe('getPooledMoment', () => {
   it('returns a moment given a day string', () => {
     const momentObj = getPooledMoment('2017-12-10');
     expect(moment.isMoment(momentObj)).to.equal(true);
-    expect(momentObj.format('YYYY MM DD')).to.equal('2017 12 10');
+    expect(momentObj.format('yyyy MMdd')).to.equal('2017 12 10');
   });
 
   it('returns the same moment given the same day string', () => {

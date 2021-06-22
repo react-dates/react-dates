@@ -83,7 +83,7 @@ const defaultProps = {
   onNextMonthClick() {},
 
   // internationalization
-  monthFormat: 'MMMM YYYY',
+  monthFormat: 'MMMM yyyy',
 };
 
 class DayPickerSingleDateControllerWrapper extends React.Component {
@@ -118,7 +118,7 @@ class DayPickerSingleDateControllerWrapper extends React.Component {
       'showInput',
     ]);
 
-    const dateString = date && date.format('YYYY-MM-DD');
+    const dateString = date && date.format('yyyy-mm-dd');
 
     return (
       <div>

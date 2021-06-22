@@ -167,7 +167,7 @@ storiesOf('DayPickerSingleDateController', module)
         onOutsideClick={action('DayPickerSingleDateController::onOutsideClick')}
         onPrevMonthClick={action('DayPickerSingleDateController::onPrevMonthClick')}
         onNextMonthClick={action('DayPickerSingleDateController::onNextMonthClick')}
-        monthFormat="YYYY[年]MMMM"
+        monthFormat="yyyy[年]MMMM"
       />
     );
   }))

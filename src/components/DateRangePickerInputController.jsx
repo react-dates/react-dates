@@ -120,7 +120,7 @@ const defaultProps = {
   minimumNights: 1,
   isOutsideRange: (day) => !isInclusivelyAfterDay(day, new DateObj()),
   isDayBlocked: () => false,
-  displayFormat: () => new DateObj().localeData().longDateFormat('L'),
+  displayFormat: () => new DateObj().localeData().longDateFormat(),
 
   onFocusChange() {},
   onClose() {},

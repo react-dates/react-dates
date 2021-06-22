@@ -46,7 +46,7 @@ storiesOf('SingleDatePicker (SDP)', module)
     return (
       <SingleDatePickerWrapper
         placeholder="入住日期"
-        monthFormat="YYYY[年]MMMM"
+        monthFormat="yyyy[年]MMMM"
         phrases={{
           closeDatePicker: '关闭',
           clearDate: '清除日期',
@@ -59,7 +59,7 @@ storiesOf('SingleDatePicker (SDP)', module)
     // return (
     //   <SingleDatePickerWrapper
     //     placeholder="تقویم فارسی"
-    //     renderMonthText={month => momentJalaali(month).format('jMMMM jYYYY')}
+    //     renderMonthText={month => momentJalaali(month).format('jMMMM jyyyy')}
     //     renderDayContents={day => momentJalaali(day).format('jD')}
     //   />
     // );

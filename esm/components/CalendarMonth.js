@@ -79,7 +79,7 @@ var defaultProps = {
   focusedDate: null,
   isFocused: false,
   // i18n
-  monthFormat: 'MMMM YYYY',
+  monthFormat: 'MMMM yyyy',
   // english locale
   phrases: CalendarDayPhrases,
   dayAriaLabelFormat: undefined,

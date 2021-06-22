@@ -11,7 +11,7 @@ import '../css/styles.css';
 registerCSSInterfaceWithDefaultTheme();
 
 addDecorator((story) => {
-  moment.setLocale('en');
+  moment().setLocale('en');
   return story();
 });
 

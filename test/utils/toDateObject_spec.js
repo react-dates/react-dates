@@ -23,7 +23,7 @@ describe('toDateObject', () => {
   });
 
   it('parses custom format', () => {
-    const date = DateObj.toDateObject('1991---13/07', 'YYYY---DD/MM');
+    const date = DateObj.toDateObject('1991---13/07', 'yyyy---DD/MM');
 
     expect(date).not.to.equal(null);
     expect(date.month()).to.equal(6); // moment months are zero-indexed

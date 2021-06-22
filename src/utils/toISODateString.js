@@ -9,4 +9,5 @@ export default function toISODateString(date, currentFormat) {
   }
 
   return dateObj.format(ISO_FORMAT);
+  // return `${dateObj.year()}-${String(dateObj.month() + 1).padStart(2, '0')}`;
 }

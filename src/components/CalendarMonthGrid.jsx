@@ -94,7 +94,7 @@ const defaultProps = {
   verticalBorderSpacing: undefined,
 
   // i18n
-  monthFormat: 'MMMM YYYY', // english locale
+  monthFormat: 'MMMM yyyy', // english locale
   phrases: CalendarDayPhrases,
   dayAriaLabelFormat: undefined,
 };
@@ -124,7 +124,7 @@ class CalendarMonthGrid extends React.PureComponent {
     this.onTransitionEnd = this.onTransitionEnd.bind(this);
     this.setContainerRef = this.setContainerRef.bind(this);
     // TODO check this
-    this.locale = new DateObj().localeData();
+    this.locale = new DateObj().dataLocale;
     this.onMonthSelect = this.onMonthSelect.bind(this);
     this.onYearSelect = this.onYearSelect.bind(this);
   }
@@ -167,10 +167,10 @@ class CalendarMonthGrid extends React.PureComponent {
       newMonths = getMonths(initialMonth, numberOfMonths, withoutTransitionMonths);
     }
 
-    const momentLocale = new DateObj().localeData();
+    const momentLocale = new DateObj().dataLocale;
     if (this.locale !== momentLocale) {
       this.locale = momentLocale;
-      newMonths = newMonths.map((m) => m.locale(this.locale));
+      newMonths = newMonths.map((m) => m.setLocale(this.locale));
     }
 
     this.setState({

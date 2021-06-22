@@ -127,8 +127,8 @@ const defaultProps = {
   maxDate: undefined,
 
   // internationalization
-  displayFormat: () => new DateObj().localeData().longDateFormat('L'),
-  monthFormat: 'MMMM YYYY',
+  displayFormat: () => new DateObj().localeData().longDateFormat(),
+  monthFormat: 'MMMM yyyy',
   weekDayFormat: 'dd',
   phrases: DateRangePickerPhrases,
   dayAriaLabelFormat: undefined,

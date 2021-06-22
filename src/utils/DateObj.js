@@ -148,6 +148,8 @@ export default class DateObj {
   }
 
   format(formatString) {
+    // TODO fix this
+    console.log(this.dataLocale);
     return format(this.dataDate, formatString, { locale: this.dataLocale });
   }
 
@@ -323,15 +325,19 @@ export default class DateObj {
     if (this.dataLocale) {
       return {
         firstDayOfWeek: () => this.dataLocale.options.weekStartsOn,
+        longDateFormat: () => (this.dataLocale || enUS).formatLong,
+
         // TODO fix this
-         longDateFormat: (formatString) => enUS.formatLong(formatString),
-        // longDateFormat: (formatString) => format(formatString, 'pppp', { locale: this.dataLocale }),
+        // firstDayOfWeek: () => (this.dataLocale || enUS).options?.weekStartsOn,
+        // longDateFormat: () => enUS.formatLong,
+        // // longDateFormat: (formatString) =>
+        // format(formatString, 'pppp', { locale: this.dataLocale }),
       };
     }
 
     return {
       firstDayOfWeek: () => 0,
-      longDateFormat: () => 'YYYY-MM-DD',
+      longDateFormat: () => 'yyyy-mm-dd',
     };
   }
 }

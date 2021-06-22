@@ -73,8 +73,8 @@ const defaultProps = {
   isDayHighlighted: () => {},
 
   // internationalization props
-  displayFormat: () => moment().localeData().longDateFormat('L'),
-  monthFormat: 'MMMM YYYY',
+  displayFormat: () => new DateObj().localeData().longDateFormat(),
+  monthFormat: 'MMMM yyyy',
   phrases: SingleDatePickerPhrases,
 };
 

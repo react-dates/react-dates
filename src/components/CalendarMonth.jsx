@@ -82,7 +82,7 @@ const defaultProps = {
   isFocused: false,
 
   // i18n
-  monthFormat: 'MMMM YYYY', // english locale
+  monthFormat: 'MMMM yyyy', // english locale
   phrases: CalendarDayPhrases,
   dayAriaLabelFormat: undefined,
   verticalBorderSpacing: undefined,
@@ -91,13 +91,12 @@ const defaultProps = {
 class CalendarMonth extends React.PureComponent {
   constructor(props) {
     super(props);
-
     this.state = {
       weeks: getCalendarMonthWeeks(
         props.month,
         props.enableOutsideDays,
         props.firstDayOfWeek == null
-          ? props.month.localeData().firstDayOfWeek() : props.firstDayOfWeek,
+          ? new DateObj(props.month).localeData().firstDayOfWeek() : props.firstDayOfWeek,
       ),
     };
 

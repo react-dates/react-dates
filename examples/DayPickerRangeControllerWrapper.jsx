@@ -105,7 +105,7 @@ const defaultProps = {
   onNextMonthClick() {},
 
   // internationalization
-  monthFormat: 'MMMM YYYY',
+  monthFormat: 'MMMM yyyy',
 };
 
 class DayPickerRangeControllerWrapper extends React.Component {
@@ -163,8 +163,8 @@ class DayPickerRangeControllerWrapper extends React.Component {
       'showInputs',
     ]);
 
-    const startDateString = startDate && startDate.format('YYYY-MM-DD');
-    const endDateString = endDate && endDate.format('YYYY-MM-DD');
+    const startDateString = startDate && startDate.format('yyyy-mm-dd');
+    const endDateString = endDate && endDate.format('yyyy-mm-dd');
     const renderCalendarInfo = errorMessage ? () => <div>{errorMessage}</div> : renderCalendarInfoProp;
 
     return (

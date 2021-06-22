@@ -57,7 +57,7 @@ describe('CustomizableCalendarDay', () => {
 
     describe('aria-label', () => {
       const phrases = {};
-      const day = moment('10/10/2017', 'MM/DD/YYYY');
+      const day = moment('10/10/2017', 'MM/DD/yyyy');
 
       beforeEach(() => {
         phrases.chooseAvailableDate = sinon.stub().returns('chooseAvailableDate text');
@@ -144,7 +144,7 @@ describe('CustomizableCalendarDay', () => {
           <CustomizableCalendarDay
             modifiers={modifiers}
             day={day}
-            ariaLabelFormat="MMMM Do YYYY"
+            ariaLabelFormat="MMMM Do yyyy"
           />
         )).dive();
 
@@ -153,14 +153,14 @@ describe('CustomizableCalendarDay', () => {
     });
 
     describe('event handlers', () => {
-      const day = moment('10/10/2017', 'MM/DD/YYYY');
+      const day = moment('10/10/2017', 'MM/DD/yyyy');
 
       let wrapper;
       beforeEach(() => {
         wrapper = shallow((
           <CustomizableCalendarDay
             day={day}
-            ariaLabelFormat="MMMM Do YYYY"
+            ariaLabelFormat="MMMM Do yyyy"
           />
         )).dive();
       });
@@ -208,7 +208,7 @@ describe('CustomizableCalendarDay', () => {
   });
 
   describe('#onKeyDown', () => {
-    const day = moment('10/10/2017', 'MM/DD/YYYY');
+    const day = moment('10/10/2017', 'MM/DD/yyyy');
 
     let onDayClick;
     let wrapper;

@@ -115,7 +115,7 @@ var defaultProps = {
   displayFormat: function displayFormat() {
     return new DateObj().localeData().longDateFormat('L');
   },
-  monthFormat: 'MMMM YYYY',
+  monthFormat: 'MMMM yyyy',
   weekDayFormat: 'dd',
   phrases: DateRangePickerPhrases,
   dayAriaLabelFormat: undefined,

@@ -146,7 +146,7 @@ var defaultProps = {
   onTab: function onTab() {},
   onShiftTab: function onShiftTab() {},
   // i18n
-  monthFormat: 'MMMM YYYY',
+  monthFormat: 'MMMM yyyy',
   weekDayFormat: 'dd',
   phrases: DayPickerPhrases,
   dayAriaLabelFormat: undefined,

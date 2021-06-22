@@ -7,7 +7,7 @@ export default function getCalendarMonthWeeks(
   enableOutsideDays,
   firstDayOfWeekParam,
 ) {
-  if (!DateObj.isDate(month) || !DateObj.isValid()) {
+  if (!DateObj.isDate(month) || !DateObj.isValid(month)) {
     throw new TypeError('`month` must be a valid Date object');
   }
   const firstDayOfWeek = firstDayOfWeekParam != null
