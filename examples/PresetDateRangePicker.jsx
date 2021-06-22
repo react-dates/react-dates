@@ -1,14 +1,18 @@
+/* eslint-disable react/default-props-match-prop-types */
+/* eslint-disable react/forbid-prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
 import omit from 'lodash/omit';
 
 import { withStyles, withStylesPropTypes, css } from 'react-with-styles';
-import { moment } from '../src/utils/DateObj';
+import DateObj from '../src/utils/DateObj';
 import DateRangePicker from '../src/components/DateRangePicker';
 
 import { DateRangePickerPhrases } from '../src/defaultPhrases';
 import DateRangePickerShape from '../src/shapes/DateRangePickerShape';
-import { START_DATE, END_DATE, HORIZONTAL_ORIENTATION, ANCHOR_LEFT } from '../src/constants';
+import {
+  START_DATE, END_DATE, HORIZONTAL_ORIENTATION, ANCHOR_LEFT,
+} from '../src/constants';
 import isSameDay from '../src/utils/isSameDay';
 
 const propTypes = {
@@ -81,11 +85,11 @@ const defaultProps = {
   minimumNights: 0,
   enableOutsideDays: false,
   isDayBlocked: () => false,
-  isOutsideRange: day => false,
+  isOutsideRange: (day) => false,
   isDayHighlighted: () => false,
 
   // internationalization
-  displayFormat: () => moment().localeData().longDateFormat(),
+  displayFormat: () => new DateObj().localeData().longDateFormat(),
   monthFormat: 'MMMM yyyy',
   phrases: DateRangePickerPhrases,
 };

@@ -215,7 +215,7 @@ class CalendarMonth extends React.PureComponent {
             verticalBorderSpacing && { borderSpacing: `0px ${verticalBorderSpacing}px` },
           )}
           role="presentation"
-        >
+        >{console.log("weeks are",weeks)}
           <tbody>
             {weeks.map((week, i) => (
               <CalendarWeek key={i}>

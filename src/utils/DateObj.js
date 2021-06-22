@@ -149,7 +149,6 @@ export default class DateObj {
 
   format(formatString) {
     // TODO fix this
-    console.log(this.dataLocale);
     return format(this.dataDate, formatString, { locale: this.dataLocale });
   }
 
@@ -325,13 +324,11 @@ export default class DateObj {
     if (this.dataLocale) {
       return {
         firstDayOfWeek: () => this.dataLocale.options.weekStartsOn,
-        longDateFormat: () => (this.dataLocale || enUS).formatLong,
+        longDateFormat: () => ((this.dataLocale || enUS).formatLong.date({ width: 'short' })),
 
         // TODO fix this
         // firstDayOfWeek: () => (this.dataLocale || enUS).options?.weekStartsOn,
         // longDateFormat: () => enUS.formatLong,
-        // // longDateFormat: (formatString) =>
-        // format(formatString, 'pppp', { locale: this.dataLocale }),
       };
     }
 

@@ -18,8 +18,8 @@ export default function getCalendarMonthWeeks(
   }
 
   // set utc offset to get correct dates in future (when timezone changes)
-  const firstOfMonth = month.clone().startOf('month').hour(12);
-  const lastOfMonth = month.clone().endOf('month').hour(12);
+  const firstOfMonth = new DateObj(month).clone().startOf('month').hour(12);
+  const lastOfMonth = new DateObj(month).clone().endOf('month').hour(12);
 
   // calculate the exact first and last days to fill the entire matrix
   // (considering days outside month)
@@ -47,6 +47,6 @@ export default function getCalendarMonthWeeks(
 
     currentDay.add(1, 'day');
   }
-
+console.log('Weeks in month ' , weeksInMonth);
   return weeksInMonth;
 }
