@@ -27,9 +27,8 @@ export default function getCalendarMonthWeeks(
   const nextDays = ((firstDayOfWeek + 6 - lastOfMonth.day()) % 7);
   const firstDay = firstOfMonth.clone().subtract(prevDays, 'day');
   const lastDay = lastOfMonth.clone().add(nextDays, 'day');
-
-  const totalDays = lastDay.diff(firstDay, 'days') + 1;
-
+  // TODO fix diff
+  const totalDays = new DateObj(lastDay).diff(firstDay, 'days') + 1;
   const currentDay = firstDay.clone();
   const weeksInMonth = [];
 
@@ -47,6 +46,5 @@ export default function getCalendarMonthWeeks(
 
     currentDay.add(1, 'day');
   }
-console.log('Weeks in month ' , weeksInMonth);
   return weeksInMonth;
 }

@@ -148,7 +148,6 @@ export default class DateObj {
   }
 
   format(formatString) {
-    // TODO fix this
     return format(this.dataDate, formatString, { locale: this.dataLocale });
   }
 
@@ -305,7 +304,7 @@ export default class DateObj {
   }
 
   periodActionValue(action, period, date) {
-    return PERIODS[DateObj.getRealPeriod(period)][action](this.dataDate, date);
+    return PERIODS[DateObj.getRealPeriod(period)][action](new Date(), new Date(date));
   }
 
   startOf(period) {
