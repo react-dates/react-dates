@@ -585,6 +585,8 @@ export default class DayPickerRangeController extends React.PureComponent {
   }
 
   onDayClick(day, e) {
+    
+console.log("DAY CLICKEd INSIDE RANGE COntroLLer : ",day);
     const {
       keepOpenOnDateSelect,
       minimumNights,
@@ -600,7 +602,7 @@ export default class DayPickerRangeController extends React.PureComponent {
     } = this.props;
 
     if (e) e.preventDefault();
-    if (this.isBlocked(day, !daysViolatingMinNightsCanBeClicked)) return;
+    if (this.isBlocked(day, !daysViolatingMinNightsCanBeClicked)){console.log("Day is blocked"); return;}
 
     let { startDate, endDate } = this.props;
 
@@ -611,7 +613,6 @@ export default class DayPickerRangeController extends React.PureComponent {
       if (this.isBlocked(startDate) || this.isBlocked(endDate)) {
         return;
       }
-
       onDatesChange({ startDate, endDate });
 
       if (!keepOpenOnDateSelect) {

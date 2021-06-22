@@ -359,6 +359,7 @@ export default class DayPickerSingleDateController extends React.PureComponent {
   }
 
   onDayClick(day, e) {
+    console.log("DAY CLICKED : ",day);
     if (e) e.preventDefault();
     if (this.isBlocked(day)) return;
     const {

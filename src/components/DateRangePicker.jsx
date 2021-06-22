@@ -132,7 +132,7 @@ const defaultProps = {
   weekDayFormat: 'dd',
   phrases: DateRangePickerPhrases,
   dayAriaLabelFormat: undefined,
-  locale: null,
+  locale: new DateObj().dataLocale,
 };
 
 class DateRangePicker extends React.PureComponent {

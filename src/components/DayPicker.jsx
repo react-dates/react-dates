@@ -45,7 +45,7 @@ import {
   NAV_POSITION_TOP,
   NAV_POSITION_BOTTOM,
 } from '../constants';
-import { moment } from '../utils/DateObj';
+import DateObj from '../utils/DateObj';
 
 const MONTH_PADDING = 23;
 const PREV_TRANSITION = 'prev';
@@ -136,7 +136,7 @@ export const defaultProps = {
   withPortal: false,
   onOutsideClick() {},
   hidden: false,
-  initialVisibleMonth: () => moment(),
+  initialVisibleMonth: () => new DateObj(),
   firstDayOfWeek: null,
   renderCalendarInfo: null,
   calendarInfoPosition: INFO_POSITION_BOTTOM,
@@ -203,7 +203,7 @@ class DayPicker extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    const currentMonth = props.hidden ? moment().setLocale(props.locale)
+    const currentMonth = props.hidden ? new DateObj().setLocale(props.locale)
       : props.initialVisibleMonth();
 
     let focusedDate = currentMonth.clone().startOf('month');
@@ -651,11 +651,10 @@ class DayPicker extends React.PureComponent {
     });
   }
 
-  // TODO check the locale
   getFirstDayOfWeek(locale) {
     let { firstDayOfWeek } = this.props;
     if (firstDayOfWeek == null) {
-      firstDayOfWeek = moment().setLocale(locale).localeData().firstDayOfWeek();
+      firstDayOfWeek = new DateObj().setLocale(locale).localeData().firstDayOfWeek();
     }
 
     return firstDayOfWeek;
