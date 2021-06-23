@@ -22,7 +22,6 @@ const propTypes = forbidExtraProps({
   children: PropTypes.node,
   placeholder: PropTypes.string,
   ariaLabel: PropTypes.string,
-  titleText: PropTypes.string,
   displayValue: PropTypes.string,
   screenReaderMessage: PropTypes.string,
   focused: PropTypes.bool,
@@ -60,7 +59,6 @@ const defaultProps = {
   children: null,
   placeholder: 'Select Date',
   ariaLabel: undefined,
-  titleText: undefined,
   displayValue: '',
   screenReaderMessage: '',
   focused: false,
@@ -99,7 +97,6 @@ function SingleDatePickerInput({
   children,
   placeholder,
   ariaLabel,
-  titleText,
   displayValue,
   focused,
   isFocused,
@@ -172,7 +169,6 @@ function SingleDatePickerInput({
         id={id}
         placeholder={placeholder}
         ariaLabel={ariaLabel}
-        titleText={titleText}
         displayValue={displayValue}
         screenReaderMessage={screenReaderText}
         focused={focused}
@@ -263,7 +259,7 @@ export default withStyles(({ reactDates: { border, color } }) => ({
     padding: 10,
     margin: '0 10px 0 5px', // TODO: should be noflip wrapped and handled by an isRTL prop
     position: 'absolute',
-    right: 0, // TODO: should be noflip wrapped and handled by an isRTL prop
+    right: 0,
     top: '50%',
     transform: 'translateY(-50%)',
   },

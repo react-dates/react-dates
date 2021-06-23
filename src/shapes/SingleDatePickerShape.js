@@ -15,7 +15,7 @@ import NavPositionShape from './NavPositionShape';
 export default {
   // required props for a functional interactive SingleDatePicker
   date: PropTypes.object,
-  onDateChange: PropTypes.func.isRequired,
+  onDateChange: PropTypes.func,
 
   focused: PropTypes.bool,
   onFocusChange: PropTypes.func.isRequired,
@@ -24,7 +24,6 @@ export default {
   id: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   ariaLabel: PropTypes.string,
-  titleText: PropTypes.string,
   disabled: PropTypes.bool,
   required: PropTypes.bool,
   readOnly: PropTypes.bool,
@@ -72,8 +71,6 @@ export default {
   navPosition: NavPositionShape,
   navPrev: PropTypes.node,
   navNext: PropTypes.node,
-  renderNavPrevButton: PropTypes.func,
-  renderNavNextButton: PropTypes.func,
 
   onPrevMonthClick: PropTypes.func,
   onNextMonthClick: PropTypes.func,
@@ -86,13 +83,12 @@ export default {
   isDayBlocked: PropTypes.func,
   isOutsideRange: PropTypes.func,
   isDayHighlighted: PropTypes.func,
-  minDate: PropTypes.object,
-  maxDate: PropTypes.object,
 
   // internationalization props
   displayFormat: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   monthFormat: PropTypes.string,
   weekDayFormat: PropTypes.string,
   phrases: PropTypes.shape(getPhrasePropTypes(SingleDatePickerPhrases)),
+  locale: PropTypes.string,
   dayAriaLabelFormat: PropTypes.string,
 };

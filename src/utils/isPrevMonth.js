@@ -1,7 +1,8 @@
-import DateObj from './DateObj';
-import isSameMonth from './isSameMonth';
+import isDate from 'date-fns/isDate';
+import subMonths from 'date-fns/subMonths';
+import isSameMonthAndYear from './isSameMonthAndYear';
 
 export default function isPrevMonth(a, b) {
-  if (!DateObj.isDate(a) || !DateObj.isDate(b)) return false;
-  return isSameMonth(a.clone().subtract(1, 'month'), b);
+  if (!isDate(a) || !isDate(b)) return false;
+  return isSameMonthAndYear(subMonths(a, 1), b);
 }

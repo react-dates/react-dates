@@ -4,10 +4,13 @@ import { forbidExtraProps, nonNegativeInteger, or } from 'airbnb-prop-types';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
 import raf from 'raf';
 
+import format from 'date-fns/format';
+import addHours from 'date-fns/addHours';
+import startOfDay from 'date-fns/startOfDay';
 import { CalendarDayPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 import getCalendarDaySettings from '../utils/getCalendarDaySettings';
-import DateObj from '../utils/DateObj';
+
 import { DAY_SIZE } from '../constants';
 import DefaultTheme from '../theme/DefaultTheme';
 
@@ -176,7 +179,7 @@ export const selectedStyles = {
 };
 
 const defaultProps = {
-  day: new DateObj(),
+  day: addHours(startOfDay(new Date()), 12),
   daySize: DAY_SIZE,
   isOutsideDay: false,
   modifiers: new Set(),
@@ -212,6 +215,7 @@ const defaultProps = {
   phrases: CalendarDayPhrases,
 };
 
+/** @extends React.Component */
 class CustomizableCalendarDay extends React.PureComponent {
   constructor(...args) {
     super(...args);
@@ -349,7 +353,7 @@ class CustomizableCalendarDay extends React.PureComponent {
         onKeyDown={(e) => { this.onKeyDown(day, e); }}
         tabIndex={tabIndex}
       >
-        {renderDayContents ? renderDayContents(day, modifiers) : day.format('D')}
+        {renderDayContents ? renderDayContents(day, modifiers) : format(day, 'd')}
       </td>
     );
   }

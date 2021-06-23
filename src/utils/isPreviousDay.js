@@ -1,8 +1,9 @@
-import DateObj from './DateObj';
-import isSameDay from './isSameDay';
+import isDate from 'date-fns/isDate';
+import subDays from 'date-fns/subDays';
+import isSameDay from 'date-fns/isSameDay';
 
 export default function isPreviousDay(a, b) {
-  if (!DateObj.isDate(a) || !DateObj.isDate(b)) return false;
-  const dayBefore = new DateObj(a).subtract(1, 'day');
+  if (!isDate(a) || !isDate(b)) return false;
+  const dayBefore = subDays(a, 1);
   return isSameDay(dayBefore, b);
 }

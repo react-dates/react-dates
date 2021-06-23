@@ -14,8 +14,5 @@ export { default as SingleDatePickerShape } from './shapes/SingleDatePickerShape
 export { default as isInclusivelyAfterDay } from './utils/isInclusivelyAfterDay';
 export { default as isInclusivelyBeforeDay } from './utils/isInclusivelyBeforeDay';
 export { default as isNextDay } from './utils/isNextDay';
-export { default as isSameDay } from './utils/isSameDay';
 export { default as toISODateString } from './utils/toISODateString';
 export { default as toLocalizedDateString } from './utils/toLocalizedDateString';
-export { default as DataObj } from './utils/DateObj';
-export { moment } from './utils/DateObj';

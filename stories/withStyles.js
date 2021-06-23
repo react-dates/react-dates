@@ -174,7 +174,6 @@ storiesOf('withStyles', module)
       </div>
     </div>
   )))
-
   .add('DateRangePickerInput', withInfo()(() => (
     <div>
       <div>
@@ -186,7 +185,7 @@ storiesOf('withStyles', module)
       </div>
 
       <div style={{ marginTop: 8 }}>
-        <DateRangePickerInput isEndDateFocused />
+        <DateRangePickerInput isEnddateFocused />
       </div>
 
       <div style={{ marginTop: 8 }}>

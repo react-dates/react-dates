@@ -11,7 +11,6 @@ import { configure, addDecorator, setAddon } from '@storybook/react';
 import infoAddon from '@storybook/addon-info';
 import { setOptions } from '@storybook/addon-options';
 
-import { moment } from '../src/utils/DateObj'
 import registerInterfaceWithDefaultTheme from '../src/utils/registerInterfaceWithDefaultTheme';
 
 import '../css/storybook.scss';
@@ -19,7 +18,6 @@ import '../css/storybook.scss';
 registerInterfaceWithDefaultTheme(aphroditeInterface);
 
 addDecorator((story) => {
-  moment().setLocale('en');
   return story();
 });
 

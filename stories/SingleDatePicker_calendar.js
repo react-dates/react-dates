@@ -2,9 +2,11 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
 
+import addMonths from 'date-fns/addMonths';
 import SingleDatePickerWrapper from '../examples/SingleDatePickerWrapper';
-import { moment } from '../src/utils/DateObj';
+
 import { VERTICAL_ORIENTATION, ANCHOR_RIGHT, OPEN_UP } from '../src/constants';
+
 
 const TestPrevIcon = () => (
   <div
@@ -17,7 +19,7 @@ const TestPrevIcon = () => (
       position: 'absolute',
       top: '20px',
     }}
-    tabindex="0"
+    tabIndex="0"
   >
     Prev
   </div>
@@ -34,7 +36,7 @@ const TestNextIcon = () => (
       right: '22px',
       top: '20px',
     }}
-    tabindex="0"
+    tabIndex="0"
   >
     Next
   </div>
@@ -135,7 +137,7 @@ storiesOf('SDP - Calendar Props', module)
   )))
   .add('with month specified on open', withInfo()(() => (
     <SingleDatePickerWrapper
-      initialVisibleMonth={() => moment().add(10, 'months')}
+      initialVisibleMonth={() => addMonths(new Date(), 10)}
       autoFocus
     />
   )))
@@ -156,7 +158,7 @@ storiesOf('SDP - Calendar Props', module)
   .add('with info panel default', withInfo()(() => (
     <SingleDatePickerWrapper
       renderCalendarInfo={() => (
-        <TestCustomInfoPanel borderPosition='borderBottom' />
+        <TestCustomInfoPanel borderPosition="borderBottom" />
       )}
       autoFocus
     />

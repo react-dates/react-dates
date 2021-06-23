@@ -18,7 +18,6 @@ const TestPrevIcon = () => (
       left: '22px',
       padding: '3px',
       position: 'absolute',
-      top: '20px',
       width: '40px',
     }}
     tabIndex="0"
@@ -76,7 +75,7 @@ function renderNavPrevButton(buttonProps) {
       style={{ position: 'absolute', top: 23, left: 22 }}
       type="button"
     >
-    &lsaquo; Prev
+      &lsaquo; Prev
     </button>
   );
 }
@@ -100,7 +99,7 @@ function renderNavNextButton(buttonProps) {
       style={{ position: 'absolute', top: 23, right: 22 }}
       type="button"
     >
-          Next &rsaquo;
+      Next &rsaquo;
     </button>
   );
 }

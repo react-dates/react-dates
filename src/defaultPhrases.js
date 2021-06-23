@@ -17,7 +17,7 @@ const pageUpPageDown = 'page up and page down keys';
 const homeEnd = 'Home and end keys';
 const escape = 'Escape key';
 const questionMark = 'Question mark';
-const selectFocusedDate = 'Select the date in focus.';
+const selectFocuseddate = 'Select the date in focus.';
 const moveFocusByOneDay = 'Move backward (left) and forward (right) by one day.';
 const moveFocusByOneWeek = 'Move backward (up) and forward (down) by one week.';
 const moveFocusByOneMonth = 'Switch months.';
@@ -27,12 +27,12 @@ const keyboardForwardNavigationInstructions = 'Navigate forward to interact with
 const keyboardBackwardNavigationInstructions = 'Navigate backward to interact with the calendar and select a date. Press the question mark key to get the keyboard shortcuts for changing dates.';
 
 const chooseAvailableStartDate = ({ date }) => `Choose ${date} as your check-in date. It’s available.`;
-const chooseAvailableEndDate = ({ date }) => `Choose ${date} as your check-out date. It’s available.`;
+const chooseAvailableEnddate = ({ date }) => `Choose ${date} as your check-out date. It’s available.`;
 const chooseAvailableDate = ({ date }) => date;
 const dateIsUnavailable = ({ date }) => `Not available. ${date}`;
 const dateIsSelected = ({ date }) => `Selected. ${date}`;
 const dateIsSelectedAsStartDate = ({ date }) => `Selected as start date. ${date}`;
-const dateIsSelectedAsEndDate = ({ date }) => `Selected as end date. ${date}`;
+const dateIsSelectedAsEnddate = ({ date }) => `Selected as end date. ${date}`;
 
 export default {
   calendarLabel,
@@ -54,7 +54,7 @@ export default {
   homeEnd,
   escape,
   questionMark,
-  selectFocusedDate,
+  selectFocuseddate,
   moveFocusByOneDay,
   moveFocusByOneWeek,
   moveFocusByOneMonth,
@@ -64,11 +64,11 @@ export default {
   keyboardBackwardNavigationInstructions,
 
   chooseAvailableStartDate,
-  chooseAvailableEndDate,
+  chooseAvailableEnddate,
   dateIsUnavailable,
   dateIsSelected,
   dateIsSelectedAsStartDate,
-  dateIsSelectedAsEndDate,
+  dateIsSelectedAsEnddate,
 };
 
 export const DateRangePickerPhrases = {
@@ -90,7 +90,7 @@ export const DateRangePickerPhrases = {
   homeEnd,
   escape,
   questionMark,
-  selectFocusedDate,
+  selectFocuseddate,
   moveFocusByOneDay,
   moveFocusByOneWeek,
   moveFocusByOneMonth,
@@ -99,11 +99,11 @@ export const DateRangePickerPhrases = {
   keyboardForwardNavigationInstructions,
   keyboardBackwardNavigationInstructions,
   chooseAvailableStartDate,
-  chooseAvailableEndDate,
+  chooseAvailableEnddate,
   dateIsUnavailable,
   dateIsSelected,
   dateIsSelectedAsStartDate,
-  dateIsSelectedAsEndDate,
+  dateIsSelectedAsEnddate,
 };
 
 export const DateRangePickerInputPhrases = {
@@ -131,7 +131,7 @@ export const SingleDatePickerPhrases = {
   homeEnd,
   escape,
   questionMark,
-  selectFocusedDate,
+  selectFocuseddate,
   moveFocusByOneDay,
   moveFocusByOneWeek,
   moveFocusByOneMonth,
@@ -166,19 +166,19 @@ export const DayPickerPhrases = {
   homeEnd,
   escape,
   questionMark,
-  selectFocusedDate,
+  selectFocuseddate,
   moveFocusByOneDay,
   moveFocusByOneWeek,
   moveFocusByOneMonth,
   moveFocustoStartAndEndOfWeek,
   returnFocusToInput,
   chooseAvailableStartDate,
-  chooseAvailableEndDate,
+  chooseAvailableEnddate,
   chooseAvailableDate,
   dateIsUnavailable,
   dateIsSelected,
   dateIsSelectedAsStartDate,
-  dateIsSelectedAsEndDate,
+  dateIsSelectedAsEnddate,
 };
 
 export const DayPickerKeyboardShortcutsPhrases = {
@@ -193,7 +193,7 @@ export const DayPickerKeyboardShortcutsPhrases = {
   homeEnd,
   escape,
   questionMark,
-  selectFocusedDate,
+  selectFocuseddate,
   moveFocusByOneDay,
   moveFocusByOneWeek,
   moveFocusByOneMonth,
@@ -211,5 +211,5 @@ export const CalendarDayPhrases = {
   dateIsUnavailable,
   dateIsSelected,
   dateIsSelectedAsStartDate,
-  dateIsSelectedAsEndDate,
+  dateIsSelectedAsEnddate,
 };

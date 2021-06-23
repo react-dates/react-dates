@@ -3,11 +3,10 @@ import PropTypes from 'prop-types';
 import omit from 'lodash/omit';
 
 import SingleDatePicker from '../src/components/SingleDatePicker';
-import { moment } from '../src/utils/DateObj';
-import  DateObj  from '../src/utils/DateObj';
+
 import { SingleDatePickerPhrases } from '../src/defaultPhrases';
 import SingleDatePickerShape from '../src/shapes/SingleDatePickerShape';
-import { HORIZONTAL_ORIENTATION, ANCHOR_LEFT, OPEN_DOWN } from '../src/constants';
+import { HORIZONTAL_ORIENTATION, ANCHOR_LEFT } from '../src/constants';
 import isInclusivelyAfterDay from '../src/utils/isInclusivelyAfterDay';
 
 const propTypes = {
@@ -55,7 +54,6 @@ const defaultProps = {
   keepOpenOnDateSelect: false,
   reopenPickerOnClearDate: false,
   isRTL: false,
-  openDirection: OPEN_DOWN,
 
   // navigation related props
   navPrev: null,
@@ -69,11 +67,11 @@ const defaultProps = {
   renderDayContents: null,
   enableOutsideDays: false,
   isDayBlocked: () => false,
-  isOutsideRange: day => !isInclusivelyAfterDay(day, new DateObj()),
+  isOutsideRange: day => !isInclusivelyAfterDay(day, new Date()),
   isDayHighlighted: () => {},
 
   // internationalization props
-  displayFormat: () => new DateObj().localeData().longDateFormat(),
+  displayFormat: () => 'P',
   monthFormat: 'MMMM yyyy',
   phrases: SingleDatePickerPhrases,
 };

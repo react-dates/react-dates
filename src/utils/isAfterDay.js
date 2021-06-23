@@ -1,7 +1,7 @@
-import DateObj from './DateObj';
+import isDate from 'date-fns/isDate';
+import isAfter from 'date-fns/isAfter';
 
 export default function isAfterDay(a, b) {
-  if (!DateObj.isDate(a) || !DateObj.isDate(b)) return false;
-
-  return a.isAfterDay(b);
+  if (!isDate(a) || !isDate(b)) return false;
+  return isAfter(a, b);
 }

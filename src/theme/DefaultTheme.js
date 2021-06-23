@@ -55,7 +55,7 @@ export default {
       disabled: core.grayLightest,
 
       background: core.white,
-      backgroundDark: '#f2f2f2',
+      backgrounddark: '#f2f2f2',
       backgroundFocused: core.white,
       border: 'rgb(219, 219, 219)',
       text: core.gray,

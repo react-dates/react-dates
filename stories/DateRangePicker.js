@@ -2,8 +2,11 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
 import DirectionProvider, { DIRECTIONS } from 'react-with-direction/dist/DirectionProvider';
+import startOfMonth from 'date-fns/startOfMonth';
+import endOfMonth from 'date-fns/endOfMonth';
+import addMonths from 'date-fns/addMonths';
+import subMonths from 'date-fns/subMonths';
 
-import { moment } from '../src/utils/DateObj';
 import {
   VERTICAL_ORIENTATION,
   ANCHOR_RIGHT,
@@ -11,7 +14,7 @@ import {
 
 import DateRangePickerWrapper from '../examples/DateRangePickerWrapper';
 
-const TestInput = props => (
+const TestInput = (props) => (
   <div style={{ marginTop: 16 }}>
     <input
       {...props}
@@ -70,40 +73,29 @@ storiesOf('DateRangePicker (DRP)', module)
       <TestInput placeholder="Input 3" />
     </div>
   )))
-  .add('non-english locale', withInfo()(() => {
-    moment().setLocale('zh-cn');
-    return (
-      <DateRangePickerWrapper
-        showClearDates
-        startDatePlaceholderText="入住日期"
-        endDatePlaceholderText="退房日期"
-        monthFormat="yyyy[年]MMMM"
-        phrases={{
-          closeDatePicker: '关闭',
-          clearDates: '清除日期',
-        }}
-      />
-    );
-  }))
-  .add('non-english locale (Persian)', withInfo()(() => {
-    moment().setLocale('fa');
-    // momentJalaali.loadPersian({ dialect: 'persian-modern', usePersianDigits: true });
-    // return (
-    //   <DateRangePickerWrapper
-    //     isRTL
-    //     stateDateWrapper={momentJalaali}
-    //     startDatePlaceholderText="تاریخ شروع"
-    //     endDatePlaceholderText="تاریخ پایان"
-    //     renderMonthText={month => momentJalaali(month).format('jMMMM jyyyy')}
-    //     renderDayContents={day => momentJalaali(day).format('jD')}
-    //   />
-    // );
-  }))
+  .add('non-english locale', withInfo()(() => (
+    <DateRangePickerWrapper
+      showClearDates
+      startDatePlaceholderText="入住日期"
+      enddatePlaceholderText="退房日期"
+      monthFormat="yyyy[年]MMMM"
+      phrases={{
+        closeDatePicker: '关闭',
+        clearDates: '清除日期',
+      }}
+      locale="zh-CN"
+    />
+  )))
+  .add('non-english locale #2', withInfo()(() => (
+    <DateRangePickerWrapper
+      locale="pt-BR"
+    />
+  )))
   .add('with DirectionProvider', withInfo()(() => (
     <DirectionProvider direction={DIRECTIONS.RTL}>
       <DateRangePickerWrapper
         startDatePlaceholderText="تاریخ شروع"
-        endDatePlaceholderText="تاریخ پایان"
+        enddatePlaceholderText="تاریخ پایان"
         anchorDirection={ANCHOR_RIGHT}
         showDefaultInputIcon
         showClearDates
@@ -119,8 +111,8 @@ storiesOf('DateRangePicker (DRP)', module)
   )))
   .add('with navigation blocked (minDate and maxDate)', withInfo()(() => (
     <DateRangePickerWrapper
-      minDate={moment().subtract(2, 'months').startOf('month')}
-      maxDate={moment().add(2, 'months').endOf('month')}
+      minDate={subMonths(startOfMonth(new Date()), 2)}
+      maxDate={addMonths(endOfMonth(new Date()), 2)}
       numberOfMonths={2}
     />
   )));

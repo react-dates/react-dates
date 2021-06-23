@@ -1,23 +1,26 @@
 import React from 'react';
-
 import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
 
-import isInclusivelyAfterDay from '../src/utils/isInclusivelyAfterDay';
-import isSameDay from '../src/utils/isSameDay';
+import addDays from 'date-fns/addDays';
+import addWeeks from 'date-fns/addWeeks';
+import format from 'date-fns/format';
+import isSameDay from 'date-fns/isSameDay';
+import getDay from 'date-fns/getDay';
 
-import { moment } from '../src/utils/DateObj';
+import isInclusivelyAfterDay from '../src/utils/isInclusivelyAfterDay';
+
 import SingleDatePickerWrapper from '../examples/SingleDatePickerWrapper';
 
 const datesList = [
-  moment(),
-  moment().add(1, 'days'),
-  moment().add(3, 'days'),
-  moment().add(9, 'days'),
-  moment().add(10, 'days'),
-  moment().add(11, 'days'),
-  moment().add(12, 'days'),
-  moment().add(13, 'days'),
+  new Date(),
+  addDays(new Date(), 1),
+  addDays(new Date(), 3),
+  addDays(new Date(), 9),
+  addDays(new Date(), 10),
+  addDays(new Date(), 11),
+  addDays(new Date(), 12),
+  addDays(new Date(), 13),
 ];
 
 storiesOf('SDP - Day Props', module)
@@ -32,9 +35,8 @@ storiesOf('SDP - Day Props', module)
   )))
   .add('allows next two weeks only', withInfo()(() => (
     <SingleDatePickerWrapper
-      isOutsideRange={day =>
-        !isInclusivelyAfterDay(day, moment()) ||
-        isInclusivelyAfterDay(day, moment().add(2, 'weeks'))
+      isOutsideRange={day => !isInclusivelyAfterDay(day, new Date())
+        || isInclusivelyAfterDay(day, addWeeks(new Date(), 2))
       }
       autoFocus
     />
@@ -53,14 +55,14 @@ storiesOf('SDP - Day Props', module)
   )))
   .add('blocks fridays', withInfo()(() => (
     <SingleDatePickerWrapper
-      isDayBlocked={day => moment.weekdays(day.weekday()) === 'Friday'}
+      isDayBlocked={day => getDay(day) === 5}
       autoFocus
     />
   )))
   .add('with custom daily details', withInfo()(() => (
     <SingleDatePickerWrapper
       numberOfMonths={1}
-      renderDayContents={day => day.format('ddd')}
+      renderDayContents={day => format(day, 'ddd')}
       autoFocus
     />
   )));

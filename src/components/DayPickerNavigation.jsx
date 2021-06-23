@@ -351,7 +351,7 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
     },
 
     ':active': {
-      background: color.backgroundDark,
+      background: color.backgrounddark,
     },
   },
 

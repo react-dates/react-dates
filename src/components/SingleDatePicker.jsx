@@ -5,8 +5,9 @@ import { forbidExtraProps } from 'airbnb-prop-types';
 import { addEventListener } from 'consolidated-events';
 import isTouchDevice from 'is-touch-device';
 import OutsideClickHandler from 'react-outside-click-handler';
-import { darken } from 'color2k';
 
+import addHours from 'date-fns/addHours';
+import startOfDay from 'date-fns/startOfDay';
 import SingleDatePickerShape from '../shapes/SingleDatePickerShape';
 import { SingleDatePickerPhrases } from '../defaultPhrases';
 
@@ -20,7 +21,6 @@ import noflip from '../utils/noflip';
 import SingleDatePickerInputController from './SingleDatePickerInputController';
 import DayPickerSingleDateController from './DayPickerSingleDateController';
 import CloseButton from './CloseButton';
-import DateObj from '../utils/DateObj';
 
 import {
   HORIZONTAL_ORIENTATION,
@@ -46,14 +46,11 @@ const defaultProps = {
   // required props for a functional interactive SingleDatePicker
   date: null,
   focused: false,
-  minDate: null,
-  maxDate: null,
 
   // input related props
   id: 'date',
   placeholder: 'Date',
   ariaLabel: undefined,
-  titleText: undefined,
   disabled: false,
   required: false,
   readOnly: false,
@@ -115,17 +112,19 @@ const defaultProps = {
   renderMonthElement: null,
   enableOutsideDays: false,
   isDayBlocked: () => false,
-  isOutsideRange: (day) => !isInclusivelyAfterDay(day, new DateObj()),
+  isOutsideRange: (day) => !isInclusivelyAfterDay(day, addHours(startOfDay(new Date()), 12)),
   isDayHighlighted: () => {},
 
   // internationalization props
-  displayFormat: () => new DateObj().localeData().longDateFormat('L'),
+  displayFormat: () => 'P',
   monthFormat: 'MMMM yyyy',
-  weekDayFormat: 'dd',
+  weekDayFormat: 'eee',
   phrases: SingleDatePickerPhrases,
   dayAriaLabelFormat: undefined,
+  locale: null,
 };
 
+/** @extends React.Component */
 class SingleDatePicker extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -397,8 +396,6 @@ class SingleDatePicker extends React.PureComponent {
       openDirection,
       onDateChange,
       date,
-      minDate,
-      maxDate,
       onFocusChange,
       focused,
       enableOutsideDays,
@@ -442,8 +439,8 @@ class SingleDatePicker extends React.PureComponent {
       verticalSpacing,
       horizontalMonthPadding,
       small,
-      locale,
       theme: { reactDates },
+      locale,
     } = this.props;
     const { dayPickerContainerStyles, isDayPickerFocused, showKeyboardShortcuts } = this.state;
 
@@ -456,6 +453,7 @@ class SingleDatePicker extends React.PureComponent {
 
     /* eslint-disable jsx-a11y/no-static-element-interactions */
     /* eslint-disable jsx-a11y/click-events-have-key-events */
+
     return (
       <div
         ref={this.setDayPickerContainerRef}
@@ -482,8 +480,6 @@ class SingleDatePicker extends React.PureComponent {
       >
         <DayPickerSingleDateController
           date={date}
-          minDate={minDate}
-          maxDate={maxDate}
           onDateChange={onDateChange}
           onFocusChange={onFocusChange}
           orientation={orientation}
@@ -552,7 +548,6 @@ class SingleDatePicker extends React.PureComponent {
       id,
       placeholder,
       ariaLabel,
-      titleText,
       disabled,
       focused,
       required,
@@ -581,6 +576,7 @@ class SingleDatePicker extends React.PureComponent {
       styles,
       isOutsideRange,
       isDayBlocked,
+      locale,
     } = this.props;
 
     const { isInputFocused } = this.state;
@@ -594,7 +590,6 @@ class SingleDatePicker extends React.PureComponent {
         id={id}
         placeholder={placeholder}
         ariaLabel={ariaLabel}
-        titleText={titleText}
         focused={focused}
         isFocused={isInputFocused}
         disabled={disabled}
@@ -625,6 +620,7 @@ class SingleDatePicker extends React.PureComponent {
         verticalSpacing={verticalSpacing}
         reopenPickerOnClearDate={reopenPickerOnClearDate}
         keepOpenOnDateSelect={keepOpenOnDateSelect}
+        locale={locale}
       >
         {this.maybeRenderDayPickerWithPortal()}
       </SingleDatePickerInputController>
@@ -639,9 +635,9 @@ class SingleDatePicker extends React.PureComponent {
         )}
       >
         {enableOutsideClick && (
-          <OutsideClickHandler onOutsideClick={this.onOutsideClick}>
-            {input}
-          </OutsideClickHandler>
+        <OutsideClickHandler onOutsideClick={this.onOutsideClick}>
+          {input}
+        </OutsideClickHandler>
         )}
         {enableOutsideClick || input}
       </div>
@@ -710,12 +706,12 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
     zIndex: zIndex + 2,
 
     ':hover': {
-      color: darken(color.core.grayLighter, 0.1),
+      color: `darken(${color.core.grayLighter}, 10%)`,
       textDecoration: 'none',
     },
 
     ':focus': {
-      color: darken(color.core.grayLighter, 0.1),
+      color: `darken(${color.core.grayLighter}, 10%)`,
       textDecoration: 'none',
     },
   },

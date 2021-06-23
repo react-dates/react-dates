@@ -1,11 +1,11 @@
+import subMonths from 'date-fns/subMonths';
 import isDayVisible from './isDayVisible';
 import toISODateString from './toISODateString';
 import toISOMonthString from './toISOMonthString';
-import getPreviousMonthMemoLast from './getPreviousMonthMemoLast';
 
 import { VERTICAL_SCROLLABLE } from '../constants';
 
-export function addModifier(updatedDays, day, modifier, props, state) {
+export function addModifier(updateddays, day, modifier, props, state) {
   const { numberOfMonths: numberOfVisibleMonths, enableOutsideDays, orientation } = props;
   const { currentMonth: firstVisibleMonth, visibleDays } = state;
 
@@ -14,24 +14,23 @@ export function addModifier(updatedDays, day, modifier, props, state) {
   if (orientation === VERTICAL_SCROLLABLE) {
     numberOfMonths = Object.keys(visibleDays).length;
   } else {
-    currentMonth = getPreviousMonthMemoLast(currentMonth);
+    currentMonth = subMonths(currentMonth, 1);
     numberOfMonths += 2;
   }
   if (!day || !isDayVisible(day, currentMonth, numberOfMonths, enableOutsideDays)) {
-    return updatedDays;
+    return updateddays;
   }
 
   const iso = toISODateString(day);
 
-  let updatedDaysAfterAddition = { ...updatedDays };
+  let updateddaysAfterAddition = { ...updateddays };
   if (enableOutsideDays) {
     const monthsToUpdate = Object.keys(visibleDays).filter((monthKey) => (
       Object.keys(visibleDays[monthKey]).indexOf(iso) > -1
     ));
 
-    updatedDaysAfterAddition = monthsToUpdate.reduce((acc, monthIso) => {
-      const month = updatedDays[monthIso] || visibleDays[monthIso];
-
+    updateddaysAfterAddition = monthsToUpdate.reduce((acc, monthIso) => {
+      const month = updateddays[monthIso] || visibleDays[monthIso];
       if (!month[iso] || !month[iso].has(modifier)) {
         const modifiers = new Set(month[iso]);
         modifiers.add(modifier);
@@ -42,51 +41,49 @@ export function addModifier(updatedDays, day, modifier, props, state) {
       }
 
       return acc;
-    }, updatedDaysAfterAddition);
+    }, updateddaysAfterAddition);
   } else {
     const monthIso = toISOMonthString(day);
-    const month = updatedDays[monthIso] || visibleDays[monthIso] || {};
+    const month = updateddays[monthIso] || visibleDays[monthIso] || {};
 
     if (!month[iso] || !month[iso].has(modifier)) {
       const modifiers = new Set(month[iso]);
       modifiers.add(modifier);
-      updatedDaysAfterAddition[monthIso] = {
+      updateddaysAfterAddition[monthIso] = {
         ...month,
         [iso]: modifiers,
       };
     }
   }
 
-  return updatedDaysAfterAddition;
+  return updateddaysAfterAddition;
 }
 
-export function deleteModifier(updatedDays, day, modifier, props, state) {
+export function deleteModifier(updateddays, day, modifier, props, state) {
   const { numberOfMonths: numberOfVisibleMonths, enableOutsideDays, orientation } = props;
   const { currentMonth: firstVisibleMonth, visibleDays } = state;
-
   let currentMonth = firstVisibleMonth;
   let numberOfMonths = numberOfVisibleMonths;
   if (orientation === VERTICAL_SCROLLABLE) {
     numberOfMonths = Object.keys(visibleDays).length;
   } else {
-    currentMonth = getPreviousMonthMemoLast(currentMonth);
+    currentMonth = subMonths(currentMonth, 1);
     numberOfMonths += 2;
   }
   if (!day || !isDayVisible(day, currentMonth, numberOfMonths, enableOutsideDays)) {
-    return updatedDays;
+    return updateddays;
   }
 
   const iso = toISODateString(day);
 
-  let updatedDaysAfterDeletion = { ...updatedDays };
+  let updateddaysAfterDeletion = { ...updateddays };
   if (enableOutsideDays) {
     const monthsToUpdate = Object.keys(visibleDays).filter((monthKey) => (
       Object.keys(visibleDays[monthKey]).indexOf(iso) > -1
     ));
 
-    updatedDaysAfterDeletion = monthsToUpdate.reduce((acc, monthIso) => {
-      const month = updatedDays[monthIso] || visibleDays[monthIso];
-
+    updateddaysAfterDeletion = monthsToUpdate.reduce((acc, monthIso) => {
+      const month = updateddays[monthIso] || visibleDays[monthIso];
       if (month[iso] && month[iso].has(modifier)) {
         const modifiers = new Set(month[iso]);
         modifiers.delete(modifier);
@@ -95,22 +92,21 @@ export function deleteModifier(updatedDays, day, modifier, props, state) {
           [iso]: modifiers,
         };
       }
-
       return acc;
-    }, updatedDaysAfterDeletion);
+    }, updateddaysAfterDeletion);
   } else {
     const monthIso = toISOMonthString(day);
-    const month = updatedDays[monthIso] || visibleDays[monthIso] || {};
+    const month = updateddays[monthIso] || visibleDays[monthIso] || {};
 
     if (month[iso] && month[iso].has(modifier)) {
       const modifiers = new Set(month[iso]);
       modifiers.delete(modifier);
-      updatedDaysAfterDeletion[monthIso] = {
+      updateddaysAfterDeletion[monthIso] = {
         ...month,
         [iso]: modifiers,
       };
     }
   }
 
-  return updatedDaysAfterDeletion;
+  return updateddaysAfterDeletion;
 }

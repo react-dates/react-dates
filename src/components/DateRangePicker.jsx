@@ -5,9 +5,9 @@ import { forbidExtraProps } from 'airbnb-prop-types';
 import { addEventListener } from 'consolidated-events';
 import isTouchDevice from 'is-touch-device';
 import OutsideClickHandler from 'react-outside-click-handler';
-import { darken } from 'color2k';
-import DateObj from '../utils/DateObj';
 
+import addHours from 'date-fns/addHours';
+import startOfDay from 'date-fns/startOfDay';
 import DateRangePickerShape from '../shapes/DateRangePickerShape';
 import { DateRangePickerPhrases } from '../defaultPhrases';
 
@@ -47,18 +47,16 @@ const propTypes = forbidExtraProps({
 const defaultProps = {
   // required props for a functional interactive DateRangePicker
   startDate: null,
-  endDate: null,
+  enddate: null,
   focusedInput: null,
 
   // input related props
   startDatePlaceholderText: 'Start Date',
-  endDatePlaceholderText: 'End Date',
+  enddatePlaceholderText: 'End Date',
   startDateAriaLabel: undefined,
-  endDateAriaLabel: undefined,
-  startDateTitleText: undefined,
-  endDateTitleText: undefined,
+  enddateAriaLabel: undefined,
   startDateOffset: undefined,
-  endDateOffset: undefined,
+  enddateOffset: undefined,
   disabled: false,
   required: false,
   readOnly: false,
@@ -121,18 +119,18 @@ const defaultProps = {
   minimumNights: 1,
   enableOutsideDays: false,
   isDayBlocked: () => false,
-  isOutsideRange: (day) => !isInclusivelyAfterDay(day, new DateObj()),
+  isOutsideRange: (day) => !isInclusivelyAfterDay(day, addHours(startOfDay(new Date()), 12)),
   isDayHighlighted: () => false,
   minDate: undefined,
   maxDate: undefined,
 
   // internationalization
-  displayFormat: () => new DateObj().localeData().longDateFormat(),
+  displayFormat: () => 'P',
   monthFormat: 'MMMM yyyy',
-  weekDayFormat: 'dd',
+  weekDayFormat: 'eee',
   phrases: DateRangePickerPhrases,
+  locale: null,
   dayAriaLabelFormat: undefined,
-  locale: new DateObj().dataLocale,
 };
 
 class DateRangePicker extends React.PureComponent {
@@ -204,7 +202,7 @@ class DateRangePicker extends React.PureComponent {
       onFocusChange,
       onClose,
       startDate,
-      endDate,
+      enddate,
       appendToBody,
     } = this.props;
 
@@ -218,7 +216,7 @@ class DateRangePicker extends React.PureComponent {
     });
 
     onFocusChange(null);
-    onClose({ startDate, endDate });
+    onClose({ startDate, enddate });
   }
 
   onDateRangePickerInputFocus(focusedInput) {
@@ -430,8 +428,8 @@ class DateRangePicker extends React.PureComponent {
       focusedInput,
       startDate,
       startDateOffset,
-      endDate,
-      endDateOffset,
+      enddate,
+      enddateOffset,
       minDate,
       maxDate,
       minimumNights,
@@ -453,7 +451,6 @@ class DateRangePicker extends React.PureComponent {
       locale,
       styles,
       verticalHeight,
-      noBorder,
       transitionDuration,
       verticalSpacing,
       horizontalMonthPadding,
@@ -468,7 +465,7 @@ class DateRangePicker extends React.PureComponent {
       ? this.onOutsideClick
       : undefined;
     const initialVisibleMonthThunk = initialVisibleMonth || (
-      () => (startDate || endDate || new DateObj())
+      () => (startDate || enddate || addHours(startOfDay(new Date()), 12))
     );
 
     const closeIcon = customCloseIcon || (
@@ -515,8 +512,8 @@ class DateRangePicker extends React.PureComponent {
           focusedInput={focusedInput}
           startDate={startDate}
           startDateOffset={startDateOffset}
-          endDate={endDate}
-          endDateOffset={endDateOffset}
+          enddate={enddate}
+          enddateOffset={enddateOffset}
           minDate={minDate}
           maxDate={maxDate}
           monthFormat={monthFormat}
@@ -550,12 +547,11 @@ class DateRangePicker extends React.PureComponent {
           isRTL={isRTL}
           firstDayOfWeek={firstDayOfWeek}
           weekDayFormat={weekDayFormat}
+          locale={locale}
           verticalHeight={verticalHeight}
-          noBorder={noBorder}
           transitionDuration={transitionDuration}
           disabled={disabled}
           horizontalMonthPadding={horizontalMonthPadding}
-          locale={locale}
         />
 
         {withFullScreenPortal && (
@@ -580,12 +576,10 @@ class DateRangePicker extends React.PureComponent {
       startDateId,
       startDatePlaceholderText,
       startDateAriaLabel,
-      startDateTitleText,
-      endDate,
-      endDateId,
-      endDatePlaceholderText,
-      endDateAriaLabel,
-      endDateTitleText,
+      enddate,
+      enddateId,
+      enddatePlaceholderText,
+      enddateAriaLabel,
       focusedInput,
       screenReaderInputMessage,
       showClearDates,
@@ -616,6 +610,7 @@ class DateRangePicker extends React.PureComponent {
       small,
       regular,
       styles,
+      locale,
     } = this.props;
 
     const { isDateRangePickerInputFocused } = this.state;
@@ -631,13 +626,11 @@ class DateRangePicker extends React.PureComponent {
         startDatePlaceholderText={startDatePlaceholderText}
         isStartDateFocused={focusedInput === START_DATE}
         startDateAriaLabel={startDateAriaLabel}
-        startDateTitleText={startDateTitleText}
-        endDate={endDate}
-        endDateId={endDateId}
-        endDatePlaceholderText={endDatePlaceholderText}
-        isEndDateFocused={focusedInput === END_DATE}
-        endDateAriaLabel={endDateAriaLabel}
-        endDateTitleText={endDateTitleText}
+        enddate={enddate}
+        enddateId={enddateId}
+        enddatePlaceholderText={enddatePlaceholderText}
+        isEnddateFocused={focusedInput === END_DATE}
+        enddateAriaLabel={enddateAriaLabel}
         displayFormat={displayFormat}
         showClearDates={showClearDates}
         showCaret={!withPortal && !withFullScreenPortal && !hideFang}
@@ -670,6 +663,7 @@ class DateRangePicker extends React.PureComponent {
         small={small}
         regular={regular}
         verticalSpacing={verticalSpacing}
+        locale={locale}
       >
         {this.maybeRenderDayPickerWithPortal()}
       </DateRangePickerInputController>
@@ -755,12 +749,12 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
     zIndex: zIndex + 2,
 
     ':hover': {
-      color: darken(color.core.grayLighter, 0.1),
+      color: `darken(${color.core.grayLighter}, 10%)`,
       textDecoration: 'none',
     },
 
     ':focus': {
-      color: darken(color.core.grayLighter, 0.1),
+      color: `darken(${color.core.grayLighter}, 10%)`,
       textDecoration: 'none',
     },
   },

@@ -42,7 +42,7 @@ function getKeyboardShortcuts(phrases) {
     {
       unicode: '↵',
       label: phrases.enterKey,
-      action: phrases.selectFocusedDate,
+      action: phrases.selectFocuseddate,
     },
     {
       unicode: '←/→',
@@ -77,6 +77,7 @@ function getKeyboardShortcuts(phrases) {
   ];
 }
 
+/** @extends React.Component */
 class DayPickerKeyboardShortcuts extends React.PureComponent {
   constructor(...args) {
     super(...args);
@@ -100,14 +101,6 @@ class DayPickerKeyboardShortcuts extends React.PureComponent {
 
   componentDidUpdate() {
     this.handleFocus();
-  }
-
-  handleFocus() {
-    if (this.hideKeyboardShortcutsButton) {
-      // automatically move focus into the dialog by moving
-      // to the only interactive element, the hide button
-      this.hideKeyboardShortcutsButton.focus();
-    }
   }
 
   onKeyDown(e) {
@@ -160,6 +153,14 @@ class DayPickerKeyboardShortcuts extends React.PureComponent {
     this.hideKeyboardShortcutsButton = ref;
   }
 
+  handleFocus() {
+    if (this.hideKeyboardShortcutsButton) {
+      // automatically move focus into the dialog by moving
+      // to the only interactive element, the hide button
+      this.hideKeyboardShortcutsButton.focus();
+    }
+  }
+
   render() {
     const {
       block,
@@ -183,41 +184,42 @@ class DayPickerKeyboardShortcuts extends React.PureComponent {
     return (
       <div>
         {renderKeyboardShortcutsButton
-          && renderKeyboardShortcutsButton({
-            // passing in context-specific props
-            ref: this.setShowKeyboardShortcutsButtonRef,
-            onClick: this.onShowKeyboardShortcutsButtonClick,
-            ariaLabel: toggleButtonText,
-          })}
+        && renderKeyboardShortcutsButton({
+          // passing in context-specific props
+          ref: this.setShowKeyboardShortcutsButtonRef,
+          onClick: this.onShowKeyboardShortcutsButtonClick,
+          ariaLabel: toggleButtonText,
+        })}
         {!renderKeyboardShortcutsButton && (
-          <button
-            ref={this.setShowKeyboardShortcutsButtonRef}
+        <button
+          ref={this.setShowKeyboardShortcutsButtonRef}
+          {...css(
+            styles.DayPickerKeyboardShortcuts_buttonReset,
+            styles.DayPickerKeyboardShortcuts_show,
+            bottomRight && styles.DayPickerKeyboardShortcuts_show__bottomRight,
+            topRight && styles.DayPickerKeyboardShortcuts_show__topRight,
+            topLeft && styles.DayPickerKeyboardShortcuts_show__topLeft,
+          )}
+          type="button"
+          aria-label={toggleButtonText}
+          onClick={this.onShowKeyboardShortcutsButtonClick}
+          onMouseUp={(e) => {
+            e.currentTarget.blur();
+          }}
+        >
+          <span
             {...css(
-              styles.DayPickerKeyboardShortcuts_buttonReset,
-              styles.DayPickerKeyboardShortcuts_show,
-              bottomRight && styles.DayPickerKeyboardShortcuts_show__bottomRight,
-              topRight && styles.DayPickerKeyboardShortcuts_show__topRight,
-              topLeft && styles.DayPickerKeyboardShortcuts_show__topLeft,
+              styles.DayPickerKeyboardShortcuts_showSpan,
+              bottomRight && styles.DayPickerKeyboardShortcuts_showSpan__bottomRight,
+              topRight && styles.DayPickerKeyboardShortcuts_showSpan__topRight,
+              topLeft && styles.DayPickerKeyboardShortcuts_showSpan__topLeft,
             )}
-            type="button"
-            aria-label={toggleButtonText}
-            onClick={this.onShowKeyboardShortcutsButtonClick}
-            onMouseUp={(e) => {
-              e.currentTarget.blur();
-            }}
           >
-            <span
-              {...css(
-                styles.DayPickerKeyboardShortcuts_showSpan,
-                bottomRight && styles.DayPickerKeyboardShortcuts_showSpan__bottomRight,
-                topRight && styles.DayPickerKeyboardShortcuts_showSpan__topRight,
-                topLeft && styles.DayPickerKeyboardShortcuts_showSpan__topLeft,
-              )}
-            >
-              ?
-            </span>
-          </button>
+            ?
+          </span>
+        </button>
         )}
+
         {showKeyboardShortcutsPanel && (
           renderKeyboardShortcutsPanel ? (
             renderKeyboardShortcutsPanel({
@@ -304,7 +306,6 @@ export default withStyles(({ reactDates: { color, font, zIndex } }) => ({
     height: 26,
     position: 'absolute',
     zIndex: zIndex + 2,
-
     '::before': {
       content: '""',
       display: 'block',
@@ -315,14 +316,12 @@ export default withStyles(({ reactDates: { color, font, zIndex } }) => ({
   DayPickerKeyboardShortcuts_show__bottomRight: {
     bottom: 0,
     right: 0,
-
     '::before': {
       borderTop: '26px solid transparent',
       borderRight: `33px solid ${color.core.primary}`,
       bottom: 0,
       right: 0,
     },
-
     ':hover::before': {
       borderRight: `33px solid ${color.core.primary_dark}`,
     },
@@ -331,14 +330,12 @@ export default withStyles(({ reactDates: { color, font, zIndex } }) => ({
   DayPickerKeyboardShortcuts_show__topRight: {
     top: 0,
     right: 0,
-
     '::before': {
       borderBottom: '26px solid transparent',
       borderRight: `33px solid ${color.core.primary}`,
       top: 0,
       right: 0,
     },
-
     ':hover::before': {
       borderRight: `33px solid ${color.core.primary_dark}`,
     },
@@ -347,14 +344,12 @@ export default withStyles(({ reactDates: { color, font, zIndex } }) => ({
   DayPickerKeyboardShortcuts_show__topLeft: {
     top: 0,
     left: 0,
-
     '::before': {
       borderBottom: '26px solid transparent',
       borderLeft: `33px solid ${color.core.primary}`,
       top: 0,
       left: 0,
     },
-
     ':hover::before': {
       borderLeft: `33px solid ${color.core.primary_dark}`,
     },

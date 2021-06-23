@@ -1,13 +1,33 @@
-import DateObj from './DateObj';
+import isValid from 'date-fns/isValid';
+import format from 'date-fns/format';
+import parse from 'date-fns/parse';
+import parseISO from 'date-fns/parseISO';
 
-import { ISO_FORMAT } from '../../constants';
+import { ISO_FORMAT } from '../constants';
 
 export default function toISODateString(date, currentFormat) {
-  const dateObj = DateObj.isDate(date) ? date : DateObj.toDateObject(date, currentFormat);
-  if (!dateObj || !DateObj.isValid(dateObj)) {
-    return null;
+  if (Object.prototype.toString.call(date) === '[object Date]') {
+    if (isValid(date)) {
+      return format(date, ISO_FORMAT);
+    }
   }
-
-  return dateObj.format(ISO_FORMAT);
-  // return `${dateObj.year()}-${String(dateObj.month() + 1).padStart(2, '0')}`;
+  if (typeof date === 'string') {
+    if (currentFormat) {
+      const newDate = parse(date, currentFormat, new Date());
+      if (isValid(newDate)) {
+        return format(newDate, ISO_FORMAT);
+      }
+    } else {
+      let newDate;
+      newDate = parseISO(date);
+      if (isValid(newDate)) {
+        return format(newDate, ISO_FORMAT);
+      }
+      newDate = Date.parse(date);
+      if (isValid(newDate)) {
+        return format(newDate, ISO_FORMAT);
+      }
+    }
+  }
+  return null;
 }

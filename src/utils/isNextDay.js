@@ -1,7 +1,8 @@
-import DateObj from './DateObj';
+import isDate from 'date-fns/isDate';
+import isSameDay from 'date-fns/isSameDay';
+import addDays from 'date-fns/addDays';
 
 export default function isNextDay(a, b) {
-  if (!DateObj.isDate(a) || !DateObj.isDate(b)) return false;
-  const nextDay = a.add(1, 'day');
-  return nextDay.isSameDay(b);
+  if (!isDate(a) || !isDate(b)) return false;
+  return isSameDay(addDays(a, 1), b);
 }

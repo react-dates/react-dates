@@ -8,7 +8,6 @@ import isTouchDevice from 'is-touch-device';
 import noflip from '../utils/noflip';
 import getInputHeight from '../utils/getInputHeight';
 import openDirectionShape from '../shapes/OpenDirectionShape';
-
 import {
   OPEN_DOWN,
   OPEN_UP,
@@ -29,7 +28,6 @@ const propTypes = forbidExtraProps({
   placeholder: PropTypes.string,
   displayValue: PropTypes.string,
   ariaLabel: PropTypes.string,
-  titleText: PropTypes.string,
   screenReaderMessage: PropTypes.string,
   focused: PropTypes.bool,
   disabled: PropTypes.bool,
@@ -58,7 +56,6 @@ const defaultProps = {
   placeholder: 'Select Date',
   displayValue: '',
   ariaLabel: undefined,
-  titleText: undefined,
   screenReaderMessage: '',
   focused: false,
   disabled: false,
@@ -83,6 +80,7 @@ const defaultProps = {
   isFocused: false,
 };
 
+/** @extends React.Component */
 class DateInput extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -177,7 +175,6 @@ class DateInput extends React.PureComponent {
       id,
       placeholder,
       ariaLabel,
-      titleText,
       displayValue,
       screenReaderMessage,
       focused,
@@ -224,7 +221,6 @@ class DateInput extends React.PureComponent {
             disabled && styles.DateInput_input__disabled,
           )}
           aria-label={ariaLabel === undefined ? placeholder : ariaLabel}
-          title={titleText}
           type="text"
           id={id}
           name={id}
