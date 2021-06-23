@@ -8,9 +8,9 @@ ThemedStyleSheet.registerTheme(DefaultTheme);
 ThemedStyleSheet.registerInterface(aphroditeInterface);
 
 beforeEach(() => {
-  StyleSheetTestUtils.suppressStyleInjection();
-});
-
-afterEach(() => {
-  StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
-});
+    StyleSheetTestUtils.suppressStyleInjection();
+  });
+  
+  afterEach(() => {
+    StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
+  });

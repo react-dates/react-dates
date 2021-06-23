@@ -638,6 +638,7 @@ describe('SingleDatePicker', () => {
       wrapper = shallow((
         <SingleDatePicker id="date" onFocusChange={onFocusChangeStub} />
       )).dive();
+
       ctrl = wrapper.instance();
       ctrl.dayPickerContainer = {
         contains: dpcContainsStub.returns(true),

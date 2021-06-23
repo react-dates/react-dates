@@ -69,26 +69,6 @@ describe('DateRangePickerInput', () => {
       )).dive();
       expect(wrapper.find('.custom-arrow-icon')).to.have.lengthOf(1);
     });
-
-    it('custom icon is rendered when in RTL mode', () => {
-      const wrapper = shallow(
-        <DateRangePickerInput
-          customArrowIcon={<span className="custom-arrow-icon" />}
-          isRTL
-        />,
-      ).dive();
-      expect(wrapper.find('.custom-arrow-icon')).to.have.lengthOf(1);
-    });
-
-    it('custom icon is rendered when using small mode', () => {
-      const wrapper = shallow(
-        <DateRangePickerInput
-          customArrowIcon={<span className="custom-arrow-icon" />}
-          small
-        />,
-      ).dive();
-      expect(wrapper.find('.custom-arrow-icon')).to.have.lengthOf(1);
-    });
   });
 
   describe('props.customCloseIcon', () => {
@@ -141,36 +121,36 @@ describe('DateRangePickerInput', () => {
     describe('props.disabled=START_DATE', () => {
       it('First DateInput gets disabled prop, second does not', () => {
         const wrapper = shallow(<DateRangePickerInput disabled={START_DATE} />).dive();
-        const [startDateInput, endDateInput] = wrapper.find(DateInput);
+        const [startDateInput, enddateInput] = wrapper.find(DateInput);
         expect(startDateInput.props.disabled).to.equal(true);
-        expect(endDateInput.props.disabled).to.equal(false);
+        expect(enddateInput.props.disabled).to.equal(false);
       });
     });
 
     describe('props.disabled=END_DATE', () => {
       it('First DateInput gets disabled prop, second does not', () => {
         const wrapper = shallow(<DateRangePickerInput disabled={END_DATE} />).dive();
-        const [startDateInput, endDateInput] = wrapper.find(DateInput);
+        const [startDateInput, enddateInput] = wrapper.find(DateInput);
         expect(startDateInput.props.disabled).to.equal(false);
-        expect(endDateInput.props.disabled).to.equal(true);
+        expect(enddateInput.props.disabled).to.equal(true);
       });
     });
 
     describe('props.disabled=true', () => {
       it('First DateInput gets disabled prop, second does not', () => {
         const wrapper = shallow(<DateRangePickerInput disabled />).dive();
-        const [startDateInput, endDateInput] = wrapper.find(DateInput);
+        const [startDateInput, enddateInput] = wrapper.find(DateInput);
         expect(startDateInput.props.disabled).to.equal(true);
-        expect(endDateInput.props.disabled).to.equal(true);
+        expect(enddateInput.props.disabled).to.equal(true);
       });
     });
 
     describe('props.disabled=false', () => {
       it('First DateInput gets disabled prop, second does not', () => {
         const wrapper = shallow(<DateRangePickerInput disabled={false} />).dive();
-        const [startDateInput, endDateInput] = wrapper.find(DateInput);
+        const [startDateInput, enddateInput] = wrapper.find(DateInput);
         expect(startDateInput.props.disabled).to.equal(false);
-        expect(endDateInput.props.disabled).to.equal(false);
+        expect(enddateInput.props.disabled).to.equal(false);
       });
     });
   });

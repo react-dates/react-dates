@@ -1,13 +1,12 @@
 import { expect } from 'chai';
 import sinon from 'sinon-sandbox';
-import { moment } from '../../src/utils/DateObj';
 
 import getCalendarDaySettings from '../../src/utils/getCalendarDaySettings';
 import { BLOCKED_MODIFIER } from '../../src/constants';
 
-const testDay = moment('10/10/2017', 'MM/DD/yyyy');
-const expectedFormattedDay = { date: 'Tuesday, October 10, 2017' };
-const testAriaLabelFormat = 'dddd, LL';
+const testDay = new Date(2017, 9, 10); // 2017-10-10
+const expectedFormattedday = { date: 'Tuesday, October 10, 2017' };
+const testAriaLabelFormat = 'EEEE, MMMM d, yyyy';
 const testDaySize = 39;
 const testModifiers = new Set();
 const testPhrases = {
@@ -15,7 +14,7 @@ const testPhrases = {
   dateIsSelected: sinon.stub(),
   dateIsUnavailable: sinon.stub(),
   dateIsSelectedAsStartDate: sinon.stub(),
-  dateIsSelectedAsEndDate: sinon.stub(),
+  dateIsSelectedAsEnddate: sinon.stub(),
 };
 
 describe('getCalendarDaySettings', () => {
@@ -185,7 +184,7 @@ describe('getCalendarDaySettings', () => {
       phrases.dateIsSelected = sinon.stub().returns('dateIsSelected text');
       phrases.dateIsUnavailable = sinon.stub().returns('dateIsUnavailable text');
       phrases.dateIsSelectedAsStartDate = sinon.stub().returns('dateIsSelectedAsStartDate text');
-      phrases.dateIsSelectedAsEndDate = sinon.stub().returns('dateIsSelectedAsEndDate text');
+      phrases.dateIsSelectedAsEnddate = sinon.stub().returns('dateIsSelectedAsEnddate text');
     });
 
     afterEach(() => {
@@ -203,7 +202,7 @@ describe('getCalendarDaySettings', () => {
         phrases,
       );
 
-      expect(phrases.chooseAvailableDate.calledWith(expectedFormattedDay)).to.equal(true);
+      expect(phrases.chooseAvailableDate.calledWith(expectedFormattedday)).to.equal(true);
       expect(ariaLabel).to.equal('chooseAvailableDate text');
     });
 
@@ -218,7 +217,7 @@ describe('getCalendarDaySettings', () => {
         phrases,
       );
 
-      expect(phrases.dateIsSelected.calledWith(expectedFormattedDay)).to.equal(true);
+      expect(phrases.dateIsSelected.calledWith(expectedFormattedday)).to.equal(true);
       expect(ariaLabel).to.equal('dateIsSelected text');
     });
 
@@ -233,11 +232,11 @@ describe('getCalendarDaySettings', () => {
         phrases,
       );
 
-      expect(phrases.dateIsSelectedAsStartDate.calledWith(expectedFormattedDay)).to.equal(true);
+      expect(phrases.dateIsSelectedAsStartDate.calledWith(expectedFormattedday)).to.equal(true);
       expect(ariaLabel).to.equal('dateIsSelectedAsStartDate text');
     });
 
-    it('is formatted with the dateIsSelectedAsEndDate phrase function when day is selected as the end date', () => {
+    it('is formatted with the dateIsSelectedAsEnddate phrase function when day is selected as the end date', () => {
       const modifiers = new Set().add(BLOCKED_MODIFIER).add('selected-end');
 
       const { ariaLabel } = getCalendarDaySettings(
@@ -248,17 +247,18 @@ describe('getCalendarDaySettings', () => {
         phrases,
       );
 
-      expect(phrases.dateIsSelectedAsEndDate.calledWith(expectedFormattedDay)).to.equal(true);
-      expect(ariaLabel).to.equal('dateIsSelectedAsEndDate text');
+      expect(phrases.dateIsSelectedAsEnddate.calledWith(expectedFormattedday)).to.equal(true);
+      expect(ariaLabel).to.equal('dateIsSelectedAsEnddate text');
     });
 
     it('is formatted with the dateIsSelected phrase function when day is selected as the start or end date and no selected start or end date phrase function is specified', () => {
       phrases.dateIsSelectedAsStartDate = null;
-      phrases.dateIsSelectedAsEndDate = null;
+      phrases.dateIsSelectedAsEnddate = null;
       const selectedModifiers = new Set(['selected-end', 'selected-start']);
 
       selectedModifiers.forEach((selectedModifier) => {
         const modifiers = new Set([selectedModifier]);
+
         const { ariaLabel } = getCalendarDaySettings(
           testDay,
           testAriaLabelFormat,
@@ -267,7 +267,7 @@ describe('getCalendarDaySettings', () => {
           phrases,
         );
 
-        expect(phrases.dateIsSelected.calledWith(expectedFormattedDay)).to.equal(true);
+        expect(phrases.dateIsSelected.calledWith(expectedFormattedday)).to.equal(true);
         expect(ariaLabel).to.equal('dateIsSelected text');
       });
     });
@@ -283,7 +283,7 @@ describe('getCalendarDaySettings', () => {
         phrases,
       );
 
-      expect(phrases.dateIsUnavailable.calledWith(expectedFormattedDay)).to.equal(true);
+      expect(phrases.dateIsUnavailable.calledWith(expectedFormattedday)).to.equal(true);
       expect(ariaLabel).to.equal('dateIsUnavailable text');
     });
   });

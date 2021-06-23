@@ -1,9 +1,11 @@
 import { expect } from 'chai';
-import { moment } from '../../src/utils/DateObj';
+
+import addDays from 'date-fns/addDays';
+
 import isNextDay from '../../src/utils/isNextDay';
 
-const today = moment();
-const tomorrow = moment().add(1, 'days');
+const today = new Date();
+const tomorrow = addDays(new Date(), 1);
 
 describe('isNextDay', () => {
   it('returns true if second argument is the next day after the first', () => {
@@ -14,12 +16,12 @@ describe('isNextDay', () => {
     expect(isNextDay(tomorrow, today)).to.equal(false);
   });
 
-  describe('non-moment arguments', () => {
-    it('is false if first argument is not a moment object', () => {
+  describe('non-Date arguments', () => {
+    it('is false if first argument is not a Date object', () => {
       expect(isNextDay(null, today)).to.equal(false);
     });
 
-    it('is false if second argument is not a moment object', () => {
+    it('is false if second argument is not a Date object', () => {
       expect(isNextDay(today, 'foo')).to.equal(false);
     });
   });

@@ -1,10 +1,11 @@
 import { expect } from 'chai';
 
-import { moment } from '../../src/utils/DateObj';
+import addDays from 'date-fns/addDays';
+
 import isInclusivelyAfterDay from '../../src/utils/isInclusivelyAfterDay';
 
-const today = moment();
-const tomorrow = moment().add(1, 'days');
+const today = new Date();
+const tomorrow = addDays(new Date(), 1);
 
 describe('isInclusivelyAfterDay', () => {
   it('returns true if first argument is after the second', () => {
@@ -19,12 +20,12 @@ describe('isInclusivelyAfterDay', () => {
     expect(isInclusivelyAfterDay(today, tomorrow)).to.equal(false);
   });
 
-  describe('non-moment object arguments', () => {
-    it('is false if first argument is not a moment object', () => {
+  describe('non-Date object arguments', () => {
+    it('is false if first argument is not a Date object', () => {
       expect(isInclusivelyAfterDay(null, today)).to.equal(false);
     });
 
-    it('is false if second argument is not a moment object', () => {
+    it('is false if second argument is not a Date object', () => {
       expect(isInclusivelyAfterDay(today, 'foo')).to.equal(false);
     });
   });

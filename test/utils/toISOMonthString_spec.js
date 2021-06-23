@@ -1,42 +1,43 @@
 import { expect } from 'chai';
 
-import { moment } from '../../src/utils/DateObj';
+import format from 'date-fns/format';
+
 import { ISO_FORMAT, ISO_MONTH_FORMAT } from '../../src/constants';
 import toISOMonthString from '../../src/utils/toISOMonthString';
 
 describe('#toISOMonthString', () => {
-  describe('arg is a moment object', () => {
+  describe('arg is a Date object', () => {
     it('returns month in ISO_MONTH_FORMAT format', () => {
-      const today = moment();
-      expect(toISOMonthString(today)).to.equal(today.format(ISO_MONTH_FORMAT));
+      const today = new Date();
+      expect(toISOMonthString(today)).to.equal(format(today, ISO_MONTH_FORMAT));
     });
   });
 
   describe('arg is a string', () => {
     describe('arg is in ISO format', () => {
       it('returns month in ISO_MONTH_FORMAT format', () => {
-        const today = moment();
-        const todayISO = today.format(ISO_FORMAT);
-        expect(toISOMonthString(todayISO)).to.equal(today.format(ISO_MONTH_FORMAT));
+        const today = new Date();
+        const todayISO = format(today, ISO_FORMAT);
+        expect(toISOMonthString(todayISO)).to.equal(format(today, ISO_MONTH_FORMAT));
       });
     });
 
     describe('arg matches the second arg date format provided', () => {
       it('returns month in ISO_MONTH_FORMAT format', () => {
-        const today = moment();
-        const dateFormat = 'MM_DD_yyyy';
-        const formattedDate = today.format(dateFormat);
-        const monthString = toISOMonthString(formattedDate, dateFormat);
-        expect(monthString).to.equal(today.format(ISO_MONTH_FORMAT));
+        const today = new Date();
+        const dateFormat = 'MM_dd_yyyy';
+        const formatteddate = format(today, dateFormat);
+        const monthString = toISOMonthString(formatteddate, dateFormat);
+        expect(monthString).to.equal(format(today, ISO_MONTH_FORMAT));
       });
     });
 
     describe('arg is neither in iso format or in the provided format', () => {
       it('returns null', () => {
-        const today = moment();
-        const dateFormat = 'MM_DD_yyyy';
-        const formattedDate = today.format('MM-DD-yyyy');
-        expect(toISOMonthString(formattedDate, dateFormat)).to.equal(null);
+        const today = new Date();
+        const dateFormat = 'MM_dd_yyyy';
+        const formatteddate = format(today, 'MM-dd-yyyy');
+        expect(toISOMonthString(formatteddate, dateFormat)).to.equal(null);
       });
     });
 

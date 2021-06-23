@@ -1,0 +1,20 @@
+{
+  "globals": {
+    "describe": true,
+    "context": true,
+    "it": true,
+    "before": true,
+    "after": true,
+    "beforeEach": true,
+    "afterEach": true
+  },
+  "extends": "airbnb",
+  "rules": {
+    "import/no-extraneous-dependencies": [2, {
+      "devDependencies": true
+    }],
+    "indent": [2, 2, {
+      "MemberExpression": "off"
+    }],
+  }
+}

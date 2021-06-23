@@ -1,9 +1,13 @@
 import { expect } from 'chai';
-import { moment } from '../../src/utils/DateObj';
+
+import addDays from 'date-fns/addDays';
+import addMonths from 'date-fns/addMonths';
+import addYears from 'date-fns/addYears';
+
 import isBeforeDay from '../../src/utils/isBeforeDay';
 
-const today = moment();
-const tomorrow = moment().add(1, 'days');
+const today = new Date();
+const tomorrow = addDays(new Date(), 1);
 
 describe('isBeforeDay', () => {
   it('returns true if first arg is before the second but have same month and year', () => {
@@ -11,11 +15,11 @@ describe('isBeforeDay', () => {
   });
 
   it('returns true if first arg is before the second but have same day and year', () => {
-    expect(isBeforeDay(today, moment().clone().add(1, 'month'))).to.equal(true);
+    expect(isBeforeDay(today, addYears(new Date(), 1))).to.equal(true);
   });
 
   it('returns true if first arg is before the second but have same day and month', () => {
-    expect(isBeforeDay(today, moment().clone().add(1, 'year'))).to.equal(true);
+    expect(isBeforeDay(today, addMonths(new Date(), 1))).to.equal(true);
   });
 
   it('returns false if args are the same day', () => {
@@ -26,12 +30,12 @@ describe('isBeforeDay', () => {
     expect(isBeforeDay(tomorrow, today)).to.equal(false);
   });
 
-  describe('non-moment object arguments', () => {
-    it('is false if first argument is not a moment object', () => {
+  describe('non-Date object arguments', () => {
+    it('is false if first argument is not a Date object', () => {
       expect(isBeforeDay(null, today)).to.equal(false);
     });
 
-    it('is false if second argument is not a moment object', () => {
+    it('is false if second argument is not a Date object', () => {
       expect(isBeforeDay(today, 'foo')).to.equal(false);
     });
   });

@@ -4,9 +4,12 @@ import sinon from 'sinon-sandbox';
 import { shallow } from 'enzyme';
 import raf from 'raf';
 
+import startOfMonth from 'date-fns/startOfMonth';
+import endOfMonth from 'date-fns/endOfMonth';
+import format from 'date-fns/format';
+
 import { BLOCKED_MODIFIER } from '../../src/constants';
 import CalendarDay, { PureCalendarDay } from '../../src/components/CalendarDay';
-import DateObj from '../../src/utils/DateObj';
 
 describe('CalendarDay', () => {
   afterEach(() => {
@@ -15,28 +18,28 @@ describe('CalendarDay', () => {
 
   describe('#render', () => {
     it('contains formatted day for single digit days', () => {
-      const firstOfMonth = DateObj().startOf('month');
+      const firstOfMonth = startOfMonth(new Date());
       const wrapper = shallow(<CalendarDay day={firstOfMonth} />).dive();
-      expect(wrapper.text()).to.equal(firstOfMonth.format('D'));
+      expect(wrapper.text()).to.equal(format(firstOfMonth, 'd'));
     });
 
     it('contains formatted day for double digit days', () => {
-      const lastOfMonth = DateObj().endOf('month');
+      const lastOfMonth = endOfMonth(new Date());
       const wrapper = shallow(<CalendarDay day={lastOfMonth} />).dive();
-      expect(wrapper.text()).to.equal(lastOfMonth.format('D'));
+      expect(wrapper.text()).to.equal(format(lastOfMonth, 'd'));
     });
 
     it('contains arbitrary content if renderDay is provided', () => {
-      const dayName = DateObj().format('dddd');
-      const renderDay = (day) => day.format('dddd');
+      const dayName = format(new Date(), 'dddd');
+      const renderDay = (day) => format(day, 'dddd');
       const wrapper = shallow(<CalendarDay renderDayContents={renderDay} />).dive();
       expect(wrapper.text()).to.equal(dayName);
     });
 
     it('passes modifiers to renderDayContents', () => {
       const modifiers = new Set([BLOCKED_MODIFIER]);
-      const renderDayContents = (day, mods) => `${day.format('dddd')}${mods.has(BLOCKED_MODIFIER) ? 'BLOCKED' : ''}`;
-      const expected = `${DateObj().format('dddd')}BLOCKED`;
+      const renderDayContents = (day, mods) => `${format(day, 'dddd')}${mods.has(BLOCKED_MODIFIER) ? 'BLOCKED' : ''}`;
+      const expected = `${format(new Date(), 'dddd')}BLOCKED`;
       const wrapper = shallow((
         <CalendarDay renderDayContents={renderDayContents} modifiers={modifiers} />
       )).dive();
@@ -54,42 +57,16 @@ describe('CalendarDay', () => {
       expect(wrapper.props().tabIndex).to.equal(tabIndex);
     });
 
-    describe('aria-current', () => {
-      it('should add aria-current to date for today date', () => {
-        const modifiers = new Set(['today']);
-
-        const wrapper = shallow((
-          <CalendarDay
-            modifiers={modifiers}
-          />
-        )).dive();
-
-        expect(wrapper.prop('aria-current')).to.equal('date');
-      });
-
-      it('should not add aria-current for not today date', () => {
-        const modifiers = new Set();
-
-        const wrapper = shallow((
-          <CalendarDay
-            modifiers={modifiers}
-          />
-        )).dive();
-
-        expect(wrapper).to.not.have.property('aria-current');
-      });
-    });
-
     describe('aria-label', () => {
       const phrases = {};
-      const day = DateObj()('10/10/2017', 'MM/DD/yyyy');
+      const day = new Date(2017, 9, 10);
 
       beforeEach(() => {
         phrases.chooseAvailableDate = sinon.stub().returns('chooseAvailableDate text');
         phrases.dateIsSelected = sinon.stub().returns('dateIsSelected text');
         phrases.dateIsUnavailable = sinon.stub().returns('dateIsUnavailable text');
         phrases.dateIsSelectedAsStartDate = sinon.stub().returns('dateIsSelectedAsStartDate text');
-        phrases.dateIsSelectedAsEndDate = sinon.stub().returns('dateIsSelectedAsEndDate text');
+        phrases.dateIsSelectedAsEnddate = sinon.stub().returns('dateIsSelectedAsEnddate text');
       });
 
       it('is formatted with the chooseAvailableDate phrase function when day is available', () => {
@@ -148,7 +125,7 @@ describe('CalendarDay', () => {
         expect(wrapper.prop('aria-label')).to.equal('dateIsSelectedAsStartDate text');
       });
 
-      it('is formatted with the dateIsSelectedAsEndDate phrase function when day is selected as the end date', () => {
+      it('is formatted with the dateIsSelectedAsEnddate phrase function when day is selected as the end date', () => {
         const modifiers = new Set().add(BLOCKED_MODIFIER).add('selected-end');
 
         const wrapper = shallow((
@@ -159,7 +136,7 @@ describe('CalendarDay', () => {
           />
         )).dive();
 
-        expect(wrapper.prop('aria-label')).to.equal('dateIsSelectedAsEndDate text');
+        expect(wrapper.prop('aria-label')).to.equal('dateIsSelectedAsEnddate text');
       });
 
       it('is formatted with the dateIsUnavailable phrase function when day is not available', () => {
@@ -183,7 +160,7 @@ describe('CalendarDay', () => {
           <CalendarDay
             modifiers={modifiers}
             day={day}
-            ariaLabelFormat="MMMM Do yyyy"
+            ariaLabelFormat="MMMM do yyyy"
           />
         )).dive();
 
@@ -192,14 +169,14 @@ describe('CalendarDay', () => {
     });
 
     describe('event handlers', () => {
-      const day = DateObj()('10/10/2017', 'MM/DD/yyyy');
+      const day = new Date(2017, 9, 10);
 
       let wrapper;
       beforeEach(() => {
         wrapper = shallow((
           <CalendarDay
             day={day}
-            ariaLabelFormat="MMMM Do yyyy"
+            ariaLabelFormat="MMMM do yyyy"
           />
         )).dive();
       });
@@ -230,7 +207,7 @@ describe('CalendarDay', () => {
   });
 
   describe('#onKeyDown', () => {
-    const day = new DateObj('10/10/2017', 'MM/DD/yyyy');
+    const day = new Date(2017, 9, 10);
 
     let onDayClick;
     let wrapper;

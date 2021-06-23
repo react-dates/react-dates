@@ -3,8 +3,11 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon-sandbox';
 
+import format from 'date-fns/format';
+import subMonths from 'date-fns/subMonths';
+import isDate from 'date-fns/isDate';
+
 import CalendarMonth from '../../src/components/CalendarMonth';
-import DateObj from '../../src/utils/DateObj';
 
 describe('CalendarMonth', () => {
   describe('#render', () => {
@@ -22,16 +25,16 @@ describe('CalendarMonth', () => {
 
     describe('caption', () => {
       it('text is the correctly formatted month title', () => {
-        const MONTH = new DateObj();
+        const MONTH = new Date();
         const captionWrapper = shallow(<CalendarMonth month={MONTH} />).dive().find('strong');
-        expect(captionWrapper.text()).to.equal(MONTH.format('MMMM yyyy'));
+        expect(captionWrapper.text()).to.equal(format(MONTH, 'MMMM yyyy'));
       });
     });
 
     it('renderMonthElement renders month element when month changes', () => {
       const renderMonthElementStub = sinon.stub().returns(<div id="month-element" />);
       const wrapper = shallow(<CalendarMonth renderMonthElement={renderMonthElementStub} />).dive();
-      wrapper.setProps({ month: new DateObj().subtract(1, 'months') });
+      wrapper.setProps({ month: subMonths(new Date(), 1) });
 
       const [{
         month,
@@ -40,7 +43,7 @@ describe('CalendarMonth', () => {
         isVisible,
       }] = renderMonthElementStub.getCall(0).args;
 
-      expect(DateObj.isDate(month)).to.equal(true);
+      expect(isDate(month)).to.equal(true);
       expect(typeof onMonthSelect).to.equal('function');
       expect(typeof onYearSelect).to.equal('function');
       expect(typeof isVisible).to.equal('boolean');

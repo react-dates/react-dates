@@ -20,7 +20,7 @@ describe('DayPickerKeyboardShortcuts', () => {
       it('updates the keyboardShortcuts', () => {
         const wrapper = shallow(<DayPickerKeyboardShortcuts {...prevProps} />).dive();
         const prevKeyboardShortcuts = wrapper.instance().keyboardShortcuts;
-        wrapper.instance().componentWillReceiveProps(newProps);
+        wrapper.instance().UNSAFE_componentWillReceiveProps(newProps);
         const updatedKeyboardShortcuts = wrapper.instance().keyboardShortcuts;
         expect(prevKeyboardShortcuts).to.not.equal(updatedKeyboardShortcuts);
       });
@@ -33,7 +33,7 @@ describe('DayPickerKeyboardShortcuts', () => {
       it('does NOT update the keyboardShortcuts', () => {
         const wrapper = shallow(<DayPickerKeyboardShortcuts {...prevProps} />).dive();
         const prevKeyboardShortcuts = wrapper.instance().keyboardShortcuts;
-        wrapper.instance().componentWillReceiveProps(newProps);
+        wrapper.instance().UNSAFE_componentWillReceiveProps(newProps);
         const updatedKeyboardShortcuts = wrapper.instance().keyboardShortcuts;
         expect(prevKeyboardShortcuts).to.deep.equal(updatedKeyboardShortcuts);
       });
@@ -145,14 +145,14 @@ describe('DayPickerKeyboardShortcuts', () => {
           const wrapper = shallow(<DayPickerKeyboardShortcuts {...props} />).dive();
           expect(wrapper.children().find(Button)).to.have.lengthOf(1);
         });
+      });
 
-        it('renders the default button if renderKeyboardShortcutsButton is not provided', () => {
-          const wrapper = shallow(<DayPickerKeyboardShortcuts />).dive();
-          expect(wrapper.children().find('button')).to.have.lengthOf(1);
-          expect(wrapper.children().find('button').prop('aria-label')).to.eql(
-            DayPickerKeyboardShortcutsPhrases.showKeyboardShortcutsPanel,
-          );
-        });
+      it('renders the default button if renderKeyboardShortcutsButton is not provided', () => {
+        const wrapper = shallow(<DayPickerKeyboardShortcuts />).dive();
+        expect(wrapper.children().find('button')).to.have.lengthOf(1);
+        expect(wrapper.children().find('button').prop('aria-label')).to.eql(
+          DayPickerKeyboardShortcutsPhrases.showKeyboardShortcutsPanel,
+        );
       });
 
       describe('renderKeyboardShortcutsPanel', () => {

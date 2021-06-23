@@ -1,10 +1,10 @@
 import { expect } from 'chai';
-import { moment } from '../../src/utils/DateObj';
 
-import isSameDay from '../../src/utils/isSameDay';
+import isSameDay from 'date-fns/isSameDay';
+
 import getVisibleDays from '../../src/utils/getVisibleDays';
 
-const today = moment();
+const today = new Date();
 
 describe('getVisibleDays', () => {
   it('has numberOfMonths entries', () => {
@@ -13,12 +13,12 @@ describe('getVisibleDays', () => {
     expect(Object.keys(visibleDays).length).to.equal(numberOfMonths + 2);
   });
 
-  it('values are all arrays of moment objects', () => {
+  it('values are all arrays of Date objects', () => {
     const visibleDays = getVisibleDays(today, 3, false);
     Object.values(visibleDays).forEach((days) => {
       expect(Array.isArray(days)).to.equal(true);
       days.forEach((day) => {
-        expect(moment.isMoment(day)).to.equal(true);
+        expect(day instanceof Date).to.equal(true);
       });
     });
   });

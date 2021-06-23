@@ -1,11 +1,12 @@
 import { expect } from 'chai';
-import { moment } from '../../src/utils/DateObj';
+
+import addMonths from 'date-fns/addMonths';
 
 import isNextMonth from '../../src/utils/isNextMonth';
 
-const today = moment();
-const nextMonth = moment().add(1, 'months');
-const twoMonths = moment().add(2, 'months');
+const today = new Date();
+const nextMonth = addMonths(new Date(), 1);
+const twoMonths = addMonths(new Date(), 2);
 
 describe('isNextMonth', () => {
   it('returns true if second argument is the next month after the first', () => {
@@ -20,12 +21,12 @@ describe('isNextMonth', () => {
     expect(isNextMonth(today, twoMonths)).to.equal(false);
   });
 
-  describe('non-moment arguments', () => {
-    it('is false if first argument is not a moment object', () => {
+  describe('non-Date arguments', () => {
+    it('is false if first argument is not a Date object', () => {
       expect(isNextMonth(null, today)).to.equal(false);
     });
 
-    it('is false if second argument is not a moment object', () => {
+    it('is false if second argument is not a Date object', () => {
       expect(isNextMonth(today, 'foo')).to.equal(false);
     });
   });

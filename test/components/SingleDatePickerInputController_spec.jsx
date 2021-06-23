@@ -3,15 +3,17 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon-sandbox';
 
-import { moment } from '../../src/utils/DateObj';
-
-import SingleDatePickerInput from '../../src/components/SingleDatePickerInput';
+import addHours from 'date-fns/addHours';
+import addDays from 'date-fns/addDays';
+import format from 'date-fns/format';
+import isSameDay from 'date-fns/isSameDay';
+import startOfDay from 'date-fns/startOfDay';
+import parseISO from 'date-fns/parseISO';
 import SingleDatePickerInputController from '../../src/components/SingleDatePickerInputController';
-
-import isSameDay from '../../src/utils/isSameDay';
+import SingleDatePickerInput from '../../src/components/SingleDatePickerInput';
 
 // Set to noon to mimic how days in the picker are configured internally
-const today = moment().startOf('day').hours(12);
+const today = addHours(startOfDay(new Date()), 12);
 
 describe('SingleDatePickerInputController', () => {
   afterEach(() => {
@@ -43,7 +45,7 @@ describe('SingleDatePickerInputController', () => {
 
   describe('#onChange', () => {
     describe('valid future date string', () => {
-      const futureDateString = moment().add(10, 'days').format('yyyy-mm-dd');
+      const futureDateString = format(addDays(new Date(), 10), 'yyyy-MM-dd');
       it('calls props.onDateChange once', () => {
         const onDateChangeStub = sinon.stub();
         const wrapper = shallow((
@@ -60,7 +62,7 @@ describe('SingleDatePickerInputController', () => {
         ));
         wrapper.instance().onChange(futureDateString);
         const newDate = onDateChangeStub.getCall(0).args[0];
-        expect(isSameDay(newDate, moment(futureDateString))).to.equal(true);
+        expect(isSameDay(newDate, parseISO(futureDateString))).to.equal(true);
       });
 
       it('calls props.onFocusChange once', () => {
@@ -107,13 +109,13 @@ describe('SingleDatePickerInputController', () => {
         ));
         wrapper.instance().onChange(futureDateString);
         const newDate = onCloseStub.getCall(0).args[0].date;
-        expect(isSameDay(newDate, moment(futureDateString))).to.equal(true);
+        expect(isSameDay(newDate, parseISO(futureDateString))).to.equal(true);
       });
     });
 
     describe('matches custom display format', () => {
-      const customFormat = 'YY|MM[foobar]DD';
-      const customFormatDateString = moment().add(5, 'days').format(customFormat);
+      const customFormat = "yy|MM'[foobar]'dd";
+      const customFormatDateString = format(addDays(new Date(), 5), customFormat);
       it('calls props.onDateChange once', () => {
         const onDateChangeStub = sinon.stub();
         const wrapper = shallow((
@@ -139,7 +141,8 @@ describe('SingleDatePickerInputController', () => {
           />
         ));
         wrapper.instance().onChange(customFormatDateString);
-        const formattedFirstArg = onDateChangeStub.getCall(0).args[0].format(customFormat);
+        const arg = onDateChangeStub.getCall(0).args[0];
+        const formattedFirstArg = format(arg, customFormat);
         expect(formattedFirstArg).to.equal(customFormatDateString);
       });
 
@@ -173,13 +176,13 @@ describe('SingleDatePickerInputController', () => {
     });
 
     describe('invalid date string', () => {
-      const invalidDateString = 'foobar';
+      const invaliddateString = 'foobar';
       it('calls props.onDateChange once', () => {
         const onDateChangeStub = sinon.stub();
         const wrapper = shallow((
           <SingleDatePickerInputController id="date" onDateChange={onDateChangeStub} onFocusChange={() => {}} />
         ));
-        wrapper.instance().onChange(invalidDateString);
+        wrapper.instance().onChange(invaliddateString);
         expect(onDateChangeStub.callCount).to.equal(1);
       });
 
@@ -188,7 +191,7 @@ describe('SingleDatePickerInputController', () => {
         const wrapper = shallow((
           <SingleDatePickerInputController id="date" onDateChange={onDateChangeStub} onFocusChange={() => {}} />
         ));
-        wrapper.instance().onChange(invalidDateString);
+        wrapper.instance().onChange(invaliddateString);
         expect(onDateChangeStub.getCall(0).args[0]).to.equal(null);
       });
 
@@ -197,14 +200,14 @@ describe('SingleDatePickerInputController', () => {
         const wrapper = shallow((
           <SingleDatePickerInputController id="date" onDateChange={() => {}} onFocusChange={onFocusChangeStub} />
         ));
-        wrapper.instance().onChange(invalidDateString);
+        wrapper.instance().onChange(invaliddateString);
         expect(onFocusChangeStub.callCount).to.equal(0);
       });
     });
 
     describe('date string outside range', () => {
       const isOutsideRangeStub = sinon.stub().returns(true);
-      const todayDateString = today.format('DD/MM/yyyy');
+      const todayDateString = format(today, 'dd-MM-yyyy');
 
       it('calls props.onDateChange once', () => {
         const onDateChangeStub = sinon.stub();
@@ -251,7 +254,7 @@ describe('SingleDatePickerInputController', () => {
 
     describe('date string is blocked', () => {
       const isDayBlocked = sinon.stub().returns(true);
-      const todayDateString = today.format('DD/MM/yyyy');
+      const todayDateString = format(today, 'dd-MM-yyyy');
 
       it('calls props.onDateChange once', () => {
         const onDateChangeStub = sinon.stub();
