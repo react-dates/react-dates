@@ -84,14 +84,14 @@ storiesOf('DRP - Day Props', module)
     <DateRangePickerWrapper
       minimumNights={3}
       initialStartDate={addDays(new Date(), 3)}
-      autoFocusEnddate
+      autoFocusEndDate
     />
   )))
   .add('allows single day range', withInfo()(() => (
     <DateRangePickerWrapper
       minimumNights={0}
       initialStartDate={addDays(new Date(), 3)}
-      autoFocusEnddate
+      autoFocusEndDate
     />
   )))
   .add('allows all days, including past days', withInfo()(() => (

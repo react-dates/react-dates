@@ -57,7 +57,7 @@ const propTypes = forbidExtraProps({
   translationValue: PropTypes.number,
   renderMonthElement: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'),
   daySize: nonNegativeInteger,
-  focuseddate: PropTypes.object, // indicates focusable day
+  focusedDate: PropTypes.object, // indicates focusable day
   isFocused: PropTypes.bool, // indicates whether or not to move focus to focusable day
   firstDayOfWeek: DayOfWeekShape,
   setMonthTitleHeight: PropTypes.func,
@@ -93,7 +93,7 @@ const defaultProps = {
   translationValue: null,
   renderMonthElement: null,
   daySize: DAY_SIZE,
-  focuseddate: null,
+  focusedDate: null,
   isFocused: false,
   firstDayOfWeek: null,
   setMonthTitleHeight: null,
@@ -257,7 +257,7 @@ class CalendarMonthGrid extends React.PureComponent {
       renderMonthElement,
       onMonthTransitionEnd,
       firstDayOfWeek,
-      focuseddate,
+      focusedDate,
       isFocused,
       isRTL,
       styles,
@@ -351,7 +351,7 @@ class CalendarMonthGrid extends React.PureComponent {
                 renderMonthElement={renderMonthElement}
                 firstDayOfWeek={firstDayOfWeek}
                 daySize={daySize}
-                focuseddate={isVisible ? focuseddate : null}
+                focusedDate={isVisible ? focusedDate : null}
                 isFocused={isFocused}
                 phrases={phrases}
                 setMonthTitleHeight={setMonthTitleHeight}

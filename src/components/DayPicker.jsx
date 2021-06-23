@@ -220,9 +220,9 @@ class DayPicker extends React.PureComponent {
     const currentMonth = props.hidden
       ? addHours(startOfDay(new Date()), 12) : props.initialVisibleMonth();
 
-    let focuseddate = startOfMonth(currentMonth);
+    let focusedDate = startOfMonth(currentMonth);
     if (props.getFirstFocusableDay) {
-      focuseddate = props.getFirstFocusableDay(currentMonth);
+      focusedDate = props.getFirstFocusableDay(currentMonth);
     }
 
     const { horizontalMonthPadding } = props;
@@ -239,8 +239,8 @@ class DayPicker extends React.PureComponent {
       translationValue,
       scrollableMonthMultiple: 1,
       calendarMonthWidth: getCalendarMonthWidth(props.daySize, horizontalMonthPadding),
-      focuseddate: (!props.hidden || props.isFocused) ? focuseddate : null,
-      nextFocuseddate: null,
+      focusedDate: (!props.hidden || props.isFocused) ? focusedDate : null,
+      nextFocusedDate: null,
       showKeyboardShortcuts: props.showKeyboardShortcuts,
       onKeyboardShortcutsPanelClose() {},
       isTouchDevice: isTouchDevice(),
@@ -337,7 +337,7 @@ class DayPicker extends React.PureComponent {
 
     if (isFocused !== prevIsFocused) {
       if (isFocused) {
-        const focuseddate = this.getFocusedday(currentMonth);
+        const focusedDate = this.getFocusedday(currentMonth);
 
         let { onKeyboardShortcutsPanelClose } = this.state;
         if (nextProps.showKeyboardShortcuts) {
@@ -348,11 +348,11 @@ class DayPicker extends React.PureComponent {
         this.setState({
           showKeyboardShortcuts,
           onKeyboardShortcutsPanelClose,
-          focuseddate,
+          focusedDate,
           withMouseInteractions: false,
         });
       } else {
-        this.setState({ focuseddate: null });
+        this.setState({ focusedDate: null });
       }
     }
 
@@ -403,7 +403,7 @@ class DayPicker extends React.PureComponent {
     const {
       currentMonth,
       currentMonthScrollTop,
-      focuseddate,
+      focusedDate,
       monthTitleHeight,
     } = this.state;
 
@@ -417,7 +417,7 @@ class DayPicker extends React.PureComponent {
       this.adjustDayPickerHeight(newMonthHeight);
     }
 
-    if (!prevProps.isFocused && isFocused && !focuseddate) {
+    if (!prevProps.isFocused && isFocused && !focusedDate) {
       this.container.focus();
     }
 
@@ -456,10 +456,10 @@ class DayPicker extends React.PureComponent {
       onShiftTab,
       isRTL,
     } = this.props;
-    const { focuseddate, showKeyboardShortcuts } = this.state;
-    if (!focuseddate) return;
+    const { focusedDate, showKeyboardShortcuts } = this.state;
+    if (!focusedDate) return;
 
-    let newFocuseddate = new Date(focuseddate);
+    let newFocusedDate = new Date(focusedDate);
 
     let didTransitionMonth = false;
 
@@ -473,51 +473,51 @@ class DayPicker extends React.PureComponent {
     switch (e.key) {
       case 'ArrowUp':
         e.preventDefault();
-        newFocuseddate = subWeeks(newFocuseddate, 1);
-        didTransitionMonth = this.maybeTransitionPrevMonth(newFocuseddate);
+        newFocusedDate = subWeeks(newFocusedDate, 1);
+        didTransitionMonth = this.maybeTransitionPrevMonth(newFocusedDate);
         break;
       case 'ArrowLeft':
         e.preventDefault();
         if (isRTL) {
-          newFocuseddate = addDays(newFocuseddate, 1);
+          newFocusedDate = addDays(newFocusedDate, 1);
         } else {
-          newFocuseddate = subDays(newFocuseddate, 1);
+          newFocusedDate = subDays(newFocusedDate, 1);
         }
-        didTransitionMonth = this.maybeTransitionPrevMonth(newFocuseddate);
+        didTransitionMonth = this.maybeTransitionPrevMonth(newFocusedDate);
         break;
       case 'Home':
         e.preventDefault();
-        newFocuseddate = startOfWeek(newFocuseddate);
-        didTransitionMonth = this.maybeTransitionPrevMonth(newFocuseddate);
+        newFocusedDate = startOfWeek(newFocusedDate);
+        didTransitionMonth = this.maybeTransitionPrevMonth(newFocusedDate);
         break;
       case 'PageUp':
         e.preventDefault();
-        newFocuseddate = subMonths(newFocuseddate, 1);
-        didTransitionMonth = this.maybeTransitionPrevMonth(newFocuseddate);
+        newFocusedDate = subMonths(newFocusedDate, 1);
+        didTransitionMonth = this.maybeTransitionPrevMonth(newFocusedDate);
         break;
       case 'ArrowDown':
         e.preventDefault();
-        newFocuseddate = addWeeks(newFocuseddate, 1);
-        didTransitionMonth = this.maybeTransitionNextMonth(newFocuseddate);
+        newFocusedDate = addWeeks(newFocusedDate, 1);
+        didTransitionMonth = this.maybeTransitionNextMonth(newFocusedDate);
         break;
       case 'ArrowRight':
         e.preventDefault();
         if (isRTL) {
-          newFocuseddate = subDays(newFocuseddate, 1);
+          newFocusedDate = subDays(newFocusedDate, 1);
         } else {
-          newFocuseddate = addDays(newFocuseddate, 1);
+          newFocusedDate = addDays(newFocusedDate, 1);
         }
-        didTransitionMonth = this.maybeTransitionNextMonth(newFocuseddate);
+        didTransitionMonth = this.maybeTransitionNextMonth(newFocusedDate);
         break;
       case 'End':
         e.preventDefault();
-        newFocuseddate = endOfWeek(newFocuseddate);
-        didTransitionMonth = this.maybeTransitionNextMonth(newFocuseddate);
+        newFocusedDate = endOfWeek(newFocusedDate);
+        didTransitionMonth = this.maybeTransitionNextMonth(newFocusedDate);
         break;
       case 'PageDown':
         e.preventDefault();
-        newFocuseddate = addMonths(newFocuseddate, 1);
-        didTransitionMonth = this.maybeTransitionNextMonth(newFocuseddate);
+        newFocusedDate = addMonths(newFocusedDate, 1);
+        didTransitionMonth = this.maybeTransitionNextMonth(newFocusedDate);
         break;
       case '?':
         this.openKeyboardShortcutsPanel(onKeyboardShortcutsPanelClose);
@@ -542,10 +542,10 @@ class DayPicker extends React.PureComponent {
 
     // If there was a month transition, do not update the focused date until the transition has
     // completed. Otherwise, attempting to focus on a DOM node may interrupt the CSS animation. If
-    // didTransitionMonth is true, the focuseddate gets updated in #updateStateAfterMonthTransition
+    // didTransitionMonth is true, the focusedDate gets updated in #updateStateAfterMonthTransition
     if (!didTransitionMonth) {
       this.setState({
-        focuseddate: newFocuseddate,
+        focusedDate: newFocusedDate,
       });
     }
   }
@@ -555,7 +555,7 @@ class DayPicker extends React.PureComponent {
     this.onPrevMonthTransition();
   }
 
-  onPrevMonthTransition(nextFocuseddate) {
+  onPrevMonthTransition(nextFocusedDate) {
     const { daySize, isRTL, numberOfMonths } = this.props;
     const { calendarMonthWidth, monthTitleHeight } = this.state;
 
@@ -578,8 +578,8 @@ class DayPicker extends React.PureComponent {
     this.setState({
       monthTransition: PREV_TRANSITION,
       translationValue,
-      focuseddate: null,
-      nextFocuseddate,
+      focusedDate: null,
+      nextFocusedDate,
     });
   }
 
@@ -592,8 +592,8 @@ class DayPicker extends React.PureComponent {
     this.setState({
       monthTransition: MONTH_SELECTION_TRANSITION,
       translationValue: 0.00001,
-      focuseddate: null,
-      nextFocuseddate: currentMonth,
+      focusedDate: null,
+      nextFocusedDate: currentMonth,
       currentMonth,
     });
   }
@@ -607,8 +607,8 @@ class DayPicker extends React.PureComponent {
     this.setState({
       monthTransition: YEAR_SELECTION_TRANSITION,
       translationValue: 0.0001,
-      focuseddate: null,
-      nextFocuseddate: currentMonth,
+      focusedDate: null,
+      nextFocusedDate: currentMonth,
       currentMonth,
     });
   }
@@ -618,7 +618,7 @@ class DayPicker extends React.PureComponent {
     this.onNextMonthTransition();
   }
 
-  onNextMonthTransition(nextFocuseddate) {
+  onNextMonthTransition(nextFocusedDate) {
     const { isRTL, numberOfMonths, daySize } = this.props;
     const { calendarMonthWidth, monthTitleHeight } = this.state;
 
@@ -645,8 +645,8 @@ class DayPicker extends React.PureComponent {
     this.setState({
       monthTransition: NEXT_TRANSITION,
       translationValue,
-      focuseddate: null,
-      nextFocuseddate,
+      focusedDate: null,
+      nextFocusedDate,
     });
   }
 
@@ -690,16 +690,16 @@ class DayPicker extends React.PureComponent {
   getFocusedday(newMonth) {
     const { getFirstFocusableDay, numberOfMonths } = this.props;
 
-    let focuseddate;
+    let focusedDate;
     if (getFirstFocusableDay) {
-      focuseddate = getFirstFocusableDay(newMonth);
+      focusedDate = getFirstFocusableDay(newMonth);
     }
 
-    if (newMonth && (!focuseddate || !isDayVisible(focuseddate, newMonth, numberOfMonths))) {
-      focuseddate = startOfMonth(newMonth);
+    if (newMonth && (!focusedDate || !isDayVisible(focusedDate, newMonth, numberOfMonths))) {
+      focusedDate = startOfMonth(newMonth);
     }
 
-    return focuseddate;
+    return focusedDate;
   }
 
   setMonthTitleHeight(monthTitleHeight) {
@@ -757,30 +757,30 @@ class DayPicker extends React.PureComponent {
     }));
   }
 
-  maybeTransitionNextMonth(newFocuseddate) {
+  maybeTransitionNextMonth(newFocusedDate) {
     const { numberOfMonths } = this.props;
-    const { currentMonth, focuseddate } = this.state;
+    const { currentMonth, focusedDate } = this.state;
 
-    const newFocuseddateMonth = getMonth(newFocuseddate);
-    const focuseddateMonth = getMonth(focuseddate);
-    const isNewFocuseddateVisible = isDayVisible(newFocuseddate, currentMonth, numberOfMonths);
-    if (newFocuseddateMonth !== focuseddateMonth && !isNewFocuseddateVisible) {
-      this.onNextMonthTransition(newFocuseddate);
+    const newFocusedDateMonth = getMonth(newFocusedDate);
+    const focusedDateMonth = getMonth(focusedDate);
+    const isNewFocusedDateVisible = isDayVisible(newFocusedDate, currentMonth, numberOfMonths);
+    if (newFocusedDateMonth !== focusedDateMonth && !isNewFocusedDateVisible) {
+      this.onNextMonthTransition(newFocusedDate);
       return true;
     }
 
     return false;
   }
 
-  maybeTransitionPrevMonth(newFocuseddate) {
+  maybeTransitionPrevMonth(newFocusedDate) {
     const { numberOfMonths } = this.props;
-    const { currentMonth, focuseddate } = this.state;
+    const { currentMonth, focusedDate } = this.state;
 
-    const newFocuseddateMonth = getMonth(newFocuseddate);
-    const focuseddateMonth = getMonth(focuseddate);
-    const isNewFocuseddateVisible = isDayVisible(newFocuseddate, currentMonth, numberOfMonths);
-    if (newFocuseddateMonth !== focuseddateMonth && !isNewFocuseddateVisible) {
-      this.onPrevMonthTransition(newFocuseddate);
+    const newFocusedDateMonth = getMonth(newFocusedDate);
+    const focusedDateMonth = getMonth(focusedDate);
+    const isNewFocusedDateVisible = isDayVisible(newFocusedDate, currentMonth, numberOfMonths);
+    if (newFocusedDateMonth !== focusedDateMonth && !isNewFocusedDateVisible) {
+      this.onPrevMonthTransition(newFocusedDate);
       return true;
     }
 
@@ -811,8 +811,8 @@ class DayPicker extends React.PureComponent {
     const {
       currentMonth,
       monthTransition,
-      focuseddate,
-      nextFocuseddate,
+      focusedDate,
+      nextFocusedDate,
       withMouseInteractions,
       calendarMonthWidth,
     } = this.state;
@@ -847,19 +847,19 @@ class DayPicker extends React.PureComponent {
       if (onYearChange) onYearChange(newMonth);
     }
 
-    let newFocuseddate = null;
-    if (nextFocuseddate) {
-      newFocuseddate = nextFocuseddate;
-    } else if (!focuseddate && !withMouseInteractions) {
-      newFocuseddate = this.getFocusedday(newMonth);
+    let newFocusedDate = null;
+    if (nextFocusedDate) {
+      newFocusedDate = nextFocusedDate;
+    } else if (!focusedDate && !withMouseInteractions) {
+      newFocusedDate = this.getFocusedday(newMonth);
     }
 
     this.setState({
       currentMonth: newMonth,
       monthTransition: null,
       translationValue: (isRTL && this.isHorizontal()) ? -calendarMonthWidth : 0,
-      nextFocuseddate: null,
-      focuseddate: newFocuseddate,
+      nextFocusedDate: null,
+      focusedDate: newFocusedDate,
     }, () => {
       // we don't want to focus on the relevant calendar day after a month transition
       // if the user is navigating around using a mouse
@@ -1035,7 +1035,7 @@ class DayPicker extends React.PureComponent {
       monthTransition,
       translationValue,
       scrollableMonthMultiple,
-      focuseddate,
+      focusedDate,
       showKeyboardShortcuts,
       isTouchDevice: isTouch,
       hasSetHeight,
@@ -1235,7 +1235,7 @@ class DayPicker extends React.PureComponent {
                   daySize={daySize}
                   firstDayOfWeek={firstDayOfWeek}
                   isFocused={shouldFocusDate}
-                  focuseddate={focuseddate}
+                  focusedDate={focusedDate}
                   phrases={phrases}
                   isRTL={isRTL}
                   dayAriaLabelFormat={dayAriaLabelFormat}

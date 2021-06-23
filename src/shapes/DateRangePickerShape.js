@@ -17,7 +17,7 @@ import NavPositionShape from './NavPositionShape';
 export default {
   // required props for a functional interactive DateRangePicker
   startDate: PropTypes.object,
-  enddate: PropTypes.object,
+  endDate: PropTypes.object,
   onDatesChange: PropTypes.func.isRequired,
 
   focusedInput: FocusedInputShape,
@@ -29,11 +29,11 @@ export default {
   startDateId: PropTypes.string.isRequired,
   startDatePlaceholderText: PropTypes.string,
   startDateOffset: PropTypes.func,
-  enddateOffset: PropTypes.func,
-  enddateId: PropTypes.string.isRequired,
-  enddatePlaceholderText: PropTypes.string,
+  endDateOffset: PropTypes.func,
+  endDateId: PropTypes.string.isRequired,
+  endDatePlaceholderText: PropTypes.string,
   startDateAriaLabel: PropTypes.string,
-  enddateAriaLabel: PropTypes.string,
+  endDateAriaLabel: PropTypes.string,
   disabled: DisabledShape,
   required: PropTypes.bool,
   readOnly: PropTypes.bool,

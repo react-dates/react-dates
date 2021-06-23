@@ -58,10 +58,10 @@ import DayPicker from './DayPicker';
 
 const propTypes = forbidExtraProps({
   startDate: PropTypes.object,
-  enddate: PropTypes.object,
+  endDate: PropTypes.object,
   onDatesChange: PropTypes.func,
   startDateOffset: PropTypes.func,
-  enddateOffset: PropTypes.func,
+  endDateOffset: PropTypes.func,
   minDate: PropTypes.object,
   maxDate: PropTypes.object,
 
@@ -135,10 +135,10 @@ const propTypes = forbidExtraProps({
 
 const defaultProps = {
   startDate: null,
-  enddate: null,
+  endDate: null,
   onDatesChange() {},
   startDateOffset: undefined,
-  enddateOffset: undefined,
+  endDateOffset: undefined,
   minDate: null,
   maxDate: null,
 
@@ -216,7 +216,7 @@ const getChooseAvailableDatePhrase = (phrases, focusedInput) => {
     return phrases.chooseAvailableStartDate;
   }
   if (focusedInput === END_DATE) {
-    return phrases.chooseAvailableEnddate;
+    return phrases.chooseAvailableEndDate;
   }
   return phrases.chooseAvailableDate;
 };
@@ -236,7 +236,7 @@ export default class DayPickerRangeController extends React.PureComponent {
       'highlighted-calendar': (day) => props.isDayHighlighted(day),
       valid: (day) => !this.isBlocked(day),
       'selected-start': (day) => this.isStartDate(day),
-      'selected-end': (day) => this.isEnddate(day),
+      'selected-end': (day) => this.isEndDate(day),
       'blocked-minimum-nights': (day) => this.doesNotMeetMinimumNights(day),
       'selected-span': (day) => this.isInSelectedSpan(day),
       'last-in-range': (day) => this.isLastInRange(day),
@@ -246,13 +246,13 @@ export default class DayPickerRangeController extends React.PureComponent {
       'after-hovered-start': (day) => this.isDayAfterHoveredStartDate(day),
       'first-day-of-week': (day) => this.isFirstDayOfWeek(day),
       'last-day-of-week': (day) => this.isLastDayOfWeek(day),
-      'hovered-start-first-possible-end': (day, hoverDate) => this.isFirstPossibleEnddateForHoveredStartDate(day, hoverDate),
+      'hovered-start-first-possible-end': (day, hoverDate) => this.isFirstPossibleEndDateForHoveredStartDate(day, hoverDate),
       'hovered-start-blocked-minimum-nights': (day, hoverDate) => this.doesNotMeetMinNightsForHoveredStartDate(day, hoverDate),
-      'before-hovered-end': (day) => this.isDayBeforeHoveredEnddate(day),
+      'before-hovered-end': (day) => this.isDayBeforeHoveredEndDate(day),
       'no-selected-start-before-selected-end': (day) => this.beforeSelectedEnd(day) && !props.startDate,
       'selected-start-in-hovered-span': (day, hoverDate) => this.isStartDate(day) && isAfterDay(hoverDate, day),
-      'selected-start-no-selected-end': (day) => this.isStartDate(day) && !props.enddate,
-      'selected-end-no-selected-start': (day) => this.isEnddate(day) && !props.startDate,
+      'selected-start-no-selected-end': (day) => this.isStartDate(day) && !props.endDate,
+      'selected-end-no-selected-start': (day) => this.isEndDate(day) && !props.startDate,
     };
 
     const { currentMonth, visibleDays } = this.getStateForNewMonth(props);
@@ -288,7 +288,7 @@ export default class DayPickerRangeController extends React.PureComponent {
   UNSAFE_componentWillReceiveProps(nextProps) {
     const {
       startDate,
-      enddate,
+      endDate,
       focusedInput,
       getMinNightsForHoverDate,
       minimumNights,
@@ -303,7 +303,7 @@ export default class DayPickerRangeController extends React.PureComponent {
 
     const {
       startDate: prevStartDate,
-      enddate: prevEnddate,
+      endDate: prevEndDate,
       focusedInput: prevFocusedInput,
       minimumNights: prevMinimumNights,
       isOutsideRange: prevIsOutsideRange,
@@ -342,7 +342,7 @@ export default class DayPickerRangeController extends React.PureComponent {
     );
 
     const didStartDateChange = startDate !== prevStartDate;
-    const didEnddateChange = enddate !== prevEnddate;
+    const didEndDateChange = endDate !== prevEndDate;
     const didFocusChange = focusedInput !== prevFocusedInput;
 
     if (
@@ -374,14 +374,14 @@ export default class DayPickerRangeController extends React.PureComponent {
         const endSpan = addDays(prevStartDate, prevMinimumNights + 1);
         modifiers = this.deleteModifierFromRange(modifiers, startSpan, endSpan, 'after-hovered-start');
 
-        if (!enddate || !prevEnddate) {
+        if (!endDate || !prevEndDate) {
           modifiers = this.deleteModifier(modifiers, prevStartDate, 'selected-start-no-selected-end');
         }
       }
 
-      if (!prevStartDate && enddate && startDate) {
-        modifiers = this.deleteModifier(modifiers, enddate, 'selected-end-no-selected-start');
-        modifiers = this.deleteModifier(modifiers, enddate, 'selected-end-in-hovered-span');
+      if (!prevStartDate && endDate && startDate) {
+        modifiers = this.deleteModifier(modifiers, endDate, 'selected-end-no-selected-start');
+        modifiers = this.deleteModifier(modifiers, endDate, 'selected-end-in-hovered-span');
 
         values(visibleDays).forEach((days) => {
           Object.keys(days).forEach((day) => {
@@ -392,55 +392,55 @@ export default class DayPickerRangeController extends React.PureComponent {
       }
     }
 
-    if (didEnddateChange) {
-      modifiers = this.deleteModifier(modifiers, prevEnddate, 'selected-end');
-      modifiers = this.addModifier(modifiers, enddate, 'selected-end');
+    if (didEndDateChange) {
+      modifiers = this.deleteModifier(modifiers, prevEndDate, 'selected-end');
+      modifiers = this.addModifier(modifiers, endDate, 'selected-end');
 
-      if (prevEnddate && (!startDate || !prevStartDate)) {
-        modifiers = this.deleteModifier(modifiers, prevEnddate, 'selected-end-no-selected-start');
+      if (prevEndDate && (!startDate || !prevStartDate)) {
+        modifiers = this.deleteModifier(modifiers, prevEndDate, 'selected-end-no-selected-start');
       }
     }
 
-    if (didStartDateChange || didEnddateChange) {
-      if (prevStartDate && prevEnddate) {
+    if (didStartDateChange || didEndDateChange) {
+      if (prevStartDate && prevEndDate) {
         modifiers = this.deleteModifierFromRange(
           modifiers,
           prevStartDate,
-          addDays(prevEnddate, 1),
+          addDays(prevEndDate, 1),
           'selected-span',
         );
       }
 
-      if (startDate && enddate) {
+      if (startDate && endDate) {
         modifiers = this.deleteModifierFromRange(
           modifiers,
           startDate,
-          addDays(enddate, 1),
+          addDays(endDate, 1),
           'hovered-span',
         );
 
         modifiers = this.addModifierToRange(
           modifiers,
           addDays(startDate, 1),
-          enddate,
+          endDate,
           'selected-span',
         );
       }
 
-      if (startDate && !enddate) {
+      if (startDate && !endDate) {
         modifiers = this.addModifier(modifiers, startDate, 'selected-start-no-selected-end');
       }
 
-      if (enddate && !startDate) {
-        modifiers = this.addModifier(modifiers, enddate, 'selected-end-no-selected-start');
+      if (endDate && !startDate) {
+        modifiers = this.addModifier(modifiers, endDate, 'selected-end-no-selected-start');
       }
 
-      if (!startDate && enddate) {
+      if (!startDate && endDate) {
         values(visibleDays).forEach((days) => {
           Object.keys(days).forEach((day) => {
             const dateObj = day;
 
-            if (isBeforeDay(dateObj, enddate)) {
+            if (isBeforeDay(dateObj, endDate)) {
               modifiers = this.addModifier(modifiers, dateObj, 'no-selected-start-before-selected-end');
             }
           });
@@ -448,15 +448,15 @@ export default class DayPickerRangeController extends React.PureComponent {
       }
     }
 
-    if (!this.isTouchDevice && didStartDateChange && startDate && !enddate) {
+    if (!this.isTouchDevice && didStartDateChange && startDate && !endDate) {
       const startSpan = addDays(startDate, 1);
       const endSpan = addDays(startDate, minimumNights + 1);
       modifiers = this.addModifierToRange(modifiers, startSpan, endSpan, 'after-hovered-start');
     }
 
-    if (!this.isTouchDevice && didEnddateChange && !startDate && enddate) {
-      const startSpan = subDays(enddate, minimumNights);
-      const endSpan = new Date(enddate);
+    if (!this.isTouchDevice && didEndDateChange && !startDate && endDate) {
+      const startSpan = subDays(endDate, minimumNights);
+      const endSpan = new Date(endDate);
       modifiers = this.addModifierToRange(modifiers, startSpan, endSpan, 'before-hovered-end');
     }
 
@@ -608,7 +608,7 @@ export default class DayPickerRangeController extends React.PureComponent {
       onClose,
       onDatesChange,
       startDateOffset,
-      enddateOffset,
+      endDateOffset,
       disabled,
       daysViolatingMinNightsCanBeClicked,
     } = this.props;
@@ -616,72 +616,72 @@ export default class DayPickerRangeController extends React.PureComponent {
     if (e) e.preventDefault();
     if (this.isBlocked(day, !daysViolatingMinNightsCanBeClicked)) return;
 
-    let { startDate, enddate } = this.props;
+    let { startDate, endDate } = this.props;
 
-    if (startDateOffset || enddateOffset) {
+    if (startDateOffset || endDateOffset) {
       startDate = getSelectedDateOffset(startDateOffset, day);
-      enddate = getSelectedDateOffset(enddateOffset, day);
+      endDate = getSelectedDateOffset(endDateOffset, day);
 
-      if (this.isBlocked(startDate) || this.isBlocked(enddate)) {
+      if (this.isBlocked(startDate) || this.isBlocked(endDate)) {
         return;
       }
 
-      onDatesChange({ startDate, enddate });
+      onDatesChange({ startDate, endDate });
 
       if (!keepOpenOnDateSelect) {
         onFocusChange(null);
-        onClose({ startDate, enddate });
+        onClose({ startDate, endDate });
       }
     } else if (
       daysViolatingMinNightsCanBeClicked
       && this.doesNotMeetMinimumNights(day)
     ) {
-      enddate = day;
-      onDatesChange({ startDate, enddate });
+      endDate = day;
+      onDatesChange({ startDate, endDate });
     } else if (focusedInput === START_DATE) {
-      const lastAllowedStartDate = enddate && subDays(enddate, minimumNights);
-      const isStartDateAfterEnddate = isBeforeDay(lastAllowedStartDate, day)
-        || isAfterDay(startDate, enddate);
-      const isEnddateDisabled = disabled === END_DATE;
+      const lastAllowedStartDate = endDate && subDays(endDate, minimumNights);
+      const isStartDateAfterEndDate = isBeforeDay(lastAllowedStartDate, day)
+        || isAfterDay(startDate, endDate);
+      const isEndDateDisabled = disabled === END_DATE;
 
-      if (!isEnddateDisabled || !isStartDateAfterEnddate) {
+      if (!isEndDateDisabled || !isStartDateAfterEndDate) {
         startDate = day;
-        if (isStartDateAfterEnddate) {
-          enddate = null;
+        if (isStartDateAfterEndDate) {
+          endDate = null;
         }
       }
 
-      onDatesChange({ startDate, enddate });
+      onDatesChange({ startDate, endDate });
 
-      if (isEnddateDisabled && !isStartDateAfterEnddate) {
+      if (isEndDateDisabled && !isStartDateAfterEndDate) {
         onFocusChange(null);
-        onClose({ startDate, enddate });
-      } else if (!isEnddateDisabled) {
+        onClose({ startDate, endDate });
+      } else if (!isEndDateDisabled) {
         onFocusChange(END_DATE);
       }
     } else if (focusedInput === END_DATE) {
-      const firstAllowedEnddate = startDate && addDays(startDate, minimumNights);
+      const firstAllowedEndDate = startDate && addDays(startDate, minimumNights);
 
       if (!startDate) {
-        enddate = day;
-        onDatesChange({ startDate, enddate });
+        endDate = day;
+        onDatesChange({ startDate, endDate });
         onFocusChange(START_DATE);
-      } else if (isInclusivelyAfterDay(day, firstAllowedEnddate)) {
-        enddate = day;
-        onDatesChange({ startDate, enddate });
+      } else if (isInclusivelyAfterDay(day, firstAllowedEndDate)) {
+        endDate = day;
+        onDatesChange({ startDate, endDate });
         if (!keepOpenOnDateSelect) {
           onFocusChange(null);
-          onClose({ startDate, enddate });
+          onClose({ startDate, endDate });
         }
       } else if (disabled !== START_DATE) {
         startDate = day;
-        enddate = null;
-        onDatesChange({ startDate, enddate });
+        endDate = null;
+        onDatesChange({ startDate, endDate });
       } else {
-        onDatesChange({ startDate, enddate });
+        onDatesChange({ startDate, endDate });
       }
     } else {
-      onDatesChange({ startDate, enddate });
+      onDatesChange({ startDate, endDate });
     }
 
     onBlur();
@@ -692,12 +692,12 @@ export default class DayPickerRangeController extends React.PureComponent {
     if (this.isTouchDevice) return;
     const {
       startDate,
-      enddate,
+      endDate,
       getMinNightsForHoverDate,
       focusedInput,
       minimumNights,
       startDateOffset,
-      enddateOffset,
+      endDateOffset,
     } = this.props;
 
     const {
@@ -709,12 +709,12 @@ export default class DayPickerRangeController extends React.PureComponent {
     let nextDateOffset = null;
 
     if (focusedInput) {
-      const hasOffset = startDateOffset || enddateOffset;
+      const hasOffset = startDateOffset || endDateOffset;
       let modifiers = {};
 
       if (hasOffset) {
         const start = getSelectedDateOffset(startDateOffset, day);
-        const end = getSelectedDateOffset(enddateOffset, day, (rangeDay) => addDays(rangeDay, 1));
+        const end = getSelectedDateOffset(endDateOffset, day, (rangeDay) => addDays(rangeDay, 1));
 
         nextDateOffset = {
           start,
@@ -732,7 +732,7 @@ export default class DayPickerRangeController extends React.PureComponent {
         modifiers = this.deleteModifier(modifiers, hoverDate, 'hovered');
         modifiers = this.addModifier(modifiers, day, 'hovered');
 
-        if (startDate && !enddate && focusedInput === END_DATE) {
+        if (startDate && !endDate && focusedInput === END_DATE) {
           if (isAfterDay(hoverDate, startDate)) {
             const endSpan = addDays(hoverDate, 1);
             modifiers = this.deleteModifierFromRange(modifiers, startDate, endSpan, 'hovered-span');
@@ -749,18 +749,18 @@ export default class DayPickerRangeController extends React.PureComponent {
           }
         }
 
-        if (!startDate && enddate && focusedInput === START_DATE) {
-          if (isBeforeDay(hoverDate, enddate)) {
-            modifiers = this.deleteModifierFromRange(modifiers, hoverDate, enddate, 'hovered-span');
+        if (!startDate && endDate && focusedInput === START_DATE) {
+          if (isBeforeDay(hoverDate, endDate)) {
+            modifiers = this.deleteModifierFromRange(modifiers, hoverDate, endDate, 'hovered-span');
           }
 
-          if (isAfterDay(day, enddate) || isSameDay(day, enddate)) {
-            modifiers = this.deleteModifier(modifiers, enddate, 'selected-end-in-hovered-span');
+          if (isAfterDay(day, endDate) || isSameDay(day, endDate)) {
+            modifiers = this.deleteModifier(modifiers, endDate, 'selected-end-in-hovered-span');
           }
 
-          if (!this.isBlocked(day) && isBeforeDay(day, enddate)) {
-            modifiers = this.addModifierToRange(modifiers, day, enddate, 'hovered-span');
-            modifiers = this.addModifier(modifiers, enddate, 'selected-end-in-hovered-span');
+          if (!this.isBlocked(day) && isBeforeDay(day, endDate)) {
+            modifiers = this.addModifierToRange(modifiers, day, endDate, 'hovered-span');
+            modifiers = this.addModifier(modifiers, endDate, 'selected-end-in-hovered-span');
           }
         }
 
@@ -781,16 +781,16 @@ export default class DayPickerRangeController extends React.PureComponent {
           }
         }
 
-        if (enddate) {
-          const startSpan = subDays(enddate, minimumNights);
-          modifiers = this.deleteModifierFromRange(modifiers, startSpan, enddate, 'before-hovered-end');
+        if (endDate) {
+          const startSpan = subDays(endDate, minimumNights);
+          modifiers = this.deleteModifierFromRange(modifiers, startSpan, endDate, 'before-hovered-end');
 
-          if (isSameDay(day, enddate)) {
-            const newStartSpan = subDays(enddate, minimumNights);
+          if (isSameDay(day, endDate)) {
+            const newStartSpan = subDays(endDate, minimumNights);
             modifiers = this.addModifierToRange(
               modifiers,
               newStartSpan,
-              enddate,
+              endDate,
               'before-hovered-end',
             );
           }
@@ -847,7 +847,7 @@ export default class DayPickerRangeController extends React.PureComponent {
   onDayMouseLeave(day) {
     const {
       startDate,
-      enddate,
+      endDate,
       focusedInput,
       getMinNightsForHoverDate,
       minimumNights,
@@ -863,7 +863,7 @@ export default class DayPickerRangeController extends React.PureComponent {
       modifiers = this.deleteModifierFromRange(modifiers, dateOffset.start, dateOffset.end, 'hovered-offset');
     }
 
-    if (startDate && !enddate) {
+    if (startDate && !endDate) {
       if (isAfterDay(hoverDate, startDate)) {
         const endSpan = addDays(hoverDate, 1);
         modifiers = this.deleteModifierFromRange(modifiers, startDate, endSpan, 'hovered-span');
@@ -874,13 +874,13 @@ export default class DayPickerRangeController extends React.PureComponent {
       }
     }
 
-    if (!startDate && enddate) {
-      if (isAfterDay(enddate, hoverDate)) {
-        modifiers = this.deleteModifierFromRange(modifiers, hoverDate, enddate, 'hovered-span');
+    if (!startDate && endDate) {
+      if (isAfterDay(endDate, hoverDate)) {
+        modifiers = this.deleteModifierFromRange(modifiers, hoverDate, endDate, 'hovered-span');
       }
 
-      if (isBeforeDay(day, enddate)) {
-        modifiers = this.deleteModifier(modifiers, enddate, 'selected-end-in-hovered-span');
+      if (isBeforeDay(day, endDate)) {
+        modifiers = this.deleteModifier(modifiers, endDate, 'selected-end-in-hovered-span');
       }
     }
 
@@ -890,9 +890,9 @@ export default class DayPickerRangeController extends React.PureComponent {
       modifiers = this.deleteModifierFromRange(modifiers, startSpan, endSpan, 'after-hovered-start');
     }
 
-    if (enddate && isSameDay(day, enddate)) {
-      const startSpan = subDays(enddate, minimumNights);
-      modifiers = this.deleteModifierFromRange(modifiers, startSpan, enddate, 'before-hovered-end');
+    if (endDate && isSameDay(day, endDate)) {
+      const startSpan = subDays(endDate, minimumNights);
+      modifiers = this.deleteModifierFromRange(modifiers, startSpan, endDate, 'before-hovered-end');
     }
 
     if (!this.isBlocked(hoverDate)) {
@@ -1079,25 +1079,25 @@ export default class DayPickerRangeController extends React.PureComponent {
   getFirstFocusableDay(newMonth) {
     const {
       startDate,
-      enddate,
+      endDate,
       focusedInput,
       minimumNights,
       numberOfMonths,
     } = this.props;
 
-    let focuseddate = startOfMonth(newMonth);
+    let focusedDate = startOfMonth(newMonth);
     if (focusedInput === START_DATE && startDate) {
-      focuseddate = new Date(startDate);
-    } else if (focusedInput === END_DATE && !enddate && startDate) {
-      focuseddate = addDays(startDate, minimumNights);
-    } else if (focusedInput === END_DATE && enddate) {
-      focuseddate = new Date(enddate);
+      focusedDate = new Date(startDate);
+    } else if (focusedInput === END_DATE && !endDate && startDate) {
+      focusedDate = addDays(startDate, minimumNights);
+    } else if (focusedInput === END_DATE && endDate) {
+      focusedDate = new Date(endDate);
     }
 
-    if (this.isBlocked(focuseddate)) {
+    if (this.isBlocked(focusedDate)) {
       const days = [];
       const lastVisibleDay = endOfMonth(addMonths(newMonth, numberOfMonths - 1));
-      let currentDay = new Date(focuseddate);
+      let currentDay = new Date(focusedDate);
       while (!isAfterDay(currentDay, lastVisibleDay)) {
         currentDay = addDays(currentDay, 1);
         days.push(currentDay);
@@ -1106,11 +1106,11 @@ export default class DayPickerRangeController extends React.PureComponent {
       const viableDays = days.filter((day) => !this.isBlocked(day));
 
       if (viableDays.length > 0) {
-        ([focuseddate] = viableDays);
+        ([focusedDate] = viableDays);
       }
     }
 
-    return focuseddate;
+    return focusedDate;
   }
 
   getModifiers(visibleDays) {
@@ -1226,20 +1226,20 @@ export default class DayPickerRangeController extends React.PureComponent {
   }
 
   isDayAfterHoveredStartDate(day) {
-    const { startDate, enddate, minimumNights } = this.props;
+    const { startDate, endDate, minimumNights } = this.props;
     const { hoverDate } = this.state || {};
 
     return !!startDate
-      && !enddate
+      && !endDate
       && !this.isBlocked(day)
       && isNextDay(hoverDate, day)
       && minimumNights > 0
       && isSameDay(hoverDate, startDate);
   }
 
-  isEnddate(day) {
-    const { enddate } = this.props;
-    return isSameDay(day, enddate);
+  isEndDate(day) {
+    const { endDate } = this.props;
+    return isSameDay(day, endDate);
   }
 
   isHovered(day) {
@@ -1249,15 +1249,15 @@ export default class DayPickerRangeController extends React.PureComponent {
   }
 
   isInHoveredSpan(day) {
-    const { startDate, enddate } = this.props;
+    const { startDate, endDate } = this.props;
     const { hoverDate } = this.state || {};
 
-    const isForwardRange = !!startDate && !enddate && (
+    const isForwardRange = !!startDate && !endDate && (
       (hoverDate >= startDate ? isWithinInterval(day, { start: startDate, end: hoverDate }) : false)
       || isSameDay(hoverDate, day)
     );
-    const isBackwardRange = !!enddate && !startDate && (
-      (hoverDate <= enddate ? isWithinInterval(day, { start: hoverDate, end: enddate }) : false)
+    const isBackwardRange = !!endDate && !startDate && (
+      (hoverDate <= endDate ? isWithinInterval(day, { start: hoverDate, end: endDate }) : false)
       || isSameDay(hoverDate, day)
     );
 
@@ -1267,16 +1267,16 @@ export default class DayPickerRangeController extends React.PureComponent {
   }
 
   isInSelectedSpan(day) {
-    const { startDate, enddate } = this.props;
-    if (!isDate(startDate) || !isDate(enddate)) {
+    const { startDate, endDate } = this.props;
+    if (!isDate(startDate) || !isDate(endDate)) {
       return false;
     }
-    return isWithinInterval(day, { start: startDate, end: enddate });
+    return isWithinInterval(day, { start: startDate, end: endDate });
   }
 
   isLastInRange(day) {
-    const { enddate } = this.props;
-    return this.isInSelectedSpan(day) && isNextDay(day, enddate);
+    const { endDate } = this.props;
+    return this.isInSelectedSpan(day) && isNextDay(day, endDate);
   }
 
   isStartDate(day) {
@@ -1311,29 +1311,29 @@ export default class DayPickerRangeController extends React.PureComponent {
     return isSameDay(day, endOfWeek(day, { locale: getLocale(locale) }));
   }
 
-  isFirstPossibleEnddateForHoveredStartDate(day, hoverDate) {
+  isFirstPossibleEndDateForHoveredStartDate(day, hoverDate) {
     const { focusedInput, getMinNightsForHoverDate } = this.props;
     if (focusedInput !== END_DATE || !hoverDate || this.isBlocked(hoverDate)) return false;
     const minNights = getMinNightsForHoverDate(hoverDate);
-    const firstAvailableEnddate = addDays(hoverDate, minNights);
-    return isSameDay(day, firstAvailableEnddate);
+    const firstAvailableEndDate = addDays(hoverDate, minNights);
+    return isSameDay(day, firstAvailableEndDate);
   }
 
   beforeSelectedEnd(day) {
-    const { enddate } = this.props;
-    return isBeforeDay(day, enddate);
+    const { endDate } = this.props;
+    return isBeforeDay(day, endDate);
   }
 
-  isDayBeforeHoveredEnddate(day) {
-    const { startDate, enddate, minimumNights } = this.props;
+  isDayBeforeHoveredEndDate(day) {
+    const { startDate, endDate, minimumNights } = this.props;
     const { hoverDate } = this.state || {};
 
-    return !!enddate
+    return !!endDate
       && !startDate
       && !this.isBlocked(day)
       && isPreviousDay(hoverDate, day)
       && minimumNights > 0
-      && isSameDay(hoverDate, enddate);
+      && isSameDay(hoverDate, endDate);
   }
 
   render() {

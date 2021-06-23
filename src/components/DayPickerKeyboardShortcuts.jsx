@@ -42,7 +42,7 @@ function getKeyboardShortcuts(phrases) {
     {
       unicode: '↵',
       label: phrases.enterKey,
-      action: phrases.selectFocuseddate,
+      action: phrases.selectFocusedDate,
     },
     {
       unicode: '←/→',

@@ -3,7 +3,7 @@ export const ISO_FORMAT = 'yyyy-MM-dd';
 export const ISO_MONTH_FORMAT = 'yyyy-MM';
 
 export const START_DATE = 'startDate';
-export const END_DATE = 'enddate';
+export const END_DATE = 'endDate';
 
 export const HORIZONTAL_ORIENTATION = 'horizontal';
 export const VERTICAL_ORIENTATION = 'vertical';

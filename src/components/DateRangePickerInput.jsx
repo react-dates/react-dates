@@ -35,25 +35,25 @@ const propTypes = forbidExtraProps({
   startDateAriaLabel: PropTypes.string,
   screenReaderMessage: PropTypes.string,
 
-  enddateId: PropTypes.string,
-  enddatePlaceholderText: PropTypes.string,
-  enddateAriaLabel: PropTypes.string,
+  endDateId: PropTypes.string,
+  endDatePlaceholderText: PropTypes.string,
+  endDateAriaLabel: PropTypes.string,
 
   onStartDateFocus: PropTypes.func,
-  onEnddateFocus: PropTypes.func,
+  onEndDateFocus: PropTypes.func,
   onStartDateChange: PropTypes.func,
-  onEnddateChange: PropTypes.func,
+  onEndDateChange: PropTypes.func,
   onStartDateShiftTab: PropTypes.func,
-  onEnddateTab: PropTypes.func,
+  onEndDateTab: PropTypes.func,
   onClearDates: PropTypes.func,
   onKeyDownArrowDown: PropTypes.func,
   onKeyDownQuestionMark: PropTypes.func,
 
   startDate: PropTypes.string,
-  enddate: PropTypes.string,
+  endDate: PropTypes.string,
 
   isStartDateFocused: PropTypes.bool,
-  isEnddateFocused: PropTypes.bool,
+  isEndDateFocused: PropTypes.bool,
   showClearDates: PropTypes.bool,
   disabled: DisabledShape,
   required: PropTypes.bool,
@@ -83,27 +83,27 @@ const propTypes = forbidExtraProps({
 const defaultProps = {
   children: null,
   startDateId: START_DATE,
-  enddateId: END_DATE,
+  endDateId: END_DATE,
   startDatePlaceholderText: 'Start Date',
-  enddatePlaceholderText: 'End Date',
+  endDatePlaceholderText: 'End Date',
   startDateAriaLabel: undefined,
-  enddateAriaLabel: undefined,
+  endDateAriaLabel: undefined,
   screenReaderMessage: '',
   onStartDateFocus() {},
-  onEnddateFocus() {},
+  onEndDateFocus() {},
   onStartDateChange() {},
-  onEnddateChange() {},
+  onEndDateChange() {},
   onStartDateShiftTab() {},
-  onEnddateTab() {},
+  onEndDateTab() {},
   onClearDates() {},
   onKeyDownArrowDown() {},
   onKeyDownQuestionMark() {},
 
   startDate: '',
-  enddate: '',
+  endDate: '',
 
   isStartDateFocused: false,
-  isEnddateFocused: false,
+  isEndDateFocused: false,
   showClearDates: false,
   disabled: false,
   required: false,
@@ -141,14 +141,14 @@ function DateRangePickerInput({
   onStartDateFocus,
   onStartDateShiftTab,
   startDateAriaLabel,
-  enddate,
-  enddateId,
-  enddatePlaceholderText,
-  isEnddateFocused,
-  onEnddateChange,
-  onEnddateFocus,
-  onEnddateTab,
-  enddateAriaLabel,
+  endDate,
+  endDateId,
+  endDatePlaceholderText,
+  isEndDateFocused,
+  onEndDateChange,
+  onEndDateFocus,
+  onEndDateTab,
+  endDateAriaLabel,
   onKeyDownArrowDown,
   onKeyDownQuestionMark,
   onClearDates,
@@ -192,7 +192,7 @@ function DateRangePickerInput({
 
   const screenReaderStartDateText = screenReaderMessage
     || phrases.keyboardForwardNavigationInstructions;
-  const screenReaderEnddateText = screenReaderMessage
+  const screenReaderEndDateText = screenReaderMessage
     || phrases.keyboardBackwardNavigationInstructions;
 
   const inputIcon = (showDefaultInputIcon || customInputIcon !== null) && (
@@ -208,7 +208,7 @@ function DateRangePickerInput({
   );
 
   const startDateDisabled = disabled === START_DATE || disabled === true;
-  const enddateDisabled = disabled === END_DATE || disabled === true;
+  const endDateDisabled = disabled === END_DATE || disabled === true;
 
   return (
     <div
@@ -257,23 +257,23 @@ function DateRangePickerInput({
       </div>
 
       <DateInput
-        id={enddateId}
-        placeholder={enddatePlaceholderText}
-        ariaLabel={enddateAriaLabel}
-        displayValue={enddate}
-        screenReaderMessage={screenReaderEnddateText}
-        focused={isEnddateFocused}
+        id={endDateId}
+        placeholder={endDatePlaceholderText}
+        ariaLabel={endDateAriaLabel}
+        displayValue={endDate}
+        screenReaderMessage={screenReaderEndDateText}
+        focused={isEndDateFocused}
         isFocused={isFocused}
-        disabled={enddateDisabled}
+        disabled={endDateDisabled}
         required={required}
         readOnly={readOnly}
         showCaret={showCaret}
         openDirection={openDirection}
-        onChange={onEnddateChange}
-        onFocus={onEnddateFocus}
+        onChange={onEndDateChange}
+        onFocus={onEndDateFocus}
         onKeyDownArrowDown={onKeyDownArrowDown}
         onKeyDownQuestionMark={onKeyDownQuestionMark}
-        onKeyDownTab={onEnddateTab}
+        onKeyDownTab={onEndDateTab}
         verticalSpacing={verticalSpacing}
         small={small}
         regular={regular}
@@ -287,7 +287,7 @@ function DateRangePickerInput({
             styles.DateRangePickerInput_clearDates,
             small && styles.DateRangePickerInput_clearDates__small,
             !customCloseIcon && styles.DateRangePickerInput_clearDates_default,
-            !(startDate || enddate) && styles.DateRangePickerInput_clearDates__hide,
+            !(startDate || endDate) && styles.DateRangePickerInput_clearDates__hide,
           )}
           onClick={onClearDates}
           disabled={disabled}

@@ -47,16 +47,16 @@ const propTypes = forbidExtraProps({
 const defaultProps = {
   // required props for a functional interactive DateRangePicker
   startDate: null,
-  enddate: null,
+  endDate: null,
   focusedInput: null,
 
   // input related props
   startDatePlaceholderText: 'Start Date',
-  enddatePlaceholderText: 'End Date',
+  endDatePlaceholderText: 'End Date',
   startDateAriaLabel: undefined,
-  enddateAriaLabel: undefined,
+  endDateAriaLabel: undefined,
   startDateOffset: undefined,
-  enddateOffset: undefined,
+  endDateOffset: undefined,
   disabled: false,
   required: false,
   readOnly: false,
@@ -202,7 +202,7 @@ class DateRangePicker extends React.PureComponent {
       onFocusChange,
       onClose,
       startDate,
-      enddate,
+      endDate,
       appendToBody,
     } = this.props;
 
@@ -216,7 +216,7 @@ class DateRangePicker extends React.PureComponent {
     });
 
     onFocusChange(null);
-    onClose({ startDate, enddate });
+    onClose({ startDate, endDate });
   }
 
   onDateRangePickerInputFocus(focusedInput) {
@@ -428,8 +428,8 @@ class DateRangePicker extends React.PureComponent {
       focusedInput,
       startDate,
       startDateOffset,
-      enddate,
-      enddateOffset,
+      endDate,
+      endDateOffset,
       minDate,
       maxDate,
       minimumNights,
@@ -465,7 +465,7 @@ class DateRangePicker extends React.PureComponent {
       ? this.onOutsideClick
       : undefined;
     const initialVisibleMonthThunk = initialVisibleMonth || (
-      () => (startDate || enddate || addHours(startOfDay(new Date()), 12))
+      () => (startDate || endDate || addHours(startOfDay(new Date()), 12))
     );
 
     const closeIcon = customCloseIcon || (
@@ -512,8 +512,8 @@ class DateRangePicker extends React.PureComponent {
           focusedInput={focusedInput}
           startDate={startDate}
           startDateOffset={startDateOffset}
-          enddate={enddate}
-          enddateOffset={enddateOffset}
+          endDate={endDate}
+          endDateOffset={endDateOffset}
           minDate={minDate}
           maxDate={maxDate}
           monthFormat={monthFormat}
@@ -576,10 +576,10 @@ class DateRangePicker extends React.PureComponent {
       startDateId,
       startDatePlaceholderText,
       startDateAriaLabel,
-      enddate,
-      enddateId,
-      enddatePlaceholderText,
-      enddateAriaLabel,
+      endDate,
+      endDateId,
+      endDatePlaceholderText,
+      endDateAriaLabel,
       focusedInput,
       screenReaderInputMessage,
       showClearDates,
@@ -626,11 +626,11 @@ class DateRangePicker extends React.PureComponent {
         startDatePlaceholderText={startDatePlaceholderText}
         isStartDateFocused={focusedInput === START_DATE}
         startDateAriaLabel={startDateAriaLabel}
-        enddate={enddate}
-        enddateId={enddateId}
-        enddatePlaceholderText={enddatePlaceholderText}
-        isEnddateFocused={focusedInput === END_DATE}
-        enddateAriaLabel={enddateAriaLabel}
+        endDate={endDate}
+        endDateId={endDateId}
+        endDatePlaceholderText={endDatePlaceholderText}
+        isEndDateFocused={focusedInput === END_DATE}
+        endDateAriaLabel={endDateAriaLabel}
         displayFormat={displayFormat}
         showClearDates={showClearDates}
         showCaret={!withPortal && !withFullScreenPortal && !hideFang}

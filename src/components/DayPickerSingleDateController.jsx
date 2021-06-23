@@ -282,12 +282,12 @@ export default class DayPickerSingleDateController extends React.PureComponent {
       });
     }
 
-    const diddateChange = date !== prevDate;
+    const didDateChange = date !== prevDate;
     const didFocusChange = focused !== prevFocused;
 
     let modifiers = {};
 
-    if (diddateChange) {
+    if (didDateChange) {
       modifiers = this.deleteModifier(modifiers, prevDate, 'selected');
       modifiers = this.addModifier(modifiers, date, 'selected');
     }
@@ -535,27 +535,27 @@ export default class DayPickerSingleDateController extends React.PureComponent {
   getFirstFocusableDay(newMonth) {
     const { date, numberOfMonths } = this.props;
 
-    let focuseddate = startOfMonth(newMonth);
+    let focusedDate = startOfMonth(newMonth);
     if (date) {
-      focuseddate = new Date(date);
+      focusedDate = new Date(date);
     }
 
-    if (this.isBlocked(focuseddate)) {
+    if (this.isBlocked(focusedDate)) {
       const days = [];
       const lastVisibleDay = endOfMonth(addMonths(newMonth, numberOfMonths - 1));
-      let currentDay = new Date(focuseddate);
+      let currentDay = new Date(focusedDate);
       while (!isAfterDay(currentDay, lastVisibleDay)) {
         currentDay = addDays(currentDay, 1);
         days.push(currentDay);
       }
 
-      const viableDays = days.filter((day) => !this.isBlocked(day) && isAfterDay(day, focuseddate));
+      const viableDays = days.filter((day) => !this.isBlocked(day) && isAfterDay(day, focusedDate));
       if (viableDays.length > 0) {
-        ([focuseddate] = viableDays);
+        ([focusedDate] = viableDays);
       }
     }
 
-    return focuseddate;
+    return focusedDate;
   }
 
   getModifiers(visibleDays) {

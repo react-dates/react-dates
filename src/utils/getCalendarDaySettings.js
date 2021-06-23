@@ -27,27 +27,27 @@ function getAriaLabel(phrases, modifiers, day, ariaLabelFormat) {
     dateIsUnavailable,
     dateIsSelected,
     dateIsSelectedAsStartDate,
-    dateIsSelectedAsEnddate,
+    dateIsSelectedAsEndDate,
   } = phrases;
 
-  const formatteddate = {
+  const formattedDate = {
     date: format(day, ariaLabelFormat),
   };
 
   if (modifiers.has('selected-start') && dateIsSelectedAsStartDate) {
-    return getPhrase(dateIsSelectedAsStartDate, formatteddate);
+    return getPhrase(dateIsSelectedAsStartDate, formattedDate);
   }
-  if (modifiers.has('selected-end') && dateIsSelectedAsEnddate) {
-    return getPhrase(dateIsSelectedAsEnddate, formatteddate);
+  if (modifiers.has('selected-end') && dateIsSelectedAsEndDate) {
+    return getPhrase(dateIsSelectedAsEndDate, formattedDate);
   }
   if (isSelected(modifiers) && dateIsSelected) {
-    return getPhrase(dateIsSelected, formatteddate);
+    return getPhrase(dateIsSelected, formattedDate);
   }
   if (modifiers.has(BLOCKED_MODIFIER)) {
-    return getPhrase(dateIsUnavailable, formatteddate);
+    return getPhrase(dateIsUnavailable, formattedDate);
   }
 
-  return getPhrase(chooseAvailableDate, formatteddate);
+  return getPhrase(chooseAvailableDate, formattedDate);
 }
 
 export default function getCalendarDaySettings(day, ariaLabelFormat, daySize, modifiers, phrases) {

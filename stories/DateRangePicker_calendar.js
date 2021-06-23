@@ -65,7 +65,7 @@ storiesOf('DRP - Calendar Props', module)
   .add('with 7 days range selection', withInfo()(() => (
     <DateRangePickerWrapper
       startDateOffset={(day) => day.subtract(3, 'days')}
-      enddateOffset={(day) => day.add(3, 'days')}
+      endDateOffset={(day) => day.add(3, 'days')}
     />
   )))
   .add('with custom day size', withInfo()(() => (
@@ -241,7 +241,7 @@ storiesOf('DRP - Calendar Props', module)
   )))
   .add('with onClose handler', withInfo()(() => (
     <DateRangePickerWrapper
-      onClose={({ startDate, enddate }) => alert(`onClose: startDate = ${startDate}, enddate = ${enddate}`)}
+      onClose={({ startDate, endDate }) => alert(`onClose: startDate = ${startDate}, endDate = ${endDate}`)}
       autoFocus
     />
   )))

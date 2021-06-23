@@ -54,20 +54,20 @@ storiesOf('DRP - Input Props', module)
   .add('default', withInfo()(() => (
     <DateRangePickerWrapper
       initialStartDate={addMonths(new Date(), 3)}
-      initialEnddate={addMonths(addDays(new Date(), 10), 3)}
+      initialEndDate={addMonths(addDays(new Date(), 10), 3)}
     />
   )))
   .add('disabled', withInfo()(() => (
     <DateRangePickerWrapper
       initialStartDate={addMonths(new Date(), 3)}
-      initialEnddate={addMonths(addDays(new Date(), 10), 3)}
+      initialEndDate={addMonths(addDays(new Date(), 10), 3)}
       disabled
     />
   )))
   .add('disabled start date', withInfo()(() => (
     <DateRangePickerWrapper
       initialStartDate={addMonths(new Date(), 3)}
-      initialEnddate={addMonths(addDays(new Date(), 10), 3)}
+      initialEndDate={addMonths(addDays(new Date(), 10), 3)}
       disabled="startDate"
       isOutsideRange={day => !isInclusivelyAfterDay(day, addMonths(new Date(), 3))}
     />
@@ -75,8 +75,8 @@ storiesOf('DRP - Input Props', module)
   .add('disabled end date', withInfo()(() => (
     <DateRangePickerWrapper
       initialStartDate={addMonths(new Date(), 3)}
-      initialEnddate={addMonths(addDays(new Date(), 10), 3)}
-      disabled="enddate"
+      initialEndDate={addMonths(addDays(new Date(), 10), 3)}
+      disabled="endDate"
       isOutsideRange={day => !isInclusivelyAfterDay(day, new Date())
         || !isInclusivelyBeforeDay(day, addMonths(addDays(new Date(), 10), 3))}
     />
@@ -84,21 +84,21 @@ storiesOf('DRP - Input Props', module)
   .add('readOnly', withInfo()(() => (
     <DateRangePickerWrapper
       initialStartDate={addMonths(new Date(), 3)}
-      initialEnddate={addMonths(addDays(new Date(), 10), 3)}
+      initialEndDate={addMonths(addDays(new Date(), 10), 3)}
       readOnly
     />
   )))
   .add('with clear dates button', withInfo()(() => (
     <DateRangePickerWrapper
       initialStartDate={addDays(new Date(), 3)}
-      initialEnddate={addDays(new Date(), 10)}
+      initialEndDate={addDays(new Date(), 10)}
       showClearDates
     />
   )))
   .add('reopens DayPicker on clear dates', withInfo()(() => (
     <DateRangePickerWrapper
       initialStartDate={addDays(new Date(), 3)}
-      initialEnddate={addDays(new Date(), 10)}
+      initialEndDate={addDays(new Date(), 10)}
       showClearDates
       reopenPickerOnClearDates
     />
@@ -106,35 +106,35 @@ storiesOf('DRP - Input Props', module)
   .add('with custom display format', withInfo()(() => (
     <DateRangePickerWrapper
       initialStartDate={addDays(new Date(), 3)}
-      initialEnddate={addDays(new Date(), 10)}
+      initialEndDate={addDays(new Date(), 10)}
       displayFormat="MMM d"
     />
   )))
   .add('with show calendar icon', withInfo()(() => (
     <DateRangePickerWrapper
       initialStartDate={addDays(new Date(), 3)}
-      initialEnddate={addDays(new Date(), 10)}
+      initialEndDate={addDays(new Date(), 10)}
       showDefaultInputIcon
     />
   )))
   .add('with custom show calendar icon', withInfo()(() => (
     <DateRangePickerWrapper
       initialStartDate={addDays(new Date(), 3)}
-      initialEnddate={addDays(new Date(), 10)}
+      initialEndDate={addDays(new Date(), 10)}
       customInputIcon={<TestCustomInputIcon />}
     />
   )))
   .add('with custom arrow icon', withInfo()(() => (
     <DateRangePickerWrapper
       initialStartDate={addDays(new Date(), 3)}
-      initialEnddate={addDays(new Date(), 10)}
+      initialEndDate={addDays(new Date(), 10)}
       customArrowIcon={<TestCustomArrowIcon />}
     />
   )))
   .add('with custom close icon', withInfo()(() => (
     <DateRangePickerWrapper
       initialStartDate={addDays(new Date(), 3)}
-      initialEnddate={addDays(new Date(), 10)}
+      initialEndDate={addDays(new Date(), 10)}
       showClearDates
       customCloseIcon={<TestCustomCloseIcon />}
     />
@@ -142,7 +142,7 @@ storiesOf('DRP - Input Props', module)
   .add('with show calendar icon after input', withInfo()(() => (
     <DateRangePickerWrapper
       initialStartDate={addDays(new Date(), 3)}
-      initialEnddate={addDays(new Date(), 10)}
+      initialEndDate={addDays(new Date(), 10)}
       showDefaultInputIcon
       inputIconPosition="after"
     />
@@ -150,21 +150,21 @@ storiesOf('DRP - Input Props', module)
   .add('with screen reader message', withInfo()(() => (
     <DateRangePickerWrapper
       initialStartDate={addDays(new Date(), 3)}
-      initialEnddate={addDays(new Date(), 10)}
+      initialEndDate={addDays(new Date(), 10)}
       screenReaderInputMessage="Here you could inform screen reader users of the date format, minimum nights, blocked out dates, etc"
     />
   )))
   .add('noBorder', withInfo()(() => (
     <DateRangePickerWrapper
       initialStartDate={addDays(new Date(), 3)}
-      initialEnddate={addDays(new Date(), 10)}
+      initialEndDate={addDays(new Date(), 10)}
       noBorder
     />
   )))
   .add('block styling', withInfo()(() => (
     <DateRangePickerWrapper
       initialStartDate={addDays(new Date(), 3)}
-      initialEnddate={addDays(new Date(), 10)}
+      initialEndDate={addDays(new Date(), 10)}
       showClearDates
       block
     />
@@ -172,7 +172,7 @@ storiesOf('DRP - Input Props', module)
   .add('small styling', withInfo()(() => (
     <DateRangePickerWrapper
       initialStartDate={addDays(new Date(), 3)}
-      initialEnddate={addDays(new Date(), 10)}
+      initialEndDate={addDays(new Date(), 10)}
       showClearDates
       small
     />
@@ -180,7 +180,7 @@ storiesOf('DRP - Input Props', module)
   .add('regular styling', withInfo()(() => (
     <DateRangePickerWrapper
       initialStartDate={addDays(new Date(), 3)}
-      initialEnddate={addDays(new Date(), 10)}
+      initialEndDate={addDays(new Date(), 10)}
       showClearDates
       regular
     />

@@ -35,7 +35,7 @@ const dayPickerRangeControllerInfo = `The ${monospace('DayPickerRangeController'
   date range. Unlike the ${monospace('DayPicker')}, which requires the consumer to explicitly define
   ${monospace('onDayMouseEnter')}, ${monospace('onDayMouseLeave')}, and ${monospace('onDayClick')}
   handlers, the consumer needs simply to maintain the ${monospace('focusedInput')},
-  ${monospace('startDate')}, and ${monospace('enddate')} values in state and then pass these down as
+  ${monospace('startDate')}, and ${monospace('endDate')} values in state and then pass these down as
   props along with ${monospace('onFocusChange')} and ${monospace('onDatesChange')} callbacks that
   update them appropriately. You can see an example of this implementation <a href=
   "https://github.com/airbnb/react-dates/blob/master/examples/DayPickerRangeControllerWrapper.jsx">
@@ -361,7 +361,7 @@ storiesOf('DayPickerRangeController', module)
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
       startDateOffset={(day) => subDays(day, 3)}
-      enddateOffset={(day) => subDays(day, 3)}
+      endDateOffset={(day) => subDays(day, 3)}
     />
   )))
   .add('with 45 days range selection', withInfo()(() => (
@@ -370,7 +370,7 @@ storiesOf('DayPickerRangeController', module)
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
       startDateOffset={(day) => subDays(day, 22)}
-      enddateOffset={(day) => addDays(day, 22)}
+      endDateOffset={(day) => addDays(day, 22)}
     />
   )))
   .add('with 4 days after today range selection', withInfo()(() => (
@@ -378,7 +378,7 @@ storiesOf('DayPickerRangeController', module)
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
-      enddateOffset={(day) => day.add(4, 'days')}
+      endDateOffset={(day) => day.add(4, 'days')}
     />
   )))
   .add('with current week range selection', withInfo()(() => (
@@ -387,7 +387,7 @@ storiesOf('DayPickerRangeController', module)
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
       startDateOffset={(day) => startOfWeek(day)}
-      enddateOffset={(day) => endOfWeek(day)}
+      endDateOffset={(day) => endOfWeek(day)}
     />
   )))
   .add('with custom inputs', withInfo()(() => (
@@ -610,7 +610,7 @@ storiesOf('DayPickerRangeController', module)
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
       initialStartDate={addDays(new Date(), 3)}
-      autoFocusEnddate
+      autoFocusEndDate
     />
   )))
   .add('allows single day range', withInfo()(() => (
@@ -620,7 +620,7 @@ storiesOf('DayPickerRangeController', module)
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
       initialStartDate={addDays(new Date(), 3)}
-      autoFocusEnddate
+      autoFocusEndDate
     />
   )))
   .add('allows all days, including past days', withInfo()(() => (
@@ -793,6 +793,6 @@ storiesOf('DayPickerRangeController', module)
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
       initialStartDate={addDays(new Date(), 3)}
-      autoFocusEnddate
+      autoFocusEndDate
     />
   )));

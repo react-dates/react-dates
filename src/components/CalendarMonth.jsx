@@ -54,7 +54,7 @@ const propTypes = forbidExtraProps({
   setMonthTitleHeight: PropTypes.func,
   verticalBorderSpacing: nonNegativeInteger,
 
-  focuseddate: PropTypes.object, // indicates focusable day
+  focusedDate: PropTypes.object, // indicates focusable day
   isFocused: PropTypes.bool, // indicates whether or not to move focus to focusable day
 
   // i18n
@@ -84,7 +84,7 @@ const defaultProps = {
   firstDayOfWeek: null,
   setMonthTitleHeight: null,
 
-  focuseddate: null,
+  focusedDate: null,
   isFocused: false,
 
   // i18n
@@ -168,7 +168,7 @@ class CalendarMonth extends React.PureComponent {
     const {
       dayAriaLabelFormat,
       daySize,
-      focuseddate,
+      focusedDate,
       horizontalMonthPadding,
       isFocused,
       isVisible,
@@ -243,7 +243,7 @@ class CalendarMonth extends React.PureComponent {
                   day,
                   daySize,
                   isOutsideDay: !day || getMonth(day) !== getMonth(month),
-                  tabIndex: isVisible && isSameDay(day, focuseddate) ? 0 : -1,
+                  tabIndex: isVisible && isSameDay(day, focusedDate) ? 0 : -1,
                   isFocused,
                   onDayMouseEnter,
                   onDayMouseLeave,

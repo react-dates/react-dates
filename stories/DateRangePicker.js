@@ -77,7 +77,7 @@ storiesOf('DateRangePicker (DRP)', module)
     <DateRangePickerWrapper
       showClearDates
       startDatePlaceholderText="入住日期"
-      enddatePlaceholderText="退房日期"
+      endDatePlaceholderText="退房日期"
       monthFormat="yyyy[年]MMMM"
       phrases={{
         closeDatePicker: '关闭',
@@ -95,7 +95,7 @@ storiesOf('DateRangePicker (DRP)', module)
     <DirectionProvider direction={DIRECTIONS.RTL}>
       <DateRangePickerWrapper
         startDatePlaceholderText="تاریخ شروع"
-        enddatePlaceholderText="تاریخ پایان"
+        endDatePlaceholderText="تاریخ پایان"
         anchorDirection={ANCHOR_RIGHT}
         showDefaultInputIcon
         showClearDates

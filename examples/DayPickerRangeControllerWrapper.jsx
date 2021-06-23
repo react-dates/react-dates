@@ -14,11 +14,11 @@ import isInclusivelyAfterDay from '../src/utils/isInclusivelyAfterDay';
 
 const propTypes = forbidExtraProps({
   // example props for the demo
-  autoFocusEnddate: PropTypes.bool,
+  autoFocusEndDate: PropTypes.bool,
   initialStartDate: PropTypes.object,
-  initialEnddate: PropTypes.object,
+  initialEndDate: PropTypes.object,
   startDateOffset: PropTypes.func,
-  enddateOffset: PropTypes.func,
+  endDateOffset: PropTypes.func,
   showInputs: PropTypes.bool,
   minDate: PropTypes.object,
   maxDate: PropTypes.object,
@@ -63,11 +63,11 @@ const propTypes = forbidExtraProps({
 
 const defaultProps = {
   // example props for the demo
-  autoFocusEnddate: false,
+  autoFocusEndDate: false,
   initialStartDate: null,
-  initialEnddate: null,
+  initialEndDate: null,
   startDateOffset: undefined,
-  enddateOffset: undefined,
+  endDateOffset: undefined,
   showInputs: false,
   minDate: null,
   maxDate: null,
@@ -116,25 +116,25 @@ class DayPickerRangeControllerWrapper extends React.Component {
 
     this.state = {
       errorMessage: null,
-      focusedInput: props.autoFocusEnddate ? END_DATE : START_DATE,
+      focusedInput: props.autoFocusEndDate ? END_DATE : START_DATE,
       startDate: props.initialStartDate,
-      enddate: props.initialEnddate,
+      endDate: props.initialEndDate,
     };
 
     this.onDatesChange = this.onDatesChange.bind(this);
     this.onFocusChange = this.onFocusChange.bind(this);
   }
 
-  onDatesChange({ startDate, enddate }) {
+  onDatesChange({ startDate, endDate }) {
     const { daysViolatingMinNightsCanBeClicked, minimumNights } = this.props;
     let doesNotMeetMinNights = false;
-    if (daysViolatingMinNightsCanBeClicked && startDate && enddate) {
-      const dayDiff = enddate.diff(startDate.clone().startOf('day').hour(12), 'days');
+    if (daysViolatingMinNightsCanBeClicked && startDate && endDate) {
+      const dayDiff = endDate.diff(startDate.clone().startOf('day').hour(12), 'days');
       doesNotMeetMinNights = dayDiff < minimumNights && dayDiff >= 0;
     }
     this.setState({
       startDate,
-      enddate: doesNotMeetMinNights ? null : enddate,
+      endDate: doesNotMeetMinNights ? null : endDate,
       errorMessage: doesNotMeetMinNights
         ? 'That day does not meet the minimum nights requirement'
         : null,
@@ -154,19 +154,19 @@ class DayPickerRangeControllerWrapper extends React.Component {
       errorMessage,
       focusedInput,
       startDate,
-      enddate,
+      endDate,
     } = this.state;
 
     const props = omit(this.props, [
       'autoFocus',
-      'autoFocusEnddate',
+      'autoFocusEndDate',
       'initialStartDate',
-      'initialEnddate',
+      'initialEndDate',
       'showInputs',
     ]);
 
     const startDateString = startDate && format(startDate, 'yyyy-MM-dd');
-    const enddateString = enddate && format(enddate, 'yyyy-MM-dd');
+    const endDateString = endDate && format(endDate, 'yyyy-MM-dd');
 
     const renderCalendarInfo = errorMessage ? () => <div>{errorMessage}</div> : renderCalendarInfoProp;
 
@@ -175,7 +175,7 @@ class DayPickerRangeControllerWrapper extends React.Component {
         {showInputs && (
           <div style={{ marginBottom: 16 }}>
             <input type="text" name="start date" value={startDateString} readOnly />
-            <input type="text" name="end date" value={enddateString} readOnly />
+            <input type="text" name="end date" value={endDateString} readOnly />
           </div>
         )}
 
@@ -185,7 +185,7 @@ class DayPickerRangeControllerWrapper extends React.Component {
           onFocusChange={this.onFocusChange}
           focusedInput={focusedInput}
           startDate={startDate}
-          enddate={enddate}
+          endDate={endDate}
           renderCalendarInfo={renderCalendarInfo}
         />
       </div>
