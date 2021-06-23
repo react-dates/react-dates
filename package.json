@@ -113,10 +113,10 @@
     "webpack": "^4.46.0"
   },
   "dependencies": {
-    "date-fns": "^2.0.0-alpha.3",
     "airbnb-prop-types": "^2.16.0",
     "color2k": "^1.1.1",
     "consolidated-events": "^1.1.1 || ^2.0.0",
+    "date-fns": "2.22.1",
     "enzyme-shallow-equal": "^1.0.4",
     "is-touch-device": "^1.0.1",
     "lodash": "^4.1.1",
