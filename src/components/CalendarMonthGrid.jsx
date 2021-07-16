@@ -292,7 +292,7 @@ class CalendarMonthGrid extends React.PureComponent {
           isVerticalScrollable && styles.CalendarMonthGrid__vertical_scrollable,
           isAnimating && styles.CalendarMonthGrid__animating,
           isAnimating && transitionDuration && {
-            transition: `transform ${transitionDuration}ms ease-in-out`,
+            transition: `transform ${transitionDuration}ms ease-in-out 0.1s`,
           },
           {
             ...getTransformStyles(transformValue),

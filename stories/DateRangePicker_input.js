@@ -126,6 +126,14 @@ storiesOf('DRP - Input Props', module)
       customArrowIcon={<TestCustomArrowIcon />}
     />
   )))
+  .add('with custom arrow icon and RTL support', withInfo()(() => (
+    <DateRangePickerWrapper
+      initialStartDate={moment().add(3, 'days')}
+      initialEndDate={moment().add(10, 'days')}
+      customArrowIcon={<TestCustomArrowIcon />}
+      isRTL
+    />
+  )))
   .add('with custom close icon', withInfo()(() => (
     <DateRangePickerWrapper
       initialStartDate={moment().add(3, 'days')}

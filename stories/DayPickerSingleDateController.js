@@ -145,6 +145,14 @@ storiesOf('DayPickerSingleDateController', module)
       onNextMonthClick={action('DayPickerSingleDateController::onNextMonthClick')}
     />
   )))
+  .add('with day unselection', withInfo()(() => (
+    <DayPickerSingleDateControllerWrapper
+      onOutsideClick={action('DayPickerSingleDateController::onOutsideClick')}
+      onPrevMonthClick={action('DayPickerSingleDateController::onPrevMonthClick')}
+      onNextMonthClick={action('DayPickerSingleDateController::onNextMonthClick')}
+      allowUnselect
+    />
+  )))
   .add('with custom input', withInfo()(() => (
     <DayPickerSingleDateControllerWrapper
       onOutsideClick={action('DayPickerSingleDateController::onOutsideClick')}

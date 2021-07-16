@@ -787,4 +787,12 @@ describe('DateRangePicker', () => {
       });
     });
   });
+
+  it('should pass noBorder as noBorder to <DayPickerRangeController>', () => {
+    const wrapper = shallow((
+      <DateRangePicker {...requiredProps} focusedInput={START_DATE} noBorder />
+    )).dive();
+
+    expect(wrapper.find(DayPickerRangeController).prop('noBorder')).to.equal(true);
+  });
 });

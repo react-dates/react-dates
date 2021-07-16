@@ -69,6 +69,26 @@ describe('DateRangePickerInput', () => {
       )).dive();
       expect(wrapper.find('.custom-arrow-icon')).to.have.lengthOf(1);
     });
+
+    it('custom icon is rendered when in RTL mode', () => {
+      const wrapper = shallow(
+        <DateRangePickerInput
+          customArrowIcon={<span className="custom-arrow-icon" />}
+          isRTL
+        />,
+      ).dive();
+      expect(wrapper.find('.custom-arrow-icon')).to.have.lengthOf(1);
+    });
+
+    it('custom icon is rendered when using small mode', () => {
+      const wrapper = shallow(
+        <DateRangePickerInput
+          customArrowIcon={<span className="custom-arrow-icon" />}
+          small
+        />,
+      ).dive();
+      expect(wrapper.find('.custom-arrow-icon')).to.have.lengthOf(1);
+    });
   });
 
   describe('props.customCloseIcon', () => {

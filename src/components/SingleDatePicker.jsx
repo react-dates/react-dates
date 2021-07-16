@@ -6,6 +6,7 @@ import { forbidExtraProps } from 'airbnb-prop-types';
 import { addEventListener } from 'consolidated-events';
 import isTouchDevice from 'is-touch-device';
 import OutsideClickHandler from 'react-outside-click-handler';
+import { darken } from 'color2k';
 
 import SingleDatePickerShape from '../shapes/SingleDatePickerShape';
 import { SingleDatePickerPhrases } from '../defaultPhrases';
@@ -707,12 +708,12 @@ export default withStyles(({ reactDates: { color, zIndex } }) => ({
     zIndex: zIndex + 2,
 
     ':hover': {
-      color: `darken(${color.core.grayLighter}, 10%)`,
+      color: darken(color.core.grayLighter, 0.1),
       textDecoration: 'none',
     },
 
     ':focus': {
-      color: `darken(${color.core.grayLighter}, 10%)`,
+      color: darken(color.core.grayLighter, 0.1),
       textDecoration: 'none',
     },
   },

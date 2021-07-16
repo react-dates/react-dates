@@ -54,6 +54,32 @@ describe('CalendarDay', () => {
       expect(wrapper.props().tabIndex).to.equal(tabIndex);
     });
 
+    describe('aria-current', () => {
+      it('should add aria-current to date for today date', () => {
+        const modifiers = new Set(['today']);
+
+        const wrapper = shallow((
+          <CalendarDay
+            modifiers={modifiers}
+          />
+        )).dive();
+
+        expect(wrapper.prop('aria-current')).to.equal('date');
+      });
+
+      it('should not add aria-current for not today date', () => {
+        const modifiers = new Set();
+
+        const wrapper = shallow((
+          <CalendarDay
+            modifiers={modifiers}
+          />
+        )).dive();
+
+        expect(wrapper).to.not.have.property('aria-current');
+      });
+    });
+
     describe('aria-label', () => {
       const phrases = {};
       const day = moment('10/10/2017', 'MM/DD/YYYY');
