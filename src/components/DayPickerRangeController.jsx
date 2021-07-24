@@ -20,6 +20,7 @@ import getVisibleDays from '../utils/getVisibleDays';
 import isDayVisible from '../utils/isDayVisible';
 
 import getSelectedDateOffset from '../utils/getSelectedDateOffset';
+import enumrateDatesBetween from '../utils/enumrateDatesBetween';
 
 import toISODateString from '../utils/toISODateString';
 import { addModifier, deleteModifier } from '../utils/modifiers';
@@ -65,6 +66,7 @@ const propTypes = forbidExtraProps({
   isDayHighlighted: PropTypes.func,
   getMinNightsForHoverDate: PropTypes.func,
   daysViolatingMinNightsCanBeClicked: PropTypes.bool,
+  moveOffsetForDisabledDates: PropTypes.bool,
 
   // DayPicker props
   renderMonthText: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'),
@@ -118,6 +120,8 @@ const propTypes = forbidExtraProps({
   dayAriaLabelFormat: PropTypes.string,
 
   isRTL: PropTypes.bool,
+
+  
 });
 
 const defaultProps = {
@@ -141,6 +145,7 @@ const defaultProps = {
   isDayHighlighted() {},
   getMinNightsForHoverDate() {},
   daysViolatingMinNightsCanBeClicked: false,
+  moveOffsetForDisabledDates: false,
 
   // DayPicker props
   renderMonthText: null,
@@ -596,6 +601,7 @@ export default class DayPickerRangeController extends React.PureComponent {
       endDateOffset,
       disabled,
       daysViolatingMinNightsCanBeClicked,
+      moveOffsetForDisabledDates
     } = this.props;
 
     if (e) e.preventDefault();
@@ -605,7 +611,11 @@ export default class DayPickerRangeController extends React.PureComponent {
 
     if (startDateOffset || endDateOffset) {
       startDate = getSelectedDateOffset(startDateOffset, day);
-      endDate = getSelectedDateOffset(endDateOffset, day);
+      if (moveOffsetForDisabledDates) {
+        endDate = this.getDisabledEndDateOffset(startDate, getSelectedDateOffset(endDateOffset, day));
+      } else {
+        endDate = getSelectedDateOffset(endDateOffset, day);
+      }
 
       if (this.isBlocked(startDate) || this.isBlocked(endDate)) {
         return;
@@ -683,6 +693,7 @@ export default class DayPickerRangeController extends React.PureComponent {
       minimumNights,
       startDateOffset,
       endDateOffset,
+      moveOffsetForDisabledDates
     } = this.props;
 
     const {
@@ -699,7 +710,14 @@ export default class DayPickerRangeController extends React.PureComponent {
 
       if (hasOffset) {
         const start = getSelectedDateOffset(startDateOffset, day);
-        const end = getSelectedDateOffset(endDateOffset, day, (rangeDay) => rangeDay.add(1, 'day'));
+        let end = null;
+        if (moveOffsetForDisabledDates) {
+          end = this.getDisabledEndDateOffset(start, getSelectedDateOffset(
+            endDateOffset, day, (rangeDay) => rangeDay.add(1, 'day')));
+        } else {
+          end = getSelectedDateOffset(
+            endDateOffset, day, (rangeDay) => rangeDay.add(1, 'day'))
+        }
 
         nextDateOffset = {
           start,
@@ -1190,6 +1208,18 @@ export default class DayPickerRangeController extends React.PureComponent {
       return dayDiff < minNights && dayDiff >= 0;
     }
     return false;
+  }
+
+  getDisabledEndDateOffset(start, end) {
+    const dates = enumrateDatesBetween(start, end);
+    let daysToAdd = 0;
+    dates.map(d => {
+      if (this.isBlocked(moment(d))) {
+        daysToAdd++;
+      }
+    });
+    
+    return end.add(daysToAdd, 'day');
   }
 
   isDayAfterHoveredStartDate(day) {
