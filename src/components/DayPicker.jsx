@@ -391,10 +391,19 @@ class DayPicker extends React.PureComponent {
       monthTitleHeight,
     } = this.state;
 
+    let shouldAdjustHeight = false;
+    if (numberOfMonths !== prevProps.numberOfMonths) {
+      this.setCalendarMonthWeeks(currentMonth);
+      shouldAdjustHeight = true;
+    }
     if (
       this.isHorizontal()
       && (orientation !== prevProps.orientation || daySize !== prevProps.daySize)
     ) {
+      shouldAdjustHeight = true;
+    }
+
+    if (shouldAdjustHeight) {
       const visibleCalendarWeeks = this.calendarMonthWeeks.slice(1, numberOfMonths + 1);
       const calendarMonthWeeksHeight = Math.max(0, ...visibleCalendarWeeks) * (daySize - 1);
       const newMonthHeight = monthTitleHeight + calendarMonthWeeksHeight + 1;

@@ -16,7 +16,7 @@
     "lint": "eslint --ext .js,.jsx src test",
     "mocha": "mocha ./test/_helpers",
     "storybook:uninstall": "npm uninstall --no-save @storybook/react && rimraf node_modules/@storybook node_modules/react-modal node_modules/react-dom-factories",
-    "react": "enzyme-adapter-react-install 16",
+    "react": "NPM_CONFIG_LEGACY_PEER_DEPS=true enzyme-adapter-react-install 16",
     "pretest": "npm run --silent lint",
     "pretests-only": "npm run react",
     "tests-only": "npm run mocha --silent",

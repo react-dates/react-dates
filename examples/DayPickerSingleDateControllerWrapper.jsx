@@ -19,6 +19,7 @@ const propTypes = forbidExtraProps({
   initialDate: momentPropTypes.momentObj,
   showInput: PropTypes.bool,
 
+  allowUnselect: PropTypes.bool,
   keepOpenOnDateSelect: PropTypes.bool,
   isOutsideRange: PropTypes.func,
   isDayBlocked: PropTypes.func,
@@ -56,6 +57,7 @@ const defaultProps = {
   showInput: false,
 
   // day presentation and interaction related props
+  allowUnselect: false,
   renderCalendarDay: undefined,
   renderDayContents: null,
   isDayBlocked: () => false,
