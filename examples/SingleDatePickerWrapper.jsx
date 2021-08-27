@@ -35,6 +35,7 @@ const defaultProps = {
   disabled: false,
   required: false,
   screenReaderInputMessage: '',
+  ariaDescribedBy: undefined,
   showClearDate: false,
   showDefaultInputIcon: false,
   customInputIcon: null,

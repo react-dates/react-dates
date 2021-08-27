@@ -119,6 +119,7 @@ function SingleDatePickerInput({
   onKeyDownArrowDown,
   onKeyDownQuestionMark,
   screenReaderMessage,
+  ariaDescribedBy,
   customCloseIcon,
   customInputIcon,
   openDirection,
@@ -150,6 +151,8 @@ function SingleDatePickerInput({
       disabled={disabled}
       aria-label={phrases.focusStartDate}
       onClick={onFocus}
+      aria-describedby={ariaDescribedBy}
+      aria-expanded={isFocused}
     >
       {calendarIcon}
     </button>

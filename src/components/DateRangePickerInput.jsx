@@ -140,6 +140,7 @@ function DateRangePickerInput({
   startDateId,
   startDatePlaceholderText,
   screenReaderMessage,
+  ariaDescribedBy,
   isStartDateFocused,
   onStartDateChange,
   onStartDateFocus,
@@ -207,6 +208,8 @@ function DateRangePickerInput({
       type="button"
       disabled={disabled}
       aria-label={phrases.focusStartDate}
+      aria-describedby={ariaDescribedBy}
+      aria-expanded={isFocused}
       onClick={onKeyDownArrowDown}
     >
       {calendarIcon}

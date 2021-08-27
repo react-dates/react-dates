@@ -67,6 +67,7 @@ const propTypes = forbidExtraProps({
 
   // accessibility
   isFocused: PropTypes.bool,
+  ariaDescribedBy: PropTypes.string,
 
   // i18n
   phrases: PropTypes.shape(getPhrasePropTypes(SingleDatePickerInputPhrases)),
@@ -113,6 +114,7 @@ const defaultProps = {
 
   // accessibility
   isFocused: false,
+  ariaDescribedBy: undefined,
 
   // i18n
   phrases: SingleDatePickerInputPhrases,
@@ -222,6 +224,7 @@ export default class SingleDatePickerInputController extends React.PureComponent
       onKeyDownArrowDown,
       onKeyDownQuestionMark,
       screenReaderMessage,
+      ariaDescribedBy,
       isRTL,
       noBorder,
       block,
@@ -258,6 +261,7 @@ export default class SingleDatePickerInputController extends React.PureComponent
         onKeyDownArrowDown={onKeyDownArrowDown}
         onKeyDownQuestionMark={onKeyDownQuestionMark}
         screenReaderMessage={screenReaderMessage}
+        ariaDescribedBy={ariaDescribedBy}
         phrases={phrases}
         isRTL={isRTL}
         noBorder={noBorder}
