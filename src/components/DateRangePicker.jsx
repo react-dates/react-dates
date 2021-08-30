@@ -670,8 +670,6 @@ class DateRangePicker extends React.PureComponent {
         regular={regular}
         verticalSpacing={verticalSpacing}
         ariaDescribedBy={ariaDescribedBy}
-        focusedInput={focusedInput}
-
       >
         {this.maybeRenderDayPickerWithPortal()}
       </DateRangePickerInputController>

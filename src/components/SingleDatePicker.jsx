@@ -58,6 +58,7 @@ const defaultProps = {
   required: false,
   readOnly: false,
   screenReaderInputMessage: '',
+  ariaDescribedBy: undefined,
   showClearDate: false,
   showDefaultInputIcon: false,
   inputIconPosition: ICON_BEFORE_POSITION,

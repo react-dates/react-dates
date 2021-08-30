@@ -75,6 +75,7 @@ const propTypes = forbidExtraProps({
 
   // accessibility
   isFocused: PropTypes.bool, // describes actual DOM focus
+  ariaDescribedBy: PropTypes.string,
 
   // i18n
   phrases: PropTypes.shape(getPhrasePropTypes(DateRangePickerInputPhrases)),
@@ -127,6 +128,7 @@ const defaultProps = {
 
   // accessibility
   isFocused: false,
+  ariaDescribedBy: undefined,
 
   // i18n
   phrases: DateRangePickerInputPhrases,

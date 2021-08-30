@@ -54,6 +54,7 @@ const propTypes = forbidExtraProps({
 
   // i18n
   phrases: PropTypes.shape(getPhrasePropTypes(SingleDatePickerInputPhrases)),
+  ariaDescribedBy: PropTypes.string,
 });
 
 const defaultProps = {
@@ -81,6 +82,7 @@ const defaultProps = {
   small: false,
   regular: false,
   verticalSpacing: undefined,
+  ariaDescribedBy: undefined,
 
   onChange() {},
   onClearDate() {},

@@ -8,167 +8,156 @@ import { START_DATE, END_DATE } from '../../src/constants';
 import DateInput from '../../src/components/DateInput';
 import DateRangePickerInput from '../../src/components/DateRangePickerInput';
 
-describe("DateRangePickerInput", () => {
-  describe("#render", () => {
-    it("renders 2 <DateInput /> components", () => {
+describe('DateRangePickerInput', () => {
+  describe('#render', () => {
+    it('renders 2 <DateInput /> components', () => {
       const wrapper = shallow(<DateRangePickerInput />).dive();
       expect(wrapper.find(DateInput)).to.have.lengthOf(2);
     });
 
-    describe("props.showClearDates", () => {
-      it("if true renders clear dates button", () => {
+    describe('props.showClearDates', () => {
+      it('if true renders clear dates button', () => {
         const wrapper = shallow(<DateRangePickerInput showClearDates />).dive();
-        expect(wrapper.find("button")).to.have.lengthOf(1);
+        expect(wrapper.find('button')).to.have.lengthOf(1);
       });
 
-      it("if false does not render clear dates", () => {
-        const wrapper = shallow(
-          <DateRangePickerInput showClearDates={false} />
-        ).dive();
-        expect(wrapper.find("button")).to.have.lengthOf(0);
+      it('if false does not render clear dates', () => {
+        const wrapper = shallow(<DateRangePickerInput showClearDates={false} />).dive();
+        expect(wrapper.find('button')).to.have.lengthOf(0);
       });
     });
 
-    describe("show calendar icon", () => {
-      it("if true renders calendar button", () => {
-        const wrapper = shallow(
-          <DateRangePickerInput showDefaultInputIcon />
-        ).dive();
-        expect(wrapper.find("button")).to.have.lengthOf(1);
+    describe('show calendar icon', () => {
+      it('if true renders calendar button', () => {
+        const wrapper = shallow(<DateRangePickerInput showDefaultInputIcon />).dive();
+        expect(wrapper.find('button')).to.have.lengthOf(1);
       });
 
-      it("if false does not render calendar button", () => {
-        const wrapper = shallow(
-          <DateRangePickerInput showDefaultInputIcon={false} />
-        ).dive();
-        expect(wrapper.find("button")).to.have.lengthOf(0);
+      it('if false does not render calendar button', () => {
+        const wrapper = shallow(<DateRangePickerInput showDefaultInputIcon={false} />).dive();
+        expect(wrapper.find('button')).to.have.lengthOf(0);
       });
 
-      describe("props.customInputIcon is a React Element", () => {
-        it("custom icon is rendered", () => {
-          const wrapper = shallow(
+      describe('props.customInputIcon is a React Element', () => {
+        it('custom icon is rendered', () => {
+          const wrapper = shallow((
             <DateRangePickerInput
               customInputIcon={<span className="custom-icon" />}
             />
-          ).dive();
-          expect(wrapper.find(".custom-icon")).to.have.lengthOf(1);
+          )).dive();
+          expect(wrapper.find('.custom-icon')).to.have.lengthOf(1);
         });
       });
     });
 
-    describe("props.children", () => {
-      it("should unconditionally render children when provided", () => {
+    describe('props.children', () => {
+      it('should unconditionally render children when provided', () => {
         const Child = () => <div>CHILD</div>;
 
-        const wrapper = shallow(
-          <DateRangePickerInput>
-            <Child />
-          </DateRangePickerInput>
-        ).dive();
-        expect(wrapper.find("Child")).to.have.lengthOf(1);
+        const wrapper = shallow(<DateRangePickerInput><Child /></DateRangePickerInput>).dive();
+        expect(wrapper.find('Child')).to.have.lengthOf(1);
       });
     });
   });
 
-  describe("props.customArrowIcon", () => {
-    it("custom icon is rendered", () => {
-      const wrapper = shallow(
+  describe('props.customArrowIcon', () => {
+    it('custom icon is rendered', () => {
+      const wrapper = shallow((
         <DateRangePickerInput
           customArrowIcon={<span className="custom-arrow-icon" />}
         />
-      ).dive();
-      expect(wrapper.find(".custom-arrow-icon")).to.have.lengthOf(1);
+      )).dive();
+      expect(wrapper.find('.custom-arrow-icon')).to.have.lengthOf(1);
     });
 
-    it("custom icon is rendered when in RTL mode", () => {
+    it('custom icon is rendered when in RTL mode', () => {
       const wrapper = shallow(
         <DateRangePickerInput
           customArrowIcon={<span className="custom-arrow-icon" />}
           isRTL
-        />
+        />,
       ).dive();
-      expect(wrapper.find(".custom-arrow-icon")).to.have.lengthOf(1);
+      expect(wrapper.find('.custom-arrow-icon')).to.have.lengthOf(1);
     });
 
-    it("custom icon is rendered when using small mode", () => {
+    it('custom icon is rendered when using small mode', () => {
       const wrapper = shallow(
         <DateRangePickerInput
           customArrowIcon={<span className="custom-arrow-icon" />}
           small
-        />
+        />,
       ).dive();
-      expect(wrapper.find(".custom-arrow-icon")).to.have.lengthOf(1);
+      expect(wrapper.find('.custom-arrow-icon')).to.have.lengthOf(1);
     });
   });
 
-  describe("props.customCloseIcon", () => {
-    it("custom icon is rendered", () => {
-      const wrapper = shallow(
+  describe('props.customCloseIcon', () => {
+    it('custom icon is rendered', () => {
+      const wrapper = shallow((
         <DateRangePickerInput
           showClearDates
           customCloseIcon={<span className="custom-close-icon" />}
         />
-      ).dive();
-      expect(wrapper.find(".custom-close-icon")).to.have.lengthOf(1);
+      )).dive();
+      expect(wrapper.find('.custom-close-icon')).to.have.lengthOf(1);
     });
   });
 
-  describe("clear dates interactions", () => {
-    describe("onClick", () => {
-      it("props.onClearDates gets triggered", () => {
+  describe('clear dates interactions', () => {
+    describe('onClick', () => {
+      it('props.onClearDates gets triggered', () => {
         const onClearDatesSpy = sinon.spy();
-        const wrapper = shallow(
-          <DateRangePickerInput onClearDates={onClearDatesSpy} showClearDates />
-        ).dive();
-        const clearDatesWrapper = wrapper.find("button");
-        clearDatesWrapper.simulate("click");
+        const wrapper = shallow((
+          <DateRangePickerInput
+            onClearDates={onClearDatesSpy}
+            showClearDates
+          />
+        )).dive();
+        const clearDatesWrapper = wrapper.find('button');
+        clearDatesWrapper.simulate('click');
         expect(onClearDatesSpy.called).to.equal(true);
       });
     });
   });
 
-  describe("calendar icon interaction", () => {
-    describe("onClick", () => {
-      it("props.onKeyDownArrowDown gets triggered", () => {
+  describe('calendar icon interaction', () => {
+    describe('onClick', () => {
+      it('props.onKeyDownArrowDown gets triggered', () => {
         const onArrowDownSpy = sinon.spy();
-        const wrapper = shallow(
+        const wrapper = shallow((
           <DateRangePickerInput
             onKeyDownArrowDown={onArrowDownSpy}
             showDefaultInputIcon
           />
-        ).dive();
-        const calendarIconWrapper = wrapper.find("button").at(0);
-        calendarIconWrapper.simulate("click");
+        )).dive();
+        const calendarIconWrapper = wrapper.find('button').at(0);
+        calendarIconWrapper.simulate('click');
         expect(onArrowDownSpy.callCount).to.equal(1);
       });
     });
   });
 
-  describe("props.disabled", () => {
-    describe("props.disabled=START_DATE", () => {
-      it("First DateInput gets disabled prop, second does not", () => {
-        const wrapper = shallow(
-          <DateRangePickerInput disabled={START_DATE} />
-        ).dive();
+  describe('props.disabled', () => {
+    describe('props.disabled=START_DATE', () => {
+      it('First DateInput gets disabled prop, second does not', () => {
+        const wrapper = shallow(<DateRangePickerInput disabled={START_DATE} />).dive();
         const [startDateInput, endDateInput] = wrapper.find(DateInput);
         expect(startDateInput.props.disabled).to.equal(true);
         expect(endDateInput.props.disabled).to.equal(false);
       });
     });
 
-    describe("props.disabled=END_DATE", () => {
-      it("First DateInput gets disabled prop, second does not", () => {
-        const wrapper = shallow(
-          <DateRangePickerInput disabled={END_DATE} />
-        ).dive();
+    describe('props.disabled=END_DATE', () => {
+      it('First DateInput gets disabled prop, second does not', () => {
+        const wrapper = shallow(<DateRangePickerInput disabled={END_DATE} />).dive();
         const [startDateInput, endDateInput] = wrapper.find(DateInput);
         expect(startDateInput.props.disabled).to.equal(false);
         expect(endDateInput.props.disabled).to.equal(true);
       });
     });
 
-    describe("props.disabled=true", () => {
-      it("First DateInput gets disabled prop, second does not", () => {
+    describe('props.disabled=true', () => {
+      it('First DateInput gets disabled prop, second does not', () => {
         const wrapper = shallow(<DateRangePickerInput disabled />).dive();
         const [startDateInput, endDateInput] = wrapper.find(DateInput);
         expect(startDateInput.props.disabled).to.equal(true);
@@ -176,49 +165,47 @@ describe("DateRangePickerInput", () => {
       });
     });
 
-    describe("props.disabled=false", () => {
-      it("First DateInput gets disabled prop, second does not", () => {
-        const wrapper = shallow(
-          <DateRangePickerInput disabled={false} />
-        ).dive();
+    describe('props.disabled=false', () => {
+      it('First DateInput gets disabled prop, second does not', () => {
+        const wrapper = shallow(<DateRangePickerInput disabled={false} />).dive();
         const [startDateInput, endDateInput] = wrapper.find(DateInput);
         expect(startDateInput.props.disabled).to.equal(false);
         expect(endDateInput.props.disabled).to.equal(false);
       });
     });
+  });
 
-    describe('aria-describedBy calender icon', () => {
-      let wrapper;
-      const labelId = 'ServiceDates';
-      const ariaDescribedBySelector = `#${labelId}`;
+  describe('aria-describedBy calender icon', () => {
+    let wrapper;
+    const labelId = 'ServiceDates';
+    const ariaDescribedBySelector = `#${labelId}`;
 
-      describe('props.ariaDescribedBy is truthy', () => {
-        beforeEach(() => {
-          wrapper = shallow(
-              <DateRangePickerInput ariaDescribedBy="serviceDates" />
-          );
-        });
-
-        it('has label id', () => {
-          expect(wrapper.find(ariaDescribedBySelector)).to.have.lengthOf(1);
-        });
-
-        it('has aria-describedby attribute ', () => {
-          expect(wrapper.find(`button[aria-describedby="${labelId}"]`)).to.have.lengthOf(1);
-        });
+    describe('props.ariaDescribedBy is truthy', () => {
+      beforeEach(() => {
+        wrapper = shallow(<DateRangePickerInput ariaDescribedBy="serviceDates" />);
       });
 
-      describe('props.screenReaderMessage is falsey', () => {
-        beforeEach(() => {
-          wrapper = shallow(<DateRangePickerInput />);
-        });
+      it('has label id', () => {
+        expect(wrapper.find(ariaDescribedBySelector)).to.have.lengthOf(1);
+      });
 
-        it('does not have #DateInput__screen-reader-message id', () => {
-          expect(wrapper.find(ariaDescribedBySelector)).to.have.lengthOf(0);
-        });
-
-        it('does not have aria-describedby attribute value', () => {
-          expect(wrapper.find(`button[aria-describedby="${labelId}"]`)).to.have.lengthOf(0);
-        });
+      it('has aria-describedby attribute ', () => {
+        expect(wrapper.find(`button[aria-describedby="${labelId}"]`)).to.have.lengthOf(1);
       });
     });
+
+    describe('props.ariaDescribed is falsey', () => {
+      beforeEach(() => {
+        wrapper = shallow(<DateRangePickerInput />);
+      });
+
+      it('does not have #ariaDescribedBy ', () => {
+        expect(wrapper.find(ariaDescribedBySelector)).to.have.lengthOf(0);
+      });
+
+      it('does not have aria-describedby attribute value', () => {
+        expect(wrapper.find(`button[aria-describedby="${labelId}"]`)).to.have.lengthOf(0);
+      });
+    });
+  });
+});
