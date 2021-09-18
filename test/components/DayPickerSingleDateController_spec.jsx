@@ -1000,6 +1000,19 @@ describe('DayPickerSingleDateController', () => {
       expect(firstFocusableDay.isSame(date, 'day')).to.equal(true);
     });
 
+    it('time is a noon', () => {
+      sinon.stub(DayPickerSingleDateController.prototype, 'isBlocked').returns(false);
+      const wrapper = shallow((
+        <DayPickerSingleDateController
+          date={null}
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />
+      ));
+      const firstFocusableDay = wrapper.instance().getFirstFocusableDay(today);
+      expect(firstFocusableDay.hours()).to.equal(12);
+    });
+
     describe('desired date is blocked', () => {
       it('returns first unblocked visible day if exists', () => {
         const isBlockedStub = sinon.stub(DayPickerSingleDateController.prototype, 'isBlocked');

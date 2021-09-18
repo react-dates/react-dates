@@ -203,7 +203,7 @@ class DayPicker extends React.PureComponent {
 
     const currentMonth = props.hidden ? moment() : props.initialVisibleMonth();
 
-    let focusedDate = currentMonth.clone().startOf('month');
+    let focusedDate = currentMonth.clone().startOf('month').hour(12);
     if (props.getFirstFocusableDay) {
       focusedDate = props.getFirstFocusableDay(currentMonth);
     }
@@ -487,7 +487,7 @@ class DayPicker extends React.PureComponent {
         break;
       case 'Home':
         e.preventDefault();
-        newFocusedDate.startOf('week');
+        newFocusedDate.startOf('week').hour(12);
         didTransitionMonth = this.maybeTransitionPrevMonth(newFocusedDate);
         break;
       case 'PageUp':
@@ -703,7 +703,7 @@ class DayPicker extends React.PureComponent {
     }
 
     if (newMonth && (!focusedDate || !isDayVisible(focusedDate, newMonth, numberOfMonths))) {
-      focusedDate = newMonth.clone().startOf('month');
+      focusedDate = newMonth.clone().startOf('month').hour(12);
     }
 
     return focusedDate;

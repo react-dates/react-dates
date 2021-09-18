@@ -545,7 +545,7 @@ export default class DayPickerSingleDateController extends React.PureComponent {
   getFirstFocusableDay(newMonth) {
     const { date, numberOfMonths } = this.props;
 
-    let focusedDate = newMonth.clone().startOf('month');
+    let focusedDate = newMonth.clone().startOf('month').hour(12);
     if (date) {
       focusedDate = date.clone();
     }

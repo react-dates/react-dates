@@ -1045,7 +1045,7 @@ export default class DayPickerRangeController extends React.PureComponent {
       numberOfMonths,
     } = this.props;
 
-    let focusedDate = newMonth.clone().startOf('month');
+    let focusedDate = newMonth.clone().startOf('month').hour(12);
     if (focusedInput === START_DATE && startDate) {
       focusedDate = startDate.clone();
     } else if (focusedInput === END_DATE && !endDate && startDate) {

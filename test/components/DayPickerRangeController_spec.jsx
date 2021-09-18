@@ -3775,6 +3775,21 @@ describe('DayPickerRangeController', () => {
       });
     });
 
+    it('time is a noon', () => {
+      sinon.stub(DayPickerRangeController.prototype, 'isBlocked').returns(false);
+      const wrapper = shallow((
+        <DayPickerRangeController
+          focusedInput={null}
+          startDate={null}
+          endDate={null}
+          onFocusChange={sinon.stub()}
+          onDatesChange={sinon.stub()}
+        />
+      ));
+      const firstFocusableDay = wrapper.instance().getFirstFocusableDay(today);
+      expect(firstFocusableDay.hours()).to.equal(12);
+    });
+
     describe('desired day is blocked', () => {
       it('returns next unblocked visible day after desired day if exists', () => {
         const isBlockedStub = sinon.stub(DayPickerRangeController.prototype, 'isBlocked');
