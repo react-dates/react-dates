@@ -213,11 +213,12 @@ export default class DayPickerRangeController extends React.PureComponent {
 
     this.isTouchDevice = isTouchDevice();
     this.today = moment();
+    this.cachedProps = {};
     this.modifiers = {
       today: (day) => this.isToday(day),
       blocked: (day) => this.isBlocked(day),
-      'blocked-calendar': (day) => props.isDayBlocked(day),
-      'blocked-out-of-range': (day) => props.isOutsideRange(day),
+      'blocked-calendar': (day) => this.getCachedPropByDay(day, 'isDayBlocked'),
+      'blocked-out-of-range': (day) => this.getCachedPropByDay(day, 'isOutsideRange'),
       'highlighted-calendar': (day) => props.isDayHighlighted(day),
       valid: (day) => !this.isBlocked(day),
       'selected-start': (day) => this.isStartDate(day),
@@ -308,17 +309,14 @@ export default class DayPickerRangeController extends React.PureComponent {
     let recomputeDayHighlighted = false;
 
     if (isOutsideRange !== prevIsOutsideRange) {
-      this.modifiers['blocked-out-of-range'] = (day) => isOutsideRange(day);
       recomputeOutsideRange = true;
     }
 
     if (isDayBlocked !== prevIsDayBlocked) {
-      this.modifiers['blocked-calendar'] = (day) => isDayBlocked(day);
       recomputeDayBlocked = true;
     }
 
     if (isDayHighlighted !== prevIsDayHighlighted) {
-      this.modifiers['highlighted-calendar'] = (day) => isDayHighlighted(day);
       recomputeDayHighlighted = true;
     }
 
@@ -471,7 +469,7 @@ export default class DayPickerRangeController extends React.PureComponent {
           let isBlocked = false;
 
           if (didFocusChange || recomputeOutsideRange) {
-            if (isOutsideRange(momentObj)) {
+            if (this.getCachedPropByDay(momentObj, 'isOutsideRange', nextProps, true)) {
               modifiers = this.addModifier(modifiers, momentObj, 'blocked-out-of-range');
               isBlocked = true;
             } else {
@@ -480,7 +478,7 @@ export default class DayPickerRangeController extends React.PureComponent {
           }
 
           if (didFocusChange || recomputeDayBlocked) {
-            if (isDayBlocked(momentObj)) {
+            if (this.getCachedPropByDay(momentObj, 'isDayBlocked', nextProps, true)) {
               modifiers = this.addModifier(modifiers, momentObj, 'blocked-calendar');
               isBlocked = true;
             } else {
@@ -1086,6 +1084,7 @@ export default class DayPickerRangeController extends React.PureComponent {
   }
 
   getModifiersForDay(day) {
+    this.removeCachedProps(day);
     return new Set(Object.keys(this.modifiers).filter((modifier) => this.modifiers[modifier](day)));
   }
 
@@ -1109,6 +1108,42 @@ export default class DayPickerRangeController extends React.PureComponent {
       withoutTransitionMonths,
     ));
     return { currentMonth, visibleDays };
+  }
+
+  getCachedPropByDay(day, prop, props, forceUpdate = false) {
+    const key = day.toString();
+    const propsStore = props || this.props;
+    if (!forceUpdate && this.cachedProps[key] && this.cachedProps[key][prop]) {
+      // Get value from cache
+      return this.cachedProps[key][prop].value;
+    }
+
+    // Get new value
+    const value = propsStore[prop](day);
+    if (!this.cachedProps[key]) {
+      this.cachedProps[key] = {};
+    }
+    this.cachedProps[key][prop] = { value };
+
+    return value;
+  }
+
+  removeCachedProps(day, prop) {
+    if (!day) {
+      // Remove all
+      this.cachedProps = {};
+    }
+
+    const key = day.toString();
+    if (prop) {
+      // Remove by day and prop
+      if (this.cachedProps[key]) {
+        delete this.cachedProps[key][prop];
+      }
+    } else {
+      // Remove by day
+      delete this.cachedProps[key];
+    }
   }
 
   shouldDisableMonthNavigation(date, visibleMonth) {
@@ -1157,7 +1192,6 @@ export default class DayPickerRangeController extends React.PureComponent {
   doesNotMeetMinimumNights(day) {
     const {
       startDate,
-      isOutsideRange,
       focusedInput,
       minimumNights,
     } = this.props;
@@ -1167,7 +1201,7 @@ export default class DayPickerRangeController extends React.PureComponent {
       const dayDiff = day.diff(startDate.clone().startOf('day').hour(12), 'days');
       return dayDiff < minimumNights && dayDiff >= 0;
     }
-    return isOutsideRange(moment(day).subtract(minimumNights, 'days'));
+    return this.getCachedPropByDay(moment(day).subtract(minimumNights, 'days'), 'isOutsideRange');
   }
 
   doesNotMeetMinNightsForHoveredStartDate(day, hoverDate) {
@@ -1239,9 +1273,8 @@ export default class DayPickerRangeController extends React.PureComponent {
   }
 
   isBlocked(day, blockDaysViolatingMinNights = true) {
-    const { isDayBlocked, isOutsideRange } = this.props;
-    return isDayBlocked(day)
-      || isOutsideRange(day)
+    return this.getCachedPropByDay(day, 'isDayBlocked')
+      || this.getCachedPropByDay(day, 'isOutsideRange')
       || (blockDaysViolatingMinNights && this.doesNotMeetMinimumNights(day));
   }
 
