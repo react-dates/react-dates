@@ -29,6 +29,7 @@ const propTypes = forbidExtraProps({
   placeholder: PropTypes.string,
   displayValue: PropTypes.string,
   ariaLabel: PropTypes.string,
+  autoComplete: PropTypes.string,
   titleText: PropTypes.string,
   screenReaderMessage: PropTypes.string,
   focused: PropTypes.bool,
@@ -58,6 +59,7 @@ const defaultProps = {
   placeholder: 'Select Date',
   displayValue: '',
   ariaLabel: undefined,
+  autoComplete: 'off',
   titleText: undefined,
   screenReaderMessage: '',
   focused: false,
@@ -177,6 +179,7 @@ class DateInput extends React.PureComponent {
       id,
       placeholder,
       ariaLabel,
+      autoComplete,
       titleText,
       displayValue,
       screenReaderMessage,
@@ -234,7 +237,7 @@ class DateInput extends React.PureComponent {
           onKeyDown={this.onKeyDown}
           onFocus={onFocus}
           placeholder={placeholder}
-          autoComplete="off"
+          autoComplete={autoComplete}
           disabled={disabled}
           readOnly={typeof readOnly === 'boolean' ? readOnly : isTouch}
           required={required}
