@@ -126,18 +126,4 @@ describe('SingleDatePickerInput', () => {
       });
     });
   });
-  describe('autoComplete is customizable', () => {
-    it('has custom autocomplete attribute value', () => {
-      const customAutoComplete = 'date picker';
-      const wrapper = shallow((
-        <SingleDatePickerInput
-          id="date"
-          autoComplete={customAutoComplete}
-        />
-      )).dive();
-      const dateInput = wrapper.find(DateInput);
-      expect(dateInput).to.have.lengthOf(1);
-      expect(dateInput).to.have.property('autoComplete', customAutoComplete);
-    });
-  });
 });
