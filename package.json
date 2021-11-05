@@ -1,7 +1,7 @@
 {
-  "name": "react-dates",
+  "name": "@availity/react-dates",
   "version": "21.8.0",
-  "description": "A responsive and accessible date range picker component built with React",
+  "description": "Availity's responsive and accessible date range picker component built with React",
   "main": "index.js",
   "scripts": {
     "prebuild": "npm run clean",
@@ -44,7 +44,7 @@
     "type": "git",
     "url": "git+https://github.com/airbnb/react-dates.git"
   },
-  "author": "Maja Wichrowska <maja.wichrowska@airbnb.com>",
+  "author": "Tanner Byers <tanner.byers@availity.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/airbnb/react-dates/issues"
