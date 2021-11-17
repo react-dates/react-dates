@@ -63,6 +63,7 @@ const defaultProps = {
   required: false,
   readOnly: false,
   screenReaderInputMessage: '',
+  ariaDescribedBy: undefined,
   showClearDates: false,
   showDefaultInputIcon: false,
   inputIconPosition: ICON_BEFORE_POSITION,
@@ -615,6 +616,7 @@ class DateRangePicker extends React.PureComponent {
       small,
       regular,
       styles,
+      ariaDescribedBy,
     } = this.props;
 
     const { isDateRangePickerInputFocused } = this.state;
@@ -669,6 +671,7 @@ class DateRangePicker extends React.PureComponent {
         small={small}
         regular={regular}
         verticalSpacing={verticalSpacing}
+        ariaDescribedBy={ariaDescribedBy}
         autoComplete={autoComplete}
       >
         {this.maybeRenderDayPickerWithPortal()}

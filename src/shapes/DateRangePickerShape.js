@@ -52,6 +52,7 @@ export default {
   small: PropTypes.bool,
   regular: PropTypes.bool,
   keepFocusOnInput: PropTypes.bool,
+  ariaDescribedBy: PropTypes.string,
   autoComplete: PropTypes.string,
 
   // calendar presentation and interaction related props

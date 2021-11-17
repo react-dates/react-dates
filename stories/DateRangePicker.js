@@ -125,6 +125,10 @@ storiesOf('DateRangePicker (DRP)', module)
       numberOfMonths={2}
     />
   )))
-  .add('with custom autoComplete', withInfo()(() => (
-    <DateRangePickerWrapper autoComplete="datePicker" />
+  .add(
+    'with aria-describedBy', withInfo()(() => (
+    <div>
+      <label id="ServiceDate">Service Date</label>
+      <DateRangePickerWrapper ariaDescribedBy="ServiceDate" />
+    </div>
   )));

@@ -55,6 +55,7 @@ const propTypes = forbidExtraProps({
 
   // i18n
   phrases: PropTypes.shape(getPhrasePropTypes(SingleDatePickerInputPhrases)),
+  ariaDescribedBy: PropTypes.string,
 });
 
 const defaultProps = {
@@ -83,6 +84,7 @@ const defaultProps = {
   small: false,
   regular: false,
   verticalSpacing: undefined,
+  ariaDescribedBy: undefined,
 
   onChange() {},
   onClearDate() {},
@@ -122,6 +124,7 @@ function SingleDatePickerInput({
   onKeyDownArrowDown,
   onKeyDownQuestionMark,
   screenReaderMessage,
+  ariaDescribedBy,
   customCloseIcon,
   customInputIcon,
   openDirection,
@@ -153,6 +156,8 @@ function SingleDatePickerInput({
       disabled={disabled}
       aria-label={phrases.focusStartDate}
       onClick={onFocus}
+      aria-describedby={ariaDescribedBy}
+      aria-expanded={isFocused}
     >
       {calendarIcon}
     </button>

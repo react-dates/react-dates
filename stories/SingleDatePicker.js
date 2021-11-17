@@ -99,8 +99,10 @@ storiesOf('SingleDatePicker (SDP)', module)
       verticalHeight={568}
     />
   )))
-  .add('with custom autoComplete attribute', withInfo()(() => (
-    <SingleDatePickerWrapper
-    autoComplete="datePicker"
-    />
+  .add(
+    'with aria-describedBy', withInfo()(() => (
+    <div>
+      <label id="ServiceDate">Service Date</label>
+      <SingleDatePickerWrapper ariaDescribedBy="ServiceDate" />
+    </div>
   )));

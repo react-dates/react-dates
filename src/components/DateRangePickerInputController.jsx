@@ -80,6 +80,7 @@ const propTypes = forbidExtraProps({
 
   // accessibility
   isFocused: PropTypes.bool,
+  ariaDescribedBy: PropTypes.string,
 
   // i18n
   phrases: PropTypes.shape(getPhrasePropTypes(DateRangePickerInputPhrases)),
@@ -140,6 +141,7 @@ const defaultProps = {
 
   // accessibility
   isFocused: false,
+  ariaDescribedBy: undefined,
 
   // i18n
   phrases: DateRangePickerInputPhrases,
@@ -314,6 +316,7 @@ export default class DateRangePickerInputController extends React.PureComponent 
       small,
       regular,
       verticalSpacing,
+      ariaDescribedBy,
       autoComplete,
     } = this.props;
 
@@ -362,6 +365,7 @@ export default class DateRangePickerInputController extends React.PureComponent 
         small={small}
         regular={regular}
         verticalSpacing={verticalSpacing}
+        ariaDescribedBy={ariaDescribedBy}
         autoComplete={autoComplete}
       >
         {children}
