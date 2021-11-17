@@ -44,6 +44,7 @@ const defaultProps = {
   regular: false,
   verticalSpacing: undefined,
   keepFocusOnInput: false,
+  autoComplete: 'off',
 
   // calendar presentation and interaction related props
   renderMonthText: null,

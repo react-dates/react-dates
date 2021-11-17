@@ -100,6 +100,7 @@ const defaultProps = {
   verticalHeight: null,
   transitionDuration: undefined,
   verticalSpacing: DEFAULT_VERTICAL_SPACING,
+  autoComplete: 'off',
   horizontalMonthPadding: undefined,
 
   // navigation related props
@@ -595,6 +596,7 @@ class DateRangePicker extends React.PureComponent {
       disabled,
       required,
       readOnly,
+      autoComplete,
       openDirection,
       phrases,
       isOutsideRange,
@@ -670,6 +672,7 @@ class DateRangePicker extends React.PureComponent {
         regular={regular}
         verticalSpacing={verticalSpacing}
         ariaDescribedBy={ariaDescribedBy}
+        autoComplete={autoComplete}
       >
         {this.maybeRenderDayPickerWithPortal()}
       </DateRangePickerInputController>

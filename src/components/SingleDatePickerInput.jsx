@@ -22,6 +22,7 @@ const propTypes = forbidExtraProps({
   children: PropTypes.node,
   placeholder: PropTypes.string,
   ariaLabel: PropTypes.string,
+  autoComplete: PropTypes.string,
   titleText: PropTypes.string,
   displayValue: PropTypes.string,
   screenReaderMessage: PropTypes.string,
@@ -61,6 +62,7 @@ const defaultProps = {
   children: null,
   placeholder: 'Select Date',
   ariaLabel: undefined,
+  autoComplete: 'off',
   titleText: undefined,
   displayValue: '',
   screenReaderMessage: '',
@@ -101,6 +103,7 @@ function SingleDatePickerInput({
   children,
   placeholder,
   ariaLabel,
+  autoComplete,
   titleText,
   displayValue,
   focused,
@@ -177,6 +180,7 @@ function SingleDatePickerInput({
         id={id}
         placeholder={placeholder}
         ariaLabel={ariaLabel}
+        autoComplete={autoComplete}
         titleText={titleText}
         displayValue={displayValue}
         screenReaderMessage={screenReaderText}

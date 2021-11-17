@@ -159,6 +159,7 @@ noBorder: PropTypes.bool,
 block: PropTypes.bool,
 small: PropTypes.bool,
 regular: PropTypes.bool,
+autoComplete: PropTypes.string,
 
 // calendar presentation and interaction related props
 renderMonthText: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'), // (month) => PropTypes.string,
@@ -246,6 +247,7 @@ noBorder: PropTypes.bool,
 block: PropTypes.bool,
 small: PropTypes.bool,
 regular: PropTypes.bool,
+autoComplete: PropTypes.string,
 
 // calendar presentation and interaction related props
 renderMonthText: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'), // (month) => PropTypes.string,

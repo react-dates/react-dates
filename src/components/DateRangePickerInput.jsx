@@ -72,6 +72,7 @@ const propTypes = forbidExtraProps({
   small: PropTypes.bool,
   regular: PropTypes.bool,
   verticalSpacing: nonNegativeInteger,
+  autoComplete: PropTypes.string,
 
   // accessibility
   isFocused: PropTypes.bool, // describes actual DOM focus
@@ -94,6 +95,7 @@ const defaultProps = {
   startDateTitleText: undefined,
   endDateTitleText: undefined,
   screenReaderMessage: '',
+  autoComplete: 'off',
   onStartDateFocus() {},
   onEndDateFocus() {},
   onStartDateChange() {},
@@ -165,6 +167,7 @@ function DateRangePickerInput({
   disabled,
   required,
   readOnly,
+  autoComplete,
   showCaret,
   openDirection,
   showDefaultInputIcon,
@@ -238,6 +241,7 @@ function DateRangePickerInput({
         id={startDateId}
         placeholder={startDatePlaceholderText}
         ariaLabel={startDateAriaLabel}
+        autoComplete={autoComplete}
         titleText={startDateTitleText}
         displayValue={startDate}
         screenReaderMessage={screenReaderStartDateText}
@@ -274,6 +278,7 @@ function DateRangePickerInput({
         id={endDateId}
         placeholder={endDatePlaceholderText}
         ariaLabel={endDateAriaLabel}
+        autoComplete={autoComplete}
         titleText={endDateTitleText}
         displayValue={endDate}
         screenReaderMessage={screenReaderEndDateText}

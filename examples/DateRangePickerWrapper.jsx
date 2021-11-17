@@ -59,6 +59,7 @@ const defaultProps = {
   block: false,
   small: false,
   regular: false,
+  autoComplete: 'off',
 
   // calendar presentation and interaction related props
   renderMonthText: null,
