@@ -63,6 +63,7 @@ const defaultProps = {
   required: false,
   readOnly: false,
   screenReaderInputMessage: '',
+  ariaDescribedBy: undefined,
   showClearDates: false,
   showDefaultInputIcon: false,
   inputIconPosition: ICON_BEFORE_POSITION,
@@ -99,6 +100,7 @@ const defaultProps = {
   verticalHeight: null,
   transitionDuration: undefined,
   verticalSpacing: DEFAULT_VERTICAL_SPACING,
+  autoComplete: 'off',
   horizontalMonthPadding: undefined,
 
   // navigation related props
@@ -594,6 +596,7 @@ class DateRangePicker extends React.PureComponent {
       disabled,
       required,
       readOnly,
+      autoComplete,
       openDirection,
       phrases,
       isOutsideRange,
@@ -613,6 +616,7 @@ class DateRangePicker extends React.PureComponent {
       small,
       regular,
       styles,
+      ariaDescribedBy,
     } = this.props;
 
     const { isDateRangePickerInputFocused } = this.state;
@@ -667,6 +671,8 @@ class DateRangePicker extends React.PureComponent {
         small={small}
         regular={regular}
         verticalSpacing={verticalSpacing}
+        ariaDescribedBy={ariaDescribedBy}
+        autoComplete={autoComplete}
       >
         {this.maybeRenderDayPickerWithPortal()}
       </DateRangePickerInputController>

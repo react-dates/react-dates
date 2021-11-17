@@ -58,6 +58,7 @@ const propTypes = forbidExtraProps({
   small: PropTypes.bool,
   regular: PropTypes.bool,
   verticalSpacing: nonNegativeInteger,
+  autoComplete: PropTypes.string,
 
   keepOpenOnDateSelect: PropTypes.bool,
   reopenPickerOnClearDates: PropTypes.bool,
@@ -79,6 +80,7 @@ const propTypes = forbidExtraProps({
 
   // accessibility
   isFocused: PropTypes.bool,
+  ariaDescribedBy: PropTypes.string,
 
   // i18n
   phrases: PropTypes.shape(getPhrasePropTypes(DateRangePickerInputPhrases)),
@@ -117,6 +119,7 @@ const defaultProps = {
   small: false,
   regular: false,
   verticalSpacing: undefined,
+  autoComplete: 'off',
 
   keepOpenOnDateSelect: false,
   reopenPickerOnClearDates: false,
@@ -138,6 +141,7 @@ const defaultProps = {
 
   // accessibility
   isFocused: false,
+  ariaDescribedBy: undefined,
 
   // i18n
   phrases: DateRangePickerInputPhrases,
@@ -312,6 +316,8 @@ export default class DateRangePickerInputController extends React.PureComponent 
       small,
       regular,
       verticalSpacing,
+      ariaDescribedBy,
+      autoComplete,
     } = this.props;
 
     const startDateString = this.getDateString(startDate);
@@ -359,6 +365,8 @@ export default class DateRangePickerInputController extends React.PureComponent 
         small={small}
         regular={regular}
         verticalSpacing={verticalSpacing}
+        ariaDescribedBy={ariaDescribedBy}
+        autoComplete={autoComplete}
       >
         {children}
       </DateRangePickerInput>

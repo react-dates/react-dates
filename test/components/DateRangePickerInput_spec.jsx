@@ -174,4 +174,38 @@ describe('DateRangePickerInput', () => {
       });
     });
   });
+
+  describe('aria-describedBy calender icon', () => {
+    let wrapper;
+    const labelId = 'ServiceDates';
+    const ariaDescribedBySelector = `#${labelId}`;
+
+    describe('props.ariaDescribedBy is truthy', () => {
+      beforeEach(() => {
+        wrapper = shallow(<DateRangePickerInput ariaDescribedBy="serviceDates" />);
+      });
+
+      it('has label id', () => {
+        expect(wrapper.find(ariaDescribedBySelector)).to.have.lengthOf(1);
+      });
+
+      it('has aria-describedby attribute ', () => {
+        expect(wrapper.find(`button[aria-describedby="${labelId}"]`)).to.have.lengthOf(1);
+      });
+    });
+
+    describe('props.ariaDescribed is falsey', () => {
+      beforeEach(() => {
+        wrapper = shallow(<DateRangePickerInput />);
+      });
+
+      it('does not have #ariaDescribedBy ', () => {
+        expect(wrapper.find(ariaDescribedBySelector)).to.have.lengthOf(0);
+      });
+
+      it('does not have aria-describedby attribute value', () => {
+        expect(wrapper.find(`button[aria-describedby="${labelId}"]`)).to.have.lengthOf(0);
+      });
+    });
+  });
 });

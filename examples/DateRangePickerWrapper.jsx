@@ -50,6 +50,7 @@ const defaultProps = {
   disabled: false,
   required: false,
   screenReaderInputMessage: '',
+  ariaDescribedBy: undefined,
   showClearDates: false,
   showDefaultInputIcon: false,
   customInputIcon: null,
@@ -58,6 +59,7 @@ const defaultProps = {
   block: false,
   small: false,
   regular: false,
+  autoComplete: 'off',
 
   // calendar presentation and interaction related props
   renderMonthText: null,

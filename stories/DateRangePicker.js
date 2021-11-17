@@ -124,4 +124,11 @@ storiesOf('DateRangePicker (DRP)', module)
       maxDate={moment().add(2, 'months').endOf('month')}
       numberOfMonths={2}
     />
+  )))
+  .add(
+    'with aria-describedBy', withInfo()(() => (
+    <div>
+      <label id="ServiceDate">Service Date</label>
+      <DateRangePickerWrapper ariaDescribedBy="ServiceDate" />
+    </div>
   )));

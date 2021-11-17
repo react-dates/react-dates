@@ -22,6 +22,7 @@ const propTypes = forbidExtraProps({
   children: PropTypes.node,
   placeholder: PropTypes.string,
   ariaLabel: PropTypes.string,
+  autoComplete: PropTypes.string,
   titleText: PropTypes.string,
   displayValue: PropTypes.string,
   screenReaderMessage: PropTypes.string,
@@ -54,12 +55,14 @@ const propTypes = forbidExtraProps({
 
   // i18n
   phrases: PropTypes.shape(getPhrasePropTypes(SingleDatePickerInputPhrases)),
+  ariaDescribedBy: PropTypes.string,
 });
 
 const defaultProps = {
   children: null,
   placeholder: 'Select Date',
   ariaLabel: undefined,
+  autoComplete: 'off',
   titleText: undefined,
   displayValue: '',
   screenReaderMessage: '',
@@ -81,6 +84,7 @@ const defaultProps = {
   small: false,
   regular: false,
   verticalSpacing: undefined,
+  ariaDescribedBy: undefined,
 
   onChange() {},
   onClearDate() {},
@@ -99,6 +103,7 @@ function SingleDatePickerInput({
   children,
   placeholder,
   ariaLabel,
+  autoComplete,
   titleText,
   displayValue,
   focused,
@@ -119,6 +124,7 @@ function SingleDatePickerInput({
   onKeyDownArrowDown,
   onKeyDownQuestionMark,
   screenReaderMessage,
+  ariaDescribedBy,
   customCloseIcon,
   customInputIcon,
   openDirection,
@@ -150,6 +156,8 @@ function SingleDatePickerInput({
       disabled={disabled}
       aria-label={phrases.focusStartDate}
       onClick={onFocus}
+      aria-describedby={ariaDescribedBy}
+      aria-expanded={isFocused}
     >
       {calendarIcon}
     </button>
@@ -172,6 +180,7 @@ function SingleDatePickerInput({
         id={id}
         placeholder={placeholder}
         ariaLabel={ariaLabel}
+        autoComplete={autoComplete}
         titleText={titleText}
         displayValue={displayValue}
         screenReaderMessage={screenReaderText}

@@ -112,6 +112,17 @@ storiesOf('DRP - Input Props', module)
       showDefaultInputIcon
     />
   )))
+  .add('aria-describedby for calendar icon ', withInfo()(() => (
+    <div>
+      <label id="serviceDates">Service Dates</label>
+    <DateRangePickerWrapper
+      initialStartDate={moment().add(3, 'days')}
+      initialEndDate={moment().add(10, 'days')}
+      ariaDescribedBy="serviceDates"
+      showDefaultInputIcon
+    />
+    </div>
+  )))
   .add('with custom show calendar icon', withInfo()(() => (
     <DateRangePickerWrapper
       initialStartDate={moment().add(3, 'days')}

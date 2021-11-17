@@ -98,4 +98,11 @@ storiesOf('SingleDatePicker (SDP)', module)
       orientation={VERTICAL_ORIENTATION}
       verticalHeight={568}
     />
+  )))
+  .add(
+    'with aria-describedBy', withInfo()(() => (
+    <div>
+      <label id="ServiceDate">Service Date</label>
+      <SingleDatePickerWrapper ariaDescribedBy="ServiceDate" />
+    </div>
   )));

@@ -72,9 +72,11 @@ const propTypes = forbidExtraProps({
   small: PropTypes.bool,
   regular: PropTypes.bool,
   verticalSpacing: nonNegativeInteger,
+  autoComplete: PropTypes.string,
 
   // accessibility
   isFocused: PropTypes.bool, // describes actual DOM focus
+  ariaDescribedBy: PropTypes.string,
 
   // i18n
   phrases: PropTypes.shape(getPhrasePropTypes(DateRangePickerInputPhrases)),
@@ -93,6 +95,7 @@ const defaultProps = {
   startDateTitleText: undefined,
   endDateTitleText: undefined,
   screenReaderMessage: '',
+  autoComplete: 'off',
   onStartDateFocus() {},
   onEndDateFocus() {},
   onStartDateChange() {},
@@ -127,6 +130,7 @@ const defaultProps = {
 
   // accessibility
   isFocused: false,
+  ariaDescribedBy: undefined,
 
   // i18n
   phrases: DateRangePickerInputPhrases,
@@ -140,6 +144,7 @@ function DateRangePickerInput({
   startDateId,
   startDatePlaceholderText,
   screenReaderMessage,
+  ariaDescribedBy,
   isStartDateFocused,
   onStartDateChange,
   onStartDateFocus,
@@ -162,6 +167,7 @@ function DateRangePickerInput({
   disabled,
   required,
   readOnly,
+  autoComplete,
   showCaret,
   openDirection,
   showDefaultInputIcon,
@@ -207,6 +213,8 @@ function DateRangePickerInput({
       type="button"
       disabled={disabled}
       aria-label={phrases.focusStartDate}
+      aria-describedby={ariaDescribedBy}
+      aria-expanded={isFocused}
       onClick={onKeyDownArrowDown}
     >
       {calendarIcon}
@@ -233,6 +241,7 @@ function DateRangePickerInput({
         id={startDateId}
         placeholder={startDatePlaceholderText}
         ariaLabel={startDateAriaLabel}
+        autoComplete={autoComplete}
         titleText={startDateTitleText}
         displayValue={startDate}
         screenReaderMessage={screenReaderStartDateText}
@@ -269,6 +278,7 @@ function DateRangePickerInput({
         id={endDateId}
         placeholder={endDatePlaceholderText}
         ariaLabel={endDateAriaLabel}
+        autoComplete={autoComplete}
         titleText={endDateTitleText}
         displayValue={endDate}
         screenReaderMessage={screenReaderEndDateText}
