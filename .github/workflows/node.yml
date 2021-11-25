@@ -1,0 +1,48 @@
+name: 'Tests: node.js'
+
+on: [pull_request, push]
+
+jobs:
+  matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      latest: ${{ steps.set-matrix.outputs.requireds }}
+      minors: ${{ steps.set-matrix.outputs.optionals }}
+    steps:
+      - uses: ljharb/actions/node/matrix@main
+        id: set-matrix
+        with:
+          type: 'majors'
+          versionsAsRoot: true
+          preset: '>=6'
+          # to test in node < 6, we need to run the build in one stage, including the tests, and then run the tests in the desired node version later
+
+  majors:
+    needs: [matrix]
+    name: 'latest minors'
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: ${{ fromJson(needs.matrix.outputs.latest) }}
+        react:
+          - 16
+          - 15
+          - 0.14
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ljharb/actions/node/install@main
+        name: 'nvm install ${{ matrix.node-version }} && npm install'
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm run tests-only
+      - uses: codecov/codecov-action@v2
+
+  node:
+    name: 'node 6+'
+    needs: [majors]
+    runs-on: ubuntu-latest
+    steps:
+      - run: 'echo tests completed'

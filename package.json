@@ -11,15 +11,13 @@
     "prebuild:css": "rimraf lib/css && mkdirp lib/css",
     "build:css": "node scripts/buildCSS.js",
     "clean": "rimraf lib esm",
-    "precover": "rimraf coverage && npm run react",
-    "cover": "cross-env NODE_ENV=test node --max-old-space-size=4096 $(which nyc) npm run mocha",
     "lint": "eslint --ext .js,.jsx src test",
     "mocha": "mocha ./test/_helpers",
     "storybook:uninstall": "npm uninstall --no-save @storybook/react && rimraf node_modules/@storybook node_modules/react-modal node_modules/react-dom-factories",
     "react": "NPM_CONFIG_LEGACY_PEER_DEPS=true enzyme-adapter-react-install 16",
     "pretest": "npm run --silent lint",
     "pretests-only": "npm run react",
-    "tests-only": "npm run mocha --silent",
+    "tests-only": "cross-env NODE_ENV=test nyc npm run mocha --silent",
     "pretests-karma": "npm run react",
     "tests-karma": "karma start",
     "test": "npm run build && npm run tests-only",
@@ -73,7 +71,6 @@
     "babel-preset-airbnb": "^4.5.0",
     "chai": "^4.2.0",
     "clean-css": "^4.2.3",
-    "coveralls": "^3.1.0",
     "cross-env": "^5.2.1",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-helper": "^1.3.9",
@@ -98,7 +95,7 @@
     "mocha-wrap": "^2.1.2",
     "moment": "^2.29.1",
     "moment-jalaali": "^0.7.4",
-    "nyc": "^14.1.1",
+    "nyc": "^10.3.2",
     "raw-loader": "^0.5.1",
     "react": "^0.14 || ^15.5.4 || ^16.1.1",
     "react-dom": "^0.14 || ^15.5.4 || ^16.1.1",
@@ -137,12 +134,6 @@
     "react": "^0.14 || ^15.5.4 || ^16.1.1",
     "react-dom": "^0.14 || ^15.5.4 || ^16.1.1",
     "react-with-direction": "^1.3.1"
-  },
-  "greenkeeper": {
-    "ignore": [
-      "mocha",
-      "webpack"
-    ]
   },
   "engines": {
     "node": ">=0.10"

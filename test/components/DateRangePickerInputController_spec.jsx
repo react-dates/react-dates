@@ -4,8 +4,7 @@ import moment from 'moment';
 import sinon from 'sinon-sandbox';
 import { shallow } from 'enzyme';
 
-import DateRangePickerInputController
-  from '../../src/components/DateRangePickerInputController';
+import DateRangePickerInputController from '../../src/components/DateRangePickerInputController';
 
 import DateRangePickerInput from '../../src/components/DateRangePickerInput';
 
