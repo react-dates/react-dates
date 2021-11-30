@@ -882,7 +882,6 @@ describe('DayPickerRangeController', () => {
                 expect(visibleDays[monthString][dateString]).to.include('blocked-minimum-nights');
                 day.add(1, 'day');
               }
-          });
             });
 
             it('updates state to include `blocked` on the appropriate days', () => {
