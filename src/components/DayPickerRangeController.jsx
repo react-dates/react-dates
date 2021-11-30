@@ -1134,7 +1134,7 @@ export default class DayPickerRangeController extends React.PureComponent {
       this.cachedProps = {};
     }
 
-    const key = day.toString();
+    const key = String(day);
     if (prop) {
       // Remove by day and prop
       if (this.cachedProps[key]) {
