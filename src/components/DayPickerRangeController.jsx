@@ -1111,7 +1111,7 @@ export default class DayPickerRangeController extends React.PureComponent {
   }
 
   getCachedPropByDay(day, prop, props, forceUpdate = false) {
-    const key = day.toString();
+    const key = String(day);
     const propsStore = props || this.props;
     if (!forceUpdate && this.cachedProps[key] && this.cachedProps[key][prop]) {
       // Get value from cache
