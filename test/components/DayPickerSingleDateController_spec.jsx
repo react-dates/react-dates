@@ -1352,6 +1352,29 @@ describe('DayPickerSingleDateController', () => {
       modifiers = wrapper.addModifier(updatedDays, pastDateAfterMultiply, modifierToAdd);
       expect(Array.from(modifiers[monthISO][dayISO])).to.contain(modifierToAdd);
     });
+
+    it('return value now has modifier arg for day after multiplying number of months', () => {
+      const modifierToAdd = 'foo';
+      const futureDateAfterMultiply = today.clone().add(4, 'months');
+      const monthISO = toISOMonthString(futureDateAfterMultiply);
+      const todayISO = toISODateString(futureDateAfterMultiply);
+      const updatedDays = {
+        [monthISO]: { [todayISO]: new Set(['bar', 'baz']) },
+      };
+      const wrapper = shallow((
+        <DayPickerSingleDateController
+          onDatesChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+          numberOfMonths={3}
+          orientation={VERTICAL_SCROLLABLE}
+        />
+      )).instance();
+      let modifiers = wrapper.addModifier(updatedDays, futureDateAfterMultiply, modifierToAdd);
+      expect(Array.from(modifiers[monthISO][todayISO])).to.not.contain(modifierToAdd);
+      wrapper.onMultiplyScrollableMonths();
+      modifiers = wrapper.addModifier(updatedDays, futureDateAfterMultiply, modifierToAdd);
+      expect(Array.from(modifiers[monthISO][todayISO])).to.contain(modifierToAdd);
+    });
   });
 
   describe('#deleteModifier', () => {
