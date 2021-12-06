@@ -195,6 +195,7 @@ class DateInput extends React.PureComponent {
       regular,
       block,
       styles,
+      isFocused,
       theme: { reactDates },
     } = this.props;
 
@@ -242,6 +243,7 @@ class DateInput extends React.PureComponent {
           readOnly={typeof readOnly === 'boolean' ? readOnly : isTouch}
           required={required}
           aria-describedby={screenReaderMessage && screenReaderMessageId}
+          aria-expanded={isFocused}
         />
 
         {withFang && (
