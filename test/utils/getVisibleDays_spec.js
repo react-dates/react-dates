@@ -29,4 +29,19 @@ describe('getVisibleDays', () => {
       .filter((days) => days.filter((day) => isSameDay(day, today)).length > 0);
     expect(containsToday.length > 0).to.equal(true);
   });
+
+  it('contains correctly prev and next month dates when firstDayOfWeek is not zero', () => {
+    // The beginning and end of February 2020 are Saturday
+    const testDate = moment({
+      year: 2020,
+      month: 1,
+      day: 1,
+    });
+    const visibleDays = getVisibleDays(testDate, 1, true, true, 1);
+    const februaryVisibleDays = Object.values(visibleDays)[0];
+    const januaryDates = februaryVisibleDays.filter((day) => day.month() === 0);
+    expect(januaryDates.length).to.equal(5);
+    const marchDates = februaryVisibleDays.filter((day) => day.month() === 2);
+    expect(marchDates.length).to.equal(1);
+  });
 });
