@@ -5,7 +5,7 @@ import disableScroll, {
   getScrollAncestorsOverflowY,
 } from '../../src/utils/disableScroll';
 
-const describeIfWindow = typeof document === 'undefined' ? describe.skip : describe;
+import describeIfWindow from '../_helpers/describeIfWindow';
 
 const createScrollContainer = (level = 1) => {
   const el = document.createElement('div');

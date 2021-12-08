@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { forbidExtraProps, mutuallyExclusiveProps, nonNegativeInteger } from 'airbnb-prop-types';
-import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
+import { withStyles, withStylesPropTypes } from 'react-with-styles';
 
 import moment from 'moment';
 import throttle from 'lodash/throttle';
@@ -203,7 +203,7 @@ class DayPicker extends React.PureComponent {
 
     const currentMonth = props.hidden ? moment() : props.initialVisibleMonth();
 
-    let focusedDate = currentMonth.clone().startOf('month');
+    let focusedDate = currentMonth.clone().startOf('month').hour(12);
     if (props.getFirstFocusableDay) {
       focusedDate = props.getFirstFocusableDay(currentMonth);
     }
@@ -487,7 +487,7 @@ class DayPicker extends React.PureComponent {
         break;
       case 'Home':
         e.preventDefault();
-        newFocusedDate.startOf('week');
+        newFocusedDate.startOf('week').hour(12);
         didTransitionMonth = this.maybeTransitionPrevMonth(newFocusedDate);
         break;
       case 'PageUp':
@@ -703,7 +703,7 @@ class DayPicker extends React.PureComponent {
     }
 
     if (newMonth && (!focusedDate || !isDayVisible(focusedDate, newMonth, numberOfMonths))) {
-      focusedDate = newMonth.clone().startOf('month');
+      focusedDate = newMonth.clone().startOf('month').hour(12);
     }
 
     return focusedDate;
@@ -983,6 +983,7 @@ class DayPicker extends React.PureComponent {
       horizontalMonthPadding,
       orientation,
       renderWeekHeaderElement,
+      css,
       styles,
     } = this.props;
 
@@ -1068,6 +1069,7 @@ class DayPicker extends React.PureComponent {
       daySize,
       isFocused,
       isRTL,
+      css,
       styles,
       theme,
       phrases,

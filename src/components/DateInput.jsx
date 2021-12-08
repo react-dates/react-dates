@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
-import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
+import { withStyles, withStylesPropTypes } from 'react-with-styles';
 import throttle from 'lodash/throttle';
 import isTouchDevice from 'is-touch-device';
 
@@ -194,6 +194,7 @@ class DateInput extends React.PureComponent {
       small,
       regular,
       block,
+      css,
       styles,
       theme: { reactDates },
     } = this.props;
@@ -342,7 +343,7 @@ export default withStyles(({
   },
 
   DateInput_input__regular: {
-    fontWeight: 'auto',
+    fontWeight: 'inherit',
   },
 
   DateInput_input__readOnly: {

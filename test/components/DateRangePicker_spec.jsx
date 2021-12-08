@@ -17,7 +17,7 @@ import {
   VERTICAL_ORIENTATION,
 } from '../../src/constants';
 
-const describeIfWindow = typeof document === 'undefined' ? describe.skip : describe;
+import describeIfWindow from '../_helpers/describeIfWindow';
 
 class DateRangePickerWrapper extends React.Component {
   constructor(props) {

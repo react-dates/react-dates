@@ -1000,6 +1000,19 @@ describe('DayPickerSingleDateController', () => {
       expect(firstFocusableDay.isSame(date, 'day')).to.equal(true);
     });
 
+    it('time is a noon', () => {
+      sinon.stub(DayPickerSingleDateController.prototype, 'isBlocked').returns(false);
+      const wrapper = shallow((
+        <DayPickerSingleDateController
+          date={null}
+          onDateChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+        />
+      ));
+      const firstFocusableDay = wrapper.instance().getFirstFocusableDay(today);
+      expect(firstFocusableDay.hours()).to.equal(12);
+    });
+
     describe('desired date is blocked', () => {
       it('returns first unblocked visible day if exists', () => {
         const isBlockedStub = sinon.stub(DayPickerSingleDateController.prototype, 'isBlocked');
@@ -1617,6 +1630,19 @@ describe('DayPickerSingleDateController', () => {
 
       it('returns true if same day as firstDayOfWeek prop', () => {
         const firstDayOfWeek = 3;
+        const wrapper = shallow(<DayPickerSingleDateController firstDayOfWeek={firstDayOfWeek} />);
+        expect(wrapper.instance().isFirstDayOfWeek(moment().startOf('week').day(firstDayOfWeek))).to.equal(true);
+      });
+
+      it('returns true if first day of week and prop are both zero', () => {
+        const firstDayOfWeek = 0;
+        const wrapper = shallow(<DayPickerSingleDateController firstDayOfWeek={firstDayOfWeek} />);
+        expect(wrapper.instance().isFirstDayOfWeek(moment().startOf('week').day(firstDayOfWeek))).to.equal(true);
+      });
+
+      it('returns true if first day of week is not zero, and prop is zero', () => {
+        sinon.stub(moment.localeData(), 'firstDayOfWeek').returns(1);
+        const firstDayOfWeek = 0;
         const wrapper = shallow(<DayPickerSingleDateController firstDayOfWeek={firstDayOfWeek} />);
         expect(wrapper.instance().isFirstDayOfWeek(moment().startOf('week').day(firstDayOfWeek))).to.equal(true);
       });
