@@ -354,6 +354,7 @@ export default class DateRangePickerInputController extends React.PureComponent 
         onStartDateShiftTab={this.onClearFocus}
         onEndDateChange={this.onEndDateChange}
         onEndDateFocus={this.onEndDateFocus}
+        onEndDateTab={this.onClearFocus}
         showClearDates={showClearDates}
         onClearDates={this.clearDates}
         screenReaderMessage={screenReaderMessage}
