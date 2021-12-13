@@ -3693,6 +3693,74 @@ describe('DayPickerRangeController', () => {
     });
   });
 
+  describe('#onMonchChange', () => {
+    it('sets disableNext as false when maxDate is in visible month and a past month is selected', () => {
+      const wrapper = shallow((
+        <DayPickerRangeController
+          onDatesChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+          maxDate={today}
+        />
+      ));
+      wrapper.setState({
+        currentMonth: today,
+      });
+      expect(wrapper.state()).to.have.property('disableNext', true);
+      wrapper.instance().onMonthChange(today.clone().subtract(1, 'month'));
+      expect(wrapper.state()).to.have.property('disableNext', false);
+    });
+
+    it('sets disablePrev as false when minDate is in visible month and a future month is selected', () => {
+      const wrapper = shallow((
+        <DayPickerRangeController
+          onDatesChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+          minDate={today}
+        />
+      ));
+      wrapper.setState({
+        currentMonth: today,
+      });
+      expect(wrapper.state()).to.have.property('disablePrev', true);
+      wrapper.instance().onMonthChange(today.clone().add(1, 'month'));
+      expect(wrapper.state()).to.have.property('disablePrev', false);
+    });
+  });
+
+  describe('#onYearChange', () => {
+    it('sets disableNext as false when maxDate is in visible month and a past year is selected', () => {
+      const wrapper = shallow((
+        <DayPickerRangeController
+          onDatesChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+          maxDate={today}
+        />
+      ));
+      wrapper.setState({
+        currentMonth: today,
+      });
+      expect(wrapper.state()).to.have.property('disableNext', true);
+      wrapper.instance().onYearChange(today.clone().subtract(1, 'year'));
+      expect(wrapper.state()).to.have.property('disableNext', false);
+    });
+
+    it('sets disablePrev as false when minDate is in visible month and a future year is selected', () => {
+      const wrapper = shallow((
+        <DayPickerRangeController
+          onDatesChange={sinon.stub()}
+          onFocusChange={sinon.stub()}
+          minDate={today}
+        />
+      ));
+      wrapper.setState({
+        currentMonth: today,
+      });
+      expect(wrapper.state()).to.have.property('disablePrev', true);
+      wrapper.instance().onYearChange(today.clone().add(1, 'year'));
+      expect(wrapper.state()).to.have.property('disablePrev', false);
+    });
+  });
+
   describe('#getFirstFocusableDay', () => {
     describe('focusedInput === START_DATE', () => {
       it('returns startDate if exists and is not blocked', () => {
