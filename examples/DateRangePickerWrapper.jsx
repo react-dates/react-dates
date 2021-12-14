@@ -151,6 +151,7 @@ class DateRangePickerWrapper extends React.Component {
       <div>
         <DateRangePicker
           {...props}
+          ariaDescribedBy="input-feedback"
           onDatesChange={this.onDatesChange}
           onFocusChange={this.onFocusChange}
           focusedInput={focusedInput}
