@@ -1,6 +1,6 @@
 {
   "name": "@availity/react-dates",
-  "version": "21.11.0",
+  "version": "21.11.1",
   "description": "Availity's responsive and accessible date range picker component built with React",
   "main": "index.js",
   "scripts": {
