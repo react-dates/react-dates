@@ -28,6 +28,7 @@ const propTypes = forbidExtraProps({
   id: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   displayValue: PropTypes.string,
+  ariaDescribedBy: PropTypes.string,
   ariaLabel: PropTypes.string,
   autoComplete: PropTypes.string,
   titleText: PropTypes.string,
@@ -178,6 +179,7 @@ class DateInput extends React.PureComponent {
     const {
       id,
       placeholder,
+      ariaDescribedBy,
       ariaLabel,
       autoComplete,
       titleText,
@@ -242,7 +244,7 @@ class DateInput extends React.PureComponent {
           disabled={disabled}
           readOnly={typeof readOnly === 'boolean' ? readOnly : isTouch}
           required={required}
-          aria-describedby={screenReaderMessage && screenReaderMessageId}
+          aria-describedby={`${screenReaderMessage && screenReaderMessageId} ${ariaDescribedBy?ariaDescribedBy:''}`}
           aria-expanded={isFocused}
         />
 
