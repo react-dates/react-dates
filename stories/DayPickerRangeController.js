@@ -24,7 +24,7 @@ const dayPickerRangeControllerInfo = `The ${monospace('DayPickerRangeController'
   ${monospace('startDate')}, and ${monospace('endDate')} values in state and then pass these down as
   props along with ${monospace('onFocusChange')} and ${monospace('onDatesChange')} callbacks that
   update them appropriately. You can see an example of this implementation <a href=
-  "https://github.com/airbnb/react-dates/blob/master/examples/DayPickerRangeControllerWrapper.jsx">
+  "https://github.com/react-dates/react-dates/blob/HEAD/examples/DayPickerRangeControllerWrapper.jsx">
   here</a>. <br/><br/>
   Note that the ${monospace('focusedInput')} prop may be ${monospace('null')}, but if this is the
   case, dates are not selectable. As a result, in the example wrapper, we always force
