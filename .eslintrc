@@ -25,6 +25,8 @@
   "parser": "@babel/eslint-parser",
 
   "rules": {
+    "max-len": "off",
+
     "react/forbid-foreign-prop-types": 2, // For babel-plugin-transform-react-remove-prop-types
 
     "jsx-a11y/click-events-have-key-events": 1, // TODO: enable
@@ -53,6 +55,7 @@
         "indent": [2, 2, {
           "MemberExpression": "off",
         }],
+        "react/function-component-definition": "off",
       },
     },
   ],

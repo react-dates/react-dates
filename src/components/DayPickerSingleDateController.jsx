@@ -529,9 +529,7 @@ export default class DayPickerSingleDateController extends React.PureComponent {
     const { currentMonth, visibleDays } = this.state;
 
     const firstPreviousMonth = currentMonth.clone().subtract(numberOfMonths, 'month');
-    const newVisibleDays = getVisibleDays(
-      firstPreviousMonth, numberOfMonths, enableOutsideDays, true,
-    );
+    const newVisibleDays = getVisibleDays(firstPreviousMonth, numberOfMonths, enableOutsideDays, true);
 
     this.setState({
       currentMonth: firstPreviousMonth.clone(),
