@@ -260,15 +260,13 @@ function DateRangePickerInput({
 
       {!isEndDateFocused && children}
 
-      {
-        <div
-          {...css(styles.DateRangePickerInput_arrow)}
-          aria-hidden="true"
-          role="presentation"
-        >
-          {arrowIcon}
-        </div>
-      }
+      <div
+        {...css(styles.DateRangePickerInput_arrow)}
+        aria-hidden="true"
+        role="presentation"
+      >
+        {arrowIcon}
+      </div>
 
       <DateInput
         id={endDateId}

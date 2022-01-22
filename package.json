@@ -51,6 +51,7 @@
   "devDependencies": {
     "@babel/cli": "^7.16.8",
     "@babel/core": "^7.16.12",
+    "@babel/eslint-parser": "^7.16.5",
     "@babel/register": "^7.16.9",
     "@babel/runtime": "^7.16.7",
     "@storybook/addon-actions": "^5.3.21",
@@ -62,7 +63,6 @@
     "@welldone-software/why-did-you-render": "^3.6.0",
     "airbnb-js-shims": "^2.2.1",
     "aphrodite": "^2.4.0",
-    "babel-eslint": "^10.1.0",
     "babel-loader": "^8.2.2",
     "babel-plugin-inline-react-svg": "^1.1.2",
     "babel-plugin-inline-svg": "^1.2.0",

@@ -3,19 +3,26 @@
 
   "extends": [
     "airbnb",
-    "plugin:react-with-styles/recommended"
+    "plugin:react-with-styles/recommended",
   ],
 
   "plugins": [
-    "react-with-styles"
+    "react-with-styles",
   ],
 
   "env": {
     "browser": true,
-    "node": true
+    "node": true,
   },
 
-  "parser": "babel-eslint",
+  "ignorePatterns": [
+    "lib/",
+    ".storybook/",
+    "test/_helpers/",
+    "webpack.config.js",
+  ],
+
+  "parser": "@babel/eslint-parser",
 
   "rules": {
     "react/forbid-foreign-prop-types": 2, // For babel-plugin-transform-react-remove-prop-types
@@ -44,7 +51,7 @@
           //"devDependencies": true
         //}],
         "indent": [2, 2, {
-          "MemberExpression": "off"
+          "MemberExpression": "off",
         }],
       },
     },
@@ -52,5 +59,5 @@
 
   "settings": {
     "propWrapperFunctions": ["forbidExtraProps", "exact", "Object.freeze"],
-  }
+  },
 }
