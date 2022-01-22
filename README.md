@@ -14,7 +14,7 @@
 
 ## Live Playground
 
-For examples of the datepicker in action, go to http://airbnb.io/react-dates.
+For examples of the datepicker in action, go to [react-dates.github.io](https://react-dates.github.io/react-dates/).
 
 OR
 
