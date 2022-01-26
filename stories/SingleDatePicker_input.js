@@ -1,7 +1,6 @@
 import React from 'react';
 import moment from 'moment';
 import { storiesOf } from '@storybook/react';
-import { withInfo } from '@storybook/addon-info';
 
 import SingleDatePickerWrapper from '../examples/SingleDatePickerWrapper';
 
@@ -19,94 +18,94 @@ const TestCustomInputIcon = () => (
 );
 
 storiesOf('SDP - Input Props', module)
-  .add('default', withInfo()(() => (
+  .add('default', (() => (
     <SingleDatePickerWrapper
       initialDate={moment().add(3, 'days')}
     />
   )))
-  .add('disabled', withInfo()(() => (
+  .add('disabled', (() => (
     <SingleDatePickerWrapper
       initialDate={moment().add(3, 'days')}
       disabled
     />
   )))
-  .add('readOnly', withInfo()(() => (
+  .add('readOnly', (() => (
     <SingleDatePickerWrapper
       initialDate={moment().add(3, 'days')}
       readOnly
     />
   )))
-  .add('with clear dates button', withInfo()(() => (
+  .add('with clear dates button', (() => (
     <SingleDatePickerWrapper
       initialDate={moment().add(3, 'days')}
       showClearDate
     />
   )))
-  .add('reopens DayPicker on clear dates', withInfo()(() => (
+  .add('reopens DayPicker on clear dates', (() => (
     <SingleDatePickerWrapper
       initialDate={moment().add(3, 'days')}
       showClearDate
       reopenPickerOnClearDate
     />
   )))
-  .add('with custom display format', withInfo()(() => (
+  .add('with custom display format', (() => (
     <SingleDatePickerWrapper
       initialDate={moment().add(3, 'days')}
       displayFormat="MMM D"
     />
   )))
-  .add('with show calendar icon', withInfo()(() => (
+  .add('with show calendar icon', (() => (
     <SingleDatePickerWrapper
       initialDate={moment().add(3, 'days')}
       showDefaultInputIcon
     />
   )))
-  .add('with custom show calendar icon', withInfo()(() => (
+  .add('with custom show calendar icon', (() => (
     <SingleDatePickerWrapper
       initialDate={moment().add(3, 'days')}
       customInputIcon={<TestCustomInputIcon />}
     />
   )))
-  .add('with show calendar icon after input', withInfo()(() => (
+  .add('with show calendar icon after input', (() => (
     <SingleDatePickerWrapper
       initialDate={moment().add(3, 'days')}
       showDefaultInputIcon
       inputIconPosition="after"
     />
   )))
-  .add('with screen reader message', withInfo()(() => (
+  .add('with screen reader message', (() => (
     <SingleDatePickerWrapper
       initialDate={moment().add(3, 'days')}
       screenReaderInputMessage="Here you could inform screen reader users of the date format, minimum nights, blocked out dates, etc"
     />
   )))
-  .add('with custom title attribute', withInfo()(() => (
+  .add('with custom title attribute', (() => (
     <SingleDatePickerWrapper
       initialDate={moment().add(3, 'days')}
       titleText="Here you can set the title attribute of the input, which shows in the tooltip on :hover over the field"
     />
   )))
-  .add('noBorder', withInfo()(() => (
+  .add('noBorder', (() => (
     <SingleDatePickerWrapper
       initialDate={moment().add(3, 'days')}
       noBorder
     />
   )))
-  .add('block styling', withInfo()(() => (
+  .add('block styling', (() => (
     <SingleDatePickerWrapper
       initialDate={moment().add(3, 'days')}
       showClearDate
       block
     />
   )))
-  .add('small styling', withInfo()(() => (
+  .add('small styling', (() => (
     <SingleDatePickerWrapper
       initialDate={moment().add(3, 'days')}
       showClearDate
       small
     />
   )))
-  .add('regular styling', withInfo()(() => (
+  .add('regular styling', (() => (
     <SingleDatePickerWrapper
       initialDate={moment().add(3, 'days')}
       showClearDate

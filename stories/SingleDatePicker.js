@@ -2,7 +2,6 @@ import React from 'react';
 import moment from 'moment';
 import momentJalaali from 'moment-jalaali';
 import { storiesOf } from '@storybook/react';
-import { withInfo } from '@storybook/addon-info';
 import DirectionProvider, { DIRECTIONS } from 'react-with-direction/dist/DirectionProvider';
 import isInclusivelyBeforeDay from '../src/utils/isInclusivelyBeforeDay';
 import isInclusivelyAfterDay from '../src/utils/isInclusivelyAfterDay';
@@ -31,10 +30,10 @@ const TestInput = props => (
 );
 
 storiesOf('SingleDatePicker (SDP)', module)
-  .add('default', withInfo()(() => (
+  .add('default', (() => (
     <SingleDatePickerWrapper />
   )))
-  .add('as part of a form', withInfo()(() => (
+  .add('as part of a form', (() => (
     <div>
       <SingleDatePickerWrapper />
       <TestInput placeholder="Input 1" />
@@ -42,7 +41,7 @@ storiesOf('SingleDatePicker (SDP)', module)
       <TestInput placeholder="Input 3" />
     </div>
    )))
-  .add('non-english locale (Chinese)', withInfo()(() => {
+  .add('non-english locale (Chinese)', (() => {
     moment.locale('zh-cn');
     return (
       <SingleDatePickerWrapper
@@ -55,7 +54,7 @@ storiesOf('SingleDatePicker (SDP)', module)
       />
     );
   }))
-  .add('non-english locale (Persian)', withInfo()(() => {
+  .add('non-english locale (Persian)', (() => {
     moment.locale('fa');
     return (
       <SingleDatePickerWrapper
@@ -65,7 +64,7 @@ storiesOf('SingleDatePicker (SDP)', module)
       />
     );
   }))
-  .add('with DirectionProvider', withInfo()(() => (
+  .add('with DirectionProvider', (() => (
     <DirectionProvider direction={DIRECTIONS.RTL}>
       <SingleDatePickerWrapper
         placeholder="تاریخ شروع"
@@ -76,13 +75,13 @@ storiesOf('SingleDatePicker (SDP)', module)
       />
     </DirectionProvider>
   )))
-  .add('with custom month navigation and blocked navigation (minDate and maxDate)', withInfo()(() => (
+  .add('with custom month navigation and blocked navigation (minDate and maxDate)', (() => (
     <SingleDatePickerWrapper
       minDate={moment().subtract(2, 'months').startOf('month')}
       maxDate={moment().add(2, 'months').endOf('month')}
     />
   )))
-  .add('with custom isOutsideRange and month navigation and blocked navigation (minDate and maxDate)', withInfo()(() => {
+  .add('with custom isOutsideRange and month navigation and blocked navigation (minDate and maxDate)', (() => {
     const minDate = moment().subtract(2, 'months').startOf('month')
     const maxDate = moment().add(2, 'months').endOf('month')
     const isOutsideRange = day => isInclusivelyBeforeDay(day, minDate) || isInclusivelyAfterDay(day, maxDate)
@@ -93,13 +92,13 @@ storiesOf('SingleDatePicker (SDP)', module)
       isOutsideRange={isOutsideRange}
     />
   )}))
-  .add('vertical with custom height', withInfo()(() => (
+  .add('vertical with custom height', (() => (
     <SingleDatePickerWrapper
       orientation={VERTICAL_ORIENTATION}
       verticalHeight={568}
     />
   )))
-  .add('with custom autoComplete attribute', withInfo()(() => (
+  .add('with custom autoComplete attribute', (() => (
     <SingleDatePickerWrapper
     autoComplete="datePicker"
     />

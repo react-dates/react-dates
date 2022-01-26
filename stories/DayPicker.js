@@ -1,6 +1,5 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { withInfo } from '@storybook/addon-info';
 import DirectionProvider, { DIRECTIONS } from 'react-with-direction/dist/DirectionProvider';
 import DayPicker from '../src/components/DayPicker';
 
@@ -106,25 +105,25 @@ function renderNavNextButton(buttonProps) {
 }
 
 storiesOf('DayPicker', module)
-  .add('default', withInfo()(() => (
+  .add('default', (() => (
     <DayPicker />
   )))
-  .add('with custom day size', withInfo()(() => (
+  .add('with custom day size', (() => (
     <DayPicker daySize={50} />
   )))
-  .add('single month', withInfo()(() => (
+  .add('single month', (() => (
     <DayPicker numberOfMonths={1} />
   )))
-  .add('3 months', withInfo()(() => (
+  .add('3 months', (() => (
     <DayPicker numberOfMonths={3} />
   )))
-  .add('vertical', withInfo()(() => (
+  .add('vertical', (() => (
     <DayPicker
       numberOfMonths={2}
       orientation={VERTICAL_ORIENTATION}
     />
   )))
-  .add('vertically scrollable with 12 months', withInfo()(() => (
+  .add('vertically scrollable with 12 months', (() => (
     <div
       style={{
         height: 568,
@@ -137,21 +136,21 @@ storiesOf('DayPicker', module)
       />
     </div>
   )))
-  .add('vertical with custom day size', withInfo()(() => (
+  .add('vertical with custom day size', (() => (
     <DayPicker
       numberOfMonths={2}
       orientation={VERTICAL_ORIENTATION}
       daySize={50}
     />
   )))
-  .add('vertical with custom height', withInfo()(() => (
+  .add('vertical with custom height', (() => (
     <DayPicker
       numberOfMonths={2}
       orientation={VERTICAL_ORIENTATION}
       verticalHeight={568}
     />
   )))
-  .add('vertical with DirectionProvider', withInfo()(() => (
+  .add('vertical with DirectionProvider', (() => (
     <DirectionProvider direction={DIRECTIONS.RTL}>
       <DayPicker
         numberOfMonths={2}
@@ -160,7 +159,7 @@ storiesOf('DayPicker', module)
       />
     </DirectionProvider>
   )))
-  .add('vertically scrollable with DirectionProvider', withInfo()(() => (
+  .add('vertically scrollable with DirectionProvider', (() => (
     <DirectionProvider direction={DIRECTIONS.RTL}>
       <div
         style={{
@@ -175,24 +174,24 @@ storiesOf('DayPicker', module)
       </div>
     </DirectionProvider>
   )))
-  .add('with custom arrows', withInfo()(() => (
+  .add('with custom arrows', (() => (
     <DayPicker
       navPrev={<TestPrevIcon />}
       navNext={<TestNextIcon />}
     />
   )))
-  .add('with custom navigation buttons', withInfo()(() => (
+  .add('with custom navigation buttons', (() => (
     <DayPicker
       renderNavPrevButton={renderNavPrevButton}
       renderNavNextButton={renderNavNextButton}
     />
   )))
-  .add('with custom details', withInfo()(() => (
+  .add('with custom details', (() => (
     <DayPicker
       renderDayContents={(day) => (day.day() % 6 === 5 ? '😻' : day.format('D'))}
     />
   )))
-  .add('vertical with fixed-width container', withInfo()(() => (
+  .add('vertical with fixed-width container', (() => (
     <div style={{ width: '400px' }}>
       <DayPicker
         numberOfMonths={2}
@@ -200,30 +199,30 @@ storiesOf('DayPicker', module)
       />
     </div>
   )))
-  .add('with info panel', withInfo()(() => (
+  .add('with info panel', (() => (
     <DayPicker
       renderCalendarInfo={() => (
         <TestCustomInfoPanel />
       )}
     />
   )))
-  .add('with custom week header text', withInfo()(() => (
+  .add('with custom week header text', (() => (
     <DayPicker
       renderWeekHeaderElement={(day) => (
         <strong style={{ color: '#FE01E5' }}><small>{day.toUpperCase()}</small></strong>
       )}
     />
   )))
-  .add('with custom week day format', withInfo()(() => (
+  .add('with custom week day format', (() => (
     <DayPicker
       weekDayFormat="ddd"
     />
   )))
-  .add('with no animation', withInfo()(() => (
+  .add('with no animation', (() => (
     <DayPicker
       transitionDuration={0}
     />
   )))
-  .add('noBorder', withInfo()(() => (
+  .add('noBorder', (() => (
     <DayPicker noBorder />
   )));
