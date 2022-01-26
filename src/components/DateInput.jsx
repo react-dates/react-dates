@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
 import { withStyles, withStylesPropTypes } from 'react-with-styles';
@@ -7,6 +7,7 @@ import isTouchDevice from 'is-touch-device';
 
 import noflip from '../utils/noflip';
 import getInputHeight from '../utils/getInputHeight';
+import usePrevious from '../utils/usePrevious';
 import openDirectionShape from '../shapes/OpenDirectionShape';
 
 import {
@@ -85,73 +86,46 @@ const defaultProps = {
   isFocused: false,
 };
 
-class DateInput extends React.PureComponent {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      dateString: '',
-      isTouchDevice: false,
-    };
-
-    this.onChange = this.onChange.bind(this);
-    this.onKeyDown = this.onKeyDown.bind(this);
-    this.setInputRef = this.setInputRef.bind(this);
-    this.throttledKeyDown = throttle(this.onFinalKeyDown, 300, { trailing: false });
-  }
-
-  componentDidMount() {
-    this.setState({ isTouchDevice: isTouchDevice() });
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { dateString } = this.state;
-    if (dateString && nextProps.displayValue) {
-      this.setState({
-        dateString: '',
-      });
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    const { focused, isFocused } = this.props;
-    if (prevProps.focused === focused && prevProps.isFocused === isFocused) return;
-
-    if (focused && isFocused) {
-      this.inputRef.focus();
-    }
-  }
-
-  onChange(e) {
-    const { onChange, onKeyDownQuestionMark } = this.props;
-    const dateString = e.target.value;
-
-    // In Safari, onKeyDown does not consistently fire ahead of onChange. As a result, we need to
-    // special case the `?` key so that it always triggers the appropriate callback, instead of
-    // modifying the input value
-    if (dateString[dateString.length - 1] === '?') {
-      onKeyDownQuestionMark(e);
-    } else {
-      this.setState({ dateString }, () => onChange(dateString));
-    }
-  }
-
-  onKeyDown(e) {
-    e.stopPropagation();
-    if (!MODIFIER_KEY_NAMES.has(e.key)) {
-      this.throttledKeyDown(e);
-    }
-  }
-
-  onFinalKeyDown(e) {
+const DateInput = memo((props) => {
+  const inputRef = useRef(null);
+  const { 
+    displayValue, 
+    focused, 
+    isFocused, 
+    id,
+    placeholder,
+    ariaLabel,
+    autoComplete,
+    titleText,
+    screenReaderMessage,
+    showCaret,
+    onFocus,
+    disabled,
+    required,
+    readOnly,
+    openDirection,
+    verticalSpacing,
+    small,
+    regular,
+    block,
+    css,
+    styles,
+    onChange,
+    theme: { reactDates },
+  } = props;
+  
+  const [dateString, setDateString] = useState('');
+  const [isTouch, setIsTouchDevice] = useState(false);
+  
+  const handleFinalKeyDown = (e) => {
     const {
       onKeyDownShiftTab,
       onKeyDownTab,
       onKeyDownArrowDown,
       onKeyDownQuestionMark,
-    } = this.props;
+    } = props;
     const { key } = e;
-
+    
     if (key === 'Tab') {
       if (e.shiftKey) {
         onKeyDownShiftTab(e);
@@ -165,120 +139,134 @@ class DateInput extends React.PureComponent {
       onKeyDownQuestionMark(e);
     }
   }
-
-  setInputRef(ref) {
-    this.inputRef = ref;
+  
+  const throttledKeyDown = throttle(handleFinalKeyDown, 300, { trailing: false });
+  
+  const handleKeyDown = (e) => {
+    e.stopPropagation();
+    if (!MODIFIER_KEY_NAMES.has(e.key)) {
+      throttledKeyDown(e);
+    }
   }
+  
+  const { focused: prevFocused, isFocused: prevIsFocused } = usePrevious(props, props) || {};
+  const prevDateString = usePrevious(dateString)
 
-  render() {
-    const {
-      dateString,
-      isTouchDevice: isTouch,
-    } = this.state;
-    const {
-      id,
-      placeholder,
-      ariaLabel,
-      autoComplete,
-      titleText,
-      displayValue,
-      screenReaderMessage,
-      focused,
-      showCaret,
-      onFocus,
-      disabled,
-      required,
-      readOnly,
-      openDirection,
-      verticalSpacing,
-      small,
-      regular,
-      block,
-      css,
-      styles,
-      theme: { reactDates },
-    } = this.props;
+  useEffect(() => {
+    setIsTouchDevice(isTouchDevice());
+  }, []);
+  
+  useEffect(() => {
+    if (dateString && displayValue) {
+      setDateString('')
+    }
+    
+    if (dateString != prevDateString) {
+      onChange(dateString)
+    }
+  }, [dateString]);
+  
+  useEffect(() => {
+    if (prevFocused === focused && prevIsFocused === isFocused) return;
+    
+    if (focused && isFocused) {
+      inputRef.current.focus();
+    }
+  }, [focused, isFocused]);
+  
+  const handleChange = (e) => {
+    const { onKeyDownQuestionMark } = props;
+    const dateString = e.target.value;
 
-    const value = dateString || displayValue || '';
-    const screenReaderMessageId = `DateInput__screen-reader-message-${id}`;
+    // In Safari, onKeyDown does not consistently fire ahead of onChange. As a result, we need to
+    // special case the `?` key so that it always triggers the appropriate callback, instead of
+    // modifying the input value
+    if (dateString[dateString.length - 1] === '?') {
+      onKeyDownQuestionMark(e);
+    } else {
+      setDateString(dateString);
+    }
+  }  
 
-    const withFang = showCaret && focused;
+  const value = dateString || displayValue || '';
+  const screenReaderMessageId = `DateInput__screen-reader-message-${id}`;
 
-    const inputHeight = getInputHeight(reactDates, small);
+  const withFang = showCaret && focused;
 
-    return (
-      <div
+  const inputHeight = getInputHeight(reactDates, small);
+
+  return (
+    <div
+      {...css(
+        styles.DateInput,
+        small && styles.DateInput__small,
+        block && styles.DateInput__block,
+        withFang && styles.DateInput__withFang,
+        disabled && styles.DateInput__disabled,
+        withFang && openDirection === OPEN_DOWN && styles.DateInput__openDown,
+        withFang && openDirection === OPEN_UP && styles.DateInput__openUp,
+      )}
+    >
+      <input
         {...css(
-          styles.DateInput,
-          small && styles.DateInput__small,
-          block && styles.DateInput__block,
-          withFang && styles.DateInput__withFang,
-          disabled && styles.DateInput__disabled,
-          withFang && openDirection === OPEN_DOWN && styles.DateInput__openDown,
-          withFang && openDirection === OPEN_UP && styles.DateInput__openUp,
+          styles.DateInput_input,
+          small && styles.DateInput_input__small,
+          regular && styles.DateInput_input__regular,
+          readOnly && styles.DateInput_input__readOnly,
+          focused && styles.DateInput_input__focused,
+          disabled && styles.DateInput_input__disabled,
         )}
-      >
-        <input
+        aria-label={ariaLabel === undefined ? placeholder : ariaLabel}
+        title={titleText}
+        type="text"
+        id={id}
+        name={id}
+        ref={inputRef}
+        value={value}
+        onChange={handleChange}
+        onKeyDown={handleKeyDown}
+        onFocus={onFocus}
+        placeholder={placeholder}
+        autoComplete={autoComplete}
+        disabled={disabled}
+        readOnly={typeof readOnly === 'boolean' ? readOnly : isTouch}
+        required={required}
+        aria-describedby={screenReaderMessage && screenReaderMessageId}
+      />
+
+      {withFang && (
+        <svg
+          role="presentation"
+          focusable="false"
           {...css(
-            styles.DateInput_input,
-            small && styles.DateInput_input__small,
-            regular && styles.DateInput_input__regular,
-            readOnly && styles.DateInput_input__readOnly,
-            focused && styles.DateInput_input__focused,
-            disabled && styles.DateInput_input__disabled,
+            styles.DateInput_fang,
+            openDirection === OPEN_DOWN && {
+              top: inputHeight + verticalSpacing - FANG_HEIGHT_PX - 1,
+            },
+            openDirection === OPEN_UP && {
+              bottom: inputHeight + verticalSpacing - FANG_HEIGHT_PX - 1,
+            },
           )}
-          aria-label={ariaLabel === undefined ? placeholder : ariaLabel}
-          title={titleText}
-          type="text"
-          id={id}
-          name={id}
-          ref={this.setInputRef}
-          value={value}
-          onChange={this.onChange}
-          onKeyDown={this.onKeyDown}
-          onFocus={onFocus}
-          placeholder={placeholder}
-          autoComplete={autoComplete}
-          disabled={disabled}
-          readOnly={typeof readOnly === 'boolean' ? readOnly : isTouch}
-          required={required}
-          aria-describedby={screenReaderMessage && screenReaderMessageId}
-        />
+        >
+          <path
+            {...css(styles.DateInput_fangShape)}
+            d={openDirection === OPEN_DOWN ? FANG_PATH_TOP : FANG_PATH_BOTTOM}
+          />
+          <path
+            {...css(styles.DateInput_fangStroke)}
+            d={openDirection === OPEN_DOWN ? FANG_STROKE_TOP : FANG_STROKE_BOTTOM}
+          />
+        </svg>
+      )}
 
-        {withFang && (
-          <svg
-            role="presentation"
-            focusable="false"
-            {...css(
-              styles.DateInput_fang,
-              openDirection === OPEN_DOWN && {
-                top: inputHeight + verticalSpacing - FANG_HEIGHT_PX - 1,
-              },
-              openDirection === OPEN_UP && {
-                bottom: inputHeight + verticalSpacing - FANG_HEIGHT_PX - 1,
-              },
-            )}
-          >
-            <path
-              {...css(styles.DateInput_fangShape)}
-              d={openDirection === OPEN_DOWN ? FANG_PATH_TOP : FANG_PATH_BOTTOM}
-            />
-            <path
-              {...css(styles.DateInput_fangStroke)}
-              d={openDirection === OPEN_DOWN ? FANG_STROKE_TOP : FANG_STROKE_BOTTOM}
-            />
-          </svg>
-        )}
-
-        {screenReaderMessage && (
-          <p {...css(styles.DateInput_screenReaderMessage)} id={screenReaderMessageId}>
-            {screenReaderMessage}
-          </p>
-        )}
-      </div>
-    );
-  }
-}
+      {screenReaderMessage && (
+        <p {...css(styles.DateInput_screenReaderMessage)} id={screenReaderMessageId}>
+          {screenReaderMessage}
+        </p>
+      )}
+    </div>
+  );
+});
 
 DateInput.propTypes = propTypes;
 DateInput.defaultProps = defaultProps;

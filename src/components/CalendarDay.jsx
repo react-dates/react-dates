@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import momentPropTypes from 'react-moment-proptypes';
 import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
@@ -9,6 +9,7 @@ import raf from 'raf';
 import { CalendarDayPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 import getCalendarDaySettings from '../utils/getCalendarDaySettings';
+import usePrevious from '../utils/usePrevious';
 import ModifiersShape from '../shapes/ModifiersShape';
 
 import { DAY_SIZE } from '../constants';
@@ -48,43 +49,52 @@ const defaultProps = {
   phrases: CalendarDayPhrases,
 };
 
-class CalendarDay extends React.PureComponent {
-  constructor(...args) {
-    super(...args);
+const CalendarDay  = memo((props) => {
+  const buttonRef = useRef(null);
+  const { 
+    isFocused, 
+    tabIndex,
+    day,
+    ariaLabelFormat,
+    daySize,
+    isOutsideDay,
+    modifiers,
+    renderDayContents,
+    css,
+    styles,
+    phrases,
+  } = props;
+  const { tabIndex: prevTabIndex } = usePrevious(props, props) || {};
 
-    this.setButtonRef = this.setButtonRef.bind(this);
-  }
-
-  componentDidUpdate(prevProps) {
-    const { isFocused, tabIndex } = this.props;
+  useEffect(() => {
     if (tabIndex === 0) {
-      if (isFocused || tabIndex !== prevProps.tabIndex) {
+      if (isFocused || tabIndex !== prevTabIndex) {
         raf(() => {
-          if (this.buttonRef) {
-            this.buttonRef.focus();
+          if (buttonRef.current) {
+            buttonRef.current.focus();
           }
         });
       }
     }
-  }
+  }, [isFocused, tabIndex]);
 
-  onDayClick(day, e) {
-    const { onDayClick } = this.props;
+  const handleDayClick = (day, e) => {
+    const { onDayClick } = props;
     onDayClick(day, e);
   }
 
-  onDayMouseEnter(day, e) {
-    const { onDayMouseEnter } = this.props;
+  const handleDayMouseEnter = (day, e) => {
+    const { onDayMouseEnter } = props;
     onDayMouseEnter(day, e);
   }
 
-  onDayMouseLeave(day, e) {
-    const { onDayMouseLeave } = this.props;
+  const handleDayMouseLeave = (day, e) => {
+    const { onDayMouseLeave } = props;
     onDayMouseLeave(day, e);
   }
 
-  onKeyDown(day, e) {
-    const { onDayClick } = this.props;
+  const handleKeyDown = (day, e) => {
+    const { onDayClick } = props;
 
     const { key } = e;
     if (key === 'Enter' || key === ' ') {
@@ -92,83 +102,64 @@ class CalendarDay extends React.PureComponent {
     }
   }
 
-  setButtonRef(ref) {
-    this.buttonRef = ref;
-  }
+  if (!day) return <td />;
 
-  render() {
-    const {
-      day,
-      ariaLabelFormat,
-      daySize,
-      isOutsideDay,
-      modifiers,
-      renderDayContents,
-      tabIndex,
-      css,
-      styles,
-      phrases,
-    } = this.props;
+  const {
+    daySizeStyles,
+    useDefaultCursor,
+    selected,
+    hoveredSpan,
+    isOutsideRange,
+    ariaLabel,
+  } = getCalendarDaySettings(day, ariaLabelFormat, daySize, modifiers, phrases);
 
-    if (!day) return <td />;
-
-    const {
-      daySizeStyles,
-      useDefaultCursor,
-      selected,
-      hoveredSpan,
-      isOutsideRange,
-      ariaLabel,
-    } = getCalendarDaySettings(day, ariaLabelFormat, daySize, modifiers, phrases);
-
-    return (
-      <td
-        {...css(
-          styles.CalendarDay,
-          useDefaultCursor && styles.CalendarDay__defaultCursor,
-          styles.CalendarDay__default,
-          isOutsideDay && styles.CalendarDay__outside,
-          modifiers.has('today') && styles.CalendarDay__today,
-          modifiers.has('first-day-of-week') && styles.CalendarDay__firstDayOfWeek,
-          modifiers.has('last-day-of-week') && styles.CalendarDay__lastDayOfWeek,
-          modifiers.has('hovered-offset') && styles.CalendarDay__hovered_offset,
-          modifiers.has('hovered-start-first-possible-end') && styles.CalendarDay__hovered_start_first_possible_end,
-          modifiers.has('hovered-start-blocked-minimum-nights') && styles.CalendarDay__hovered_start_blocked_min_nights,
-          modifiers.has('highlighted-calendar') && styles.CalendarDay__highlighted_calendar,
-          modifiers.has('blocked-minimum-nights') && styles.CalendarDay__blocked_minimum_nights,
-          modifiers.has('blocked-calendar') && styles.CalendarDay__blocked_calendar,
-          hoveredSpan && styles.CalendarDay__hovered_span,
-          modifiers.has('after-hovered-start') && styles.CalendarDay__after_hovered_start,
-          modifiers.has('selected-span') && styles.CalendarDay__selected_span,
-          modifiers.has('selected-start') && styles.CalendarDay__selected_start,
-          modifiers.has('selected-end') && styles.CalendarDay__selected_end,
-          selected && !modifiers.has('selected-span') && styles.CalendarDay__selected,
-          modifiers.has('before-hovered-end') && styles.CalendarDay__before_hovered_end,
-          modifiers.has('no-selected-start-before-selected-end') && styles.CalendarDay__no_selected_start_before_selected_end,
-          modifiers.has('selected-start-in-hovered-span') && styles.CalendarDay__selected_start_in_hovered_span,
-          modifiers.has('selected-end-in-hovered-span') && styles.CalendarDay__selected_end_in_hovered_span,
-          modifiers.has('selected-start-no-selected-end') && styles.CalendarDay__selected_start_no_selected_end,
-          modifiers.has('selected-end-no-selected-start') && styles.CalendarDay__selected_end_no_selected_start,
-          isOutsideRange && styles.CalendarDay__blocked_out_of_range,
-          daySizeStyles,
-        )}
-        role="button" // eslint-disable-line jsx-a11y/no-noninteractive-element-to-interactive-role
-        ref={this.setButtonRef}
-        aria-disabled={modifiers.has('blocked')}
-        {...(modifiers.has('today') ? { 'aria-current': 'date' } : {})}
-        aria-label={ariaLabel}
-        onMouseEnter={(e) => { this.onDayMouseEnter(day, e); }}
-        onMouseLeave={(e) => { this.onDayMouseLeave(day, e); }}
-        onMouseUp={(e) => { e.currentTarget.blur(); }}
-        onClick={(e) => { this.onDayClick(day, e); }}
-        onKeyDown={(e) => { this.onKeyDown(day, e); }}
-        tabIndex={tabIndex}
-      >
-        {renderDayContents ? renderDayContents(day, modifiers) : day.format('D')}
-      </td>
-    );
-  }
-}
+  return (
+    <td
+      {...css(
+        styles.CalendarDay,
+        useDefaultCursor && styles.CalendarDay__defaultCursor,
+        styles.CalendarDay__default,
+        isOutsideDay && styles.CalendarDay__outside,
+        modifiers.has('today') && styles.CalendarDay__today,
+        modifiers.has('first-day-of-week') && styles.CalendarDay__firstDayOfWeek,
+        modifiers.has('last-day-of-week') && styles.CalendarDay__lastDayOfWeek,
+        modifiers.has('hovered-offset') && styles.CalendarDay__hovered_offset,
+        modifiers.has('hovered-start-first-possible-end') && styles.CalendarDay__hovered_start_first_possible_end,
+        modifiers.has('hovered-start-blocked-minimum-nights') && styles.CalendarDay__hovered_start_blocked_min_nights,
+        modifiers.has('highlighted-calendar') && styles.CalendarDay__highlighted_calendar,
+        modifiers.has('blocked-minimum-nights') && styles.CalendarDay__blocked_minimum_nights,
+        modifiers.has('blocked-calendar') && styles.CalendarDay__blocked_calendar,
+        hoveredSpan && styles.CalendarDay__hovered_span,
+        modifiers.has('after-hovered-start') && styles.CalendarDay__after_hovered_start,
+        modifiers.has('selected-span') && styles.CalendarDay__selected_span,
+        modifiers.has('selected-start') && styles.CalendarDay__selected_start,
+        modifiers.has('selected-end') && styles.CalendarDay__selected_end,
+        selected && !modifiers.has('selected-span') && styles.CalendarDay__selected,
+        modifiers.has('before-hovered-end') && styles.CalendarDay__before_hovered_end,
+        modifiers.has('no-selected-start-before-selected-end') && styles.CalendarDay__no_selected_start_before_selected_end,
+        modifiers.has('selected-start-in-hovered-span') && styles.CalendarDay__selected_start_in_hovered_span,
+        modifiers.has('selected-end-in-hovered-span') && styles.CalendarDay__selected_end_in_hovered_span,
+        modifiers.has('selected-start-no-selected-end') && styles.CalendarDay__selected_start_no_selected_end,
+        modifiers.has('selected-end-no-selected-start') && styles.CalendarDay__selected_end_no_selected_start,
+        isOutsideRange && styles.CalendarDay__blocked_out_of_range,
+        daySizeStyles,
+      )}
+      role="button" // eslint-disable-line jsx-a11y/no-noninteractive-element-to-interactive-role
+      ref={buttonRef}
+      aria-disabled={modifiers.has('blocked')}
+      {...(modifiers.has('today') ? { 'aria-current': 'date' } : {})}
+      aria-label={ariaLabel}
+      onMouseEnter={(e) => { handleDayMouseEnter(day, e); }}
+      onMouseLeave={(e) => { handleDayMouseLeave(day, e); }}
+      onMouseUp={(e) => { e.currentTarget.blur(); }}
+      onClick={(e) => { handleDayClick(day, e); }}
+      onKeyDown={(e) => { handleKeyDown(day, e); }}
+      tabIndex={tabIndex}
+    >
+      {renderDayContents ? renderDayContents(day, modifiers) : day.format('D')}
+    </td>
+  );
+});
 
 CalendarDay.propTypes = propTypes;
 CalendarDay.defaultProps = defaultProps;
