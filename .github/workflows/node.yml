@@ -27,9 +27,14 @@ jobs:
       matrix:
         node-version: ${{ fromJson(needs.matrix.outputs.latest) }}
         react:
-          - 16
-          - 15
-          - 0.14
+          - '16'
+          - '16.9'
+          - '16.3'
+          - '16.0'
+          - '15'
+          - '15.5'
+          - '15.0'
+          # - '0.14' # TODO: fix pure-component-fallbacl
 
     steps:
       - uses: actions/checkout@v2
@@ -38,6 +43,8 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm run tests-only
+        env:
+          REACT: ${{ matrix.react }}
       - uses: codecov/codecov-action@v2
 
   node:
