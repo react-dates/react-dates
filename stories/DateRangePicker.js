@@ -2,7 +2,6 @@ import React from 'react';
 import moment from 'moment';
 import momentJalaali from 'moment-jalaali';
 import { storiesOf } from '@storybook/react';
-import { withInfo } from '@storybook/addon-info';
 import DirectionProvider, { DIRECTIONS } from 'react-with-direction/dist/DirectionProvider';
 
 import {
@@ -57,13 +56,13 @@ class TestWrapper extends React.Component {
 }
 
 storiesOf('DateRangePicker (DRP)', module)
-  .add('default', withInfo()(() => (
+  .add('default', (() => (
     <DateRangePickerWrapper />
   )))
-  .add('hidden with display: none', withInfo()(() => (
+  .add('hidden with display: none', (() => (
     <TestWrapper />
   )))
-  .add('as part of a form', withInfo()(() => (
+  .add('as part of a form', (() => (
     <div>
       <DateRangePickerWrapper />
       <TestInput placeholder="Input 1" />
@@ -71,7 +70,7 @@ storiesOf('DateRangePicker (DRP)', module)
       <TestInput placeholder="Input 3" />
     </div>
   )))
-  .add('non-english locale', withInfo()(() => {
+  .add('non-english locale', (() => {
     moment.locale('zh-cn');
     return (
       <DateRangePickerWrapper
@@ -86,7 +85,7 @@ storiesOf('DateRangePicker (DRP)', module)
       />
     );
   }))
-  .add('non-english locale (Persian)', withInfo()(() => {
+  .add('non-english locale (Persian)', (() => {
     moment.locale('fa');
     momentJalaali.loadPersian({ dialect: 'persian-modern', usePersianDigits: true });
     return (
@@ -100,7 +99,7 @@ storiesOf('DateRangePicker (DRP)', module)
       />
     );
   }))
-  .add('with DirectionProvider', withInfo()(() => (
+  .add('with DirectionProvider', (() => (
     <DirectionProvider direction={DIRECTIONS.RTL}>
       <DateRangePickerWrapper
         startDatePlaceholderText="تاریخ شروع"
@@ -112,19 +111,19 @@ storiesOf('DateRangePicker (DRP)', module)
       />
     </DirectionProvider>
   )))
-  .add('vertical with custom height', withInfo()(() => (
+  .add('vertical with custom height', (() => (
     <DateRangePickerWrapper
       orientation={VERTICAL_ORIENTATION}
       verticalHeight={568}
     />
   )))
-  .add('with navigation blocked (minDate and maxDate)', withInfo()(() => (
+  .add('with navigation blocked (minDate and maxDate)', (() => (
     <DateRangePickerWrapper
       minDate={moment().subtract(2, 'months').startOf('month')}
       maxDate={moment().add(2, 'months').endOf('month')}
       numberOfMonths={2}
     />
   )))
-  .add('with custom autoComplete', withInfo()(() => (
+  .add('with custom autoComplete', (() => (
     <DateRangePickerWrapper autoComplete="datePicker" />
   )));

@@ -1,7 +1,6 @@
 import React from 'react';
 import moment from 'moment';
 import { storiesOf } from '@storybook/react';
-import { withInfo } from '@storybook/addon-info';
 
 import isSameDay from '../src/utils/isSameDay';
 import isInclusivelyAfterDay from '../src/utils/isInclusivelyAfterDay';
@@ -74,30 +73,30 @@ const customDayStyles = {
 };
 
 storiesOf('DRP - Day Props', module)
-  .add('default', withInfo()(() => (
+  .add('default', (() => (
     <DateRangePickerWrapper autoFocus />
   )))
-  .add('with minimum nights set', withInfo()(() => (
+  .add('with minimum nights set', (() => (
     <DateRangePickerWrapper
       minimumNights={3}
       initialStartDate={moment().add(3, 'days')}
       autoFocusEndDate
     />
   )))
-  .add('allows single day range', withInfo()(() => (
+  .add('allows single day range', (() => (
     <DateRangePickerWrapper
       minimumNights={0}
       initialStartDate={moment().add(3, 'days')}
       autoFocusEndDate
     />
   )))
-  .add('allows all days, including past days', withInfo()(() => (
+  .add('allows all days, including past days', (() => (
     <DateRangePickerWrapper
       isOutsideRange={() => false}
       autoFocus
     />
   )))
-  .add('allows next two weeks only', withInfo()(() => (
+  .add('allows next two weeks only', (() => (
     <DateRangePickerWrapper
       isOutsideRange={day =>
         !isInclusivelyAfterDay(day, moment()) ||
@@ -106,31 +105,31 @@ storiesOf('DRP - Day Props', module)
       autoFocus
     />
   )))
-  .add('with some blocked dates', withInfo()(() => (
+  .add('with some blocked dates', (() => (
     <DateRangePickerWrapper
       isDayBlocked={day1 => datesList.some(day2 => isSameDay(day1, day2))}
       autoFocus
     />
   )))
-  .add('with some highlighted dates', withInfo()(() => (
+  .add('with some highlighted dates', (() => (
     <DateRangePickerWrapper
       isDayHighlighted={day1 => datesList.some(day2 => isSameDay(day1, day2))}
       autoFocus
     />
   )))
-  .add('blocks fridays', withInfo()(() => (
+  .add('blocks fridays', (() => (
     <DateRangePickerWrapper
       isDayBlocked={day => moment.weekdays(day.weekday()) === 'Friday'}
       autoFocus
     />
   )))
-  .add('with custom daily details', withInfo()(() => (
+  .add('with custom daily details', (() => (
     <DateRangePickerWrapper
       renderDayContents={day => <div className="foo-bar">{day.format('ddd')}</div>}
       autoFocus
     />
   )))
-  .add('one-off custom styling', withInfo()(() => (
+  .add('one-off custom styling', (() => (
     <DateRangePickerWrapper
       minimumNights={3}
       renderCalendarDay={props => <CustomizableCalendarDay {...props} {...customDayStyles} />}

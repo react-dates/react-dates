@@ -1,6 +1,5 @@
 import React from 'react';
 import { action, storiesOf } from '@storybook/react';
-import { withInfo } from '@storybook/addon-info';
 
 import CalendarDay from '../src/components/CalendarDay';
 import CustomizableCalendarDay from '../src/components/CustomizableCalendarDay';
@@ -29,7 +28,7 @@ const customStyles = {
 };
 
 storiesOf('withStyles', module)
-  .add('CalendarDay', withInfo()(() => (
+  .add('CalendarDay', (() => (
     <table>
       <tbody>
         <tr>
@@ -64,15 +63,15 @@ storiesOf('withStyles', module)
       </tbody>
     </table>
   )))
-  .add('CalendarMonth', withInfo()(() => (
+  .add('CalendarMonth', (() => (
     <CalendarMonth
       isVisible
     />
   )))
-  .add('CalendarMonthGrid', withInfo()(() => (
+  .add('CalendarMonthGrid', (() => (
     <CalendarMonthGrid />
   )))
-  .add('DayPickerNavigation', withInfo()(() => (
+  .add('DayPickerNavigation', (() => (
     <div>
       <div
         style={{
@@ -114,14 +113,14 @@ storiesOf('withStyles', module)
       </div>
     </div>
   )))
-  .add('KeyboardShortcutRow', withInfo()(() => (
+  .add('KeyboardShortcutRow', (() => (
     <KeyboardShortcutRow
       unicode="↵"
       label="Enter key"
       action="Select the currently focused date"
     />
   )))
-  .add('DayPickerKeyboardShortcuts', withInfo()(() => (
+  .add('DayPickerKeyboardShortcuts', (() => (
     <div>
       <div
         style={{
@@ -136,7 +135,7 @@ storiesOf('withStyles', module)
       </div>
     </div>
   )))
-  .add('DateInput', withInfo()(() => (
+  .add('DateInput', (() => (
     <div>
       <div>
         <DateInput />
@@ -155,7 +154,7 @@ storiesOf('withStyles', module)
       </div>
     </div>
   )))
-  .add('SingleDatePickerInput', withInfo()(() => (
+  .add('SingleDatePickerInput', (() => (
     <div>
       <div>
         <SingleDatePickerInput />
@@ -175,7 +174,7 @@ storiesOf('withStyles', module)
     </div>
   )))
 
-  .add('DateRangePickerInput', withInfo()(() => (
+  .add('DateRangePickerInput', (() => (
     <div>
       <div>
         <DateRangePickerInput />
