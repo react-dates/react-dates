@@ -3,6 +3,14 @@
     "test": {
       "presets": [["airbnb", { looseClasses: true }]],
       "plugins": [
+        ["import-path-replace", {
+          "rules": [
+            {
+              "match": "../src/",
+              "replacement": "../lib/"
+            }
+          ]
+        }],
         ["inline-react-svg", {
           "svgo": false
         }],

@@ -1,3 +1,2 @@
---require @babel/register
 --require airbnb-js-shims
-test/**/*.{js,jsx}
+test-build/**/*.js

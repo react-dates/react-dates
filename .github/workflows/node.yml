@@ -14,11 +14,31 @@ jobs:
         with:
           type: 'majors'
           versionsAsRoot: true
-          preset: '>=6'
-          # to test in node < 6, we need to run the build in one stage, including the tests, and then run the tests in the desired node version later
+          preset: '>=4'
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ljharb/actions/node/install@main
+        with:
+          node-version: 'lts/*'
+      - uses: actions/cache@v2
+        id: cache
+        with:
+          path: |
+            lib
+            esm
+            test-build
+          key: ${{ runner.os }}-${{ hashFiles('package.json', 'src/**', 'test/**', 'scripts/buildCSS.js') }}
+      - run: npm run build
+        if: steps.cache.outputs.cache-hit != 'true'
+      - run: npm run build:test
+        if: steps.cache.outputs.cache-hit != 'true'
+
 
   majors:
-    needs: [matrix]
+    needs: [build, matrix]
     name: 'latest minors'
     runs-on: ubuntu-latest
 
@@ -34,7 +54,7 @@ jobs:
           - '15'
           - '15.5'
           - '15.0'
-          # - '0.14' # TODO: fix pure-component-fallbacl
+          - '0.14'
 
     steps:
       - uses: actions/checkout@v2
@@ -42,13 +62,25 @@ jobs:
         name: 'nvm install ${{ matrix.node-version }} && npm install'
         with:
           node-version: ${{ matrix.node-version }}
+          skip-ls-check: ${{ !startsWith(matrix.node-version, '5.') && !startsWith(matrix.node-version, '4.') && 'true' || 'false' }}
+      - uses: actions/cache@v2
+        id: cache
+        with:
+          path: |
+            lib
+            esm
+            test-build
+          key: ${{ runner.os }}-${{ hashFiles('package.json', 'src/**', 'test/**', 'scripts/buildCSS.js') }}
+      - run: npm run react
+        env:
+          REACT: ${{ matrix.react }}
       - run: npm run tests-only
         env:
           REACT: ${{ matrix.react }}
       - uses: codecov/codecov-action@v2
 
   node:
-    name: 'node 6+'
+    name: 'node.js'
     needs: [majors]
     runs-on: ubuntu-latest
     steps:
