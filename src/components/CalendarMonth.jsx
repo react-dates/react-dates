@@ -1,6 +1,6 @@
 /* eslint react/no-array-index-key: 0 */
 
-import React from 'react';
+import React, { memo, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import momentPropTypes from 'react-moment-proptypes';
 import { forbidExtraProps, mutuallyExclusiveProps, nonNegativeInteger } from 'airbnb-prop-types';
@@ -16,6 +16,7 @@ import CalendarDay from './CalendarDay';
 import calculateDimension from '../utils/calculateDimension';
 import getCalendarMonthWeeks from '../utils/getCalendarMonthWeeks';
 import isSameDay from '../utils/isSameDay';
+import usePrevious from '../utils/usePrevious';
 import toISODateString from '../utils/toISODateString';
 
 import ModifiersShape from '../shapes/ModifiersShape';
@@ -89,173 +90,157 @@ const defaultProps = {
   verticalBorderSpacing: undefined,
 };
 
-class CalendarMonth extends React.PureComponent {
-  constructor(props) {
-    super(props);
+const CalendarMonth = memo((props) => {
+  const { 
+    month, 
+    enableOutsideDays, 
+    firstDayOfWeek, 
+    dayAriaLabelFormat,
+    daySize,
+    focusedDate,
+    horizontalMonthPadding,
+    isFocused,
+    isVisible,
+    modifiers,
+    monthFormat,
+    onDayClick,
+    onDayMouseEnter,
+    onDayMouseLeave,
+    onMonthSelect,
+    onYearSelect,
+    orientation,
+    phrases,
+    renderCalendarDay,
+    renderDayContents,
+    renderMonthElement,
+    renderMonthText,
+    css,
+    styles,
+    verticalBorderSpacing,
+  } = props;
+  const captionRef = useRef(null);
 
-    this.state = {
-      weeks: getCalendarMonthWeeks(
-        props.month,
-        props.enableOutsideDays,
-        props.firstDayOfWeek == null ? moment.localeData().firstDayOfWeek() : props.firstDayOfWeek,
-      ),
-    };
+  let setMonthTitleHeightTimeout;
 
-    this.setCaptionRef = this.setCaptionRef.bind(this);
-    this.setMonthTitleHeight = this.setMonthTitleHeight.bind(this);
+  const setMonthTitleHeight = () => {
+    const { setMonthTitleHeight: setMonthTitleHeightProp } = props;
+    if (setMonthTitleHeight) {
+      const captionHeight = calculateDimension(captionRef.current, 'height', true, true);
+      setMonthTitleHeightProp(captionHeight);
+    }
   }
 
-  componentDidMount() {
-    this.queueSetMonthTitleHeight();
+  const queueSetMonthTitleHeight = () => {
+    setMonthTitleHeightTimeout = window.setTimeout(setMonthTitleHeight, 0);
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { month, enableOutsideDays, firstDayOfWeek } = nextProps;
-    const {
-      month: prevMonth,
-      enableOutsideDays: prevEnableOutsideDays,
-      firstDayOfWeek: prevFirstDayOfWeek,
-    } = this.props;
+  const [weeks, setWeeks] = useState(getCalendarMonthWeeks(
+    month,
+    enableOutsideDays,
+    firstDayOfWeek == null ? moment.localeData().firstDayOfWeek() : firstDayOfWeek,
+  ))
+    
+  const { 
+    month: prevMonth, 
+    enableOutsideDays: prevEnableOutsideDays, 
+    firstDayOfWeek: prevFirstDayOfWeek, 
+    setMonthTitleHeight: prevSetMonthTitleHeight 
+  } = usePrevious(props, props) || {};
+  useEffect(() => {
+    queueSetMonthTitleHeight();
+    return () => {
+      if (setMonthTitleHeightTimeout) {
+        clearInterval(setMonthTitleHeightTimeout)
+      }
+    }
+  }, [])
+
+  useEffect(() => {
     if (
       !month.isSame(prevMonth)
       || enableOutsideDays !== prevEnableOutsideDays
       || firstDayOfWeek !== prevFirstDayOfWeek
     ) {
-      this.setState({
-        weeks: getCalendarMonthWeeks(
-          month,
-          enableOutsideDays,
-          firstDayOfWeek == null ? moment.localeData().firstDayOfWeek() : firstDayOfWeek,
-        ),
-      });
+      setWeeks(getCalendarMonthWeeks(
+        month,
+        enableOutsideDays,
+        firstDayOfWeek == null ? moment.localeData().firstDayOfWeek() : firstDayOfWeek,
+      ));
     }
-  }
+  }, [month, enableOutsideDays, firstDayOfWeek])
 
-  componentDidUpdate(prevProps) {
-    const { setMonthTitleHeight } = this.props;
-
-    if (prevProps.setMonthTitleHeight === null && setMonthTitleHeight !== null) {
-      this.queueSetMonthTitleHeight();
+  useEffect(() => {
+    if (prevSetMonthTitleHeight === null && setMonthTitleHeight !== null) {
+      queueSetMonthTitleHeight();
     }
-  }
+  }, [setMonthTitleHeight]);
 
-  componentWillUnmount() {
-    if (this.setMonthTitleHeightTimeout) {
-      clearTimeout(this.setMonthTitleHeightTimeout);
-    }
-  }
+  const monthTitle = renderMonthText ? renderMonthText(month) : month.format(monthFormat);
 
-  setMonthTitleHeight() {
-    const { setMonthTitleHeight } = this.props;
-    if (setMonthTitleHeight) {
-      const captionHeight = calculateDimension(this.captionRef, 'height', true, true);
-      setMonthTitleHeight(captionHeight);
-    }
-  }
+  const verticalScrollable = orientation === VERTICAL_SCROLLABLE;
 
-  setCaptionRef(ref) {
-    this.captionRef = ref;
-  }
-
-  queueSetMonthTitleHeight() {
-    this.setMonthTitleHeightTimeout = window.setTimeout(this.setMonthTitleHeight, 0);
-  }
-
-  render() {
-    const {
-      dayAriaLabelFormat,
-      daySize,
-      focusedDate,
-      horizontalMonthPadding,
-      isFocused,
-      isVisible,
-      modifiers,
-      month,
-      monthFormat,
-      onDayClick,
-      onDayMouseEnter,
-      onDayMouseLeave,
-      onMonthSelect,
-      onYearSelect,
-      orientation,
-      phrases,
-      renderCalendarDay,
-      renderDayContents,
-      renderMonthElement,
-      renderMonthText,
-      css,
-      styles,
-      verticalBorderSpacing,
-    } = this.props;
-
-    const { weeks } = this.state;
-    const monthTitle = renderMonthText ? renderMonthText(month) : month.format(monthFormat);
-
-    const verticalScrollable = orientation === VERTICAL_SCROLLABLE;
-
-    return (
+  return (
+    <div
+      {...css(
+        styles.CalendarMonth,
+        { padding: `0 ${horizontalMonthPadding}px` },
+      )}
+      data-visible={isVisible}
+    >
       <div
+        ref={captionRef}
         {...css(
-          styles.CalendarMonth,
-          { padding: `0 ${horizontalMonthPadding}px` },
+          styles.CalendarMonth_caption,
+          verticalScrollable && styles.CalendarMonth_caption__verticalScrollable,
         )}
-        data-visible={isVisible}
       >
-        <div
-          ref={this.setCaptionRef}
-          {...css(
-            styles.CalendarMonth_caption,
-            verticalScrollable && styles.CalendarMonth_caption__verticalScrollable,
-          )}
-        >
-          {renderMonthElement ? (
-            renderMonthElement({
-              month,
-              onMonthSelect,
-              onYearSelect,
-              isVisible,
-            })
-          ) : (
-            <strong>
-              {monthTitle}
-            </strong>
-          )}
-        </div>
-
-        <table
-          {...css(
-            !verticalBorderSpacing && styles.CalendarMonth_table,
-            verticalBorderSpacing && styles.CalendarMonth_verticalSpacing,
-            verticalBorderSpacing && { borderSpacing: `0px ${verticalBorderSpacing}px` },
-          )}
-          role="presentation"
-        >
-          <tbody>
-            {weeks.map((week, i) => (
-              <CalendarWeek key={i}>
-                {week.map((day, dayOfWeek) => renderCalendarDay({
-                  key: dayOfWeek,
-                  day,
-                  daySize,
-                  isOutsideDay: !day || day.month() !== month.month(),
-                  tabIndex: isVisible && isSameDay(day, focusedDate) ? 0 : -1,
-                  isFocused,
-                  onDayMouseEnter,
-                  onDayMouseLeave,
-                  onDayClick,
-                  renderDayContents,
-                  phrases,
-                  modifiers: modifiers[toISODateString(day)],
-                  ariaLabelFormat: dayAriaLabelFormat,
-                }))}
-              </CalendarWeek>
-            ))}
-          </tbody>
-        </table>
+        {renderMonthElement ? (
+          renderMonthElement({
+            month,
+            onMonthSelect,
+            onYearSelect,
+            isVisible,
+          })
+        ) : (
+          <strong>
+            {monthTitle}
+          </strong>
+        )}
       </div>
-    );
-  }
-}
+
+      <table
+        {...css(
+          !verticalBorderSpacing && styles.CalendarMonth_table,
+          verticalBorderSpacing && styles.CalendarMonth_verticalSpacing,
+          verticalBorderSpacing && { borderSpacing: `0px ${verticalBorderSpacing}px` },
+        )}
+        role="presentation"
+      >
+        <tbody>
+          {weeks.map((week, i) => (
+            <CalendarWeek key={i}>
+              {week.map((day, dayOfWeek) => renderCalendarDay({
+                key: dayOfWeek,
+                day,
+                daySize,
+                isOutsideDay: !day || day.month() !== month.month(),
+                tabIndex: isVisible && isSameDay(day, focusedDate) ? 0 : -1,
+                isFocused,
+                onDayMouseEnter,
+                onDayMouseLeave,
+                onDayClick,
+                renderDayContents,
+                phrases,
+                modifiers: modifiers[toISODateString(day)],
+                ariaLabelFormat: dayAriaLabelFormat,
+              }))}
+            </CalendarWeek>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+});
 
 CalendarMonth.propTypes = propTypes;
 CalendarMonth.defaultProps = defaultProps;

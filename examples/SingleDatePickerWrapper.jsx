@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import momentPropTypes from 'react-moment-proptypes';
 import moment from 'moment';
@@ -80,47 +80,29 @@ const defaultProps = {
   phrases: SingleDatePickerPhrases,
 };
 
-class SingleDatePickerWrapper extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      focused: props.autoFocus,
-      date: props.initialDate,
-    };
+function SingleDatePickerWrapper(props) {
+  const { autoFocus, initialDate } = props;
 
-    this.onDateChange = this.onDateChange.bind(this);
-    this.onFocusChange = this.onFocusChange.bind(this);
-  }
+  const [focused, setFocused] = useState(autoFocus);
+  const [date, setDate] = useState(initialDate);
 
-  onDateChange(date) {
-    this.setState({ date });
-  }
+  // autoFocus and initialDate are helper props for the example wrapper but are not
+  // props on the SingleDatePicker itself and thus, have to be omitted.
+  const filteredProps = omit(props, [
+    'autoFocus',
+    'initialDate',
+  ]);
 
-  onFocusChange({ focused }) {
-    this.setState({ focused });
-  }
-
-  render() {
-    const { focused, date } = this.state;
-
-    // autoFocus and initialDate are helper props for the example wrapper but are not
-    // props on the SingleDatePicker itself and thus, have to be omitted.
-    const props = omit(this.props, [
-      'autoFocus',
-      'initialDate',
-    ]);
-
-    return (
-      <SingleDatePicker
-        {...props}
-        id="date_input"
-        date={date}
-        focused={focused}
-        onDateChange={this.onDateChange}
-        onFocusChange={this.onFocusChange}
-      />
-    );
-  }
+  return (
+    <SingleDatePicker
+      {...filteredProps}
+      id="date_input"
+      date={date}
+      focused={focused}
+      onDateChange={setDate}
+      onFocusChange={setFocused}
+    />
+  );
 }
 
 SingleDatePickerWrapper.propTypes = propTypes;

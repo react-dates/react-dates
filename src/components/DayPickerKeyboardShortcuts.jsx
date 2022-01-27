@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { forbidExtraProps } from 'airbnb-prop-types';
 import { withStyles, withStylesPropTypes } from 'react-with-styles';
@@ -8,6 +8,7 @@ import getPhrasePropTypes from '../utils/getPhrasePropTypes';
 
 import KeyboardShortcutRow from './KeyboardShortcutRow';
 import CloseButton from './CloseButton';
+import usePrevious from '../utils/usePrevious';
 
 export const TOP_LEFT = 'top-left';
 export const TOP_RIGHT = 'top-right';
@@ -77,43 +78,50 @@ function getKeyboardShortcuts(phrases) {
   ];
 }
 
-class DayPickerKeyboardShortcuts extends React.PureComponent {
-  constructor(...args) {
-    super(...args);
+const DayPickerKeyboardShortcuts = memo((props) => {
+  const {
+    block,
+    buttonLocation,
+    showKeyboardShortcutsPanel,
+    closeKeyboardShortcutsPanel,
+    css,
+    styles,
+    phrases,
+    renderKeyboardShortcutsButton,
+    renderKeyboardShortcutsPanel,
+  } = props;
 
-    const { phrases } = this.props;
-    this.keyboardShortcuts = getKeyboardShortcuts(phrases);
+  let keyboardShortcuts = getKeyboardShortcuts(phrases);
+  let hideKeyboardShortcutsButton;
 
-    this.onShowKeyboardShortcutsButtonClick = this.onShowKeyboardShortcutsButtonClick.bind(this);
-    this.setShowKeyboardShortcutsButtonRef = this.setShowKeyboardShortcutsButtonRef.bind(this);
-    this.setHideKeyboardShortcutsButtonRef = this.setHideKeyboardShortcutsButtonRef.bind(this);
-    this.handleFocus = this.handleFocus.bind(this);
-    this.onKeyDown = this.onKeyDown.bind(this);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { phrases } = this.props;
-    if (nextProps.phrases !== phrases) {
-      this.keyboardShortcuts = getKeyboardShortcuts(nextProps.phrases);
-    }
-  }
-
-  componentDidUpdate() {
-    this.handleFocus();
-  }
-
-  handleFocus() {
-    if (this.hideKeyboardShortcutsButton) {
+  const showKeyboardShortcutsButtonRef = useRef(null);
+  const hideKeyboardShortcutsButtonRef = useRef(null);
+  
+  const handleFocus = () => {
+    if (hideKeyboardShortcutsButton) {
       // automatically move focus into the dialog by moving
       // to the only interactive element, the hide button
-      this.hideKeyboardShortcutsButton.focus();
+      hideKeyboardShortcutsButton.focus();
     }
   }
+  
+  const { phrases: prevPhrases } = usePrevious(props, props) || {};
 
-  onKeyDown(e) {
+  useEffect(() => {
+    handleFocus()
+  });
+
+  useEffect(() => {
+    if (phrases !== prevPhrases) {
+      keyboardShortcuts = getKeyboardShortcuts(nextProps.phrases);
+    }
+  }, [phrases]);
+
+  
+
+  const handleKeyDown = (e) => {
     e.stopPropagation();
 
-    const { closeKeyboardShortcutsPanel } = this.props;
     // Because the close button is the only focusable element inside of the panel, this
     // amounts to a very basic focus trap. The user can exit the panel by "pressing" the
     // close button or hitting escape
@@ -145,139 +153,117 @@ class DayPickerKeyboardShortcuts extends React.PureComponent {
     }
   }
 
-  onShowKeyboardShortcutsButtonClick() {
+  const handleShowKeyboardShortcutsButtonClick = () => {
     const { openKeyboardShortcutsPanel } = this.props;
 
     // we want to return focus to this button after closing the keyboard shortcuts panel
     openKeyboardShortcutsPanel(() => { this.showKeyboardShortcutsButton.focus(); });
   }
 
-  setShowKeyboardShortcutsButtonRef(ref) {
-    this.showKeyboardShortcutsButton = ref;
-  }
+  const toggleButtonText = showKeyboardShortcutsPanel
+    ? phrases.hideKeyboardShortcutsPanel
+    : phrases.showKeyboardShortcutsPanel;
 
-  setHideKeyboardShortcutsButtonRef(ref) {
-    this.hideKeyboardShortcutsButton = ref;
-  }
+  const bottomRight = buttonLocation === BOTTOM_RIGHT;
+  const topRight = buttonLocation === TOP_RIGHT;
+  const topLeft = buttonLocation === TOP_LEFT;
 
-  render() {
-    const {
-      block,
-      buttonLocation,
-      showKeyboardShortcutsPanel,
-      closeKeyboardShortcutsPanel,
-      css,
-      styles,
-      phrases,
-      renderKeyboardShortcutsButton,
-      renderKeyboardShortcutsPanel,
-    } = this.props;
-
-    const toggleButtonText = showKeyboardShortcutsPanel
-      ? phrases.hideKeyboardShortcutsPanel
-      : phrases.showKeyboardShortcutsPanel;
-
-    const bottomRight = buttonLocation === BOTTOM_RIGHT;
-    const topRight = buttonLocation === TOP_RIGHT;
-    const topLeft = buttonLocation === TOP_LEFT;
-
-    return (
-      <div>
-        {renderKeyboardShortcutsButton
-          && renderKeyboardShortcutsButton({
-            // passing in context-specific props
-            ref: this.setShowKeyboardShortcutsButtonRef,
-            onClick: this.onShowKeyboardShortcutsButtonClick,
-            ariaLabel: toggleButtonText,
-          })}
-        {!renderKeyboardShortcutsButton && (
-          <button
-            ref={this.setShowKeyboardShortcutsButtonRef}
+  return (
+    <div>
+      {renderKeyboardShortcutsButton
+        && renderKeyboardShortcutsButton({
+          // passing in context-specific props
+          ref: showKeyboardShortcutsButtonRef,
+          onClick: handleShowKeyboardShortcutsButtonClick,
+          ariaLabel: toggleButtonText,
+        })}
+      {!renderKeyboardShortcutsButton && (
+        <button
+          ref={hideKeyboardShortcutsButtonRef}
+          {...css(
+            styles.DayPickerKeyboardShortcuts_buttonReset,
+            styles.DayPickerKeyboardShortcuts_show,
+            bottomRight && styles.DayPickerKeyboardShortcuts_show__bottomRight,
+            topRight && styles.DayPickerKeyboardShortcuts_show__topRight,
+            topLeft && styles.DayPickerKeyboardShortcuts_show__topLeft,
+          )}
+          type="button"
+          aria-label={toggleButtonText}
+          onClick={handleShowKeyboardShortcutsButtonClick}
+          onMouseUp={(e) => {
+            e.currentTarget.blur();
+          }}
+        >
+          <span
             {...css(
-              styles.DayPickerKeyboardShortcuts_buttonReset,
-              styles.DayPickerKeyboardShortcuts_show,
-              bottomRight && styles.DayPickerKeyboardShortcuts_show__bottomRight,
-              topRight && styles.DayPickerKeyboardShortcuts_show__topRight,
-              topLeft && styles.DayPickerKeyboardShortcuts_show__topLeft,
+              styles.DayPickerKeyboardShortcuts_showSpan,
+              bottomRight && styles.DayPickerKeyboardShortcuts_showSpan__bottomRight,
+              topRight && styles.DayPickerKeyboardShortcuts_showSpan__topRight,
+              topLeft && styles.DayPickerKeyboardShortcuts_showSpan__topLeft,
             )}
-            type="button"
-            aria-label={toggleButtonText}
-            onClick={this.onShowKeyboardShortcutsButtonClick}
-            onMouseUp={(e) => {
-              e.currentTarget.blur();
-            }}
           >
-            <span
-              {...css(
-                styles.DayPickerKeyboardShortcuts_showSpan,
-                bottomRight && styles.DayPickerKeyboardShortcuts_showSpan__bottomRight,
-                topRight && styles.DayPickerKeyboardShortcuts_showSpan__topRight,
-                topLeft && styles.DayPickerKeyboardShortcuts_showSpan__topLeft,
-              )}
-            >
-              ?
-            </span>
-          </button>
-        )}
-        {showKeyboardShortcutsPanel && (
-          renderKeyboardShortcutsPanel ? (
-            renderKeyboardShortcutsPanel({
-              closeButtonAriaLabel: phrases.hideKeyboardShortcutsPanel,
-              keyboardShortcuts: this.keyboardShortcuts,
-              onCloseButtonClick: closeKeyboardShortcutsPanel,
-              onKeyDown: this.onKeyDown,
-              title: phrases.keyboardShortcuts,
-            })
-          ) : (
+            ?
+          </span>
+        </button>
+      )}
+      {showKeyboardShortcutsPanel && (
+        renderKeyboardShortcutsPanel ? (
+          renderKeyboardShortcutsPanel({
+            closeButtonAriaLabel: phrases.hideKeyboardShortcutsPanel,
+            keyboardShortcuts: keyboardShortcuts,
+            onCloseButtonClick: closeKeyboardShortcutsPanel,
+            onKeyDown: handleKeyDown,
+            title: phrases.keyboardShortcuts,
+          })
+        ) : (
+          <div
+            {...css(styles.DayPickerKeyboardShortcuts_panel)}
+            role="dialog"
+            aria-labelledby="DayPickerKeyboardShortcuts_title"
+            aria-describedby="DayPickerKeyboardShortcuts_description"
+          >
             <div
-              {...css(styles.DayPickerKeyboardShortcuts_panel)}
-              role="dialog"
-              aria-labelledby="DayPickerKeyboardShortcuts_title"
-              aria-describedby="DayPickerKeyboardShortcuts_description"
+              {...css(styles.DayPickerKeyboardShortcuts_title)}
+              id="DayPickerKeyboardShortcuts_title"
             >
-              <div
-                {...css(styles.DayPickerKeyboardShortcuts_title)}
-                id="DayPickerKeyboardShortcuts_title"
-              >
-                {phrases.keyboardShortcuts}
-              </div>
-
-              <button
-                ref={this.setHideKeyboardShortcutsButtonRef}
-                {...css(
-                  styles.DayPickerKeyboardShortcuts_buttonReset,
-                  styles.DayPickerKeyboardShortcuts_close,
-                )}
-                type="button"
-                tabIndex="0"
-                aria-label={phrases.hideKeyboardShortcutsPanel}
-                onClick={closeKeyboardShortcutsPanel}
-                onKeyDown={this.onKeyDown}
-              >
-                <CloseButton {...css(styles.DayPickerKeyboardShortcuts_closeSvg)} />
-              </button>
-
-              <ul
-                {...css(styles.DayPickerKeyboardShortcuts_list)}
-                id="DayPickerKeyboardShortcuts_description"
-              >
-                {this.keyboardShortcuts.map(({ unicode, label, action }) => (
-                  <KeyboardShortcutRow
-                    key={label}
-                    unicode={unicode}
-                    label={label}
-                    action={action}
-                    block={block}
-                  />
-                ))}
-              </ul>
+              {phrases.keyboardShortcuts}
             </div>
-          )
-        )}
-      </div>
-    );
-  }
-}
+
+            <button
+              ref={this.setHideKeyboardShortcutsButtonRef}
+              {...css(
+                styles.DayPickerKeyboardShortcuts_buttonReset,
+                styles.DayPickerKeyboardShortcuts_close,
+              )}
+              type="button"
+              tabIndex="0"
+              aria-label={phrases.hideKeyboardShortcutsPanel}
+              onClick={closeKeyboardShortcutsPanel}
+              onKeyDown={handleKeyDown}
+            >
+              <CloseButton {...css(styles.DayPickerKeyboardShortcuts_closeSvg)} />
+            </button>
+
+            <ul
+              {...css(styles.DayPickerKeyboardShortcuts_list)}
+              id="DayPickerKeyboardShortcuts_description"
+            >
+              {keyboardShortcuts.map(({ unicode, label, action }) => (
+                <KeyboardShortcutRow
+                  key={label}
+                  unicode={unicode}
+                  label={label}
+                  action={action}
+                  block={block}
+                />
+              ))}
+            </ul>
+          </div>
+        )
+      )}
+    </div>
+  );
+});
 
 DayPickerKeyboardShortcuts.propTypes = propTypes;
 DayPickerKeyboardShortcuts.defaultProps = defaultProps;

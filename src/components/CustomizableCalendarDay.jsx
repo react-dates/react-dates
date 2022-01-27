@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import momentPropTypes from 'react-moment-proptypes';
 import { forbidExtraProps, nonNegativeInteger, or } from 'airbnb-prop-types';
@@ -12,6 +12,7 @@ import getCalendarDaySettings from '../utils/getCalendarDaySettings';
 
 import { DAY_SIZE } from '../constants';
 import DefaultTheme from '../theme/DefaultTheme';
+import usePrevious from '../utils/usePrevious';
 
 const { reactDates: { color } } = DefaultTheme;
 
@@ -214,51 +215,76 @@ const defaultProps = {
   phrases: CalendarDayPhrases,
 };
 
-class CustomizableCalendarDay extends React.PureComponent {
-  constructor(...args) {
-    super(...args);
+const CustomizableCalendarDay = memo((props) => {
+  const {
+    isFocused, 
+    tabIndex,
+    day,
+    ariaLabelFormat,
+    daySize,
+    isOutsideDay,
+    modifiers,
+    renderDayContents,
+    css,
+    styles,
+    phrases,
 
-    this.state = {
-      isHovered: false,
-    };
+    defaultStyles: defaultStylesWithHover,
+    outsideStyles: outsideStylesWithHover,
+    todayStyles: todayStylesWithHover,
+    firstDayOfWeekStyles: firstDayOfWeekStylesWithHover,
+    lastDayOfWeekStyles: lastDayOfWeekStylesWithHover,
+    highlightedCalendarStyles: highlightedCalendarStylesWithHover,
+    blockedMinNightsStyles: blockedMinNightsStylesWithHover,
+    blockedCalendarStyles: blockedCalendarStylesWithHover,
+    blockedOutOfRangeStyles: blockedOutOfRangeStylesWithHover,
+    hoveredSpanStyles: hoveredSpanStylesWithHover,
+    selectedSpanStyles: selectedSpanStylesWithHover,
+    lastInRangeStyles: lastInRangeStylesWithHover,
+    selectedStyles: selectedStylesWithHover,
+    selectedStartStyles: selectedStartStylesWithHover,
+    selectedEndStyles: selectedEndStylesWithHover,
+    afterHoveredStartStyles: afterHoveredStartStylesWithHover,
+    hoveredStartFirstPossibleEndStyles: hoveredStartFirstPossibleEndStylesWithHover,
+    hoveredStartBlockedMinNightsStyles: hoveredStartBlockedMinNightsStylesWithHover,
+  } = props;
+  const [isHovered, setIsHovered] = useState(false);
+  const buttonRef = useRef(null);
 
-    this.setButtonRef = this.setButtonRef.bind(this);
-  }
+  const { tabIndex: prevTabIndex } = usePrevious(props, props) || {};
 
-  componentDidUpdate(prevProps) {
-    const { isFocused, tabIndex } = this.props;
+  useEffect(() => {
+    const { isFocused, tabIndex } = props;
     if (tabIndex === 0) {
-      if (isFocused || tabIndex !== prevProps.tabIndex) {
+      if (isFocused || tabIndex !== prevTabIndex) {
         raf(() => {
-          if (this.buttonRef) {
-            this.buttonRef.focus();
+          if (buttonRef.current) {
+            buttonRef.current.focus();
           }
         });
       }
     }
-  }
+  }, [isFocused, tabIndex]);
 
-  onDayClick(day, e) {
-    const { onDayClick } = this.props;
+  const handleDayClick = (day, e) => {
+    const { onDayClick } = props;
     onDayClick(day, e);
   }
 
-  onDayMouseEnter(day, e) {
-    const { onDayMouseEnter } = this.props;
-    this.setState({ isHovered: true });
+  const handleDayMouseEnter = (day, e) => {
+    const { onDayMouseEnter } = props;
+    setIsHovered(true);
     onDayMouseEnter(day, e);
   }
 
-  onDayMouseLeave(day, e) {
-    const { onDayMouseLeave } = this.props;
+  const handleDayMouseLeave = (day, e) => {
+    const { onDayMouseLeave } = props;
     this.setState({ isHovered: false });
     onDayMouseLeave(day, e);
   }
 
-  onKeyDown(day, e) {
-    const {
-      onDayClick,
-    } = this.props;
+  const handleKeyDown = (day, e) => {
+    const { onDayClick } = props;
 
     const { key } = e;
     if (key === 'Enter' || key === ' ') {
@@ -266,97 +292,57 @@ class CustomizableCalendarDay extends React.PureComponent {
     }
   }
 
-  setButtonRef(ref) {
-    this.buttonRef = ref;
-  }
+  if (!day) return <td />;
 
-  render() {
-    const {
-      day,
-      ariaLabelFormat,
-      daySize,
-      isOutsideDay,
-      modifiers,
-      tabIndex,
-      renderDayContents,
-      css,
-      styles,
-      phrases,
+  const {
+    daySizeStyles,
+    useDefaultCursor,
+    selected,
+    hoveredSpan,
+    isOutsideRange,
+    ariaLabel,
+  } = getCalendarDaySettings(day, ariaLabelFormat, daySize, modifiers, phrases);
 
-      defaultStyles: defaultStylesWithHover,
-      outsideStyles: outsideStylesWithHover,
-      todayStyles: todayStylesWithHover,
-      firstDayOfWeekStyles: firstDayOfWeekStylesWithHover,
-      lastDayOfWeekStyles: lastDayOfWeekStylesWithHover,
-      highlightedCalendarStyles: highlightedCalendarStylesWithHover,
-      blockedMinNightsStyles: blockedMinNightsStylesWithHover,
-      blockedCalendarStyles: blockedCalendarStylesWithHover,
-      blockedOutOfRangeStyles: blockedOutOfRangeStylesWithHover,
-      hoveredSpanStyles: hoveredSpanStylesWithHover,
-      selectedSpanStyles: selectedSpanStylesWithHover,
-      lastInRangeStyles: lastInRangeStylesWithHover,
-      selectedStyles: selectedStylesWithHover,
-      selectedStartStyles: selectedStartStylesWithHover,
-      selectedEndStyles: selectedEndStylesWithHover,
-      afterHoveredStartStyles: afterHoveredStartStylesWithHover,
-      hoveredStartFirstPossibleEndStyles: hoveredStartFirstPossibleEndStylesWithHover,
-      hoveredStartBlockedMinNightsStyles: hoveredStartBlockedMinNightsStylesWithHover,
-    } = this.props;
-
-    const { isHovered } = this.state;
-
-    if (!day) return <td />;
-
-    const {
-      daySizeStyles,
-      useDefaultCursor,
-      selected,
-      hoveredSpan,
-      isOutsideRange,
-      ariaLabel,
-    } = getCalendarDaySettings(day, ariaLabelFormat, daySize, modifiers, phrases);
-
-    return (
-      <td
-        {...css(
-          styles.CalendarDay,
-          useDefaultCursor && styles.CalendarDay__defaultCursor,
-          daySizeStyles,
-          getStyles(defaultStylesWithHover, isHovered),
-          isOutsideDay && getStyles(outsideStylesWithHover, isHovered),
-          modifiers.has('today') && getStyles(todayStylesWithHover, isHovered),
-          modifiers.has('first-day-of-week') && getStyles(firstDayOfWeekStylesWithHover, isHovered),
-          modifiers.has('last-day-of-week') && getStyles(lastDayOfWeekStylesWithHover, isHovered),
-          modifiers.has('hovered-start-first-possible-end') && getStyles(hoveredStartFirstPossibleEndStylesWithHover, isHovered),
-          modifiers.has('hovered-start-blocked-minimum-nights') && getStyles(hoveredStartBlockedMinNightsStylesWithHover, isHovered),
-          modifiers.has('highlighted-calendar') && getStyles(highlightedCalendarStylesWithHover, isHovered),
-          modifiers.has('blocked-minimum-nights') && getStyles(blockedMinNightsStylesWithHover, isHovered),
-          modifiers.has('blocked-calendar') && getStyles(blockedCalendarStylesWithHover, isHovered),
-          hoveredSpan && getStyles(hoveredSpanStylesWithHover, isHovered),
-          modifiers.has('after-hovered-start') && getStyles(afterHoveredStartStylesWithHover, isHovered),
-          modifiers.has('selected-span') && getStyles(selectedSpanStylesWithHover, isHovered),
-          modifiers.has('last-in-range') && getStyles(lastInRangeStylesWithHover, isHovered),
-          selected && getStyles(selectedStylesWithHover, isHovered),
-          modifiers.has('selected-start') && getStyles(selectedStartStylesWithHover, isHovered),
-          modifiers.has('selected-end') && getStyles(selectedEndStylesWithHover, isHovered),
-          isOutsideRange && getStyles(blockedOutOfRangeStylesWithHover, isHovered),
-        )}
-        role="button" // eslint-disable-line jsx-a11y/no-noninteractive-element-to-interactive-role
-        ref={this.setButtonRef}
-        aria-disabled={modifiers.has('blocked')}
-        aria-label={ariaLabel}
-        onMouseEnter={(e) => { this.onDayMouseEnter(day, e); }}
-        onMouseLeave={(e) => { this.onDayMouseLeave(day, e); }}
-        onMouseUp={(e) => { e.currentTarget.blur(); }}
-        onClick={(e) => { this.onDayClick(day, e); }}
-        onKeyDown={(e) => { this.onKeyDown(day, e); }}
-        tabIndex={tabIndex}
-      >
-        {renderDayContents ? renderDayContents(day, modifiers) : day.format('D')}
-      </td>
-    );
-  }
-}
+  return (
+    <td
+      {...css(
+        styles.CalendarDay,
+        useDefaultCursor && styles.CalendarDay__defaultCursor,
+        daySizeStyles,
+        getStyles(defaultStylesWithHover, isHovered),
+        isOutsideDay && getStyles(outsideStylesWithHover, isHovered),
+        modifiers.has('today') && getStyles(todayStylesWithHover, isHovered),
+        modifiers.has('first-day-of-week') && getStyles(firstDayOfWeekStylesWithHover, isHovered),
+        modifiers.has('last-day-of-week') && getStyles(lastDayOfWeekStylesWithHover, isHovered),
+        modifiers.has('hovered-start-first-possible-end') && getStyles(hoveredStartFirstPossibleEndStylesWithHover, isHovered),
+        modifiers.has('hovered-start-blocked-minimum-nights') && getStyles(hoveredStartBlockedMinNightsStylesWithHover, isHovered),
+        modifiers.has('highlighted-calendar') && getStyles(highlightedCalendarStylesWithHover, isHovered),
+        modifiers.has('blocked-minimum-nights') && getStyles(blockedMinNightsStylesWithHover, isHovered),
+        modifiers.has('blocked-calendar') && getStyles(blockedCalendarStylesWithHover, isHovered),
+        hoveredSpan && getStyles(hoveredSpanStylesWithHover, isHovered),
+        modifiers.has('after-hovered-start') && getStyles(afterHoveredStartStylesWithHover, isHovered),
+        modifiers.has('selected-span') && getStyles(selectedSpanStylesWithHover, isHovered),
+        modifiers.has('last-in-range') && getStyles(lastInRangeStylesWithHover, isHovered),
+        selected && getStyles(selectedStylesWithHover, isHovered),
+        modifiers.has('selected-start') && getStyles(selectedStartStylesWithHover, isHovered),
+        modifiers.has('selected-end') && getStyles(selectedEndStylesWithHover, isHovered),
+        isOutsideRange && getStyles(blockedOutOfRangeStylesWithHover, isHovered),
+      )}
+      role="button" // eslint-disable-line jsx-a11y/no-noninteractive-element-to-interactive-role
+      ref={buttonRef}
+      aria-disabled={modifiers.has('blocked')}
+      aria-label={ariaLabel}
+      onMouseEnter={(e) => { handleDayMouseEnter(day, e); }}
+      onMouseLeave={(e) => { handleDayMouseLeave(day, e); }}
+      onMouseUp={(e) => { e.currentTarget.blur(); }}
+      onClick={(e) => { handleDayClick(day, e); }}
+      onKeyDown={(e) => { handleKeyDown(day, e); }}
+      tabIndex={tabIndex}
+    >
+      {renderDayContents ? renderDayContents(day, modifiers) : day.format('D')}
+    </td>
+  );
+});
 
 CustomizableCalendarDay.propTypes = propTypes;
 CustomizableCalendarDay.defaultProps = defaultProps;

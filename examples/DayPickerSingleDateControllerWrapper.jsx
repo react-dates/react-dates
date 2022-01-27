@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unused-prop-types */
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import momentPropTypes from 'react-moment-proptypes';
 import { forbidExtraProps } from 'airbnb-prop-types';
@@ -87,58 +87,44 @@ const defaultProps = {
   monthFormat: 'MMMM YYYY',
 };
 
-class DayPickerSingleDateControllerWrapper extends React.Component {
-  constructor(props) {
-    super(props);
+function DayPickerSingleDateControllerWrapper(props) {
+  const { initialDate } = props;
 
-    this.state = {
-      focused: true,
-      date: props.initialDate,
-    };
+  const [focused, setFocused] = useState(true);
+  const [date, setDate] = useState(initialDate);
 
-    this.onDateChange = this.onDateChange.bind(this);
-    this.onFocusChange = this.onFocusChange.bind(this);
-  }
-
-  onDateChange(date) {
-    this.setState({ date });
-  }
-
-  onFocusChange() {
+  const handleFocusChange = () => {
     // Force the focused states to always be truthy so that date is always selectable
-    this.setState({ focused: true });
+    setFocused(true);
   }
 
-  render() {
-    const { showInput } = this.props;
-    const { focused, date } = this.state;
+  const { showInput } = props;
 
-    const props = omit(this.props, [
-      'autoFocus',
-      'initialDate',
-      'showInput',
-    ]);
+  const filteredProps = omit(props, [
+    'autoFocus',
+    'initialDate',
+    'showInput',
+  ]);
 
-    const dateString = date && date.format('YYYY-MM-DD');
+  const dateString = date && date.format('YYYY-MM-DD');
 
-    return (
-      <div>
-        {showInput && (
-          <div style={{ marginBottom: 16 }}>
-            <input type="text" name="start date" value={dateString || ''} readOnly />
-          </div>
-        )}
+  return (
+    <div>
+      {showInput && (
+        <div style={{ marginBottom: 16 }}>
+          <input type="text" name="start date" value={dateString || ''} readOnly />
+        </div>
+      )}
 
-        <DayPickerSingleDateController
-          {...props}
-          onDateChange={this.onDateChange}
-          onFocusChange={this.onFocusChange}
-          focused={focused}
-          date={date}
-        />
-      </div>
-    );
-  }
+      <DayPickerSingleDateController
+        {...filteredProps}
+        onDateChange={setDate}
+        onFocusChange={handleFocusChange}
+        focused={focused}
+        date={date}
+      />
+    </div>
+  );
 }
 
 DayPickerSingleDateControllerWrapper.propTypes = propTypes;
