@@ -31,6 +31,13 @@ describe('DayPickerRangeController', () => {
     sinon.restore();
   });
 
+  it('should pass onBlur to <DayPickerRangeController />', () => {
+    const onBlurStub = sinon.stub();
+    const wrapper = shallow(<DayPickerRangeController onBlur={onBlurStub} />);
+    wrapper.prop('onBlur')();
+    expect(onBlurStub).to.have.property('callCount', 1);
+  });
+
   describe('#render()', () => {
     it('renders <DayPicker />', () => {
       const wrapper = shallow(<DayPickerRangeController />);
@@ -5027,13 +5034,15 @@ describe('DayPickerRangeController', () => {
 
     describe('noNavButtons prop', () => {
       it('renders navigation button', () => {
-        const wrapper = shallow(<DayPickerRangeController />).dive().dive();
-        expect(wrapper.find(DayPickerNavigation)).to.have.lengthOf(1);
+        const wrapper = shallow(<DayPickerRangeController />);
+        const daypickerWrapper = wrapper.find(DayPicker).dive().dive();
+        expect(daypickerWrapper.find(DayPickerNavigation)).to.have.lengthOf(1);
       });
 
       it('does not render navigation button when noNavButtons prop applied', () => {
-        const wrapper = shallow(<DayPickerRangeController noNavButtons />).dive().dive();
-        expect(wrapper.find(DayPickerNavigation)).to.have.lengthOf(0);
+        const wrapper = shallow(<DayPickerRangeController noNavButtons />);
+        const daypickerWrapper = wrapper.find(DayPicker).dive().dive();
+        expect(daypickerWrapper.find(DayPickerNavigation)).to.have.lengthOf(0);
       });
     });
 

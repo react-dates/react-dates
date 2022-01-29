@@ -258,6 +258,7 @@ export default class DayPickerRangeController extends React.PureComponent {
       disableNext: this.shouldDisableMonthNavigation(props.maxDate, currentMonth),
     };
 
+    this.onBlur = this.onBlur.bind(this);
     this.onDayClick = this.onDayClick.bind(this);
     this.onDayMouseEnter = this.onDayMouseEnter.bind(this);
     this.onDayMouseLeave = this.onDayMouseLeave.bind(this);
@@ -583,11 +584,17 @@ export default class DayPickerRangeController extends React.PureComponent {
     }
   }
 
+  onBlur(e) {
+    const { onBlur } = this.props;
+
+    onBlur(e);
+  }
+
+
   onDayClick(day, e) {
     const {
       keepOpenOnDateSelect,
       minimumNights,
-      onBlur,
       focusedInput,
       onFocusChange,
       onClose,
@@ -668,8 +675,6 @@ export default class DayPickerRangeController extends React.PureComponent {
     } else {
       onDatesChange({ startDate, endDate });
     }
-
-    onBlur();
   }
 
   onDayMouseEnter(day) {
@@ -1343,64 +1348,66 @@ export default class DayPickerRangeController extends React.PureComponent {
     } = this.state;
 
     return (
-      <DayPicker
-        orientation={orientation}
-        enableOutsideDays={enableOutsideDays}
-        modifiers={visibleDays}
-        numberOfMonths={numberOfMonths}
-        onDayClick={this.onDayClick}
-        onDayMouseEnter={this.onDayMouseEnter}
-        onDayMouseLeave={this.onDayMouseLeave}
-        onPrevMonthClick={this.onPrevMonthClick}
-        onNextMonthClick={this.onNextMonthClick}
-        onMonthChange={this.onMonthChange}
-        onTab={onTab}
-        onShiftTab={onShiftTab}
-        onYearChange={this.onYearChange}
-        onGetNextScrollableMonths={this.onGetNextScrollableMonths}
-        onGetPrevScrollableMonths={this.onGetPrevScrollableMonths}
-        monthFormat={monthFormat}
-        renderMonthText={renderMonthText}
-        renderWeekHeaderElement={renderWeekHeaderElement}
-        withPortal={withPortal}
-        hidden={!focusedInput}
-        initialVisibleMonth={() => currentMonth}
-        daySize={daySize}
-        onOutsideClick={onOutsideClick}
-        disablePrev={disablePrev}
-        disableNext={disableNext}
-        dayPickerNavigationInlineStyles={dayPickerNavigationInlineStyles}
-        navPosition={navPosition}
-        navPrev={navPrev}
-        navNext={navNext}
-        renderNavPrevButton={renderNavPrevButton}
-        renderNavNextButton={renderNavNextButton}
-        noNavButtons={noNavButtons}
-        noNavPrevButton={noNavPrevButton}
-        noNavNextButton={noNavNextButton}
-        renderCalendarDay={renderCalendarDay}
-        renderDayContents={renderDayContents}
-        renderCalendarInfo={renderCalendarInfo}
-        renderMonthElement={renderMonthElement}
-        renderKeyboardShortcutsButton={renderKeyboardShortcutsButton}
-        renderKeyboardShortcutsPanel={renderKeyboardShortcutsPanel}
-        calendarInfoPosition={calendarInfoPosition}
-        firstDayOfWeek={firstDayOfWeek}
-        hideKeyboardShortcutsPanel={hideKeyboardShortcutsPanel}
-        isFocused={isFocused}
-        getFirstFocusableDay={this.getFirstFocusableDay}
-        onBlur={onBlur}
-        showKeyboardShortcuts={showKeyboardShortcuts}
-        phrases={phrases}
-        isRTL={isRTL}
-        weekDayFormat={weekDayFormat}
-        dayAriaLabelFormat={dayAriaLabelFormat}
-        verticalHeight={verticalHeight}
-        verticalBorderSpacing={verticalBorderSpacing}
-        noBorder={noBorder}
-        transitionDuration={transitionDuration}
-        horizontalMonthPadding={horizontalMonthPadding}
-      />
+      <div onBlur={this.onBlur}>
+        <DayPicker
+          orientation={orientation}
+          enableOutsideDays={enableOutsideDays}
+          modifiers={visibleDays}
+          numberOfMonths={numberOfMonths}
+          onDayClick={this.onDayClick}
+          onDayMouseEnter={this.onDayMouseEnter}
+          onDayMouseLeave={this.onDayMouseLeave}
+          onPrevMonthClick={this.onPrevMonthClick}
+          onNextMonthClick={this.onNextMonthClick}
+          onMonthChange={this.onMonthChange}
+          onTab={onTab}
+          onShiftTab={onShiftTab}
+          onYearChange={this.onYearChange}
+          onGetNextScrollableMonths={this.onGetNextScrollableMonths}
+          onGetPrevScrollableMonths={this.onGetPrevScrollableMonths}
+          monthFormat={monthFormat}
+          renderMonthText={renderMonthText}
+          renderWeekHeaderElement={renderWeekHeaderElement}
+          withPortal={withPortal}
+          hidden={!focusedInput}
+          initialVisibleMonth={() => currentMonth}
+          daySize={daySize}
+          onOutsideClick={onOutsideClick}
+          disablePrev={disablePrev}
+          disableNext={disableNext}
+          dayPickerNavigationInlineStyles={dayPickerNavigationInlineStyles}
+          navPosition={navPosition}
+          navPrev={navPrev}
+          navNext={navNext}
+          renderNavPrevButton={renderNavPrevButton}
+          renderNavNextButton={renderNavNextButton}
+          noNavButtons={noNavButtons}
+          noNavPrevButton={noNavPrevButton}
+          noNavNextButton={noNavNextButton}
+          renderCalendarDay={renderCalendarDay}
+          renderDayContents={renderDayContents}
+          renderCalendarInfo={renderCalendarInfo}
+          renderMonthElement={renderMonthElement}
+          renderKeyboardShortcutsButton={renderKeyboardShortcutsButton}
+          renderKeyboardShortcutsPanel={renderKeyboardShortcutsPanel}
+          calendarInfoPosition={calendarInfoPosition}
+          firstDayOfWeek={firstDayOfWeek}
+          hideKeyboardShortcutsPanel={hideKeyboardShortcutsPanel}
+          isFocused={isFocused}
+          getFirstFocusableDay={this.getFirstFocusableDay}
+          onBlur={onBlur}
+          showKeyboardShortcuts={showKeyboardShortcuts}
+          phrases={phrases}
+          isRTL={isRTL}
+          weekDayFormat={weekDayFormat}
+          dayAriaLabelFormat={dayAriaLabelFormat}
+          verticalHeight={verticalHeight}
+          verticalBorderSpacing={verticalBorderSpacing}
+          noBorder={noBorder}
+          transitionDuration={transitionDuration}
+          horizontalMonthPadding={horizontalMonthPadding}
+        />
+      </div>
     );
   }
 }
