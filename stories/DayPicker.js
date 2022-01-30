@@ -105,6 +105,30 @@ function renderNavNextButton(buttonProps) {
   );
 }
 
+class TestWrapper extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showDatePicker: false,
+    };
+  }
+
+  render() {
+    const { showDatePicker } = this.state;
+    return (
+      <div>
+        <button
+          type="button"
+          onClick={() => this.setState({ showDatePicker: !showDatePicker })}
+        >
+          {showDatePicker ? 'Show' : 'Hide'}
+        </button>
+        <DayPicker hidden={showDatePicker} />
+      </div>
+    );
+  }
+}
+
 storiesOf('DayPicker', module)
   .add('default', withInfo()(() => (
     <DayPicker />
@@ -226,4 +250,7 @@ storiesOf('DayPicker', module)
   )))
   .add('noBorder', withInfo()(() => (
     <DayPicker noBorder />
+  )))
+  .add('hide', withInfo()(() => (
+    <TestWrapper />
   )));
