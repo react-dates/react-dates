@@ -669,23 +669,5 @@ describe('SingleDatePicker', () => {
       ctrl.onFocusOut(event);
       expect(dpcContainsStub.getCall(0).args[0]).to.equal(event.target);
     });
-
-    it('should check the target when related target is defined', () => {
-      const event = {
-        relatedTarget: 'related target',
-        target: 'target',
-      };
-      ctrl.onFocusOut(event);
-      expect(dpcContainsStub.getCall(0).args[0]).to.equal(event.relatedTarget);
-    });
-
-    it('should check the target when related target is not defined', () => {
-      const event = {
-        relatedTarget: undefined,
-        target: 'target',
-      };
-      ctrl.onFocusOut(event);
-      expect(dpcContainsStub.getCall(0).args[0]).to.equal(event.target);
-    });
   });
 });
