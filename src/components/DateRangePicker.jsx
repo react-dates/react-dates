@@ -27,6 +27,7 @@ import {
   END_DATE,
   HORIZONTAL_ORIENTATION,
   VERTICAL_ORIENTATION,
+  VERTICAL_SCROLLABLE,
   ANCHOR_LEFT,
   ANCHOR_RIGHT,
   OPEN_DOWN,
@@ -491,6 +492,7 @@ class DateRangePicker extends React.PureComponent {
           anchorDirection === ANCHOR_RIGHT && styles.DateRangePicker_picker__directionRight,
           orientation === HORIZONTAL_ORIENTATION && styles.DateRangePicker_picker__horizontal,
           orientation === VERTICAL_ORIENTATION && styles.DateRangePicker_picker__vertical,
+          orientation === VERTICAL_SCROLLABLE && styles.DateRangePicker_picker__vertical,
           !withAnyPortal && openDirection === OPEN_DOWN && {
             top: inputHeight + verticalSpacing,
           },
