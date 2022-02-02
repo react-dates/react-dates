@@ -232,7 +232,7 @@ class DateRangePicker extends React.PureComponent {
 
     if (focusedInput) {
       const withAnyPortal = withPortal || withFullScreenPortal;
-      const moveFocusToDayPicker = withAnyPortal
+      const moveFocusToDayPicker = (withAnyPortal && !keepFocusOnInput)
         || (readOnly && !keepFocusOnInput)
         || (this.isTouchDevice && !keepFocusOnInput);
 
@@ -619,6 +619,7 @@ class DateRangePicker extends React.PureComponent {
       regular,
       css,
       styles,
+      keepFocusOnInput
     } = this.props;
 
     const { isDateRangePickerInputFocused } = this.state;
@@ -626,7 +627,7 @@ class DateRangePicker extends React.PureComponent {
     const enableOutsideClick = (!withPortal && !withFullScreenPortal);
 
     const hideFang = verticalSpacing < FANG_HEIGHT_PX;
-
+    const disabledByPortal = focusedInput && (withPortal || withFullScreenPortal) && !keepFocusOnInput;
     const input = (
       <DateRangePickerInputController
         startDate={startDate}
@@ -649,7 +650,7 @@ class DateRangePicker extends React.PureComponent {
         customInputIcon={customInputIcon}
         customArrowIcon={customArrowIcon}
         customCloseIcon={customCloseIcon}
-        disabled={disabled}
+        disabled={disabled || disabledByPortal}
         required={required}
         readOnly={readOnly}
         openDirection={openDirection}

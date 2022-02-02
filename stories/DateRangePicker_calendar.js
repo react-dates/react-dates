@@ -97,6 +97,13 @@ storiesOf('DRP - Calendar Props', module)
       autoFocus
     />
   )))
+  .add('horizontal with portal and Input Focus', withInfo()(() => (
+    <DateRangePickerWrapper
+      withPortal
+      autoFocus
+      keepFocusOnInput
+    />
+  )))
   .add('horizontal with fullscreen portal', withInfo()(() => (
     <DateRangePickerWrapper withFullScreenPortal autoFocus />
   )))
