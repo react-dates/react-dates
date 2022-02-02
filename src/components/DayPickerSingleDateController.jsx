@@ -303,7 +303,7 @@ export default class DayPickerSingleDateController extends React.PureComponent {
       modifiers = this.addModifier(modifiers, date, 'selected');
     }
 
-    if (didFocusChange || recomputePropModifiers) {
+    if (didFocusChange || didDateChange || recomputePropModifiers) {
       values(visibleDays).forEach((days) => {
         Object.keys(days).forEach((day) => {
           const momentObj = getPooledMoment(day);

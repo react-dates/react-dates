@@ -912,7 +912,7 @@ describe('DayPickerRangeController', () => {
       });
 
       describe('blocked-out-of-range', () => {
-        describe('focusedInput did not change', () => {
+        describe('focusedInput, startDate, endDate did not change', () => {
           it('does not call isOutsideRange if unchanged', () => {
             const isOutsideRangeStub = sinon.stub();
             const wrapper = shallow(<DayPickerRangeController
@@ -938,7 +938,7 @@ describe('DayPickerRangeController', () => {
           });
         });
 
-        describe('focusedInput changed', () => {
+        describe('focusedInput, startDate, endDate changed', () => {
           const numVisibleDays = 3;
           let visibleDays;
           beforeEach(() => {
@@ -952,13 +952,37 @@ describe('DayPickerRangeController', () => {
             };
           });
 
-          it('calls isOutsideRange for every visible day', () => {
+          it('calls isOutsideRange for every visible day when focusedInput changes', () => {
             const isOutsideRangeStub = sinon.stub();
             const wrapper = shallow(<DayPickerRangeController {...props} />);
             wrapper.setState({ visibleDays });
             wrapper.instance().componentWillReceiveProps({
               ...props,
               focusedInput: END_DATE,
+              isOutsideRange: isOutsideRangeStub,
+            });
+            expect(isOutsideRangeStub.callCount).to.equal(numVisibleDays);
+          });
+
+          it('calls isOutsideRange for every visible day when startDate changes', () => {
+            const isOutsideRangeStub = sinon.stub();
+            const wrapper = shallow(<DayPickerRangeController {...props} />);
+            wrapper.setState({ visibleDays });
+            wrapper.instance().componentWillReceiveProps({
+              ...props,
+              startDate: today,
+              isOutsideRange: isOutsideRangeStub,
+            });
+            expect(isOutsideRangeStub.callCount).to.equal(numVisibleDays);
+          });
+
+          it('calls isOutsideRange for every visible day when endDate changes', () => {
+            const isOutsideRangeStub = sinon.stub();
+            const wrapper = shallow(<DayPickerRangeController {...props} />);
+            wrapper.setState({ visibleDays });
+            wrapper.instance().componentWillReceiveProps({
+              ...props,
+              endDate: today,
               isOutsideRange: isOutsideRangeStub,
             });
             expect(isOutsideRangeStub.callCount).to.equal(numVisibleDays);
@@ -995,7 +1019,7 @@ describe('DayPickerRangeController', () => {
       });
 
       describe('blocked-calendar', () => {
-        describe('focusedInput did not change', () => {
+        describe('focusedInput, startDate, endDate did not change', () => {
           it('does not call isDayBlocked if unchanged', () => {
             const isDayBlockedStub = sinon.stub();
             const wrapper = shallow(<DayPickerRangeController
@@ -1021,7 +1045,7 @@ describe('DayPickerRangeController', () => {
           });
         });
 
-        describe('focusedInput changed', () => {
+        describe('focusedInput, startDate, endDate changed', () => {
           const numVisibleDays = 3;
           let visibleDays;
           beforeEach(() => {
@@ -1035,13 +1059,37 @@ describe('DayPickerRangeController', () => {
             };
           });
 
-          it('calls isDayBlocked for every visible day', () => {
+          it('calls isDayBlocked for every visible day when focusedInput changes', () => {
             const isDayBlockedStub = sinon.stub();
             const wrapper = shallow(<DayPickerRangeController {...props} />);
             wrapper.setState({ visibleDays });
             wrapper.instance().componentWillReceiveProps({
               ...props,
               focusedInput: END_DATE,
+              isDayBlocked: isDayBlockedStub,
+            });
+            expect(isDayBlockedStub.callCount).to.equal(numVisibleDays);
+          });
+
+          it('calls isDayBlocked for every visible day when startDate changes', () => {
+            const isDayBlockedStub = sinon.stub();
+            const wrapper = shallow(<DayPickerRangeController {...props} />);
+            wrapper.setState({ visibleDays });
+            wrapper.instance().componentWillReceiveProps({
+              ...props,
+              startDate: today,
+              isDayBlocked: isDayBlockedStub,
+            });
+            expect(isDayBlockedStub.callCount).to.equal(numVisibleDays);
+          });
+
+          it('calls isDayBlocked for every visible day when endDate changes', () => {
+            const isDayBlockedStub = sinon.stub();
+            const wrapper = shallow(<DayPickerRangeController {...props} />);
+            wrapper.setState({ visibleDays });
+            wrapper.instance().componentWillReceiveProps({
+              ...props,
+              endDate: today,
               isDayBlocked: isDayBlockedStub,
             });
             expect(isDayBlockedStub.callCount).to.equal(numVisibleDays);
@@ -1078,7 +1126,7 @@ describe('DayPickerRangeController', () => {
       });
 
       describe('highlighted-calendar', () => {
-        describe('focusedInput did not change', () => {
+        describe('focusedInput, startDate, endDate did not change', () => {
           it('does not call isDayHighlighted', () => {
             const isDayHighlightedStub = sinon.stub();
             const wrapper = shallow(<DayPickerRangeController
@@ -1104,7 +1152,7 @@ describe('DayPickerRangeController', () => {
           });
         });
 
-        describe('focusedInput changed', () => {
+        describe('focusedInput, startDate, endDate changed', () => {
           const numVisibleDays = 3;
           let visibleDays;
           beforeEach(() => {
@@ -1118,13 +1166,37 @@ describe('DayPickerRangeController', () => {
             };
           });
 
-          it('calls isDayHighlighted for every visible day', () => {
+          it('calls isDayHighlighted for every visible day when focusedInput changes', () => {
             const isDayHighlightedStub = sinon.stub();
             const wrapper = shallow(<DayPickerRangeController {...props} />);
             wrapper.setState({ visibleDays });
             wrapper.instance().componentWillReceiveProps({
               ...props,
               focusedInput: END_DATE,
+              isDayHighlighted: isDayHighlightedStub,
+            });
+            expect(isDayHighlightedStub.callCount).to.equal(numVisibleDays);
+          });
+
+          it('calls isDayHighlighted for every visible day when startDate changes', () => {
+            const isDayHighlightedStub = sinon.stub();
+            const wrapper = shallow(<DayPickerRangeController {...props} />);
+            wrapper.setState({ visibleDays });
+            wrapper.instance().componentWillReceiveProps({
+              ...props,
+              startDate: today,
+              isDayHighlighted: isDayHighlightedStub,
+            });
+            expect(isDayHighlightedStub.callCount).to.equal(numVisibleDays);
+          });
+
+          it('calls isDayHighlighted for every visible day when endDate changes', () => {
+            const isDayHighlightedStub = sinon.stub();
+            const wrapper = shallow(<DayPickerRangeController {...props} />);
+            wrapper.setState({ visibleDays });
+            wrapper.instance().componentWillReceiveProps({
+              ...props,
+              endDate: today,
               isDayHighlighted: isDayHighlightedStub,
             });
             expect(isDayHighlightedStub.callCount).to.equal(numVisibleDays);
