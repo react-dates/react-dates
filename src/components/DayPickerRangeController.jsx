@@ -284,6 +284,8 @@ export default class DayPickerRangeController extends React.PureComponent {
       initialVisibleMonth,
       numberOfMonths,
       enableOutsideDays,
+      maxDate,
+      minDate,
     } = nextProps;
 
     const {
@@ -298,6 +300,8 @@ export default class DayPickerRangeController extends React.PureComponent {
       initialVisibleMonth: prevInitialVisibleMonth,
       numberOfMonths: prevNumberOfMonths,
       enableOutsideDays: prevEnableOutsideDays,
+      maxDate: prevMaxDate,
+      minDate: prevMinDate,
     } = this.props;
 
     const { hoverDate } = this.state;
@@ -579,6 +583,22 @@ export default class DayPickerRangeController extends React.PureComponent {
           ...phrases,
           chooseAvailableDate,
         },
+      });
+    }
+
+    if (maxDate !== prevMaxDate) {
+      const { currentMonth } = this.state;
+
+      this.setState({
+        disableNext: this.shouldDisableMonthNavigation(maxDate, currentMonth),
+      });
+    }
+
+    if (minDate !== prevMinDate) {
+      const { currentMonth } = this.state;
+
+      this.setState({
+        disablePrev: this.shouldDisableMonthNavigation(minDate, currentMonth),
       });
     }
   }
