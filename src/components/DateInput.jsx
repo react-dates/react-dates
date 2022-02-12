@@ -223,7 +223,7 @@ class DateInput extends React.PureComponent {
             styles.DateInput_input,
             small && styles.DateInput_input__small,
             regular && styles.DateInput_input__regular,
-            readOnly && styles.DateInput_input__readOnly,
+            (readOnly || (isTouch && !showCaret)) && styles.DateInput_input__readOnly,
             focused && styles.DateInput_input__focused,
             disabled && styles.DateInput_input__disabled,
           )}
