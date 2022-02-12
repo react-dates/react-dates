@@ -1332,6 +1332,8 @@ export default class DayPickerRangeController extends React.PureComponent {
       transitionDuration,
       verticalBorderSpacing,
       horizontalMonthPadding,
+      minDate,
+      maxDate,
     } = this.props;
 
     const {
@@ -1369,6 +1371,8 @@ export default class DayPickerRangeController extends React.PureComponent {
         onOutsideClick={onOutsideClick}
         disablePrev={disablePrev}
         disableNext={disableNext}
+        minDate={minDate}
+        maxDate={maxDate}
         dayPickerNavigationInlineStyles={dayPickerNavigationInlineStyles}
         navPosition={navPosition}
         navPrev={navPrev}

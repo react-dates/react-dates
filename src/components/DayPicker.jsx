@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import momentPropTypes from 'react-moment-proptypes';
 import { forbidExtraProps, mutuallyExclusiveProps, nonNegativeInteger } from 'airbnb-prop-types';
 import { withStyles, withStylesPropTypes } from 'react-with-styles';
 
@@ -26,6 +27,7 @@ import calculateDimension from '../utils/calculateDimension';
 import getActiveElement from '../utils/getActiveElement';
 import isDayVisible from '../utils/isDayVisible';
 import isSameMonth from '../utils/isSameMonth';
+import isBeforeDay from '../utils/isBeforeDay';
 
 import ModifiersShape from '../shapes/ModifiersShape';
 import NavPositionShape from '../shapes/NavPositionShape';
@@ -98,6 +100,8 @@ const propTypes = forbidExtraProps({
   onYearChange: PropTypes.func,
   onGetNextScrollableMonths: PropTypes.func, // VERTICAL_SCROLLABLE daypickers only
   onGetPrevScrollableMonths: PropTypes.func, // VERTICAL_SCROLLABLE daypickers only
+  minDate: momentPropTypes.momentObj,
+  maxDate: momentPropTypes.momentObj,
 
   // month props
   renderMonthText: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'),
@@ -168,6 +172,8 @@ export const defaultProps = {
   onYearChange() {},
   onGetNextScrollableMonths() {},
   onGetPrevScrollableMonths() {},
+  minDate: null,
+  maxDate: null,
 
   // month props
   renderMonthText: null,
@@ -766,14 +772,16 @@ class DayPicker extends React.PureComponent {
   }
 
   maybeTransitionNextMonth(newFocusedDate) {
-    const { numberOfMonths } = this.props;
+    const { numberOfMonths, maxDate } = this.props;
     const { currentMonth, focusedDate } = this.state;
 
     const newFocusedDateMonth = newFocusedDate.month();
     const focusedDateMonth = focusedDate.month();
     const isNewFocusedDateVisible = isDayVisible(newFocusedDate, currentMonth, numberOfMonths);
     if (newFocusedDateMonth !== focusedDateMonth && !isNewFocusedDateVisible) {
-      this.onNextMonthTransition(newFocusedDate);
+      if (!maxDate || (maxDate && isBeforeDay(newFocusedDate, maxDate))) {
+        this.onNextMonthTransition(newFocusedDate);
+      }
       return true;
     }
 
@@ -781,14 +789,16 @@ class DayPicker extends React.PureComponent {
   }
 
   maybeTransitionPrevMonth(newFocusedDate) {
-    const { numberOfMonths } = this.props;
+    const { numberOfMonths, minDate } = this.props;
     const { currentMonth, focusedDate } = this.state;
 
     const newFocusedDateMonth = newFocusedDate.month();
     const focusedDateMonth = focusedDate.month();
     const isNewFocusedDateVisible = isDayVisible(newFocusedDate, currentMonth, numberOfMonths);
     if (newFocusedDateMonth !== focusedDateMonth && !isNewFocusedDateVisible) {
-      this.onPrevMonthTransition(newFocusedDate);
+      if (!minDate || (minDate && isBeforeDay(minDate, newFocusedDate))) {
+        this.onPrevMonthTransition(newFocusedDate);
+      }
       return true;
     }
 
