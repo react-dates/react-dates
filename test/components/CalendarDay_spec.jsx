@@ -227,6 +227,36 @@ describe('CalendarDay', () => {
       expect(wrapper.children()).to.have.lengthOf(0);
       expect(wrapper.props()).to.eql({});
     });
+
+    describe('class', () => {
+      it('should have CalendarDay__firstDateOfMonth if it is the first day of month', () => {
+        const modifiers = new Set(['first-date-of-month']);
+
+        const wrapper = shallow((
+          <CalendarDay
+            modifiers={modifiers}
+          />
+        )).dive();
+
+        const className = wrapper.prop('className') || '';
+
+        expect(className).to.contain('CalendarDay__firstDateOfMonth');
+      });
+
+      it('should have CalendarDay__lastDateOfMonth if it is the last day of month', () => {
+        const modifiers = new Set(['last-date-of-month']);
+
+        const wrapper = shallow((
+          <CalendarDay
+            modifiers={modifiers}
+          />
+        )).dive();
+
+        const className = wrapper.prop('className') || '';
+
+        expect(className).to.contain('CalendarDay__lastDateOfMonth');
+      });
+    });
   });
 
   describe('#onKeyDown', () => {

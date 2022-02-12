@@ -188,6 +188,42 @@ describe('CustomizableCalendarDay', () => {
       expect(wrapper.children()).to.have.lengthOf(0);
       expect(wrapper.props()).to.eql({});
     });
+
+    describe('style', () => {
+      it('should have specified background color if it is the first day of month', () => {
+        const modifiers = new Set(['first-date-of-month']);
+
+        const wrapper = shallow((
+          <CustomizableCalendarDay
+            modifiers={modifiers}
+            firstDateOfMonthStyles={{
+              background: 'purple',
+            }}
+          />
+        )).dive();
+
+        const style = wrapper.prop('style') || {};
+
+        expect(style).to.have.property('background', 'purple');
+      });
+
+      it('should have specified background color if it is the last day of month', () => {
+        const modifiers = new Set(['last-date-of-month']);
+
+        const wrapper = shallow((
+          <CustomizableCalendarDay
+            modifiers={modifiers}
+            lastDateOfMonthStyles={{
+              background: 'magenta',
+            }}
+          />
+        )).dive();
+
+        const style = wrapper.prop('style') || {};
+
+        expect(style).to.have.property('background', 'magenta');
+      });
+    });
   });
 
   describe('#componentDidUpdate', () => {
