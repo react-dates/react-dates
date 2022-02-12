@@ -2,11 +2,12 @@ import React from 'react';
 import moment from 'moment';
 import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
+import { action } from '@storybook/addon-actions';
 
 import isInclusivelyAfterDay from '../src/utils/isInclusivelyAfterDay';
 import isSameDay from '../src/utils/isSameDay';
 
-import SingleDatePickerWrapper from '../examples/SingleDatePickerWrapper';
+import SingleDatePickerWrapperExample from "../examples/SingleDatePickerWrapper";
 
 const datesList = [
   moment(),
@@ -18,6 +19,14 @@ const datesList = [
   moment().add(12, 'days'),
   moment().add(13, 'days'),
 ];
+
+const SingleDatePickerWrapper = (props) => (
+  <SingleDatePickerWrapperExample
+    {...props}
+    onDateChange={action('onDateChange')}
+    onFocusChange={action('onFocusChange')}
+  />
+);
 
 storiesOf('SDP - Day Props', module)
   .add('default', withInfo()(() => (

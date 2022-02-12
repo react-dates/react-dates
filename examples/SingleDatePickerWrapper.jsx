@@ -18,9 +18,7 @@ const propTypes = {
 
   ...omit(SingleDatePickerShape, [
     'date',
-    'onDateChange',
     'focused',
-    'onFocusChange',
   ]),
 };
 
@@ -28,6 +26,9 @@ const defaultProps = {
   // example props for the demo
   autoFocus: false,
   initialDate: null,
+
+  onDateChange: () => {},
+  onFocusChange: () => {},
 
   // input related props
   id: 'date',
@@ -93,11 +94,17 @@ class SingleDatePickerWrapper extends React.Component {
   }
 
   onDateChange(date) {
+    const { onDateChange } = this.props;
     this.setState({ date });
+
+    onDateChange(date);
   }
 
   onFocusChange({ focused }) {
+    const { onFocusChange } = this.props;
     this.setState({ focused });
+
+    onFocusChange({ focused });
   }
 
   render() {

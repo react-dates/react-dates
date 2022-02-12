@@ -265,6 +265,23 @@ describe('CalendarDay', () => {
     });
   });
 
+  describe('#componentDidMount', () => {
+    it('focuses buttonRef after a delay when isFocused and tabIndex is 0', () => {
+      const wrapper = shallow(<CalendarDay isFocused tabIndex={0} />).dive();
+      const focus = sinon.spy();
+      wrapper.instance().buttonRef = { focus };
+      wrapper.instance().componentDidMount({ isFocused: true, tabIndex: 0 });
+      expect(focus.callCount).to.eq(0);
+
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          expect(focus.callCount).to.eq(1);
+          resolve();
+        }, 0);
+      });
+    });
+  });
+
   describe('#componentDidUpdate', () => {
     it('focuses buttonRef after a delay when isFocused, tabIndex is 0, and tabIndex was not 0', () => {
       const wrapper = shallow(<CalendarDay isFocused tabIndex={0} />).dive();
