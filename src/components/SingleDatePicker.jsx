@@ -105,6 +105,7 @@ const defaultProps = {
   onPrevMonthClick() {},
   onNextMonthClick() {},
   onClose() {},
+  onOutsideClick() {},
 
   // month presentation and interaction related props
   renderMonthText: null,
@@ -415,6 +416,7 @@ class SingleDatePicker extends React.PureComponent {
       onPrevMonthClick,
       onNextMonthClick,
       onClose,
+      onOutsideClick,
       withPortal,
       withFullScreenPortal,
       keepOpenOnDateSelect,
@@ -448,7 +450,8 @@ class SingleDatePicker extends React.PureComponent {
     } = this.props;
     const { dayPickerContainerStyles, isDayPickerFocused, showKeyboardShortcuts } = this.state;
 
-    const onOutsideClick = (!withFullScreenPortal && withPortal) ? this.onOutsideClick : undefined;
+    const onOutsideClickImpl = onOutsideClick || this.onOutsideClick;
+    const onOutsideClickWithPortal = (!withFullScreenPortal && withPortal) ? onOutsideClickImpl : undefined;
     const closeIcon = customCloseIcon || (<CloseButton />);
 
     const inputHeight = getInputHeight(reactDates, small);
@@ -479,7 +482,7 @@ class SingleDatePicker extends React.PureComponent {
           isRTL && styles.SingleDatePicker_picker__rtl,
           dayPickerContainerStyles,
         )}
-        onClick={onOutsideClick}
+        onClick={onOutsideClickWithPortal}
       >
         <DayPickerSingleDateController
           date={date}
@@ -534,7 +537,7 @@ class SingleDatePicker extends React.PureComponent {
             {...css(styles.SingleDatePicker_closeButton)}
             aria-label={phrases.closeDatePicker}
             type="button"
-            onClick={this.onOutsideClick}
+            onClick={onOutsideClickImpl}
           >
             <div {...css(styles.SingleDatePicker_closeButton_svg)}>
               {closeIcon}
@@ -568,6 +571,7 @@ class SingleDatePicker extends React.PureComponent {
       onDateChange,
       displayFormat,
       phrases,
+      onOutsideClick,
       withPortal,
       withFullScreenPortal,
       screenReaderInputMessage,
@@ -590,6 +594,8 @@ class SingleDatePicker extends React.PureComponent {
     const enableOutsideClick = (!withPortal && !withFullScreenPortal);
 
     const hideFang = verticalSpacing < FANG_HEIGHT_PX;
+
+    const onOutsideClickImpl = onOutsideClick || this.onOutsideClick;
 
     const input = (
       <SingleDatePickerInputController
@@ -642,7 +648,7 @@ class SingleDatePicker extends React.PureComponent {
         )}
       >
         {enableOutsideClick && (
-          <OutsideClickHandler onOutsideClick={this.onOutsideClick}>
+          <OutsideClickHandler onOutsideClick={onOutsideClickImpl}>
             {input}
           </OutsideClickHandler>
         )}

@@ -80,6 +80,7 @@ export default {
   onPrevMonthClick: PropTypes.func,
   onNextMonthClick: PropTypes.func,
   onClose: PropTypes.func,
+  onOutsideClick: PropTypes.func,
 
   // day presentation and interaction related props
   renderCalendarDay: PropTypes.func,
