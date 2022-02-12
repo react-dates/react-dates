@@ -75,6 +75,7 @@ const propTypes = forbidExtraProps({
   orientation: ScrollableOrientationShape,
   withPortal: PropTypes.bool,
   initialVisibleMonth: PropTypes.func,
+  initialMonthTitleHeight: PropTypes.number,
   hideKeyboardShortcutsPanel: PropTypes.bool,
   daySize: nonNegativeInteger,
   noBorder: PropTypes.bool,
@@ -151,6 +152,7 @@ const defaultProps = {
   withPortal: false,
   hideKeyboardShortcutsPanel: false,
   initialVisibleMonth: null,
+  initialMonthTitleHeight: undefined,
   daySize: DAY_SIZE,
 
   dayPickerNavigationInlineStyles: null,
@@ -1332,6 +1334,7 @@ export default class DayPickerRangeController extends React.PureComponent {
       transitionDuration,
       verticalBorderSpacing,
       horizontalMonthPadding,
+      initialMonthTitleHeight,
     } = this.props;
 
     const {
@@ -1347,6 +1350,7 @@ export default class DayPickerRangeController extends React.PureComponent {
         orientation={orientation}
         enableOutsideDays={enableOutsideDays}
         modifiers={visibleDays}
+        initialMonthTitleHeight={initialMonthTitleHeight}
         numberOfMonths={numberOfMonths}
         onDayClick={this.onDayClick}
         onDayMouseEnter={this.onDayMouseEnter}
