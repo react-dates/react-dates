@@ -316,7 +316,11 @@ class SingleDatePicker extends React.PureComponent {
   responsivizePickerPosition() {
     // It's possible the portal props have been changed in response to window resizes
     // So let's ensure we reset this back to the base state each time
-    this.setState({ dayPickerContainerStyles: {} });
+    const { dayPickerContainerStyles } = this.state;
+
+    if (Object.keys(dayPickerContainerStyles).length > 0) {
+      this.setState({ dayPickerContainerStyles: {} });
+    }
 
     const {
       openDirection,
@@ -327,8 +331,6 @@ class SingleDatePicker extends React.PureComponent {
       appendToBody,
       focused,
     } = this.props;
-
-    const { dayPickerContainerStyles } = this.state;
 
     if (!focused) {
       return;
