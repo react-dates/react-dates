@@ -130,6 +130,14 @@ describe('DateInput', () => {
         wrapper.instance().componentWillReceiveProps({ displayValue: '1991-07-13' });
         expect(wrapper.state()).to.have.property('dateString', '');
       });
+
+      it('sets state.dateString to \'\' if nextProps.displayValue is \'\'', () => {
+        const dateString = 'foo123';
+        const wrapper = shallow(<DateInput id="date" />).dive();
+        wrapper.setState({ dateString });
+        wrapper.instance().componentWillReceiveProps({ displayValue: '' });
+        expect(wrapper.state()).to.have.property('dateString', '');
+      });
     });
 
     describe('nextProps.displayValue does not exist', () => {
