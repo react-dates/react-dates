@@ -402,6 +402,16 @@ describe('DateRangePickerInputController', () => {
         const args = onDatesChangeStub.getCall(0).args[0];
         expect(args.endDate).to.equal(null);
       });
+
+      it('calls props.onDatesChange with invalidDateString in arg object', () => {
+        const onDatesChangeStub = sinon.stub();
+        const wrapper = shallow((
+          <DateRangePickerInputController onDatesChange={onDatesChangeStub} />
+        ));
+        wrapper.instance().onEndDateChange(invalidDateString);
+        const args = onDatesChangeStub.getCall(0).args[0];
+        expect(args.invalidDateString).to.equal(invalidDateString);
+      });
     });
 
     describe('is outside range', () => {
@@ -753,6 +763,19 @@ describe('DateRangePickerInputController', () => {
         wrapper.instance().onStartDateChange(invalidDateString);
         const args = onDatesChangeStub.getCall(0).args[0];
         expect(args.startDate).to.equal(null);
+      });
+
+      it('calls props.onDatesChange with invalidDateString in arg object', () => {
+        const onDatesChangeStub = sinon.stub();
+        const wrapper = shallow((
+          <DateRangePickerInputController
+            onDatesChange={onDatesChangeStub}
+            startDate={today}
+          />
+        ));
+        wrapper.instance().onStartDateChange(invalidDateString);
+        const args = onDatesChangeStub.getCall(0).args[0];
+        expect(args.invalidDateString).to.equal(invalidDateString);
       });
 
       it('calls props.onDatesChange with endDate === props.endDate', () => {
