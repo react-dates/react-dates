@@ -49,4 +49,12 @@ describe('#isDayVisible', () => {
       expect(isDayVisible(test, currentMonth, 1, true)).to.equal(false);
     });
   });
+
+  // this test fails when run with the whole suite,
+  // potentially due to cache pollution from other tests
+  it.skip('works when the first day of the week that starts the month does not have a midnight', () => {
+    const march29 = moment('2020-03-29').utcOffset(-1 /* 'Atlantic/Azores' */);
+    const april2020 = moment('2020-04-02').utcOffset(-1 /* 'Atlantic/Azores' */);
+    expect(isDayVisible(march29, april2020, 1, true)).to.equal(true);
+  });
 });

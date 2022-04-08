@@ -126,7 +126,7 @@ storiesOf('DRP - Day Props', module)
   )))
   .add('with custom daily details', withInfo()(() => (
     <DateRangePickerWrapper
-      renderDayContents={day => <td className="foo-bar">{day.format('ddd')}</td>}
+      renderDayContents={day => <div className="foo-bar">{day.format('ddd')}</div>}
       autoFocus
     />
   )))

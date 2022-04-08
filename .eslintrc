@@ -3,21 +3,30 @@
 
   "extends": [
     "airbnb",
-    "plugin:react-with-styles/recommended"
+    "plugin:react-with-styles/recommended",
   ],
 
   "plugins": [
-    "react-with-styles"
+    "react-with-styles",
   ],
 
   "env": {
     "browser": true,
-    "node": true
+    "node": true,
   },
 
-  "parser": "babel-eslint",
+  "ignorePatterns": [
+    "lib/",
+    ".storybook/",
+    "test/_helpers/",
+    "webpack.config.js",
+  ],
+
+  "parser": "@babel/eslint-parser",
 
   "rules": {
+    "max-len": "off",
+
     "react/forbid-foreign-prop-types": 2, // For babel-plugin-transform-react-remove-prop-types
 
     "jsx-a11y/click-events-have-key-events": 1, // TODO: enable
@@ -44,13 +53,14 @@
           //"devDependencies": true
         //}],
         "indent": [2, 2, {
-          "MemberExpression": "off"
+          "MemberExpression": "off",
         }],
+        "react/function-component-definition": "off",
       },
     },
   ],
 
   "settings": {
     "propWrapperFunctions": ["forbidExtraProps", "exact", "Object.freeze"],
-  }
+  },
 }

@@ -1,0 +1,37 @@
+name: 'Tests: pretest/posttest/build'
+
+on: [pull_request, push]
+
+jobs:
+  pretest:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ljharb/actions/node/install@main
+        name: 'nvm install lts/* && npm install'
+        with:
+          node-version: 'lts/*'
+      - run: npm run pretest
+
+  # posttest:
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: ljharb/actions/node/install@main
+  #       name: 'nvm install lts/* && npm install'
+  #       with:
+  #         node-version: 'lts/*'
+  #     - run: npm run posttest
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ljharb/actions/node/install@main
+        name: 'nvm install lts/* && npm install'
+        with:
+          node-version: 'lts/*'
+      - run: npm run build
