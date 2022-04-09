@@ -341,4 +341,44 @@ describe('CalendarDay', () => {
       expect(onMouseLeaveStub).to.have.property('callCount', 1);
     });
   });
+
+  describe('#onDayFocus', () => {
+    let onDayFocusSpy;
+    beforeEach(() => {
+      onDayFocusSpy = sinon.spy(PureCalendarDay.prototype, 'onDayFocus');
+    });
+
+    it('gets triggered by focus', () => {
+      const wrapper = shallow(<CalendarDay />).dive();
+      wrapper.simulate('focus');
+      expect(onDayFocusSpy).to.have.property('callCount', 1);
+    });
+
+    it('calls props.onDayFocus', () => {
+      const onDayFocusStub = sinon.stub();
+      const wrapper = shallow(<CalendarDay onDayFocus={onDayFocusStub} />).dive();
+      wrapper.instance().onDayFocus();
+      expect(onDayFocusStub).to.have.property('callCount', 1);
+    });
+  });
+
+  describe('#onDayBlur', () => {
+    let onDayBlurSpy;
+    beforeEach(() => {
+      onDayBlurSpy = sinon.spy(PureCalendarDay.prototype, 'onDayBlur');
+    });
+
+    it('gets triggered by blur', () => {
+      const wrapper = shallow(<CalendarDay />).dive();
+      wrapper.simulate('blur');
+      expect(onDayBlurSpy).to.have.property('callCount', 1);
+    });
+
+    it('calls props.onDayBlur', () => {
+      const onDayBlurStub = sinon.stub();
+      const wrapper = shallow(<CalendarDay onDayBlur={onDayBlurStub} />).dive();
+      wrapper.instance().onDayBlur();
+      expect(onDayBlurStub).to.have.property('callCount', 1);
+    });
+  });
 });

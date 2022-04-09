@@ -24,6 +24,8 @@ const propTypes = forbidExtraProps({
   onDayClick: PropTypes.func,
   onDayMouseEnter: PropTypes.func,
   onDayMouseLeave: PropTypes.func,
+  onDayFocus: PropTypes.func,
+  onDayBlur: PropTypes.func,
   renderDayContents: PropTypes.func,
   ariaLabelFormat: PropTypes.string,
 
@@ -41,6 +43,8 @@ const defaultProps = {
   onDayClick() {},
   onDayMouseEnter() {},
   onDayMouseLeave() {},
+  onDayFocus() {},
+  onDayBlur() {},
   renderDayContents: null,
   ariaLabelFormat: 'dddd, LL',
 
@@ -81,6 +85,16 @@ class CalendarDay extends React.PureComponent {
   onDayMouseLeave(day, e) {
     const { onDayMouseLeave } = this.props;
     onDayMouseLeave(day, e);
+  }
+
+  onDayFocus(day, e) {
+    const { onDayFocus } = this.props;
+    onDayFocus(day, e);
+  }
+
+  onDayBlur(day, e) {
+    const { onDayBlur } = this.props;
+    onDayBlur(day, e);
   }
 
   onKeyDown(day, e) {
@@ -160,6 +174,8 @@ class CalendarDay extends React.PureComponent {
         onMouseEnter={(e) => { this.onDayMouseEnter(day, e); }}
         onMouseLeave={(e) => { this.onDayMouseLeave(day, e); }}
         onMouseUp={(e) => { e.currentTarget.blur(); }}
+        onFocus={(e) => { this.onDayFocus(day, e); }}
+        onBlur={(e) => { this.onDayBlur(day, e); }}
         onClick={(e) => { this.onDayClick(day, e); }}
         onKeyDown={(e) => { this.onKeyDown(day, e); }}
         tabIndex={tabIndex}
