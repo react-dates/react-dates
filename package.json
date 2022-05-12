@@ -96,7 +96,7 @@
     "mkdirp": "^0.5.5",
     "mocha": "^3.5.3",
     "mocha-wrap": "^2.1.2",
-    "moment": "^2.29.1",
+    "moment": "^2.29.3",
     "moment-jalaali": "^0.7.4",
     "nyc": "^10.3.2",
     "raw-loader": "^0.5.1",
