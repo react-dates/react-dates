@@ -242,8 +242,10 @@ class DateInput extends React.PureComponent {
           placeholder={placeholder}
           autoComplete={autoComplete}
           disabled={disabled}
+          role="combobox"
           readOnly={typeof readOnly === 'boolean' ? readOnly : isTouch}
           required={required}
+          aria-controls={id}
           aria-describedby={`${screenReaderMessage && screenReaderMessageId} ${ariaDescribedBy?ariaDescribedBy:''}`}
           aria-expanded={isFocused}
         />
