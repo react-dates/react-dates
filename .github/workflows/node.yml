@@ -47,14 +47,8 @@ jobs:
       matrix:
         node-version: ${{ fromJson(needs.matrix.outputs.latest) }}
         react:
-          - '16'
-          - '16.9'
-          - '16.3'
-          - '16.0'
-          - '15'
-          - '15.5'
-          - '15.0'
-          - '0.14'
+          - '18'
+          - '17'
 
     steps:
       - uses: actions/checkout@v2
