@@ -1211,15 +1211,19 @@ export default class DayPickerRangeController extends React.PureComponent {
   }
 
   getDisabledEndDateOffset(start, end) {
+
+    const isSaturday = this.isSaturday(end);
     const dates = enumrateDatesBetween(start, end);
     let daysToAdd = 0;
-    dates.map(d => {
+
+    dates.map((d) => {
       if (this.isBlocked(moment(d))) {
         daysToAdd++;
       }
     });
-    
-    return end.add(daysToAdd, 'day');
+
+    const newEndDate = end.add(isSaturday ? 2 : daysToAdd, 'day');
+    return newEndDate;
   }
 
   isDayAfterHoveredStartDate(day) {
@@ -1280,6 +1284,16 @@ export default class DayPickerRangeController extends React.PureComponent {
     return isDayBlocked(day)
       || isOutsideRange(day)
       || (blockDaysViolatingMinNights && this.doesNotMeetMinimumNights(day));
+  }
+
+  isSunday(day) {
+    const dateDay = day.day();
+    return dateDay === 0;
+  }
+
+  isSaturday(day) {
+    const dateDay = day.day();
+    return dateDay === 6;
   }
 
   isToday(day) {

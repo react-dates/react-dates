@@ -371,9 +371,10 @@ storiesOf('DayPickerRangeController', module)
   .add('with 4 days after today range selection with disabled dates', withInfo()(() => (
     <DayPickerRangeControllerWrapper
       isDayBlocked={(day1) => {
-        return new Date(day1).getDay() % 6 == 0
+        const dayOfweek = new Date(day1).getDay();
+        return (dayOfweek === 6) || (dayOfweek === 0);
       }}
-      moveOffsetForDisabledDates={false}
+      moveOffsetForDisabledDates={true}
       onOutsideClick={action('DayPickerRangeController::onOutsideClick')}
       onPrevMonthClick={action('DayPickerRangeController::onPrevMonthClick')}
       onNextMonthClick={action('DayPickerRangeController::onNextMonthClick')}
