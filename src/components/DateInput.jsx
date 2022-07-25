@@ -246,6 +246,7 @@ class DateInput extends React.PureComponent {
           required={required}
           aria-describedby={`${screenReaderMessage && screenReaderMessageId} ${ariaDescribedBy?ariaDescribedBy:''}`}
           aria-expanded={isFocused}
+          aria-control={`${id}-dayPicker_popup`}
         />
 
         {withFang && (
