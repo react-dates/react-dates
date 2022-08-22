@@ -22,7 +22,6 @@ import ModifiersShape from '../shapes/ModifiersShape';
 import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
 import DayOfWeekShape from '../shapes/DayOfWeekShape';
 
-
 import {
   HORIZONTAL_ORIENTATION,
   VERTICAL_SCROLLABLE,
@@ -110,7 +109,7 @@ class CalendarMonth extends React.PureComponent {
     this.setMonthTitleHeightTimeout = setTimeout(this.setMonthTitleHeight, 0);
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { month, enableOutsideDays, firstDayOfWeek } = nextProps;
     const {
       month: prevMonth,

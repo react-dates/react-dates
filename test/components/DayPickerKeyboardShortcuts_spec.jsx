@@ -12,7 +12,7 @@ import DayPickerKeyboardShortcuts from '../../src/components/DayPickerKeyboardSh
 const event = { preventDefault: sinon.stub(), stopPropagation: sinon.stub() };
 
 describe('DayPickerKeyboardShortcuts', () => {
-  describe('#componentWillReceiveProps', () => {
+  describe('#UNSAFE_componentWillReceiveProps', () => {
     describe('when the phrases have been updated', () => {
       const prevProps = { phrases: { enterKey: 'foo', escape: 'bar', questionMark: 'baz' } };
       const newProps = { phrases: { enterKey: 'bleep', escape: 'blah', questionMark: 'boop' } };
@@ -20,7 +20,7 @@ describe('DayPickerKeyboardShortcuts', () => {
       it('updates the keyboardShortcuts', () => {
         const wrapper = shallow(<DayPickerKeyboardShortcuts {...prevProps} />).dive();
         const prevKeyboardShortcuts = wrapper.instance().keyboardShortcuts;
-        wrapper.instance().componentWillReceiveProps(newProps);
+        wrapper.instance().UNSAFE_componentWillReceiveProps(newProps);
         const updatedKeyboardShortcuts = wrapper.instance().keyboardShortcuts;
         expect(prevKeyboardShortcuts).to.not.equal(updatedKeyboardShortcuts);
       });
@@ -33,7 +33,7 @@ describe('DayPickerKeyboardShortcuts', () => {
       it('does NOT update the keyboardShortcuts', () => {
         const wrapper = shallow(<DayPickerKeyboardShortcuts {...prevProps} />).dive();
         const prevKeyboardShortcuts = wrapper.instance().keyboardShortcuts;
-        wrapper.instance().componentWillReceiveProps(newProps);
+        wrapper.instance().UNSAFE_componentWillReceiveProps(newProps);
         const updatedKeyboardShortcuts = wrapper.instance().keyboardShortcuts;
         expect(prevKeyboardShortcuts).to.deep.equal(updatedKeyboardShortcuts);
       });

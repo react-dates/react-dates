@@ -18,7 +18,6 @@ import {
   NAV_POSITION_BOTTOM,
 } from '../../src/constants';
 
-
 const today = moment().locale('en');
 const event = { preventDefault() {}, stopPropagation() {} };
 
@@ -514,7 +513,6 @@ describe('DayPicker', () => {
       });
     });
 
-
     describe('focusedDate is falsy', () => {
       it('does not call maybeTransitionPrevMonth', () => {
         const maybeTransitionPrevMonthSpy = sinon.spy(PureDayPicker.prototype, 'maybeTransitionPrevMonth');
@@ -936,7 +934,7 @@ describe('DayPicker', () => {
       });
     });
 
-    describe('#componentWillReceiveProps', () => {
+    describe('#UNSAFE_componentWillReceiveProps', () => {
       describe('props.orientation === VERTICAL_SCROLLABLE', () => {
         it('updates state.currentMonthScrollTop', () => {
           sinon.spy(DayPicker.prototype, 'setTransitionContainerRef');
