@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import momentPropTypes from 'react-moment-proptypes';
 import { forbidExtraProps, nonNegativeInteger, or } from 'airbnb-prop-types';
-import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
+import { withStyles, withStylesPropTypes } from 'react-with-styles';
 import moment from 'moment';
 import raf from 'raf';
 
@@ -279,6 +279,7 @@ class CustomizableCalendarDay extends React.PureComponent {
       modifiers,
       tabIndex,
       renderDayContents,
+      css,
       styles,
       phrases,
 

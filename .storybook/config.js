@@ -27,8 +27,8 @@ function getLink(href, text) {
   return `<a href=${href} rel="noopener noreferrer" target="_blank">${text}</a>`;
 }
 
-const README = getLink('https://github.com/airbnb/react-dates/blob/master/README.md', 'README');
-const wrapperSource = getLink('https://github.com/airbnb/react-dates/tree/master/examples', 'wrapper source');
+const README = getLink('https://github.com/react-dates/react-dates/blob/HEAD/README.md', 'README');
+const wrapperSource = getLink('https://github.com/react-dates/react-dates/tree/HEAD/examples', 'wrapper source');
 
 const helperText = `All examples are built using a wrapper component that is not exported by
   react-dates. Please see the ${README} for more information about minimal setup or explore
@@ -58,7 +58,7 @@ addDecorator(story => (
 
 setOptions({
   name: 'REACT-DATES',
-  url: 'https://github.com/airbnb/react-dates',
+  url: 'https://github.com/react-dates/react-dates',
 });
 
 function loadStories() {

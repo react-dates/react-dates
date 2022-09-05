@@ -98,4 +98,9 @@ storiesOf('SingleDatePicker (SDP)', module)
       orientation={VERTICAL_ORIENTATION}
       verticalHeight={568}
     />
+  )))
+  .add('with custom autoComplete attribute', withInfo()(() => (
+    <SingleDatePickerWrapper
+    autoComplete="datePicker"
+    />
   )));

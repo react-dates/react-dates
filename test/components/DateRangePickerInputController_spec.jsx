@@ -4,8 +4,7 @@ import moment from 'moment';
 import sinon from 'sinon-sandbox';
 import { shallow } from 'enzyme';
 
-import DateRangePickerInputController
-  from '../../src/components/DateRangePickerInputController';
+import DateRangePickerInputController from '../../src/components/DateRangePickerInputController';
 
 import DateRangePickerInput from '../../src/components/DateRangePickerInput';
 
@@ -220,6 +219,23 @@ describe('DateRangePickerInputController', () => {
           const futureDate = moment(validFutureDateString);
           expect(onDatesChangeArgs.startDate).to.equal(startDate);
           expect(isSameDay(onDatesChangeArgs.endDate, futureDate)).to.equal(true);
+        });
+
+        it('calls props.onClose with props.startDate and provided end date', () => {
+          const onCloseStub = sinon.stub();
+          const wrapper = shallow((
+            <DateRangePickerInputController
+              onClose={onCloseStub}
+              startDate={startDate}
+            />
+          ));
+          wrapper.instance().onEndDateChange(validFutureDateString);
+          expect(onCloseStub).to.have.property('callCount', 1);
+
+          const [onCloseArgs] = onCloseStub.getCall(0).args;
+          const futureDate = moment(validFutureDateString);
+          expect(onCloseArgs).to.have.property('startDate', startDate);
+          expect(isSameDay(onCloseArgs.endDate, futureDate)).to.equal(true);
         });
 
         describe('props.onFocusChange', () => {

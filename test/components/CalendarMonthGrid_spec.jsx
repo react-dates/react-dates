@@ -45,6 +45,21 @@ describe('CalendarMonthGrid', () => {
     expect(Object.keys(collisions).length).to.equal(months.length);
   });
 
+  it('does not setState if hasMonthChanged and hasNumberOfMonthsChanged are falsy', () => {
+    const setState = sinon.stub(CalendarMonthGrid.prototype, 'setState');
+    const initialMonth = moment();
+    const wrapper = shallow((
+      <CalendarMonthGrid numberOfMonths={12} initialMonth={initialMonth} />
+    )).dive();
+
+    wrapper.instance().componentWillReceiveProps({
+      initialMonth,
+      numberOfMonths: 12,
+    });
+
+    expect(setState.callCount).to.eq(0);
+  });
+
   it('works with the same number of months', () => {
     const initialMonth = moment();
     const wrapper = shallow((

@@ -58,6 +58,7 @@ const propTypes = forbidExtraProps({
   small: PropTypes.bool,
   regular: PropTypes.bool,
   verticalSpacing: nonNegativeInteger,
+  autoComplete: PropTypes.string,
 
   keepOpenOnDateSelect: PropTypes.bool,
   reopenPickerOnClearDates: PropTypes.bool,
@@ -117,6 +118,7 @@ const defaultProps = {
   small: false,
   regular: false,
   verticalSpacing: undefined,
+  autoComplete: 'off',
 
   keepOpenOnDateSelect: false,
   reopenPickerOnClearDates: false,
@@ -177,6 +179,8 @@ export default class DateRangePickerInputController extends React.PureComponent 
       minimumNights,
       keepOpenOnDateSelect,
       onDatesChange,
+      onClose,
+      onFocusChange,
     } = this.props;
 
     const endDate = toMomentObject(endDateString, this.getDisplayFormat());
@@ -186,7 +190,10 @@ export default class DateRangePickerInputController extends React.PureComponent 
       && !(startDate && isBeforeDay(endDate, startDate.clone().add(minimumNights, 'days')));
     if (isEndDateValid) {
       onDatesChange({ startDate, endDate });
-      if (!keepOpenOnDateSelect) this.onClearFocus();
+      if (!keepOpenOnDateSelect) {
+        onFocusChange(null);
+        onClose({ startDate, endDate });
+      }
     } else {
       onDatesChange({
         startDate,
@@ -312,6 +319,7 @@ export default class DateRangePickerInputController extends React.PureComponent 
       small,
       regular,
       verticalSpacing,
+      autoComplete,
     } = this.props;
 
     const startDateString = this.getDateString(startDate);
@@ -359,6 +367,7 @@ export default class DateRangePickerInputController extends React.PureComponent 
         small={small}
         regular={regular}
         verticalSpacing={verticalSpacing}
+        autoComplete={autoComplete}
       >
         {children}
       </DateRangePickerInput>

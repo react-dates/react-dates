@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
-import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
+import { withStyles, withStylesPropTypes } from 'react-with-styles';
 
 import { DateRangePickerInputPhrases } from '../defaultPhrases';
 import getPhrasePropTypes from '../utils/getPhrasePropTypes';
@@ -72,6 +72,7 @@ const propTypes = forbidExtraProps({
   small: PropTypes.bool,
   regular: PropTypes.bool,
   verticalSpacing: nonNegativeInteger,
+  autoComplete: PropTypes.string,
 
   // accessibility
   isFocused: PropTypes.bool, // describes actual DOM focus
@@ -93,6 +94,7 @@ const defaultProps = {
   startDateTitleText: undefined,
   endDateTitleText: undefined,
   screenReaderMessage: '',
+  autoComplete: 'off',
   onStartDateFocus() {},
   onEndDateFocus() {},
   onStartDateChange() {},
@@ -162,6 +164,7 @@ function DateRangePickerInput({
   disabled,
   required,
   readOnly,
+  autoComplete,
   showCaret,
   openDirection,
   showDefaultInputIcon,
@@ -177,6 +180,7 @@ function DateRangePickerInput({
   verticalSpacing,
   small,
   regular,
+  css,
   styles,
 }) {
   const calendarIcon = customInputIcon || (
@@ -233,6 +237,7 @@ function DateRangePickerInput({
         id={startDateId}
         placeholder={startDatePlaceholderText}
         ariaLabel={startDateAriaLabel}
+        autoComplete={autoComplete}
         titleText={startDateTitleText}
         displayValue={startDate}
         screenReaderMessage={screenReaderStartDateText}
@@ -253,22 +258,21 @@ function DateRangePickerInput({
         regular={regular}
       />
 
-      {children}
+      {!isEndDateFocused && children}
 
-      {
-        <div
-          {...css(styles.DateRangePickerInput_arrow)}
-          aria-hidden="true"
-          role="presentation"
-        >
-          {arrowIcon}
-        </div>
-      }
+      <div
+        {...css(styles.DateRangePickerInput_arrow)}
+        aria-hidden="true"
+        role="presentation"
+      >
+        {arrowIcon}
+      </div>
 
       <DateInput
         id={endDateId}
         placeholder={endDatePlaceholderText}
         ariaLabel={endDateAriaLabel}
+        autoComplete={autoComplete}
         titleText={endDateTitleText}
         displayValue={endDate}
         screenReaderMessage={screenReaderEndDateText}
@@ -288,6 +292,8 @@ function DateRangePickerInput({
         small={small}
         regular={regular}
       />
+
+      {isEndDateFocused && children}
 
       {showClearDates && (
         <button

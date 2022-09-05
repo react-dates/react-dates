@@ -1,43 +1,13 @@
 language: node_js
-node_js:
-  - 14
-  - 12
-  - 10
-  - 8
-  - 6
+node_js: lts/*
 before_install:
-  - 'nvm install-latest-npm'
+  - nvm install-latest-npm
 services:
   - xvfb
-before_script:
-  - 'if [ -n "${KARMA-}" ]; then export DISPLAY=:99.0; fi'
 script:
-  - 'if [ -n "${LINT-}" ]; then npm run lint ; fi'
-  - 'if [ -n "${BUILD-}" ]; then npm run build ; fi'
-  - 'if [ "${TEST-}" = true ]; then npm run tests-only ; fi'
-  - 'if [ -n "${KARMA-}" ]; then npm run tests-karma ; fi'
-  - 'if [ -n "${COVERAGE-}" ] && [ "${TRAVIS_BRANCH-}" = "master" ]; then npm run cover; cat ./coverage/lcov.info | ./node_modules/.bin/coveralls ; fi'
-install:
-  - 'if [ -n "${LINT-}" ]; then NPM_CONFIG_LEGACY_PEER_DEPS=true npm install --legacy-bundling ; else npm install ; fi'
+  - npm run tests-karma
 env:
   global:
-    - TEST=true
-  matrix:
-    - REACT=0.14
-    - REACT=15
     - REACT=16
+    - DISPLAY=:99.0
 sudo: false
-matrix:
-  fast_finish: true
-  include:
-    - node_js: "lts/*"
-      env: LINT=true TEST=false
-    - node_js: "lts/*"
-      env: BUILD=true TEST=false
-    - node_js: "lts/*"
-      env: COVERAGE=true TEST=false
-    - node_js: "lts/*"
-      env: KARMA=true TEST=false
-  allow_failures:
-    - node_js: "10"
-      env: REACT=16

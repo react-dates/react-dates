@@ -22,7 +22,7 @@ const dayPickerSingleDateControllerInfo = `The ${monospace('DayPickerSingleDateC
   ${monospace('date')} values in state and then pass these down as props along with
   ${monospace('onFocusChange')} and ${monospace('onDateChange')} callbacks that
   update them appropriately. You can see an example of this implementation <a href=
-  "https://github.com/airbnb/react-dates/blob/master/examples/DayPickerSingleDateControllerWrapper.jsx">
+  "https://github.com/react-dates/react-dates/blob/HEAD/examples/DayPickerSingleDateControllerWrapper.jsx">
   here</a>. <br/><br/>
   Note that the ${monospace('focused')} prop may be ${monospace('false')}, but if this is the
   case, dates are not selectable. As a result, in the example wrapper, we always force

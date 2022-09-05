@@ -1,8 +1,9 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import sinon from 'sinon-sandbox';
 import moment from 'moment';
+import describeIfWindow from '../_helpers/describeIfWindow';
 
 import CalendarMonth from '../../src/components/CalendarMonth';
 
@@ -45,6 +46,43 @@ describe('CalendarMonth', () => {
       expect(typeof onYearSelect).to.equal('function');
       expect(typeof isVisible).to.equal('boolean');
       expect(wrapper.find('#month-element').exists()).to.equal(true);
+    });
+
+    describeIfWindow('setMonthTitleHeight', () => {
+      beforeEach(() => {
+        sinon.stub(window, 'setTimeout').callsFake((handler) => handler());
+      });
+
+      it('sets the title height after mount', () => {
+        const setMonthTitleHeightStub = sinon.stub();
+        mount(
+          <CalendarMonth
+            isVisible
+            setMonthTitleHeight={setMonthTitleHeightStub}
+          />,
+        );
+
+        expect(setMonthTitleHeightStub).to.have.property('callCount', 1);
+      });
+
+      describe('if the callbacks gets set again', () => {
+        it('updates the title height', () => {
+          const setMonthTitleHeightStub = sinon.stub();
+          const wrapper = mount(
+            <CalendarMonth
+              isVisible
+              setMonthTitleHeight={setMonthTitleHeightStub}
+            />,
+          );
+
+          expect(setMonthTitleHeightStub).to.have.property('callCount', 1);
+
+          wrapper.setProps({ setMonthTitleHeight: null });
+
+          wrapper.setProps({ setMonthTitleHeight: setMonthTitleHeightStub });
+          expect(setMonthTitleHeightStub).to.have.property('callCount', 2);
+        });
+      });
     });
   });
 });
