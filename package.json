@@ -1,6 +1,6 @@
 {
   "name": "@copper/copper-datepicker",
-  "version": "21.2.11",
+  "version": "21.2.12",
   "description": "A responsive and accessible date range picker component built with React",
   "main": "index.js",
   "scripts": {
@@ -95,8 +95,8 @@
     "karma-webpack": "^4.0.2",
     "mocha": "^3.5.3",
     "mocha-wrap": "^2.1.2",
-    "moment": "^2.24.0",
-    "moment-jalaali": "^0.7.4",
+    "moment": "2.29.4",
+    "moment-jalaali": "0.9.6",
     "node-sass": "^4.12.0",
     "nyc": "^14.1.1",
     "raw-loader": "^0.5.1",
