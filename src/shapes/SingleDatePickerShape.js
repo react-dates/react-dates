@@ -12,6 +12,7 @@ import openDirectionShape from './OpenDirectionShape';
 import DayOfWeekShape from './DayOfWeekShape';
 import CalendarInfoPositionShape from './CalendarInfoPositionShape';
 import NavPositionShape from './NavPositionShape';
+import AppendToBodyShape from './AppendToBodyShape';
 
 export default {
   // required props for a functional interactive SingleDatePicker
@@ -53,7 +54,7 @@ export default {
   horizontalMargin: PropTypes.number,
   withPortal: PropTypes.bool,
   withFullScreenPortal: PropTypes.bool,
-  appendToBody: PropTypes.bool,
+  appendToBody: AppendToBodyShape,
   disableScroll: PropTypes.bool,
   initialVisibleMonth: PropTypes.func,
   firstDayOfWeek: DayOfWeekShape,

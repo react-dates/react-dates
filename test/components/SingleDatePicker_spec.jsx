@@ -260,6 +260,31 @@ describe('SingleDatePicker', () => {
           expect(enableScrollSpy.callCount).to.equal(1);
         });
       });
+
+      describeIfWindow('mounted', () => {
+        let wrapper;
+        let instance;
+        let onCloseStub;
+
+        beforeEach(() => {
+          onCloseStub = sinon.stub();
+          wrapper = mount(shallow((
+            <SingleDatePicker
+              {...requiredProps}
+              appendToBody
+              focused
+              onClose={onCloseStub}
+            />
+          ))
+            .get(0));
+          instance = wrapper.instance();
+        });
+
+        it('positions <DateRangePickerInputController> using position: fixed when appendToBody is set to fixed', () => {
+          const dayPickerEl = instance.dayPickerContainer;
+          expect(dayPickerEl.style.position).to.equal('fixed');
+        });
+      });
     });
   });
 

@@ -14,6 +14,7 @@ import openDirectionShape from './OpenDirectionShape';
 import DayOfWeekShape from './DayOfWeekShape';
 import CalendarInfoPositionShape from './CalendarInfoPositionShape';
 import NavPositionShape from './NavPositionShape';
+import AppendToBodyShape from './AppendToBodyShape';
 
 export default {
   // required props for a functional interactive DateRangePicker
@@ -64,7 +65,7 @@ export default {
   horizontalMargin: PropTypes.number,
   withPortal: PropTypes.bool,
   withFullScreenPortal: PropTypes.bool,
-  appendToBody: PropTypes.bool,
+  appendToBody: AppendToBodyShape,
   disableScroll: PropTypes.bool,
   daySize: nonNegativeInteger,
   isRTL: PropTypes.bool,

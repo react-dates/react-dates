@@ -355,6 +355,7 @@ class SingleDatePicker extends React.PureComponent {
             openDirection,
             anchorDirection,
             this.container,
+            appendToBody,
           )),
         },
       });
