@@ -12,6 +12,7 @@ import DayPickerRangeController from '../../src/components/DayPickerRangeControl
 import DayPicker from '../../src/components/DayPicker';
 
 import {
+  APPEND_TO_BODY_FIXED,
   HORIZONTAL_ORIENTATION,
   START_DATE,
 } from '../../src/constants';
@@ -225,6 +226,31 @@ describe('DateRangePicker', () => {
           const enableScrollSpy = sinon.spy(instance, 'enableScroll');
           wrapper.unmount();
           expect(enableScrollSpy.callCount).to.equal(1);
+        });
+      });
+
+      describeIfWindow('mounted', () => {
+        let wrapper;
+        let instance;
+        let onCloseStub;
+
+        beforeEach(() => {
+          onCloseStub = sinon.stub();
+          wrapper = mount(shallow((
+            <DateRangePicker
+              {...requiredProps}
+              appendToBody={APPEND_TO_BODY_FIXED}
+              focusedInput={START_DATE}
+              onClose={onCloseStub}
+            />
+          ))
+            .get(0));
+          instance = wrapper.instance();
+        });
+
+        it('positions <DateRangePickerInputController> using position: fixed when appendToBody is set to fixed', () => {
+          const dayPickerEl = instance.dayPickerContainer;
+          expect(dayPickerEl.style.position).to.equal('fixed');
         });
       });
     });

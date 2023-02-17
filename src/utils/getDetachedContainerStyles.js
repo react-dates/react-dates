@@ -19,8 +19,9 @@ import { OPEN_UP, ANCHOR_RIGHT } from '../constants';
  * @param {string} openDirection The vertical positioning of the popup
  * @param {string} anchorDirection The horizontal position of the popup
  * @param {HTMLElement} referenceEl The reference element
+ * @param {'fixed' | boolean} appendToBody Set to `fixed` to use `position: 'fixed'` for the container
  */
-export default function getDetachedContainerStyles(openDirection, anchorDirection, referenceEl) {
+export default function getDetachedContainerStyles(openDirection, anchorDirection, referenceEl, appendToBody) {
   const referenceRect = referenceEl.getBoundingClientRect();
   let offsetX = referenceRect.left;
   let offsetY = referenceRect.top;
@@ -34,6 +35,7 @@ export default function getDetachedContainerStyles(openDirection, anchorDirectio
   }
 
   return {
+    position: appendToBody === 'fixed' ? 'fixed' : undefined,
     transform: `translate3d(${Math.round(offsetX)}px, ${Math.round(offsetY)}px, 0)`,
   };
 }
