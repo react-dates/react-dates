@@ -129,7 +129,8 @@
     "react-portal": "^4.2.1",
     "react-with-direction": "^1.4.0",
     "react-with-styles": "~4.1.0",
-    "react-with-styles-interface-css": "^6.0.0"
+    "react-with-styles-interface-css": "^6.0.0",
+    "sass": "^1.62.0"
   },
   "peerDependencies": {
     "@babel/runtime": "^7.0.0",
