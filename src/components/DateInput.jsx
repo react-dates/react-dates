@@ -138,7 +138,7 @@ class DateInput extends React.PureComponent {
 
   onKeyDown(e) {
     const keyArray = ['Tab', 'ArrowDown', '?'];
-    if ( keyArray.includes( e.key )) e.stopPropogation();
+    if (keyArray.includes(e.key)) e.stopPropagation();
     if (!MODIFIER_KEY_NAMES.has(e.key)) {
       this.throttledKeyDown(e);
     }
@@ -197,6 +197,7 @@ class DateInput extends React.PureComponent {
       block,
       css,
       styles,
+      onKeyDownShiftTab,
       theme: { reactDates },
     } = this.props;
 
@@ -236,6 +237,7 @@ class DateInput extends React.PureComponent {
           ref={this.setInputRef}
           value={value}
           onChange={this.onChange}
+          onBlur={onKeyDownShiftTab}
           onKeyDown={this.onKeyDown}
           onFocus={onFocus}
           placeholder={placeholder}

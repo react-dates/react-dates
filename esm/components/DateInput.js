@@ -136,7 +136,7 @@ var DateInput = /*#__PURE__*/function (_ref2, _ref) {
   };
   _proto.onKeyDown = function onKeyDown(e) {
     var keyArray = ['Tab', 'ArrowDown', '?'];
-    if (keyArray.includes(e.key)) e.stopPropogation();
+    if (keyArray.includes(e.key)) e.stopPropagation();
     if (!MODIFIER_KEY_NAMES.has(e.key)) {
       this.throttledKeyDown(e);
     }
@@ -189,6 +189,7 @@ var DateInput = /*#__PURE__*/function (_ref2, _ref) {
       block = _this$props4.block,
       css = _this$props4.css,
       styles = _this$props4.styles,
+      onKeyDownShiftTab = _this$props4.onKeyDownShiftTab,
       reactDates = _this$props4.theme.reactDates;
     var value = dateString || displayValue || '';
     var screenReaderMessageId = "DateInput__screen-reader-message-".concat(id);
@@ -203,6 +204,7 @@ var DateInput = /*#__PURE__*/function (_ref2, _ref) {
       ref: this.setInputRef,
       value: value,
       onChange: this.onChange,
+      onBlur: onKeyDownShiftTab,
       onKeyDown: this.onKeyDown,
       onFocus: onFocus,
       placeholder: placeholder,
