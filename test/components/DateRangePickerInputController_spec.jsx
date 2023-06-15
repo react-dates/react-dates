@@ -704,6 +704,24 @@ describe('DateRangePickerInputController', () => {
         expect(endDate).to.equal(wrapper.instance().props.endDate);
       });
 
+      it('calls props.onDatesChange with custom function format', () => {
+        const onDatesChangeStub = sinon.stub();
+        const customFunctionFormat = (date) => date;
+        const customDate = moment(today).add(5, 'days');
+        const wrapper = shallow((
+          <DateRangePickerInputController
+            displayFormat={customFunctionFormat}
+            onDatesChange={onDatesChangeStub}
+          />
+        ));
+        wrapper.instance().onStartDateChange(customDate);
+        expect(onDatesChangeStub.callCount).to.equal(1);
+
+        const { startDate, endDate } = onDatesChangeStub.getCall(0).args[0];
+        expect(startDate).to.deep.equal(customDate);
+        expect(endDate).to.equal(wrapper.instance().props.endDate);
+      });
+
       describe('props.onFocusChange', () => {
         it('is called once', () => {
           const onFocusChangeStub = sinon.stub();
