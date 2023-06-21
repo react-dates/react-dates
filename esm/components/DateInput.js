@@ -204,7 +204,11 @@ var DateInput = /*#__PURE__*/function (_ref2, _ref) {
       ref: this.setInputRef,
       value: value,
       onChange: this.onChange,
-      onBlur: onKeyDownShiftTab,
+      onBlur: function onBlur() {
+        return setTimeout(function () {
+          return onKeyDownShiftTab;
+        });
+      },
       onKeyDown: this.onKeyDown,
       onFocus: onFocus,
       placeholder: placeholder,

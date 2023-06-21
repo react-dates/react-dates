@@ -237,7 +237,7 @@ class DateInput extends React.PureComponent {
           ref={this.setInputRef}
           value={value}
           onChange={this.onChange}
-          onBlur={onKeyDownShiftTab}
+          onBlur={() => setTimeout(() => onKeyDownShiftTab)}
           onKeyDown={this.onKeyDown}
           onFocus={onFocus}
           placeholder={placeholder}
