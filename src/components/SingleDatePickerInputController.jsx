@@ -175,8 +175,6 @@ export default class SingleDatePickerInputController extends React.PureComponent
     } = this.props;
     if (!focused) return;
 
-    console.log('clear focus')
-
     onFocusChange({ focused: false });
     onClose({ date });
   }

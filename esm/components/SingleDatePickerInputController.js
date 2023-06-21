@@ -157,7 +157,6 @@ var SingleDatePickerInputController = /*#__PURE__*/function (_ref2, _ref) {
       onClose = _this$props3.onClose,
       date = _this$props3.date;
     if (!focused) return;
-    console.log('clear focus');
     onFocusChange({
       focused: false
     });
