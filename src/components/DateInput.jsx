@@ -197,7 +197,6 @@ class DateInput extends React.PureComponent {
       block,
       css,
       styles,
-      onKeyDownShiftTab,
       theme: { reactDates },
     } = this.props;
 
@@ -237,7 +236,10 @@ class DateInput extends React.PureComponent {
           ref={this.setInputRef}
           value={value}
           onChange={this.onChange}
-          onBlur={() => setTimeout(() => onKeyDownShiftTab)}
+          onBlur={(evt) => {
+            if (this.inputRef.contains(evt.target)) return false;
+            return true;
+          }}
           onKeyDown={this.onKeyDown}
           onFocus={onFocus}
           placeholder={placeholder}
