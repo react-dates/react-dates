@@ -52,6 +52,7 @@ const propTypes = forbidExtraProps({
   small: PropTypes.bool,
   regular: PropTypes.bool,
   verticalSpacing: nonNegativeInteger,
+  containerRef: PropTypes.node,
 
   keepOpenOnDateSelect: PropTypes.bool,
   reopenPickerOnClearDate: PropTypes.bool,
@@ -99,6 +100,7 @@ const defaultProps = {
   small: false,
   regular: false,
   verticalSpacing: undefined,
+  containerRef: null,
 
   keepOpenOnDateSelect: false,
   reopenPickerOnClearDate: false,
@@ -231,6 +233,7 @@ export default class SingleDatePickerInputController extends React.PureComponent
       small,
       regular,
       verticalSpacing,
+      containerRef,
     } = this.props;
 
     const displayValue = this.getDateString(date);
@@ -269,6 +272,7 @@ export default class SingleDatePickerInputController extends React.PureComponent
         small={small}
         regular={regular}
         verticalSpacing={verticalSpacing}
+        containerRef={containerRef}
       >
         {children}
       </SingleDatePickerInput>

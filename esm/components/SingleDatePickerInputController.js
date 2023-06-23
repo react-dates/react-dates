@@ -41,6 +41,7 @@ var propTypes = process.env.NODE_ENV !== "production" ? forbidExtraProps({
   small: PropTypes.bool,
   regular: PropTypes.bool,
   verticalSpacing: nonNegativeInteger,
+  containerRef: PropTypes.node,
   keepOpenOnDateSelect: PropTypes.bool,
   reopenPickerOnClearDate: PropTypes.bool,
   isOutsideRange: PropTypes.func,
@@ -79,6 +80,7 @@ var defaultProps = {
   small: false,
   regular: false,
   verticalSpacing: undefined,
+  containerRef: null,
   keepOpenOnDateSelect: false,
   reopenPickerOnClearDate: false,
   isOutsideRange: function isOutsideRange(day) {
@@ -217,7 +219,8 @@ var SingleDatePickerInputController = /*#__PURE__*/function (_ref2, _ref) {
       block = _this$props5.block,
       small = _this$props5.small,
       regular = _this$props5.regular,
-      verticalSpacing = _this$props5.verticalSpacing;
+      verticalSpacing = _this$props5.verticalSpacing,
+      containerRef = _this$props5.containerRef;
     var displayValue = this.getDateString(date);
     return /*#__PURE__*/React.createElement(SingleDatePickerInput, {
       id: id,
@@ -251,7 +254,8 @@ var SingleDatePickerInputController = /*#__PURE__*/function (_ref2, _ref) {
       block: block,
       small: small,
       regular: regular,
-      verticalSpacing: verticalSpacing
+      verticalSpacing: verticalSpacing,
+      containerRef: containerRef
     }, children);
   };
   return SingleDatePickerInputController;

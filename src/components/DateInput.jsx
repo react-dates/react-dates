@@ -50,6 +50,7 @@ const propTypes = forbidExtraProps({
 
   onKeyDownArrowDown: PropTypes.func,
   onKeyDownQuestionMark: PropTypes.func,
+  containerRef: PropTypes.node,
 
   // accessibility
   isFocused: PropTypes.bool, // describes actual DOM focus
@@ -72,6 +73,7 @@ const defaultProps = {
   small: false,
   block: false,
   regular: false,
+  containerRef: null,
 
   onChange() {},
   onFocus() {},
@@ -198,6 +200,7 @@ class DateInput extends React.PureComponent {
       css,
       styles,
       onKeyDownShiftTab,
+      containerRef,
       theme: { reactDates },
     } = this.props;
 
@@ -238,7 +241,7 @@ class DateInput extends React.PureComponent {
           value={value}
           onChange={this.onChange}
           onBlur={(evt) => {
-            if (!evt.relatedTarget) onKeyDownShiftTab();
+            if (!containerRef.contains(evt.relatedTarget)) onKeyDownShiftTab();
           }}
           onKeyDown={this.onKeyDown}
           onFocus={onFocus}

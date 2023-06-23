@@ -43,6 +43,7 @@ var propTypes = process.env.NODE_ENV !== "production" ? forbidExtraProps(_object
   onKeyDownTab: PropTypes.func,
   onKeyDownArrowDown: PropTypes.func,
   onKeyDownQuestionMark: PropTypes.func,
+  containerRef: PropTypes.node,
   // accessibility
   isFocused: PropTypes.bool // describes actual DOM focus
 })) : {};
@@ -63,6 +64,7 @@ var defaultProps = {
   small: false,
   block: false,
   regular: false,
+  containerRef: null,
   onChange: function onChange() {},
   onFocus: function onFocus() {},
   onKeyDownShiftTab: function onKeyDownShiftTab() {},
@@ -190,6 +192,7 @@ var DateInput = /*#__PURE__*/function (_ref2, _ref) {
       css = _this$props4.css,
       styles = _this$props4.styles,
       onKeyDownShiftTab = _this$props4.onKeyDownShiftTab,
+      containerRef = _this$props4.containerRef,
       reactDates = _this$props4.theme.reactDates;
     var value = dateString || displayValue || '';
     var screenReaderMessageId = "DateInput__screen-reader-message-".concat(id);
@@ -205,7 +208,7 @@ var DateInput = /*#__PURE__*/function (_ref2, _ref) {
       value: value,
       onChange: this.onChange,
       onBlur: function onBlur(evt) {
-        if (!evt.relatedTarget) onKeyDownShiftTab();
+        if (!containerRef.contains(evt.relatedTarget)) onKeyDownShiftTab();
       },
       onKeyDown: this.onKeyDown,
       onFocus: onFocus,
