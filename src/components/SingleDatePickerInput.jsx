@@ -44,7 +44,7 @@ const propTypes = forbidExtraProps({
   small: PropTypes.bool,
   regular: PropTypes.bool,
   verticalSpacing: nonNegativeInteger,
-  containerRef: PropTypes.node,
+  containerRef: PropTypes.element,
 
   onChange: PropTypes.func,
   onClearDate: PropTypes.func,

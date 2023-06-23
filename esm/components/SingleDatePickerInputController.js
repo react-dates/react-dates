@@ -41,7 +41,7 @@ var propTypes = process.env.NODE_ENV !== "production" ? forbidExtraProps({
   small: PropTypes.bool,
   regular: PropTypes.bool,
   verticalSpacing: nonNegativeInteger,
-  containerRef: PropTypes.node,
+  containerRef: PropTypes.element,
   keepOpenOnDateSelect: PropTypes.bool,
   reopenPickerOnClearDate: PropTypes.bool,
   isOutsideRange: PropTypes.func,

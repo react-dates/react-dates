@@ -43,7 +43,7 @@ var propTypes = process.env.NODE_ENV !== "production" ? forbidExtraProps(_object
   onKeyDownTab: PropTypes.func,
   onKeyDownArrowDown: PropTypes.func,
   onKeyDownQuestionMark: PropTypes.func,
-  containerRef: PropTypes.node,
+  containerRef: PropTypes.element,
   // accessibility
   isFocused: PropTypes.bool // describes actual DOM focus
 })) : {};
@@ -208,7 +208,7 @@ var DateInput = /*#__PURE__*/function (_ref2, _ref) {
       value: value,
       onChange: this.onChange,
       onBlur: function onBlur(evt) {
-        if (!containerRef.contains(evt.relatedTarget)) onKeyDownShiftTab();
+        if (!(containerRef !== null && containerRef !== void 0 && containerRef.contains(evt.relatedTarget))) onKeyDownShiftTab();
       },
       onKeyDown: this.onKeyDown,
       onFocus: onFocus,

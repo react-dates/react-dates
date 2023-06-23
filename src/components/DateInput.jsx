@@ -50,7 +50,7 @@ const propTypes = forbidExtraProps({
 
   onKeyDownArrowDown: PropTypes.func,
   onKeyDownQuestionMark: PropTypes.func,
-  containerRef: PropTypes.node,
+  containerRef: PropTypes.element,
 
   // accessibility
   isFocused: PropTypes.bool, // describes actual DOM focus
@@ -241,7 +241,7 @@ class DateInput extends React.PureComponent {
           value={value}
           onChange={this.onChange}
           onBlur={(evt) => {
-            if (!containerRef.contains(evt.relatedTarget)) onKeyDownShiftTab();
+            if (!containerRef?.contains(evt.relatedTarget)) onKeyDownShiftTab();
           }}
           onKeyDown={this.onKeyDown}
           onFocus={onFocus}

@@ -43,7 +43,7 @@ var propTypes = process.env.NODE_ENV !== "production" ? forbidExtraProps(_object
   small: PropTypes.bool,
   regular: PropTypes.bool,
   verticalSpacing: nonNegativeInteger,
-  containerRef: PropTypes.node,
+  containerRef: PropTypes.element,
   onChange: PropTypes.func,
   onClearDate: PropTypes.func,
   onFocus: PropTypes.func,

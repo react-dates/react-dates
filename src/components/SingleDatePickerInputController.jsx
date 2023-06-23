@@ -52,7 +52,7 @@ const propTypes = forbidExtraProps({
   small: PropTypes.bool,
   regular: PropTypes.bool,
   verticalSpacing: nonNegativeInteger,
-  containerRef: PropTypes.node,
+  containerRef: PropTypes.element,
 
   keepOpenOnDateSelect: PropTypes.bool,
   reopenPickerOnClearDate: PropTypes.bool,
