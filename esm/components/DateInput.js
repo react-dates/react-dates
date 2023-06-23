@@ -165,7 +165,6 @@ var DateInput = /*#__PURE__*/function (_ref2, _ref) {
     this.inputRef = ref;
   };
   _proto.render = function render() {
-    var _this2 = this;
     var _this$state = this.state,
       dateString = _this$state.dateString,
       isTouch = _this$state.isTouchDevice;
@@ -190,6 +189,7 @@ var DateInput = /*#__PURE__*/function (_ref2, _ref) {
       block = _this$props4.block,
       css = _this$props4.css,
       styles = _this$props4.styles,
+      onKeyDownShiftTab = _this$props4.onKeyDownShiftTab,
       reactDates = _this$props4.theme.reactDates;
     var value = dateString || displayValue || '';
     var screenReaderMessageId = "DateInput__screen-reader-message-".concat(id);
@@ -205,8 +205,7 @@ var DateInput = /*#__PURE__*/function (_ref2, _ref) {
       value: value,
       onChange: this.onChange,
       onBlur: function onBlur(evt) {
-        if (_this2.inputRef.contains(evt.target)) return false;
-        return true;
+        if (!evt.relatedTarget) onKeyDownShiftTab();
       },
       onKeyDown: this.onKeyDown,
       onFocus: onFocus,
