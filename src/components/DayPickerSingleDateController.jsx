@@ -56,6 +56,7 @@ const propTypes = forbidExtraProps({
   isDayHighlighted: PropTypes.func,
 
   // DayPicker props
+  customRef: PropTypes.element,
   renderMonthText: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'),
   renderMonthElement: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'),
   renderWeekHeaderElement: PropTypes.func,
@@ -124,6 +125,7 @@ const defaultProps = {
   isDayHighlighted() {},
 
   // DayPicker props
+  customRef: null,
   renderMonthText: null,
   renderWeekHeaderElement: null,
   enableOutsideDays: false,
@@ -699,6 +701,7 @@ export default class DayPickerSingleDateController extends React.PureComponent {
       transitionDuration,
       verticalBorderSpacing,
       horizontalMonthPadding,
+      customRef,
     } = this.props;
 
     const {
@@ -710,6 +713,7 @@ export default class DayPickerSingleDateController extends React.PureComponent {
 
     return (
       <DayPicker
+        customRef={customRef}
         orientation={orientation}
         enableOutsideDays={enableOutsideDays}
         modifiers={visibleDays}

@@ -59,6 +59,7 @@ const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
 
   // calendar presentation props
+  customRef: PropTypes.element,
   enableOutsideDays: PropTypes.bool,
   numberOfMonths: PropTypes.number,
   orientation: ScrollableOrientationShape,
@@ -129,6 +130,7 @@ const propTypes = forbidExtraProps({
 
 export const defaultProps = {
   // calendar presentation props
+  customRef: null,
   enableOutsideDays: false,
   numberOfMonths: 2,
   orientation: HORIZONTAL_ORIENTATION,
@@ -1080,6 +1082,7 @@ class DayPicker extends React.PureComponent {
       verticalBorderSpacing,
       horizontalMonthPadding,
       navPosition,
+      customRef,
     } = this.props;
 
     const { reactDates: { spacing: { dayPickerHorizontalPadding } } } = theme;
@@ -1157,6 +1160,7 @@ class DayPicker extends React.PureComponent {
 
     return (
       <div
+        ref={customRef}
         {...css(
           styles.DayPicker,
           isHorizontal && styles.DayPicker__horizontal,

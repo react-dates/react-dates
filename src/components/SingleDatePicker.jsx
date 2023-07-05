@@ -64,6 +64,7 @@ const defaultProps = {
   inputIconPosition: ICON_BEFORE_POSITION,
   customInputIcon: null,
   customCloseIcon: null,
+  customRef: null,
   noBorder: false,
   block: false,
   small: false,
@@ -444,6 +445,7 @@ class SingleDatePicker extends React.PureComponent {
       verticalSpacing,
       horizontalMonthPadding,
       small,
+      customRef,
       theme: { reactDates },
     } = this.props;
     const { dayPickerContainerStyles, isDayPickerFocused, showKeyboardShortcuts } = this.state;
@@ -482,6 +484,7 @@ class SingleDatePicker extends React.PureComponent {
         onClick={onOutsideClick}
       >
         <DayPickerSingleDateController
+          customRef={customRef}
           date={date}
           minDate={minDate}
           maxDate={maxDate}
