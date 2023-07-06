@@ -1,4 +1,4 @@
-name: 'Tests: node.js'
+name: "Tests: node.js"
 
 on: [pull_request, push]
 
@@ -12,9 +12,9 @@ jobs:
       - uses: ljharb/actions/node/matrix@main
         id: set-matrix
         with:
-          type: 'majors'
+          type: "majors"
           versionsAsRoot: true
-          preset: '>=4'
+          preset: ">=4"
 
   build:
     runs-on: ubuntu-latest
@@ -22,7 +22,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: ljharb/actions/node/install@main
         with:
-          node-version: 'lts/*'
+          node-version: "lts/*"
       - uses: actions/cache@v2
         id: cache
         with:
@@ -36,10 +36,9 @@ jobs:
       - run: npm run build:test
         if: steps.cache.outputs.cache-hit != 'true'
 
-
   majors:
     needs: [build, matrix]
-    name: 'latest minors'
+    name: "latest minors"
     runs-on: ubuntu-latest
 
     strategy:
@@ -47,19 +46,13 @@ jobs:
       matrix:
         node-version: ${{ fromJson(needs.matrix.outputs.latest) }}
         react:
-          - '16'
-          - '16.9'
-          - '16.3'
-          - '16.0'
-          - '15'
-          - '15.5'
-          - '15.0'
-          - '0.14'
+          - "18"
+          - "17"
 
     steps:
       - uses: actions/checkout@v2
       - uses: ljharb/actions/node/install@main
-        name: 'nvm install ${{ matrix.node-version }} && npm install'
+        name: "nvm install ${{ matrix.node-version }} && npm install"
         with:
           node-version: ${{ matrix.node-version }}
           skip-ls-check: ${{ !startsWith(matrix.node-version, '5.') && !startsWith(matrix.node-version, '4.') && 'true' || 'false' }}
@@ -80,8 +73,8 @@ jobs:
       - uses: codecov/codecov-action@v2
 
   node:
-    name: 'node.js'
+    name: "node.js"
     needs: [majors]
     runs-on: ubuntu-latest
     steps:
-      - run: 'echo tests completed'
+      - run: "echo tests completed"

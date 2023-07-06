@@ -1,13 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
-import { withStyles, withStylesPropTypes } from 'react-with-styles';
-import throttle from 'lodash/throttle';
-import isTouchDevice from 'is-touch-device';
+import React from "react";
+import PropTypes from "prop-types";
+import { forbidExtraProps, nonNegativeInteger } from "airbnb-prop-types";
+import { withStyles, withStylesPropTypes } from "react-with-styles";
+import throttle from "lodash/throttle";
+import isTouchDevice from "is-touch-device";
 
-import noflip from '../utils/noflip';
-import getInputHeight from '../utils/getInputHeight';
-import openDirectionShape from '../shapes/OpenDirectionShape';
+import noflip from "../utils/noflip";
+import getInputHeight from "../utils/getInputHeight";
+import openDirectionShape from "../shapes/OpenDirectionShape";
 
 import {
   OPEN_DOWN,
@@ -16,12 +16,20 @@ import {
   FANG_WIDTH_PX,
   DEFAULT_VERTICAL_SPACING,
   MODIFIER_KEY_NAMES,
-} from '../constants';
+} from "../constants";
 
-const FANG_PATH_TOP = `M0,${FANG_HEIGHT_PX} ${FANG_WIDTH_PX},${FANG_HEIGHT_PX} ${FANG_WIDTH_PX / 2},0z`;
-const FANG_STROKE_TOP = `M0,${FANG_HEIGHT_PX} ${FANG_WIDTH_PX / 2},0 ${FANG_WIDTH_PX},${FANG_HEIGHT_PX}`;
-const FANG_PATH_BOTTOM = `M0,0 ${FANG_WIDTH_PX},0 ${FANG_WIDTH_PX / 2},${FANG_HEIGHT_PX}z`;
-const FANG_STROKE_BOTTOM = `M0,0 ${FANG_WIDTH_PX / 2},${FANG_HEIGHT_PX} ${FANG_WIDTH_PX},0`;
+const FANG_PATH_TOP = `M0,${FANG_HEIGHT_PX} ${FANG_WIDTH_PX},${FANG_HEIGHT_PX} ${
+  FANG_WIDTH_PX / 2
+},0z`;
+const FANG_STROKE_TOP = `M0,${FANG_HEIGHT_PX} ${
+  FANG_WIDTH_PX / 2
+},0 ${FANG_WIDTH_PX},${FANG_HEIGHT_PX}`;
+const FANG_PATH_BOTTOM = `M0,0 ${FANG_WIDTH_PX},0 ${
+  FANG_WIDTH_PX / 2
+},${FANG_HEIGHT_PX}z`;
+const FANG_STROKE_BOTTOM = `M0,0 ${
+  FANG_WIDTH_PX / 2
+},${FANG_HEIGHT_PX} ${FANG_WIDTH_PX},0`;
 
 const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
@@ -56,12 +64,12 @@ const propTypes = forbidExtraProps({
 });
 
 const defaultProps = {
-  placeholder: 'Select Date',
-  displayValue: '',
+  placeholder: "Select Date",
+  displayValue: "",
   ariaLabel: undefined,
-  autoComplete: 'off',
+  autoComplete: "off",
   titleText: undefined,
-  screenReaderMessage: '',
+  screenReaderMessage: "",
   focused: false,
   disabled: false,
   required: false,
@@ -90,32 +98,35 @@ class DateInput extends React.PureComponent {
     super(props);
 
     this.state = {
-      dateString: '',
+      dateString: "",
       isTouchDevice: false,
     };
 
     this.onChange = this.onChange.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
     this.setInputRef = this.setInputRef.bind(this);
-    this.throttledKeyDown = throttle(this.onFinalKeyDown, 300, { trailing: false });
+    this.throttledKeyDown = throttle(this.onFinalKeyDown, 300, {
+      trailing: false,
+    });
   }
 
   componentDidMount() {
     this.setState({ isTouchDevice: isTouchDevice() });
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { dateString } = this.state;
     if (dateString && nextProps.displayValue) {
       this.setState({
-        dateString: '',
+        dateString: "",
       });
     }
   }
 
   componentDidUpdate(prevProps) {
     const { focused, isFocused } = this.props;
-    if (prevProps.focused === focused && prevProps.isFocused === isFocused) return;
+    if (prevProps.focused === focused && prevProps.isFocused === isFocused)
+      return;
 
     if (focused && isFocused) {
       this.inputRef.focus();
@@ -129,7 +140,7 @@ class DateInput extends React.PureComponent {
     // In Safari, onKeyDown does not consistently fire ahead of onChange. As a result, we need to
     // special case the `?` key so that it always triggers the appropriate callback, instead of
     // modifying the input value
-    if (dateString[dateString.length - 1] === '?') {
+    if (dateString[dateString.length - 1] === "?") {
       onKeyDownQuestionMark(e);
     } else {
       this.setState({ dateString }, () => onChange(dateString));
@@ -152,15 +163,15 @@ class DateInput extends React.PureComponent {
     } = this.props;
     const { key } = e;
 
-    if (key === 'Tab') {
+    if (key === "Tab") {
       if (e.shiftKey) {
         onKeyDownShiftTab(e);
       } else {
         onKeyDownTab(e);
       }
-    } else if (key === 'ArrowDown') {
+    } else if (key === "ArrowDown") {
       onKeyDownArrowDown(e);
-    } else if (key === '?') {
+    } else if (key === "?") {
       e.preventDefault();
       onKeyDownQuestionMark(e);
     }
@@ -171,10 +182,7 @@ class DateInput extends React.PureComponent {
   }
 
   render() {
-    const {
-      dateString,
-      isTouchDevice: isTouch,
-    } = this.state;
+    const { dateString, isTouchDevice: isTouch } = this.state;
     const {
       id,
       placeholder,
@@ -199,7 +207,7 @@ class DateInput extends React.PureComponent {
       theme: { reactDates },
     } = this.props;
 
-    const value = dateString || displayValue || '';
+    const value = dateString || displayValue || "";
     const screenReaderMessageId = `DateInput__screen-reader-message-${id}`;
 
     const withFang = showCaret && focused;
@@ -215,7 +223,7 @@ class DateInput extends React.PureComponent {
           withFang && styles.DateInput__withFang,
           disabled && styles.DateInput__disabled,
           withFang && openDirection === OPEN_DOWN && styles.DateInput__openDown,
-          withFang && openDirection === OPEN_UP && styles.DateInput__openUp,
+          withFang && openDirection === OPEN_UP && styles.DateInput__openUp
         )}
       >
         <input
@@ -225,7 +233,7 @@ class DateInput extends React.PureComponent {
             regular && styles.DateInput_input__regular,
             readOnly && styles.DateInput_input__readOnly,
             focused && styles.DateInput_input__focused,
-            disabled && styles.DateInput_input__disabled,
+            disabled && styles.DateInput_input__disabled
           )}
           aria-label={ariaLabel === undefined ? placeholder : ariaLabel}
           title={titleText}
@@ -240,7 +248,7 @@ class DateInput extends React.PureComponent {
           placeholder={placeholder}
           autoComplete={autoComplete}
           disabled={disabled}
-          readOnly={typeof readOnly === 'boolean' ? readOnly : isTouch}
+          readOnly={typeof readOnly === "boolean" ? readOnly : isTouch}
           required={required}
           aria-describedby={screenReaderMessage && screenReaderMessageId}
         />
@@ -256,7 +264,7 @@ class DateInput extends React.PureComponent {
               },
               openDirection === OPEN_UP && {
                 bottom: inputHeight + verticalSpacing - FANG_HEIGHT_PX - 1,
-              },
+              }
             )}
           >
             <path
@@ -265,13 +273,20 @@ class DateInput extends React.PureComponent {
             />
             <path
               {...css(styles.DateInput_fangStroke)}
-              d={openDirection === OPEN_DOWN ? FANG_STROKE_TOP : FANG_STROKE_BOTTOM}
+              d={
+                openDirection === OPEN_DOWN
+                  ? FANG_STROKE_TOP
+                  : FANG_STROKE_BOTTOM
+              }
             />
           </svg>
         )}
 
         {screenReaderMessage && (
-          <p {...css(styles.DateInput_screenReaderMessage)} id={screenReaderMessageId}>
+          <p
+            {...css(styles.DateInput_screenReaderMessage)}
+            id={screenReaderMessageId}
+          >
             {screenReaderMessage}
           </p>
         )}
@@ -283,113 +298,112 @@ class DateInput extends React.PureComponent {
 DateInput.propTypes = propTypes;
 DateInput.defaultProps = defaultProps;
 
-export default withStyles(({
-  reactDates: {
-    border, color, sizing, spacing, font, zIndex,
-  },
-}) => ({
-  DateInput: {
-    margin: 0,
-    padding: spacing.inputPadding,
-    background: color.background,
-    position: 'relative',
-    display: 'inline-block',
-    width: sizing.inputWidth,
-    verticalAlign: 'middle',
-  },
+export default withStyles(
+  ({ reactDates: { border, color, sizing, spacing, font, zIndex } }) => ({
+    DateInput: {
+      margin: 0,
+      padding: spacing.inputPadding,
+      background: color.background,
+      position: "relative",
+      display: "inline-block",
+      width: sizing.inputWidth,
+      verticalAlign: "middle",
+    },
 
-  DateInput__small: {
-    width: sizing.inputWidth_small,
-  },
+    DateInput__small: {
+      width: sizing.inputWidth_small,
+    },
 
-  DateInput__block: {
-    width: '100%',
-  },
+    DateInput__block: {
+      width: "100%",
+    },
 
-  DateInput__disabled: {
-    background: color.disabled,
-    color: color.textDisabled,
-  },
+    DateInput__disabled: {
+      background: color.disabled,
+      color: color.textDisabled,
+    },
 
-  DateInput_input: {
-    fontWeight: font.input.weight,
-    fontSize: font.input.size,
-    lineHeight: font.input.lineHeight,
-    color: color.text,
-    backgroundColor: color.background,
-    width: '100%',
-    padding: `${spacing.displayTextPaddingVertical}px ${spacing.displayTextPaddingHorizontal}px`,
-    paddingTop: spacing.displayTextPaddingTop,
-    paddingBottom: spacing.displayTextPaddingBottom,
-    paddingLeft: noflip(spacing.displayTextPaddingLeft),
-    paddingRight: noflip(spacing.displayTextPaddingRight),
-    border: border.input.border,
-    borderTop: border.input.borderTop,
-    borderRight: noflip(border.input.borderRight),
-    borderBottom: border.input.borderBottom,
-    borderLeft: noflip(border.input.borderLeft),
-    borderRadius: border.input.borderRadius,
-  },
+    DateInput_input: {
+      fontWeight: font.input.weight,
+      fontSize: font.input.size,
+      lineHeight: font.input.lineHeight,
+      color: color.text,
+      backgroundColor: color.background,
+      width: "100%",
+      padding: `${spacing.displayTextPaddingVertical}px ${spacing.displayTextPaddingHorizontal}px`,
+      paddingTop: spacing.displayTextPaddingTop,
+      paddingBottom: spacing.displayTextPaddingBottom,
+      paddingLeft: noflip(spacing.displayTextPaddingLeft),
+      paddingRight: noflip(spacing.displayTextPaddingRight),
+      border: border.input.border,
+      borderTop: border.input.borderTop,
+      borderRight: noflip(border.input.borderRight),
+      borderBottom: border.input.borderBottom,
+      borderLeft: noflip(border.input.borderLeft),
+      borderRadius: border.input.borderRadius,
+    },
 
-  DateInput_input__small: {
-    fontSize: font.input.size_small,
-    lineHeight: font.input.lineHeight_small,
-    letterSpacing: font.input.letterSpacing_small,
-    padding: `${spacing.displayTextPaddingVertical_small}px ${spacing.displayTextPaddingHorizontal_small}px`,
-    paddingTop: spacing.displayTextPaddingTop_small,
-    paddingBottom: spacing.displayTextPaddingBottom_small,
-    paddingLeft: noflip(spacing.displayTextPaddingLeft_small),
-    paddingRight: noflip(spacing.displayTextPaddingRight_small),
-  },
+    DateInput_input__small: {
+      fontSize: font.input.size_small,
+      lineHeight: font.input.lineHeight_small,
+      letterSpacing: font.input.letterSpacing_small,
+      padding: `${spacing.displayTextPaddingVertical_small}px ${spacing.displayTextPaddingHorizontal_small}px`,
+      paddingTop: spacing.displayTextPaddingTop_small,
+      paddingBottom: spacing.displayTextPaddingBottom_small,
+      paddingLeft: noflip(spacing.displayTextPaddingLeft_small),
+      paddingRight: noflip(spacing.displayTextPaddingRight_small),
+    },
 
-  DateInput_input__regular: {
-    fontWeight: 'inherit',
-  },
+    DateInput_input__regular: {
+      fontWeight: "inherit",
+    },
 
-  DateInput_input__readOnly: {
-    userSelect: 'none',
-  },
+    DateInput_input__readOnly: {
+      userSelect: "none",
+    },
 
-  DateInput_input__focused: {
-    outline: border.input.outlineFocused,
-    background: color.backgroundFocused,
-    border: border.input.borderFocused,
-    borderTop: border.input.borderTopFocused,
-    borderRight: noflip(border.input.borderRightFocused),
-    borderBottom: border.input.borderBottomFocused,
-    borderLeft: noflip(border.input.borderLeftFocused),
-  },
+    DateInput_input__focused: {
+      outline: border.input.outlineFocused,
+      background: color.backgroundFocused,
+      border: border.input.borderFocused,
+      borderTop: border.input.borderTopFocused,
+      borderRight: noflip(border.input.borderRightFocused),
+      borderBottom: border.input.borderBottomFocused,
+      borderLeft: noflip(border.input.borderLeftFocused),
+    },
 
-  DateInput_input__disabled: {
-    background: color.disabled,
-    fontStyle: font.input.styleDisabled,
-  },
+    DateInput_input__disabled: {
+      background: color.disabled,
+      fontStyle: font.input.styleDisabled,
+    },
 
-  DateInput_screenReaderMessage: {
-    border: 0,
-    clip: 'rect(0, 0, 0, 0)',
-    height: 1,
-    margin: -1,
-    overflow: 'hidden',
-    padding: 0,
-    position: 'absolute',
-    width: 1,
-  },
+    DateInput_screenReaderMessage: {
+      border: 0,
+      clip: "rect(0, 0, 0, 0)",
+      height: 1,
+      margin: -1,
+      overflow: "hidden",
+      padding: 0,
+      position: "absolute",
+      width: 1,
+    },
 
-  DateInput_fang: {
-    position: 'absolute',
-    width: FANG_WIDTH_PX,
-    height: FANG_HEIGHT_PX,
-    left: 22, // TODO: should be noflip wrapped and handled by an isRTL prop
-    zIndex: zIndex + 2,
-  },
+    DateInput_fang: {
+      position: "absolute",
+      width: FANG_WIDTH_PX,
+      height: FANG_HEIGHT_PX,
+      left: 22, // TODO: should be noflip wrapped and handled by an isRTL prop
+      zIndex: zIndex + 2,
+    },
 
-  DateInput_fangShape: {
-    fill: color.background,
-  },
+    DateInput_fangShape: {
+      fill: color.background,
+    },
 
-  DateInput_fangStroke: {
-    stroke: color.core.border,
-    fill: 'transparent',
-  },
-}), { pureComponent: typeof React.PureComponent !== 'undefined' })(DateInput);
+    DateInput_fangStroke: {
+      stroke: color.core.border,
+      fill: "transparent",
+    },
+  }),
+  { pureComponent: typeof React.PureComponent !== "undefined" }
+)(DateInput);
