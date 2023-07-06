@@ -46,6 +46,7 @@ var propTypes = process.env.NODE_ENV !== "production" ? forbidExtraProps({
   isDayBlocked: PropTypes.func,
   isDayHighlighted: PropTypes.func,
   // DayPicker props
+  customRef: PropTypes.element,
   renderMonthText: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'),
   renderMonthElement: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'),
   renderWeekHeaderElement: PropTypes.func,
@@ -105,6 +106,7 @@ var defaultProps = {
   isDayBlocked: function isDayBlocked() {},
   isDayHighlighted: function isDayHighlighted() {},
   // DayPicker props
+  customRef: null,
   renderMonthText: null,
   renderWeekHeaderElement: null,
   enableOutsideDays: false,
@@ -621,13 +623,15 @@ var DayPickerSingleDateController = /*#__PURE__*/function (_ref2, _ref) {
       noBorder = _this$props12.noBorder,
       transitionDuration = _this$props12.transitionDuration,
       verticalBorderSpacing = _this$props12.verticalBorderSpacing,
-      horizontalMonthPadding = _this$props12.horizontalMonthPadding;
+      horizontalMonthPadding = _this$props12.horizontalMonthPadding,
+      customRef = _this$props12.customRef;
     var _this$state7 = this.state,
       currentMonth = _this$state7.currentMonth,
       disableNext = _this$state7.disableNext,
       disablePrev = _this$state7.disablePrev,
       visibleDays = _this$state7.visibleDays;
     return /*#__PURE__*/React.createElement(DayPicker, {
+      customRef: customRef,
       orientation: orientation,
       enableOutsideDays: enableOutsideDays,
       modifiers: visibleDays,

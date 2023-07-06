@@ -64,7 +64,6 @@ const defaultProps = {
   inputIconPosition: ICON_BEFORE_POSITION,
   customInputIcon: null,
   customCloseIcon: null,
-  customRef: null,
   noBorder: false,
   block: false,
   small: false,
@@ -73,6 +72,7 @@ const defaultProps = {
   keepFocusOnInput: false,
 
   // calendar presentation and interaction related props
+  customRef: null,
   orientation: HORIZONTAL_ORIENTATION,
   anchorDirection: ANCHOR_LEFT,
   openDirection: OPEN_DOWN,

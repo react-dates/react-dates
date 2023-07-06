@@ -55,6 +55,7 @@ var defaultProps = {
   verticalSpacing: DEFAULT_VERTICAL_SPACING,
   keepFocusOnInput: false,
   // calendar presentation and interaction related props
+  customRef: null,
   orientation: HORIZONTAL_ORIENTATION,
   anchorDirection: ANCHOR_LEFT,
   openDirection: OPEN_DOWN,
@@ -375,6 +376,7 @@ var SingleDatePicker = /*#__PURE__*/function (_ref2, _ref) {
       verticalSpacing = _this$props6.verticalSpacing,
       horizontalMonthPadding = _this$props6.horizontalMonthPadding,
       small = _this$props6.small,
+      customRef = _this$props6.customRef,
       reactDates = _this$props6.theme.reactDates;
     var _this$state = this.state,
       dayPickerContainerStyles = _this$state.dayPickerContainerStyles,
@@ -396,6 +398,7 @@ var SingleDatePicker = /*#__PURE__*/function (_ref2, _ref) {
     }, orientation === HORIZONTAL_ORIENTATION && styles.SingleDatePicker_picker__horizontal, orientation === VERTICAL_ORIENTATION && styles.SingleDatePicker_picker__vertical, withAnyPortal && styles.SingleDatePicker_picker__portal, withFullScreenPortal && styles.SingleDatePicker_picker__fullScreenPortal, isRTL && styles.SingleDatePicker_picker__rtl, dayPickerContainerStyles), {
       onClick: onOutsideClick
     }), /*#__PURE__*/React.createElement(DayPickerSingleDateController, {
+      customRef: customRef,
       date: date,
       minDate: minDate,
       maxDate: maxDate,

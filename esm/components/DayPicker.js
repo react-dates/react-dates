@@ -41,6 +41,7 @@ var PREV_NAV = 'prev_nav';
 var NEXT_NAV = 'next_nav';
 var propTypes = process.env.NODE_ENV !== "production" ? forbidExtraProps(_objectSpread(_objectSpread({}, withStylesPropTypes), {}, {
   // calendar presentation props
+  customRef: PropTypes.element,
   enableOutsideDays: PropTypes.bool,
   numberOfMonths: PropTypes.number,
   orientation: ScrollableOrientationShape,
@@ -108,6 +109,7 @@ var propTypes = process.env.NODE_ENV !== "production" ? forbidExtraProps(_object
 })) : {};
 export var defaultProps = {
   // calendar presentation props
+  customRef: null,
   enableOutsideDays: false,
   numberOfMonths: 2,
   orientation: HORIZONTAL_ORIENTATION,
@@ -931,7 +933,8 @@ var DayPicker = /*#__PURE__*/function (_ref2, _ref) {
       transitionDuration = _this$props12.transitionDuration,
       verticalBorderSpacing = _this$props12.verticalBorderSpacing,
       horizontalMonthPadding = _this$props12.horizontalMonthPadding,
-      navPosition = _this$props12.navPosition;
+      navPosition = _this$props12.navPosition,
+      customRef = _this$props12.customRef;
     var dayPickerHorizontalPadding = theme.reactDates.spacing.dayPickerHorizontalPadding;
     var isHorizontal = this.isHorizontal();
     var numOfWeekHeaders = this.isVertical() ? 1 : numberOfMonths;
@@ -981,7 +984,9 @@ var DayPicker = /*#__PURE__*/function (_ref2, _ref) {
       marginLeft: isHorizontal && withPortal ? -fullHorizontalWidth / 2 : null,
       marginTop: isHorizontal && withPortal ? -calendarMonthWidth / 2 : null
     };
-    return /*#__PURE__*/React.createElement("div", css(styles.DayPicker, isHorizontal && styles.DayPicker__horizontal, verticalScrollable && styles.DayPicker__verticalScrollable, isHorizontal && withPortal && styles.DayPicker_portal__horizontal, this.isVertical() && withPortal && styles.DayPicker_portal__vertical, dayPickerStyle, !monthTitleHeight && styles.DayPicker__hidden, !noBorder && styles.DayPicker__withBorder), /*#__PURE__*/React.createElement(OutsideClickHandler, {
+    return /*#__PURE__*/React.createElement("div", _extends({
+      ref: customRef
+    }, css(styles.DayPicker, isHorizontal && styles.DayPicker__horizontal, verticalScrollable && styles.DayPicker__verticalScrollable, isHorizontal && withPortal && styles.DayPicker_portal__horizontal, this.isVertical() && withPortal && styles.DayPicker_portal__vertical, dayPickerStyle, !monthTitleHeight && styles.DayPicker__hidden, !noBorder && styles.DayPicker__withBorder)), /*#__PURE__*/React.createElement(OutsideClickHandler, {
       onOutsideClick: onOutsideClick
     }, (calendarInfoPositionTop || calendarInfoPositionBefore) && calendarInfo, /*#__PURE__*/React.createElement("div", css(dayPickerWrapperStyle, calendarInfoIsInline && isHorizontal && styles.DayPicker_wrapper__horizontal), /*#__PURE__*/React.createElement("div", _extends({}, css(styles.DayPicker_weekHeaders, isHorizontal && styles.DayPicker_weekHeaders__horizontal), {
       "aria-hidden": "true",
