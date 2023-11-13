@@ -32,12 +32,14 @@ const propTypes = forbidExtraProps({
 
   startDateId: PropTypes.string,
   startDatePlaceholderText: PropTypes.string,
+  startDateLabelText: PropTypes.string,
   startDateAriaLabel: PropTypes.string,
   startDateTitleText: PropTypes.string,
   screenReaderMessage: PropTypes.string,
 
   endDateId: PropTypes.string,
   endDatePlaceholderText: PropTypes.string,
+  endDateLabelText: PropTypes.string,
   endDateAriaLabel: PropTypes.string,
   endDateTitleText: PropTypes.string,
 
@@ -89,6 +91,8 @@ const defaultProps = {
   endDateId: END_DATE,
   startDatePlaceholderText: 'Start Date',
   endDatePlaceholderText: 'End Date',
+  startDateLabelText: '',
+  endDateLabelText: '',
   startDateAriaLabel: undefined,
   endDateAriaLabel: undefined,
   startDateTitleText: undefined,
@@ -141,6 +145,7 @@ function DateRangePickerInput({
   startDate,
   startDateId,
   startDatePlaceholderText,
+  startDateLabelText,
   screenReaderMessage,
   isStartDateFocused,
   onStartDateChange,
@@ -151,6 +156,7 @@ function DateRangePickerInput({
   endDate,
   endDateId,
   endDatePlaceholderText,
+  endDateLabelText,
   isEndDateFocused,
   onEndDateChange,
   onEndDateFocus,
@@ -202,7 +208,7 @@ function DateRangePickerInput({
 
   const screenReaderStartDateText = screenReaderMessage
     || phrases.keyboardForwardNavigationInstructions;
-  const screenReaderEndDateText = screenReaderMessage
+    const screenReaderEndDateText = screenReaderMessage
     || phrases.keyboardBackwardNavigationInstructions;
 
   const inputIcon = (showDefaultInputIcon || customInputIcon !== null) && (
@@ -236,6 +242,7 @@ function DateRangePickerInput({
       <DateInput
         id={startDateId}
         placeholder={startDatePlaceholderText}
+        labelText={startDateLabelText}
         ariaLabel={startDateAriaLabel}
         autoComplete={autoComplete}
         titleText={startDateTitleText}
@@ -271,6 +278,7 @@ function DateRangePickerInput({
       <DateInput
         id={endDateId}
         placeholder={endDatePlaceholderText}
+        labelText={endDateLabelText}
         ariaLabel={endDateAriaLabel}
         autoComplete={autoComplete}
         titleText={endDateTitleText}

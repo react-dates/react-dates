@@ -127,4 +127,10 @@ storiesOf('DateRangePicker (DRP)', module)
   )))
   .add('with custom autoComplete', withInfo()(() => (
     <DateRangePickerWrapper autoComplete="datePicker" />
+  )))
+  .add('with label', withInfo()(() => (
+    <DateRangePickerWrapper 
+      startDateLabelText='Check in'
+      endDateLabelText='Check out'   
+    />
   )));
