@@ -53,6 +53,8 @@ const defaultProps = {
   // input related props
   startDatePlaceholderText: 'Start Date',
   endDatePlaceholderText: 'End Date',
+  startDateLabelText: '',
+  endDateLabelText: '',
   startDateAriaLabel: undefined,
   endDateAriaLabel: undefined,
   startDateTitleText: undefined,
@@ -459,6 +461,8 @@ class DateRangePicker extends React.PureComponent {
       horizontalMonthPadding,
       small,
       disabled,
+      startDateLabelText,
+      endDateLabelText,
       theme: { reactDates },
     } = this.props;
 
@@ -556,6 +560,8 @@ class DateRangePicker extends React.PureComponent {
           transitionDuration={transitionDuration}
           disabled={disabled}
           horizontalMonthPadding={horizontalMonthPadding}
+          startDateLabelText={startDateLabelText}
+          endDateLabelText={endDateLabelText}
         />
 
         {withFullScreenPortal && (
@@ -619,6 +625,8 @@ class DateRangePicker extends React.PureComponent {
       regular,
       css,
       styles,
+      startDateLabelText,
+      endDateLabelText
     } = this.props;
 
     const { isDateRangePickerInputFocused } = this.state;
@@ -635,6 +643,8 @@ class DateRangePicker extends React.PureComponent {
         isStartDateFocused={focusedInput === START_DATE}
         startDateAriaLabel={startDateAriaLabel}
         startDateTitleText={startDateTitleText}
+        startDateLabelText={startDateLabelText}
+        endDateLabelText={endDateLabelText}
         endDate={endDate}
         endDateId={endDateId}
         endDatePlaceholderText={endDatePlaceholderText}

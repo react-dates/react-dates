@@ -27,6 +27,7 @@ const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
   id: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
+  labelText: PropTypes.string,
   displayValue: PropTypes.string,
   ariaLabel: PropTypes.string,
   autoComplete: PropTypes.string,
@@ -57,6 +58,7 @@ const propTypes = forbidExtraProps({
 
 const defaultProps = {
   placeholder: 'Select Date',
+  labelText: '',
   displayValue: '',
   ariaLabel: undefined,
   autoComplete: 'off',
@@ -178,6 +180,7 @@ class DateInput extends React.PureComponent {
     const {
       id,
       placeholder,
+      labelText,
       ariaLabel,
       autoComplete,
       titleText,
@@ -203,6 +206,7 @@ class DateInput extends React.PureComponent {
     const screenReaderMessageId = `DateInput__screen-reader-message-${id}`;
 
     const withFang = showCaret && focused;
+    const withLabel = !!labelText;
 
     const inputHeight = getInputHeight(reactDates, small);
 
@@ -218,6 +222,18 @@ class DateInput extends React.PureComponent {
           withFang && openDirection === OPEN_UP && styles.DateInput__openUp,
         )}
       >
+        {labelText && (
+          <label
+            className={`DateInput_label ${id}_label`}
+            htmlFor={id}
+            {...css(
+              styles.DateInput_label,
+              small && styles.DateInput_label__small,
+            )}
+          >
+            {labelText}
+          </label>
+        )}
         <input
           {...css(
             styles.DateInput_input,
@@ -226,6 +242,7 @@ class DateInput extends React.PureComponent {
             readOnly && styles.DateInput_input__readOnly,
             focused && styles.DateInput_input__focused,
             disabled && styles.DateInput_input__disabled,
+            withLabel && styles.DateInput_input__withLabel
           )}
           aria-label={ariaLabel === undefined ? placeholder : ariaLabel}
           title={titleText}
@@ -263,7 +280,7 @@ class DateInput extends React.PureComponent {
               {...css(styles.DateInput_fangShape)}
               d={openDirection === OPEN_DOWN ? FANG_PATH_TOP : FANG_PATH_BOTTOM}
             />
-            <path
+           <path
               {...css(styles.DateInput_fangStroke)}
               d={openDirection === OPEN_DOWN ? FANG_STROKE_TOP : FANG_STROKE_BOTTOM}
             />
@@ -283,113 +300,138 @@ class DateInput extends React.PureComponent {
 DateInput.propTypes = propTypes;
 DateInput.defaultProps = defaultProps;
 
-export default withStyles(({
-  reactDates: {
-    border, color, sizing, spacing, font, zIndex,
+export default withStyles(({ 
+  reactDates: { 
+    border, color, sizing, spacing, font, zIndex, 
   },
-}) => ({
-  DateInput: {
-    margin: 0,
-    padding: spacing.inputPadding,
-    background: color.background,
-    position: 'relative',
-    display: 'inline-block',
-    width: sizing.inputWidth,
-    verticalAlign: 'middle',
-  },
+ }) => ({
+    DateInput: {
+      margin: 0,
+      padding: spacing.inputPadding,
+      background: color.background,
+      position: 'relative',
+      display: 'inline-block',
+      width: sizing.inputWidth,
+      verticalAlign: 'middle',
+    },
 
-  DateInput__small: {
-    width: sizing.inputWidth_small,
-  },
+    DateInput__small: {
+      width: sizing.inputWidth_small,
+    },
 
-  DateInput__block: {
-    width: '100%',
-  },
+    DateInput__block: {
+      width: '100%',
+    },
 
-  DateInput__disabled: {
-    background: color.disabled,
-    color: color.textDisabled,
-  },
+    DateInput__disabled: {
+      background: color.disabled,
+      color: color.textDisabled,
+    },
 
-  DateInput_input: {
-    fontWeight: font.input.weight,
-    fontSize: font.input.size,
-    lineHeight: font.input.lineHeight,
-    color: color.text,
-    backgroundColor: color.background,
-    width: '100%',
-    padding: `${spacing.displayTextPaddingVertical}px ${spacing.displayTextPaddingHorizontal}px`,
-    paddingTop: spacing.displayTextPaddingTop,
-    paddingBottom: spacing.displayTextPaddingBottom,
-    paddingLeft: noflip(spacing.displayTextPaddingLeft),
-    paddingRight: noflip(spacing.displayTextPaddingRight),
-    border: border.input.border,
-    borderTop: border.input.borderTop,
-    borderRight: noflip(border.input.borderRight),
-    borderBottom: border.input.borderBottom,
-    borderLeft: noflip(border.input.borderLeft),
-    borderRadius: border.input.borderRadius,
-  },
+    DateInput_input: {
+      fontWeight: font.input.weight,
+      fontSize: font.input.size,
+      lineHeight: font.input.lineHeight,
+      color: color.text,
+      backgroundColor: color.background,
+      width: '100%',
+      padding: `${spacing.displayTextPaddingVertical}px ${spacing.displayTextPaddingHorizontal}px`,
+      paddingTop: spacing.displayTextPaddingTop,
+      paddingBottom: spacing.displayTextPaddingBottom,
+      paddingLeft: noflip(spacing.displayTextPaddingLeft),
+      paddingRight: noflip(spacing.displayTextPaddingRight),
+      border: border.input.border,
+      borderTop: border.input.borderTop,
+      borderRight: noflip(border.input.borderRight),
+      borderBottom: border.input.borderBottom,
+      borderLeft: noflip(border.input.borderLeft),
+      borderRadius: border.input.borderRadius,
+    },
 
-  DateInput_input__small: {
-    fontSize: font.input.size_small,
-    lineHeight: font.input.lineHeight_small,
-    letterSpacing: font.input.letterSpacing_small,
-    padding: `${spacing.displayTextPaddingVertical_small}px ${spacing.displayTextPaddingHorizontal_small}px`,
-    paddingTop: spacing.displayTextPaddingTop_small,
-    paddingBottom: spacing.displayTextPaddingBottom_small,
-    paddingLeft: noflip(spacing.displayTextPaddingLeft_small),
-    paddingRight: noflip(spacing.displayTextPaddingRight_small),
-  },
+    DateInput_input__small: {
+      fontSize: font.input.size_small,
+      lineHeight: font.input.lineHeight_small,
+      letterSpacing: font.input.letterSpacing_small,
+      padding: `${spacing.displayTextPaddingVertical_small}px ${spacing.displayTextPaddingHorizontal_small}px`,
+      paddingTop: spacing.displayTextPaddingTop_small,
+      paddingBottom: spacing.displayTextPaddingBottom_small,
+      paddingLeft: noflip(spacing.displayTextPaddingLeft_small),
+      paddingRight: noflip(spacing.displayTextPaddingRight_small),
+    },
 
-  DateInput_input__regular: {
-    fontWeight: 'inherit',
-  },
+    DateInput_input__regular: {
+      fontWeight: 'inherit',
+    },
 
-  DateInput_input__readOnly: {
-    userSelect: 'none',
-  },
+    DateInput_input__readOnly: {
+      userSelect: 'none',
+    },
 
-  DateInput_input__focused: {
-    outline: border.input.outlineFocused,
-    background: color.backgroundFocused,
-    border: border.input.borderFocused,
-    borderTop: border.input.borderTopFocused,
-    borderRight: noflip(border.input.borderRightFocused),
-    borderBottom: border.input.borderBottomFocused,
-    borderLeft: noflip(border.input.borderLeftFocused),
-  },
+    DateInput_input__focused: {
+      outline: border.input.outlineFocused,
+      background: color.backgroundFocused,
+      border: border.input.borderFocused,
+      borderTop: border.input.borderTopFocused,
+      borderRight: noflip(border.input.borderRightFocused),
+      borderBottom: border.input.borderBottomFocused,
+      borderLeft: noflip(border.input.borderLeftFocused),
+    },
+    
+    DateInput_input__withLabel:{
+      paddingTop: spacing.inputPadding,
+    },
 
-  DateInput_input__disabled: {
-    background: color.disabled,
-    fontStyle: font.input.styleDisabled,
-  },
+    DateInput_input__disabled: {
+      background: color.disabled,
+      fontStyle: font.input.styleDisabled,
+    },
 
-  DateInput_screenReaderMessage: {
-    border: 0,
-    clip: 'rect(0, 0, 0, 0)',
-    height: 1,
-    margin: -1,
-    overflow: 'hidden',
-    padding: 0,
-    position: 'absolute',
-    width: 1,
-  },
+    DateInput_screenReaderMessage: {
+      border: 0,
+      clip: 'rect(0, 0, 0, 0)',
+      height: 1,
+      margin: -1,
+      overflow: 'hidden',
+      padding: 0,
+      position: 'absolute',
+      width: 1,
+    },
 
-  DateInput_fang: {
-    position: 'absolute',
-    width: FANG_WIDTH_PX,
-    height: FANG_HEIGHT_PX,
-    left: 22, // TODO: should be noflip wrapped and handled by an isRTL prop
-    zIndex: zIndex + 2,
-  },
+    DateInput_fang: {
+      position: 'absolute',
+      width: FANG_WIDTH_PX,
+      height: FANG_HEIGHT_PX,
+      left: 22, // TODO: should be noflip wrapped and handled by an isRTL prop
+      zIndex: zIndex + 2,
+    },
 
-  DateInput_fangShape: {
-    fill: color.background,
-  },
+    DateInput_fangShape: {
+      fill: color.background,
+    },
 
-  DateInput_fangStroke: {
-    stroke: color.core.border,
-    fill: 'transparent',
-  },
-}), { pureComponent: typeof React.PureComponent !== 'undefined' })(DateInput);
+    DateInput_fangStroke: {
+      stroke: color.core.border,
+      fill: 'transparent',
+    },
+
+    DateInput_label: {
+      fontSize: font.size,
+      color: color.text,
+      padding: `${spacing.displayTextPaddingVertical}px ${spacing.displayTextPaddingHorizontal}px`,
+      paddingTop: spacing.displayTextPaddingTop,
+      paddingBottom: spacing.displayTextPaddingBottom,
+      paddingLeft: noflip(spacing.displayTextPaddingLeft),
+      paddingRight: noflip(spacing.displayTextPaddingRight),
+    },
+
+    DateInput_label__small: {
+      fontSize: font.size,
+      padding: `${spacing.displayTextPaddingVertical_small}px ${spacing.displayTextPaddingHorizontal_small}px`,
+      paddingTop: spacing.displayTextPaddingTop_small,
+      paddingBottom: spacing.displayTextPaddingBottom_small,
+      paddingLeft: noflip(spacing.displayTextPaddingLeft_small),
+      paddingRight: noflip(spacing.displayTextPaddingRight_small),
+    },
+  }),
+  { pureComponent: typeof React.PureComponent !== 'undefined' }
+)(DateInput);
