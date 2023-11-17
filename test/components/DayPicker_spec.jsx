@@ -1068,7 +1068,7 @@ describe('DayPicker', () => {
       });
     });
 
-    describe('#componentWillReceiveProps', () => {
+    describe('#UNSAFE_componentWillReceiveProps', () => {
       describe.skip('props.orientation === VERTICAL_SCROLLABLE', () => {
         it('updates state.currentMonthScrollTop', () => {
           sinon.spy(PureDayPicker.prototype, 'setTransitionContainerRef');
@@ -1100,7 +1100,7 @@ describe('DayPicker', () => {
             const newDate = date.clone().add(1, 'month');
             const wrapper = shallow(<PureDayPicker {...props} date={date} />);
             expect(wrapper.state().currentMonth).to.eql(date);
-            wrapper.instance().componentWillReceiveProps(
+            wrapper.instance().UNSAFE_componentWillReceiveProps(
               {
                 ...props,
                 date: newDate,
@@ -1119,7 +1119,7 @@ describe('DayPicker', () => {
             const newDate = date.clone().add(1, 'month');
             const wrapper = shallow(<PureDayPicker {...props} date={date} />);
             expect(wrapper.state().currentMonth).to.eql(date);
-            wrapper.instance().componentWillReceiveProps(
+            wrapper.instance().UNSAFE_componentWillReceiveProps(
               {
                 ...props,
                 date: newDate,

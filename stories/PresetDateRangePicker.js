@@ -11,9 +11,9 @@ const presetDateRangePickerControllerInfo = `The ${monospace('PresetDateRangePic
   exported by ${monospace('react-dates')}. It is instead an example of how you might use the
   ${monospace('DateRangePicker')} along with the ${monospace('renderCalendarInfo')} prop in
   order to add preset range buttons for easy range selection. You can see the example code
-  <a href="https://github.com/react-dates/react-dates/blob/HEAD/examples/PresetDateRangePicker.jsx">
+  <a href="https://github.com/vizzly-co/react-dates-17/blob/HEAD/examples/PresetDateRangePicker.jsx">
   here</a> and
-  <a href="https://github.com/react-dates/react-dates/blob/HEAD/stories/PresetDateRangePicker.js">
+  <a href="https://github.com/vizzly-co/react-dates-17/blob/HEAD/stories/PresetDateRangePicker.js">
   here</a>.`;
 
 const today = moment();

@@ -7,9 +7,6 @@ import { setOptions } from '@storybook/addon-options';
 
 import registerCSSInterfaceWithDefaultTheme from '../src/utils/registerCSSInterfaceWithDefaultTheme';
 
-import '../css/storybook.scss';
-import '../css/styles.css';
-
 registerCSSInterfaceWithDefaultTheme();
 
 addDecorator((story) => {
@@ -21,8 +18,8 @@ function getLink(href, text) {
   return `<a href=${href} rel="noopener noreferrer" target="_blank">${text}</a>`;
 }
 
-const README = getLink('https://github.com/react-dates/react-dates/blob/HEAD/README.md', 'README');
-const wrapperSource = getLink('https://github.com/react-dates/react-dates/tree/HEAD/examples', 'wrapper source');
+const README = getLink('https://github.com/vizzly-co/react-dates-17/blob/HEAD/README.md', 'README');
+const wrapperSource = getLink('https://github.com/vizzly-co/react-dates-17/tree/HEAD/examples', 'wrapper source');
 
 const helperText = `All examples are built using a wrapper component that is not exported by
   react-dates. Please see the ${README} for more information about minimal setup or explore
@@ -52,7 +49,7 @@ addDecorator(story => (
 
 setOptions({
   name: 'REACT-DATES',
-  url: 'https://github.com/react-dates/react-dates',
+  url: 'https://github.com/vizzly-co/react-dates-17',
 });
 
 function loadStories() {
