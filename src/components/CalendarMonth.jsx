@@ -3,7 +3,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import momentPropTypes from 'react-moment-proptypes';
-import { forbidExtraProps, mutuallyExclusiveProps, nonNegativeInteger } from 'airbnb-prop-types';
+import {
+  forbidExtraProps,
+  mutuallyExclusiveProps,
+  nonNegativeInteger,
+} from 'airbnb-prop-types';
 import { withStyles, withStylesPropTypes } from 'react-with-styles';
 import moment from 'moment';
 
@@ -42,10 +46,18 @@ const propTypes = forbidExtraProps({
   onDayMouseLeave: PropTypes.func,
   onMonthSelect: PropTypes.func,
   onYearSelect: PropTypes.func,
-  renderMonthText: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'),
+  renderMonthText: mutuallyExclusiveProps(
+    PropTypes.func,
+    'renderMonthText',
+    'renderMonthElement',
+  ),
   renderCalendarDay: PropTypes.func,
   renderDayContents: PropTypes.func,
-  renderMonthElement: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'),
+  renderMonthElement: mutuallyExclusiveProps(
+    PropTypes.func,
+    'renderMonthText',
+    'renderMonthElement',
+  ),
   firstDayOfWeek: DayOfWeekShape,
   setMonthTitleHeight: PropTypes.func,
   verticalBorderSpacing: nonNegativeInteger,
@@ -73,7 +85,7 @@ const defaultProps = {
   onMonthSelect() {},
   onYearSelect() {},
   renderMonthText: null,
-  renderCalendarDay: (props) => (<CalendarDay {...props} />),
+  renderCalendarDay: (props) => <CalendarDay {...props} />,
   renderDayContents: null,
   renderMonthElement: null,
   firstDayOfWeek: null,
@@ -97,7 +109,9 @@ class CalendarMonth extends React.PureComponent {
       weeks: getCalendarMonthWeeks(
         props.month,
         props.enableOutsideDays,
-        props.firstDayOfWeek == null ? moment.localeData().firstDayOfWeek() : props.firstDayOfWeek,
+        props.firstDayOfWeek == null
+          ? moment.localeData().firstDayOfWeek()
+          : props.firstDayOfWeek,
       ),
     };
 
@@ -109,32 +123,40 @@ class CalendarMonth extends React.PureComponent {
     this.queueSetMonthTitleHeight();
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
+  static getDerivedStateFromProps(nextProps, prevState) {
     const { month, enableOutsideDays, firstDayOfWeek } = nextProps;
     const {
       month: prevMonth,
       enableOutsideDays: prevEnableOutsideDays,
       firstDayOfWeek: prevFirstDayOfWeek,
-    } = this.props;
+    } = prevState;
+
     if (
       !month.isSame(prevMonth)
       || enableOutsideDays !== prevEnableOutsideDays
       || firstDayOfWeek !== prevFirstDayOfWeek
     ) {
-      this.setState({
+      return {
         weeks: getCalendarMonthWeeks(
           month,
           enableOutsideDays,
-          firstDayOfWeek == null ? moment.localeData().firstDayOfWeek() : firstDayOfWeek,
+          firstDayOfWeek == null
+            ? moment.localeData().firstDayOfWeek()
+            : firstDayOfWeek,
         ),
-      });
+      };
     }
+
+    return null;
   }
 
   componentDidUpdate(prevProps) {
     const { setMonthTitleHeight } = this.props;
 
-    if (prevProps.setMonthTitleHeight === null && setMonthTitleHeight !== null) {
+    if (
+      prevProps.setMonthTitleHeight === null
+      && setMonthTitleHeight !== null
+    ) {
       this.queueSetMonthTitleHeight();
     }
   }
@@ -148,7 +170,12 @@ class CalendarMonth extends React.PureComponent {
   setMonthTitleHeight() {
     const { setMonthTitleHeight } = this.props;
     if (setMonthTitleHeight) {
-      const captionHeight = calculateDimension(this.captionRef, 'height', true, true);
+      const captionHeight = calculateDimension(
+        this.captionRef,
+        'height',
+        true,
+        true,
+      );
       setMonthTitleHeight(captionHeight);
     }
   }
@@ -158,7 +185,10 @@ class CalendarMonth extends React.PureComponent {
   }
 
   queueSetMonthTitleHeight() {
-    this.setMonthTitleHeightTimeout = window.setTimeout(this.setMonthTitleHeight, 0);
+    this.setMonthTitleHeightTimeout = window.setTimeout(
+      this.setMonthTitleHeight,
+      0,
+    );
   }
 
   render() {
@@ -189,23 +219,25 @@ class CalendarMonth extends React.PureComponent {
     } = this.props;
 
     const { weeks } = this.state;
-    const monthTitle = renderMonthText ? renderMonthText(month) : month.format(monthFormat);
+    const monthTitle = renderMonthText
+      ? renderMonthText(month)
+      : month.format(monthFormat);
 
     const verticalScrollable = orientation === VERTICAL_SCROLLABLE;
 
     return (
       <div
-        {...css(
-          styles.CalendarMonth,
-          { padding: `0 ${horizontalMonthPadding}px` },
-        )}
+        {...css(styles.CalendarMonth, {
+          padding: `0 ${horizontalMonthPadding}px`,
+        })}
         data-visible={isVisible}
       >
         <div
           ref={this.setCaptionRef}
           {...css(
             styles.CalendarMonth_caption,
-            verticalScrollable && styles.CalendarMonth_caption__verticalScrollable,
+            verticalScrollable
+              && styles.CalendarMonth_caption__verticalScrollable,
           )}
         >
           {renderMonthElement ? (
@@ -216,9 +248,7 @@ class CalendarMonth extends React.PureComponent {
               isVisible,
             })
           ) : (
-            <strong>
-              {monthTitle}
-            </strong>
+            <strong>{monthTitle}</strong>
           )}
         </div>
 
@@ -226,7 +256,9 @@ class CalendarMonth extends React.PureComponent {
           {...css(
             !verticalBorderSpacing && styles.CalendarMonth_table,
             verticalBorderSpacing && styles.CalendarMonth_verticalSpacing,
-            verticalBorderSpacing && { borderSpacing: `0px ${verticalBorderSpacing}px` },
+            verticalBorderSpacing && {
+              borderSpacing: `0px ${verticalBorderSpacing}px`,
+            },
           )}
           role="presentation"
         >
@@ -260,34 +292,37 @@ class CalendarMonth extends React.PureComponent {
 CalendarMonth.propTypes = propTypes;
 CalendarMonth.defaultProps = defaultProps;
 
-export default withStyles(({ reactDates: { color, font, spacing } }) => ({
-  CalendarMonth: {
-    background: color.background,
-    textAlign: 'center',
-    verticalAlign: 'top',
-    userSelect: 'none',
-  },
+export default withStyles(
+  ({ reactDates: { color, font, spacing } }) => ({
+    CalendarMonth: {
+      background: color.background,
+      textAlign: 'center',
+      verticalAlign: 'top',
+      userSelect: 'none',
+    },
 
-  CalendarMonth_table: {
-    borderCollapse: 'collapse',
-    borderSpacing: 0,
-  },
+    CalendarMonth_table: {
+      borderCollapse: 'collapse',
+      borderSpacing: 0,
+    },
 
-  CalendarMonth_verticalSpacing: {
-    borderCollapse: 'separate',
-  },
+    CalendarMonth_verticalSpacing: {
+      borderCollapse: 'separate',
+    },
 
-  CalendarMonth_caption: {
-    color: color.text,
-    fontSize: font.captionSize,
-    textAlign: 'center',
-    paddingTop: spacing.captionPaddingTop,
-    paddingBottom: spacing.captionPaddingBottom,
-    captionSide: 'initial',
-  },
+    CalendarMonth_caption: {
+      color: color.text,
+      fontSize: font.captionSize,
+      textAlign: 'center',
+      paddingTop: spacing.captionPaddingTop,
+      paddingBottom: spacing.captionPaddingBottom,
+      captionSide: 'initial',
+    },
 
-  CalendarMonth_caption__verticalScrollable: {
-    paddingTop: 12,
-    paddingBottom: 7,
-  },
-}), { pureComponent: typeof React.PureComponent !== 'undefined' })(CalendarMonth);
+    CalendarMonth_caption__verticalScrollable: {
+      paddingTop: 12,
+      paddingBottom: 7,
+    },
+  }),
+  { pureComponent: typeof React.PureComponent !== 'undefined' },
+)(CalendarMonth);
