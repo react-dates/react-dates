@@ -1,6 +1,6 @@
 {
   "name": "react-dates-17",
-  "version": "22.0.0-dev.2",
+  "version": "22.0.2",
   "description": "A responsive and accessible date range picker component built with React. Fork for React 17 and React 18.",
   "main": "index.js",
   "scripts": {
