@@ -1,7 +1,7 @@
 {
   "name": "react-dates-17",
-  "version": "22.0.0-dev.2",
-  "description": "A responsive and accessible date range picker component built with React. Fork for React 17 and React 18.",
+  "version": "22.0.4",
+  "description": "A responsive and accessible date range picker component built with React. Fork for React 17 and above",
   "main": "index.js",
   "scripts": {
     "prebuild": "npm run clean",
@@ -111,7 +111,8 @@
     "sinon-sandbox": "^2.0.6",
     "style-loader": "^0.20.3",
     "typescript": "*",
-    "webpack": "^4.46.0"
+    "webpack": "^4.46.0",
+    "sass": "^1.69.5"
   },
   "dependencies": {
     "airbnb-prop-types": "^2.16.0",
@@ -129,8 +130,7 @@
     "react-portal": "^4.2.1",
     "react-with-direction": "^1.4.0",
     "react-with-styles": "~4.1.0",
-    "react-with-styles-interface-css": "^6.0.0",
-    "sass": "^1.69.5"
+    "react-with-styles-interface-css": "^6.0.0"
   },
   "peerDependencies": {
     "@babel/runtime": "^7.0.0",
