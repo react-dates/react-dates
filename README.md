@@ -297,7 +297,7 @@ dayAriaLabelFormat: PropTypes.string,
 #### DayPickerRangeController
 The `DayPickerRangeController` is a calendar-only version of the `DateRangePicker`. There are no inputs (which also means
 that currently, it is not keyboard accessible) and the calendar is always visible, but you can select a date range much in the same way you would with the `DateRangePicker`. You can control the selected
-dates using the `startDate`, `endDate`, and `onDatesChange` props as shown below. Similarly, you can control which input is focused with the `focusedInput` and `onFocusChange` props as shown below. The user will only be able to select a date if `focusedInput` is provided.
+dates using the `startDate`, `endDate`, and `onDatesChange` props as shown below. Similarly, you can control which input is focused with the `focusedInput` and `onFocusChange` props as shown below. The user will only be able to select a date if `focusedInput` is not `null` or `undefined`.
 
 Here is the minimum *REQUIRED* setup you need to get the `DayPickerRangeController` working:
 ```jsx
