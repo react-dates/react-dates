@@ -42,6 +42,20 @@ describe('SingleDatePicker', () => {
         ).to.have.lengthOf(1);
       });
 
+      it('hides an open calendar when disabled', () => {
+        const wrapper = shallow(
+          <SingleDatePicker id="date" focused />,
+          { disableLifecycleMethods: true },
+        ).dive({ disableLifecycleMethods: true });
+        expect(wrapper.find(DayPickerSingleDateController)).to.have.lengthOf(1);
+
+        wrapper.setProps({ disabled: true });
+        expect(wrapper.find(DayPickerSingleDateController)).to.have.lengthOf(0);
+
+        wrapper.setProps({ disabled: false });
+        expect(wrapper.find(DayPickerSingleDateController)).to.have.lengthOf(1);
+      });
+
       describe('props.isOutsideRange is defined', () => {
         it('should pass props.isOutsideRange to <SingleDatePickerInputController>', () => {
           const isOutsideRange = sinon.stub();

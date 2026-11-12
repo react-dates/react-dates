@@ -178,13 +178,18 @@ class SingleDatePicker extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const { focused } = this.props;
-    if (!prevProps.focused && focused) {
+    const wasOpen = this.isOpened(prevProps);
+    const isOpen = this.isOpened();
+    if (!wasOpen && isOpen) {
       this.responsivizePickerPosition();
       this.disableScroll();
-    } else if (prevProps.focused && !focused) {
+    } else if (wasOpen && !isOpen) {
       if (this.enableScroll) this.enableScroll();
     }
+  }
+
+  isOpened(props = this.props) {
+    return props.focused && !props.disabled;
   }
 
   /* istanbul ignore next */
@@ -302,9 +307,9 @@ class SingleDatePicker extends React.PureComponent {
   }
 
   disableScroll() {
-    const { appendToBody, disableScroll: propDisableScroll, focused } = this.props;
+    const { appendToBody, disableScroll: propDisableScroll } = this.props;
     if (!appendToBody && !propDisableScroll) return;
-    if (!focused) return;
+    if (!this.isOpened()) return;
 
     // Disable scroll for every ancestor of this <SingleDatePicker> up to the
     // document level. This ensures the input and the picker never move. Other
@@ -325,12 +330,11 @@ class SingleDatePicker extends React.PureComponent {
       withPortal,
       withFullScreenPortal,
       appendToBody,
-      focused,
     } = this.props;
 
     const { dayPickerContainerStyles } = this.state;
 
-    if (!focused) {
+    if (!this.isOpened()) {
       return;
     }
 
@@ -371,13 +375,12 @@ class SingleDatePicker extends React.PureComponent {
 
   maybeRenderDayPickerWithPortal() {
     const {
-      focused,
       withPortal,
       withFullScreenPortal,
       appendToBody,
     } = this.props;
 
-    if (!focused) {
+    if (!this.isOpened()) {
       return null;
     }
 

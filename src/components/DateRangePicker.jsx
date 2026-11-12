@@ -171,8 +171,7 @@ class DateRangePicker extends React.PureComponent {
     this.responsivizePickerPosition();
     this.disableScroll();
 
-    const { focusedInput } = this.props;
-    if (focusedInput) {
+    if (this.isOpened()) {
       this.setState({
         isDateRangePickerInputFocused: true,
       });
@@ -182,12 +181,13 @@ class DateRangePicker extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const { focusedInput } = this.props;
-    if (!prevProps.focusedInput && focusedInput && this.isOpened()) {
+    const wasOpen = this.isOpened(prevProps);
+    const isOpen = this.isOpened();
+    if (!wasOpen && isOpen) {
       // The date picker just changed from being closed to being open.
       this.responsivizePickerPosition();
       this.disableScroll();
-    } else if (prevProps.focusedInput && !focusedInput && !this.isOpened()) {
+    } else if (wasOpen && !isOpen) {
       // The date picker just changed from being open to being closed.
       if (this.enableScroll) this.enableScroll();
     }
@@ -311,9 +311,9 @@ class DateRangePicker extends React.PureComponent {
     if (this.removeDayPickerFocusOut) this.removeDayPickerFocusOut();
   }
 
-  isOpened() {
-    const { focusedInput } = this.props;
-    return focusedInput === START_DATE || focusedInput === END_DATE;
+  isOpened(props = this.props) {
+    const { disabled, focusedInput } = props;
+    return disabled !== true && (focusedInput === START_DATE || focusedInput === END_DATE);
   }
 
   disableScroll() {
