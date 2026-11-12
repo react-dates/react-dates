@@ -69,6 +69,20 @@ const requiredProps = {
 };
 
 describe('DateRangePicker', () => {
+  it('hides an open calendar when both inputs are disabled', () => {
+    const wrapper = shallow(
+      <DateRangePicker {...requiredProps} focusedInput={START_DATE} />,
+      { disableLifecycleMethods: true },
+    ).dive({ disableLifecycleMethods: true });
+    expect(wrapper.find(DayPickerRangeController)).to.have.lengthOf(1);
+
+    wrapper.setProps({ disabled: true });
+    expect(wrapper.find(DayPickerRangeController)).to.have.lengthOf(0);
+
+    wrapper.setProps({ disabled: START_DATE });
+    expect(wrapper.find(DayPickerRangeController)).to.have.lengthOf(1);
+  });
+
   describe('#render()', () => {
     it('renders <DateRangePickerInputWithHandlers />', () => {
       const wrapper = shallow((
